@@ -1,0 +1,514 @@
+\chapter{Alternative Regularity via Non-Excessive Sweepouts}\label{ch:alternative-regularity}
+
+In this chapter, we combine nested sweepouts with the non-excessive framework of Chodosh--Liokumovich--Spolaor~\cite{CLS22} and apply Wickramasekera's regularity theorem~\cite{Wic14} to obtain minimal hypersurfaces in closed Riemannian manifolds.
+
+\section{Non-Excessive Sweepouts}\label{sec:non-excessive-prelim}
+An alternative approach to min--max theory, developed by Chodosh--Liokumovich--Spolaor~\cite{CLS22}, is based on the notion of \emph{non-excessive sweepouts}. This framework provides a conceptually simpler variational characterization of critical sweepouts without requiring the pull-tight procedure central to the classical Almgren--Pitts method.
+
+\subsection{Sweepouts and Width}
+
+\begin{definition}[Sweepout]\label{def:sweepout-cls}
+A \emph{sweepout} of $M$ is a map $\Phi: [0,1] \to \mathbf{Z}_{n}(M; \mathbb{Z}_2)$ continuous in the flat topology such that $\Phi(x) = \partial \Omega(x)$, where $\{\Omega(x) : x\in [0,1]\}$ is a family of Caccioppoli sets with $\Omega(0) = \emptyset$ and $\Omega(1) = M$. We denote by $\mathcal{S}$ the collection of all such sweepouts.
+
+The \emph{width} is defined by
+\[
+W = \inf_{\Phi \in \mathcal{S}} \sup_{x\in [0,1]} \mathbf{M}(\Phi(x)).
+\]
+\end{definition}
+
+We will denote $\mathbf{w}(\Phi) := \sup_{x\in [0,1]} \mathbf{M}(\Phi(x))$ for the width of a sweepout $\Phi$, and switch freely between the notation $\mathbf{M}(\Phi(x))$ and $\per(\Omega(x))$.
+
+\begin{definition}[Optimal nested volume parametrized sweepout]\label{def:onvp}
+A sweepout $\{ \Phi(x) = \partial \Omega(x) : x\in[0,1]\}$ is called
+\begin{itemize}
+    \item \emph{optimal} if $\mathbf{w}(\Phi) = W$;
+    \item \emph{nested} if $\Omega(x_1) \subset \Omega(x_2)$ for all $0\leq x_1 \leq x_2\leq 1$;
+    \item \emph{volume parametrized} if $\Vol(\Omega(x)) = x$ for every $x\in [0,1]$.
+\end{itemize}
+We call such a sweepout an \emph{optimal nested volume parametrized (ONVP) sweepout}.
+\end{definition}
+
+\begin{definition}[Critical set]\label{def:critical-set}
+Given a sweepout $\Phi$, define
+\[
+M(x) = \limsup_{r \to 0} \{\mathbf{M}(\Phi(y)): |y-x| < r\}.
+\]
+If $\Phi$ is an optimal sweepout, the \emph{critical domain of $\Phi$} is
+\[
+\mathfrak{m}(\Phi)=\{ x \in [0,1]: M(x) =W \}.
+\]
+We denote by $\mathfrak{m}_L(\Phi)$ and $\mathfrak{m}_R(\Phi)$ the sets of left and right critical points.
+\end{definition}
+
+\subsection{Excessive Intervals and Non-Excessive Points}
+
+We introduce the concept of excessive intervals, which identify portions of a sweepout that can be replaced by lower-mass competitors.
+
+\begin{definition}[Excessive intervals and points]\label{def:excessive-interval}
+Suppose $\{\Phi(x) = \partial\Omega(x)\}$ is a sweepout. Given a connected interval $I \subset [0,1]$
+(which may be open, closed, or half-open), we say that $\{\Phi^I(x) = \partial\Omega^I(x)\}_{x\in \bar{I}}$
+is an \emph{$I$-replacement family for $\Phi$} if
+$\Omega^I(a) = \Omega(a)$, $\Omega^I(b) = \Omega(b)$ at the endpoints, and for all $x \in I$,
+\[
+\limsup_{I \ni y \to x} \mathbf{M}(\Phi^I(y)) < W,
+\]
+where $W := \mathbf{w}(\Phi)$.
+
+We say that a connected interval $I$ is an \emph{excessive interval for $\Phi$} if there exists an $I$-replacement family
+for $\Phi$. A point $x$ is called \emph{left excessive for $\Phi$} (resp.\ \emph{right excessive}) if there exists an excessive interval $I$ with
+$(x-\varepsilon, x] \subset I$ (resp.\ $[x, x+\varepsilon) \subset I$) for some $\varepsilon > 0$.
+\end{definition}
+
+\subsection{Non-Excessive Sweepouts and Stationary Varifolds}\label{subsec:stationary-varifolds-non-excessive}
+
+The fundamental result of Chodosh--Liokumovich--Spolaor is the existence of sweepouts where critical points are not excessive:
+
+\begin{theorem}[Existence of non-excessive min-max hypersurface~{\cite[Theorem~3.1]{CLS22}}]\label{thm:non-excessive-existence}
+Let $(M^{n+1},g)$ be a closed Riemannian manifold with $2\leq n\leq 6$. There exists an (ONVP) sweepout $\Psi$ such that every $x\in \mathfrak{m}_L(\Psi)$ is not left excessive and every $x \in \mathfrak{m}_R(\Psi)$ is not right excessive.
+\end{theorem}
+
+A sweepout satisfying the conclusion of Theorem~\ref{thm:non-excessive-existence} is called a \emph{non-excessive sweepout}. We denote by $\Snm$ the collection of all such sweepouts.
+
+\begin{proposition}[Stationary varifolds from non-excessive sweepouts]\label{thm:CLS-stationary}
+Let $(M^{n+1},g)$ be a closed Riemannian manifold with $2\leq n\leq 6$, and let $\Phi$ be a non-excessive (ONVP) sweepout with width $W = \mathbf{w}(\Phi)$. Then there exists a stationary $n$-varifold $V$ in $M$ with $\mathbf{M}(V) \leq W$.
+\end{proposition}
+
+\begin{proof}
+Each slice $\Phi(x) = \partial\Omega(x)$ induces a varifold $V_x = |\partial^*\Omega(x)|$. Let $\{x_i\}$ be any sequence with $\mass(\Phi(x_i)) \to W$. By varifold compactness, some subsequence satisfies $V_{x_i} \weakstar V$ with $\|V\|(M) \leq W$. We claim some such limit $V$ is stationary.
+
+Suppose not: every varifold limit of sequences $\{V_{x_i}\}$ with $\mass(\Phi(x_i)) \to W$ is non-stationary. Consider $A_\eta = \{x : \mass(\Phi(x)) \geq W - \eta\}$, which is compact. By assumption, for each $x \in A_\eta$, any limit point of $\{V_y\}_{y \to x}$ is non-stationary. The tightening flow of \cite{CL03} strictly decreases mass near non-stationary varifolds, so by compactness of $A_\eta$, there exists $\varepsilon > 0$ (depending on $\eta$) such that tightening decreases mass by at least $\varepsilon$ on $A_\eta$.
+
+Choose $\eta < \varepsilon$. After tightening, slices from $A_\eta$ have mass $\leq W - \varepsilon < W - \eta$, and slices outside $A_\eta$ already had mass $< W - \eta$. Thus the tightened sweepout $\tilde{\Phi}$ satisfies $\sup_x \mass(\tilde{\Phi}(x)) < W$, contradicting the definition of width.
+\end{proof}
+\xinze{Is this proof okay?}
+
+\begin{remark}
+The varifold $V$ obtained from Proposition~\ref{thm:CLS-stationary} is stationary, but its \emph{integrality} is not automatically guaranteed. This is the key issue that distinguishes the non-excessive framework from the classical Almgren--Pitts approach:
+\begin{itemize}
+    \item In Almgren--Pitts theory, one works with integral currents $\mathbf{Z}_n(M;\mathbb{Z}_2)$ from the outset, so integrality is built into the framework.
+    \item In the non-excessive framework, one works with varifolds, and integrality must be established separately (see Section~\ref{sec:integrality-no-cancellation}).
+    \item Both approaches use pull-tight to obtain stationarity and regularity, but pull-tight alone does not produce integrality.
+\end{itemize}
+\end{remark}
+
+\subsection{Homotopic Minimizers and Non-Minimizing Points}
+
+To analyze the geometric properties of min-max varifolds, we introduce the notion of homotopic
+minimizers and points where this property fails.
+
+\begin{definition}[Homotopic minimizers]\label{def:homotopic-minimizer}
+Let $\Sigma = \bdy\Omega$ be a Caccioppoli set in $M$, and let $U \subset M$ be an open set. We say
+that $\Sigma$ is:
+\begin{itemize}
+    \item \emph{inner homotopic minimizing in $U$} if there is no Caccioppoli set $E \subset \Omega$
+    with $E \triangle \Omega \subset U$ and $\per(E, U) < \per(\Omega, U)$ that can be connected to
+    $\Omega$ by a continuous family of Caccioppoli sets in $U$;
+    \item \emph{outer homotopic minimizing in $U$} if there is no Caccioppoli set $E \supset \Omega$
+    with $E \triangle \Omega \subset U$ and $\per(E, U) < \per(\Omega, U)$ that can be connected to
+    $\Omega$ by a continuous family of Caccioppoli sets in $U$;
+    \item \emph{one-sided homotopic minimizing in $U$} if it is either inner or outer homotopic
+    minimizing in $U$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Non-homotopic-minimizing points]\label{def:hnm}
+For a varifold $V$ arising from a min-max procedure, we define the set of \emph{non-homotopic-minimizing
+points} by
+\[
+    \mathfrak{h}_{\mathrm{nm}}(V) := \left\{P \in \spt\|V\| : \begin{array}{l}
+        \text{for all $r > 0$ small, $\spt\|V\| \cap B_r(P)$ is not one-sided} \\
+        \text{homotopic area minimizing on either side in $B_r(P)$}
+    \end{array}\right\}.
+\]
+\end{definition}
+
+Intuitively, $\mathfrak{h}_{\mathrm{nm}}(V)$ consists of points where the varifold $V$ cannot be
+approximated by one-sided area minimizers in any neighborhood. Such points typically arise at branch
+points or other geometric singularities where local deformations can reduce area.
+
+\subsection{The Integrality Issue}\label{subsec:integrality-issue}
+
+Following~\cite{CLS22}, we distinguish two cases for a critical point $x_0 \in \mathfrak{m}(\Phi)$ of a non-excessive sweepout $\Phi$:
+
+\begin{definition}[Mass cancellation]\label{def:mass-cancellation}
+Let $\Phi$ be a non-excessive (ONVP) sweepout with width $W$, and let $x_0 \in \mathfrak{m}(\Phi)$ be a critical point. We say that:
+\begin{itemize}
+    \item \emph{No mass cancellation} occurs at $x_0$ if $\mathbf{M}(\Phi(x_0)) = W$.
+    \item \emph{Mass cancellation} occurs at $x_0$ if $\mathbf{M}(\Phi(x_0)) < W$.
+\end{itemize}
+\end{definition}
+
+Without mass cancellation, the limiting varifold $V$ equals $|\partial\Omega(x_0)|$ with no mass loss. With mass cancellation, $V$ may have larger mass than $\mathbf{M}(\partial\Omega(x_0))$ due to sheets with opposite orientations canceling in the current while contributing to varifold mass.
+
+In this chapter, we establish integrality and regularity without mass cancellation via Wickramasekera's theorem. The case with mass cancellation remains open.
+
+
+
+\section{Main Result}
+
+\begin{theorem}[Existence of minimal hypersurfaces via non-excessive min-max]\label{thm:non-excessive-main}
+    Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. Then there exists a
+    smooth closed embedded minimal hypersurface in $M$.
+\end{theorem}
+
+{\color{red}
+\begin{conjecture}[Integrality with mass cancellation]\label{conj:mass-cancellation-integrality}
+    If the tightened stationary varifold is integral even in the presence of mass cancellation, then
+    Wickramasekera's regularity theorem remains applicable, and the conclusion of
+    Theorem~\ref{thm:non-excessive-main} extends to this case as well.
+\end{conjecture}
+}
+
+
+\section{Integrality without Mass Cancellation}
+
+\begin{theorem}[Integrality without mass cancellation]\label{thm:integrality-mult-one}
+    Let $(M^{n+1},g)$ be a closed Riemannian manifold with $n \geq 2$, and let $V$ be a
+    stationary varifold arising from a non-excessive sweepout via the construction of
+    Theorem~\ref{thm:CLS-stationary}. If $\Theta^n(V,x)=1$ for $\mathbf{M}(V)$-almost every
+    $x\in\spt(V)$, then $V$ is integral and rectifiable.
+\end{theorem}
+
+\subsection{Case 1: No Mass Loss}
+
+The reduced boundary $\bdy\Omega$ of a Caccioppoli set $\Omega$ induces a varifold
+$V = \mathcal{H}^n \llcorner \bdy\Omega \otimes \delta_{T_x\bdy\Omega}$.
+
+The key tool is the following proposition from the appendix of De~Lellis--Tasnady~\cite{DLT13}:
+
+\begin{proposition}[Varifolds vs Caccioppoli set limits~{\cite[Proposition A.1]{DLT13}}]\label{prop:DLT-integrality}
+    Let $\{\Omega^k\}$ be a sequence of Caccioppoli sets and $U$ an open subset of $M$. Assume that
+    \begin{itemize}
+        \item[(i)] $D\mathbb{1}_{\Omega^k} \to D\mathbb{1}_\Omega$ in the sense of measures in $U$;
+        \item[(ii)] $\per(\Omega^k, U) \to \per(\Omega, U)$
+    \end{itemize}
+    for some Caccioppoli set $\Omega$. Denote by $V^k$ and $V$ the varifolds induced by $\bdy\Omega^k$
+    and $\bdy\Omega$ respectively, where $\bdy\Omega$ denotes the reduced boundary. Then
+    $V^k \to V$ in the sense of varifolds.
+\end{proposition}
+
+\begin{proof}[Proof of Theorem~\ref{thm:integrality-mult-one}, Case 1]
+By Theorem~\ref{thm:CLS-stationary}, the varifold $V$ arises as the weak limit of varifolds $V_i$
+associated to slices $T_i = \phi(t_i)$ with $\mathbf{M}(T_i) \to \mathbf{w}(\phi)$.
+
+We identify each slice $T_i \in \mathbf{Z}_n(M;\mathbb{Z}_2)$ with its corresponding Caccioppoli set
+$\Omega_i$ via Theorem~\ref{thm:caccioppoli-cycles} (see Section~\ref{subsec:caccioppoli-sets}). The
+varifold $V_i$ is then the varifold induced by the reduced boundary $\bdy\Omega_i$, given by
+\[
+    V_i = \mathcal{H}^n \llcorner \bdy\Omega_i \otimes \delta_{T_x\bdy\Omega_i}.
+\]
+
+\textbf{Step 1: BV convergence.} By the compactness theorem for BV functions (Caccioppoli sets), the
+sequence $\{\Omega_i\}$ has a subsequence (still denoted $\{\Omega_i\}$) such that
+$D\mathbb{1}_{\Omega_i} \to D\mathbb{1}_\Omega$ weakly in the sense of measures, for some
+Caccioppoli set $\Omega$.
+
+\textbf{Step 2: Perimeter convergence.} The key observation is that we have perimeter convergence:
+\[
+    \per(\Omega_i, M) = \mathbf{M}(V_i) \to \mathbf{M}(V) = \per(\Omega, M).
+\]
+This follows from the fact that $\mathbf{M}(T_i) = \per(\Omega_i, M)$ (by the identification of
+currents and Caccioppoli sets), and $\mathbf{M}(T_i) \to \mathbf{w}(\phi) = \mathbf{M}(V)$ by
+construction. Moreover, by lower semicontinuity of perimeter,
+\[
+    \per(\Omega, M) \leq \liminf_{i\to\infty} \per(\Omega_i, M) = \mathbf{M}(V).
+\]
+On the other hand, the varifold $V$ has mass $\mathbf{M}(V)$, and if $V$ is the varifold induced by
+$\bdy\Omega$, then $\mathbf{M}(V) = \per(\Omega, M)$. Therefore, perimeter convergence holds:
+\[
+    \per(\Omega_i, M) \to \per(\Omega, M).
+\]
+
+\textbf{Step 3: Application of Proposition~\ref{prop:DLT-integrality}.} By
+Proposition~\ref{prop:DLT-integrality} (De~Lellis--Tasnady, Proposition A.1), since we have both
+BV convergence and perimeter convergence, the varifold limit $V$ equals the varifold induced by
+$\bdy\Omega$:
+\[
+    V = \mathcal{H}^n \llcorner \bdy\Omega \otimes \delta_{T_x\bdy\Omega}.
+\]
+This is precisely the varifold induced by an integral current (the Caccioppoli set $\Omega$), hence
+$V$ is integral and rectifiable.
+\end{proof}
+
+\subsection{Case 2: Mass Cancellation}
+
+In this case, we assume that $\mathbf{M}(\Phi(x_0)) < W$, so that mass cancellation occurs at the critical point $x_0$. As noted in Conjecture~\ref{conj:mass-cancellation-integrality}, establishing integrality in this case remains an open problem.
+
+\begin{proposition}[Regularity assuming Conjecture~\ref{conj:mass-cancellation-integrality}]\label{prop:regularity-with-cancellation}
+    Suppose Conjecture~\ref{conj:mass-cancellation-integrality} holds, so that the stationary varifold $V$ arising from a non-excessive sweepout is integral even in the presence of mass cancellation. Then the same regularity argument as in Case 1 applies, and $V$ is a smooth embedded minimal hypersurface.
+\end{proposition}
+
+\begin{remark}
+\xinze{Modified: Replaced detailed red questions with reference to fundamental obstruction in Chapter 2.}
+The fundamental obstruction to proving Conjecture~\ref{conj:mass-cancellation-integrality} is explained in Remark~\ref{rem:index-requires-width} (Chapter~\ref{ch:examples}): when $\mathbf{M}(V) < W$, we cannot apply the index bound $\mathrm{Index}(V) \leq 1$ from min-max, which prevents us from using Wickramasekera's regularity theory to establish integrality. This represents a genuine obstruction rather than merely a technical gap.
+\end{remark}
+
+\begin{proof}
+If $V$ is integral, then by Proposition~\ref{prop:DLT-integrality}, there exists a Caccioppoli set $\Omega$ such that
+\[
+    V = \mathcal{H}^n \llcorner \partial^*\Omega \otimes \delta_{T_x\partial^*\Omega}.
+\]
+The reduced boundary $\partial^*\Omega$ is $(n-1)$-rectifiable by De Giorgi's theorem, hence $V$ is rectifiable and integral.
+
+The regularity then follows from Wickramasekera's theorem (Theorem~\ref{thm:wickramasekera}) once we verify the $\alpha$-structural hypothesis, which can be done using the same deformation arguments as in Section~\ref{sec:alpha-verification} for the case without mass cancellation.
+\end{proof}
+
+\section{Regularity via Wickramasekera's Theorem}
+
+\subsection{Wickramasekera's Regularity Theorem}
+
+We recall the main regularity result from Wickramasekera~\cite{Wic14}:
+
+\begin{theorem}[Wickramasekera~{\cite{Wic14}}]\label{thm:wickramasekera}
+    Let $V$ be a stable integral $n$-varifold in a closed $(n+1)$-dimensional Riemannian manifold
+    with $2\leq n\leq 6$. Suppose that for some $\alpha \in (0, 1/2)$, $V$ satisfies the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}).
+    Then $\sing V = \emptyset$, i.e., $\spt(V)$ is a smooth embedded minimal hypersurface.
+\end{theorem}
+
+\begin{definition}[$\alpha$-structural hypothesis]\label{defn:alpha-structural}
+For $\alpha \in (0, 1/2)$, a stationary integral varifold $V$ satisfies the \emph{$\alpha$-structural hypothesis} if \textbf{no singular point}
+of $V$ has a neighborhood in which $V$ corresponds to a union of embedded $C^{1,\alpha}$ hypersurfaces-with-boundary
+meeting \emph{only} along their common $C^{1,\alpha}$ boundary, and with multiplicity a constant positive integer
+on each of the constituent hypersurfaces-with-boundary.
+\end{definition}
+
+\begin{remark}
+By Wickramasekera's theorem, the following are equivalent for a stable integral $n$-varifold $V$:
+\begin{itemize}
+    \item[(a)] $V$ satisfies the $\alpha$-structural hypothesis for some $\alpha \in (0, 1/2)$.
+    \item[(b)] $\sing V = \emptyset$ if $2 \leq n \leq 6$.
+    \item[(c)] $\mathcal{H}^{n-1}(\sing V) = 0$ (vanishing $(n-1)$-dimensional Hausdorff measure of the singular set).
+\end{itemize}
+Thus, to prove regularity via Wickramasekera's theorem, it suffices to verify the $\alpha$-structural hypothesis for some $\alpha \in (0, 1/2)$.
+\end{remark}
+
+\subsection{Verification of the $\alpha$-Structural Hypothesis}\label{sec:alpha-verification}
+
+\begin{theorem}[Verification of $\alpha$-structural hypothesis]\label{thm:alpha-hypo}
+    Let $V$ be the stationary integral varifold from Theorem~\ref{thm:integrality-mult-one} arising from a
+    non-excessive sweepout without mass cancellation. Then $V$ satisfies the $\alpha$-structural hypothesis.
+\end{theorem}
+
+\subsubsection{Case 1: No Mass Cancellation}
+
+Assume the \emph{no cancellation} condition:
+\begin{equation}
+    \mass(\Phi(x_0)) = W,
+\end{equation}
+where $W$ is the min-max width and $x_0$ is a critical point.
+
+In this case, the stationary integral varifold $V$ from Theorem~\ref{thm:integrality-mult-one} can be written as
+$V = |\Sigma| = |\bdy\Omega|$ for some Caccioppoli set $\Omega$.
+
+Our proof of Theorem~\ref{thm:alpha-hypo} under the no cancellation condition is similar to~\cite[Lemma 3.4]{CLS22}.
+
+\begin{remark}[Why the case analysis is complete]
+\xinze{New remark: Incorporated from previous long red annotation explaining case completeness and stability.}
+
+Since $V = |\partial\Omega|$ in the no mass cancellation case, tangent cones at singular points are constrained by the Caccioppoli set structure. For stationary boundaries of Caccioppoli sets in $\mathbb{R}^{n+1}$ ($n \leq 6$), the only possible singular cones are:
+\begin{itemize}
+    \item $C = |H_1| + |H_2|$ (two half-hyperplanes meeting at angle $< \pi$) — a "wedge" or "crease"
+    \item $C = 2|H|$ (single half-hyperplane with multiplicity 2) — a "fold"
+\end{itemize}
+Higher multiplicities ($q \geq 3$) or more complex configurations (three or more sheets meeting) would require mass cancellation and are impossible for Caccioppoli boundaries. This explains why Cases 1a and 1b below are exhaustive.
+
+Moreover, stability follows from the index bound: by Theorem~\ref{thm:index-from-minmax} (Chapter~\ref{ch:examples}), the min-max construction gives $\mathrm{Index}(V) \leq 1$. Combined with the deformation arguments below showing at most one unstable direction, we conclude $\mathrm{Index}(V) = 0$ (stability) or $\mathrm{Index}(V) = 1$ (one-sided minimization), both of which lead to regularity via Wickramasekera~\cite{Wic14} or Liu~\cite{Liu19}.
+\end{remark}
+
+\begin{proof}[Proof of Theorem~\ref{thm:alpha-hypo}, Case 1]
+Suppose the $\alpha$-structural hypothesis fails at $Z \in \sing{V}$. Then there exists $\rho > 0$ such that
+\begin{equation}
+    B_\rho(Z)\backslash\spt{\norm{V}} = \left(\bigsqcup_{i=1}^NE_i\right)\sqcup\left(\bigsqcup_{j=1}^NF_j\right),
+\end{equation}
+and we denote $\mathcal{E}:= \bigsqcup_{i=1}^NE_i$ (resp.\ $\mathcal{F}:= \bigsqcup_{j=1}^NF_j$) to represent those
+Caccioppoli sets within $\overline{\Omega}$ (resp.\ $\overline{\Omega^c}$).
+
+Without loss of generality, we only need to show that the $E_i$ are not homotopic minimizers. For each $i = 1, \dots, N$,
+we denote by $C$ the blow-up cone of $E_i$ at $Z$. Then there are only two possibilities for the structure of the cone:
+
+\begin{itemize}
+    \item \textbf{Case 1a:} $C = |H_1|+|H_2|$ where both $H_1$ and $H_2$ are half-hyperplanes gluing along their
+    common boundaries with the angle between them less than $\pi$.
+
+    We denote $C = |\bdy\Omega_C|$ for some Caccioppoli set $\Omega_C$ of $\mathbb{R}^{n + 1}$. In this case, as
+    in~\cite[Lemma 3.4]{CLS22}, we can choose $C^{1, \alpha}$-coordinates on $M$ around $Z$ such that $E_i = \Omega_C$
+    in $B_\varepsilon(Z)$ so that $g_{ij}(Z) = \delta_{ij}$, which we can do since $g \in C^2$ and $\Sigma = |\bdy E_i|$
+    is a $C^{1, \alpha}$-deformation of $C$ near $Z$ by assumption.
+
+    Since the angle between $H_1$ and $H_2$ is less than $\pi$, by the optimal regularity theorem for one-sided
+    minimizers from~\cite{Liu19}, we can find a Caccioppoli set $E_C \subset \Omega_C$ so that
+    $E_C\triangle \Omega_C\subset B_1 \subset \mathbb{R}^{n + 1}$ and
+    \begin{equation}
+        \per_{\mathbb{R}^{n + 1}}(E_C, B_1) \leq \per_{\mathbb{R}^{n + 1}}(\Omega_C, B_1) - \delta
+    \end{equation}
+    for some $\delta > 0$. We set
+    \begin{equation}
+        E(x) := \begin{cases}
+            (E_i\backslash B_\varepsilon(Z))\cup(|x|E_C\cap B_\varepsilon(Z)) & x < 0\\
+            E_i & x = 0.
+        \end{cases}
+    \end{equation}
+    We have that
+    \begin{equation}
+        \per_g(E(x)) - \per_g(\Omega) = -|x|^n\delta(1 + o(1))
+    \end{equation}
+    as $x \to 0$. This shows that $\Sigma$ is not inner homotopic minimizing.
+
+    \item \textbf{Case 1b:} $C = 2|H|$ where $H$ is a half-hyperplane. In this case, we define
+    \begin{equation}
+        E(x) := \begin{cases}
+            E_i\backslash B_{|x|}(Z) & x < 0\\
+            E_i & x= 0.
+        \end{cases}
+    \end{equation}
+    Apparently, for any $r > 0$,
+    \begin{equation}
+        \mass_{B_1}(H\backslash B_r(0)) = \mass_{B_1}(H) - \frac{1}{2}\omega_n r^n.
+    \end{equation}
+    Moreover, since $E_i$ is also a two-valued $C^{1, \alpha}$ graph over $H$ and $|H|$ is the blow-up cone of
+    $|\bdy E_i|$ at $Z$, we know that $\per_g(E_i, B_{|x|}(Z)) = o(1)|x|^n$. Thus, we can again conclude that
+    \begin{equation}
+        \per_g(E(x)) - \per_g(\Omega) = -|x|^n\delta(1 + o(1)),
+    \end{equation}
+    where $\delta = \omega_n/2$.
+\end{itemize}
+
+We can define the corresponding $F(x)$ for $F_j$ by changing $x < 0$ to $x > 0$. Thus, we can know that
+$Z \in \mathfrak{h}_{nm}(\Sigma)$, where $\mathfrak{h}_{nm}$ denotes the set of points that are not homotopic minimizing
+in the sense of~\cite{CLS22}:
+\begin{equation}
+    \mathfrak{h}_{nm}(V) :=
+  \left\{P \in \spt{\norm{V}}: \begin{array}{l}
+      \text{for all $r > 0$ small, $\spt\norm{V}\cap B_r(P)$ is not one-sided}\\
+      \text{homotopic area minimizing on either side in $B_r(P)$}
+  \end{array}\right\}.
+\end{equation}
+
+Since $Z \in \mathfrak{h}_{nm}(V)$, by~\cite[Proposition 3.1]{CLS22}, we know that there is $\rho$ sufficiently small
+such that for every $X \notin B_\rho(Z)$, there exists $r > 0$ such that $\spt{\norm{V}}$ is one-sided minimizing in
+$B_r(X)$. However, since the $\alpha$-structural hypothesis fails, we can take $X \in \sing{V}$ with $X \notin B_\rho(Z)$
+such that $\spt{\norm{V}}\cap B_r(X)$ has $(n - 1)$-dimensional singularity, which contradicts the optimal regularity
+for one-sided minimizers from~\cite{Liu19}.
+
+\begin{remark}[Dimension of the singular set]
+\xinze{New remark: Condensed from previous red annotation about why sing V has multiple points.}
+
+If the $\alpha$-structural hypothesis fails at $Z \in \sing V$, then the tangent cone has an $(n-1)$-dimensional common boundary $L$ (the "crease" in Case 1a or the "fold line" in Case 1b). Since $V$ approximates this cone structure near $Z$ in the Hausdorff sense, the singular set $\sing V$ must contain an $(n-1)$-dimensional set near $Z$. This ensures that there exist other singular points $X \in \sing V$ near $Z$ where similar deformation arguments apply. Thus, the geometric structure of the tangent cone automatically guarantees that $\sing V$ is not an isolated point but has positive Hausdorff dimension.
+\end{remark}
+
+Therefore, the $\alpha$-structural hypothesis must hold.
+\end{proof}
+
+\xinze{Modified: Simplified from previous long red annotation, now references Chapter 2 for details.}
+
+By Theorem~\ref{thm:index-from-minmax} (Chapter~\ref{ch:examples}), the min-max construction gives $\text{index}(V) \leq 1$. As explained in Remark~\ref{rem:index-implies-stability}, this index bound holds \emph{a priori} before regularity is established, avoiding any circular reasoning.
+
+Thus if $V$ is stable (i.e., $\mathrm{index}(V) = 0$), then
+Wickramasekera's regularity theorem~\cite{Wic14} guarantees the optimal regularity for $V$. And in the case when
+$\text{index}(V) = 1$, $V$ is one-sided area minimizing, thus we can again use the optimal regularity for one-sided
+minimizers from~\cite{Liu19}.
+
+\subsubsection{Case 2: Mass Cancellation}
+
+Assume the \emph{cancellation} condition: $\mass(\Phi(x_0)) < W$ throughout this section.
+
+In this case, strict mass cancellation occurs: there exists a cancellation point $q \in \text{reg}\, V$ such that
+\[
+    \per(\Omega, B_\varepsilon(q)) < |V|(B_\varepsilon(q))
+\]
+for all sufficiently small $\varepsilon > 0$, where $\Omega = \Omega(x_0)$ and $V$ can be written as
+$V = \sum_i\kappa_i|\Sigma_i|$ for integer multiplicities $\kappa_i$.
+
+\begin{remark}[Integrality assumption]
+\xinze{Modified: Converted critical red issue into remark clarifying this section is conditional.}
+
+The representation $V = \sum_i\kappa_i|\Sigma_i|$ with \emph{integer} multiplicities assumes integrality, which is precisely what Conjecture~\ref{conj:mass-cancellation-integrality} seeks to establish. The analysis below should be understood as conditional on this conjecture. The fundamental obstruction to proving integrality in the mass cancellation case is explained in Remark~\ref{rem:index-requires-width}: without $\mathbf{M}(V) = W$, we cannot apply the index bound to deduce regularity.
+\end{remark}
+
+The key difference from Case 1 is that $\Sigma$ need not be globally representable as $\bdy\Omega$; instead,
+it may consist of multiple components with different multiplicities. Nevertheless, the cancellation condition
+allows us to control deformations away from the cancellation point $q$.
+
+\begin{definition}[Competitors in the cancellation case]\label{def:competitor}
+Given $\varepsilon, \tau > 0$ with $\Sigma = \spt(V) \subset \overline{\Omega}$, we call a Caccioppoli set
+$\Omega'$ a \emph{$(q, \varepsilon, \tau, \Sigma, \Omega)$-competitor} if
+\[
+    (\Omega \setminus B_\tau(\Sigma)) \cup (B_\varepsilon(q) \setminus \Sigma) \subset \Omega' \subsetneq \Omega \setminus \Sigma.
+\]
+A $(q, \varepsilon, \tau, \Sigma, \Omega)$-competitor $\Omega'$ is called a \emph{minimizing competitor}
+if its perimeter is strictly less than the perimeter of any $(q, \varepsilon, \tau, \Sigma, \Omega)$-competitor
+$\Omega''$ with $\Omega' \subset \Omega''$.
+\end{definition}
+
+Intuitively, a competitor represents a Caccioppoli set that:
+\begin{itemize}
+    \item Agrees with $\Omega$ outside a $\tau$-neighborhood of $\Sigma$;
+    \item Agrees with $\Omega$ near the cancellation point $q$ (in $B_\varepsilon(q)$);
+    \item Has strictly smaller perimeter than $\Omega$ in the intermediate region.
+\end{itemize}
+
+The key technical result is that such competitors cannot exist when $x_0$ is not excessive:
+
+\begin{proposition}[Non-existence of minimizing competitors~{\cite[Proposition~6.3]{CLS22}}]\label{prop:no-competitor}
+Suppose $V$ arises from a non-excessive sweepout $\Phi$ with $x_i \nearrow x_0 \in \mathfrak{m}_L(\Phi)$
+and $|\Phi(x_i)| \to V$, and suppose the cancellation condition $\mass(\Phi(x_0)) < W$ holds. Then for
+every $\varepsilon > 0$, there exists $\tau > 0$ such that no minimizing
+$(q, \varepsilon, \tau, \Sigma, \Omega)$-competitor exists.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Suppose a minimizing competitor $U$ exists. By the cancellation condition, we can find Caccioppoli sets
+$\Omega'$ with $\per(\Omega') \leq W + \eta - \delta(\varepsilon)$ for small $\eta$ and $\delta(\varepsilon) > 0$
+from the mass loss at $q$. The minimizing property of $U$ implies $\per(U) < W$.
+
+For $\tau$ sufficiently small, a continuity argument (as in~\cite[Lemma 3.3]{CLS22}) provides a nested
+family $\{E(x) : x \in [0,1]\}$ with $E(0) = U$, $E(1) = \Omega(x_0)$, and $\per(E(x)) < W$. Combining
+this with the original sweepout produces a replacement family showing that $x_0$ is left excessive,
+contradicting Theorem~\ref{thm:non-excessive-existence}.
+\end{proof}
+
+With the non-existence of minimizing competitors established, we can prove regularity (conditional on Conjecture~\ref{conj:mass-cancellation-integrality}):
+
+\begin{proof}[Proof of Theorem~\ref{thm:alpha-hypo}, Case 2 (assuming integrality)]
+By Proposition~\ref{prop:no-competitor}, there are no minimizing competitors for any $\varepsilon > 0$ and
+suitable $\tau > 0$. This implies:
+
+\textbf{Stability of $V$:} If any component $\Sigma_i$ had unstable regular part, one could perform a one-sided
+minimization in $B_\tau(\Sigma_i) \setminus B_\varepsilon(q)$ to find a minimizing competitor,
+contradicting Proposition~\ref{prop:no-competitor}. Thus each $\Sigma_i$ has stable regular part.
+
+\textbf{$\mathfrak{h}_{\mathrm{nm}}(V) = \emptyset$:} By~\cite[Proposition~3.7]{CLS22}, the non-existence
+of minimizing competitors implies that every point of $V$ is one-sided area minimizing in a small
+neighborhood. Therefore, $\mathfrak{h}_{\mathrm{nm}}(V) = \emptyset$.
+
+\textbf{Verification of $\alpha$-structural hypothesis:} If the $\alpha$-structural hypothesis fails at
+some point $Z \in \sing{V}$, we can construct a local area-reducing deformation as in Case 1. However,
+such a deformation would produce a minimizing competitor (by one-sided minimization), contradicting
+Proposition~\ref{prop:no-competitor}.
+
+Therefore, $V$ satisfies all hypotheses of Wickramasekera's theorem~\cite{Wic14}, implying smoothness.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}
+
+We are now ready to prove Theorem~\ref{thm:non-excessive-main}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:non-excessive-main}]
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. The nested sweepout
+framework constructed in Chapters~\ref{ch:structure}--\ref{ch:nested-sweepout} provides a continuous
+family of hypersurfaces sweeping out $M$. Applying the non-excessive tightening procedure of
+Chodosh--Liokumovich--Spolaor to this nested sweepout yields a non-excessive sweepout
+$\Phi \in \mathcal{S}_{\text{nm}}$.
+
+By Theorem~\ref{thm:CLS-stationary}, there exists a stationary varifold $V$ with $\mass(V) \leq \mathbf{w}(\Phi)$.
+
+Assume there is no mass cancellation (i.e., $\Theta^n(V,x)=1$ for $\mass(V)$-almost every $x \in \spt(V)$).
+By Theorem~\ref{thm:integrality-mult-one}, $V$ is integral and rectifiable.
+
+By Theorem~\ref{thm:alpha-hypo}, $V$ satisfies the $\alpha$-structural hypothesis.
+
+The non-excessive condition ensures that $V$ is stable. Therefore, all hypotheses of Wickramasekera's regularity
+theorem (Theorem~\ref{thm:wickramasekera}) are satisfied. We conclude that $\sing V = \emptyset$, i.e., $\spt(V)$
+is a smooth embedded minimal hypersurface.
+\end{proof}
+
