@@ -14,9 +14,9 @@ bound on the area that must remain inside $U$.
 \begin{proposition}\label{prop:non-escape}
     For every good set $U$, there exists a positive constant $\eps(U)$ which depends only on $U$ such that the following holds: For every good sweepout $\br{\Gamma_t}$ of $U$ with associated family of open sets $\br{\Omega_t}$, there exists $t' \in [0, 1]$ such that
     \begin{equation*}
-        \haus^n(\Gamma_{t'}\cap M) \geq W_g(U),
+        \mathcal{H}^n(\Gamma_{t'}) \geq W_g(U),
     \end{equation*}
-    and such that $\haus^n(\Gamma_{t'}\cap cl(U)) \geq \eps(U)$.
+    and such that $\mathcal{H}^n(\Gamma_{t'}\cap cl(U)) \geq \eps(U)$.
 \end{proposition}
 
 The proof is by contradiction. We assume that Proposition~\ref{prop:non-escape} does not hold, i.e. we can construct a good sweepout with volume of hypersurfaces strictly less than $W_g(U)$. The main tool in the proof is the structure of the nested sweepout from Proposition~\ref{prop:nested-sweepout}.
@@ -29,32 +29,32 @@ Let $U$ be a good set.
 \begin{lemma}\label{lem:nested-sweepout-small-intersection}
     There exist $\eps(U) > 0$, $\eps_0(U) > 0$ and $\eps_1(U) > 0$ such that for any open sets $\Omega'$ the following holds:
     \begin{enumerate}
-        \item $\max\br{\eps, \eps_1} < \haus^n(\partial_{rel}U)/10$;
-        \item If $\eps_0 < \haus^{n + 1}(\Omega'\cap U) < \haus^{n + 1}(U) - \eps_0$, then $\haus^n(\partial_{rel}\Omega'\cap U) > 2\eps$;
+        \item $\max\br{\eps, \eps_1} < \mathbf{M}(\partial_IU)/10$;
+        \item If $\eps_0 < \mathcal{H}^{n+1}(\Omega'\cap U) < \mathcal{H}^{n+1}(U) - \eps_0$, then $\mathbf{M}(\partial_I\Omega'\cap U) > 2\eps$;
         \item 
         \begin{enumerate}
-            \item[(A)] If $\haus^{n + 1}(\Omega'\cap U) < 2\eps_0$, then there exists a family of open sets $\br{\Xi_t}$ with 
+            \item[(A)] If $\mathcal{H}^{n+1}(\Omega'\cap U) < 2\eps_0$, then there exists a family of open sets $\br{\Xi_t}$ with 
             \begin{equation*}
                 \begin{split}
                     &\Xi_0 = \Omega';\\
                     &\Xi_t\backslash N_{\eps_1}(U) = \Omega'\backslash N_{\eps_1}(U);\\
                     &\Xi_1\cap U = \varnothing\\
-                    &\haus^n(\partial_{rel}\Xi_t) < \haus^n(\partial_{rel}\Omega') + \haus^n(\partial_{rel}U) + \eps_1.
+                    &\mathbf{M}(\partial_I\Xi_t) < \mathbf{M}(\partial_I\Omega') + \mathbf{M}(\partial_IU) + \eps_1.
                 \end{split}
             \end{equation*}
-            \item[(B)] If $\haus^{n + 1}(\Omega'\cap U) > \haus^{n + 1}(U) - 2\eps_0$, then there exists a family of open sets $\br{\Xi_t}$ with
+            \item[(B)] If $\mathcal{H}^{n+1}(\Omega'\cap U) > \mathcal{H}^{n+1}(U) - 2\eps_0$, then there exists a family of open sets $\br{\Xi_t}$ with
             \begin{equation*}
                 \begin{split}
                     &\Xi_0 = \Omega';\\
                     &\Xi_t\backslash N_{\eps_1}(U) = \Omega'\backslash N_{\eps_1}(U);\\
                     &\Xi_1\cap U = U\\
-                    &\haus^n(\partial_{rel}\Xi_t) < \haus^n(\partial_{rel}\Omega') + \haus^n(\partial_{rel}U) + \eps_1.
+                    &\mathbf{M}(\partial_I\Xi_t) < \mathbf{M}(\partial_I\Omega') + \mathbf{M}(\partial_IU) + \eps_1.
                 \end{split}
             \end{equation*}
         \end{enumerate}
     \end{enumerate}
     \begin{proof}
-        Pick some $\eps_1 \in (0, \haus^{n}(\partial_{rel}U)/10)$. 
+        Pick some $\eps_1 \in (0, \mathcal{H}^{n}(\partial_IU)/10)$. 
         
         We will show that for all sufficiently small $\eps_0$ (with the choice of $\eps_0$ depending on $\eps_1$) statement (3) holds;  
 
@@ -68,8 +68,8 @@ Let $U$ be a good set.
         \begin{equation}\label{eq:value-of-eps0}
             \eps_0 := \min\br{\frac{\eps_1 r_0}{20 N}, \brac{\frac{\eps_1}{2^{n + 2}C(n)N}}^{\frac{n + 1}{n}}},
         \end{equation}
-        where $C(n)$ is the constant from Lemma~\ref{lem:morse-separate}. Using the relative coarea formula (Theorem~\ref{thm:coarea-formula}), we may choose a covering $\br{B_i'}$ of $U$ by $N$ balls of radius $r_i \in (r_0/2, r_0)$, so that         \begin{equation}\label{eq:area-of-Bi}
-            \haus^n((\partial B_i')\cap(\Omega'\cap U)) \leq \frac{4\eps_0}{r_0} \leq \frac{\eps_1}{5N}.
+        where $C(n)$ is the constant from Lemma~\ref{lem:morse-separate}. Using the relative coarea formula (Corollary~\ref{cor:coarea-filling}), we may choose a covering $\br{B_i'}$ of $U$ by $N$ balls of radius $r_i \in (r_0/2, r_0)$, so that         \begin{equation}\label{eq:area-of-Bi}
+            \mathcal{H}^n((\partial B_i')\cap(\Omega'\cap U)) \leq \frac{4\eps_0}{r_0} \leq \frac{\eps_1}{5N}.
         \end{equation}
         Note that the second inequality follows from the first term in the definition of $\eps_0$ in~\eqref{eq:value-of-eps0}: since $\eps_0 \leq \frac{\eps_1 r_0}{20N}$, we have $\frac{4\eps_0}{r_0} \leq \frac{4\eps_1 r_0}{20Nr_0} = \frac{\eps_1}{5N}$.
 
@@ -84,17 +84,17 @@ Let $U$ be a good set.
         We can start with pushing $\Omega'$ outside of $B_1'\cap U$ as in Figure~\ref{fig:2675}. By Lemma~\ref{lem:morse-separate}, for any $\eps > 0$ sufficiently small (smaller than $\frac{\eps_1}{20N}$ in fact), we can construct a nested family $\br{{\Xi_t^1}}$ that starts on $\Omega'$ and ends on a smoothing of $\Omega'\backslash(B_1'\cap U)$. We can choose the smoothing so that the set does not intersect $B_1'\cap U$. And in this step, 
         \begin{equation*}
             \begin{split}
-                \haus^n(\partial_{rel}\Xi_t^1) \leq& \haus^n(\partial_{rel}\Omega') + \haus^n(\partial_{rel}(B_1'\cap U\cap \Omega'))\\
-                &+2^nC(n)\haus^{n + 1}(B_1'\cap U\cap \Omega') + \eps\\
-                \leq& \haus^n(\partial_{rel}\Omega') + \haus^n(B_1'\cap \partial_{rel} U) + \haus^n((\partial B_1')\cap (\Omega'\cap U))\\
+                \mathbf{M}(\partial_I\Xi_t^1) \leq& \mathbf{M}(\partial_I\Omega') + \mathbf{M}(\partial_I(B_1'\cap U\cap \Omega'))\\
+                &+2^nC(n)\mathcal{H}^{n+1}(B_1'\cap U\cap \Omega') + \eps\\
+                \leq& \mathbf{M}(\partial_I\Omega') + \mathcal{H}^n(B_1'\cap \partial_I U) + \mathcal{H}^n((\partial B_1')\cap (\Omega'\cap U))\\
                 &+2^nC(n)\eps_0^{\frac{n}{n + 1}} + \eps \quad\text{By \ref{eq:value-of-eps0}}\\
-                \leq& \haus^n(\partial_{rel}\Omega') + \haus^n(B_1'\cap \partial_{rel} U) + \frac{\eps_1}{5N} + \frac{\eps_1}{4N} + \eps\quad\text{by~\ref{eq:area-of-Bi}}\\
-                \leq& \haus^n(\partial_{rel}\Omega') + \haus^n(B_1'\cap \partial_{rel} U) + \frac{\eps_1}{2N}
+                \leq& \mathbf{M}(\partial_I\Omega') + \mathcal{H}^n(B_1'\cap \partial_I U) + \frac{\eps_1}{5N} + \frac{\eps_1}{4N} + \eps\quad\text{by~\ref{eq:area-of-Bi}}\\
+                \leq& \mathbf{M}(\partial_I\Omega') + \mathcal{H}^n(B_1'\cap \partial_I U) + \frac{\eps_1}{2N}
             \end{split}
         \end{equation*}
         We can iterate this procedure for each ball $B_i'$. During the $i$-th step, $1 \leq i \leq N$, we have that 
         \begin{equation*}
-            \haus^n(\partial_{rel}\Xi_t^i) \leq \haus^n(\partial_{rel}\Omega') + \haus^n( \partial_{rel} U) + \frac{i\eps_1}{2N}
+            \mathbf{M}(\partial_I\Xi_t^i) \leq \mathbf{M}(\partial_I\Omega') + \mathcal{H}^n( \partial_I U) + \frac{i\eps_1}{2N}
         \end{equation*}
         That means we can conclude (3)(A) after gluing these together via Proposition~\ref{prop:gluing-two-nested}.
     \end{proof}
@@ -105,15 +105,15 @@ Let $U$ be a good set.
 We are now ready to prove Proposition~\ref{prop:non-escape} by contradiction. Suppose there exists
 a good sweepout $\br{\Gamma_t}_{t \in [0, 1]}$ such that whenever
 \begin{equation*}
-    \haus^n(\Gamma_t\cap M) \geq W_g(U)
+    \mathcal{H}^n(\Gamma_t) \geq W_g(U)
 \end{equation*}
-we have $\haus^n(\Gamma_t\cap U) < \eps(U)$. Our goal is to construct a good sweepout entirely
+we have $\mathcal{H}^n(\Gamma_t\cap U) < \eps(U)$. Our goal is to construct a good sweepout entirely
 inside $U$ whose maximal slice area is \emph{strictly less} than $W_g(U)$, contradicting the
 definition of $W_g(U)$ as the infimum of maximal areas over all good sweepouts of $U$.
 
 \subsection{Continuity Regularization}
 
-Let $f(t) = \haus^n(\Gamma_t\cap U)$. Note that $f(t)$ may not be continuous. However, it is easy
+Let $f(t) = \mathcal{H}^n(\Gamma_t\cap U)$. Note that $f(t)$ may not be continuous. However, it is easy
 to see that one can perturb the family $\br{\Gamma_t}$ so that it is $\delta$-continuous in the
 following sense.
 \begin{definition}
@@ -126,22 +126,22 @@ following sense.
 \begin{lemma}[$\delta$-continuous perturbation]\label{lem:delta-cts-perturbation}
     Let $U$ be a bounded relative open subset to $M$ with smooth relative boundary and $\br{\Gamma_t}$ be a good sweepout of $U$. For every $\delta > 0$ there exists a good sweepout $\br{\Gamma'_t}$ of $U$, such that 
     \begin{itemize}
-        \item $f(t) = \haus^n(\Gamma_t'\cap U)$ is $\delta$-continuous;
-        \item $\sup_{t}\haus^n(\Gamma_t'\cap M) \leq \sup_{t}\haus^n(\Gamma_t\cap M) + \delta$;
-        \item $\sup_{t}\haus^n(\Gamma_t'\cap U) \leq \sup_{t}\haus^n(\Gamma_t\cap U) + \delta$.
+        \item $f(t) = \mathcal{H}^n(\Gamma_t'\cap U)$ is $\delta$-continuous;
+        \item $\sup_{t}\mathcal{H}^n(\Gamma_t') \leq \sup_{t}\mathcal{H}^n(\Gamma_t) + \delta$;
+        \item $\sup_{t}\mathcal{H}^n(\Gamma_t'\cap U) \leq \sup_{t}\mathcal{H}^n(\Gamma_t\cap U) + \delta$.
     \end{itemize}
     \begin{proof}
         Fix $\delta>0$ and set $\varepsilon:=\delta/6$.
         By Lemma~\ref{lem:preliminary-modification} with parameter $\varepsilon$, from $\{\Gamma_t\}$ we obtain a piecewise nested family $\{\widetilde{\Gamma}_t\}$ and a partition $0=t_0<\cdots<t_N=1$ such that
         \begin{equation*}
         \begin{split}
-        \sup_{t}\haus^n(\widetilde{\Gamma}_t\cap M)
-        &\le \sup_{t}\haus^n(\Gamma_t\cap M)+\varepsilon,\\
-        \sup_{t}\haus^n(\widetilde{\Gamma}_t\cap U)
-        &\le \sup_{t}\haus^n(\Gamma_t\cap U)+\varepsilon.
+        \sup_{t}\mathcal{H}^n(\widetilde{\Gamma}_t)
+        &\le \sup_{t}\mathcal{H}^n(\Gamma_t)+\varepsilon,\\
+        \sup_{t}\mathcal{H}^n(\widetilde{\Gamma}_t\cap U)
+        &\le \sup_{t}\mathcal{H}^n(\Gamma_t\cap U)+\varepsilon.
         \end{split}
         \end{equation*}
-        Indeed, the preliminary modification acts only inside finitely many thin annuli and endpoint collars; by (iii)–(iv) of Lemma~\ref{lem:preliminary-modification} the $M$–area increase is $\le\varepsilon$, and restricting to $U$ with the relative coarea formula~\ref{thm:coarea-formula} yields the same $\varepsilon$–bound for the $U$–area.
+        Indeed, the preliminary modification acts only inside finitely many thin annuli and endpoint collars; by (iii)–(iv) of Lemma~\ref{lem:preliminary-modification} the $M$–area increase is $\le\varepsilon$, and restricting to $U$ with the relative coarea formula (Corollary~\ref{cor:coarea-filling}) yields the same $\varepsilon$–bound for the $U$–area.
     
         For each subinterval $[t_i,t_{i+1}]$ given by the preliminary modification, we may represent
         $\br{\widetilde{\Gamma}_t}_{t\in[t_i,t_{i+1}]}$ as level sets of an admissible Morse function.
@@ -162,10 +162,10 @@ following sense.
             \qquad
             D_s:=\Omega^+\setminus\Omega^-.
         \end{equation*}
-        Shrinking $\eta>0$ if necessary and using the relative coarea formula (Theorem~\ref{thm:coarea-formula}) and the small-volume choice from Lemma~\ref{lem:preliminary-modification}, we may assume
+        Shrinking $\eta>0$ if necessary and using the relative coarea formula (Corollary~\ref{cor:coarea-filling}) and the small-volume choice from Lemma~\ref{lem:preliminary-modification}, we may assume
         \begin{equation*}
-          \haus^n(\partial D_s\cap U)+
-          (\haus^{n+1}(D_s))^{\frac{n}{n+1}}
+          \mathcal{H}^n(\partial D_s\cap U)+
+          (\mathcal{H}^{n+1}(D_s))^{\frac{n}{n+1}}
           <\varepsilon_s,
         \end{equation*}
         with $\sum_{s\in\mathcal S}\varepsilon_s\le \varepsilon$. Cover $\overline{D_s}$ by the bilipschitz balls used in the preliminary modification (interior balls mapped to balls in $\mathbb R^{n+1}$; boundary balls, via a fixed collar, to half-balls in $\mathbb R^{n+1}_+$, with vector fields tangent to $\partial M$).
@@ -173,15 +173,15 @@ following sense.
         Applying Lemma~\ref{lem:existence-nested-between-sets} and gluing, we obtain a nested family $\{\Gamma_t'\}_{t\in J_s}$ connecting $\partial\Omega^-$ to $\partial\Omega^+$ such that, for all $t\in J_s$,
         \begin{equation*}
             \begin{split}
-                \haus^n(\Gamma_t'\cap M)
-                \le& \haus^n(\partial\Omega^-\cap M)
-                   + \haus^n(\partial D_s\cap M)\\
-                   &+ C(n)(1+L_{\mathrm{ball}})^n\big(\haus^{n+1}(D_s))^{\frac{n}{n+1}}
+                \mathcal{H}^n(\Gamma_t')
+                \le& \mathbf{M}(\partial_I\Omega^-)
+                   + \mathbf{M}(\partial_I D_s)\\
+                   &+ C(n)(1+L_{\mathrm{ball}})^n\big(\mathcal{H}^{n+1}(D_s))^{\frac{n}{n+1}}
                    + \varepsilon_s,\\
-                \haus^n(\Gamma_t'\cap U)
-                \le& \haus^n(\partial\Omega^-\cap U)
-                   + \haus^n(\partial D_s\cap U)\\
-                   &+ C(n)(1+L_{\mathrm{ball}})^n\big(\haus^{n+1}(D_s))^{\frac{n}{n+1}}
+                \mathcal{H}^n(\Gamma_t'\cap U)
+                \le& \mathcal{H}^n(\partial\Omega^-\cap U)
+                   + \mathcal{H}^n(\partial D_s\cap U)\\
+                   &+ C(n)(1+L_{\mathrm{ball}})^n\big(\mathcal{H}^{n+1}(D_s))^{\frac{n}{n+1}}
                    + \varepsilon_s,
             \end{split}
         \end{equation*}
@@ -202,10 +202,10 @@ following sense.
         Using the sup–bounds from the preliminary modification and the bridge estimates on each $J_s$, we obtain
         \begin{equation*}
             \begin{split}
-                \sup_t \haus^n(\Gamma_t'\cap M)
-                &\le \sup_t \haus^n(\Gamma_t\cap M) + \varepsilon + \sum_{s\in\mathcal S}\varepsilon_s \le \sup_t \haus^n(\Gamma_t\cap M)+2\varepsilon,\\
-                \sup_t \haus^n(\Gamma_t'\cap U)
-                &\le \sup_t \haus^n(\Gamma_t\cap U)+\varepsilon+\sum_{s\in\mathcal{S}}\varepsilon_s \le \sup_t \haus^n(\Gamma_t\cap U)+2\varepsilon.
+                \sup_t \mathcal{H}^n(\Gamma_t')
+                &\le \sup_t \mathcal{H}^n(\Gamma_t) + \varepsilon + \sum_{s\in\mathcal S}\varepsilon_s \le \sup_t \mathcal{H}^n(\Gamma_t)+2\varepsilon,\\
+                \sup_t \mathcal{H}^n(\Gamma_t'\cap U)
+                &\le \sup_t \mathcal{H}^n(\Gamma_t\cap U)+\varepsilon+\sum_{s\in\mathcal{S}}\varepsilon_s \le \sup_t \mathcal{H}^n(\Gamma_t\cap U)+2\varepsilon.
             \end{split}
         \end{equation*}
         (Any endpoint adjustment inside a fixed collar of $\partial U$ preserves the “good” endpoints and adds at most $\varepsilon$ to the above sup–bounds.)
@@ -213,22 +213,22 @@ following sense.
 \end{lemma}
 % --- Start of the "no-escape" block with Lemma 7.4 (relative version) ---
 
-Let $g:[0,1]\to[0,\haus^{n+1}(U)]$ be defined by
+Let $g:[0,1]\to[0,\mathcal{H}^{n+1}(U)]$ be defined by
 \begin{equation*}
-  g(t):=\haus^{n+1}(U\cap\Omega_t),
+  g(t):=\mathcal{H}^{n+1}(U\cap\Omega_t),
 \end{equation*}
 which is continuous. % relative coarea; cf. CL p.25
 By Lemma~\ref{lem:nested-sweepout-small-intersection} (2), if $I'$ is a connected component of
-$g^{-1}([\eps_0,\ \haus^{n+1}(U)-\eps_0])$, then for every $t\in I'$ we have
+$g^{-1}([\eps_0,\ \mathcal{H}^{n+1}(U)-\eps_0])$, then for every $t\in I'$ we have
 \begin{equation*}
-  f(t):=\haus^{n}(\Gamma_t\cap U) \ge 2\eps.
+  f(t):=\mathcal{H}^{n}(\Gamma_t\cap U) \ge 2\eps.
 \end{equation*}
 
 Applying Lemma~\ref{lem:delta-cts-perturbation} with $\delta<\eps/10$ we obtain a good sweepout
-$\br{\Gamma_t'}$ such that $f'(t):=\haus^{n}(\Gamma_t'\cap U)$ is $\delta$-continuous. 
+$\br{\Gamma_t'}$ such that $f'(t):=\mathcal{H}^{n}(\Gamma_t'\cap U)$ is $\delta$-continuous. 
 By continuity of $g$ and the sweepout property, there exists a closed interval $I=[t_0,t_1]$ with $I'\subset I\subset[0,1]$ such that
 \begin{equation}\label{eq:end-of-gt-i}
-  g(t_0)\le \varepsilon_0,\qquad g(t_1)\ge \haus^{n+1}(U)-\varepsilon_0,
+  g(t_0)\le \varepsilon_0,\qquad g(t_1)\ge \mathcal{H}^{n+1}(U)-\varepsilon_0,
 \end{equation}
 and (possibly shrinking $I$ slightly) we have for all $t\in I$
 \begin{equation*}
@@ -241,7 +241,7 @@ Moreover, by the choice of endpoints and the $\delta$–continuity (with $\delta
 For the upper bound, note that the contrapositive of Lemma~\ref{lem:nested-sweepout-small-intersection}\,(2) says:
 if $f'(t_i)>2\varepsilon$ then 
 \begin{equation*}
-    g(t_i)\in\bigl(\varepsilon_0,\ \haus^{n+1}(U)-\varepsilon_0),
+    g(t_i)\in\bigl(\varepsilon_0,\ \mathcal{H}^{n+1}(U)-\varepsilon_0),
 \end{equation*}
 which contradicts our choice of the endpoints (see~\eqref{eq:end-of-gt-i} for the bounds on $g(t_i)$).
 
@@ -253,10 +253,10 @@ on the interior interval we have $f'\ge \tfrac{3}{2}\varepsilon$, choosing $t_i$
 
 \begin{remark}[Why enlarge $I'$ to a closed interval $I$]
 Enlarging a connected component $I'\subset B$ to $I=[t_0,t_1]$ with 
-$g(t_0)\le\varepsilon_0$ and $g(t_1)\ge \haus^{n+1}(U)-\varepsilon_0$ is essential:
+$g(t_0)\le\varepsilon_0$ and $g(t_1)\ge \mathcal{H}^{n+1}(U)-\varepsilon_0$ is essential:
 (i) it yields a thin error set $P$ (hence the inward perturbation $\overline U$ with controlled relative boundary);
 (ii) by $\delta$–continuity it provides endpoint anchors $\varepsilon\le f(t_i)\le 2\varepsilon$ needed for the cut–cap–insert step;
-(iii) on the compact interval $I$ we obtain a strict gap $\sup_{t\in I}\haus^n(\Gamma_t\cap M)<W_g(U)$, 
+(iii) on the compact interval $I$ we obtain a strict gap $\sup_{t\in I}\mathcal{H}^n(\Gamma_t)<W_g(U)$, 
 which survives the nested replacement and underwrites the final contradiction.
 \end{remark}
 \begin{figure}[htbp]
@@ -303,24 +303,24 @@ which survives the nested replacement and underwrites the final contradiction.
 Relabelling $f'$ back to $f$ and $\Gamma_t'$ back to $\Gamma_t$, define
 \begin{equation*}
     \begin{split}
-        A&:=\br{t\in[0,1]:\ \haus^n(\Gamma_t\cap M)\ge W_g(U)},\\
-        B&:=\br{t\in[0,1]:\ g(t)\in(\varepsilon_0,\ \haus^{n+1}(U)-\varepsilon_0)}.
+        A&:=\br{t\in[0,1]:\ \mathcal{H}^n(\Gamma_t)\ge W_g(U)},\\
+        B&:=\br{t\in[0,1]:\ g(t)\in(\varepsilon_0,\ \mathcal{H}^{n+1}(U)-\varepsilon_0)}.
     \end{split}
 \end{equation*}
 By Lemma~\ref{lem:nested-sweepout-small-intersection} (2), $t\in B\Rightarrow f(t)\ge 2\varepsilon$, hence $A\cap B=\emptyset$. Since $I\subset B$, we have
 \begin{equation*}
-\haus^n(\Gamma_t\cap M)\ <\ W_g(U)\qquad\text{for all }t\in I.
+\mathcal{H}^n(\Gamma_t)\ <\ W_g(U)\qquad\text{for all }t\in I.
 \end{equation*}
-By piecewise continuity of $t\mapsto \haus^n(\Gamma_t\cap M)$ on the compact interval $I$, there exists
+By piecewise continuity of $t\mapsto \mathcal{H}^n(\Gamma_t)$ on the compact interval $I$, there exists
 \begin{equation*}
-m:=\sup_{t\in I}\haus^n(\Gamma_t\cap M) < W_g(U),\qquad
+m:=\sup_{t\in I}\mathcal{H}^n(\Gamma_t) < W_g(U),\qquad
 \delta_1:=W_g(U)-m > 0.
 \end{equation*}
 
 Apply the nested–replacement proposition from Section~6 (Proposition~\ref{prop:nested-sweepout}) to $\br{\Gamma_t}_{t\in I}$. 
 We obtain a nested family $\{\overline{\Gamma}_t\}_{t\in[0,1]}$ with associated open sets $\{\overline{\Omega}_t\}$ such that
 \begin{equation*}
-  \sup_{t\in[0,1]}\haus^n(\overline{\Gamma}_t\cap M)\ \le\ m-\tfrac{\delta_1}{2}\ <\ W_g(U)-\tfrac{\delta_1}{2},
+  \sup_{t\in[0,1]}\mathcal{H}^n(\overline{\Gamma}_t)\ \le\ m-\tfrac{\delta_1}{2}\ <\ W_g(U)-\tfrac{\delta_1}{2},
 \end{equation*}
 and
 \begin{equation*}
@@ -337,9 +337,9 @@ Define the thin error set
   \caption{Thin set $P$ removed and smoothed to $\overline{U}$ inside a fixed collar of $\partial U$.}
   \label{fig:PUbar}
 \end{figure}
-By the endpoint volume bounds $g(t_0)\le \varepsilon_0$ and $g(t_1)\ge \haus^{n+1}(U)-\varepsilon_0$, both
+By the endpoint volume bounds $g(t_0)\le \varepsilon_0$ and $g(t_1)\ge \mathcal{H}^{n+1}(U)-\varepsilon_0$, both
 $\Omega_{t_0}\cap U$ and $U\setminus \operatorname{cl}(\Omega_{t_1})$ have measure $\le \varepsilon_0$, hence
-$\haus^{n+1}(P)\le 2\varepsilon_0$. Remove $P$ from $U$ and smooth inward inside a fixed collar of $\partial U$
+$\mathcal{H}^{n+1}(P)\le 2\varepsilon_0$. Remove $P$ from $U$ and smooth inward inside a fixed collar of $\partial U$
 to obtain a slightly shrunken open set $\overline U\subset U$ (an relative inward $\delta$-perturbation of $U\setminus \operatorname{cl}(P)$).
 Then, as in \cite[p.~26]{CL20}, we may assume:
 \begin{enumerate}
@@ -349,16 +349,16 @@ Then, as in \cite[p.~26]{CL20}, we may assume:
   $\partial U$ yields a nested sweepout of $\overline U$.
   \item[(ii)] \emph{Relative boundary control:}
   \begin{equation*}
-    \haus^n(\partial_{\mathrm{rel}}\overline U)
-    \ \le\ \haus^n(\partial_{\mathrm{rel}}U)\ +\ C\,\varepsilon_0^{\frac{n}{n+1}}
-    \ \le\ 2\,\haus^n(\partial_{\mathrm{rel}}U)
+    \mathbf{M}(\partial_I\overline U)
+    \ \le\ \mathbf{M}(\partial_IU)\ +\ C\,\varepsilon_0^{\frac{n}{n+1}}
+    \ \le\ 2\,\mathbf{M}(\partial_IU)
   \end{equation*}
   for $\varepsilon_0=\varepsilon_0(U)$ chosen sufficiently small. Here the extra term comes from the new boundary
   created by excising $P$ and the inward smoothing; it is controlled by the relative isoperimetric/coarea
-  inequalities applied to $\haus^{n+1}(P)\le 2\varepsilon_0$.
+  inequalities applied to $\mathcal{H}^{n+1}(P)\le 2\varepsilon_0$.
   \item[(iii)] \emph{Push-out with controlled area:}
   there exists a homotopy supported in the collar of $\partial U$, generated by vector fields tangent to $\partial M$,
-  that pushes $\partial_{\mathrm{rel}}\overline U$ outside $U$ through slices of area at most $3\haus^n(\partial_{rel}U)$, after absorbing the $O(\varepsilon_0^{\frac{n}{n+1}})$ error into the constant (again by choosing
+  that pushes $\partial_{\mathrm{rel}}\overline U$ outside $U$ through slices of area at most $3\mathbf{M}(\partial_IU)$, after absorbing the $O(\varepsilon_0^{\frac{n}{n+1}})$ error into the constant (again by choosing
   $\varepsilon_0(U)$ small). This is the relative version of the short “push across the collar” used in \cite{CL20}.
 \end{enumerate}
 \subsection{Controlling Slices Outside the Good Set}
@@ -378,29 +378,29 @@ slice-level estimate and makes the subsequent "cut–and–insert" step possible
 \begin{lemma}[relative version of Lemma 7.4 in \cite{CL20}]\label{lem:barU-slice-outside}
 There exists $t_0\in[0,1]$ such that
 \begin{equation*}
-  \haus^n((\overline{\Gamma}_{t_0}\cap M)\setminus \overline U)\leq2\haus^n(\partial_{rel} U).
+  \mathcal{H}^n(\overline{\Gamma}_{t_0}\setminus \overline U)\leq2\mathbf{M}(\partial_I U).
 \end{equation*}
 \end{lemma}
 \begin{proof}
-    Let $L:=\sup_{t\in[0,1]}\haus^n\bigl(\overline{\Gamma}_t\cap \overline U)$. By the Morse–foliation construction on $\overline U$ and the relative boundary control in (ii), we can sweep out $\overline U$
+    Let $L:=\sup_{t\in[0,1]}\mathcal{H}^n\bigl(\overline{\Gamma}_t\cap \overline U)$. By the Morse–foliation construction on $\overline U$ and the relative boundary control in (ii), we can sweep out $\overline U$
     by slices of area at most
 \begin{equation*}
-  L+\haus^n(\partial_{\mathrm{rel}}\overline U)+\delta \le L+2\,\haus^n(\partial_{\mathrm{rel}}U)+\delta.
+  L+\mathbf{M}(\partial_I\overline U)+\delta \le L+2\,\mathbf{M}(\partial_IU)+\delta.
 \end{equation*}
-Using (iii), we extend this to a good sweepout of $U$ (the homotopy is supported in a fixed collar of $\partial U$ and generated by vector fields tangent to $\partial M$) whose maximal slice area is at most $L+2\,\haus^n(\partial_{\mathrm{rel}}U)+\delta$. Hence, by the definition of $W_g(U)$,
+Using (iii), we extend this to a good sweepout of $U$ (the homotopy is supported in a fixed collar of $\partial U$ and generated by vector fields tangent to $\partial M$) whose maximal slice area is at most $L+2\,\mathbf{M}(\partial_IU)+\delta$. Hence, by the definition of $W_g(U)$,
 \begin{equation*}
-  W_g(U)\le L+2\haus^n(\partial_{rel}U)+\delta.
+  W_g(U)\le L+2\mathbf{M}(\partial_IU)+\delta.
 \end{equation*}
-If, for every $t\in[0,1]$, we had $\haus^n((\overline{\Gamma}_t\cap M)\setminus \overline U)\ >\ 2\,\haus^n(\partial_{\mathrm{rel}}U),$
+If, for every $t\in[0,1]$, we had $\mathcal{H}^n(\overline{\Gamma}_t\setminus \overline U)\ >\ 2\,\mathbf{M}(\partial_IU),$
 then
 \begin{equation*}
     \begin{split}
-        \haus^n(\overline{\Gamma}_t\cap M) &= \haus^n(\overline{\Gamma}_t\cap \overline U) + \haus^n( (\overline{\Gamma}_t\cap M)\setminus \overline U)\\
-        &> L + 2\haus^n(\partial_{\mathrm{rel}}U)\\
+        \mathcal{H}^n(\overline{\Gamma}_t) &= \mathcal{H}^n(\overline{\Gamma}_t\cap \overline U) + \mathcal{H}^n( (\overline{\Gamma}_t\cap M)\setminus \overline U)\\
+        &> L + 2\mathbf{M}(\partial_IU)\\
         &\geq W_g(U)-\delta
     \end{split}
 \end{equation*}
-contradicting $\sup_t\haus^n(\overline{\Gamma}_t\cap M)\le W_g(U)-\delta_1/2$ for $\delta>0$ chosen smaller than $\delta_1/2$.
+contradicting $\sup_t\mathcal{H}^n(\overline{\Gamma}_t)\le W_g(U)-\delta_1/2$ for $\delta>0$ chosen smaller than $\delta_1/2$.
 Therefore such $t_0$ exists.
 \end{proof}
 
@@ -413,24 +413,24 @@ Let
 \end{equation*}
 and define
 \begin{equation*}
-  A_i:=\inf\br{\haus^n(\partial_{rel}\Omega) : \Omega\in\mathcal{U}_i},\qquad i=0,1.
+  A_i:=\inf\br{\mathbf{M}(\partial_I\Omega) : \Omega\in\mathcal{U}_i},\qquad i=0,1.
 \end{equation*}
 By Lemma~\ref{lem:barU-slice-outside} and property (ii) for $\overline U$, we have 
 \begin{equation*}
-  A_i\ \le\ 3\,\haus^n(\partial_{\mathrm{rel}}U).
+  A_i\ \le\ 3\,\mathbf{M}(\partial_IU).
 \end{equation*}
 Choose $\Sigma_i=\partial\Xi_i$ with $\Xi_i\in\mathcal U_i$ such that 
 \begin{equation*}
-  \haus^n(\Sigma_i\cap M)\ \le\ A_i+\delta/4.
+  \mathcal{H}^n(\Sigma_i)\ \le\ A_i+\delta/4.
 \end{equation*}
 Applying the relative nested–insertion lemmas (Lemma~\ref{lem:extension}(I),(II) in our Section~5) \emph{inside} $\overline U$ and concatenating,
 we obtain a nested sweepout of $\overline U$ from $\Sigma_0$ to $\Sigma_1$ whose maximal slice area (measured in $M$) satisfies
 \begin{equation*}
-  \sup_{t}\ \haus^n(\Gamma^{\overline U}_t\cap M)\ \le\ W_g(U)-\delta/4.
+  \sup_{t}\ \mathcal{H}^n(\Gamma^{\overline U}_t)\ \le\ W_g(U)-\delta/4.
 \end{equation*}
 Using Lemma~\ref{lem:nested-sweepout-small-intersection}\,(3) (relative push across a $\partial U$–collar),
 we upgrade this to a good sweepout of $U$ with
 \begin{equation*}
-  \sup_{t}\ \haus^n(\Gamma^{U}_t\cap M)\ \le\ W_g(U)-\delta/4,
+  \sup_{t}\ \mathcal{H}^n(\Gamma^{U}_t)\ \le\ W_g(U)-\delta/4,
 \end{equation*}
 contradicting the definition of $W_g(U)$. This completes the proof of Proposition~\ref{prop:non-escape}.
