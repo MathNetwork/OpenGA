@@ -14,7 +14,11 @@ We denote by $\mathcal{H}^k$ the $k$-dimensional Hausdorff measure and by $\math
 \]
 for those tangent to $\partial M$.
 
-For a relatively open subset $U \subset M$, we write $\mathrm{int}_M(U)$ for the relative interior of $U$ in $M$, and $\partial_{\mathrm{rel}} U$ for the relative boundary. We use $A \Subset B$ to denote that $\overline{A}$ is compact and contained in $B$.
+For a relatively open subset $U \subset M$, we write $\mathrm{int}_M(U)$ for the relative interior of $U$ in $M$. We use $A \Subset B$ to denote that $\overline{A}$ is compact and contained in $B$.
+
+\begin{definition}[$\partial$-transverse function]\label{def:boundary-transverse}
+A smooth function $f: M \to \mathbb{R}$ is \emph{$\partial$-transverse} if $f|_{\partial M}$ has no critical points, i.e.\ $\nabla_{\partial M}(f|_{\partial M}) \neq 0$ everywhere on $\partial M$.  A \emph{$\partial$-transverse Morse function} is a Morse function on $M$ that is also $\partial$-transverse.
+\end{definition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Currents and Relative Cycles}\label{sec:relative-cycles}
@@ -44,7 +48,7 @@ For a bounded open set $U \subset M$ with smooth boundary, the associated $(n+1)
 \]
 where:
 \begin{itemize}
-    \item $\partial_I U := \partial \llbracket U \rrbracket \llcorner \mathrm{int}(M) \in \mathcal{Z}_n(M, \partial M)$ is the \emph{interior boundary} (a relative cycle);
+    \item $\partial_I U := \partial \llbracket U \rrbracket \llcorner \mathrm{int}(M)$ is the \emph{interior boundary} (a relative cycle in $\mathcal{Z}_n(M, \partial M)$, since $U$ has smooth boundary);
     \item $\partial_F U := \partial \llbracket U \rrbracket \llcorner \partial M$ is the \emph{free boundary part} (supported on $\partial M$).
 \end{itemize}
 
@@ -111,6 +115,10 @@ Let $U \subset M$ be a bounded open set with smooth boundary. Then:
     \item If $U$ is a good set (Definition~\ref{def:good-set}), then $W_g(U) = W(U)$.
 \end{enumerate}
 \end{proposition}
+
+\begin{proof}
+Part~(i) follows by restricting a nested sweepout to $\overline{U}$ (giving the lower bound) and extending a relative sweepout by adding $\partial_I U$ at each time (giving the upper bound). Part~(ii) is proved by approximating an arbitrary sweepout by nested ones using the coarea formula (Theorem~\ref{thm:slicing}); see \cite[Lemma~4.2]{CL20}. Part~(iii) follows from~(ii) by a cut-off argument using the good set condition (Definition~\ref{def:good-set}).
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Good Sets}\label{sec:good-sets}
@@ -179,3 +187,47 @@ Let $Q = \llbracket \Omega \rrbracket$ for a bounded open set $\Omega \subset M$
 \int_{\mathbb{R}} \mathbf{M}(\langle Q, f, t \rangle)\, dt \leq \int_\Omega |\nabla f|\, d\mathcal{H}^{n+1}.
 \]
 \end{corollary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Varifold Theory}\label{sec:varifolds}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We collect the basic definitions from varifold theory needed in later chapters. Standard references include Pitts~\cite{Pit81} and Simon~\cite{Sim84}.
+
+\begin{definition}[Varifolds]\label{def:varifold}
+Let $\mathrm{Gr}_n(M)$ denote the Grassmannian bundle of (unoriented) $n$-planes over $M$. An \emph{$n$-varifold} on $M$ is a Radon measure on $\mathrm{Gr}_n(M)$. The space of all $n$-varifolds is denoted $\mathcal{V}_n(M)$, equipped with the weak-$*$ topology.
+
+For $V \in \mathcal{V}_n(M)$, the \emph{mass measure} $\|V\|$ is the pushforward of $V$ under the projection $\mathrm{Gr}_n(M) \to M$. The \emph{total mass} is $\|V\|(M)$, and the \emph{support} is $\operatorname{spt}\|V\|$. For an open set $A \subset M$, the \emph{restriction} $V \llcorner A$ is the varifold defined by $V \llcorner A(E) := V(E \cap \mathrm{Gr}_n(A))$.
+\end{definition}
+
+\begin{definition}[First variation]\label{def:first-variation}
+The \emph{first variation} of $V \in \mathcal{V}_n(M)$ is the linear functional on smooth vector fields defined by
+\[
+\delta V(X) := \int_{\mathrm{Gr}_n(M)} \operatorname{div}_S X(x) \, dV(x, S),
+\]
+where $\operatorname{div}_S X(x) := \sum_{i=1}^n \langle \nabla_{e_i} X, e_i \rangle$ for any orthonormal basis $\{e_i\}$ of $S$.
+\end{definition}
+
+\begin{definition}[Stationarity]\label{def:stationary}
+A varifold $V \in \mathcal{V}_n(M)$ is:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item \emph{stationary in $\operatorname{int}(M)$} if $\delta V(X) = 0$ for all $X \in \mathfrak{X}_c(\operatorname{int}(M))$;
+    \item \emph{stationary with free boundary} if $\delta V(X) = 0$ for all $X \in \mathfrak{X}_{\mathrm{tan}}(M)$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[$\mathbf{F}$-metric]\label{def:F-metric}
+The \emph{$\mathbf{F}$-metric} on $\mathcal{V}_n(M)$ is defined by
+\[
+\mathbf{F}(V, W) := \sup\biggl\{\int f \, dV - \int f \, dW : f \in C_c(\mathrm{Gr}_n(M)),\ |f| \leq 1,\ \operatorname{Lip}(f) \leq 1\biggr\}.
+\]
+On sets of uniformly bounded mass, $\mathbf{F}$ metrizes the weak-$*$ topology. For an open set $U \subset M$, the \emph{localized $\mathbf{F}$-metric} is $\mathbf{F}_U(V, W) := \mathbf{F}(V \llcorner U, W \llcorner U)$. See \cite[Section~2]{LZ17}.
+\end{definition}
+
+\begin{definition}[Pushforward of varifolds]\label{def:varifold-pushforward}
+Let $\varphi: M \to M$ be a diffeomorphism. The \emph{pushforward} $\varphi_\sharp V \in \mathcal{V}_n(M)$ is defined by
+\[
+\varphi_\sharp V(A) := \int_{\mathrm{Gr}_n(M)} \mathbf{1}_A(\varphi(x), d\varphi_x(S)) \cdot |J_S \varphi(x)| \, dV(x, S)
+\]
+for Borel $A \subset \mathrm{Gr}_n(M)$, where $J_S \varphi(x) := \det(d\varphi_x|_S)$ is the $n$-dimensional Jacobian of $\varphi$ restricted to $S$.
+\end{definition}
