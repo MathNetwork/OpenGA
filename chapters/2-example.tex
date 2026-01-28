@@ -1,0 +1,221 @@
+\chapter{Settings and Preliminaries}\label{ch:examples}
+
+This chapter establishes the foundational framework for the free boundary min-max theory in complete Riemannian manifolds.
+
+\section{Notation and Basic Conventions}\label{sec:notation}
+
+Let $(M^{n+1}, g)$ be a smooth, complete Riemannian manifold with non-empty smooth boundary $\partial M$. The \emph{doubled manifold} $\widetilde{M}$ is obtained by reflecting $M$ across $\partial M$ and gluing smoothly: $\widetilde{M} = M \sqcup_{\partial M} M^-$, equipped with a metric that agrees with $g$ on each copy. For any subset $U \subset M$, we denote by $\widetilde{U} \subset \widetilde{M}$ its reflection across $\partial M$ (see Appendix~\ref{sec:fermi-coordinates} for details on Fermi coordinates). We write $\nu$ for the outward unit normal to $\partial M$.
+
+We denote by $\mathcal{H}^k$ the $k$-dimensional Hausdorff measure and by $\mathbf{M}(T)$ the mass of a current $T$. A free boundary $k$-cycle is an element of $\mathcal{Z}_k(M, \partial M; \mathbb{Z}_2)$, the space of mod-$2$ cycles with boundary on $\partial M$. For vector fields, we write $\mathfrak{X}(M)$ for smooth compactly supported vector fields on $M$, and $\mathfrak{X}_{\tan}(M)$ for those tangent to $\partial M$. Any $X \in \mathfrak{X}(M)$ decomposes as $X = X_{\tan} + X_{\perp}$ near $\partial M$.
+
+\section{Relative Cycles and Free Boundary Currents}\label{sec:relative-cycles}\label{sec:caccioppoli}
+
+We work in the space of mod-$2$ relative cycles following Li--Zhou~\cite{LZ17}.
+
+\begin{definition}[Relative cycles]\label{def:relative-cycle}
+Denote by $\mathcal{Z}_n(M, \partial M; \mathbb{Z}_2)$ the space of mod-$2$ flat $n$-chains $T$ in $M$ satisfying $\partial T \in \mathcal{Z}_{n-1}(\partial M; \mathbb{Z}_2)$, equipped with the flat topology. The \emph{mass} of $T$ is $\mathbf{M}(T) = \mathcal{H}^n(\mathrm{spt}(T) \cap M)$, and the \emph{support} of $T$ is the closed set $\mathrm{spt}(T) \subset M$ with $\partial(\mathrm{spt}(T)) \subset \partial M$.
+\end{definition}
+
+Every Caccioppoli set (set of finite perimeter) $E \subset M$ gives rise to a relative cycle $\partial E \in \mathcal{Z}_n(M, \partial M; \mathbb{Z}_2)$ with $\mathbf{M}(\partial E) = \Per_M(E) = \mathcal{H}^n(\partial^* E)$, where $\partial^* E$ denotes the reduced boundary; see~\cite[Theorem~15.9]{Mag12}. The \emph{relative perimeter} $\Per_M(E, U) := \mathcal{H}^n(\partial^* E \cap U)$ localizes the mass to a relatively open set $U \subset M$.\label{def:relative-perimeter}
+
+\begin{notation}
+For a family $\{T_t\}_{t \in [0,1]}$ of relative cycles, we write $\Gamma_t = \mathrm{spt}(T_t) \cap M$ for the underlying hypersurfaces and note that $\partial \Gamma_t \subset \partial M$ for each $t$.
+\end{notation}
+
+\begin{remark}
+Chapter~\ref{ch:alternative-regularity} (Result~II, concerning closed manifolds) uses Caccioppoli sets and absolute cycles $\mathcal{Z}_n(M; \mathbb{Z}_2)$ instead of relative cycles; the two frameworks coincide when $\partial M = \varnothing$.
+\end{remark}
+
+\section{Varifolds and Rectifiability}\label{sec:varifolds}
+We recall the basic theory for rectifiable and integral varifold; see \cite{Sim84} for more information. If $U$ is an open subset of $M$, any Radon measure on Grassmannian $G(U)$ of unoriented $n$-planes on $U$ is said to be an $n$-\textit{varifold} in $U$. We denote the space of $n$-varifolds by $\mathcal{V}(U)$ and the topology it endowed with is weak*-topology. Thus, a sequence ${V^k} \subset \mathcal{V}(U)$ converges to $V$ is 
+\begin{equation*}
+    \lim_{k \to \infty}\int \varphi(x, \pi)dV^k(x, \pi) = \int \varphi(x, \pi)dV(x, \pi)
+\end{equation*}
+for every $\varphi \in C_c(G(U))$. Here $\pi$ denotes an $n$-plane of $T_xM$. If $U' \subset U$ and $V \in \mathcal{V}(U)$, then $V \mres U'$ is the restriction of the measure $V$ to $G(U')$.
+
+Moreover, $\norm{V}$ is the nonnegative measure on $U$ defined by
+\begin{equation*}
+    \int_U \varphi(x)d\norm{V}(x) = \int_{G(U)}\varphi dV(x, \pi), \quad \forall \varphi \in C_c(U).
+\end{equation*}
+The support of $\norm{V}$, denoted by $\spt{\norm{V}}$, is the smallest closed set outside which $\norm{V}$ vanishes identically. The number $\norm{V}(U)$ will be called the \textit{mass} if $V$ in $U$.
+
+Recall also that an $n$-dimensional rectifiable set is the countable union of closed subsets of $C^1$ surfaces (modulo sets of $\haus^n$-measure $0$). If $R \subset U$ is an $n$-dimensional rectifiable set and $h: R \to \R^+$ is a Borel function, then the \textit{varifold $V$ induced by $R$} is defined by
+\begin{equation*}
+    \int_{G(U)}\varphi(x, \pi)dV(x, \pi) = \int_R h(x) \varphi(x, T_x R)d\haus^n(x)
+\end{equation*}
+for all $\varphi \in C_c(G(U))$. Here $T_xR$ denotes the tangent plane to $R$ in $x$. If $h$ is integer-valued, then we say that $V$ is an \textit{integral rectifiable varifold}.
+
+\section{Stationary Varifolds with Free Boundary}\label{sec:stationary-varifolds}
+
+\begin{definition}[First variation of a varifold]\label{def:first-variation-varifold}
+Let $V \in \mathcal{V}_n(\widetilde{M})$ be a varifold. For a smooth vector field
+$X \in \mathfrak{X}(\widetilde{M})$ with compact support, the \emph{first variation} of $V$ with respect
+to $X$ is defined by
+\[
+    \delta V(X) := \int_{G_n(\widetilde{M})} \operatorname{div}_S X(x)\, dV(x, S),
+\]
+where $\operatorname{div}_S X(x)$ denotes the tangential divergence of $X$ at $x$ along the $n$-plane
+$S \in G_n(T_x \widetilde{M})$. Explicitly, if $\{e_1, \ldots, e_n\}$ is an orthonormal basis for $S$,
+then
+\[
+    \operatorname{div}_S X(x) := \sum_{i=1}^n \langle \nabla_{e_i} X, e_i \rangle,
+\]
+where $\nabla$ is the Levi-Civita connection on $\widetilde{M}$.
+\end{definition}
+
+\begin{definition}[Stationary varifold with free boundary]\label{def:stationary-free-boundary}
+A varifold $V \in \mathcal{V}_n(M)$ is \emph{stationary with free boundary} if $\delta V(X) = 0$ for all $X \in \mathfrak{X}_{\tan}(M)$ and $\|V\|(\partial M) = 0$. For smooth hypersurfaces, this means $H = 0$ in the interior and $\Sigma$ meets $\partial M$ orthogonally.
+\end{definition}
+
+\begin{theorem}[Monotonicity formula~\cite{LZ17}]\label{thm:monotonicity-free-boundary}
+Let $V \in \mathcal{V}_n(M)$ be a stationary varifold with free boundary (Definition~\ref{def:stationary-free-boundary}). Assume that $\partial M$ is smooth. Then for any $x_0 \in M$ and any $0 < r < R < \mathrm{dist}(x_0, \infty)$ (where $\mathrm{dist}(x_0, \infty) = \infty$ if $M$ is compact), we have
+\[
+    \frac{\|V\|(B_R(x_0))}{R^n} \geq \frac{\|V\|(B_r(x_0))}{r^n}.
+\]
+Moreover, if $x_0 \in \mathrm{int}(M)$ and $R < \mathrm{dist}(x_0, \partial M)$, then the ratio
+$\|V\|(B_r(x_0))/r^n$ is non-decreasing in $r$ for $r \in (0, R)$.
+\end{theorem}
+\xinze{Role of monotonicity formula in regularity theory: (1) ensures density $\Theta^n(V, x_0)$ exists; (2) used in blow-up analysis for tangent cones; (3) controls varifold behavior at different scales. This theorem is used \emph{indirectly} in Chapter~\ref{ch:alternative-regularity}: Wickramasekera's regularity theorem (Thm 9.4.1) internally relies on the monotonicity formula for blow-up analysis, but we do not explicitly \textbackslash ref it. Should we keep it as background knowledge, or remove it and just cite \cite{LZ17}/\cite{Wic14} where needed?}
+
+
+\begin{definition}[Second variation for varifolds]\label{def:second-variation-varifold}
+Let $V \in \mathcal{V}_n(M)$ be a stationary integral varifold with free boundary. For a compactly
+supported normal variation $\phi \in C^1_c(\mathrm{reg}\, V; \nu)$ (i.e., $\phi$ is supported in the
+regular part $\mathrm{reg}\, V$ and takes values in the normal bundle $\nu$ to $V$), the
+\emph{second variation} is defined by:
+\[
+    \delta^2 V(\phi, \phi) = \int_{\mathrm{reg}\, V} \left( |\nabla^\perp \phi|^2 - |A|^2 |\phi|^2 - \mathrm{Ric}(\nu, \nu)|\phi|^2 \right) d\|V\|,
+\]
+where:
+\begin{itemize}
+    \item $\nabla^\perp$ denotes the covariant derivative in the normal bundle;
+    \item $A$ is the second fundamental form of $V$ (defined $\|V\|$-a.e.\ on $\mathrm{reg}\, V$);
+    \item $\mathrm{Ric}$ is the Ricci curvature of the ambient manifold $(M, g)$;
+    \item $\nu$ is a choice of unit normal to $V$ (which exists locally on $\mathrm{reg}\, V$ when
+    $V$ is orientable).
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Stability and Morse index for varifolds]\label{def:morse-index-varifold}
+Let $V \in \mathcal{V}_n(M)$ be a stationary integral varifold with free boundary. We say that:
+\begin{enumerate}[label=(\roman*)]
+    \item $V$ is \emph{stable} if for each open set $\Omega \subset M$ with $\mathrm{sing}\, V \cap \Omega = \emptyset$
+    (when $2 \leq n \leq 6$), the second variation satisfies $\delta^2 V(\phi, \phi) \geq 0$ for all
+    normal variations $\phi \in C^1_c(\mathrm{reg}\, V \cap \Omega; \nu)$.
+
+    \item The \emph{Morse index} (or simply \emph{index}) of $V$ is defined by:
+    \[
+        \mathrm{Index}(V) := \max\left\{ \dim W : W \subset C^1_c(\mathrm{reg}\, V; \nu), \, \delta^2 V(\phi, \phi) < 0 \, \forall \phi \in W \setminus \{0\} \right\}.
+    \]
+    In other words, $\mathrm{Index}(V)$ is the maximal dimension of a subspace on which the second
+    variation is negative definite.
+\end{enumerate}
+\end{definition}
+
+See Appendix~\ref{sec:wickramasekera-detailed} and~\cite{Sim84, Wic14} for further background.
+
+\begin{lemma}[Reflection principle~{\cite[Section~2]{LZ17}}]\label{lem:reflection-principle}
+Let $V \in \mathcal{V}_n(M)$ be a stationary varifold with free boundary. Assume $\partial M$ is smooth (at least $C^2$). Then $V$ can be extended to a stationary varifold $\widetilde{V} \in \mathcal{V}_n(\widetilde{M})$ in the doubled manifold $\widetilde{M}$ (Section~\ref{sec:notation}) by reflection across $\partial M$. Moreover, if $V$ is integral and has multiplicity one, then so does $\widetilde{V}$.
+\end{lemma}
+
+\section{Coarea Formula}\label{sec:coarea}
+
+\begin{theorem}[Coarea formula~{\cite[Section~13.1]{Mag12}}]\label{thm:coarea-formula}
+Let $N\subset \widetilde M$ be a smooth $(n+1)$-dimensional submanifold whose boundary is tangent to
+$\partial M$ along $\partial N\cap \partial M$. Let $f:N\to \mathbb{R}$ be a Lipschitz function and
+denote by $N_t:=f^{-1}(t)$. Then, for any Borel set $A\subset N$,
+\[
+    \int_A |\nabla f|\,d\mathcal{H}^{n+1}
+    =\int_{\mathbb{R}} \mathcal{H}^n(A\cap N_t)\, dt.
+\]
+In particular, if $f$ is proper on $N$ and has no critical points in $A$, then for almost every $t$
+the slice $N_t\cap M$ is a smooth hypersurface whose area is controlled by the integral on the left.
+\end{theorem}
+
+\section{Regularity Theory}\label{sec:regularity-theory}
+
+\begin{theorem}[Wickramasekera~\cite{Wic14}]\label{thm:wickramasekera-prelim}
+Let $V$ be a stable integral $n$-varifold in a smooth $(n+1)$-dimensional Riemannian manifold with
+$2 \leq n \leq 6$. Suppose $V$ satisfies the following \emph{$\alpha$-Structural Hypothesis} for
+some $\alpha \in (0,1/2)$: no singular point has a neighborhood in which the support of $V$
+corresponds to a union of three or more embedded $C^{1,\alpha}$ hypersurfaces-with-boundary meeting
+only along their common boundary.
+
+Then $\mathrm{sing}\, V = \emptyset$, i.e., $V$ corresponds to a smooth embedded hypersurface.
+\end{theorem}
+
+See Definition~\ref{defn:alpha-structural} and Appendix~\ref{sec:wickramasekera-detailed} for details. The hypothesis is satisfied when $\mathcal{H}^{n-1}(\mathrm{sing}\, V) = 0$, in particular for limits of currents without cancellation.
+
+\chapter{Families of Surfaces and Sweepouts}\label{ch:sweepouts}
+
+\begin{definition}[Family of hypersurfaces]\label{def:family-surfaces}
+A family $\br{\Gamma_t}$, $t \in [0, 1]$, of closed subsets $M$ with finite Hausdorff measure will be called a family of hypersurfaces if:
+\begin{itemize}
+    \item[(s1)] for each $t$, there is a finite $P_t \subset \text{int}(M)$ such that $\Gamma_t\backslash \partial M$ is a smooth hypersurfaces in $M \backslash P_t$;
+    \item[(s2)] $\haus^n(\Gamma_t \cap M)$ depends continuously on $t$ and $t \to \Gamma_t$ is continuous in the Hausdorff sense (for manifolds with boundary, any discontinuity caused by $\partial M$ can be removed by a small perturbation);
+    \item[(s3)] on any $U \cptsub \text{int}(M)\backslash P_{t_0}$, $\Gamma_t\to\Gamma_{t_0}$ smoothly in $U$ as $t \to t_0$;
+    \item[(s4)] (no concentration of mass) for every point $x \in M$ we have 
+    \begin{equation*}
+        \limsup_{r \to 0}\sup_{t \in [0, 1]}\haus^n(\Gamma_t\cap B_r(x)) = 0.
+    \end{equation*}
+\end{itemize}
+\end{definition}
+\begin{definition}[Sweepout of an open set]\label{def:sweepout}
+Let $U \subset M$ be a relatively open set of $M$, where $M$ is a complete manifold with boundary. $\{\Gamma_t\}_{t \in [0,1]}$ is a sweepout of $U$ if it satisfies $(s1)-(s4)$ and there exists a family $\br{\Omega_t}$, $t \in [0, 1]$, of relative open sets of finite Hausdorff meausre, such that:
+\begin{enumerate}
+    \item[(sw0)] $\partial \Gamma_t \subset \partial M$ for every $t$, i.e.\ each slice is a relative cycle in $\mathcal{Z}_n(M,\partial M;\mathbb{Z}_2)$;
+    \item[(sw1)] $(\Gamma_t \backslash\partial\Omega_t) \subset P_t$ for any $t$;
+    \item[(sw2)] $\Omega_0\cap U = \varnothing$ and $U \subset \Omega_1$;
+    \item[(sw3)] $\haus^{n + 1}(\Omega_t\backslash \Omega_2) + \haus^{n + 1}(\Omega_s\backslash\Omega_t) \to 0$ as $t \to s$
+\end{enumerate}
+For a sweepout $\br{\Gamma_t}$ we will say that $\br{\Omega_t}$ is the \emph{corresponding family} of (relative) open sets if it satisfies $(sw1)-(sw3)$.
+\end{definition}
+
+\begin{definition}[Height and width]\label{def:height}
+The \emph{height} of a sweepout $\{\Gamma_t\}$ is $\mathcal{F}(\{\Gamma_t\}) := \sup_{t} \mathcal{H}^n(\Gamma_t\backslash\partial M)$.\label{def:width-collection} The \emph{width} of a collection $\mathcal{S}$ of sweepouts is $W(\mathcal{S}) := \inf_{\{\Gamma_t\} \in \mathcal{S}} \mathcal{F}(\{\Gamma_t\})$.
+\end{definition}
+
+\begin{definition}[Good sweepout]\label{def:good-sweepout}
+Let $U \subset M$ be a relative open subset. A sweepout $\{\Gamma_t\}$ of $U$ is
+called a \emph{good sweepout} if it in addition satisfies
+\begin{enumerate}
+    \item[($\text{sw}_g$)] $\haus^n(\Gamma_0) \leq 5\haus^n(\partial U)$ and $\haus^n(\Gamma_1) \leq 5\haus^n(\partial U)$.
+\end{enumerate}
+we will denote the collection of good sweepout of $U$ as $\mathcal{S}_g(U)$ or simply $\mathcal{S}_g$ in short.
+\end{definition}
+\begin{definition}[Nested sweepout]\label{def:nested-sweepout}
+A \emph{nested sweepout} $\br{\Gamma_t}$ is a sweepout of $U$ which in addition satisfies:
+\begin{enumerate}
+    \item[($\text{sw}_n$)] there exists a Morse function $f: \widetilde{M} \to [-1, \infty)$, such that $\Gamma_t = f^{-1}(t)\cap M$, $t \in [0, 1]$; the corresponding family of open sets is given by $\Omega_t = f^{-1}((-\infty, t))\cap M$.
+\end{enumerate}
+we will denote the collection of nested sweepout of $U$ as $\mathcal{S}_n(U)$ or simply $\mathcal{S}_n$ in short.
+\end{definition}
+
+\begin{definition}[Relative sweepout]\label{def:relative-sweepout}
+Suppose $\partial U$ is a smooth manifold and $\br{\Gamma_t}$ is a nested sweepout of $U$ with the corresponding open sets $\br{\Omega_t}$. Set $\Sigma_t = (cl(U)\cap \Gamma_t)$. We will say that $\br{\Sigma_t}$ is a \emph{relative sweepout} of $U$. we will denote the collection of relative sweepout of $U$ as $\mathcal{S}_\partial(U)$ or simply $\mathcal{S}_\partial$ in short.
+\end{definition}
+
+\begin{proposition}[Width inequalities~\cite{CL20}]\label{prop:width-inequalities}
+Let $U \subset M$ be a bounded relatively open set. Then:
+\begin{enumerate}[label=(\roman*)]
+    \item $W_\partial(U) \leq W_n(U) \leq W_\partial(U) + \mathcal{H}^n(\bdy U)$;
+    \item $W_n(U) = W(U)$;
+    \item If $U$ is a good set, then $W_g(U) = W(U)$.
+\end{enumerate}
+\end{proposition}
+\noindent Item (i) follows directly from definitions. Item (ii) is Proposition~\ref{prop:nested-sweepout}. Item (iii) follows from (ii): for good sets, nested sweepouts starting from a point and ending on $\partial U$ are automatically good.
+
+\begin{definition}[Good set]\label{def:good-set}
+A bounded relative open subset $U \subset M$ is a \emph{good set} if $\mathcal{H}^n(\bdy U) \leq \frac{1}{10}\,W_\partial(U)$.
+\end{definition}
+\begin{remark}[Why good sweepouts prevent escape to infinity]\label{rem:good-sweepout-no-escape}
+The combination of the good set condition $\mathcal{H}^n(\bdy U) \leq \frac{1}{10} W_\partial(U)$ and the good sweepout condition $\mathcal{F}(\{\Gamma_t\}) \leq 5 W_\partial(U)$ is designed to address the fundamental difficulty of \emph{escape to infinity} in min-max theory on complete non-compact manifolds.
+
+\textbf{The escape to infinity problem:} In a compact manifold, the min-max surface is automatically localized by compactness. However, in a complete non-compact manifold (such as $\mathbb{R}^{n+1}$ or a manifold with cylindrical ends), a sequence of surfaces in a sweepout could concentrate all their mass arbitrarily far from the region $U$ where we want to find the minimal surface, thus ``escaping to infinity.''
+
+\textbf{How good sweepouts prevent escape:} The key observation is the following \emph{bottleneck principle}:
+\begin{quote}
+If a sweepout wants to transfer mass from inside $U$ to outside $U$, it must pass through the boundary $\bdy U$. But $\bdy U$ has area $\leq W_\partial(U)/10$, which is much smaller than the sweepout's height $\sim W_\partial(U)$. Therefore, the sweepout cannot move all its mass outside $U$---at least one slice must carry a definite amount of area inside $\overline{U}$.
+\end{quote}
+This principle is made rigorous in Chapter~\ref{ch:no-escape-to-infinity} (Proposition~\ref{prop:non-escape}), which proves that every good sweepout must have at least one slice with area $\geq \varepsilon(U) > 0$ inside $\overline{U}$. The proof uses a contradiction argument: if all slices had negligible area in $U$, we could use the nested sweepout structure (Chapter~\ref{ch:nested-sweepout}) to ``push'' them completely outside $U$ while increasing the perimeter by at most $\mathcal{H}^n(\bdy U) \ll W_\partial(U)$, thus constructing a competing sweepout with strictly smaller width---a contradiction.
+\end{remark}

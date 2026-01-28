@@ -1,0 +1,52 @@
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{DLT13}
+
+\bibitem[All72]{AW}
+William~K. Allard, \emph{On the first variation of a varifold}, Annals of Mathematics \textbf{95} (1972), no.~3, 417--491.
+
+\bibitem[CL03]{CL03}
+Tobias Colding and Camillo Lellis, \emph{The min--max construction of minimal surfaces}, Surveys in Differential Geometry \textbf{8} (2003).
+
+\bibitem[CL20]{CL20}
+Gregory~R. Chambers and Yevgeny Liokumovich, \emph{Existence of minimal hypersurfaces in complete manifolds of finite volume}, Inventiones mathematicae \textbf{219} (2020), no.~1, 179--217.
+
+\bibitem[CLS22]{CLS22}
+Otis Chodosh, Yevgeny Liokumovich, and Luca Spolaor, \emph{Singular behavior and generic regularity of min-max minimal hypersurfaces}, Ars Inveniendi Analytica (2022).
+
+\bibitem[DG61]{DG}
+Ennio De~Giorgi, \emph{Frontiere orientate di misura minima}, Seminario di Matematica della Scuola Normale Superiore di Pisa (1960--1961), 1--56.
+
+\bibitem[DLT13]{DLT13}
+Camillo De~Lellis and Dominik Tasnady, \emph{{The existence of embedded minimal hypersurfaces}}, Journal of Differential Geometry \textbf{95} (2013), no.~3, 355 -- 388.
+
+\bibitem[Liu19]{Liu19}
+Zhenhua Liu, \emph{Stationary one-sided area-minimizing hypersurfaces with isolated singularities}, 2019.
+
+\bibitem[LZ17]{LZ17}
+Martin Li and Xin Zhou, \emph{Min-max theory for free boundary minimal hypersurfaces i - regularity theory}, 2017.
+
+\bibitem[Mag12]{Mag12}
+F.~Maggi, \emph{Sets of finite perimeter and geometric variational problems: An introduction to geometric measure theory}, Cambridge Studies in Advanced Mathematics, Cambridge University Press, 2012.
+
+\bibitem[Mar17]{Marques05}
+Fernando~C. Marques, \emph{Existence of infinitely many minimal hypersurfaces in positive ricci curvature}, Inventiones mathematicae \textbf{209} (2017), no.~2, 577--616.
+
+\bibitem[Sim68]{SJ}
+James Simons, \emph{Minimal varieties in riemannian manifolds}, Annals of Mathematics \textbf{88} (1968), no.~1, 62--105.
+
+\bibitem[Sim84]{Sim84}
+L~Simon, \emph{Lectures on geometric measure theory}, Proceedings of the Centre for Mathematical Analysis, Centre for Mathematical Analysis, Australian National University, 1984.
+
+\bibitem[SS81]{SS}
+Richard Schoen and Leon Simon, \emph{Regularity of stable minimal hypersurfaces}, Communications on Pure and Applied Mathematics \textbf{34} (1981), no.~6, 741--797.
+
+\bibitem[Wic14]{Wic14}
+Neshan Wickramasekera, \emph{A general regularity theory for stable codimension 1 integral varifolds}, Annals of Mathematics \textbf{179} (2014), no.~3, 843--1007.
+
+\end{thebibliography}

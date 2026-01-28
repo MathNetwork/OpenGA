@@ -1,0 +1,82 @@
+\RequirePackage{silence}
+\WarningFilter{scrreprt}{Usage of package `titlesec'}
+\WarningFilter{scrreprt}{Activating an ugly workaround}
+\WarningFilter{titlesec}{Non standard sectioning command detected}
+
+% You can run this document two ways.
+
+% Option 1: Same margins on both sides and no "open right"
+% This is the best option for the digital version of your thesis.
+\documentclass[oneside,numbers=noenddot,headinclude,footinclude,cleardoublepage=empty,abstract=on,BCOR=5mm,paper=letter,fontsize=11pt,headheight=17pt]{scrreprt}
+
+% Option 2: When you print your thesis, comment the above documentclass and uncomment the one below.
+% The only difference is ``twoside'' instead of ``oneside''
+% That way, the outer margins are larger than the inner margins. Also, chapters are always opened on the right hand side.
+% This results in a MUCH nicer printed version. No worries, all page breaks remain where they are, it just moves everything to the left or right a bit.
+% ALSO: Make sure to uncomment the addmargin environments in titlepage.tex and colophon.tex. That way, the first and last page remain centered
+%\documentclass[twoside,numbers=noenddot,headinclude,footinclude,cleardoublepage=empty,abstract=on,BCOR=5mm,paper=letter,fontsize=11pt,headheight=17pt]{scrreprt}
+
+% So to recap: Typeset your whole thesis with Option 1 and submit the resulting version electronically
+% But before actually printing the thesis, rerun the document with Option 2.
+
+% Any packages, newcommands, ... should be put in the thesisconfig file.
+\input{thesisconfig}
+
+% Ensure head height is at least \baselineskip so scrlayer-scrpage is happy
+\KOMAoptions{headheight=17pt}
+\recalctypearea
+
+\begin{document}
+
+% If you are wondering what \frenchspacing does, check out the Internet then decide if you want to use it.
+\frenchspacing
+\raggedbottom
+
+\selectlanguage{english}
+
+% Frontmatter
+% Note: SGS requires that the abstract is on the second page. Do not move it further down.
+% Roman page numbering is also required by SGS.
+\pagenumbering{roman}
+\pagestyle{plain}
+\include{frontbackmatter/titlepage}
+\cleardoublepage
+\include{frontbackmatter/abstract}
+\cleardoublepage
+\include{frontbackmatter/dedication}
+\cleardoublepage
+\include{frontbackmatter/acknowledgements}
+% The following command will make sure that publications are on the left and contents are on the right.
+\cleardoubleevenpage
+\include{frontbackmatter/publications}
+\clearpage
+\include{frontbackmatter/contents}
+
+% Add any chapters here
+\cleardoublepage
+\pagestyle{scrheadings}
+\pagenumbering{arabic}
+\cleardoublepage
+% \include{chapters/1-introduction}
+% \cleardoublepage
+\include{chapters/2-example}
+\cleardoublepage
+\include{chapters/4-morse_foliations}
+\cleardoublepage
+\include{chapters/5-splitting_and_extension}
+\cleardoublepage
+\include{chapters/6-nested_sweepout}
+\cleardoublepage
+\include{chapters/7-no_escape_to_infinity}
+\cleardoublepage
+\include{chapters/8-convergence-of-min-max}
+\cleardoublepage
+\include{chapters/9-alternative-regularity}
+\appendix
+\cleardoublepage
+\include{chapters/appendix1}
+% Backmatter
+\cleardoublepage
+\include{frontbackmatter/bibliography}
+
+\end{document}

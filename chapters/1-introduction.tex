@@ -1,0 +1,772 @@
+\chapter{Introduction}
+\label{ch:intro}
+
+\section{The Classical Minimal Surface Problem}
+
+\subsection{Historical Origins: From Plateau to Morse Theory}
+
+The study of minimal surfaces has its roots in eighteenth-century physics and the calculus of
+variations. The name ``minimal surface'' itself originates from the physical observation that soap
+films spanning a wire frame naturally minimize area subject to the boundary constraint. This
+physical phenomenon, formalized as the \emph{Plateau problem}, asks: given a Jordan curve
+$\gamma \subset \mathbb{R}^3$, does there exist a surface of least area with boundary $\gamma$?
+
+The Plateau problem was solved in the 1930s independently by Douglas and Rad\'o using conformal
+parametrizations and harmonic maps. Their work established that smooth minimal surfaces exist for
+nice boundary data, opening the door to a systematic study of minimal submanifolds in Riemannian
+geometry.
+
+A fundamentally different approach emerged in the 1960s through the work of Birkhoff on closed
+geodesics. Birkhoff's \emph{min-max method} constructs a nontrivial closed geodesic on the
+two-sphere $S^2$ by considering a one-parameter family of curves (a ``sweepout'') connecting a
+point curve to itself with nonzero degree. The minimax principle guarantees that the curve of
+maximal length in this family can be shortened to a closed geodesic. This variational idea---finding
+critical points by analyzing the maximum value of a functional over continuous families---became
+the foundation of modern min-max theory.
+
+The extension of Birkhoff's method to higher-dimensional minimal submanifolds, however, faced
+formidable obstacles. Unlike curves in surfaces (where regularity is almost automatic), minimal
+hypersurfaces in higher dimensions may develop singularities, and controlling the topology
+(embeddedness, genus bounds) requires sophisticated machinery from geometric measure theory. These
+challenges motivated the development of \emph{Almgren--Pitts theory}, the modern framework for
+min-max constructions of minimal submanifolds.
+
+\subsection{The Three Fundamental Questions}
+
+The classical theory of minimal submanifolds revolves around three fundamental questions that have
+shaped the development of the field:
+
+\begin{question}[Existence]
+Given topological or boundary constraints, does there exist a minimal submanifold satisfying these
+conditions?
+\end{question}
+
+The existence question has been addressed through various approaches: direct methods in the
+calculus of variations (minimization), geometric flows (mean curvature flow, Ricci flow), and
+min-max methods. Each approach has advantages and limitations. Direct minimization often produces
+area-minimizers but may fail to capture non-minimizing critical points. Geometric flows can lose
+topology through singularities. Min-max methods, while technically demanding, have proven remarkably
+effective at constructing minimal submanifolds with prescribed topological features.
+
+\begin{question}[Regularity]
+Are the minimal submanifolds produced by variational methods smooth? If singularities occur, what
+is their structure?
+\end{question}
+
+The regularity question lies at the heart of geometric analysis. Even when existence is established
+through variational or topological methods, the resulting objects may be singular (as in geometric
+measure theory) or only weakly regular. Understanding when and why minimal submanifolds are smooth
+requires deep techniques from partial differential equations, harmonic analysis, and the theory of
+elliptic regularity. As we will see in Section~\ref{sec:regularity}, the answer depends critically
+on dimension: there is a fundamental \emph{dimension barrier} beyond which singularities are
+unavoidable.
+
+\begin{question}[Multiplicity and Structure]
+How many minimal submanifolds exist? How are they distributed in the ambient manifold?
+\end{question}
+
+The multiplicity question, exemplified by Yau's conjecture (existence of infinitely many minimal
+hypersurfaces in closed manifolds), asks not just whether minimal submanifolds exist, but whether
+they are abundant. Recent breakthroughs have shown that in generic closed manifolds, minimal
+hypersurfaces are not only infinite in number, but form a \emph{dense} set and exhibit remarkable
+\emph{equidistribution} properties with respect to the ambient volume measure. These results reveal
+deep connections between minimal surface theory, spectral geometry, and dynamical systems.
+
+\section{Min-Max Theory: From Existence to Multiplicity}\label{sec:minmax}
+
+Having established the three fundamental questions, we now turn to \emph{min-max theory}, the
+primary tool for addressing existence and multiplicity in the closed manifold setting. Min-max
+methods have achieved spectacular successes over the past decade, resolving long-standing
+conjectures and revealing unexpected structure in the space of minimal submanifolds.
+
+\subsection{The Almgren--Pitts Framework}
+
+The modern min-max theory for minimal hypersurfaces descends from the pioneering work of Almgren
+\cite{Alm62,Alm65,Alm68} and Pitts \cite{Pit81}. Pitts adapted Almgren's homotopy-theoretic
+framework to the setting of codimension-one varifolds in Riemannian manifolds, producing the first
+general existence theorem for minimal hypersurfaces via min-max methods.
+
+\subsubsection{Sweepouts and Width Functionals}
+
+The basic setup is as follows. Let $(M^{n+1}, g)$ be a closed Riemannian manifold. A
+\emph{sweepout} is a continuous map
+\[
+    \Phi: X \to \mathcal{Z}_n(M; \mathbb{Z}_2)
+\]
+from a parameter space $X$ (typically a sphere or torus) to the space $\mathcal{Z}_n(M;\mathbb{Z}_2)$
+of $n$-dimensional mod-$2$ flat chains, satisfying certain non-triviality conditions encoded by
+Almgren's cohomology class $\lambda_n \in H^1(\mathcal{Z}_n(M;\mathbb{Z}_2); \mathbb{Z}_2)$.
+
+For each sweepout $\Phi$, the \emph{width} is defined as
+\[
+    \mathbf{L}(\Phi) := \max_{x \in X} \mathcal{H}^n(\Phi(x)),
+\]
+where $\mathcal{H}^n$ denotes $n$-dimensional Hausdorff measure. The \emph{min-max value} (or
+\emph{$1$-width}) is then
+\[
+    \omega_1(M,g) := \inf_{\Phi \in \Pi} \mathbf{L}(\Phi),
+\]
+where $\Pi$ denotes a suitable homotopy class of sweepouts.
+
+Pitts' fundamental theorem asserts that this min-max value is realized by a stationary integral
+varifold---a weak notion of minimal hypersurface that may have singularities and integer
+multiplicities. The proof involves a delicate pull-tight argument and uses compactness of varifolds
+to extract a limiting object from a minimizing sequence of sweepouts.
+
+\subsubsection{Continuous Sweepouts: The Colding--De Lellis Simplification}
+
+A decisive simplification of the Almgren--Pitts theory was achieved by Colding--De Lellis \cite{CL03}
+and De Lellis--Tasnady \cite{DLT13}. They introduced \emph{continuous sweepouts}---families of
+hypersurfaces parametrized continuously without discretization---and developed a streamlined
+pull-tight procedure that clarifies the geometric picture.
+
+The continuous sweepout framework has several advantages: it is more intuitive, easier to adapt to
+settings with boundary, and better suited for tracking geometric quantities (such as relative
+boundaries in the free-boundary setting). This approach forms the technical foundation for the main
+result of this thesis (Theorem~\ref{thm:main}).
+
+\subsection{The Weyl Law and Volume Spectrum (Codimension One)}
+
+A major breakthrough in min-max theory was the proof of the \emph{Weyl law for the volume spectrum}
+by Liokumovich--Marques--Neves \cite{LMN}. This result provides quantitative control over the growth
+rate of higher min-max values and has far-reaching consequences for multiplicity questions.
+
+\subsubsection{The Volume Spectrum}
+
+For $p \geq 1$, the \emph{$p$-width} $\omega_p^{n-1}(M,g)$ is defined by considering
+$p$-parameter sweepouts---families of hypersurfaces parametrized by a $p$-dimensional parameter
+space $X$ satisfying a non-triviality condition encoded by the $p$-th cup power $\lambda_{n-1}^p$
+of Almgren's cohomology class. The sequence $\{\omega_p^{n-1}(M,g)\}_{p=1}^\infty$ is called the
+\emph{volume spectrum}.
+
+In the 1980s, Gromov \cite{Gro86,Gro02,Gro09} proposed viewing the volume spectrum as a nonlinear
+analog of the eigenvalues of the Laplacian, and conjectured an asymptotic \emph{Weyl law}:
+\[
+    \lim_{p \to \infty} \omega_p^{n-1}(M,g) \, p^{-\frac{n-1}{n}} = \alpha(n) \, \mathrm{Vol}(M,g)^{\frac{n-1}{n}}
+\]
+for a universal constant $\alpha(n) > 0$ depending only on the dimension $n$.
+
+\subsubsection{Resolution of the Weyl Law}
+
+Liokumovich--Marques--Neves \cite{LMN} proved Gromov's conjecture for hypersurfaces,
+establishing the Weyl law with sharp asymptotics. Their proof combines the Almgren--Pitts min-max
+construction with sophisticated regularity arguments and a delicate analysis of how widths vary
+under conformal deformations.
+
+For higher codimension, Gromov's conjecture for $1$-cycles (geodesic nets) was first proved by
+Guth--Liokumovich \cite{GL22} in dimension $n=3$ using parametric versions of the isoperimetric
+and coarea inequalities, and then by Staffa \cite{Sta-Weyl,Sta-Coarea} in arbitrary dimension $n$,
+resolving the conjecture for codimension $n-1$.
+
+The Weyl law has profound implications:
+\begin{itemize}
+    \item It implies the existence of \emph{infinitely many} distinct min-max minimal hypersurfaces
+    (since $\omega_p$ grows without bound as $p \to \infty$).
+
+    \item It provides quantitative estimates on the areas of these hypersurfaces.
+
+    \item It establishes a deep analogy between the volume spectrum and the Laplace spectrum,
+    suggesting that minimal hypersurfaces encode spectral information about the ambient manifold.
+\end{itemize}
+
+\subsection{Yau's Conjecture and Recent Breakthroughs}
+
+Building on the Weyl law, a series of spectacular results resolved Yau's conjecture and revealed
+unexpected structure in the space of minimal hypersurfaces.
+
+\subsubsection{Infinitely Many Minimal Hypersurfaces}
+
+In the early 1980s, Yau conjectured that every closed Riemannian three-manifold contains infinitely
+many immersed minimal surfaces. This conjecture was first resolved by Marques--Neves \cite{MN17}
+for manifolds with positive Ricci curvature in dimensions up to seven, using the Weyl law combined
+with a careful analysis of multiplicities.
+
+Subsequently, Song \cite{Song18} proved Yau's conjecture for arbitrary closed Riemannian manifolds
+of dimension three to seven, removing the Ricci curvature assumption. Song's breakthrough relied on
+a delicate Lusternik--Schnirelmann type argument to handle the \emph{multiplicity problem}: the
+same minimal hypersurface appearing with different integer multiplicities represents distinct
+critical points from the variational perspective, and these must be carefully distinguished to
+ensure infinitude of geometrically distinct hypersurfaces.
+
+\subsubsection{Generic Density}
+
+The progression from existence to geometric understanding continued with Irie--Marques--Neves
+\cite{IMN17}, who proved a \emph{generic density theorem}: for Baire-generic metrics on closed
+manifolds (dimension three to seven), the union of all closed embedded minimal hypersurfaces is
+\emph{dense} in $M$.
+
+This result settled Yau's conjecture in the generic case and revealed a much stronger structure
+than mere infinitude: the minimal hypersurfaces collectively fill the ambient space in a
+topological sense. The proof uses bumpy metrics (metrics for which all minimal hypersurfaces are
+non-degenerate) combined with Morse-theoretic arguments and the Weyl law.
+
+\subsubsection{Generic Equidistribution}
+
+Shortly thereafter, Marques--Neves--Song \cite{MNS} refined the density result into a quantitative
+\emph{generic equidistribution theorem}: for generic metrics, there exists a sequence
+$\{\Sigma_j\}$ of closed embedded minimal hypersurfaces such that
+\[
+    \lim_{q \to \infty} \frac{1}{\sum_{j=1}^q \vol(\Sigma_j)} \sum_{j=1}^q \int_{\Sigma_j} f \, d\mu
+    = \frac{1}{\vol(M)} \int_M f \, d\vol
+\]
+for any smooth function $f: M \to \mathbb{R}$.
+
+This equidistribution result demonstrates that minimal hypersurfaces collectively encode the
+ambient geometry in a profound way, extending classical equidistribution phenomena from dynamical
+systems and number theory to geometric variational problems. The proof crucially relies on the
+Weyl law and quantitative control over how the $p$-widths vary under conformal deformations of the
+metric. A parallel equidistribution result for stationary geodesic nets in $n$-manifolds ($n \geq 3$)
+was established by Li--Staffa \cite{LS23}, building on Staffa's Weyl law and Liokumovich--Staffa's
+generic density result \cite{LioStaffa-dense}.
+
+\section{Regularity Theory: The Dimension Barrier and Recent Breakthroughs}\label{sec:regularity}
+
+Having discussed existence and multiplicity, we now turn to the \emph{regularity question}: Are minimal hypersurfaces
+produced by variational methods smooth? The answer to this question depends critically on the
+dimension of the ambient manifold and reveals deep connections between geometric analysis, partial
+differential equations, and the calculus of variations.
+
+\subsection{Classical Regularity Theory and the Dimension Barrier}
+
+The regularity theory for minimal hypersurfaces has a rich history dating back to the early 1970s.
+A fundamental result of Federer \cite{Fed70}, building on Simons' pioneering work \cite{Sim68} on
+the nonexistence of stable cones in $\mathbb{R}^{n+1}$ for $2 \leq n \leq 6$, established that
+area-minimizing rectifiable hypercurrents have singular sets of Hausdorff codimension at least $7$
+away from their boundary. In particular, for $2 \leq n \leq 6$, any area-minimizing integral
+$n$-cycle in a Riemannian manifold $M^{n+1}$ must be a smooth minimal hypersurface.
+
+However, the situation changes dramatically in dimension $n = 7$. Bombieri--De Giorgi--Giusti
+\cite{BDGG69} proved that the \emph{Simons cone}
+\[
+    \mathcal{C} = \{(x,y) \in \mathbb{R}^4 \times \mathbb{R}^4 : |x| = |y|\}
+\]
+is area-minimizing in $\mathbb{R}^8$, yet has an isolated singularity at the origin. This landmark
+example establishes dimension $8$ as the first dimension where singularities can appear for
+area-minimizing hypersurfaces, creating a fundamental \emph{dimension barrier} for regularity theory.
+
+The existence of the Simons cone has profound implications: it shows that even the strongest
+variational condition (area-minimization) does not guarantee smoothness in dimensions $\geq 8$,
+and that singularities are an intrinsic feature of the geometry in higher dimensions.
+
+\subsection{Integrality and Wickramasekera's Regularity Theorem}\label{subsec:regularity-stable}
+
+For minimal hypersurfaces in \emph{closed manifolds} arising from variational methods (such as
+min-max theory), the relevant notion is \emph{stability} rather than area-minimization. This
+regularity theory, culminating in Wickramasekera's theorem, forms the theoretical foundation for
+Result II of this thesis (Theorem~\ref{thm:non-excessive}). A minimal hypersurface $\Sigma$ is
+\emph{stable} if the second variation of area is non-negative for all compactly supported normal
+variations. In the language of varifolds, this translates to the stability inequality
+\[
+    \int_{\text{spt}\|V\|} |\nabla \phi|^2 \, d\|V\|
+    \geq \int_{\text{spt}\|V\|} |A|^2 \phi^2 \, d\|V\|
+\]
+for all compactly supported smooth functions $\phi$, where $A$ denotes the second fundamental form.
+
+The regularity theory in this setting was pioneered by Schoen--Simon \cite{SS81} and
+Schoen--Simon--Yau \cite{SSY75}, who proved that stable minimal hypersurfaces with natural a priori
+assumptions on the singular set are smooth in dimensions up to $7$. Their work extended Simons'
+nonexistence results for stable cones and applied deep PDE techniques to control the regularity
+near potential singularities.
+
+A decisive breakthrough came with Wickramasekera's deep regularity theorem \cite{Wic14}, which
+provides optimal regularity for stable minimal hypersurfaces (varifolds) under the crucial
+assumption of \emph{integrality}.
+
+\begin{definition}[Integral Varifold]
+An integral varifold is one whose tangent planes have integer multiplicities almost everywhere.
+\end{definition}
+
+Wickramasekera's theorem asserts that if $V$ is an integral stationary varifold in $M^{n+1}$ with
+$2 \leq n \leq 6$ satisfying the stability inequality, then $V$ is a smooth minimal hypersurface
+(possibly with integer multiplicity).
+
+\paragraph{Integrality: The Crucial Bridge for Closed Manifolds.}
+For the closed manifold setting, integrality is the \emph{crucial bridge} between variational
+min-max constructions and regularity theory. Without integrality, Wickramasekera's regularity
+theorem cannot be applied, and smoothness cannot be guaranteed. In the classical Almgren--Pitts
+framework, integrality is built into the construction through the use of integral currents and
+careful pull-tight arguments. However, in more modern frameworks (such as the non-excessive approach
+discussed in Section~\ref{sec:free-bdry}), integrality is not automatic and must be established
+separately, creating a fundamental challenge that we address in Result II of this thesis (see
+Theorem~\ref{thm:non-excessive}).
+
+The quantitative refinements and rectifiability of singular sets have been further studied by
+Cheeger--Naber \cite{CN13} and Naber--Valtorta \cite{NV20}, providing sharp estimates on the
+structure of singularities when they do occur.
+
+\subsection{Regularity for Free Boundary Minimal Hypersurfaces}\label{subsec:lizhou-regularity}
+
+The free boundary setting requires specialized regularity theory that differs fundamentally from
+the closed case. Li--Zhou \cite{LZ17} developed a comprehensive regularity framework for free
+boundary minimal hypersurfaces (FBMH) arising from min-max constructions, establishing smoothness
+up to the boundary and verifying the orthogonality condition $\nu_\Sigma \perp T(\partial M)$ in
+dimensions $3 \leq n+1 \leq 7$.
+
+Their approach exploits the \emph{doubling trick}: by reflecting the manifold $M$ across its
+boundary $\partial M$, one obtains a doubled manifold $\tilde{M}$ without boundary, allowing the
+use of interior regularity techniques. The key technical challenge is to ensure that the reflected
+varifold inherits appropriate regularity properties. Li--Zhou establish this through an
+\emph{almost minimizing property in annuli intersecting the boundary}, which provides sufficient
+control to apply blow-up analysis and conclude smoothness.
+
+Crucially, the Li--Zhou regularity framework operates directly within the min-max construction and
+does not require a separate integrality verification step as in the Wickramasekera approach for
+closed manifolds. The free boundary orthogonality condition emerges naturally from the variational
+principle and the reflection symmetry.
+
+This regularity theory forms the foundation for Result I of this thesis (Theorem~\ref{thm:main}),
+allowing us to construct smooth free boundary minimal hypersurfaces in complete manifolds with
+boundary.
+
+\subsection{Generic Regularity: From Dimension 8 to Dimension 11}\label{subsec:generic-regularity-dim8}
+
+While singularities are unavoidable in dimension $8$ and higher for specific metrics (as
+demonstrated by the Simons cone), a natural and profound question arises:
+
+\begin{question}[Generic Regularity]\label{q:generic-regularity}
+Can singularities of minimal hypersurfaces be resolved by small perturbations of the ambient metric
+or boundary data?
+\end{question}
+
+An affirmative answer to this question, combined with existence results from min-max theory, would
+immediately imply the generic existence of smooth minimal hypersurfaces in higher dimensions.
+
+\subsubsection{N. Smale's Pioneering Work}
+
+This question was first addressed by N. Smale \cite{Sma93}, who proved that in any $8$-dimensional
+closed manifold with $C^k$-generic metric ($k \geq 4$), there exists a smooth area-minimizing
+hypersurface in each nontrivial homology class. Smale's argument crucially relied on the
+\emph{Hardt--Simon foliation theorem} \cite{HS85}, which provides a local foliation by smooth
+minimal hypersurfaces on either side of a regular area-minimizing cone. The key idea is that
+isolated singular points can be ``perturbed away'' by slightly deforming the metric, causing the
+singular cone to be replaced by a smooth foliation.
+
+However, Smale's approach requires that the tangent cone at each singular point be one-sided
+area-minimizing, a restrictive condition that limits the applicability of the Hardt--Simon local
+analysis. Whether regular stable cones that are \emph{not} one-sided area-minimizing admit similar
+foliations remains an important open question in the field.
+
+\subsubsection{Recent Breakthroughs: Li--Wang and Beyond}
+
+The generic regularity program has seen spectacular progress in recent years, moving beyond the
+limitations of local Hardt--Simon analysis:
+
+\paragraph{Li--Wang: Global Perturbation and Singular Capacity.}
+In a groundbreaking work, Yangyang Li and Zhihan Wang \cite{LiWang-dim8} proved that every
+$8$-dimensional closed Riemannian manifold with $C^\infty$-generic metric admits a smooth minimal
+hypersurface. Their approach represents a paradigm shift in generic regularity theory:
+
+\begin{itemize}
+    \item \textbf{Global perturbation framework}: Building on Wang's earlier work \cite{Wang20},
+    they developed a global deformation argument that avoids the restrictive assumptions of local
+    Hardt--Simon analysis. This allows them to handle singular points whose tangent cones may not be
+    one-sided area-minimizing.
+
+    \item \textbf{Singular capacity}: They introduced a novel geometric invariant, the
+    \emph{singular capacity}, which counts singular points with suitable weights. This invariant
+    decreases under generic perturbations, providing a quantitative measure of progress in resolving
+    singularities.
+
+    \item \textbf{Multiplicity considerations}: Their techniques handle minimal hypersurfaces with
+    integer multiplicities, addressing a fundamental challenge in combining min-max theory with
+    generic regularity.
+\end{itemize}
+
+The Li--Wang result settles Question~\ref{q:generic-regularity} affirmatively in dimension $8$ and
+demonstrates that singularities in dimension $8$ are indeed ``artifacts'' of special metrics that
+disappear under generic perturbations.
+
+\paragraph{Chodosh--Mantoulidis--Schulze--Wang: Second-Order Analysis.}
+In a remarkable extension, Chodosh--Mantoulidis--Schulze--Wang \cite{CMSW-dim11} proved generic
+regularity up to dimension $11$ for area-minimizers, both in the Plateau problem setting and for
+minimizers in homology classes. Their strategy involves a sophisticated second-order blow-up
+analysis:
+
+\begin{itemize}
+    \item \textbf{Deeper blow-up}: They go one blow-up level deeper than previous works, modeling
+    the minimizer locally as a \emph{graph of a Jacobi field} over a cylindrical hypercone
+    $\mathcal{C} = \mathcal{C}^\circ \times \mathbb{R}^k$.
+
+    \item \textbf{Almgren frequency at the Jacobi field level}: They introduce a discrete
+    Almgren-type frequency monotonicity quantity that measures the decay rate of graph Jacobi fields
+    toward the origin. This frequency distinguishes between ``fast decay'' (super-linear) and ``slow
+    decay'' (linear) cases.
+
+    \item \textbf{Refined cone-splitting}: In the fast decay case, they obtain improved separation
+    estimates between distinct leaves of the foliation. In the slow decay case, new cone-splitting
+    arguments at the Jacobi field level provide a second-order refinement of the singular set
+    dimension estimates.
+
+    \item \textbf{Non-concentration estimates}: They adapt L. Simon's deep non-concentration
+    techniques \cite{Sim93,Sim94} to control the geometry at multiple scales, wrestling with the
+    possibility of tangent cone non-uniqueness and the lack of an explicit equation for the singular
+    set.
+\end{itemize}
+
+Moreover, they proved that in any $\mathbb{R}^{n+1}$, an area-minimizing hypersurface will have
+singular set of dimension at most $n - 10 - \varepsilon_n$ after a $C^\infty$-perturbation of the
+Plateau boundary, improving the classical $n-7$ bound from Federer's theorem.
+
+\subsection{The Interplay: Min-Max, Integrality, and Regularity}
+
+The regularity theory discussed above is intimately connected to min-max theory. For minimal
+hypersurfaces arising specifically from min-max constructions (not just area-minimizers),
+Chodosh--Liokumovich--Spolaor \cite{CLS20} proved generic existence of smooth minimal hypersurfaces
+in manifolds with positive Ricci curvature. They constructed optimal nested volume-parametrized
+sweepouts and combined the non-excessive framework (discussed in Section~\ref{sec:free-bdry}) with
+Hardt--Simon type perturbations. This work demonstrates that the non-excessive approach can be
+effectively combined with generic regularity techniques, opening new pathways for understanding
+singularities in min-max theory.
+
+The connection between integrality, min-max constructions, and regularity forms a central theme of
+this thesis. In Chapter~\ref{ch:alternative-regularity}, we develop integrality arguments for varifolds
+arising from non-excessive sweepouts when the limiting varifold has multiplicity one. Integrality
+is the \emph{crucial bridge} between variational constructions and regularity theory: without it,
+Wickramasekera's regularity theorem \cite{Wic14} cannot be applied.
+
+The open problem of establishing integrality for multiplicity $\geq 2$ varifolds in the
+non-excessive framework is closely related to the generic regularity questions in higher dimensions.
+The techniques of Li--Wang (singular capacity) and Chodosh et al. (second-order blow-up analysis)
+suggest potential pathways:
+
+\begin{question}
+Can the non-excessive framework be combined with global perturbation techniques (such as the
+singular capacity method) to handle higher multiplicity cases and extend generic regularity to
+dimension $8$ and beyond in the min-max setting?
+\end{question}
+
+Such a combination would unify the variational min-max approach with the recent breakthroughs in
+generic regularity theory, potentially creating a comprehensive framework for understanding minimal
+hypersurfaces across all dimensions.
+
+\section{The Free Boundary Setting: A New Frontier}\label{sec:free-bdry}
+
+Having discussed the remarkable progress in min-max theory and regularity for \emph{closed}
+manifolds (Sections~\ref{sec:minmax}--\ref{sec:regularity}), we now turn to the \emph{free
+boundary setting}---the central focus of this thesis. Free boundary minimal hypersurfaces represent
+a natural generalization of the closed case, but introduce new geometric and analytic challenges
+that require significant technical innovations.
+
+\subsection{From Closed Manifolds to Manifolds with Boundary: Geometric Motivations}
+
+Why study free boundary minimal hypersurfaces? There are several compelling motivations:
+
+\paragraph{Physical motivation:}
+In physics, free boundary problems arise naturally when a minimal surface is allowed to ``float
+freely'' in a domain, meeting the boundary orthogonally. This orthogonality condition appears in
+capillary theory, soap film problems, and extremal surface theory in general relativity.
+
+\paragraph{Geometric motivation:}
+From a purely geometric perspective, free boundary minimal hypersurfaces are critical points of the
+area functional among all hypersurfaces with boundary lying on $\partial M$. They generalize
+geodesics with endpoints on the boundary of a surface, and provide a natural setting for studying
+variational problems in manifolds with boundary.
+
+\paragraph{Spectral motivation:}
+Free boundary minimal hypersurfaces are intimately connected to the \emph{Steklov eigenvalue
+problem}---the spectral problem for the Dirichlet-to-Neumann map on the boundary $\partial M$. This
+connection, discussed in Section~\ref{subsec:steklov}, reveals deep relationships between minimal
+surface theory, spectral geometry, and boundary value problems.
+
+\paragraph{The challenge:}
+Compared to the closed case, the free boundary setting introduces several difficulties:
+\begin{itemize}
+    \item \textbf{Boundary regularity}: Ensuring that minimal hypersurfaces meet $\partial M$
+    smoothly and orthogonally requires refined regularity theory.
+
+    \item \textbf{Compactness}: Varifold compactness is more delicate when boundaries are present,
+    as mass can escape to infinity or concentrate at the boundary.
+
+    \item \textbf{Sweepout construction}: Constructing families of hypersurfaces that respect the
+    free boundary condition and satisfy the necessary non-triviality conditions is technically
+    demanding.
+\end{itemize}
+
+Despite these challenges, the free boundary setting has seen significant progress in recent years,
+and forms a natural frontier for extending the successes of closed min-max theory.
+
+\subsection{Free Boundary Minimal Hypersurfaces: Definitions and Basic Theory}
+
+\begin{definition}[Free Boundary Minimal Hypersurface]
+Let $(M^{n+1}, g)$ be a Riemannian manifold with non-empty boundary $\partial M$. A smooth
+hypersurface $\Sigma \subset M$ with boundary $\partial \Sigma \subset \partial M$ is called a
+\emph{free boundary minimal hypersurface (FBMH)} if:
+\begin{enumerate}
+    \item $\Sigma$ is minimal in the interior: $H_\Sigma \equiv 0$ on $\Sigma \setminus \partial \Sigma$,
+    where $H_\Sigma$ is the mean curvature of $\Sigma$;
+
+    \item $\Sigma$ meets $\partial M$ orthogonally: $\nu_\Sigma \perp T(\partial M)$ along
+    $\partial \Sigma$, where $\nu_\Sigma$ is the unit normal to $\Sigma$.
+\end{enumerate}
+\end{definition}
+
+The orthogonality condition is the \emph{natural boundary condition} arising from the variational
+principle: it ensures that $\Sigma$ is a critical point of the area functional among all
+hypersurfaces with boundary on $\partial M$.
+
+\paragraph{Regularity theory for FBMH:}
+Li--Zhou \cite{LZ17} developed a comprehensive regularity theory for free boundary minimal
+hypersurfaces arising from min-max constructions. They adapted Wickramasekera's regularity theorem
+\cite{Wic14} to the free boundary setting, proving that integral stationary varifolds satisfying
+the orthogonality condition are smooth up to the boundary in dimensions $3 \leq n+1 \leq 7$. Their
+arguments crucially exploit the doubling trick and the almost minimizing property in annuli
+intersecting the boundary.
+
+\subsection{The Steklov Eigenvalue Problem}\label{subsec:steklov}
+
+Free boundary minimal hypersurfaces are intimately connected to the \emph{Steklov eigenvalue
+problem}, a spectral problem on the boundary $\partial M$. The Steklov operator is defined as the
+Dirichlet-to-Neumann map:
+\[
+    \Lambda: C^\infty(\partial M) \to C^\infty(\partial M), \quad
+    \Lambda(f) = \frac{\partial u}{\partial \nu}\Big|_{\partial M},
+\]
+where $u$ is the harmonic extension of $f$ to $M$ (i.e., $\Delta u = 0$ in $M$ and $u|_{\partial M} = f$).
+
+The Steklov eigenvalues $\{\sigma_k\}_{k=0}^\infty$ are the eigenvalues of $\Lambda$, and the
+corresponding eigenfunctions satisfy
+\[
+    \Delta u = 0 \text{ in } M, \quad
+    \frac{\partial u}{\partial \nu} = \sigma u \text{ on } \partial M.
+\]
+
+Free boundary minimal hypersurfaces arise as level sets of Steklov eigenfunctions, providing a
+variational characterization analogous to the relationship between geodesics and the Laplace
+spectrum. This connection has been exploited to study extremal properties of Steklov eigenvalues
+and to construct free boundary minimal surfaces in various geometric settings.
+
+\subsection{The Non-Excessive Condition and Integrality}\label{subsec:non-excessive-integrality}
+
+A major recent development in min-max theory is the \emph{non-excessive sweepout framework},
+introduced by Chodosh--Liokumovich--Spolaor \cite{CLS20}. This framework provides a conceptual
+simplification of the classical Almgren--Pitts approach and has proven particularly effective when
+combined with generic regularity techniques.
+
+\subsubsection{What is a Non-Excessive Sweepout?}
+
+A sweepout is called \emph{non-excessive} if it cannot be continuously deformed to reduce its
+maximal area while staying in the same homotopy class. This variational criticality condition plays
+a role analogous to stationarity, but operates directly at the level of continuous families rather
+than through pull-tight constructions.
+
+The non-excessive framework offers both elegance and new challenges. On one hand, it avoids many
+technical deformations required in the classical approach. On the other hand, ensuring the
+\emph{integrality} of the limiting varifold---a property essential for applying Wickramasekera's
+regularity theorem (Section~\ref{subsec:regularity-stable})---requires new arguments.
+
+\subsubsection{The Integrality Challenge}
+
+Integrality is the \emph{crucial bridge} between variational min-max constructions and regularity
+theory. Wickramasekera's theorem \cite{Wic14} requires that the stationary varifold be
+integral---that is, its multiplicity function takes integer values almost everywhere. Without
+integrality, the regularity machinery breaks down, and smoothness cannot be guaranteed.
+
+In the classical Almgren--Pitts framework, integrality is built into the construction through the
+use of integral currents and careful pull-tight arguments. However, in the non-excessive framework,
+integrality is not automatic and must be established separately. This creates a fundamental
+challenge:
+
+\begin{question}[Integrality in the Non-Excessive Framework]
+Under what conditions does a stationary varifold arising from a non-excessive sweepout have integer
+multiplicities?
+\end{question}
+
+This question is addressed in Chapter~\ref{ch:alternative-regularity} of this thesis, where we develop
+integrality arguments for the case when the limiting varifold has multiplicity one. Our proof
+strategy distinguishes two cases:
+\begin{itemize}
+    \item \textbf{No mass cancellation}: Standard varifold convergence preserves integrality.
+
+    \item \textbf{With mass cancellation}: We develop new arguments using the non-excessive property
+    to control the limiting measure and ensure integer multiplicities.
+\end{itemize}
+
+However, a subtle difficulty arises when the limiting varifold has multiplicity two or higher: in
+this case, our current techniques do not guarantee integrality, and thus Wickramasekera's regularity
+theorem \cite{Wic14} cannot be directly applied. This open problem is deeply connected to the
+generic regularity questions discussed in Section~\ref{subsec:generic-regularity-dim8}.
+
+\section{Main Results of This Thesis}
+
+Having laid out the historical and theoretical background, we now state the main results of this
+thesis. We present two contributions: (I) the construction of free boundary minimal hypersurfaces
+in complete manifolds, and (II) a clarification of the integrality issue in the non-excessive
+min-max framework.
+
+\subsection{Result I: Free-Boundary Min-Max in Complete Manifolds}
+
+The primary objective of this work is to establish the existence of free-boundary minimal
+hypersurfaces in complete Riemannian manifolds with boundary and sublinear volume growth, combining
+the techniques of Chambers--Liokumovich \cite{CL20} for complete manifolds with the free-boundary
+theory of Li--Zhou \cite{LZ17}.
+
+\begin{theorem}[Main Theorem: Free Boundary in Complete Manifolds]\label{thm:main}
+    Let $3 \leq n + 1 \leq 7$. Let $M^{n + 1}$ be a smooth complete Riemannian manifold with
+    non-empty boundary $\partial M$ and sublinear volume growth. Then there exists a hypersurface
+    $\Sigma$ with boundary $\partial\Sigma \subset \partial M$ such that
+    \begin{enumerate}
+        \item[(i)] $\Sigma$ is smoothly embedded in $M$ up to the boundary $\partial \Sigma$;
+        \item[(ii)] $\Sigma$ is minimal in the interior of $\Sigma$; and
+        \item[(iii)] $\Sigma$ meets $\partial M$ orthogonally along $\partial \Sigma$.
+    \end{enumerate}
+    Moreover, $\Sigma$ is smooth up to the boundary.
+\end{theorem}
+
+The overall strategy mirrors that of \cite{CL20}, but each step must be revisited to track the
+interaction with $\partial M$.
+
+\begin{remark}[Relationship to regularity theory]
+Our main theorem (Theorem~\ref{thm:main}) guarantees smoothness in dimensions $3 \leq n+1 \leq 7$
+by applying the Li--Zhou free-boundary regularity theory \cite{LZ17} (see
+Section~\ref{subsec:lizhou-regularity}). This regularity framework is specifically designed for
+free boundary minimal hypersurfaces and operates directly within the min-max construction. The
+dimension restriction $3 \leq n+1 \leq 7$ is intrinsic to Li--Zhou's regularity arguments: in
+dimension $8$ and higher, singularities may appear even for free boundary minimal hypersurfaces, as
+suggested by the existence of the Simons cone in the closed case
+(Section~\ref{subsec:generic-regularity-dim8}). The recent breakthroughs of Li--Wang
+\cite{LiWang-dim8} and Chodosh et al. \cite{CMSW-dim11} show that generic regularity can be
+achieved through metric perturbations in dimensions up to $11$, suggesting potential future
+extensions of our complete manifold results to higher dimensions via similar techniques.
+\end{remark}
+
+\subsection{Result II: Non-Excessive Min-Max and Integrality}
+
+As a complementary contribution, we provide a new approach to the existence of smooth minimal
+hypersurfaces in closed manifolds using the non-excessive sweepout framework, with a focus on
+clarifying the \emph{integrality issue}---the crucial bridge between variational constructions and
+regularity theory (see Section~\ref{subsec:regularity-stable}).
+
+\subsubsection{Motivation: An Alternative Proof of Pitts' Existence Theorem}
+
+The existence of minimal hypersurfaces in closed Riemannian manifolds was first established by
+Pitts~\cite{Pit81} using the Almgren--Pitts min-max theory with regularity provided by
+Schoen--Simon and Schoen--Simon--Yau combined with freezing. Subsequently,
+Colding--De~Lellis~\cite{CL03} gave an alternative proof for $n+1=3$ (surfaces in 3-manifolds) using
+Simon--Smith continuous sweepouts combined with Meeks--Yau regularity, which De~Lellis--Tasnady~\cite{DLT13}
+extended to all dimensions $n+1 \leq 7$ using Schoen--Simon--Yau regularity. Both alternative proofs
+still use freezing arguments and require working with multiple sweepouts in the construction.
+
+The original motivation for this work was to provide yet another alternative proof of Pitts' theorem
+using the non-excessive framework introduced by Chodosh--Liokumovich--Spolaor~\cite{CLS22}. Our
+approach differs from previous work in two key aspects: (1) we use Wickramasekera's regularity
+theorem~\cite{Wic14} (which requires stability but avoids freezing), with stability provided
+directly by the non-excessive condition, and (2) we work with a single, well-structured nested
+sweepout rather than the multiple sweepouts required in Colding--De~Lellis and De~Lellis--Tasnady.
+We use the same classical tightening procedure as previous approaches to obtain a stationary varifold.
+
+The trade-off is that working with non-excessive sweepouts yields only stationary varifolds, and
+integrality must be established separately (whereas it is automatic when working with integral
+currents). We succeed in proving integrality for the multiplicity-one case
+(Theorem~\ref{thm:non-excessive} below), yielding an alternative proof of Pitts' theorem under this
+multiplicity assumption. If one could extend this to multiplicity two, it would yield a complete
+alternative proof using Wickramasekera regularity and requiring only a single nested sweepout.
+
+The multiplicity-two case remains open in all dimensions $n \geq 2$, preventing us from fully
+realizing the original goal. Nevertheless, our result provides an alternative proof of Pitts'
+theorem for multiplicity-one varifolds, offering a different approach to regularity via
+Wickramasekera's theorem rather than freezing.
+
+\begin{theorem}[Non-Excessive Min-Max: Multiplicity One Case]\label{thm:non-excessive}
+    Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$. Suppose a non-excessive
+    min-max procedure produces a stationary varifold with multiplicity one. Then the varifold is
+    integral. Moreover, for $2 \leq n \leq 6$, Wickramasekera's regularity theorem implies the
+    varifold is a smooth, closed, embedded minimal hypersurface in $M$.
+\end{theorem}
+
+\subsubsection{Key Technical Contributions}
+
+Our main contribution is a \emph{direct proof of integrality} for the stationary varifold arising
+from a non-excessive sweepout when it has multiplicity one. As explained in
+Section~\ref{subsec:regularity-stable}, integrality is essential for applying Wickramasekera's
+regularity theorem \cite{Wic14}: without it, the regularity machinery breaks down and smoothness
+cannot be guaranteed.
+
+The proof strategy distinguishes two cases depending on whether mass cancellation occurs in the
+limiting process:
+\begin{itemize}
+    \item \textbf{No mass cancellation}: Standard varifold convergence preserves integrality, and
+    we can directly apply Wickramasekera's theorem to conclude smoothness.
+
+    \item \textbf{With mass cancellation}: We develop new arguments using the non-excessive property
+    to control the limiting measure. The key insight is that the non-excessive condition prevents
+    certain types of mass concentration that would destroy integrality, allowing us to track integer
+    multiplicities through the limiting process.
+\end{itemize}
+
+\subsubsection{The Multiplicity Barrier and Open Problems}
+
+Our integrality result exhibits a fundamental limitation with respect to multiplicity. For
+multiplicity one, our arguments establish integrality in all dimensions $n \geq 2$, and combined
+with Wickramasekera's regularity theorem (when $2 \leq n \leq 6$), this yields smooth minimal
+hypersurfaces.
+
+However, a crucial difficulty arises when the limiting varifold has multiplicity two or higher. Our
+current methods do \emph{not} establish integrality when the limiting varifold has multiplicity
+$\geq 2$ in \emph{any} dimension $n \geq 2$. This is the fundamental barrier preventing us from
+obtaining a complete alternative proof of Pitts' theorem. The issue is subtle and geometric:
+
+\begin{itemize}
+    \item When mass cancellation occurs in the limiting process, two sheets with opposite
+    orientations can approach each other, producing a varifold of multiplicity 2 but a current with
+    strictly smaller mass.
+
+    \item The multiplicity-one assumption is essential for ruling out such cancellation: if
+    $\Theta^n(V,x) = 1$ almost everywhere, cancellation would create points with $\Theta^n \geq 2$,
+    yielding a contradiction.
+
+    \item For multiplicity $\geq 2$, this argument breaks down in all dimensions $n \geq 2$, and
+    integrality remains an open problem in the non-excessive framework.
+\end{itemize}
+
+\textbf{Consequence:} Resolving integrality for multiplicity two would yield a complete alternative
+proof of Pitts' existence theorem that is conceptually simpler than both the original
+Almgren--Pitts approach and the De~Lellis--Tasnady simplification. However, as it stands, our
+result provides only a partial simplification, establishing integrality under the additional
+assumption that the limiting varifold has multiplicity one.
+
+This multiplicity barrier is not merely technical---it reflects deep geometric phenomena related to
+mass cancellation in the non-excessive framework, and is intimately connected to the generic
+regularity questions discussed in Section~\ref{subsec:generic-regularity-dim8}. The recent work of Li--Wang \cite{LiWang-dim8}
+introduces a \emph{singular capacity} invariant that counts singular points with suitable weights,
+providing a quantitative measure of progress in resolving singularities. Similarly,
+Chodosh--Mantoulidis--Schulze--Wang \cite{CMSW-dim11} develop second-order blow-up analysis that
+distinguishes between different decay rates of Jacobi fields near singularities.
+
+\begin{question}
+Can the non-excessive framework be combined with these global perturbation techniques (such as
+singular capacity or second-order blow-up analysis) to handle higher multiplicity cases and extend
+generic regularity to dimension $8$ and beyond in the min-max setting?
+\end{question}
+
+Such a combination would unify the variational min-max approach with the recent breakthroughs in
+generic regularity theory, potentially creating a comprehensive framework for understanding minimal
+hypersurfaces that works across all dimensions and multiplicity levels.
+
+\subsection{Organization of the Thesis}
+
+Chapter~\ref{ch:examples} sets the analytic stage for both results: we collect notation, recall
+the relative coarea formula, define good sets and good sweepouts, and introduce the non-excessive
+framework. The good set framework provides a quantitative way to ensure that width and boundary
+size are compatible.
+
+Chapter~\ref{ch:alternative-regularity} presents our non-excessive min-max result for closed manifolds
+(Theorem~\ref{thm:non-excessive}). We establish the existence of a stationary varifold via a
+simplified tightening argument, then prove its integrality and rectifiability in the multiplicity-one
+case. The proof distinguishes two cases depending on whether mass cancellation occurs in the limiting
+process. We conclude with a discussion of potential extensions to free-boundary problems and the
+challenges posed by higher multiplicities.
+
+Chapters~\ref{ch:structure}--\ref{ch:convergence-of-min-max} contain the proof of the main
+free-boundary result (Theorem~\ref{thm:main}) using the continuous sweepout approach.
+Chapter~\ref{ch:structure} outlines the logic of the min-max argument and isolates the two major
+difficulties: preventing the min-max sequence from escaping to infinity and constructing nested
+sweepouts with controlled area. These are resolved in the subsequent technical chapters.
+Chapter~\ref{ch:morse-foliation} adapts Morse foliation techniques to the doubled manifold, while
+Chapter~\ref{ch:splitting-and-extension} contains relative splitting and extension lemmas needed
+to monotonise families. Chapter~\ref{ch:nested-sweepout} uses these tools to build nested sweepouts.
+Chapter~\ref{ch:no-escape-to-infinity} proves the non-escape property, and
+Chapter~\ref{ch:convergence-of-min-max} carries out the pull-tight and regularity arguments that
+culminate in the proof of Theorem~\ref{thm:main}.
+
+Finally, the appendix records the interpolation results that bridge continuous and discrete notions
+of almost minimizing, which are used in both the classical and non-excessive approaches.

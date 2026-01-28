@@ -1,0 +1,64 @@
+This is BibTeX, Version 0.99d (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: thesis.aux
+A level-1 auxiliary file: frontbackmatter/titlepage.aux
+A level-1 auxiliary file: frontbackmatter/abstract.aux
+A level-1 auxiliary file: frontbackmatter/dedication.aux
+A level-1 auxiliary file: frontbackmatter/acknowledgements.aux
+A level-1 auxiliary file: frontbackmatter/publications.aux
+A level-1 auxiliary file: frontbackmatter/contents.aux
+A level-1 auxiliary file: chapters/2-example.aux
+A level-1 auxiliary file: chapters/4-morse_foliations.aux
+A level-1 auxiliary file: chapters/5-splitting_and_extension.aux
+A level-1 auxiliary file: chapters/6-nested_sweepout.aux
+A level-1 auxiliary file: chapters/7-no_escape_to_infinity.aux
+A level-1 auxiliary file: chapters/8-convergence-of-min-max.aux
+A level-1 auxiliary file: chapters/9-alternative-regularity.aux
+A level-1 auxiliary file: chapters/appendix1.aux
+A level-1 auxiliary file: frontbackmatter/bibliography.aux
+The style file: amsalpha.bst
+Database file #1: thesis.bib
+Warning--missing pages in CL03
+Warning--missing pages in CLS22
+You've used 14 entries,
+            2624 wiz_defined-function locations,
+            672 strings with 6768 characters,
+and the built_in function-call counts, 4826 in all, are:
+= -- 445
+> -- 184
+< -- 8
++ -- 57
+- -- 55
+* -- 401
+:= -- 780
+add.period$ -- 14
+call.type$ -- 14
+change.case$ -- 77
+chr.to.int$ -- 14
+cite$ -- 16
+duplicate$ -- 206
+empty$ -- 402
+format.name$ -- 76
+if$ -- 965
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 28
+newline$ -- 52
+num.names$ -- 42
+pop$ -- 97
+preamble$ -- 1
+purify$ -- 91
+quote$ -- 0
+skip$ -- 144
+stack$ -- 0
+substring$ -- 297
+swap$ -- 16
+text.length$ -- 8
+text.prefix$ -- 7
+top$ -- 0
+type$ -- 104
+warning$ -- 2
+while$ -- 50
+width$ -- 18
+write$ -- 154
+(There were 2 warnings)
