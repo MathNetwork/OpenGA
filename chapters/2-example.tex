@@ -2,17 +2,17 @@
 
 This chapter establishes the foundational framework for the free boundary min-max theory in complete Riemannian manifolds with boundary.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Notation and Basic Conventions}\label{sec:notation}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 Let $(M^{n+1}, g)$ be a smooth, complete Riemannian manifold with non-empty smooth boundary $\partial M$. We assume $2 \leq n \leq 6$ throughout. We write $\nu_{\partial M}$ for the inward unit normal to $\partial M$. See Appendix~\ref{sec:fermi-coordinates} for details on Fermi coordinates near $\partial M$.
 
-We denote by $\mathcal{H}^k$ the $k$-dimensional Hausdorff measure and by $\mathbf{M}(T)$ the mass of a current $T$. For vector fields, we write $\mathfrak{X}(M)$ for smooth compactly supported vector fields on $M$, and 
+We denote by $\mathcal{H}^k$ the $k$-dimensional Hausdorff measure and by $\mathbf{M}(T)$ the mass of a current $T$. We assume $M$ is isometrically embedded in some $\mathbb{R}^L$. For vector fields, let $\mathfrak{X}_c(M)$ denote the space of \emph{compactly supported} smooth vector fields on $M$ that are tangent to $M$:
+\begin{multline*}
+\mathfrak{X}_c(M) := \bigl\{X \in \mathfrak{X}(\mathbb{R}^L) : X \text{ is compactly supported},\\
+X(p) \in T_p M \text{ for all } p \in M\bigr\}.
+\end{multline*}
+The subspace of vector fields additionally tangent to the boundary is
 \[
-\mathfrak{X}_{\mathrm{tan}}(M) := \{X \in \mathfrak{X}(M) : X(p) \in T_p(\partial M) \text{ for all } p \in \partial M\}
+\mathfrak{X}_{\mathrm{tan}}(M) := \{X \in \mathfrak{X}_c(M) : X(p) \in T_p(\partial M) \text{ for all } p \in \partial M\}.
 \]
-for those tangent to $\partial M$.
 
 For a relatively open subset $U \subset M$, we write $\mathrm{int}_M(U)$ for the relative interior of $U$ in $M$. We use $A \Subset B$ to denote that $\overline{A}$ is compact and contained in $B$.
 
@@ -20,27 +20,80 @@ For a relatively open subset $U \subset M$, we write $\mathrm{int}_M(U)$ for the
 A smooth function $f: M \to \mathbb{R}$ is \emph{$\partial$-transverse} if $f|_{\partial M}$ has no critical points, i.e.\ $\nabla_{\partial M}(f|_{\partial M}) \neq 0$ everywhere on $\partial M$.  A \emph{$\partial$-transverse Morse function} is a Morse function on $M$ that is also $\partial$-transverse.
 \end{definition}
 
+\begin{definition}[Bounded geometry]\label{def:bounded-geom}
+A complete Riemannian manifold $(M^{n+1}, g)$ with boundary $\partial M$ has \emph{bounded geometry} if there exists a constant $\Lambda > 0$ such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item $\mathrm{Ric}_M \geq -\Lambda g$;
+    \item $|A_{\partial M}| \leq \Lambda$, where $A_{\partial M}$ is the second fundamental form of $\partial M$;
+    \item $\mathrm{inj}(M) \geq \Lambda^{-1}$.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}\label{rem:bounded-geom}
+The bounded geometry assumption ensures that the constants in the monotonicity formula (\cite[Theorem~2.3]{LZ17}) and Fermi coordinates (\cite[Appendix~A]{LZ17}) are uniformly controlled. In the compact case of \cite{LZ17}, these bounds hold automatically.
+\end{remark}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Currents and Relative Cycles}\label{sec:relative-cycles}
+\section{Currents and Varifolds}\label{sec:currents-varifolds}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We work with currents and relative cycles following Li--Zhou~\cite{LZ17}. We write $\mathcal{R}_k(M)$ for the space of integer rectifiable $k$-currents supported in $M$, with mass norm $\mathbf{M}$ and flat topology. For a bounded open set $\Omega \subset M$ of finite perimeter (i.e.\ a Caccioppoli set), we write $Q_\Omega := \llbracket \Omega \rrbracket \in \mathcal{R}_{n+1}(M)$ for the associated $(n+1)$-current, so that $\mathbf{M}(\partial Q_\Omega) < \infty$.
 
-\begin{definition}[Relative cycles]\label{def:relative-cycle}
-The space of \emph{relative cycles} is
+\begin{definition}[Relative cycles and equivalence classes]\label{def:relative-cycle}
+For subsets $A \supset B$ of $M$, the space of \emph{relative cycles} is
 \[
-\mathcal{Z}_n(M, \partial M) := \{T \in \mathcal{R}_n(M) : \mathrm{spt}(T) \subset M, \ \mathrm{spt}(\partial T) \subset \partial M\},
+\mathcal{Z}_n(A, B) := \{T \in \mathcal{R}_n(M) : \mathrm{spt}(T) \subset A, \ \mathrm{spt}(\partial T) \subset B\},
 \]
-equipped with the flat topology. Each $\tau \in \mathcal{Z}_n(M, \partial M)$ satisfies $\partial \tau \subset \partial M$ automatically.
+equipped with the flat topology. The \emph{space of equivalence classes of relative cycles} is the quotient
+\[
+\mathbf{Z}_n(A, B) := \mathcal{Z}_n(A, B) / \mathcal{Z}_n(B, B).
+\]
+Two cycles $T_1, T_2 \in \mathcal{Z}_n(A, B)$ represent the same class $\tau \in \mathbf{Z}_n(A, B)$ if and only if $T_1 - T_2 \in \mathcal{Z}_n(B, B)$, i.e., $T_1 - T_2$ is supported in $B$.
 \end{definition}
 
-\begin{remark}\label{rem:filling-cycle}
-For any bounded open set $\Omega \subset M$ of finite perimeter, the current $\partial \llbracket \Omega \rrbracket$ gives a relative cycle in $\mathcal{Z}_n(M, \partial M)$. We refer to $\llbracket \Omega \rrbracket$ as the \emph{filling} of this cycle. For a relative cycle $\tau \in \mathcal{Z}_n(M, \partial M)$, the mass restricted to an open set $V$ is $\|\tau\|(V) := \mathbf{M}(\tau \llcorner V)$.
+\begin{definition}[Canonical representative]\label{def:canonical-rep}
+For $\tau \in \mathbf{Z}_n(A, B)$, there exists a unique representative $T \in \tau$ satisfying $T \llcorner B = 0$. This $T$ is called the \emph{canonical representative} of $\tau$. When no confusion arises, we identify $\tau$ with its canonical representative.
+\end{definition}
+
+\begin{definition}[Mass of an equivalence class]\label{def:mass-equivalence-class}
+For $\tau \in \mathbf{Z}_n(A, B)$, the \emph{mass} of $\tau$ is defined as $\mathbf{M}(\tau) := \mathbf{M}(T)$, where $T$ is the canonical representative of $\tau$.
+\end{definition}
+
+\begin{remark}\label{rem:mass-infimum}
+By \cite[Lemma~3.3]{LZ17}, we have $\mathbf{M}(\tau) = \inf_{S \in \tau} \mathbf{M}(S)$. In particular, the canonical representative achieves the infimum of mass over all representatives.
 \end{remark}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Boundary Decomposition of Currents}\label{sec:boundary-decomposition}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{definition}[Relative flat norm]\label{def:relative-flat-norm}
+For a compact set $K \subset M$ and $\tau \in \mathbf{Z}_n(A, B)$, the \emph{relative flat norm} is
+\[
+\mathcal{F}^K(\tau) := \inf_{T \in \tau} \mathcal{F}^K(T),
+\]
+where $\mathcal{F}^K(T) := \inf\{\mathbf{M}(T - \partial S) + \mathbf{M}(S) : S \in \mathcal{R}_{n+1}(M), \mathrm{spt}(S) \subset K\}$ is the flat norm of $T$ relative to $K$.
+\end{definition}
+
+\begin{lemma}[$\mathcal{F}$-isoperimetric lemma {\cite[Lemma~3.15]{LZ17}}]\label{lem:F-isoperimetric}
+There exist $\epsilon_M > 0$ and $C_M \geq 1$ depending only on the isometric embedding $M \hookrightarrow \mathbb{R}^L$ such that for any $\tau_1, \tau_2 \in \mathbf{Z}_n(M, \partial M)$ with $\mathcal{F}(\tau_2 - \tau_1) < \epsilon_M$, there exists an integral $(n+1)$-current $Q$ (an \emph{isoperimetric choice}) such that:
+\begin{itemize}
+    \item $\mathrm{spt}(Q) \subset M$;
+    \item $\mathrm{spt}(T_2 - T_1 - \partial Q) \subset \partial M$;
+    \item $\mathbf{M}(Q) \leq C_M \mathcal{F}(\tau_2 - \tau_1)$,
+\end{itemize}
+where $T_1, T_2$ are the canonical representatives of $\tau_1, \tau_2$.
+\end{lemma}
+
+\begin{lemma}[$\mathbf{M}$-isoperimetric lemma {\cite[Lemma~3.17]{LZ17}}]\label{lem:M-isoperimetric}
+There exist $\epsilon_M > 0$ and $C_M \geq 1$ depending only on the isometric embedding $M \hookrightarrow \mathbb{R}^L$ such that for any $\tau_1, \tau_2 \in \mathbf{Z}_n(M, \partial M)$ with $\mathbf{M}(\tau_2 - \tau_1) < \epsilon_M$, there exist an integral $(n+1)$-current $Q$ and an integer rectifiable $n$-current $R$ such that:
+\begin{itemize}
+    \item $\mathrm{spt}(Q) \subset M$, $\mathrm{spt}(R) \subset \partial M$;
+    \item $T_2 - T_1 = \partial Q + R$;
+    \item $\mathbf{M}(Q) + \mathbf{M}(R) \leq C_M \mathbf{M}(\tau_2 - \tau_1)$,
+\end{itemize}
+where $T_1, T_2$ are the canonical representatives.
+\end{lemma}
+
+\begin{remark}\label{rem:filling-cycle}
+For any bounded open set $\Omega \subset M$ of finite perimeter, the current $\partial \llbracket \Omega \rrbracket$ gives a relative cycle in $\mathcal{Z}_n(M, \partial M)$. We refer to $\llbracket \Omega \rrbracket$ as the \emph{filling} of this cycle. For a relative cycle $\tau \in \mathbf{Z}_n(M, \partial M)$ with canonical representative $T$, the mass restricted to an open set $V$ is $\|\tau\|(V) := \mathbf{M}(T \llcorner V)$.
+\end{remark}
 
 For a bounded open set $U \subset M$ with smooth boundary, the associated $(n+1)$-current $\llbracket U \rrbracket \in \mathcal{R}_{n+1}(M)$ has boundary
 \[
@@ -48,63 +101,185 @@ For a bounded open set $U \subset M$ with smooth boundary, the associated $(n+1)
 \]
 where:
 \begin{itemize}
-    \item $\partial_I U := \partial \llbracket U \rrbracket \llcorner \mathrm{int}(M)$ is the \emph{interior boundary} (a relative cycle in $\mathcal{Z}_n(M, \partial M)$, since $U$ has smooth boundary);
-    \item $\partial_F U := \partial \llbracket U \rrbracket \llcorner \partial M$ is the \emph{free boundary part} (supported on $\partial M$).
+    \item $\partial_I U := \partial \llbracket U \rrbracket \llcorner \mathrm{int}(M)$ is the \emph{interior boundary}, supported on $\partial U \cap \mathrm{int}(M)$;
+    \item $\partial_F U := \partial \llbracket U \rrbracket \llcorner \partial M$ is the \emph{free boundary part}, supported on $\overline{U} \cap \partial M$.
 \end{itemize}
 
+\begin{remark}\label{rem:LZ-correspondence}
+In the notation of Li--Zhou~\cite{LZ17}, sweepouts of $(U, \partial_F U)$ correspond to families in $\mathbf{Z}_n(\overline{U}, \overline{U} \cap \partial M)$. The interior boundary $\partial_I U$ is a relative cycle in $\mathcal{Z}_n(M, \partial M)$ since $U$ has smooth boundary.
+\end{remark}
+
+\begin{remark}[Why equivalence classes are necessary]\label{rem:why-equivalence}
+Working with the quotient space $\mathbf{Z}_n(A, B)$ rather than the space of currents $\mathcal{Z}_n(A, B)$ is essential for several reasons:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item \emph{Well-defined mass}: The mass $\mathbf{M}(\tau)$ of an equivalence class (Definition~\ref{def:mass-equivalence-class}) is canonically defined via the canonical representative, whereas the mass of a current in a class depends on the choice of representative.
+    \item \emph{Homotopy theory}: The discrete homotopy framework (Definition~\ref{def:homotopy-sequence}) requires $\mathbf{M}$-fineness, which is naturally defined on $\mathbf{Z}_n(M, \partial M)$ since representatives differing by cycles in $\partial M$ should be considered equivalent.
+    \item \emph{Isoperimetric lemmas}: The $\mathcal{F}$- and $\mathbf{M}$-isoperimetric lemmas (Lemmas~\ref{lem:F-isoperimetric} and~\ref{lem:M-isoperimetric}) require working with equivalence classes to ensure that the isoperimetric choices are well-defined up to boundary terms.
+\end{enumerate}
+\end{remark}
+
+We recall the slicing theory for integer rectifiable currents; see Simon~\cite[Sections~28--29]{Sim84}.
+
+\begin{theorem}[Slicing~{\cite[28.4, 28.5]{Sim84}}]\label{thm:slicing}
+Let $T \in \mathcal{R}_{n+1}(M)$ and let $f: M \to \mathbb{R}$ be a Lipschitz function. Then for almost every $t \in \mathbb{R}$, the \emph{slice}
+\[
+\langle T, f, t \rangle \in \mathcal{R}_n(M)
+\]
+is a well-defined integer rectifiable $n$-current satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item (Boundary formula) $\partial \langle T, f, t \rangle = \langle \partial T, f, t \rangle$ wherever $\partial T$ has locally finite mass;
+    \item (Coarea inequality) $\int_{\mathbb{R}} \mathbf{M}(\langle T, f, t \rangle)\, dt \leq \int |\nabla f|\, d\|T\|$.
+\end{enumerate}
+\end{theorem}
+
+\begin{corollary}[Coarea formula for fillings]\label{cor:coarea-filling}
+Let $Q = \llbracket \Omega \rrbracket$ for a bounded open set $\Omega \subset M$ of finite perimeter, and let $f: M \to \mathbb{R}$ be Lipschitz. Then for almost every $t$, the slice $\langle Q, f, t \rangle \in \mathcal{Z}_n(M, \partial M)$ is a relative cycle, and
+\[
+\int_{\mathbb{R}} \mathbf{M}(\langle Q, f, t \rangle)\, dt \leq \int_\Omega |\nabla f|\, d\mathcal{H}^{n+1}.
+\]
+\end{corollary}
+
+We collect the basic definitions from varifold theory needed in later chapters. Standard references include Pitts~\cite{Pit81} and Simon~\cite{Sim84}.
+
+\begin{definition}[Varifolds]\label{def:varifold}
+Let $\mathrm{Gr}_n(M)$ denote the Grassmannian bundle of (unoriented) $n$-planes over $M$. An \emph{$n$-varifold} on $M$ is a Radon measure on $\mathrm{Gr}_n(M)$. The space of all $n$-varifolds is denoted $\mathcal{V}_n(M)$, equipped with the weak-$*$ topology.
+
+For $V \in \mathcal{V}_n(M)$, the \emph{mass measure} $\|V\|$ is the pushforward of $V$ under the projection $\mathrm{Gr}_n(M) \to M$. The \emph{total mass} is $\|V\|(M)$, and the \emph{support} is $\operatorname{spt}\|V\|$. For an open set $A \subset M$, the \emph{restriction} $V \llcorner A$ is the varifold defined by $V \llcorner A(E) := V(E \cap \mathrm{Gr}_n(A))$.
+\end{definition}
+
+\begin{definition}[First variation]\label{def:first-variation}
+The \emph{first variation} of $V \in \mathcal{V}_n(M)$ is the linear functional on smooth vector fields defined by
+\[
+\delta V(X) := \int_{\mathrm{Gr}_n(M)} \operatorname{div}_S X(x) \, dV(x, S),
+\]
+where $\operatorname{div}_S X(x) := \sum_{i=1}^n \langle \nabla_{e_i} X, e_i \rangle$ for any orthonormal basis $\{e_i\}$ of $S$.
+\end{definition}
+
+\begin{definition}[Stationarity]\label{def:stationary}
+A varifold $V \in \mathcal{V}_n(M)$ is:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item \emph{stationary in $\operatorname{int}(M)$} if $\delta V(X) = 0$ for all $X \in \mathfrak{X}_c(\operatorname{int}(M))$;
+    \item \emph{stationary with free boundary} if $\delta V(X) = 0$ for all $X \in \mathfrak{X}_{\mathrm{tan}}(M)$.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}\label{rem:stationarity-relation}
+Condition~(ii) implies condition~(i) since $\mathfrak{X}_c(\operatorname{int}(M)) \subset \mathfrak{X}_{\mathrm{tan}}(M)$. The additional constraint in~(ii) is that the first variation vanishes even for vector fields that are supported up to $\partial M$, as long as they are tangent to $\partial M$.
+\end{remark}
+
+\begin{definition}[$\mathbf{F}$-metric]\label{def:F-metric}
+The \emph{$\mathbf{F}$-metric} on $\mathcal{V}_n(M)$ is defined by
+\[
+\mathbf{F}(V, W) := \sup\biggl\{\int f \, dV - \int f \, dW : f \in C_c(\mathrm{Gr}_n(M)),\ |f| \leq 1,\ \operatorname{Lip}(f) \leq 1\biggr\}.
+\]
+On sets of uniformly bounded mass, $\mathbf{F}$ metrizes the weak-$*$ topology. For an open set $U \subset M$, the \emph{localized $\mathbf{F}$-metric} is $\mathbf{F}_U(V, W) := \mathbf{F}(V \llcorner U, W \llcorner U)$. See \cite[Section~2]{LZ17}.
+\end{definition}
+
+\begin{definition}[Pushforward of varifolds]\label{def:varifold-pushforward}
+Let $\varphi: M \to M$ be a diffeomorphism. The \emph{pushforward} $\varphi_\sharp V \in \mathcal{V}_n(M)$ is defined by
+\[
+\varphi_\sharp V(A) := \int_{\mathrm{Gr}_n(M)} \mathbf{1}_A(\varphi(x), d\varphi_x(S)) \cdot |J_S \varphi(x)| \, dV(x, S)
+\]
+for Borel $A \subset \mathrm{Gr}_n(M)$, where $J_S \varphi(x) := \det{d\varphi_x|_S}$ is the $n$-dimensional Jacobian of $\varphi$ restricted to $S$.
+\end{definition}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Sweepouts of Open Sets}\label{sec:sweepouts}
+\section{Sweepouts and Width}\label{sec:sweepouts}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{definition}[Sweepout]\label{def:sweepout}
-Let $U \subset M$ be a bounded open set of finite perimeter. A \emph{sweepout of $U$} is a family $\{\tau_t\}_{t \in [0,1]}$ of relative cycles $\tau_t \in \mathcal{Z}_n(M, \partial M)$ together with a family of fillings $\{Q_t\}_{t \in [0,1]}$, $Q_t \in \mathcal{R}_{n+1}(M)$ with $\partial Q_t = \tau_t + S_t$ where $S_t$ is supported on $\partial M$, satisfying:
+We follow the discrete sweepout framework of Li--Zhou~\cite{LZ17}, which we now recall.
+
+\subsection*{Cell Complexes}
+
+For $m \geq 1$ and $j \geq 1$, let $I(m, j)$ denote the cell complex on $I^m = [0,1]^m$ obtained by subdividing each edge into $3^j$ equal parts. We write:
+\begin{itemize}
+    \item $I(m, j)_0$ for the set of vertices of $I(m, j)$;
+    \item $I_0(m, j)_0 := I(m, j)_0 \cap \partial I^m$ for the boundary vertices.
+\end{itemize}
+
+\begin{definition}[$\mathbf{M}$-fineness]\label{def:fineness}
+For a map $\phi : I(m, j)_0 \to \mathbf{Z}_n(A, B)$, the \emph{$\mathbf{M}$-fineness} of $\phi$ is
+\[
+\mathbf{f}_{\mathbf{M}}(\phi) := \sup\left\{ \frac{\mathbf{M}(\phi(x) - \phi(y))}{|x - y|} : x, y \in I(m, j)_0, \ x \neq y \right\}.
+\]
+\end{definition}
+
+\begin{definition}[Homotopy sequence]\label{def:homotopy-sequence}
+An \emph{$(m, \mathbf{M})$-homotopy sequence of mappings into $(\mathbf{Z}_n(M, \partial M), \{0\})$} is a sequence
+\[
+S = \{\phi_i\}_{i \in \mathbb{N}}, \quad \phi_i : I(m, j_i)_0 \to \mathbf{Z}_n(M, \partial M),
+\]
+satisfying:
+\begin{enumerate}[label=\textup{(H\arabic*)}]
+    \item\label{H:boundary} \textbf{Boundary condition}: $\phi_i(x) = 0$ for all $x \in I_0(m, j_i)_0$;
+    \item\label{H:homotopic} \textbf{Homotopy}: There exist maps $\psi_i : I(m, k_i)_0 \to \mathbf{Z}_n(M, \partial M)$ that are $m$-homotopic to both $\phi_i$ and $\phi_{i+1}$ with fineness $\mathbf{f}_{\mathbf{M}}(\psi_i) \to 0$ as $i \to \infty$;
+    \item\label{H:mass-bound} \textbf{Mass bound}: $\sup_{i} \max_{x \in I(m, j_i)_0} \mathbf{M}(\phi_i(x)) < \infty$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Homotopy class and width]\label{def:homotopy-class}
+Two $(m, \mathbf{M})$-homotopy sequences $S = \{\phi_i\}$ and $S' = \{\phi'_i\}$ are \emph{equivalent} if the interleaved sequence $\phi_1, \phi'_1, \phi_2, \phi'_2, \ldots$ is also an $(m, \mathbf{M})$-homotopy sequence. The \emph{$(m, \mathbf{M})$-homotopy class} is
+\[
+\pi_m^\sharp(\mathbf{Z}_n(M, \partial M), \{0\}) := \{\text{equivalence classes of $(m, \mathbf{M})$-homotopy sequences}\}.
+\]
+For a homotopy class $\Pi \in \pi_m^\sharp(\mathbf{Z}_n(M, \partial M), \{0\})$, the \emph{width} is
+\[
+L(\Pi) := \inf_{S \in \Pi} L(S), \quad \text{where } L(S) := \limsup_{i \to \infty} \max_{x \in I(m, j_i)_0} \mathbf{M}(\phi_i(x)).
+\]
+\end{definition}
+
+\subsection*{Sweepouts of Bounded Open Sets}
+
+For applications to non-compact manifolds, we consider sweepouts of bounded open sets.
+
+\begin{definition}[Sweepout of $(U, \partial_F U)$]\label{def:sweepout}
+Let $U \subset M$ be a bounded open set of finite perimeter. A \emph{sweepout of $(U, \partial_F U)$} is a sequence $S = \{\phi_i\}$ where
+\[
+\phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(\overline{U}, \overline{U} \cap \partial M)
+\]
+satisfies:
 \begin{enumerate}[label=\textup{(sw\arabic*)}]
-    \item\label{sw:finite} $\mathbf{M}(Q_t) < \infty$ for all $t$;
-    \item\label{sw:endpoints} $Q_0 \llcorner U = 0$ and $Q_1 \llcorner U = \llbracket U \rrbracket$;
-    \item\label{sw:continuity} The map $t \mapsto Q_t$ is continuous in the flat topology;
-    \item\label{sw:no-concentration} (No mass concentration) For every $x \in M$,
+    \item\label{sw:boundary} \textbf{Boundary condition}: $\phi_i(0) = \phi_i(1) = 0$;
+    \item\label{sw:homotopy} \textbf{Homotopy}: The sequence is a $(1, \mathbf{M})$-homotopy sequence;
+    \item\label{sw:no-concentration} \textbf{No mass concentration}: For every $x \in M$,
     \[
-    \limsup_{r \to 0} \sup_{t \in [0,1]} \|\tau_t\|(B_r(x)) = 0.
+    \limsup_{r \to 0} \sup_{i} \sup_{t \in I(1, j_i)_0} \|\phi_i(t)\|(B_r(x)) = 0.
     \]
 \end{enumerate}
+The \emph{width} of $(U, \partial_F U)$ is $W(U) := \inf_S L(S)$ over all sweepouts $S$.
 \end{definition}
 
 \begin{remark}\label{rem:free-boundary-automatic}
-Since each $\tau_t \in \mathcal{Z}_n(M, \partial M)$, the free boundary condition $\partial \tau_t \subset \partial M$ is automatic.
+The boundary condition (sw1) means the sweepout starts and ends at the zero class. Together with the homotopy condition, this ensures the sweepout ``fills'' the set $U$. The free boundary condition $\partial \tau \subset \partial M$ is automatic since $\phi_i(t) \in \mathbf{Z}_n(\overline{U}, \overline{U} \cap \partial M)$.
 \end{remark}
 
-\begin{definition}[Height and width]\label{def:height-width}
-The \emph{height} of a sweepout $\{\tau_t\}$ is $\mathcal{F}(\{\tau_t\}) := \sup_{t \in [0,1]} \mathbf{M}(\tau_t)$.
-The \emph{width} of a collection $\mathcal{S}$ of sweepouts is $W(\mathcal{S}) := \inf_{\{\tau_t\} \in \mathcal{S}} \mathcal{F}(\{\tau_t\})$.
+\begin{definition}[Good sweepout]\label{def:good-sweepout}
+A sweepout $S = \{\phi_i\}$ of $(U, \partial_F U)$ is a \emph{good sweepout} if:
+\begin{enumerate}[label=\textup{(g\arabic*)}]
+    \item\label{g:endpoint-bound} For all $i$ and all $t \in I(1, j_i)_0$ with $|t| < \varepsilon_i$ or $|1-t| < \varepsilon_i$ (for some $\varepsilon_i > 0$), we have $\mathbf{M}(\phi_i(t)) \leq 5\,\mathbf{M}(\partial_I U)$.
+\end{enumerate}
+We write $W_g(U)$ for the width over all good sweepouts.
 \end{definition}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Nested and Good Sweepouts}\label{sec:nested-good}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}[Nested sweepout]\label{def:nested-sweepout}
-A sweepout $\{\tau_t, Q_t\}$ of $U$ is \emph{nested} if:
-\begin{enumerate}[label=\textup{(n\arabic*)}]
-    \item\label{n:monotone} $Q_s \leq Q_t$ for all $s \leq t$ (i.e.\ $Q_t - Q_s$ is a non-negative current);
-    \item\label{n:morse} There exists a proper Morse function $f: M \to \mathbb{R}$ with $f$ transverse to $\partial M$, such that $Q_t = \llbracket f^{-1}((-\infty, c_t)) \rrbracket$ for some continuous increasing function $t \mapsto c_t$.
-\end{enumerate}
-We denote the collection of nested sweepouts of $U$ by $\mathcal{S}_n(U)$, and write $W_n(U) := W(\mathcal{S}_n(U))$.
-\end{definition}
+A sweepout $S = \{\phi_i\}$ of $(U, \partial_F U)$ is a \emph{nested sweepout} if it arises from a $\partial$-transverse Morse function $f : M \to \mathbb{R}$ in the following sense: there exist values $a < b$ such that for each $i$, the map $\phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(\overline{U}, \overline{U} \cap \partial M)$ satisfies
+\[
+\phi_i(t) = \llbracket f^{-1}(c_t) \rrbracket \llcorner \overline{U}
+\]
+for some increasing function $t \mapsto c_t$ with $c_0 = a$ and $c_1 = b$. Equivalently, the corresponding fillings $\Omega_t := f^{-1}((-\infty, c_t))$ satisfy $\Omega_s \subset \Omega_t$ for $s \leq t$.
 
-\begin{definition}[Good sweepout]\label{def:good-sweepout}
-A sweepout $\{\tau_t, Q_t\}$ of $U$ is a \emph{good sweepout} if it additionally satisfies:
-\begin{enumerate}[label=\textup{(g\arabic*)}]
-    \item\label{g:endpoint-bound} $\mathbf{M}(\tau_0) \leq 5\,\mathbf{M}(\partial_I U)$ and $\mathbf{M}(\tau_1) \leq 5\,\mathbf{M}(\partial_I U)$.
-\end{enumerate}
-We denote the collection of good sweepouts of $U$ by $\mathcal{S}_g(U)$, and write $W_g(U) := W(\mathcal{S}_g(U))$.
+We denote the collection of nested sweepouts of $U$ by $\mathcal{S}_n(U)$, and write $W_n(U) := \inf_{S \in \mathcal{S}_n(U)} L(S)$.
 \end{definition}
 
 \begin{definition}[Relative sweepout]\label{def:relative-sweepout}
-Given a nested sweepout $\{\tau_t, Q_t\}$ of $U$, the \emph{relative sweepout} is the family
+A \emph{relative sweepout of $U$} is a sweepout $S = \{\phi_i\}$ where each $\phi_i$ takes values in the relative cycles $\mathbf{Z}_n(\overline{U}, \overline{U} \cap \partial M)$, i.e., cycles supported in $\overline{U}$ with boundary on $\partial M \cap \overline{U}$. We denote the collection of relative sweepouts of $U$ by $\mathcal{S}_\partial(U)$.
+\end{definition}
+
+\begin{definition}[Relative width]\label{def:relative-width}
+The \emph{relative width} of $U$ is
 \[
-\sigma_t := \tau_t \llcorner \overline{U} \in \mathcal{Z}_n(\overline{U}, \partial M \cap \overline{U}).
+W_\partial(U) := \inf_{S \in \mathcal{S}_\partial(U)} L(S).
 \]
-We denote the collection of relative sweepouts of $U$ by $\mathcal{S}_\partial(U)$, and write $W_\partial(U) := W(\mathcal{S}_\partial(U))$.
 \end{definition}
 
 \begin{proposition}[Width inequalities]\label{prop:width-inequalities}
@@ -117,7 +292,7 @@ Let $U \subset M$ be a bounded open set with smooth boundary. Then:
 \end{proposition}
 
 \begin{proof}
-Part~(i) follows by restricting a nested sweepout to $\overline{U}$ (giving the lower bound) and extending a relative sweepout by adding $\partial_I U$ at each time (giving the upper bound). Part~(ii) is proved by approximating an arbitrary sweepout by nested ones using the coarea formula (Theorem~\ref{thm:slicing}); see \cite[Lemma~4.2]{CL20}. Part~(iii) follows from~(ii) by a cut-off argument using the good set condition (Definition~\ref{def:good-set}).
+Part~(i) follows by restricting a nested sweepout to $\overline{U}$ (giving the lower bound) and extending a relative sweepout by adding $\partial_I U$ at each time (giving the upper bound). Part~(ii) is proved by approximating an arbitrary sweepout by nested ones using the coarea formula (Theorem~\ref{thm:slicing}); see \cite[Lemma~4.2]{CL20}. Part~(iii) follows from~(ii) by a cut-off argument using the good set condition.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -161,73 +336,3 @@ for any $S > 0$. The sublinear growth assumption therefore allows us to pick a r
 \]
 Set $U := B_R(x) \cap M$. Since $\partial_I U$ is supported on $\partial B_R(x) \cap \mathrm{int}(M)$, we have $\mathbf{M}(\partial_I U) \leq \mathbf{M}(\langle \llbracket M \rrbracket, d_x, R \rangle) \leq C_I/100$. Any sweepout of $U$ must bisect volume in $B_r(x)$ at some time, so $W_\partial(U) \geq C_I$. Since $\mathbf{M}(\partial_I U) \leq \frac{1}{10} W_\partial(U)$, the set $U$ is good. Finiteness $W_g(U) < \infty$ follows from the existence of a sweepout by slices $\langle \llbracket M \rrbracket, d_x, R' \rangle$ for $R' \in [0, R]$.
 \end{proof}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Slicing of Currents}\label{sec:slicing}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-We recall the slicing theory for integer rectifiable currents; see Simon~\cite[Sections~28--29]{Sim84}.
-
-\begin{theorem}[Slicing~{\cite[28.4, 28.5]{Sim84}}]\label{thm:slicing}
-Let $T \in \mathcal{R}_{n+1}(M)$ and let $f: M \to \mathbb{R}$ be a Lipschitz function. Then for almost every $t \in \mathbb{R}$, the \emph{slice}
-\[
-\langle T, f, t \rangle \in \mathcal{R}_n(M)
-\]
-is a well-defined integer rectifiable $n$-current satisfying:
-\begin{enumerate}[label=\textup{(\roman*)}]
-    \item (Boundary formula) $\partial \langle T, f, t \rangle = \langle \partial T, f, t \rangle$ wherever $\partial T$ has locally finite mass;
-    \item (Coarea inequality) $\int_{\mathbb{R}} \mathbf{M}(\langle T, f, t \rangle)\, dt \leq \int |\nabla f|\, d\|T\|$.
-\end{enumerate}
-\end{theorem}
-
-\begin{corollary}[Coarea formula for fillings]\label{cor:coarea-filling}
-Let $Q = \llbracket \Omega \rrbracket$ for a bounded open set $\Omega \subset M$ of finite perimeter, and let $f: M \to \mathbb{R}$ be Lipschitz. Then for almost every $t$, the slice $\langle Q, f, t \rangle \in \mathcal{Z}_n(M, \partial M)$ is a relative cycle, and
-\[
-\int_{\mathbb{R}} \mathbf{M}(\langle Q, f, t \rangle)\, dt \leq \int_\Omega |\nabla f|\, d\mathcal{H}^{n+1}.
-\]
-\end{corollary}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Varifold Theory}\label{sec:varifolds}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-We collect the basic definitions from varifold theory needed in later chapters. Standard references include Pitts~\cite{Pit81} and Simon~\cite{Sim84}.
-
-\begin{definition}[Varifolds]\label{def:varifold}
-Let $\mathrm{Gr}_n(M)$ denote the Grassmannian bundle of (unoriented) $n$-planes over $M$. An \emph{$n$-varifold} on $M$ is a Radon measure on $\mathrm{Gr}_n(M)$. The space of all $n$-varifolds is denoted $\mathcal{V}_n(M)$, equipped with the weak-$*$ topology.
-
-For $V \in \mathcal{V}_n(M)$, the \emph{mass measure} $\|V\|$ is the pushforward of $V$ under the projection $\mathrm{Gr}_n(M) \to M$. The \emph{total mass} is $\|V\|(M)$, and the \emph{support} is $\operatorname{spt}\|V\|$. For an open set $A \subset M$, the \emph{restriction} $V \llcorner A$ is the varifold defined by $V \llcorner A(E) := V(E \cap \mathrm{Gr}_n(A))$.
-\end{definition}
-
-\begin{definition}[First variation]\label{def:first-variation}
-The \emph{first variation} of $V \in \mathcal{V}_n(M)$ is the linear functional on smooth vector fields defined by
-\[
-\delta V(X) := \int_{\mathrm{Gr}_n(M)} \operatorname{div}_S X(x) \, dV(x, S),
-\]
-where $\operatorname{div}_S X(x) := \sum_{i=1}^n \langle \nabla_{e_i} X, e_i \rangle$ for any orthonormal basis $\{e_i\}$ of $S$.
-\end{definition}
-
-\begin{definition}[Stationarity]\label{def:stationary}
-A varifold $V \in \mathcal{V}_n(M)$ is:
-\begin{enumerate}[label=\textup{(\roman*)}]
-    \item \emph{stationary in $\operatorname{int}(M)$} if $\delta V(X) = 0$ for all $X \in \mathfrak{X}_c(\operatorname{int}(M))$;
-    \item \emph{stationary with free boundary} if $\delta V(X) = 0$ for all $X \in \mathfrak{X}_{\mathrm{tan}}(M)$.
-\end{enumerate}
-\end{definition}
-
-\begin{definition}[$\mathbf{F}$-metric]\label{def:F-metric}
-The \emph{$\mathbf{F}$-metric} on $\mathcal{V}_n(M)$ is defined by
-\[
-\mathbf{F}(V, W) := \sup\biggl\{\int f \, dV - \int f \, dW : f \in C_c(\mathrm{Gr}_n(M)),\ |f| \leq 1,\ \operatorname{Lip}(f) \leq 1\biggr\}.
-\]
-On sets of uniformly bounded mass, $\mathbf{F}$ metrizes the weak-$*$ topology. For an open set $U \subset M$, the \emph{localized $\mathbf{F}$-metric} is $\mathbf{F}_U(V, W) := \mathbf{F}(V \llcorner U, W \llcorner U)$. See \cite[Section~2]{LZ17}.
-\end{definition}
-
-\begin{definition}[Pushforward of varifolds]\label{def:varifold-pushforward}
-Let $\varphi: M \to M$ be a diffeomorphism. The \emph{pushforward} $\varphi_\sharp V \in \mathcal{V}_n(M)$ is defined by
-\[
-\varphi_\sharp V(A) := \int_{\mathrm{Gr}_n(M)} \mathbf{1}_A(\varphi(x), d\varphi_x(S)) \cdot |J_S \varphi(x)| \, dV(x, S)
-\]
-for Borel $A \subset \mathrm{Gr}_n(M)$, where $J_S \varphi(x) := \det(d\varphi_x|_S)$ is the $n$-dimensional Jacobian of $\varphi$ restricted to $S$.
-\end{definition}
