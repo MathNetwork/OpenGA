@@ -1,61 +1,62 @@
 \vspace {-\cftbeforechapskip }
 \babel@toc {english}{}\relax 
 \babel@toc {english}{}\relax 
-\contentsline {chapter}{\numberline {1}{Settings and Preliminaries}}{1}{chapter.1}%
-\contentsline {section}{\numberline {1.1}{Notation and Basic Conventions}}{1}{section.1.1}%
-\contentsline {section}{\numberline {1.2}{Relative Cycles and Free Boundary Currents}}{1}{section.1.2}%
-\contentsline {section}{\numberline {1.3}{Varifolds and Rectifiability}}{2}{section.1.3}%
-\contentsline {section}{\numberline {1.4}{Stationary Varifolds with Free Boundary}}{3}{section.1.4}%
-\contentsline {section}{\numberline {1.5}{Coarea Formula}}{5}{section.1.5}%
-\contentsline {section}{\numberline {1.6}{Regularity Theory}}{6}{section.1.6}%
-\contentsline {chapter}{\numberline {2}{Families of Surfaces and Sweepouts}}{7}{chapter.2}%
-\contentsline {chapter}{\numberline {3}{Morse Foliations with Controlled Area of Fibers}}{11}{chapter.3}%
-\contentsline {section}{\numberline {3.1}{Gluing Morse Foliations}}{11}{section.3.1}%
-\contentsline {section}{\numberline {3.2}{Gluing Morse Foliations on Separated Manifolds}}{12}{section.3.2}%
-\contentsline {chapter}{\numberline {4}{Splitting and Extension Lemmas}}{15}{chapter.4}%
-\contentsline {section}{\numberline {4.1}{The Extension Lemma}}{15}{section.4.1}%
-\contentsline {section}{\numberline {4.2}{The Splitting Lemma}}{20}{section.4.2}%
-\contentsline {chapter}{\numberline {5}{Nested Sweepout}}{24}{chapter.5}%
-\contentsline {section}{\numberline {5.1}{Step 1: Preliminary Modification}}{25}{section.5.1}%
-\contentsline {section}{\numberline {5.2}{Step 2: Local Monotonization}}{29}{section.5.2}%
-\contentsline {section}{\numberline {5.3}{Step 3: Gluing Nested Families}}{31}{section.5.3}%
-\contentsline {chapter}{\numberline {6}{No Escape to Infinity}}{34}{chapter.6}%
-\contentsline {section}{\numberline {6.1}{Statement of the Main Result}}{34}{section.6.1}%
-\contentsline {section}{\numberline {6.2}{Pushing Sets Outside Good Sets}}{35}{section.6.2}%
-\contentsline {section}{\numberline {6.3}{Proof of the Main Result by Contradiction}}{38}{section.6.3}%
-\contentsline {subsection}{{Continuity Regularization}}{38}{subsection*.6}%
-\contentsline {subsection}{{Controlling Slices Outside the Good Set}}{45}{subsection*.9}%
-\contentsline {chapter}{\numberline {7}{Convergence of a min--max sequence to a minimal hypersurface}}{49}{chapter.7}%
-\contentsline {section}{\numberline {7.1}{Manifolds with sublinear growth}}{50}{section.7.1}%
-\contentsline {section}{\numberline {7.2}{Pulled--tight sequences and min--max varifolds}}{51}{section.7.2}%
-\contentsline {section}{\numberline {7.3}{Almost minimizing slices in annuli}}{53}{section.7.3}%
-\contentsline {section}{\numberline {7.4}{Limit varifolds and proof of the main theorem}}{58}{section.7.4}%
-\contentsline {chapter}{\numberline {8}{Alternative Regularity via Non-Excessive Sweepouts}}{60}{chapter.8}%
-\contentsline {section}{\numberline {8.1}{Non-Excessive Sweepouts}}{60}{section.8.1}%
-\contentsline {subsection}{{Excessive Intervals and Non-Excessive Points}}{61}{subsection*.11}%
-\contentsline {subsection}{{Non-Excessive Sweepouts and Stationary Varifolds}}{62}{subsection*.12}%
-\contentsline {subsection}{{Homotopic Minimizers and Non-Minimizing Points}}{63}{subsection*.13}%
-\contentsline {subsection}{{The Integrality Issue}}{64}{subsection*.14}%
-\contentsline {section}{\numberline {8.2}{Main Result}}{65}{section.8.2}%
-\contentsline {section}{\numberline {8.3}{Integrality without Mass Cancellation}}{65}{section.8.3}%
-\contentsline {subsection}{{Case 1: No Mass Loss}}{65}{subsection*.15}%
-\contentsline {subsection}{{Case 2: Mass Cancellation}}{68}{subsection*.16}%
-\contentsline {section}{\numberline {8.4}{Regularity via Wickramasekera's Theorem}}{68}{section.8.4}%
-\contentsline {subsection}{{Verification of the $\alpha $-Structural Hypothesis}}{69}{subsection*.17}%
-\contentsline {subsubsection}{{Case 1: No Mass Cancellation}}{70}{subsubsection*.18}%
-\contentsline {subsubsection}{{Case 2: Mass Cancellation}}{73}{subsubsection*.19}%
-\contentsline {subsection}{{Proof of the Main Theorem}}{76}{subsection*.20}%
-\contentsline {chapter}{\numberline {A}{Appendix}}{77}{appendix.A}%
-\contentsline {section}{\numberline {A.1}{Equivalence of continuous and discrete almost minimizing }}{77}{section.A.1}%
-\contentsline {section}{\numberline {A.2}{Fermi Coordinates Near the Boundary}}{81}{section.A.2}%
-\contentsline {subsection}{{Definition and Basic Properties}}{81}{subsection*.21}%
-\contentsline {subsection}{{Geometric Properties of the Fermi Distance Function}}{83}{subsection*.22}%
-\contentsline {subsection}{{Fermi Balls and Convexity}}{84}{subsection*.23}%
-\contentsline {section}{\numberline {A.3}{Wickramasekera's Regularity Theory for Stable Varifolds}}{85}{section.A.3}%
-\contentsline {subsection}{{Stationary and Stable Varifolds}}{85}{subsection*.24}%
-\contentsline {subsection}{{The $\alpha $-Structural Hypothesis}}{86}{subsection*.25}%
-\contentsline {subsection}{{Wickramasekera's Main Theorem}}{87}{subsection*.26}%
-\contentsline {subsection}{{Application to Non-Excessive Min-Max Theory}}{88}{subsection*.27}%
-\contentsline {subsection}{{Key Ideas in the Proof}}{89}{subsection*.28}%
-\contentsline {chapter}{Bibliography}{91}{section*.29}%
+\contentsline {chapter}{\numberline {1}{Introduction}}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}{Settings and Preliminaries}}{2}{chapter.2}%
+\contentsline {section}{\numberline {2.1}{Currents and Varifolds}}{3}{section.2.1}%
+\contentsline {section}{\numberline {2.2}{Sweepouts and Width}}{7}{section.2.2}%
+\contentsline {section}{\numberline {2.3}{Good Sets}}{11}{section.2.3}%
+\contentsline {chapter}{\numberline {3}{Structure of the Proof}}{13}{chapter.3}%
+\contentsline {section}{\numberline {3.1}{Challenges from Non-Compactness}}{13}{section.3.1}%
+\contentsline {chapter}{\numberline {4}{Morse Foliations with Controlled Area of Fibers}}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}{Gluing Morse Foliations}}{15}{section.4.1}%
+\contentsline {section}{\numberline {4.2}{Gluing Morse Foliations on Separated Manifolds}}{16}{section.4.2}%
+\contentsline {chapter}{\numberline {5}{Splitting and Extension Lemmas}}{19}{chapter.5}%
+\contentsline {section}{\numberline {5.1}{The Extension Lemma}}{19}{section.5.1}%
+\contentsline {section}{\numberline {5.2}{The Splitting Lemma}}{24}{section.5.2}%
+\contentsline {chapter}{\numberline {6}{Nested Sweepout}}{28}{chapter.6}%
+\contentsline {section}{\numberline {6.1}{Step 1: Preliminary Modification}}{29}{section.6.1}%
+\contentsline {section}{\numberline {6.2}{Step 2: Local Monotonization}}{33}{section.6.2}%
+\contentsline {section}{\numberline {6.3}{Step 3: Gluing Nested Families}}{35}{section.6.3}%
+\contentsline {chapter}{\numberline {7}{No Escape to Infinity}}{38}{chapter.7}%
+\contentsline {section}{\numberline {7.1}{Statement of the Main Result}}{38}{section.7.1}%
+\contentsline {section}{\numberline {7.2}{Pushing Sets Outside Good Sets}}{39}{section.7.2}%
+\contentsline {section}{\numberline {7.3}{Proof of the Main Result by Contradiction}}{42}{section.7.3}%
+\contentsline {subsection}{{Continuity Regularization}}{42}{subsection*.6}%
+\contentsline {subsection}{{Controlling Slices Outside the Good Set}}{49}{subsection*.9}%
+\contentsline {chapter}{\numberline {8}{Convergence of a min--max sequence to a minimal hypersurface}}{53}{chapter.8}%
+\contentsline {section}{\numberline {8.1}{Pulled--tight sequences and min--max varifolds}}{54}{section.8.1}%
+\contentsline {section}{\numberline {8.2}{Almost minimizing varifolds with free boundary}}{56}{section.8.2}%
+\contentsline {section}{\numberline {8.3}{Limit varifolds and proof of the main theorem}}{57}{section.8.3}%
+\contentsline {subsection}{{Almost minimizing selection in the non-compact setting}}{57}{subsection*.11}%
+\contentsline {subsection}{{Regularity of the limit varifold}}{58}{subsection*.12}%
+\contentsline {subsection}{{The main theorem}}{59}{subsection*.13}%
+\contentsline {chapter}{\numberline {9}{Alternative Regularity via Non-Excessive Sweepouts}}{62}{chapter.9}%
+\contentsline {section}{\numberline {9.1}{Non-Excessive Sweepouts}}{62}{section.9.1}%
+\contentsline {subsection}{{Excessive Intervals and Non-Excessive Points}}{63}{subsection*.14}%
+\contentsline {subsection}{{Non-Excessive Sweepouts and Stationary Varifolds}}{64}{subsection*.15}%
+\contentsline {subsection}{{Homotopic Minimizers and Non-Minimizing Points}}{65}{subsection*.16}%
+\contentsline {subsection}{{The Integrality Issue}}{66}{subsection*.17}%
+\contentsline {section}{\numberline {9.2}{Main Result}}{67}{section.9.2}%
+\contentsline {section}{\numberline {9.3}{Integrality without Mass Cancellation}}{67}{section.9.3}%
+\contentsline {subsection}{{Case 1: No Mass Loss}}{67}{subsection*.18}%
+\contentsline {subsection}{{Case 2: Mass Cancellation}}{70}{subsection*.19}%
+\contentsline {section}{\numberline {9.4}{Regularity via Wickramasekera's Theorem}}{70}{section.9.4}%
+\contentsline {subsection}{{Verification of the $\alpha $-Structural Hypothesis}}{71}{subsection*.20}%
+\contentsline {subsubsection}{{Case 1: No Mass Cancellation}}{72}{subsubsection*.21}%
+\contentsline {subsubsection}{{Case 2: Mass Cancellation}}{75}{subsubsection*.22}%
+\contentsline {subsection}{{Proof of the Main Theorem}}{78}{subsection*.23}%
+\contentsline {chapter}{\numberline {A}{Appendix}}{79}{appendix.A}%
+\contentsline {section}{\numberline {A.1}{Equivalence of continuous and discrete almost minimizing }}{79}{section.A.1}%
+\contentsline {section}{\numberline {A.2}{Fermi Coordinates Near the Boundary}}{83}{section.A.2}%
+\contentsline {subsection}{{Definition and Basic Properties}}{83}{subsection*.24}%
+\contentsline {subsection}{{Geometric Properties of the Fermi Distance Function}}{85}{subsection*.25}%
+\contentsline {subsection}{{Fermi Balls and Convexity}}{86}{subsection*.26}%
+\contentsline {section}{\numberline {A.3}{Wickramasekera's Regularity Theory for Stable Varifolds}}{87}{section.A.3}%
+\contentsline {subsection}{{Stationary and Stable Varifolds}}{88}{subsection*.27}%
+\contentsline {subsection}{{The $\alpha $-Structural Hypothesis}}{89}{subsection*.28}%
+\contentsline {subsection}{{Wickramasekera's Main Theorem}}{89}{subsection*.29}%
+\contentsline {subsection}{{Application to Non-Excessive Min-Max Theory}}{90}{subsection*.30}%
+\contentsline {subsection}{{Key Ideas in the Proof}}{91}{subsection*.31}%
+\contentsline {chapter}{Bibliography}{93}{section*.32}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
