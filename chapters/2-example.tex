@@ -19,7 +19,7 @@ For a relatively open subset $U \subset M$, we write $\mathrm{int}_M(U)$ for the
 \begin{definition}[$\partial$-transverse function]\label{def:boundary-transverse}
 A smooth function $f: M \to \mathbb{R}$ is \emph{$\partial$-transverse} if $f|_{\partial M}$ has no critical points, i.e.\ $\nabla_{\partial M}(f|_{\partial M}) \neq 0$ everywhere on $\partial M$.  A \emph{$\partial$-transverse Morse function} is a Morse function on $M$ that is also $\partial$-transverse.
 \end{definition}
-
+\xinze{Bounded geometry assumption could be removed as it is very restrictive assumption and in fact the regularity can be proved each small ball so that the overall regularity holds}
 \begin{definition}[Bounded geometry]\label{def:bounded-geom}
 A complete Riemannian manifold $(M^{n+1}, g)$ with boundary $\partial M$ has \emph{bounded geometry} if there exists a constant $\Lambda > 0$ such that:
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -232,11 +232,14 @@ L(\Pi) := \inf_{S \in \Pi} L(S), \quad \text{where } L(S) := \limsup_{i \to \inf
 
 For applications to non-compact manifolds, we consider sweepouts of bounded open sets.
 
+\xinze{Given Caccippoli set $\Omega^{n + 1}$, $\partial\Omega$ induces an element $\llrr{\partial \Omega}$ of $\mathcal{Z}_n$ s.t. $Per(\Omega) = \mass{\llrr{\partial\Omega}}$ reference Tamanini/Maggi's book}
+
 \begin{definition}[Sweepout of $(U, \partial_F U)$]\label{def:sweepout}
-Let $U \subset M$ be a bounded open set of finite perimeter. A \emph{sweepout of $(U, \partial_F U)$} is a sequence $S = \{\phi_i\}$ where
+Let $U \subset M$ be a bounded open set \xinze{Make sure $U$ is relative open} of finite perimeter. A \emph{sweepout of $(U, \partial_F U)$} is a sequence $S = \{\phi_i\}$ where
 \[
 \phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(\overline{U}, \overline{U} \cap \partial M)
 \]
+\xinze{$\phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(M, \partial M)$}
 satisfies:
 \begin{enumerate}[label=\textup{(sw\arabic*)}]
     \item\label{sw:boundary} \textbf{Boundary condition}: $\phi_i(0) = \phi_i(1) = 0$;
@@ -252,9 +255,9 @@ The \emph{width} of $(U, \partial_F U)$ is $W(U) := \inf_S L(S)$ over all sweepo
 \begin{remark}\label{rem:free-boundary-automatic}
 The boundary condition (sw1) means the sweepout starts and ends at the zero class. Together with the homotopy condition, this ensures the sweepout ``fills'' the set $U$. The free boundary condition $\partial \tau \subset \partial M$ is automatic since $\phi_i(t) \in \mathbf{Z}_n(\overline{U}, \overline{U} \cap \partial M)$.
 \end{remark}
-
+\xinze{This remark need to be fixed, each caccippoli set induce a mod 2 integral, should be $Z_2$}
 \begin{definition}[Good sweepout]\label{def:good-sweepout}
-A sweepout $S = \{\phi_i\}$ of $(U, \partial_F U)$ is a \emph{good sweepout} if:
+\textcolor{red}{A sweepout $S = \{\phi_i\}$ of $(U, \partial_F U)$} is a \emph{good sweepout} if:
 \begin{enumerate}[label=\textup{(g\arabic*)}]
     \item\label{g:endpoint-bound} For all $i$ and all $t \in I(1, j_i)_0$ with $|t| < \varepsilon_i$ or $|1-t| < \varepsilon_i$ (for some $\varepsilon_i > 0$), we have $\mathbf{M}(\phi_i(t)) \leq 5\,\mathbf{M}(\partial_I U)$.
 \end{enumerate}
