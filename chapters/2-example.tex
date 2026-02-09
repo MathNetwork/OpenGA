@@ -20,43 +20,55 @@ For a relatively open subset $U \subset M$, we write $\mathrm{int}_M(U)$ for the
 A smooth function $f: M \to \mathbb{R}$ is \emph{$\partial$-transverse} if $f|_{\partial M}$ has no critical points, i.e.\ $\nabla_{\partial M}(f|_{\partial M}) \neq 0$ everywhere on $\partial M$.  A \emph{$\partial$-transverse Morse function} is a Morse function on $M$ that is also $\partial$-transverse.
 \end{definition}
 
-\begin{definition}[Bounded geometry]\label{def:bounded-geom}
-A complete Riemannian manifold $(M^{n+1}, g)$ with boundary $\partial M$ has \emph{bounded geometry} if there exists a constant $\Lambda > 0$ such that:
-\begin{enumerate}[label=\textup{(\roman*)}]
-    \item $\mathrm{Ric}_M \geq -\Lambda g$;
-    \item $|A_{\partial M}| \leq \Lambda$, where $A_{\partial M}$ is the second fundamental form of $\partial M$;
-    \item $\mathrm{inj}(M) \geq \Lambda^{-1}$.
-\end{enumerate}
-\end{definition}
-
-\begin{remark}\label{rem:bounded-geom}
-The bounded geometry assumption ensures that the constants in the monotonicity formula (\cite[Theorem~2.3]{LZ17}) and Fermi coordinates (\cite[Appendix~A]{LZ17}) are uniformly controlled. In the compact case of \cite{LZ17}, these bounds hold automatically.
+\begin{remark}[Bounded geometry]\label{rem:bounded-geom}
+Recall that a complete Riemannian manifold $(M^{n+1}, g)$ with boundary $\partial M$ is said to have \emph{bounded geometry} if there exists a constant $\Lambda > 0$ such that $\mathrm{Ric}_M \geq -\Lambda g$, $|A_{\partial M}| \leq \Lambda$, and $\mathrm{inj}(M) \geq \Lambda^{-1}$.
+In Li--Zhou \cite{LZ17}, bounded geometry is imposed globally on a compact manifold with boundary, where it holds automatically. In our non-compact setting, we do not require bounded geometry as a global hypothesis. Instead, we observe that for any precompact open subset $V \Subset M$, the closure $\overline{V}$ is compact in the complete manifold $(M,g)$, and therefore admits uniform bounds on Ricci curvature, the second fundamental form of $\partial M \cap \overline{V}$, and a positive lower bound on the injectivity radius. In particular, the constants in the monotonicity formula (\cite[Theorem~2.3]{LZ17}) and Fermi coordinates (\cite[Appendix~A]{LZ17}) are uniformly controlled on $\overline{V}$. Since all arguments in this thesis---pull-tight (Chapter~\ref{ch:convergence-of-min-max}), almost minimizing (Chapter~\ref{ch:convergence-of-min-max}), and the regularity theory of Li--Zhou---are carried out on precompact subsets, the global bounded geometry assumption can be removed.
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Currents and Varifolds}\label{sec:currents-varifolds}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We work with currents and relative cycles following Li--Zhou~\cite{LZ17}. We write $\mathcal{R}_k(M)$ for the space of integer rectifiable $k$-currents supported in $M$, with mass norm $\mathbf{M}$ and flat topology. For a bounded open set $\Omega \subset M$ of finite perimeter (i.e.\ a Caccioppoli set), we write $Q_\Omega := \llbracket \Omega \rrbracket \in \mathcal{R}_{n+1}(M)$ for the associated $(n+1)$-current, so that $\mathbf{M}(\partial Q_\Omega) < \infty$.
+We work with currents and relative cycles following Li--Zhou~\cite{LZ17}. We write $\mathcal{R}_k(M;\mathbb{Z}_2)$ for the space of mod~$2$ flat chains supported in $M$, with mass norm $\mathbf{M}$ and flat topology. For a bounded open set $\Omega \subset M$ of finite perimeter (i.e.\ a Caccioppoli set), we write $Q_\Omega := \llbracket \Omega \rrbracket \in \mathcal{R}_{n+1}(M;\mathbb{Z}_2)$ for the associated $(n+1)$-current, so that $\mathbf{M}(\partial Q_\Omega) < \infty$.
+
+\begin{remark}[Coefficient group]\label{rmk:Z2}
+Throughout this thesis we work with $\mathbb{Z}_2$ coefficients. We write $\mathcal{R}_k(M;\mathbb{Z}_2)$ for the space of mod~$2$ flat chains supported in $M$, and all cycle spaces $\mathcal{Z}_n(A,B;\mathbb{Z}_2)$, $\mathbf{Z}_n(A,B;\mathbb{Z}_2)$ are defined with $\mathbb{Z}_2$ coefficients. Li--Zhou~\cite{LZ17} originally state their results for $\mathbb{Z}$ coefficients (integer currents), but the key tools---the isoperimetric lemma, slicing theorem, and regularity theory---hold equally for $\mathbb{Z}_2$ coefficients (see \cite{MN17,Alm62}). The choice of $\mathbb{Z}_2$ has the advantage that every Caccioppoli set $\Omega \subset M$ of finite perimeter naturally induces a mod~$2$ cycle $\llbracket \partial\Omega \rrbracket \in \mathcal{Z}_n(M,\partial M;\mathbb{Z}_2)$ with
+\[
+  \mathrm{Per}(\Omega) = \mathbf{M}(\llbracket \partial\Omega \rrbracket),
+\]
+since the reduced boundary $\partial^*\Omega$ carries no orientation, only a distinction between interior and exterior. See Maggi~\cite[Theorem~15.9]{Mag12} and Tamanini~\cite{Tam82}. This identification provides a natural bridge between the discrete sweepout framework (Chapters~\ref{ch:preliminaries}--\ref{ch:convergence-of-min-max}) and the Caccioppoli-set-based non-excessive framework (Chapter~\ref{ch:alternative-regularity}). We also note that the regularity theory (Theorem~\ref{thm:main-regularity}) operates at the varifold level and does not depend on the coefficient group: replacement varifolds arising from mod~$2$ area minimization are integer rectifiable and stable, so Wickramasekera's theory~\cite{Wic14} applies without modification.
+\end{remark}
+
+\begin{proposition}[Caccioppoli sets and mod~$2$ cycles]\label{prop:cacc-cycle}
+Let $\Omega \subset M$ be a Caccioppoli set with $\mathrm{Per}(\Omega) < \infty$. Then the reduced boundary $\partial^*\Omega$ induces a mod~$2$ relative cycle
+\[
+  \llbracket \partial\Omega \rrbracket \in \mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)
+\]
+satisfying $\mathrm{Per}(\Omega) = \mathbf{M}(\llbracket\partial\Omega\rrbracket)$. Moreover, the varifold $|\partial^*\Omega|$ induced by the reduced boundary agrees with the varifold $|\llbracket\partial\Omega\rrbracket|$ induced by the mod~$2$ current.
+\end{proposition}
+
+\begin{proof}
+This follows from the structure theorem for Caccioppoli sets; see Maggi~\cite[Theorem~15.9]{Mag12}. The reduced boundary $\partial^*\Omega$ is countably $\mathcal{H}^n$-rectifiable, and the associated multiplicity-one current $\llbracket\partial\Omega\rrbracket$ satisfies $\partial\llbracket\partial\Omega\rrbracket = 0$ in $\mathrm{int}(M)$ (in the mod~$2$ sense). Since $\partial^*\Omega$ carries no canonical orientation, the natural coefficient group is $\mathbb{Z}_2$. The mass identity $\mathrm{Per}(\Omega) = \mathbf{M}(\llbracket\partial\Omega\rrbracket)$ is immediate from the definitions.
+\end{proof}
 
 \begin{definition}[Relative cycles and equivalence classes]\label{def:relative-cycle}
 For subsets $A \supset B$ of $M$, the space of \emph{relative cycles} is
 \[
-\mathcal{Z}_n(A, B) := \{T \in \mathcal{R}_n(M) : \mathrm{spt}(T) \subset A, \ \mathrm{spt}(\partial T) \subset B\},
+\mathcal{Z}_n(A, B;\mathbb{Z}_2) := \{T \in \mathcal{R}_n(M;\mathbb{Z}_2) : \mathrm{spt}(T) \subset A, \ \mathrm{spt}(\partial T) \subset B\},
 \]
 equipped with the flat topology. The \emph{space of equivalence classes of relative cycles} is the quotient
 \[
-\mathbf{Z}_n(A, B) := \mathcal{Z}_n(A, B) / \mathcal{Z}_n(B, B).
+\mathbf{Z}_n(A, B;\mathbb{Z}_2) := \mathcal{Z}_n(A, B;\mathbb{Z}_2) / \mathcal{Z}_n(B, B;\mathbb{Z}_2).
 \]
-Two cycles $T_1, T_2 \in \mathcal{Z}_n(A, B)$ represent the same class $\tau \in \mathbf{Z}_n(A, B)$ if and only if $T_1 - T_2 \in \mathcal{Z}_n(B, B)$, i.e., $T_1 - T_2$ is supported in $B$.
+Two cycles $T_1, T_2 \in \mathcal{Z}_n(A, B;\mathbb{Z}_2)$ represent the same class $\tau \in \mathbf{Z}_n(A, B;\mathbb{Z}_2)$ if and only if $T_1 - T_2 \in \mathcal{Z}_n(B, B;\mathbb{Z}_2)$, i.e., $T_1 - T_2$ is supported in $B$.
 \end{definition}
 
 \begin{definition}[Canonical representative]\label{def:canonical-rep}
-For $\tau \in \mathbf{Z}_n(A, B)$, there exists a unique representative $T \in \tau$ satisfying $T \llcorner B = 0$. This $T$ is called the \emph{canonical representative} of $\tau$. When no confusion arises, we identify $\tau$ with its canonical representative.
+For $\tau \in \mathbf{Z}_n(A, B;\mathbb{Z}_2)$, there exists a unique representative $T \in \tau$ satisfying $T \llcorner B = 0$. This $T$ is called the \emph{canonical representative} of $\tau$. When no confusion arises, we identify $\tau$ with its canonical representative.
 \end{definition}
 
 \begin{definition}[Mass of an equivalence class]\label{def:mass-equivalence-class}
-For $\tau \in \mathbf{Z}_n(A, B)$, the \emph{mass} of $\tau$ is defined as $\mathbf{M}(\tau) := \mathbf{M}(T)$, where $T$ is the canonical representative of $\tau$.
+For $\tau \in \mathbf{Z}_n(A, B;\mathbb{Z}_2)$, the \emph{mass} of $\tau$ is defined as $\mathbf{M}(\tau) := \mathbf{M}(T)$, where $T$ is the canonical representative of $\tau$.
 \end{definition}
 
 \begin{remark}\label{rem:mass-infimum}
@@ -64,15 +76,15 @@ By \cite[Lemma~3.3]{LZ17}, we have $\mathbf{M}(\tau) = \inf_{S \in \tau} \mathbf
 \end{remark}
 
 \begin{definition}[Relative flat norm]\label{def:relative-flat-norm}
-For a compact set $K \subset M$ and $\tau \in \mathbf{Z}_n(A, B)$, the \emph{relative flat norm} is
+For a compact set $K \subset M$ and $\tau \in \mathbf{Z}_n(A, B;\mathbb{Z}_2)$, the \emph{relative flat norm} is
 \[
 \mathcal{F}^K(\tau) := \inf_{T \in \tau} \mathcal{F}^K(T),
 \]
-where $\mathcal{F}^K(T) := \inf\{\mathbf{M}(T - \partial S) + \mathbf{M}(S) : S \in \mathcal{R}_{n+1}(M), \mathrm{spt}(S) \subset K\}$ is the flat norm of $T$ relative to $K$.
+where $\mathcal{F}^K(T) := \inf\{\mathbf{M}(T - \partial S) + \mathbf{M}(S) : S \in \mathcal{R}_{n+1}(M;\mathbb{Z}_2), \mathrm{spt}(S) \subset K\}$ is the flat norm of $T$ relative to $K$.
 \end{definition}
 
 \begin{lemma}[$\mathcal{F}$-isoperimetric lemma {\cite[Lemma~3.15]{LZ17}}]\label{lem:F-isoperimetric}
-There exist $\epsilon_M > 0$ and $C_M \geq 1$ depending only on the isometric embedding $M \hookrightarrow \mathbb{R}^L$ such that for any $\tau_1, \tau_2 \in \mathbf{Z}_n(M, \partial M)$ with $\mathcal{F}(\tau_2 - \tau_1) < \epsilon_M$, there exists an integral $(n+1)$-current $Q$ (an \emph{isoperimetric choice}) such that:
+There exist $\epsilon_M > 0$ and $C_M \geq 1$ depending only on the isometric embedding $M \hookrightarrow \mathbb{R}^L$ such that for any $\tau_1, \tau_2 \in \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ with $\mathcal{F}(\tau_2 - \tau_1) < \epsilon_M$, there exists a mod~$2$ $(n+1)$-current $Q$ (an \emph{isoperimetric choice}) such that:
 \begin{itemize}
     \item $\mathrm{spt}(Q) \subset M$;
     \item $\mathrm{spt}(T_2 - T_1 - \partial Q) \subset \partial M$;
@@ -82,7 +94,7 @@ where $T_1, T_2$ are the canonical representatives of $\tau_1, \tau_2$.
 \end{lemma}
 
 \begin{lemma}[$\mathbf{M}$-isoperimetric lemma {\cite[Lemma~3.17]{LZ17}}]\label{lem:M-isoperimetric}
-There exist $\epsilon_M > 0$ and $C_M \geq 1$ depending only on the isometric embedding $M \hookrightarrow \mathbb{R}^L$ such that for any $\tau_1, \tau_2 \in \mathbf{Z}_n(M, \partial M)$ with $\mathbf{M}(\tau_2 - \tau_1) < \epsilon_M$, there exist an integral $(n+1)$-current $Q$ and an integer rectifiable $n$-current $R$ such that:
+There exist $\epsilon_M > 0$ and $C_M \geq 1$ depending only on the isometric embedding $M \hookrightarrow \mathbb{R}^L$ such that for any $\tau_1, \tau_2 \in \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ with $\mathbf{M}(\tau_2 - \tau_1) < \epsilon_M$, there exist a mod~$2$ $(n+1)$-current $Q$ and a mod~$2$ rectifiable $n$-current $R$ such that:
 \begin{itemize}
     \item $\mathrm{spt}(Q) \subset M$, $\mathrm{spt}(R) \subset \partial M$;
     \item $T_2 - T_1 = \partial Q + R$;
@@ -91,11 +103,15 @@ There exist $\epsilon_M > 0$ and $C_M \geq 1$ depending only on the isometric em
 where $T_1, T_2$ are the canonical representatives.
 \end{lemma}
 
-\begin{remark}\label{rem:filling-cycle}
-For any bounded open set $\Omega \subset M$ of finite perimeter, the current $\partial \llbracket \Omega \rrbracket$ gives a relative cycle in $\mathcal{Z}_n(M, \partial M)$. We refer to $\llbracket \Omega \rrbracket$ as the \emph{filling} of this cycle. For a relative cycle $\tau \in \mathbf{Z}_n(M, \partial M)$ with canonical representative $T$, the mass restricted to an open set $V$ is $\|\tau\|(V) := \mathbf{M}(T \llcorner V)$.
+\begin{remark}[Isoperimetric constants in the non-compact setting]\label{rem:isoperimetric-local}
+In Lemmas~\ref{lem:F-isoperimetric} and~\ref{lem:M-isoperimetric}, the constants $\epsilon_M$ and $C_M$ depend on the isometric embedding $M\hookrightarrow\mathbb{R}^L$ through Almgren's isoperimetric inequality for compact Lipschitz neighbourhood retracts (CLNRs)~\cite{Alm62}. When $M$ is complete but non-compact, these lemmas are applied only to cycles whose supports are contained in a precompact region $K\subset M$. Since $\overline{K}$ is compact, it admits an isometric embedding $\overline{K}\hookrightarrow\mathbb{R}^L$ as a CLNR, and the constants $\epsilon_{\overline{K}},C_{\overline{K}}$ are well-defined and positive. In the exhaustion argument of Chapter~\ref{ch:convergence-of-min-max}, each compact set $\overline{U}_j$ has its own isoperimetric constants; the diagonal argument only requires these constants to be positive for each fixed $j$, not uniformly bounded over the exhaustion.
 \end{remark}
 
-For a bounded open set $U \subset M$ with smooth boundary, the associated $(n+1)$-current $\llbracket U \rrbracket \in \mathcal{R}_{n+1}(M)$ has boundary
+\begin{remark}\label{rem:filling-cycle}
+For any bounded open set $\Omega \subset M$ of finite perimeter, the current $\partial \llbracket \Omega \rrbracket$ gives a relative cycle in $\mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)$. We refer to $\llbracket \Omega \rrbracket$ as the \emph{filling} of this cycle. For a relative cycle $\tau \in \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ with canonical representative $T$, the mass restricted to an open set $V$ is $\|\tau\|(V) := \mathbf{M}(T \llcorner V)$.
+\end{remark}
+
+For a bounded open set $U \subset M$ with smooth boundary, the associated $(n+1)$-current $\llbracket U \rrbracket \in \mathcal{R}_{n+1}(M;\mathbb{Z}_2)$ has boundary
 \[
 \partial \llbracket U \rrbracket = \partial_I U + \partial_F U,
 \]
@@ -106,26 +122,26 @@ where:
 \end{itemize}
 
 \begin{remark}\label{rem:LZ-correspondence}
-In the notation of Li--Zhou~\cite{LZ17}, sweepouts of $(U, \partial_F U)$ correspond to families in $\mathbf{Z}_n(\overline{U}, \overline{U} \cap \partial M)$. The interior boundary $\partial_I U$ is a relative cycle in $\mathcal{Z}_n(M, \partial M)$ since $U$ has smooth boundary.
+In the notation of Li--Zhou~\cite{LZ17}, sweepouts of $(U, \partial_F U)$ correspond to families in $\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ (Li--Zhou originally use $\mathbf{Z}_n(\overline{U}, \overline{U} \cap \partial M)$ with $\mathbb{Z}$ coefficients; see Remark~\ref{rmk:Z2}). The interior boundary $\partial_I U$ is a relative cycle in $\mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)$ since $U$ has smooth boundary.
 \end{remark}
 
 \begin{remark}[Why equivalence classes are necessary]\label{rem:why-equivalence}
-Working with the quotient space $\mathbf{Z}_n(A, B)$ rather than the space of currents $\mathcal{Z}_n(A, B)$ is essential for several reasons:
+Working with the quotient space $\mathbf{Z}_n(A, B;\mathbb{Z}_2)$ rather than the space of mod~$2$ flat chains $\mathcal{Z}_n(A, B;\mathbb{Z}_2)$ is essential for several reasons:
 \begin{enumerate}[label=\textup{(\roman*)}]
     \item \emph{Well-defined mass}: The mass $\mathbf{M}(\tau)$ of an equivalence class (Definition~\ref{def:mass-equivalence-class}) is canonically defined via the canonical representative, whereas the mass of a current in a class depends on the choice of representative.
-    \item \emph{Homotopy theory}: The discrete homotopy framework (Definition~\ref{def:homotopy-sequence}) requires $\mathbf{M}$-fineness, which is naturally defined on $\mathbf{Z}_n(M, \partial M)$ since representatives differing by cycles in $\partial M$ should be considered equivalent.
+    \item \emph{Homotopy theory}: The discrete homotopy framework (Definition~\ref{def:homotopy-sequence}) requires $\mathbf{M}$-fineness, which is naturally defined on $\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ since representatives differing by cycles in $\partial M$ should be considered equivalent.
     \item \emph{Isoperimetric lemmas}: The $\mathcal{F}$- and $\mathbf{M}$-isoperimetric lemmas (Lemmas~\ref{lem:F-isoperimetric} and~\ref{lem:M-isoperimetric}) require working with equivalence classes to ensure that the isoperimetric choices are well-defined up to boundary terms.
 \end{enumerate}
 \end{remark}
 
-We recall the slicing theory for integer rectifiable currents; see Simon~\cite[Sections~28--29]{Sim84}.
+We recall the slicing theory for mod~$2$ flat chains; see Simon~\cite[Sections~28--29]{Sim84}.
 
 \begin{theorem}[Slicing~{\cite[28.4, 28.5]{Sim84}}]\label{thm:slicing}
-Let $T \in \mathcal{R}_{n+1}(M)$ and let $f: M \to \mathbb{R}$ be a Lipschitz function. Then for almost every $t \in \mathbb{R}$, the \emph{slice}
+Let $T \in \mathcal{R}_{n+1}(M;\mathbb{Z}_2)$ and let $f: M \to \mathbb{R}$ be a Lipschitz function. Then for almost every $t \in \mathbb{R}$, the \emph{slice}
 \[
-\langle T, f, t \rangle \in \mathcal{R}_n(M)
+\langle T, f, t \rangle \in \mathcal{R}_n(M;\mathbb{Z}_2)
 \]
-is a well-defined integer rectifiable $n$-current satisfying:
+is a well-defined mod~$2$ rectifiable $n$-current satisfying:
 \begin{enumerate}[label=\textup{(\roman*)}]
     \item (Boundary formula) $\partial \langle T, f, t \rangle = \langle \partial T, f, t \rangle$ wherever $\partial T$ has locally finite mass;
     \item (Coarea inequality) $\int_{\mathbb{R}} \mathbf{M}(\langle T, f, t \rangle)\, dt \leq \int |\nabla f|\, d\|T\|$.
@@ -133,7 +149,7 @@ is a well-defined integer rectifiable $n$-current satisfying:
 \end{theorem}
 
 \begin{corollary}[Coarea formula for fillings]\label{cor:coarea-filling}
-Let $Q = \llbracket \Omega \rrbracket$ for a bounded open set $\Omega \subset M$ of finite perimeter, and let $f: M \to \mathbb{R}$ be Lipschitz. Then for almost every $t$, the slice $\langle Q, f, t \rangle \in \mathcal{Z}_n(M, \partial M)$ is a relative cycle, and
+Let $Q = \llbracket \Omega \rrbracket$ for a bounded open set $\Omega \subset M$ of finite perimeter, and let $f: M \to \mathbb{R}$ be Lipschitz. Then for almost every $t$, the slice $\langle Q, f, t \rangle \in \mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)$ is a relative cycle, and
 \[
 \int_{\mathbb{R}} \mathbf{M}(\langle Q, f, t \rangle)\, dt \leq \int_\Omega |\nabla f|\, d\mathcal{H}^{n+1}.
 \]
@@ -198,21 +214,21 @@ For $m \geq 1$ and $j \geq 1$, let $I(m, j)$ denote the cell complex on $I^m = [
 \end{itemize}
 
 \begin{definition}[$\mathbf{M}$-fineness]\label{def:fineness}
-For a map $\phi : I(m, j)_0 \to \mathbf{Z}_n(A, B)$, the \emph{$\mathbf{M}$-fineness} of $\phi$ is
+For a map $\phi : I(m, j)_0 \to \mathbf{Z}_n(A, B;\mathbb{Z}_2)$, the \emph{$\mathbf{M}$-fineness} of $\phi$ is
 \[
 \mathbf{f}_{\mathbf{M}}(\phi) := \sup\left\{ \frac{\mathbf{M}(\phi(x) - \phi(y))}{|x - y|} : x, y \in I(m, j)_0, \ x \neq y \right\}.
 \]
 \end{definition}
 
 \begin{definition}[Homotopy sequence]\label{def:homotopy-sequence}
-An \emph{$(m, \mathbf{M})$-homotopy sequence of mappings into $(\mathbf{Z}_n(M, \partial M), \{0\})$} is a sequence
+An \emph{$(m, \mathbf{M})$-homotopy sequence of mappings into $(\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2), \{0\})$} is a sequence
 \[
-S = \{\phi_i\}_{i \in \mathbb{N}}, \quad \phi_i : I(m, j_i)_0 \to \mathbf{Z}_n(M, \partial M),
+S = \{\phi_i\}_{i \in \mathbb{N}}, \quad \phi_i : I(m, j_i)_0 \to \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2),
 \]
 satisfying:
 \begin{enumerate}[label=\textup{(H\arabic*)}]
     \item\label{H:boundary} \textbf{Boundary condition}: $\phi_i(x) = 0$ for all $x \in I_0(m, j_i)_0$;
-    \item\label{H:homotopic} \textbf{Homotopy}: There exist maps $\psi_i : I(m, k_i)_0 \to \mathbf{Z}_n(M, \partial M)$ that are $m$-homotopic to both $\phi_i$ and $\phi_{i+1}$ with fineness $\mathbf{f}_{\mathbf{M}}(\psi_i) \to 0$ as $i \to \infty$;
+    \item\label{H:homotopic} \textbf{Homotopy}: There exist maps $\psi_i : I(m, k_i)_0 \to \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ that are $m$-homotopic to both $\phi_i$ and $\phi_{i+1}$ with fineness $\mathbf{f}_{\mathbf{M}}(\psi_i) \to 0$ as $i \to \infty$;
     \item\label{H:mass-bound} \textbf{Mass bound}: $\sup_{i} \max_{x \in I(m, j_i)_0} \mathbf{M}(\phi_i(x)) < \infty$.
 \end{enumerate}
 \end{definition}
@@ -220,9 +236,9 @@ satisfying:
 \begin{definition}[Homotopy class and width]\label{def:homotopy-class}
 Two $(m, \mathbf{M})$-homotopy sequences $S = \{\phi_i\}$ and $S' = \{\phi'_i\}$ are \emph{equivalent} if the interleaved sequence $\phi_1, \phi'_1, \phi_2, \phi'_2, \ldots$ is also an $(m, \mathbf{M})$-homotopy sequence. The \emph{$(m, \mathbf{M})$-homotopy class} is
 \[
-\pi_m^\sharp(\mathbf{Z}_n(M, \partial M), \{0\}) := \{\text{equivalence classes of $(m, \mathbf{M})$-homotopy sequences}\}.
+\pi_m^\sharp(\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2), \{0\}) := \{\text{equivalence classes of $(m, \mathbf{M})$-homotopy sequences}\}.
 \]
-For a homotopy class $\Pi \in \pi_m^\sharp(\mathbf{Z}_n(M, \partial M), \{0\})$, the \emph{width} is
+For a homotopy class $\Pi \in \pi_m^\sharp(\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2), \{0\})$, the \emph{width} is
 \[
 L(\Pi) := \inf_{S \in \Pi} L(S), \quad \text{where } L(S) := \limsup_{i \to \infty} \max_{x \in I(m, j_i)_0} \mathbf{M}(\phi_i(x)).
 \]
@@ -233,9 +249,9 @@ L(\Pi) := \inf_{S \in \Pi} L(S), \quad \text{where } L(S) := \limsup_{i \to \inf
 For applications to non-compact manifolds, we consider sweepouts of bounded open sets.
 
 \begin{definition}[Sweepout of $(U, \partial_F U)$]\label{def:sweepout}
-Let $U \subset M$ be a bounded open set of finite perimeter. A \emph{sweepout of $(U, \partial_F U)$} is a sequence $S = \{\phi_i\}$ where
+Let $U \subset M$ be a bounded relatively open set of finite perimeter. A \emph{sweepout of $(U, \partial_F U)$} is a sequence $S = \{\phi_i\}$ where
 \[
-\phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(\overline{U}, \overline{U} \cap \partial M)
+\phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)
 \]
 satisfies:
 \begin{enumerate}[label=\textup{(sw\arabic*)}]
@@ -250,11 +266,11 @@ The \emph{width} of $(U, \partial_F U)$ is $W(U) := \inf_S L(S)$ over all sweepo
 \end{definition}
 
 \begin{remark}\label{rem:free-boundary-automatic}
-The boundary condition (sw1) means the sweepout starts and ends at the zero class. Together with the homotopy condition, this ensures the sweepout ``fills'' the set $U$. The free boundary condition $\partial \tau \subset \partial M$ is automatic since $\phi_i(t) \in \mathbf{Z}_n(\overline{U}, \overline{U} \cap \partial M)$.
+The free boundary condition is built into the cycle space: each $\phi_i(t) \in \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ is a mod~$2$ cycle whose boundary (in the sense of currents) is supported on $\partial M$. Note that after pull-tight (Chapter~\ref{ch:convergence-of-min-max}), slices may have support extending beyond $\overline{U}$, which is why the target space is $\mathbf{Z}_n(M,\partial M;\mathbb{Z}_2)$ rather than $\mathbf{Z}_n(\overline{U},\overline{U}\cap\partial M;\mathbb{Z}_2)$. The sweepout still ``fills'' $U$ in the sense that the fillings transition from $\varnothing$ to $\llbracket U \rrbracket$.
 \end{remark}
 
 \begin{definition}[Good sweepout]\label{def:good-sweepout}
-A sweepout $S = \{\phi_i\}$ of $(U, \partial_F U)$ is a \emph{good sweepout} if:
+A sweepout $S = \{\phi_i\}$ of $(U, \partial_F U)$ in $\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ is a \emph{good sweepout} if:
 \begin{enumerate}[label=\textup{(g\arabic*)}]
     \item\label{g:endpoint-bound} For all $i$ and all $t \in I(1, j_i)_0$ with $|t| < \varepsilon_i$ or $|1-t| < \varepsilon_i$ (for some $\varepsilon_i > 0$), we have $\mathbf{M}(\phi_i(t)) \leq 5\,\mathbf{M}(\partial_I U)$.
 \end{enumerate}
@@ -262,7 +278,7 @@ We write $W_g(U)$ for the width over all good sweepouts.
 \end{definition}
 
 \begin{definition}[Nested sweepout]\label{def:nested-sweepout}
-A sweepout $S = \{\phi_i\}$ of $(U, \partial_F U)$ is a \emph{nested sweepout} if it arises from a $\partial$-transverse Morse function $f : M \to \mathbb{R}$ in the following sense: there exist values $a < b$ such that for each $i$, the map $\phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(\overline{U}, \overline{U} \cap \partial M)$ satisfies
+A sweepout $S = \{\phi_i\}$ of $(U, \partial_F U)$ is a \emph{nested sweepout} if it arises from a $\partial$-transverse Morse function $f : M \to \mathbb{R}$ in the following sense: there exist values $a < b$ such that for each $i$, the map $\phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ satisfies
 \[
 \phi_i(t) = \llbracket f^{-1}(c_t) \rrbracket \llcorner \overline{U}
 \]
@@ -272,7 +288,7 @@ We denote the collection of nested sweepouts of $U$ by $\mathcal{S}_n(U)$, and w
 \end{definition}
 
 \begin{definition}[Relative sweepout]\label{def:relative-sweepout}
-A \emph{relative sweepout of $U$} is a sweepout $S = \{\phi_i\}$ where each $\phi_i$ takes values in the relative cycles $\mathbf{Z}_n(\overline{U}, \overline{U} \cap \partial M)$, i.e., cycles supported in $\overline{U}$ with boundary on $\partial M \cap \overline{U}$. We denote the collection of relative sweepouts of $U$ by $\mathcal{S}_\partial(U)$.
+A \emph{relative sweepout of $U$} is a sweepout $S = \{\phi_i\}$ where each $\phi_i$ takes values in $\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ with the additional support condition $\operatorname{spt}(\phi_i(t)) \subset \overline{U}$ for all $t$. We denote the collection of relative sweepouts of $U$ by $\mathcal{S}_\partial(U)$.
 \end{definition}
 
 \begin{definition}[Relative width]\label{def:relative-width}

@@ -22,45 +22,45 @@ The style file: amsalpha.bst
 Database file #1: thesis.bib
 Warning--missing pages in CL03
 Warning--missing pages in CLS22
-You've used 14 entries,
+You've used 18 entries,
             2624 wiz_defined-function locations,
-            671 strings with 6738 characters,
-and the built_in function-call counts, 4820 in all, are:
-= -- 444
-> -- 184
-< -- 8
-+ -- 57
-- -- 55
-* -- 400
-:= -- 777
-add.period$ -- 14
-call.type$ -- 14
-change.case$ -- 77
-chr.to.int$ -- 14
-cite$ -- 16
-duplicate$ -- 206
-empty$ -- 402
-format.name$ -- 76
-if$ -- 964
+            700 strings with 7283 characters,
+and the built_in function-call counts, 6243 in all, are:
+= -- 579
+> -- 227
+< -- 11
++ -- 70
+- -- 67
+* -- 531
+:= -- 1005
+add.period$ -- 18
+call.type$ -- 18
+change.case$ -- 98
+chr.to.int$ -- 18
+cite$ -- 20
+duplicate$ -- 266
+empty$ -- 524
+format.name$ -- 95
+if$ -- 1253
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 28
-newline$ -- 52
-num.names$ -- 42
-pop$ -- 97
+missing$ -- 38
+newline$ -- 64
+num.names$ -- 54
+pop$ -- 115
 preamble$ -- 1
-purify$ -- 91
+purify$ -- 116
 quote$ -- 0
-skip$ -- 146
+skip$ -- 183
 stack$ -- 0
-substring$ -- 297
-swap$ -- 16
-text.length$ -- 8
-text.prefix$ -- 7
+substring$ -- 412
+swap$ -- 20
+text.length$ -- 11
+text.prefix$ -- 10
 top$ -- 0
-type$ -- 104
+type$ -- 132
 warning$ -- 2
-while$ -- 50
-width$ -- 17
-write$ -- 153
+while$ -- 65
+width$ -- 21
+write$ -- 198
 (There were 2 warnings)
