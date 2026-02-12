@@ -36,7 +36,7 @@ Throughout this thesis we work with $\mathbb{Z}_2$ coefficients. We write $\math
 \[
   \mathrm{Per}(\Omega) = \mathbf{M}(\llbracket \partial\Omega \rrbracket),
 \]
-since the reduced boundary $\partial^*\Omega$ carries no orientation, only a distinction between interior and exterior. See Maggi~\cite[Theorem~15.9]{Mag12} and Tamanini~\cite{Tam82}. This identification provides a natural bridge between the discrete sweepout framework (Chapters~\ref{ch:preliminaries}--\ref{ch:convergence-of-min-max}) and the Caccioppoli-set-based non-excessive framework (Chapter~\ref{ch:alternative-regularity}). We also note that the regularity theory (Theorem~\ref{thm:main-regularity}) operates at the varifold level and does not depend on the coefficient group: replacement varifolds arising from mod~$2$ area minimization are integer rectifiable and stable, so Wickramasekera's theory~\cite{Wic14} applies without modification.
+since the reduced boundary $\partial^*\Omega$ carries no orientation, only a distinction between interior and exterior. We also note that the regularity theory (Theorem~\ref{thm:main-regularity}) operates at the varifold level and does not depend on the coefficient group: replacement varifolds arising from mod~$2$ area minimization are integer rectifiable and stable, so Wickramasekera's theory~\cite{Wic14} applies without modification.
 \end{remark}
 
 \begin{proposition}[Caccioppoli sets and mod~$2$ cycles]\label{prop:cacc-cycle}
@@ -48,7 +48,7 @@ satisfying $\mathrm{Per}(\Omega) = \mathbf{M}(\llbracket\partial\Omega\rrbracket
 \end{proposition}
 
 \begin{proof}
-This follows from the structure theorem for Caccioppoli sets; see Maggi~\cite[Theorem~15.9]{Mag12}. The reduced boundary $\partial^*\Omega$ is countably $\mathcal{H}^n$-rectifiable, and the associated multiplicity-one current $\llbracket\partial\Omega\rrbracket$ satisfies $\partial\llbracket\partial\Omega\rrbracket = 0$ in $\mathrm{int}(M)$ (in the mod~$2$ sense). Since $\partial^*\Omega$ carries no canonical orientation, the natural coefficient group is $\mathbb{Z}_2$. The mass identity $\mathrm{Per}(\Omega) = \mathbf{M}(\llbracket\partial\Omega\rrbracket)$ is immediate from the definitions.
+This follows from the structure theorem for Caccioppoli sets; see Maggi~\cite[Theorem~15.9]{Mag12}. The reduced boundary $\partial^*\Omega$ is countably $\mathcal{H}^n$-rectifiable, and the associated multiplicity-one current $\llbracket\partial\Omega\rrbracket$ satisfies $\partial\llbracket\partial\Omega\rrbracket = 0$ in $\mathrm{int}(M)$ (in the mod~$2$ sense). Since $\partial^*\Omega$ carries no canonical orientation, the natural coefficient group is $\mathbb{Z}_2$. \textcolor{red}{The mass identity $\mathrm{Per}(\Omega) = \mathbf{M}(\llbracket\partial\Omega\rrbracket)$ is immediate from the definitions.}\xinze{Need more justification, this seems trivial but haven't been done anywhere else}
 \end{proof}
 
 \begin{definition}[Relative cycles and equivalence classes]\label{def:relative-cycle}
@@ -258,7 +258,7 @@ Let $U \subset M$ be a bounded relatively open set of finite perimeter. A \emph{
 \xinze{$\phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(M, \partial M)$}
 satisfies:
 \begin{enumerate}[label=\textup{(sw\arabic*)}]
-    \item\label{sw:boundary} \textbf{Boundary condition}: $\phi_i(0) = \phi_i(1) = 0$;
+    \item\label{sw:boundary} \textbf{Boundary condition}: $\phi_i(0) = \phi_i(1) = 0$;\xinze{intersect with $U$}
     \item\label{sw:homotopy} \textbf{Homotopy}: The sequence is a $(1, \mathbf{M})$-homotopy sequence;
     \item\label{sw:no-concentration} \textbf{No mass concentration}: For every $x \in M$,
     \[
