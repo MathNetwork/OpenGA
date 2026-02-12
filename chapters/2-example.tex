@@ -248,11 +248,14 @@ L(\Pi) := \inf_{S \in \Pi} L(S), \quad \text{where } L(S) := \limsup_{i \to \inf
 
 For applications to non-compact manifolds, we consider sweepouts of bounded open sets.
 
+\xinze{Given Caccippoli set $\Omega^{n + 1}$, $\partial\Omega$ induces an element $\llrr{\partial \Omega}$ of $\mathcal{Z}_n$ s.t. $Per(\Omega) = \mass{\llrr{\partial\Omega}}$ reference Tamanini/Maggi's book}
+
 \begin{definition}[Sweepout of $(U, \partial_F U)$]\label{def:sweepout}
 Let $U \subset M$ be a bounded relatively open set of finite perimeter. A \emph{sweepout of $(U, \partial_F U)$} is a sequence $S = \{\phi_i\}$ where
 \[
 \phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)
 \]
+\xinze{$\phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(M, \partial M)$}
 satisfies:
 \begin{enumerate}[label=\textup{(sw\arabic*)}]
     \item\label{sw:boundary} \textbf{Boundary condition}: $\phi_i(0) = \phi_i(1) = 0$;
@@ -268,7 +271,7 @@ The \emph{width} of $(U, \partial_F U)$ is $W(U) := \inf_S L(S)$ over all sweepo
 \begin{remark}\label{rem:free-boundary-automatic}
 The free boundary condition is built into the cycle space: each $\phi_i(t) \in \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ is a mod~$2$ cycle whose boundary (in the sense of currents) is supported on $\partial M$. Note that after pull-tight (Chapter~\ref{ch:convergence-of-min-max}), slices may have support extending beyond $\overline{U}$, which is why the target space is $\mathbf{Z}_n(M,\partial M;\mathbb{Z}_2)$ rather than $\mathbf{Z}_n(\overline{U},\overline{U}\cap\partial M;\mathbb{Z}_2)$. The sweepout still ``fills'' $U$ in the sense that the fillings transition from $\varnothing$ to $\llbracket U \rrbracket$.
 \end{remark}
-
+\xinze{This remark need to be fixed, each caccippoli set induce a mod 2 integral, should be $Z_2$}
 \begin{definition}[Good sweepout]\label{def:good-sweepout}
 A sweepout $S = \{\phi_i\}$ of $(U, \partial_F U)$ in $\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ is a \emph{good sweepout} if:
 \begin{enumerate}[label=\textup{(g\arabic*)}]
