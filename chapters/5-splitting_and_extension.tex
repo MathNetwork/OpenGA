@@ -5,10 +5,94 @@ This chapter develops two fundamental technical tools needed for the constructio
 \section{The Extension Lemma}\label{sec:extension-lemma}
 The extension lemma is a key ingredient in the monotonisation algorithm. It allows us to insert or remove a hypersurface at one endpoint of a nested family while keeping the mass bounded.
 
-         \begin{figure}[h]
+        \begin{figure}[h]
             \centering
-            \includegraphics[width=0.8\textwidth]{figures/IMG_2674.jpg}
-            \caption{Illustration of the Lemma~\ref{lem:extension} (Cases I when $\Omega \neq \Omega_0$ and II when $\Omega \neq \Omega_1$).}
+            \begin{tikzpicture}[scale=0.55]
+              % === LEFT PANEL: Case I (Omega not subset Omega_0) ===
+
+              % Intersection of Omega and Omega_0 (orange shading = tilde Omega_0)
+              \begin{scope}
+                \clip (0,0)
+                  .. controls (0,0.8) and (0.2,2) .. (1,3)
+                  .. controls (1.8,3.8) and (2.8,3) .. (2.8,1.5)
+                  .. controls (2.8,0.5) and (2.5,0) .. (2.5,0) -- cycle;
+                \fill[orange!30] (-3,0)
+                  .. controls (-3,1.2) and (-2.8,3.2) .. (-1,4.3)
+                  .. controls (0.5,5) and (1.8,3.8) .. (1.8,2)
+                  .. controls (1.8,0.8) and (1.5,0) .. (1.5,0) -- cycle;
+              \end{scope}
+
+              % Omega_1 boundary (large Teal arc)
+              \draw[thick, Teal] (-4,0)
+                .. controls (-4.1,2.5) and (-3,5.5) .. (-0.3,6.5)
+                .. controls (2.5,6) and (3.8,3) .. (3.5,0);
+
+              % Omega_0 boundary (Teal, larger blob on the left)
+              \draw[thick, Teal] (-3,0)
+                .. controls (-3,1.2) and (-2.8,3.2) .. (-1,4.3)
+                .. controls (0.5,5) and (1.8,3.8) .. (1.8,2)
+                .. controls (1.8,0.8) and (1.5,0) .. (1.5,0);
+
+              % Omega boundary = Gamma (red/brown, smaller blob on the right)
+              \draw[thick, red!70!black] (0,0)
+                .. controls (0,0.8) and (0.2,2) .. (1,3)
+                .. controls (1.8,3.8) and (2.8,3) .. (2.8,1.5)
+                .. controls (2.8,0.5) and (2.5,0) .. (2.5,0);
+
+              % partial M (bottom boundary)
+              \draw[very thick] (-4.5,0) -- (4,0);
+
+              % Labels
+              \node[Teal] at (-1.5,3) {\large $\Omega_0$};
+              \node[red!70!black] at (2.2,2.5) {$\Omega$};
+              \node[Teal, right] at (3.6,1.5) {$\Omega_1$};
+              \node[orange!70!black] at (0.8,1.2) {$\tilde{\Omega}_0$};
+              \node[below] at (3.5,-0.15) {$\partial M$};
+
+              % === RIGHT PANEL: Case II ===
+              \begin{scope}[xshift=10.5cm]
+
+              % Fill Omega_1 region (orange)
+              \fill[orange!25] (-4,0)
+                .. controls (-4.1,2.5) and (-3,5.5) .. (-0.3,6.5)
+                .. controls (2.5,6) and (3.8,3) .. (3.5,0) -- cycle;
+
+              % Fill Omega region (orange, union with Omega_1)
+              \fill[orange!25] (-3.5,0)
+                .. controls (-3.5,2) and (-3,5.5) .. (-0.5,7.5)
+                .. controls (1.5,8) and (2.5,4) .. (2.5,1.5)
+                .. controls (2.5,0.5) and (2.2,0) .. (2,0) -- cycle;
+
+              % Omega_1 boundary (solid Teal arc)
+              \draw[thick, Teal] (-4,0)
+                .. controls (-4.1,2.5) and (-3,5.5) .. (-0.3,6.5)
+                .. controls (2.5,6) and (3.8,3) .. (3.5,0);
+
+              % Omega_0 boundary (Teal)
+              \draw[thick, Teal] (-3,0)
+                .. controls (-3,1.2) and (-2.8,3.2) .. (-1,4.3)
+                .. controls (0.5,5) and (1.8,3.8) .. (1.8,2)
+                .. controls (1.8,0.8) and (1.5,0) .. (1.5,0);
+
+              % Omega boundary = Gamma (red/brown)
+              \draw[thick, red!70!black] (-3.5,0)
+                .. controls (-3.5,2) and (-3,5.5) .. (-0.5,7.5)
+                .. controls (1.5,8) and (2.5,4) .. (2.5,1.5)
+                .. controls (2.5,0.5) and (2.2,0) .. (2,0);
+
+              % partial M (bottom boundary)
+              \draw[very thick] (-4.5,0) -- (4,0);
+
+              % Labels
+              \node[Teal] at (-1.5,3) {\large $\Omega_0$};
+              \node[red!70!black, left] at (-3.5,4) {\large $\Omega$};
+              \node[Teal, right] at (3.6,1.5) {$\Omega_1$};
+              \node[orange!70!black] at (2.8,4) {$\tilde{\Omega}_1$};
+              \node[below] at (3.5,-0.15) {$\partial M$};
+
+              \end{scope}
+            \end{tikzpicture}
+            \caption{Illustration of Lemma~\ref{lem:extension}. \textbf{Left} (Case~I, $\Omega \neq \Omega_0$): $\Omega_0$ and $\Omega$ partially overlap, with $\Omega \subset \Omega_1$. The shaded region $\tilde{\Omega}_0 = \Omega \cap \Omega_0$ serves as the new starting set for the modified nested family. \textbf{Right} (Case~II, $\Omega \neq \Omega_1$): $\Omega_0 \subset \Omega$, and $\Omega$ partially overlaps $\Omega_1$. The shaded region $\tilde{\Omega}_1 = \Omega \cup \Omega_1$ serves as the new ending set for the modified nested family.}
             \label{fig:2674}
         \end{figure}
 \begin{lemma}\label{lem:extension}

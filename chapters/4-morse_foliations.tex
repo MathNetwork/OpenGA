@@ -38,16 +38,22 @@ We will also need a slightly different version of this lemma for a non-compact s
         \item[(2)] $g^{-1}(0) = \partial\Omega_1\cup\partial\Omega_2$ and $g^{-1}(1) = \partial N$;
         \item[(3)] $\mathbf{M}(\langle \llbracket N \rrbracket, g, t \rangle) \leq \mathbf{M}(\partial_I N) + 2\,\mathcal{H}^n(\Sigma) + \eps$.
     \end{enumerate}
-    \begin{proof}
+\end{lemma}
+\begin{proof}
         Let $f: M \to \R$ be a $\partial$-transverse Morse function such that there exists some sufficiently small $0 < \delta_1 < \eps$,
         \begin{equation*}
             f(x) = \operatorname{sdist}(x, \partial N)
         \end{equation*}
-        for $x \in N_{\delta_1}(\partial N)$. The sign is chosen so that $f(x) \geq 0$ when $x \in N$. Without any loss of generality, we may assume that $f$ has no critical points in the $\eps$-neighborhood of $\Sigma$, the restriction of $f$ to $\Sigma$ is also Morse and
+        for $x \in N_{\delta_1}(\partial N)$. The sign is chosen so that $f(x) \geq 0$ when $x \in N$. Without any loss of generality, we may assume the following three conditions hold:
+        \begin{enumerate}
+            \item[(i)] $f$ has no critical points in the $\eps$-neighborhood of $\Sigma$: a generic Morse function has no critical points on any given compact set, so a small perturbation of $f$ (supported away from $N_{\delta_1}(\partial N)$) achieves this.
+            \item[(ii)] The restriction $f|_\Sigma$ is also Morse: by Sard's theorem, $f|_\Sigma$ is Morse for a generic choice of $f$.
+            \item[(iii)] The mass bound
         \begin{equation*}
             \mathbf{M}(\langle \llbracket N \rrbracket, f, t \rangle) \leq \mathbf{M}(\partial_I N) + \eps/10
         \end{equation*}
-        for $t \in [0, \delta_1]$. Pick $\delta_2 \in (0, \delta_1)$ so that for $t \in (0, \delta_2)$,
+        holds for $t \in [0, \delta_1]$: since $f = \operatorname{sdist}(\cdot, \partial N)$ in $N_{\delta_1}(\partial N)$, the level set $f^{-1}(t)$ converges to $\partial N$ in the $C^1$ sense as $t \to 0$, so $\mathcal{H}^n(f^{-1}(t) \cap N)$ converges to $\mathcal{H}^n(\partial_I N)$, and we can choose $\delta_1$ small enough for this bound to hold.
+        \end{enumerate} Pick $\delta_2 \in (0, \delta_1)$ so that for $t \in (0, \delta_2)$,
         \begin{equation*}
             \mathcal{H}^n(f^{-1}(t)\cap N_{\delta_2}(\Sigma)) < \eps/10
         \end{equation*}
@@ -66,12 +72,69 @@ We will also need a slightly different version of this lemma for a non-compact s
             for all $t \in [0, 1]$.
         \end{enumerate}
 
-        We can make an arbitrarily small perturbation of $f$ by an ambient diffeomorphism so that $f$ is a Morse function on $\partial\Omega_1\cup\partial\Omega_2$ and for $t \in [0, \delta_2]$ each leaf of the foliation $\Sigma_t = (f^{-1}(t)\cap N)\backslash(\Omega_1\cup\Omega_2)$ is a graph over some region $U_t\subset \partial N$ with
+        We can make an arbitrarily small perturbation of $f$ by an ambient diffeomorphism so that $f$ is a Morse function on $\partial\Omega_1\cup\partial\Omega_2$. For $t \in [0, \delta_2]$, since $f = \operatorname{sdist}(\cdot, \partial N)$ in $N_{\delta_1}(\partial N)$, the level set $f^{-1}(t)$ is $C^1$-close to $\partial N$. In particular, each leaf $\Sigma_t = (f^{-1}(t)\cap N)\backslash(\Omega_1\cup\Omega_2)$ is a normal graph over some region $U_t\subset \partial N$, with
          \begin{figure}[h]
             \centering
-            \includegraphics[width=0.8\textwidth]{figures/IMG_2671.PNG}
-            \caption{Gluing two submanifolds using a Morse function}
-            \label{fig:2671}
+            \begin{tikzpicture}[scale=1.0]
+              % Omega_1 (left region, shaded)
+              \fill[red!12] (-4.5,0)
+                .. controls (-4.5,0.3) and (-4.8,1) .. (-4.8,2.5)
+                .. controls (-4.8,4) and (-3.5,4.5) .. (-2,4.5)
+                .. controls (-1,4.5) and (-0.6,3.5) .. (-0.6,2.5)
+                .. controls (-0.6,1.2) and (-1,0.3) .. (-1.5,0)
+                -- cycle;
+
+              % Omega_2 (right region, shaded)
+              \fill[red!12] (4.5,0)
+                .. controls (4.5,0.3) and (4.8,1) .. (4.8,2.5)
+                .. controls (4.8,4) and (3.5,4.5) .. (2,4.5)
+                .. controls (1,4.5) and (0.6,3.5) .. (0.6,2.5)
+                .. controls (0.6,1.2) and (1,0.3) .. (1.5,0)
+                -- cycle;
+
+              % Omega_1 boundary (dashed)
+              \draw[thick, dashed] (-4.5,0)
+                .. controls (-4.5,0.3) and (-4.8,1) .. (-4.8,2.5)
+                .. controls (-4.8,4) and (-3.5,4.5) .. (-2,4.5)
+                .. controls (-1,4.5) and (-0.6,3.5) .. (-0.6,2.5)
+                .. controls (-0.6,1.2) and (-1,0.3) .. (-1.5,0);
+
+              % Omega_2 boundary (dashed)
+              \draw[thick, dashed] (4.5,0)
+                .. controls (4.5,0.3) and (4.8,1) .. (4.8,2.5)
+                .. controls (4.8,4) and (3.5,4.5) .. (2,4.5)
+                .. controls (1,4.5) and (0.6,3.5) .. (0.6,2.5)
+                .. controls (0.6,1.2) and (1,0.3) .. (1.5,0);
+
+              % Sigma (separating hypersurface, solid green)
+              \draw[thick, green!50!black] (0,4.8)
+                .. controls (0,3.5) and (-0.15,2) .. (0,0);
+
+              % partial N (bottom boundary, bold red)
+              \draw[very thick, red!70!black] (-5,0) -- (5,0);
+              \node[red!70!black, below] at (4.2,-0.15) {$\partial N$};
+
+              % A foliation leaf in the gap (thin gray curves)
+              \draw[thin, gray] (-0.6,0.6)
+                .. controls (-0.3,0.7) and (0.3,0.7) .. (0.6,0.6);
+              \draw[thin, gray] (-0.6,1.2)
+                .. controls (-0.3,1.4) and (0.3,1.4) .. (0.6,1.2);
+              \draw[thin, gray] (-0.6,1.8)
+                .. controls (-0.3,2.1) and (0.3,2.1) .. (0.6,1.8);
+              \draw[thin, gray] (-0.6,2.5)
+                .. controls (-0.3,2.8) and (0.3,2.8) .. (0.6,2.5);
+
+              % Labels
+              \node at (-3,2.5) {\large $\Omega_1$};
+              \node at (3,2.5) {\large $\Omega_2$};
+              \node[green!50!black, above] at (0,4.8) {$\Sigma$};
+
+              % Gap label
+              \draw[<-, >=stealth, thin] (0.3,0.3) -- (2.5,-0.8)
+                node[right, font=\small] {$(f^{-1}(t)\cap N)\setminus(\Omega_1\cup\Omega_2)$};
+            \end{tikzpicture}
+            \caption{Gluing two submanifolds using a Morse function. The hypersurface $\Sigma$ (green) separates $N$ into two regions; $\Omega_1$ and $\Omega_2$ (shaded) are inward perturbations of these regions. The foliation leaves (gray) in the gap $N \setminus (\Omega_1 \cup \Omega_2)$ connect $\partial\Omega_1 \cup \partial\Omega_2$ to $\partial N$.}
+            \label{fig:gluing-morse}
         \end{figure}
 
         \begin{equation*}
@@ -82,9 +145,15 @@ We will also need a slightly different version of this lemma for a non-compact s
         \begin{equation*}
             \mathbf{M}(\langle \llbracket N\backslash(\Omega_1\cup\Omega_2) \rrbracket, f, t \rangle) \leq 2\,\mathcal{H}^n(\Sigma) + \mathbf{M}(\partial_I N) + \eps/2.
         \end{equation*}
-        We can now apply Lemma~\ref{lem:morse-foliation-non-compact} to $f|_{N\backslash(\Omega_1\cup\Omega_2)}$ to obtain the desired function $g$ and the corresponding foliation, i.e.
+        We now verify that the hypotheses of Lemma~\ref{lem:morse-foliation-non-compact} are satisfied for the restriction $f|_{N\backslash(\Omega_1\cup\Omega_2)}$:
+        \begin{itemize}
+            \item The domain $N' = \operatorname{cl}(N \setminus (\Omega_1 \cup \Omega_2))$ is a (non-compact) manifold with boundary $\partial N' = \partial\Omega_1 \cup \partial\Omega_2 \cup \partial N$.
+            \item $f|_{N'}$ is proper: preimages of compact sets in $[0, \delta_1]$ are compact since the non-compact ends (i.e.\ the interiors of $V_1$ and $V_2$) have been removed by excising $\Omega_1$ and $\Omega_2$.
+            \item $f|_{N'}$ is $\partial$-transverse on $N'$, as this is inherited from the $\partial$-transversality of $f$ on $N$.
+            \item $\partial\Omega_1 \cup \partial\Omega_2$ plays the role of $\Sigma$ in Lemma~\ref{lem:morse-foliation-non-compact}, i.e.\ the compact submanifold of $\partial N'$ sent to $b = \delta_1$.
+        \end{itemize}
+        Applying Lemma~\ref{lem:morse-foliation-non-compact}, we obtain the desired function $g$ and the corresponding foliation, i.e.
         \begin{equation*}
             \mathbf{M}(\langle \llbracket N \rrbracket, g, t \rangle) \leq 2\,\mathcal{H}^n(\Sigma) + \mathbf{M}(\partial_I N) + \eps.
         \end{equation*}
     \end{proof}
-\end{lemma}
