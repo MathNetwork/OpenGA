@@ -20,10 +20,6 @@ For a relatively open subset $U \subset M$, we write $\mathrm{int}_M(U)$ for the
 A smooth function $f: M \to \mathbb{R}$ is \emph{$\partial$-transverse} if $f|_{\partial M}$ has no critical points, i.e.\ $\nabla_{\partial M}(f|_{\partial M}) \neq 0$ everywhere on $\partial M$.  A \emph{$\partial$-transverse Morse function} is a Morse function on $M$ that is also $\partial$-transverse.
 \end{definition}
 
-\begin{remark}[Bounded geometry]\label{rem:bounded-geom}
-Recall that a complete Riemannian manifold $(M^{n+1}, g)$ with boundary $\partial M$ is said to have \emph{bounded geometry} if there exists a constant $\Lambda > 0$ such that $\mathrm{Ric}_M \geq -\Lambda g$, $|A_{\partial M}| \leq \Lambda$, and $\mathrm{inj}(M) \geq \Lambda^{-1}$.
-In Li--Zhou \cite{LZ17}, bounded geometry is imposed globally on a compact manifold with boundary, where it holds automatically. In our non-compact setting, we do not require bounded geometry as a global hypothesis. Instead, we observe that for any precompact open subset $V \Subset M$, the closure $\overline{V}$ is compact in the complete manifold $(M,g)$, and therefore admits uniform bounds on Ricci curvature, the second fundamental form of $\partial M \cap \overline{V}$, and a positive lower bound on the injectivity radius. In particular, the constants in the monotonicity formula (\cite[Theorem~2.3]{LZ17}) and Fermi coordinates (\cite[Appendix~A]{LZ17}) are uniformly controlled on $\overline{V}$. Since all arguments in this thesis---pull-tight (Chapter~\ref{ch:convergence-of-min-max}), almost minimizing (Chapter~\ref{ch:convergence-of-min-max}), and the regularity theory of Li--Zhou---are carried out on precompact subsets, the global bounded geometry assumption can be removed.
-\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Currents and Varifolds}\label{sec:currents-varifolds}
@@ -129,7 +125,7 @@ In the notation of Li--Zhou~\cite{LZ17}, sweepouts of $(U, \partial_F U)$ corres
 Working with the quotient space $\mathbf{Z}_n(A, B;\mathbb{Z}_2)$ rather than the space of mod~$2$ flat chains $\mathcal{Z}_n(A, B;\mathbb{Z}_2)$ is essential for several reasons:
 \begin{enumerate}[label=\textup{(\roman*)}]
     \item \emph{Well-defined mass}: The mass $\mathbf{M}(\tau)$ of an equivalence class (Definition~\ref{def:mass-equivalence-class}) is canonically defined via the canonical representative, whereas the mass of a current in a class depends on the choice of representative.
-    \item \emph{Homotopy theory}: The discrete homotopy framework (Definition~\ref{def:homotopy-sequence}) requires $\mathbf{M}$-fineness, which is naturally defined on $\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ since representatives differing by cycles in $\partial M$ should be considered equivalent.
+    \item \emph{Flat continuity}: In the proof of Proposition~\ref{prop:sweepout-cycle}, the boundary residue $R$ supported on $\partial M$ vanishes in the equivalence class, which is essential for the $\mathcal{F}$-continuity of the map $t \mapsto \llbracket\partial\Omega_t\rrbracket$.
     \item \emph{Isoperimetric lemmas}: The $\mathcal{F}$- and $\mathbf{M}$-isoperimetric lemmas (Lemmas~\ref{lem:F-isoperimetric} and~\ref{lem:M-isoperimetric}) require working with equivalence classes to ensure that the isoperimetric choices are well-defined up to boundary terms.
 \end{enumerate}
 \end{remark}
@@ -203,102 +199,80 @@ for Borel $A \subset \mathrm{Gr}_n(M)$, where $J_S \varphi(x) := \det{d\varphi_x
 \section{Sweepouts and Width}\label{sec:sweepouts}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We follow the discrete sweepout framework of Li--Zhou~\cite{LZ17}, which we now recall.
-
-\subsection*{Cell Complexes}
-
-For $m \geq 1$ and $j \geq 1$, let $I(m, j)$ denote the cell complex on $I^m = [0,1]^m$ obtained by subdividing each edge into $3^j$ equal parts. We write:
-\begin{itemize}
-    \item $I(m, j)_0$ for the set of vertices of $I(m, j)$;
-    \item $I_0(m, j)_0 := I(m, j)_0 \cap \partial I^m$ for the boundary vertices.
-\end{itemize}
-
-\begin{definition}[$\mathbf{M}$-fineness]\label{def:fineness}
-For a map $\phi : I(m, j)_0 \to \mathbf{Z}_n(A, B;\mathbb{Z}_2)$, the \emph{$\mathbf{M}$-fineness} of $\phi$ is
-\[
-\mathbf{f}_{\mathbf{M}}(\phi) := \sup\left\{ \frac{\mathbf{M}(\phi(x) - \phi(y))}{|x - y|} : x, y \in I(m, j)_0, \ x \neq y \right\}.
-\]
-\end{definition}
-
-\begin{definition}[Homotopy sequence]\label{def:homotopy-sequence}
-An \emph{$(m, \mathbf{M})$-homotopy sequence of mappings into $(\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2), \{0\})$} is a sequence
-\[
-S = \{\phi_i\}_{i \in \mathbb{N}}, \quad \phi_i : I(m, j_i)_0 \to \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2),
-\]
-satisfying:
-\begin{enumerate}[label=\textup{(H\arabic*)}]
-    \item\label{H:boundary} \textbf{Boundary condition}: $\phi_i(x) = 0$ for all $x \in I_0(m, j_i)_0$;
-    \item\label{H:homotopic} \textbf{Homotopy}: There exist maps $\psi_i : I(m, k_i)_0 \to \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ that are $m$-homotopic to both $\phi_i$ and $\phi_{i+1}$ with fineness $\mathbf{f}_{\mathbf{M}}(\psi_i) \to 0$ as $i \to \infty$;
-    \item\label{H:mass-bound} \textbf{Mass bound}: $\sup_{i} \max_{x \in I(m, j_i)_0} \mathbf{M}(\phi_i(x)) < \infty$.
-\end{enumerate}
-\end{definition}
-
-\begin{definition}[Homotopy class and width]\label{def:homotopy-class}
-Two $(m, \mathbf{M})$-homotopy sequences $S = \{\phi_i\}$ and $S' = \{\phi'_i\}$ are \emph{equivalent} if the interleaved sequence $\phi_1, \phi'_1, \phi_2, \phi'_2, \ldots$ is also an $(m, \mathbf{M})$-homotopy sequence. The \emph{$(m, \mathbf{M})$-homotopy class} is
-\[
-\pi_m^\sharp(\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2), \{0\}) := \{\text{equivalence classes of $(m, \mathbf{M})$-homotopy sequences}\}.
-\]
-For a homotopy class $\Pi \in \pi_m^\sharp(\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2), \{0\})$, the \emph{width} is
-\[
-L(\Pi) := \inf_{S \in \Pi} L(S), \quad \text{where } L(S) := \limsup_{i \to \infty} \max_{x \in I(m, j_i)_0} \mathbf{M}(\phi_i(x)).
-\]
-\end{definition}
-
-\subsection*{Sweepouts of Bounded Open Sets}
-
-For applications to non-compact manifolds, we consider sweepouts of bounded open sets.
-
-\xinze{Given Caccippoli set $\Omega^{n + 1}$, $\partial\Omega$ induces an element $\llrr{\partial \Omega}$ of $\mathcal{Z}_n$ s.t. $Per(\Omega) = \mass{\llrr{\partial\Omega}}$ reference Tamanini/Maggi's book}
+We adopt a continuous sweepout framework based on Caccioppoli sets (sets of finite perimeter), following the approach of Chambers--Liokumovich~\cite{CL20} and De~Lellis--Tasnady~\cite{DLT13}. For applications to non-compact manifolds, we consider sweepouts of bounded open sets.
 
 \begin{definition}[Sweepout of $(U, \partial_F U)$]\label{def:sweepout}
-Let $U \subset M$ be a bounded relatively open set of finite perimeter. A \emph{sweepout of $(U, \partial_F U)$} is a sequence $S = \{\phi_i\}$ where
-\[
-\phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)
-\]
-\xinze{$\phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(M, \partial M)$}
-satisfies:
+Let $U \subset M$ be a bounded relatively open set of finite perimeter. A \emph{sweepout of $(U, \partial_F U)$} is a family of Caccioppoli sets $\{\Omega_t\}_{t \in [0,1]}$ in $M$ satisfying:
 \begin{enumerate}[label=\textup{(sw\arabic*)}]
-    \item\label{sw:boundary} \textbf{Boundary condition}: $\phi_i(0) = \phi_i(1) = 0$;\xinze{intersect with $U$}
-    \item\label{sw:homotopy} \textbf{Homotopy}: The sequence is a $(1, \mathbf{M})$-homotopy sequence;
-    \item\label{sw:no-concentration} \textbf{No mass concentration}: For every $x \in M$,
+    \item\label{sw:boundary} \textbf{Boundary condition}: $\Omega_0 \cap U = \emptyset$ and $U \subset \Omega_1$;
+    \item\label{sw:continuity} \textbf{Continuity}: the map $t \mapsto \mathbf{1}_{\Omega_t}$ is continuous in $L^1(M)$, i.e.,
     \[
-    \limsup_{r \to 0} \sup_{i} \sup_{t \in I(1, j_i)_0} \|\phi_i(t)\|(B_r(x)) = 0.
+    \mathcal{H}^{n+1}(\Omega_t \triangle \Omega_s) \to 0 \quad \text{as } s \to t;
+    \]
+    \item\label{sw:finite-mass} \textbf{Finite mass}: $\sup_{t \in [0,1]} \mathrm{Per}(\Omega_t) < \infty$;
+    \item\label{sw:no-concentration} \textbf{No mass concentration}: for every $x \in M$,
+    \[
+    \lim_{r \to 0} \sup_{t \in [0,1]} \mathrm{Per}(\Omega_t, B_r(x)) = 0.
     \]
 \end{enumerate}
-The \emph{width} of $(U, \partial_F U)$ is $W(U) := \inf_S L(S)$ over all sweepouts $S$.
+The \emph{height} of the sweepout is $F(\{\Omega_t\}) := \sup_{t \in [0,1]} \mathrm{Per}(\Omega_t)$.
+\end{definition}
+
+\begin{definition}[Width]\label{def:width}
+The \emph{width} of $(U, \partial_F U)$ is
+\[
+W(U) := \inf\bigl\{ F(\{\Omega_t\}) : \{\Omega_t\} \text{ is a sweepout of } (U, \partial_F U) \bigr\}.
+\]
 \end{definition}
 
 \begin{remark}\label{rem:free-boundary-automatic}
-The free boundary condition is built into the cycle space: each $\phi_i(t) \in \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ is a mod~$2$ cycle whose boundary (in the sense of currents) is supported on $\partial M$. Note that after pull-tight (Chapter~\ref{ch:convergence-of-min-max}), slices may have support extending beyond $\overline{U}$, which is why the target space is $\mathbf{Z}_n(M,\partial M;\mathbb{Z}_2)$ rather than $\mathbf{Z}_n(\overline{U},\overline{U}\cap\partial M;\mathbb{Z}_2)$. The sweepout still ``fills'' $U$ in the sense that the fillings transition from $\varnothing$ to $\llbracket U \rrbracket$.
+The free boundary condition is built into the Caccioppoli framework: by Proposition~\ref{prop:cacc-cycle}, each reduced boundary $\partial^*\Omega_t$ induces a mod~$2$ relative cycle $\llbracket\partial\Omega_t\rrbracket \in \mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)$, whose ``boundary'' (in the sense of currents) is automatically supported on $\partial M$. Note that the sweepout ``fills'' $U$ in the sense that the fillings $\Omega_t$ transition from being disjoint from $U$ to containing $U$.
 \end{remark}
-\xinze{This remark need to be fixed, each caccippoli set induce a mod 2 integral, should be $Z_2$}
-\begin{definition}[Good sweepout]\label{def:good-sweepout}
-A sweepout $S = \{\phi_i\}$ of $(U, \partial_F U)$ in $\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ is a \emph{good sweepout} if:
-\begin{enumerate}[label=\textup{(g\arabic*)}]
-    \item\label{g:endpoint-bound} For all $i$ and all $t \in I(1, j_i)_0$ with $|t| < \varepsilon_i$ or $|1-t| < \varepsilon_i$ (for some $\varepsilon_i > 0$), we have $\mathbf{M}(\phi_i(t)) \leq 5\,\mathbf{M}(\partial_I U)$.
+
+The following proposition provides the bridge between the Caccioppoli sweepout framework and the cycle-valued maps used in Li--Zhou~\cite{LZ17}.
+
+\begin{proposition}[From Caccioppoli sweepouts to cycle-valued maps]\label{prop:sweepout-cycle}
+Let $\{\Omega_t\}_{t \in [0,1]}$ be a sweepout of $(U, \partial_F U)$. Then the map
+\[
+\Phi: [0,1] \to \mathcal{Z}_n(M, \partial M;\mathbb{Z}_2), \quad t \mapsto \llbracket\partial\Omega_t\rrbracket
+\]
+is continuous in the flat topology $\mathcal{F}$, and satisfies $\mathbf{M}(\Phi(t)) = \mathrm{Per}(\Omega_t)$ for all $t$ by Proposition~\ref{prop:cacc-cycle}. Moreover, $\Phi$ satisfies the no mass concentration condition
+\[
+\lim_{r \to 0} \sup_{t \in [0,1]} \|\Phi(t)\|(B_r(x)) = 0 \quad \text{for every } x \in M.
+\]
+In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item the width satisfies $W(U) = \inf_\Phi \sup_t \mathbf{M}(\Phi(t))$, where the infimum is over all $\mathcal{F}$-continuous maps arising from sweepouts;
+    \item the results of Li--Zhou~\cite{LZ17} on pull-tight, almost minimizing selection, and the regularity theory, which are formulated at the level of continuous cycle-valued maps and varifolds, apply to $\Phi$ after discretization via~\cite[Theorem~5.1]{LZ17}.
 \end{enumerate}
-We write $W_g(U)$ for the width over all good sweepouts.
+\end{proposition}
+
+\begin{proof}
+The mass identity $\mathbf{M}(\Phi(t)) = \mathrm{Per}(\Omega_t)$ is Proposition~\ref{prop:cacc-cycle}. The no mass concentration condition for $\Phi$ is immediate from~\ref{sw:no-concentration} and the mass identity.
+
+For the $\mathcal{F}$-continuity: condition~\ref{sw:continuity} gives $\mathcal{F}(\llbracket\Omega_t\rrbracket - \llbracket\Omega_s\rrbracket) \leq \mathcal{H}^{n+1}(\Omega_t \triangle \Omega_s) \to 0$ as $s \to t$, since the $(n+1)$-current $\llbracket\Omega_t\rrbracket - \llbracket\Omega_s\rrbracket = \llbracket\Omega_t \setminus \Omega_s\rrbracket - \llbracket\Omega_s \setminus \Omega_t\rrbracket$ (mod~$2$) has mass equal to $\mathcal{H}^{n+1}(\Omega_t \triangle \Omega_s)$. Since $\partial(\llbracket\Omega_t\rrbracket - \llbracket\Omega_s\rrbracket) = \llbracket\partial\Omega_t\rrbracket - \llbracket\partial\Omega_s\rrbracket + R$, where $\mathrm{spt}(R) \subset \partial M$, the difference $\Phi(t) - \Phi(s)$ as a class in $\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ satisfies
+\[
+\mathcal{F}\bigl(\Phi(t) - \Phi(s)\bigr) \leq \mathcal{H}^{n+1}(\Omega_t \triangle \Omega_s) \to 0.
+\]
+Here we have used that $\llbracket\Omega_t\rrbracket - \llbracket\Omega_s\rrbracket$ serves as the ``filling'' in the definition of the flat norm (Definition~\ref{def:relative-flat-norm}), and the boundary residue $R$ on $\partial M$ vanishes in the equivalence class.
+
+Part~(i) follows from the mass identity. Part~(ii) follows because $\Phi$ is $\mathcal{F}$-continuous with no mass concentration, so it satisfies the hypotheses of the Discretization Theorem~\cite[Theorem~5.1]{LZ17}, which produces a $(1, \mathbf{M})$-homotopy sequence. The pull-tight procedure~\cite[Proposition~4.17]{LZ17} then applies to this sequence, producing stationary varifolds; the almost minimizing property~\cite[Theorem~5.3]{LZ17} selects varifolds that are almost minimizing in small annuli; and the regularity theory~\cite[Theorem~6.2]{LZ17} operates entirely at the varifold level.
+\end{proof}
+
+\begin{definition}[Good sweepout]\label{def:good-sweepout}
+A sweepout $\{\Omega_t\}$ of $(U, \partial_F U)$ is a \emph{good sweepout} if there exists $\varepsilon > 0$ such that
+\[
+\mathrm{Per}(\Omega_t) \leq 5\,\mathbf{M}(\partial_I U) \quad \text{for all } t \in [0, \varepsilon) \cup (1-\varepsilon, 1].
+\]
+We write $W_g(U)$ for the infimum of heights over all good sweepouts.
 \end{definition}
 
 \begin{definition}[Nested sweepout]\label{def:nested-sweepout}
-A sweepout $S = \{\phi_i\}$ of $(U, \partial_F U)$ is a \emph{nested sweepout} if it arises from a $\partial$-transverse Morse function $f : M \to \mathbb{R}$ in the following sense: there exist values $a < b$ such that for each $i$, the map $\phi_i : I(1, j_i)_0 \to \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ satisfies
-\[
-\phi_i(t) = \llbracket f^{-1}(c_t) \rrbracket \llcorner \overline{U}
-\]
-for some increasing function $t \mapsto c_t$ with $c_0 = a$ and $c_1 = b$. Equivalently, the corresponding fillings $\Omega_t := f^{-1}((-\infty, c_t))$ satisfy $\Omega_s \subset \Omega_t$ for $s \leq t$.
-
-We denote the collection of nested sweepouts of $U$ by $\mathcal{S}_n(U)$, and write $W_n(U) := \inf_{S \in \mathcal{S}_n(U)} L(S)$.
+A sweepout $\{\Omega_t\}$ of $(U, \partial_F U)$ is \emph{nested} if $\Omega_s \subset \Omega_t$ for all $0 \leq s \leq t \leq 1$. Equivalently, $\{\Omega_t\}$ arises from a $\partial$-transverse Morse function $f: M \to \mathbb{R}$ via $\Omega_t = f^{-1}((-\infty, c_t))$ for some increasing function $t \mapsto c_t$. We denote the collection of nested sweepouts of $U$ by $\mathcal{S}_n(U)$, and write $W_n(U) := \inf_{S \in \mathcal{S}_n(U)} F(S)$.
 \end{definition}
 
-\begin{definition}[Relative sweepout]\label{def:relative-sweepout}
-A \emph{relative sweepout of $U$} is a sweepout $S = \{\phi_i\}$ where each $\phi_i$ takes values in $\mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ with the additional support condition $\operatorname{spt}(\phi_i(t)) \subset \overline{U}$ for all $t$. We denote the collection of relative sweepouts of $U$ by $\mathcal{S}_\partial(U)$.
-\end{definition}
-
-\begin{definition}[Relative width]\label{def:relative-width}
-The \emph{relative width} of $U$ is
-\[
-W_\partial(U) := \inf_{S \in \mathcal{S}_\partial(U)} L(S).
-\]
+\begin{definition}[Relative sweepout and relative width]\label{def:relative-sweepout}
+A \emph{relative sweepout} of $U$ is a sweepout $\{\Omega_t\}$ of $(U, \partial_F U)$ with the additional property that $\partial^*\Omega_t \subset \overline{U}$ for all $t \in [0,1]$. We denote the collection of relative sweepouts by $\mathcal{S}_\partial(U)$, and define the \emph{relative width} as $W_\partial(U) := \inf_{S \in \mathcal{S}_\partial(U)} F(S)$.
 \end{definition}
 
 \begin{proposition}[Width inequalities]\label{prop:width-inequalities}
@@ -313,6 +287,10 @@ Let $U \subset M$ be a bounded open set with smooth boundary. Then:
 \begin{proof}
 Part~(i) follows by restricting a nested sweepout to $\overline{U}$ (giving the lower bound) and extending a relative sweepout by adding $\partial_I U$ at each time (giving the upper bound). Part~(ii) is proved by approximating an arbitrary sweepout by nested ones using the coarea formula (Theorem~\ref{thm:slicing}); see \cite[Lemma~4.2]{CL20}. Part~(iii) follows from~(ii) by a cut-off argument using the good set condition.
 \end{proof}
+
+\begin{remark}[Equivalence with the discrete framework]\label{rmk:discrete-equiv}
+Li--Zhou~\cite{LZ17} define sweepouts using the Almgren--Pitts discrete framework: an $(m, \mathbf{M})$-homotopy sequence $S = \{\phi_i\}_{i \in \mathbb{N}}$, where $\phi_i: I(m, j_i)_0 \to \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ are maps on the vertices of a cubical cell complex $I(m, j_i)$ satisfying fineness, boundary, and homotopy conditions (see~\cite[Definitions~5.1--5.4]{LZ17}). Their Discretization Theorem~\cite[Theorem~5.1]{LZ17} and Interpolation Theorem~\cite[Theorem~5.2]{LZ17} establish a bijection between homotopy classes of $(1, \mathbf{M})$-homotopy sequences and homotopy classes of $\mathcal{F}$-continuous maps $[0,1] \to \mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)$, preserving the width. By Proposition~\ref{prop:sweepout-cycle}, our continuous Caccioppoli sweepouts give rise to such $\mathcal{F}$-continuous maps. In particular, Definitions~\ref{def:sweepout}--\ref{def:width} and the discrete formulation of~\cite{LZ17} yield the same width $W(U)$ and the same collection of min-max varifolds.
+\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Good Sets}\label{sec:good-sets}
