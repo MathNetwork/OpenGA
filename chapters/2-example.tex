@@ -37,18 +37,34 @@ Throughout this thesis we work with $\mathbb{Z}_2$ coefficients. The reduced bou
 \end{remark}
 
 \begin{proposition}[Caccioppoli sets and mod~$2$ cycles]\label{prop:cacc-cycle}
-Let $\Omega \subset M$ be a measurable subset. Then $\Omega$ is a Caccioppoli set (i.e. $\mathrm{Per}(\Omega) < \infty$) if and only if the integration current $\llrr{\Omega} \in \mathcal{R}_{n + 1}(M; \Z_2)$ satisfies $\mass{(\partial\llrr{\Omega})} < \infty$. In this case, 
+Let $\Omega \subset M$ be a measurable subset. Then $\Omega$ is a Caccioppoli set (i.e.\ $\mathrm{Per}(\Omega) < \infty$) if and only if the integration current $\llrr{\Omega} \in \mathcal{R}_{n + 1}(M; \Z_2)$ satisfies $\mass{(\partial\llrr{\Omega})} < \infty$. In this case,
 \begin{equation*}
-    \llbracket \partial\Omega \rrbracket \in \mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)
+    \partial\llrr{\Omega} \in \mathcal{Z}_n(M, \partial M;\Z_2)
 \end{equation*}
-is a mod 2 relative cycle with
+is a mod~$2$ relative cycle with
 \begin{equation*}
-    \mathrm{Per}(\Omega) = \mathbf{M}(\llbracket\partial\Omega\rrbracket)
+    \mathrm{Per}(\Omega) = \mass{(\partial\llrr{\Omega})}.
 \end{equation*}
-The current $\partial\llrr{\Omega}$ is supported on reduced boundary $\partial^*\Omega \subset \spt{\partial\llrr{\Omega}}\subset\overline{\partial^*\Omega}$, and the varifold $\abs{\partial^*\Omega}$ induced by the reduced boundary agrees with the varifold $\abs{\partial\llrr{\Omega}}$ induced by the mod $2$ current. Moreover, $\Omega$ and $M\backslash \Omega$ induce the same mod $2$ cycle $\partial\llrr{\Omega} = \partial\llrr{M\backslash \Omega}$.
+The current $\partial\llrr{\Omega}$ is supported on the reduced boundary: $\partial^*\Omega \subset \spt{\partial\llrr{\Omega}}\subset\overline{\partial^*\Omega}$, and the varifold $\abs{\partial^*\Omega}$ induced by the reduced boundary agrees with the varifold $\abs{\partial\llrr{\Omega}}$ induced by the mod~$2$ current. Moreover, $\Omega$ and $M\setminus \Omega$ induce the same mod~$2$ cycle: $\partial\llrr{\Omega} = \partial\llrr{M\setminus \Omega}$.
 \end{proposition}
 \begin{proof}
-    
+The set $\Omega$ defines an integer rectifiable $(n{+}1)$-current $\llrr{\Omega}$ by integration: $\llrr{\Omega}(\omega) = \int_\Omega \omega$ for any smooth $(n{+}1)$-form $\omega$. Reducing modulo~$2$, we regard $\llrr{\Omega} \in \mathcal{R}_{n+1}(M; \Z_2)$. By definition, $\Omega$ is a Caccioppoli set if and only if its distributional boundary $\mu_\Omega$ is a finite Radon measure, i.e.\ $\abs{\mu_\Omega}(M) < \infty$. Since both $\abs{\mu_\Omega}(M)$ and $\mass{(\partial\llrr{\Omega})}$ express the total variation of the distributional derivative of $\mathbf{1}_\Omega$, we have $\abs{\mu_\Omega}(M) = \mass{(\partial\llrr{\Omega})}$, and the equivalence $\mathrm{Per}(\Omega) < \infty \Leftrightarrow \mass{(\partial\llrr{\Omega})} < \infty$ follows.
+
+The chain complex axiom gives $\partial(\partial\llrr{\Omega}) = \partial^2\llrr{\Omega} = 0$, so $\mathrm{spt}(\partial(\partial\llrr{\Omega})) = \emptyset \subset \partial M$ and $\partial\llrr{\Omega} \in \mathcal{Z}_n(M, \partial M; \Z_2)$.
+
+By De~Giorgi's structure theorem (Maggi~\cite[Theorem~15.9]{Mag12}), the Gauss--Green measure satisfies $\abs{\mu_\Omega} = \mathcal{H}^n \llcorner \partial^*\Omega$, and the density $\Theta^n(\partial^*\Omega, x) = 1$ for every $x \in \partial^*\Omega$ (Maggi~\cite[Corollary~15.8]{Mag12}). Therefore
+\[
+\mass{(\partial\llrr{\Omega})} = \abs{\mu_\Omega}(M) = \mathcal{H}^n(\partial^*\Omega) = \mathrm{Per}(\Omega),
+\]
+and $\partial^*\Omega \subset \spt{\partial\llrr{\Omega}} \subset \overline{\partial^*\Omega}$. Note that the current $\partial\llrr{\Omega}$ is defined by first forming the integration current and then applying $\partial$, requiring no a priori knowledge of the reduced boundary. One could alternatively define an $n$-current $\llrr{\partial^*\Omega}$ by integrating directly over $\partial^*\Omega$; De~Giorgi's structure theorem identifies the two: $\partial\llrr{\Omega} = \llrr{\partial^*\Omega}$. Throughout this thesis we write $\llbracket\partial\Omega\rrbracket := \partial\llrr{\Omega}$, with the understanding that $\partial\Omega$ refers to the reduced boundary $\partial^*\Omega$ in the context of currents.
+
+Since $\partial\llrr{\Omega}$ is carried by $\partial^*\Omega$ with multiplicity one, the associated varifold $\abs{\partial\llrr{\Omega}}$ acts on $f \in C_c(G_n(M))$ by
+\[
+\abs{\partial\llrr{\Omega}}(f) = \int_{\partial^*\Omega} f(x, T_x(\partial^*\Omega)) \, d\mathcal{H}^n(x) = \abs{\partial^*\Omega}(f),
+\]
+where $T_x(\partial^*\Omega)$ is the approximate tangent plane, which exists $\mathcal{H}^n$-a.e.\ by rectifiability.
+
+Finally, in $\Z_2$ coefficients we have $\llrr{\Omega} + \llrr{M \setminus \Omega} = \llrr{M}$. Since $\partial\llrr{M}$ is supported on $\partial M$, it vanishes as a relative cycle in $\mathcal{Z}_{n}(M, \partial M; \Z_2)$, so $\partial\llrr{\Omega} + \partial\llrr{M \setminus \Omega} = 0$, which in $\Z_2$ gives $\partial\llrr{\Omega} = \partial\llrr{M \setminus \Omega}$.
 \end{proof}
 
 For a bounded open set $\Omega \subset M$ of finite perimeter, we write $Q_\Omega := \llbracket \Omega \rrbracket \in \mathcal{R}_{n+1}(M;\mathbb{Z}_2)$ for the associated $(n+1)$-current, so that $\mathbf{M}(\partial Q_\Omega) < \infty$ by Proposition~\ref{prop:cacc-cycle}.
