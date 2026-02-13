@@ -8,86 +8,57 @@
 \begin{thebibliography}{DLT13}
 
 \bibitem[All72]{AW}
-William~K. Allard, \emph{On the first variation of a varifold}, Annals of
-  Mathematics \textbf{95} (1972), no.~3, 417--491.
+William~K. Allard, \emph{On the first variation of a varifold}, Annals of Mathematics \textbf{95} (1972), no.~3, 417--491.
 
 \bibitem[Alm62]{Alm62}
-Frederick~Justin Almgren, \emph{The homotopy groups of the integral cycle
-  groups}, Topology \textbf{1} (1962), no.~4, 257--299.
+Frederick~Justin Almgren, \emph{The homotopy groups of the integral cycle groups}, Topology \textbf{1} (1962), no.~4, 257--299.
 
 \bibitem[CL03]{CL03}
-Tobias Colding and Camillo Lellis, \emph{The min--max construction of minimal
-  surfaces}, Surveys in Differential Geometry \textbf{8} (2003).
+Tobias Colding and Camillo Lellis, \emph{The min--max construction of minimal surfaces}, Surveys in Differential Geometry \textbf{8} (2003).
 
 \bibitem[CL20]{CL20}
-Gregory~R. Chambers and Yevgeny Liokumovich, \emph{Existence of minimal
-  hypersurfaces in complete manifolds of finite volume}, Inventiones
-  mathematicae \textbf{219} (2020), no.~1, 179--217.
+Gregory~R. Chambers and Yevgeny Liokumovich, \emph{Existence of minimal hypersurfaces in complete manifolds of finite volume}, Inventiones mathematicae \textbf{219} (2020), no.~1, 179--217.
 
 \bibitem[CLS22]{CLS22}
-Otis Chodosh, Yevgeny Liokumovich, and Luca Spolaor, \emph{Singular behavior
-  and generic regularity of min-max minimal hypersurfaces}, Ars Inveniendi
-  Analytica (2022).
+Otis Chodosh, Yevgeny Liokumovich, and Luca Spolaor, \emph{Singular behavior and generic regularity of min-max minimal hypersurfaces}, Ars Inveniendi Analytica (2022).
 
 \bibitem[DG61]{DG}
-Ennio De~Giorgi, \emph{Frontiere orientate di misura minima}, Seminario di
-  Matematica della Scuola Normale Superiore di Pisa (1960--1961), 1--56.
+Ennio De~Giorgi, \emph{Frontiere orientate di misura minima}, Seminario di Matematica della Scuola Normale Superiore di Pisa (1960--1961), 1--56.
 
 \bibitem[DLT13]{DLT13}
-Camillo De~Lellis and Dominik Tasnady, \emph{{The existence of embedded minimal
-  hypersurfaces}}, Journal of Differential Geometry \textbf{95} (2013), no.~3,
-  355 -- 388.
+Camillo De~Lellis and Dominik Tasnady, \emph{{The existence of embedded minimal hypersurfaces}}, Journal of Differential Geometry \textbf{95} (2013), no.~3, 355 -- 388.
 
 \bibitem[Liu19]{Liu19}
-Zhenhua Liu, \emph{Stationary one-sided area-minimizing hypersurfaces with
-  isolated singularities}, 2019.
+Zhenhua Liu, \emph{Stationary one-sided area-minimizing hypersurfaces with isolated singularities}, 2019.
 
 \bibitem[LZ21]{LZ17}
-Martin Man-chun Li and Xin Zhou, \emph{Min-max theory for free boundary minimal
-  hypersurfaces {I}: {R}egularity theory}, J. Differential Geom. \textbf{118}
-  (2021), no.~3, 487--553.
+Martin Man-chun Li and Xin Zhou, \emph{Min-max theory for free boundary minimal hypersurfaces {I}: {R}egularity theory}, J. Differential Geom. \textbf{118} (2021), no.~3, 487--553.
 
 \bibitem[Mag12]{Mag12}
-F.~Maggi, \emph{Sets of finite perimeter and geometric variational problems: An
-  introduction to geometric measure theory}, Cambridge Studies in Advanced
-  Mathematics, Cambridge University Press, 2012.
+F.~Maggi, \emph{Sets of finite perimeter and geometric variational problems: An introduction to geometric measure theory}, Cambridge Studies in Advanced Mathematics, Cambridge University Press, 2012.
 
 \bibitem[Mar17]{Marques05}
-Fernando~C. Marques, \emph{Existence of infinitely many minimal hypersurfaces
-  in positive ricci curvature}, Inventiones mathematicae \textbf{209} (2017),
-  no.~2, 577--616.
+Fernando~C. Marques, \emph{Existence of infinitely many minimal hypersurfaces in positive ricci curvature}, Inventiones mathematicae \textbf{209} (2017), no.~2, 577--616.
 
 \bibitem[MN17]{MN17}
-Fernando~C. Marques and André Neves, \emph{Existence of infinitely many
-  minimal hypersurfaces in positive ricci curvature}, Inventiones mathematicae
-  \textbf{209} (2017), no.~2, 577--616.
+Fernando~C. Marques and André Neves, \emph{Existence of infinitely many minimal hypersurfaces in positive ricci curvature}, Inventiones mathematicae \textbf{209} (2017), no.~2, 577--616.
+
+\bibitem[Nas56]{Nash56}
+John Nash, \emph{The imbedding problem for riemannian manifolds}, Ann. of Math. (2) \textbf{63} (1956), 20--63.
 
 \bibitem[Pit81]{Pit81}
-Jon~T. Pitts, \emph{Existence and regularity of minimal surfaces on riemannian
-  manifolds. (mn-27):}, Princeton University Press, 1981.
+Jon~T. Pitts, \emph{Existence and regularity of minimal surfaces on riemannian manifolds. (mn-27):}, Princeton University Press, 1981.
 
 \bibitem[Sim68]{SJ}
-James Simons, \emph{Minimal varieties in riemannian manifolds}, Annals of
-  Mathematics \textbf{88} (1968), no.~1, 62--105.
+James Simons, \emph{Minimal varieties in riemannian manifolds}, Annals of Mathematics \textbf{88} (1968), no.~1, 62--105.
 
 \bibitem[Sim84]{Sim84}
-L~Simon, \emph{Lectures on geometric measure theory}, Proceedings of the Centre
-  for Mathematical Analysis, Centre for Mathematical Analysis, Australian
-  National University, 1984.
+L~Simon, \emph{Lectures on geometric measure theory}, Proceedings of the Centre for Mathematical Analysis, Centre for Mathematical Analysis, Australian National University, 1984.
 
 \bibitem[SS81]{SS}
-Richard Schoen and Leon Simon, \emph{Regularity of stable minimal
-  hypersurfaces}, Communications on Pure and Applied Mathematics \textbf{34}
-  (1981), no.~6, 741--797.
-
-\bibitem[Tam82]{Tam82}
-Italo Tamanini, \emph{Boundaries of caccioppoli sets with hölder-continuois
-  normal vector.}, Journal für die reine und angewandte Mathematik
-  \textbf{334} (1982), 27--39.
+Richard Schoen and Leon Simon, \emph{Regularity of stable minimal hypersurfaces}, Communications on Pure and Applied Mathematics \textbf{34} (1981), no.~6, 741--797.
 
 \bibitem[Wic14]{Wic14}
-Neshan Wickramasekera, \emph{A general regularity theory for stable codimension
-  1 integral varifolds}, Annals of Mathematics \textbf{179} (2014), no.~3,
-  843--1007.
+Neshan Wickramasekera, \emph{A general regularity theory for stable codimension 1 integral varifolds}, Annals of Mathematics \textbf{179} (2014), no.~3, 843--1007.
 
 \end{thebibliography}
