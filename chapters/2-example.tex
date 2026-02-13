@@ -14,25 +14,26 @@ The subspace of vector fields additionally tangent to the boundary is
 \mathfrak{X}_{\mathrm{tan}}(M) := \{X \in \mathfrak{X}_c(M) : X(p) \in T_p(\partial M) \text{ for all } p \in \partial M\}.
 \]
 
-For a relatively open subset $U \subset M$, we write $\mathrm{int}_M(U)$ for the relative interior of $U$ in $M$. We use $A \Subset B$ to denote that $\overline{A}$ is compact and contained in $B$.
+\begin{remark}[Role of the isometric embedding]\label{rem:isometric-embedding}
+The assumption that $M$ is isometrically embedded in $\mathbb{R}^L$ (which exists by Nash's embedding theorem~\cite{Nash56}) is not an additional geometric hypothesis but rather a foundational requirement of the Almgren--Pitts framework. Integer rectifiable currents (see Simon~\cite[\S26--27]{Sim84}) are defined as functionals on differential forms in $\mathbb{R}^L$ with support constrained to $M$ (see~\cite[\S3]{LZ17}): concretely, $\mathcal{R}_k(M)$ is the space of integer rectifiable $k$-currents in $\mathbb{R}^L$ supported in $M$. The embedding endows $M$ with the structure of a compact Lipschitz neighbourhood retract (CLNR) in the sense of Almgren~\cite[\S1]{Alm62}, which is the key property guaranteeing:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item the isoperimetric inequalities (Lemmas~\ref{lem:F-isoperimetric} and~\ref{lem:M-isoperimetric}): for two cycles $\tau_1, \tau_2$ that are close in the flat or mass norm, there exists a filling $Q$ with $\mathrm{spt}(Q) \subset M$ and $\mathbf{M}(Q) \leq C_M \mathcal{F}(\tau_2 - \tau_1)$;
+    \item the Interpolation Theorem~\cite[Theorem~5.2]{LZ17}: a discrete map with small $\mathbf{M}$-fineness can be extended to a continuous map, with constants depending on the CLNR structure.
+\end{enumerate}
+The constants $\epsilon_M$ and $C_M$ depend on the embedding but not on the specific currents involved. In our non-compact setting, these constants are well-defined on each precompact subset $\overline{K} \subset M$; see Remark~\ref{rem:isoperimetric-local}.
+\end{remark}
 
-\begin{definition}[$\partial$-transverse function]\label{def:boundary-transverse}
-A smooth function $f: M \to \mathbb{R}$ is \emph{$\partial$-transverse} if $f|_{\partial M}$ has no critical points, i.e.\ $\nabla_{\partial M}(f|_{\partial M}) \neq 0$ everywhere on $\partial M$.  A \emph{$\partial$-transverse Morse function} is a Morse function on $M$ that is also $\partial$-transverse.
-\end{definition}
+For a relatively open subset $U \subset M$, we write $\mathrm{int}_M(U)$ for the relative interior of $U$ in $M$. We use $A \Subset B$ to denote that $\overline{A}$ is compact and contained in $B$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Currents and Varifolds}\label{sec:currents-varifolds}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We work with currents and relative cycles following Li--Zhou~\cite{LZ17}. We write $\mathcal{R}_k(M;\mathbb{Z}_2)$ for the space of mod~$2$ flat chains supported in $M$, with mass norm $\mathbf{M}$ and flat topology. For a bounded open set $\Omega \subset M$ of finite perimeter (i.e.\ a Caccioppoli set), we write $Q_\Omega := \llbracket \Omega \rrbracket \in \mathcal{R}_{n+1}(M;\mathbb{Z}_2)$ for the associated $(n+1)$-current, so that $\mathbf{M}(\partial Q_\Omega) < \infty$.
+We work with currents and relative cycles following Li--Zhou~\cite{LZ17}. We write $\mathcal{R}_k(M;\mathbb{Z}_2)$ for the space of mod~$2$ flat chains supported in $M$, with mass norm $\mathbf{M}$ and flat topology.
 
 \begin{remark}[Coefficient group]\label{rmk:Z2}
-Throughout this thesis we work with $\mathbb{Z}_2$ coefficients. We write $\mathcal{R}_k(M;\mathbb{Z}_2)$ for the space of mod~$2$ flat chains supported in $M$, and all cycle spaces $\mathcal{Z}_n(A,B;\mathbb{Z}_2)$, $\mathbf{Z}_n(A,B;\mathbb{Z}_2)$ are defined with $\mathbb{Z}_2$ coefficients. Li--Zhou~\cite{LZ17} originally state their results for $\mathbb{Z}$ coefficients (integer currents), but the key tools---the isoperimetric lemma, slicing theorem, and regularity theory---hold equally for $\mathbb{Z}_2$ coefficients (see \cite{MN17,Alm62}). The choice of $\mathbb{Z}_2$ has the advantage that every Caccioppoli set $\Omega \subset M$ of finite perimeter naturally induces a mod~$2$ cycle $\llbracket \partial\Omega \rrbracket \in \mathcal{Z}_n(M,\partial M;\mathbb{Z}_2)$ with
-\[
-  \mathrm{Per}(\Omega) = \mathbf{M}(\llbracket \partial\Omega \rrbracket),
-\]
-since the reduced boundary $\partial^*\Omega$ carries no orientation, only a distinction between interior and exterior. We also note that the regularity theory (Theorem~\ref{thm:main-regularity}) operates at the varifold level and does not depend on the coefficient group: replacement varifolds arising from mod~$2$ area minimization are integer rectifiable and stable, so Wickramasekera's theory~\cite{Wic14} applies without modification.
+Throughout this thesis we work with $\mathbb{Z}_2$ coefficients. The reduced boundary $\partial^*\Omega$ of a Caccioppoli set carries no canonical orientation, only a distinction between interior and exterior, so $\mathbb{Z}_2$ is the natural coefficient group. Li--Zhou~\cite{LZ17} state their results for $\mathbb{Z}$ coefficients, but the key tools---the isoperimetric lemma, slicing theorem, and regularity theory---hold equally for $\mathbb{Z}_2$ (see \cite{MN17,Alm62}).
 \end{remark}
 
 \begin{proposition}[Caccioppoli sets and mod~$2$ cycles]\label{prop:cacc-cycle}
@@ -44,8 +45,30 @@ satisfying $\mathrm{Per}(\Omega) = \mathbf{M}(\llbracket\partial\Omega\rrbracket
 \end{proposition}
 
 \begin{proof}
-This follows from the structure theorem for Caccioppoli sets; see Maggi~\cite[Theorem~15.9]{Mag12}. The reduced boundary $\partial^*\Omega$ is countably $\mathcal{H}^n$-rectifiable, and the associated multiplicity-one current $\llbracket\partial\Omega\rrbracket$ satisfies $\partial\llbracket\partial\Omega\rrbracket = 0$ in $\mathrm{int}(M)$ (in the mod~$2$ sense). Since $\partial^*\Omega$ carries no canonical orientation, the natural coefficient group is $\mathbb{Z}_2$. \textcolor{red}{The mass identity $\mathrm{Per}(\Omega) = \mathbf{M}(\llbracket\partial\Omega\rrbracket)$ is immediate from the definitions.}\xinze{Need more justification, this seems trivial but haven't been done anywhere else}
+By De~Giorgi's structure theorem (Maggi~\cite[Theorem~15.9]{Mag12}), the reduced boundary $\partial^*\Omega$ is countably $\mathcal{H}^n$-rectifiable: there exist countably many $C^1$-hypersurfaces $M_h$ in $M$, compact sets $K_h \subset M_h$, and a Borel set $F$ with $\mathcal{H}^n(F) = 0$ such that
+\[
+\partial^*\Omega = F \cup \bigcup_{h \in \mathbb{N}} K_h.
+\]
+Moreover, the Gauss--Green measure of $\Omega$ satisfies $|\mu_\Omega| = \mathcal{H}^n \llcorner \partial^*\Omega$, and the generalized Gauss--Green formula
+\[
+\int_\Omega \nabla \varphi \, d\mathcal{H}^{n+1} = \int_{\partial^*\Omega} \varphi \, \nu_\Omega \, d\mathcal{H}^n, \qquad \forall \varphi \in C^1_c(M),
+\]
+holds, where $\nu_\Omega(x)$ is the measure-theoretic outer unit normal at $x \in \partial^*\Omega$.
+
+Since $\partial^*\Omega$ is countably $\mathcal{H}^n$-rectifiable with locally finite $\mathcal{H}^n$-measure, it defines a mod~$2$ rectifiable $n$-current $\llbracket\partial\Omega\rrbracket$ by integration: for any smooth $n$-form $\omega$,
+\[
+\llbracket\partial\Omega\rrbracket(\omega) := \int_{\partial^*\Omega} \langle \omega(x), T_x(\partial^*\Omega) \rangle \, d\mathcal{H}^n(x),
+\]
+where $T_x(\partial^*\Omega) = \nu_\Omega(x)^\perp$ is the approximate tangent plane (which exists $\mathcal{H}^n$-a.e.\ on $\partial^*\Omega$ by the rectifiability). This current has multiplicity one everywhere on $\partial^*\Omega$, so
+\[
+\mathbf{M}(\llbracket\partial\Omega\rrbracket) = \mathcal{H}^n(\partial^*\Omega) = |\mu_\Omega|(M) = \mathrm{Per}(\Omega),
+\]
+where the first equality is the definition of mass for a multiplicity-one rectifiable current, and the second is De~Giorgi's identity $|\mu_\Omega| = \mathcal{H}^n \llcorner \partial^*\Omega$. The cycle condition $\partial\llbracket\partial\Omega\rrbracket = 0$ in $\mathrm{int}(M)$ (mod~$2$) follows from the Gauss--Green formula: for any compactly supported $(n-1)$-form $\eta$ on $\mathrm{int}(M)$, $\partial\llbracket\partial\Omega\rrbracket(\eta) = \llbracket\partial\Omega\rrbracket(d\eta)$, which equals $\int_\Omega \nabla \cdot (X_\eta) \, d\mathcal{H}^{n+1}$ for the vector field $X_\eta$ dual to $d\eta$; by the Gauss--Green formula this is $\int_{\partial^*\Omega} \langle X_\eta, \nu_\Omega \rangle \, d\mathcal{H}^n = \llbracket\partial\Omega\rrbracket(d\eta)$, which is consistent but, working mod~$2$, the boundary of a boundary vanishes: $\partial^2 \llbracket\Omega\rrbracket = 0$.
+
+More directly: $\llbracket\Omega\rrbracket \in \mathcal{R}_{n+1}(M;\mathbb{Z}_2)$ is a mod~$2$ $(n+1)$-current, and $\llbracket\partial\Omega\rrbracket = \partial\llbracket\Omega\rrbracket$ (mod~$2$) in $\mathrm{int}(M)$, so $\partial\llbracket\partial\Omega\rrbracket = \partial^2\llbracket\Omega\rrbracket = 0$ in $\mathrm{int}(M)$. On $\partial M$, the boundary $\partial\llbracket\partial\Omega\rrbracket$ may be non-zero, so $\llbracket\partial\Omega\rrbracket$ is a relative cycle in $\mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)$. The varifold identity $|\partial^*\Omega| = |\llbracket\partial\Omega\rrbracket|$ follows from the fact that both are the $n$-varifold defined by integration over $\partial^*\Omega$ with multiplicity one.
 \end{proof}
+
+For a bounded open set $\Omega \subset M$ of finite perimeter, we write $Q_\Omega := \llbracket \Omega \rrbracket \in \mathcal{R}_{n+1}(M;\mathbb{Z}_2)$ for the associated $(n+1)$-current, so that $\mathbf{M}(\partial Q_\Omega) < \infty$ by Proposition~\ref{prop:cacc-cycle}.
 
 \begin{definition}[Relative cycles and equivalence classes]\label{def:relative-cycle}
 For subsets $A \supset B$ of $M$, the space of \emph{relative cycles} is
@@ -243,7 +266,7 @@ is continuous in the flat topology $\mathcal{F}$, and satisfies $\mathbf{M}(\Phi
 In particular:
 \begin{enumerate}[label=\textup{(\roman*)}]
     \item the width satisfies $W(U) = \inf_\Phi \sup_t \mathbf{M}(\Phi(t))$, where the infimum is over all $\mathcal{F}$-continuous maps arising from sweepouts;
-    \item the results of Li--Zhou~\cite{LZ17} on pull-tight, almost minimizing selection, and the regularity theory, which are formulated at the level of continuous cycle-valued maps and varifolds, apply to $\Phi$ after discretization via~\cite[Theorem~5.1]{LZ17}.
+    \item the results of Li--Zhou~\cite{LZ17} on pull-tight, almost minimizing selection, and the regularity theory apply to $\Phi$, since these operate at the level of cycle-valued maps and varifolds.
 \end{enumerate}
 \end{proposition}
 
@@ -256,7 +279,7 @@ For the $\mathcal{F}$-continuity: condition~\ref{sw:continuity} gives $\mathcal{
 \]
 Here we have used that $\llbracket\Omega_t\rrbracket - \llbracket\Omega_s\rrbracket$ serves as the ``filling'' in the definition of the flat norm (Definition~\ref{def:relative-flat-norm}), and the boundary residue $R$ on $\partial M$ vanishes in the equivalence class.
 
-Part~(i) follows from the mass identity. Part~(ii) follows because $\Phi$ is $\mathcal{F}$-continuous with no mass concentration, so it satisfies the hypotheses of the Discretization Theorem~\cite[Theorem~5.1]{LZ17}, which produces a $(1, \mathbf{M})$-homotopy sequence. The pull-tight procedure~\cite[Proposition~4.17]{LZ17} then applies to this sequence, producing stationary varifolds; the almost minimizing property~\cite[Theorem~5.3]{LZ17} selects varifolds that are almost minimizing in small annuli; and the regularity theory~\cite[Theorem~6.2]{LZ17} operates entirely at the varifold level.
+Part~(i) follows from the mass identity. For~(ii): the pull-tight procedure~\cite[Proposition~4.17]{LZ17} deforms cycles via flows of vector fields in $\mathfrak{X}_{\mathrm{tan}}(M)$, which act on the cycle space $\mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)$ and on varifolds continuously; the almost minimizing property~\cite[Theorem~5.3]{LZ17} is a condition on individual cycles and their $\mathcal{F}$-neighbourhoods; and the regularity theory~\cite[Theorem~6.2]{LZ17} operates entirely at the varifold level. All three ingredients require only the $\mathcal{F}$-continuous cycle-valued map $\Phi$ and the associated varifolds, not any particular combinatorial framework.
 \end{proof}
 
 \begin{definition}[Good sweepout]\label{def:good-sweepout}
@@ -265,6 +288,10 @@ A sweepout $\{\Omega_t\}$ of $(U, \partial_F U)$ is a \emph{good sweepout} if th
 \mathrm{Per}(\Omega_t) \leq 5\,\mathbf{M}(\partial_I U) \quad \text{for all } t \in [0, \varepsilon) \cup (1-\varepsilon, 1].
 \]
 We write $W_g(U)$ for the infimum of heights over all good sweepouts.
+\end{definition}
+
+\begin{definition}[$\partial$-transverse function]\label{def:boundary-transverse}
+A smooth function $f: M \to \mathbb{R}$ is \emph{$\partial$-transverse} if $f|_{\partial M}$ has no critical points, i.e.\ $\nabla_{\partial M}(f|_{\partial M}) \neq 0$ everywhere on $\partial M$.  A \emph{$\partial$-transverse Morse function} is a Morse function on $M$ that is also $\partial$-transverse.
 \end{definition}
 
 \begin{definition}[Nested sweepout]\label{def:nested-sweepout}
@@ -288,9 +315,6 @@ Let $U \subset M$ be a bounded open set with smooth boundary. Then:
 Part~(i) follows by restricting a nested sweepout to $\overline{U}$ (giving the lower bound) and extending a relative sweepout by adding $\partial_I U$ at each time (giving the upper bound). Part~(ii) is proved by approximating an arbitrary sweepout by nested ones using the coarea formula (Theorem~\ref{thm:slicing}); see \cite[Lemma~4.2]{CL20}. Part~(iii) follows from~(ii) by a cut-off argument using the good set condition.
 \end{proof}
 
-\begin{remark}[Equivalence with the discrete framework]\label{rmk:discrete-equiv}
-Li--Zhou~\cite{LZ17} define sweepouts using the Almgren--Pitts discrete framework: an $(m, \mathbf{M})$-homotopy sequence $S = \{\phi_i\}_{i \in \mathbb{N}}$, where $\phi_i: I(m, j_i)_0 \to \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ are maps on the vertices of a cubical cell complex $I(m, j_i)$ satisfying fineness, boundary, and homotopy conditions (see~\cite[Definitions~5.1--5.4]{LZ17}). Their Discretization Theorem~\cite[Theorem~5.1]{LZ17} and Interpolation Theorem~\cite[Theorem~5.2]{LZ17} establish a bijection between homotopy classes of $(1, \mathbf{M})$-homotopy sequences and homotopy classes of $\mathcal{F}$-continuous maps $[0,1] \to \mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)$, preserving the width. By Proposition~\ref{prop:sweepout-cycle}, our continuous Caccioppoli sweepouts give rise to such $\mathcal{F}$-continuous maps. In particular, Definitions~\ref{def:sweepout}--\ref{def:width} and the discrete formulation of~\cite{LZ17} yield the same width $W(U)$ and the same collection of min-max varifolds.
-\end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Good Sets}\label{sec:good-sets}

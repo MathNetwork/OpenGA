@@ -5,7 +5,7 @@ In this chapter, we combine nested sweepouts with the non-excessive framework of
 \section{Non-Excessive Sweepouts}\label{sec:non-excessive-prelim}
 An alternative approach to min--max theory, developed by Chodosh--Liokumovich--Spolaor~\cite{CLS22}, is based on the notion of \emph{non-excessive sweepouts}. The non-excessive condition provides additional structural control that simplifies the regularity analysis.
 
-We use the notation from Chapter~\ref{ch:sweepouts}. Recall that a sweepout $\Phi$ of $M$ is a continuous family of hypersurfaces $\{\Phi(x) = \partial\Omega(x)\}_{x \in [0,1]}$ with $\Omega(0) = \emptyset$ and $\Omega(1) = M$ (Definition~\ref{def:sweepout}). We denote $\mathcal{F}(\Phi) := \sup_{x\in [0,1]} \mathbf{M}(\Phi(x))$ for the height of a sweepout (Definition~\ref{def:height}), and the width is $W = \inf_{\Phi \in \mathcal{S}} \mathcal{F}(\Phi)$.
+We use the notation from Section~\ref{sec:sweepouts}. Recall that a sweepout $\{\Omega_t\}_{t\in[0,1]}$ of $M$ is a continuous family of Caccioppoli sets with $\Omega_0 = \emptyset$ and $\Omega_1 = M$ (Definition~\ref{def:sweepout}). The width is $W = W(M)$ as in Definition~\ref{def:width}.
 
 \begin{definition}[Optimal nested volume parametrized sweepout]\label{def:onvp}
 A sweepout $\{\Phi(x) = \partial \Omega(x)\}$ is called
@@ -181,7 +181,7 @@ By Theorem~\ref{thm:CLS-stationary}, the varifold $V$ arises as the weak limit o
 associated to slices $T_i = \phi(t_i)$ with $\mathbf{M}(T_i) \to \mathcal{F}(\phi)$.
 
 We identify each slice $T_i \in \mathbf{Z}_n(M;\mathbb{Z}_2)$ with its corresponding Caccioppoli set
-$\Omega_i$ (see Section~\ref{sec:caccioppoli}). The
+$\Omega_i$ (see Proposition~\ref{prop:cacc-cycle}). The
 varifold $V_i$ is then the varifold induced by the reduced boundary $\bdy\Omega_i$, given by
 \[
     V_i = \mathcal{H}^n \llcorner \bdy\Omega_i \otimes \delta_{T_x\bdy\Omega_i}.
@@ -200,7 +200,7 @@ By the \emph{no mass cancellation} hypothesis (Definition~\ref{def:mass-cancella
 \[
     \mathbf{M}(\phi(t^*)) = W.
 \]
-Since the sweepout $\phi$ is continuous in the flat norm topology (see Chapter~\ref{ch:sweepouts}), and flat convergence implies $L^1$ convergence of characteristic functions, we have $\mathbb{1}_{\Omega_i} \to \mathbb{1}_{\Omega(t^*)}$ in $L^1(M)$. By uniqueness of BV limits, the Caccioppoli set $\Omega$ from Step~1 equals $\Omega(t^*)$.
+Since the sweepout $\phi$ is continuous in the flat norm topology (see Proposition~\ref{prop:sweepout-cycle}), and flat convergence implies $L^1$ convergence of characteristic functions, we have $\mathbb{1}_{\Omega_i} \to \mathbb{1}_{\Omega(t^*)}$ in $L^1(M)$. By uniqueness of BV limits, the Caccioppoli set $\Omega$ from Step~1 equals $\Omega(t^*)$.
 
 Now we can establish perimeter convergence directly:
 \begin{itemize}
