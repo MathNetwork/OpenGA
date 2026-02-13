@@ -358,40 +358,49 @@ which survives the nested replacement and underwrites the final contradiction.
 \end{remark}
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}[x=10cm,y=1cm]
-    % B band (blue) - 先画色块
-    \fill[blue!12] (0.18,-0.25) rectangle (0.42,0.25);
-    \fill[blue!12] (0.60,-0.25) rectangle (0.86,0.25);
-    
-    % A band (red) disjoint from B
-    \fill[red!10] (0.46,-0.15) rectangle (0.56,0.15);
-    
-    % axis - 后画数轴，这样就在最上层
-    \draw[->] (0,0) -- (1.05,0) node[below] {$t$};
-    \draw (0,0) node[below] {$0$}; 
-    \draw (1,0) node[below] {$1$};
-    
-    % I = [t0,t1] 
-    \draw[ultra thick,blue!70] (0.58,0) -- (0.90,0);
-    \fill (0.58,0) circle (0.4pt);
-    \fill (0.90,0) circle (0.4pt);
-    \draw (0.58,-0.05) node[below=2pt] {$t_0$};
-    \draw (0.90,-0.05) node[below=2pt] {$t_1$};
-    
-    % I' inside B
-    \draw[very thick,blue] (0.62,0) -- (0.86,0);
-    \node[blue] at (0.74,0.3) {$I$};
-    
-    % Conditions with arrows
-    \node[align=center] at (0.40,0.95) {$g(t_0)\le \varepsilon_0$};
-    \draw[->,thick] (0.48,0.75) -- (0.58,0.08);
-    
-    \node[align=center] at (1.00,0.95) {$g(t_1)\ge \mathrm{Vol}(U)-\varepsilon_0$};
-    \draw[->,thick] (0.92,0.75) -- (0.90,0.08);
-    
-    % Labels below axis
-    \node[blue!60] at (0.20,-0.8) {$B=\{g\in(\varepsilon_0,\ \mathrm{Vol}(U)-\varepsilon_0)\}$};
-    \node[red!60] at (0.75,-0.8) {$A=\{\mathcal H^n(\Gamma_t\cap M)\ge W_g(U)\}$};
+  \begin{tikzpicture}[y=1cm]
+    % --- Background bands (below axis) ---
+    % B bands (green, matching Omega' color scheme)
+    \fill[green!15!gray!20] (0.3,-0.4) rectangle (1.2,0.4);
+    \fill[green!15!gray!20] (2.0,-0.4) rectangle (3.2,0.4);
+    \fill[green!15!gray!20] (5.5,-0.4) rectangle (8.5,0.4);
+
+    % A band (red, matching U color scheme)
+    \fill[red!20] (3.8,-0.4) rectangle (4.8,0.4);
+
+    % --- Axis ---
+    \draw[-{Stealth}] (-0.3,0) -- (10.5,0) node[below=3pt] {$t$};
+    \draw (0,0.1) -- (0,-0.1) node[below=4pt] {$0$};
+    \draw (10,0.1) -- (10,-0.1) node[below=4pt] {$1$};
+    \draw (5.0,0.1) -- (5.0,-0.1) node[below=4pt] {$t_0$};
+    \draw (9.0,0.1) -- (9.0,-0.1) node[below=4pt] {$t_1$};
+
+    % --- I = [t0,t1] ---
+    \draw[line width=2.5pt, cyan!40!blue, opacity=0.5] (5.0,0) -- (9.0,0);
+    % Dashed lines from t0, t1 down to brace
+    \draw[dashed, gray] (5.0,-0.1) -- (5.0,-1.0);
+    \draw[dashed, gray] (9.0,-0.1) -- (9.0,-1.0);
+    \draw[decorate, decoration={brace, amplitude=5pt, mirror}]
+      (5.0,-1.1) -- (9.0,-1.1) node[midway, below=6pt] {$I=[t_0,t_1]$};
+
+    % --- I' (connected component of B inside I) ---
+    \draw[line width=2pt, cyan!80!blue] (5.5,0) -- (8.5,0);
+    \node[cyan!80!blue] at (7.0,0.55) {$I'$};
+
+    % --- Conditions with arrows ---
+    \node at (3.0,1.6) {$g(t_0)\le \varepsilon_0$};
+    \draw[-{Stealth}, thick] (4.0,1.4) -- (5.0,0.15);
+
+    \node at (9.0,1.6) {$g(t_1)\ge \mathrm{Vol}(U)-\varepsilon_0$};
+    \draw[-{Stealth}, thick] (9.0,1.3) -- (9.0,0.15);
+
+    % --- Legend ---
+    \fill[green!15!gray!20] (0.3,-2.5) rectangle (0.7,-2.2);
+    \node[anchor=west, green!50!black, font=\small] at (0.8,-2.35)
+      {$B=\{t: g(t)\in(\varepsilon_0,\,\mathrm{Vol}(U)-\varepsilon_0)\}$};
+    \fill[red!20] (6.5,-2.5) rectangle (6.9,-2.2);
+    \node[anchor=west, red!70!black, font=\small] at (7.0,-2.35)
+      {$A=\{\mathcal{H}^n(\Gamma_t)\ge W_g(U)\}$};
   \end{tikzpicture}
   \caption{Time–axis schematic. The blue bands show $B=\{t:\ g(t)\in(\varepsilon_0,\ \mathrm{Vol}(U)-\varepsilon_0)\}$; the red band shows $A=\{t:\ \mathcal H^n(\Gamma_t\cap M)\ge W_g(U)\}$ with $A\cap B=\varnothing$. A connected component $I'\subset B$ is enlarged to $I=[t_0,t_1]$ with $g(t_0)\le\varepsilon_0$, $g(t_1)\ge \mathrm{Vol}(U)-\varepsilon_0$.}
   \label{fig:time-axis-schematic}
@@ -428,12 +437,6 @@ Define the thin error set
 \begin{equation*}
   P \ :=\ (\Omega_{t_0}\cap U)\ \cup\ \bigl(U\setminus \operatorname{cl}(\Omega_{t_1})).
 \end{equation*}
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figures/IMG_2676.PNG}
-  \caption{Thin set $P$ removed and smoothed to $\overline{U}$ inside a fixed collar of $\partial U$.}
-  \label{fig:PUbar}
-\end{figure}
 By the endpoint volume bounds $g(t_0)\le \varepsilon_0$ and $g(t_1)\ge \mathcal{H}^{n+1}(U)-\varepsilon_0$, both
 $\Omega_{t_0}\cap U$ and $U\setminus \operatorname{cl}(\Omega_{t_1})$ have measure $\le \varepsilon_0$, hence
 $\mathcal{H}^{n+1}(P)\le 2\varepsilon_0$. Remove $P$ from $U$ and smooth inward inside a fixed collar of $\partial U$
@@ -466,12 +469,6 @@ a sweepout confined to $\overline U$: once such a slice is found, we can (i) cut
 time, (ii) cap the outside part by using only boundary data of $U$, and (iii) build a sweepout of
 $\overline U$ whose maximal area is strictly below $W_g(U)$. The next lemma provides precisely this
 slice-level estimate and makes the subsequent "cut–and–insert" step possible.
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figures/IMG_2677.JPG}
-  \caption{Cut–cap–insert at the slice $\overline\Gamma_{t_0}$. The hatched red part is the portion of the slice outside $\overline U$, bounded in area by $2\,\mathcal H^n(\partial_I U)$. Capping the outside within the collar and inserting a nested homotopy inside $\overline U$ enable a sweepout below $W_g(U)$.}
-  \label{fig:cut-cap-insert}
-\end{figure}
 \begin{lemma}[relative version of Lemma 7.4 in \cite{CL20}]\label{lem:barU-slice-outside}
 There exists $t_0\in[0,1]$ such that
 \begin{equation*}
