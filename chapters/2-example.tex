@@ -37,49 +37,18 @@ Throughout this thesis we work with $\mathbb{Z}_2$ coefficients. The reduced bou
 \end{remark}
 
 \begin{proposition}[Caccioppoli sets and mod~$2$ cycles]\label{prop:cacc-cycle}
-Let $\Omega \subset M$ be a Caccioppoli set with $\mathrm{Per}(\Omega) < \infty$. Then the reduced boundary $\partial^*\Omega$ induces a mod~$2$ relative cycle
-\[
-  \llbracket \partial\Omega \rrbracket \in \mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)
-\]
-satisfying $\mathrm{Per}(\Omega) = \mathbf{M}(\llbracket\partial\Omega\rrbracket)$. Moreover, the varifold $|\partial^*\Omega|$ induced by the reduced boundary agrees with the varifold $|\llbracket\partial\Omega\rrbracket|$ induced by the mod~$2$ current.
+Let $\Omega \subset M$ be a measurable subset. Then $\Omega$ is a Caccioppoli set (i.e. $\mathrm{Per}(\Omega) < \infty$) if and only if the integration current $\llrr{\Omega} \in \mathcal{R}_{n + 1}(M; \Z_2)$ satisfies $\mass{(\partial\llrr{\Omega})} < \infty$. In this case, 
+\begin{equation*}
+    \llbracket \partial\Omega \rrbracket \in \mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)
+\end{equation*}
+is a mod 2 relative cycle with
+\begin{equation*}
+    \mathrm{Per}(\Omega) = \mathbf{M}(\llbracket\partial\Omega\rrbracket)
+\end{equation*}
+The current $\partial\llrr{\Omega}$ is supported on reduced boundary $\partial^*\Omega \subset \spt{\partial\llrr{\Omega}}\subset\overline{\partial^*\Omega}$, and the varifold $\abs{\partial^*\Omega}$ induced by the reduced boundary agrees with the varifold $\abs{\partial\llrr{\Omega}}$ induced by the mod $2$ current. Moreover, $\Omega$ and $M\backslash \Omega$ induce the same mod $2$ cycle $\partial\llrr{\Omega} = \partial\llrr{M\backslash \Omega}$.
 \end{proposition}
-
 \begin{proof}
-By De~Giorgi's structure theorem (Maggi~\cite[Theorem~15.9]{Mag12}), the reduced boundary $\partial^*\Omega$ is countably $\mathcal{H}^n$-rectifiable: there exist countably many $C^1$-hypersurfaces $M_h$ in $M$, compact sets $K_h \subset M_h$, and a Borel set $F$ with $\mathcal{H}^n(F) = 0$ such that
-\[
-\partial^*\Omega = F \cup \bigcup_{h \in \mathbb{N}} K_h.
-\]
-Moreover, the Gauss--Green measure satisfies $|\mu_\Omega| = \mathcal{H}^n \llcorner \partial^*\Omega$, and for each $x \in \partial^*\Omega$ the density satisfies $\Theta^n(\partial^*\Omega, x) = 1$ (Maggi~\cite[Corollary~15.8,\ (15.9)]{Mag12}).
-
-\medskip
-\noindent\textit{Construction of the current.}
-Since $\partial^*\Omega$ is countably $\mathcal{H}^n$-rectifiable with locally finite $\mathcal{H}^n$-measure, it defines a mod~$2$ rectifiable $n$-current $\llbracket\partial\Omega\rrbracket$ by integration: for any smooth $n$-form $\omega$,
-\[
-\llbracket\partial\Omega\rrbracket(\omega) := \int_{\partial^*\Omega} \langle \omega(x), T_x(\partial^*\Omega) \rangle \, d\mathcal{H}^n(x),
-\]
-where $T_x(\partial^*\Omega) = \nu_\Omega(x)^\perp$ is the approximate tangent plane (which exists $\mathcal{H}^n$-a.e.\ on $\partial^*\Omega$ by the rectifiability). The density condition $\Theta^n(\partial^*\Omega, x) = 1$ ensures that $\llbracket\partial\Omega\rrbracket$ has multiplicity one, so
-\[
-\mathbf{M}(\llbracket\partial\Omega\rrbracket) = \mathcal{H}^n(\partial^*\Omega) = |\mu_\Omega|(M) = \mathrm{Per}(\Omega),
-\]
-where the second equality is the De~Giorgi identity $|\mu_\Omega| = \mathcal{H}^n \llcorner \partial^*\Omega$.
-
-\medskip
-\noindent\textit{Cycle condition.}
-The Caccioppoli set $\Omega$ defines a mod~$2$ $(n+1)$-current $\llbracket\Omega\rrbracket \in \mathcal{R}_{n+1}(M;\mathbb{Z}_2)$, and the Gauss--Green formula identifies $\llbracket\partial\Omega\rrbracket = \partial\llbracket\Omega\rrbracket$ (mod~$2$). Therefore
-\[
-\partial\llbracket\partial\Omega\rrbracket = \partial^2\llbracket\Omega\rrbracket = 0
-\]
-in $\mathrm{int}(M)$, since $\partial^2 = 0$ for currents. It follows that $\mathrm{spt}(\partial\llbracket\partial\Omega\rrbracket) \subset \partial M$, which is exactly the condition for $\llbracket\partial\Omega\rrbracket$ to be a relative cycle in $\mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)$.
-
-Concretely, the Gauss--Green formula for $\Omega$ reads: for every $\varphi \in C^1_c(M)$,
-\[
-\int_\Omega \nabla \varphi \, d\mathcal{H}^{n+1} = \int_{\partial^*\Omega} \varphi \, \nu_\Omega \, d\mathcal{H}^n,
-\]
-where $\nu_\Omega(x)$ is the measure-theoretic outer unit normal. When $\eta$ is a smooth $(n{-}1)$-form compactly supported in $\mathrm{int}(M)$, the support condition ensures that no boundary terms from $\partial M$ arise, and one obtains $\partial\llbracket\partial\Omega\rrbracket(\eta) = \llbracket\partial\Omega\rrbracket(d\eta) = \int_\Omega d(d\eta) = 0$ by $d^2 = 0$, confirming the cycle condition directly.
-
-\medskip
-\noindent\textit{Varifold identity.}
-Both $|\partial^*\Omega|$ and $|\llbracket\partial\Omega\rrbracket|$ are the $n$-varifold defined by integration over $\partial^*\Omega$ with multiplicity one, so $|\partial^*\Omega| = |\llbracket\partial\Omega\rrbracket|$.
+    
 \end{proof}
 
 For a bounded open set $\Omega \subset M$ of finite perimeter, we write $Q_\Omega := \llbracket \Omega \rrbracket \in \mathcal{R}_{n+1}(M;\mathbb{Z}_2)$ for the associated $(n+1)$-current, so that $\mathbf{M}(\partial Q_\Omega) < \infty$ by Proposition~\ref{prop:cacc-cycle}.
