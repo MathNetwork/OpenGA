@@ -74,10 +74,107 @@ Let $U$ be a good set.
         Note that the second inequality follows from the first term in the definition of $\eps_0$ in~\eqref{eq:value-of-eps0}: since $\eps_0 \leq \frac{\eps_1 r_0}{20N}$, we have $\frac{4\eps_0}{r_0} \leq \frac{4\eps_1 r_0}{20Nr_0} = \frac{\eps_1}{5N}$.
 
         We are going to inductively push $\Omega'$ outside of $B_1'\cap U, B_2'\cap U ,\dots, B_N'\cap U$:
-                \begin{figure}[htbp]
+        \begin{figure}[htbp]
             \centering
-            \includegraphics[width=0.8\textwidth]{figures/IMG_2675.jpg}
-            \caption{Pushing $\Omega'$ outside of $B_1'\cap U$}
+            \begin{tikzpicture}[scale=0.7]
+              % U region (pink/salmon, hill shape on the right)
+              \fill[red!20]
+                (2,0) .. controls (2,1.5) and (3,2.5) .. (4,3)
+                .. controls (6,4) and (8,5) .. (10,4)
+                .. controls (11,3.5) and (11,1) .. (11,0) -- cycle;
+
+              % Omega' region (sage green, left block, semi-transparent so red shows through)
+              \fill[green!40!gray, fill opacity=0.5]
+                (-1,0) -- (-1,6) -- (3,6)
+                .. controls (3,5) and (3.5,4) .. (4,3)
+                .. controls (4.5,2) and (5,1) .. (5,0) -- cycle;
+
+              % Hatching: Omega' outside circle (left side of blue line)
+              \begin{scope}
+                \clip (-1,0) -- (-1,6) -- (3,6)
+                  .. controls (3,5) and (3.5,4) .. (4,3)
+                  .. controls (4.5,2) and (5,1) .. (5,0) -- cycle;
+                \begin{scope}
+                  \pgfseteorule
+                  \clip (-2,-1) rectangle (12,7) (4,3) circle (1.2);
+                  \fill[pattern=north east lines, pattern color=cyan!60!blue]
+                    (-2,-1) rectangle (12,7);
+                \end{scope}
+              \end{scope}
+
+              % Hatching: inside circle, inside Omega', outside U
+              \begin{scope}
+                \clip (4,3) circle (1.2);
+                \clip (-1,0) -- (-1,6) -- (3,6)
+                  .. controls (3,5) and (3.5,4) .. (4,3)
+                  .. controls (4.5,2) and (5,1) .. (5,0) -- cycle;
+                \begin{scope}
+                  \pgfseteorule
+                  \clip (-2,-1) rectangle (12,7)
+                    (2,0) .. controls (2,1.5) and (3,2.5) .. (4,3)
+                    .. controls (6,4) and (8,5) .. (10,4)
+                    .. controls (11,3.5) and (11,1) .. (11,0) -- cycle;
+                  \fill[pattern=north east lines, pattern color=cyan!60!blue]
+                    (-2,-1) rectangle (12,7);
+                \end{scope}
+              \end{scope}
+
+              % Boundary of U (red)
+              \draw[very thick, red!70!black]
+                (2,0) .. controls (2,1.5) and (3,2.5) .. (4,3)
+                .. controls (6,4) and (8,5) .. (10,4)
+                .. controls (11,3.5) and (11,1) .. (11,0);
+
+              % Boundary of Omega' - lower part (green)
+              \draw[very thick, green!50!black]
+                (4,3) .. controls (4.5,2) and (5,1) .. (5,0);
+
+              % Boundary of Omega' - upper part (blue, to intersection point)
+              \draw[ultra thick, blue!70]
+                (3,6) .. controls (3,5) and (3.5,4) .. (4,3);
+
+              % Omega' lower part outside circle (blue overdraw)
+              \begin{scope}
+                \pgfseteorule
+                \clip (-2,-1) rectangle (12,7) (4,3) circle (1.2);
+                \draw[ultra thick, blue!70]
+                  (4,3) .. controls (4.5,2) and (5,1) .. (5,0);
+              \end{scope}
+
+              % U boundary left part inside circle (blue)
+              \begin{scope}
+                \clip (4,3) circle (1.2);
+                \draw[ultra thick, blue!70]
+                  (2,0) .. controls (2,1.5) and (3,2.5) .. (4,3);
+              \end{scope}
+
+
+
+              % Circle B_i' (brown)
+              \draw[thick, brown!70!black] (4,3) circle (1.2);
+
+              % Circle arc inside intersection of Omega' and U (blue)
+              \begin{scope}
+                \clip (2,0) .. controls (2,1.5) and (3,2.5) .. (4,3)
+                  .. controls (6,4) and (8,5) .. (10,4)
+                  .. controls (11,3.5) and (11,1) .. (11,0) -- cycle;
+                \clip (-1,0) -- (-1,6) -- (3,6)
+                  .. controls (3,5) and (3.5,4) .. (4,3)
+                  .. controls (4.5,2) and (5,1) .. (5,0) -- cycle;
+                \draw[ultra thick, blue!70] (4,3) circle (1.2);
+              \end{scope}
+              \node[brown!70!black, above right] at (4.8,3.8) {$B_i'$};
+
+              % Bottom line (partial M)
+              \draw[very thick, brown!70!black] (-1,0) -- (11,0);
+
+              % Labels
+              \node[green!50!black, font=\large] at (1.5,3.5) {$\Omega'$};
+              \node[red!50!black, font=\large] at (7.5,3) {$\mathcal{U}$};
+              \node[blue!70, above] at (1.5,6) {$\Omega'\setminus(B_i'\cap \mathcal{U})$};
+              \node[brown!70!black, right] at (11,-0.4) {\color{brown!70!black}$\partial M$};
+            \end{tikzpicture}
+            \caption{Pushing $\Omega'$ outside of $B_1'\cap U$. The region $\Omega'$ (green) overlaps with $\mathcal{U}$ (pink) near the ball $B_i'$. The set $\Omega' \setminus (B_i' \cap \mathcal{U})$ is obtained by removing the portion of $\Omega'$ inside $B_i' \cap \mathcal{U}$.}
             \label{fig:2675}
         \end{figure}
         
