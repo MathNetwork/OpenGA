@@ -133,7 +133,7 @@ where:
 \end{itemize}
 \end{definition}
 
-In Chapters~\ref{ch:nested-sweepout} and~\ref{ch:no-escape-to-infinity}, we localise a global sweepout to a good set $U \subset M$ in order to apply the min-max theory on a precompact domain. This localisation requires cutting the Caccioppoli sets $\Omega_t$ along the interior boundary $\partial_I U$, which may introduce extra area near $\partial_I U$. To control this, we slice the filling $\llrr{\Omega_t}$ by a Lipschitz function (such as the distance to $\partial_I U$) and use the coarea inequality to find cut-off radii where the extra area is small; see Corollary~\ref{cor:coarea-filling} below. The underlying tool is the slicing theorem for mod~$2$ flat chains (Simon~\cite[Sections~28--29]{Sim84}).
+In Chapters~\ref{ch:nested-sweepout} and~\ref{ch:no-escape-to-infinity}, we localise a global sweepout to a good set $U \subset M$ in order to apply the min-max theory on a precompact domain. This localisation requires cutting the Caccioppoli sets $\Omega_t$ along the interior boundary $\partial_I U$, which may introduce extra area near $\partial_I U$. To control this, we slice the filling $\llrr{\Omega_t}$ by a Lipschitz function (such as the distance to $\partial_I U$) and use the coarea inequality to find cut-off radii where the extra area is small; see Corollary~\ref{cor:coarea-filling} below. The slicing theorem is also used in the proof of the existence of good sets (Lemma~\ref{lem:good-set-existence}), where we slice $\llrr{M}$ by the distance function to find a level set with small interior boundary. The underlying tool is the slicing theorem for mod~$2$ flat chains (Simon~\cite[Sections~28--29]{Sim84}).
 
 \begin{theorem}[Slicing~{\cite[28.4, 28.5]{Sim84}}]\label{thm:slicing}
 Let $T \in \mathcal{R}_{n+1}(M;\mathbb{Z}_2)$ and let $f: M \to \mathbb{R}$ be a Lipschitz function. Then for almost every $t \in \mathbb{R}$, the \emph{slice}
@@ -389,6 +389,7 @@ On a compact manifold, the min-max process automatically produces a minimal hype
   \end{scope}
 \end{tikzpicture}
 \caption{A good set $U$ (shaded) inside a non-compact manifold $M$ with boundary $\partial M$ (bold). The free boundary $\partial_F U \subset \partial M$ is the portion of $\partial M$ adjacent to $U$ (blue dashed), and the interior boundary $\partial_I U$ (blue dashed) sits at a narrow neck, so $\mathbf{M}(\partial_I U)$ is small relative to $W_\partial(U)$. (a)~$\partial M$ parallel to the neck, both extending to infinity; (b)~$\partial M$ transverse to the neck. Note that in case~(b), the min-max limit could in principle be a closed minimal hypersurface in the interior of $M$, away from $\partial M$; see Remark~\ref{rem:closed-vs-free}.}
+
 
 \label{fig:good-set}
 \end{figure}
