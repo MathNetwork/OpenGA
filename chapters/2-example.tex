@@ -299,7 +299,7 @@ On a compact manifold, the min-max process automatically produces a minimal hype
   %% (b) dM transverse to neck — bottle vertical
   \begin{scope}[xshift=-4.5cm]
     % Shade U (smooth bulging walls)
-    \fill[blue!8] (-1.2,0)
+    \fill[green!15!gray!20] (-1.2,0)
       .. controls (-1.2,0.3) and (-2,0.5) .. (-2,1.5)
       .. controls (-2,2.8) and (-0.5,3.2) .. (-0.5,3.5)
       -- (0.5,3.5)
@@ -319,17 +319,17 @@ On a compact manifold, the min-max process automatically produces a minimal hype
       -- (0.5,5.5);
 
     % Boundary of M (bottom, thick)
-    \draw[very thick, red!70!black] (-1.2,0) -- (1.2,0);
+    \draw[very thick, brown!70!black] (-1.2,0) -- (1.2,0);
     % Free boundary (blue dashed overlaid on dM)
-    \draw[thick, dashed, blue!70!black] (-1.2,0) -- (1.2,0);
-    \node[below] at (0,-0.15) {$\textcolor{red!70!black}{\partial M} = \textcolor{blue!70!black}{\partial_F U}$};
+    \draw[thick, dashed, green!50!black] (-1.2,0) -- (1.2,0);
+    \node[below] at (0,-0.15) {$\textcolor{brown!70!black}{\partial M} = \textcolor{green!50!black}{\partial_F U}$};
 
     % Interior boundary (dashed at neck)
-    \draw[thick, dashed, blue!70!black] (-0.5,3.5) -- (0.5,3.5);
-    \node[blue!70!black, right] at (0.65,3.5) {$\partial_I U$};
+    \draw[thick, dashed, green!50!black] (-0.5,3.5) -- (0.5,3.5);
+    \node[green!50!black, right] at (0.65,3.5) {$\partial_I U$};
 
     % Label U
-    \node[blue!70!black] at (0,1.5) {\large $U$};
+    \node[green!50!black] at (0,1.5) {\large $U$};
 
     % Dots for non-compactness
     \node at (-0.5,5.8) {$\vdots$};
@@ -347,13 +347,13 @@ On a compact manifold, the min-max process automatically produces a minimal hype
   %% (a) Half-bottle vertical: dM = vertical line on left, extends to infinity downward
   \begin{scope}[xshift=3.5cm]
     % Shade U (half-bottle body, one smooth curve for outer wall)
-    \fill[blue!8] (0,-0.3)
+    \fill[green!15!gray!20] (0,-0.3)
       .. controls (0.3,-0.3) and (2,-0.3) .. (2,1.5)
       .. controls (2,2.8) and (0.5,2.8) .. (0.5,3.5)
       -- (0,3.5) -- cycle;
 
     % dM = straight left line (the cut surface), extends down to infinity
-    \draw[very thick, red!70!black] (0,5.5) -- (0,-0.8);
+    \draw[very thick, brown!70!black] (0,5.5) -- (0,-0.8);
 
     % Outer wall (one smooth curve: starts from dM, bulges right, narrows at neck)
     \draw[thick] (0,-0.3)
@@ -362,18 +362,18 @@ On a compact manifold, the min-max process automatically produces a minimal hype
       -- (0.5,5.5);
 
     % Interior boundary (dashed horizontal at neck)
-    \draw[thick, dashed, blue!70!black] (0,3.5) -- (0.5,3.5);
-    \node[blue!70!black, right] at (0.65,3.5) {$\partial_I U$};
+    \draw[thick, dashed, green!50!black] (0,3.5) -- (0.5,3.5);
+    \node[green!50!black, right] at (0.65,3.5) {$\partial_I U$};
 
     % Label U
-    \node[blue!70!black] at (0.8,1.5) {\large $U$};
+    \node[green!50!black] at (0.8,1.5) {\large $U$};
 
     % Free boundary (blue dashed line overlaid on dM)
-    \draw[thick, dashed, blue!70!black] (0,-0.3) -- (0,3.5);
-    \node[blue!70!black, left] at (-0.15,1.6) {$\partial_F U$};
+    \draw[thick, dashed, green!50!black] (0,-0.3) -- (0,3.5);
+    \node[green!50!black, left] at (-0.15,1.6) {$\partial_F U$};
 
     % dM label (below the neck, no overlap)
-    \node[red!70!black, left] at (-0.15,4.8) {$\partial M$};
+    \node[brown!70!black, left] at (-0.15,4.8) {$\partial M$};
 
     % Dots for non-compactness
     \node at (0,5.8) {$\vdots$};
@@ -388,7 +388,7 @@ On a compact manifold, the min-max process automatically produces a minimal hype
     \node[below, font=\small] at (0.8,-1.0) {(a)};
   \end{scope}
 \end{tikzpicture}
-\caption{A good set $U$ (shaded) inside a non-compact manifold $M$ with boundary $\partial M$ (bold). The free boundary $\partial_F U \subset \partial M$ is the portion of $\partial M$ adjacent to $U$ (blue dashed), and the interior boundary $\partial_I U$ (blue dashed) sits at a narrow neck, so $\mathbf{M}(\partial_I U)$ is small relative to $W_\partial(U)$. (a)~$\partial M$ parallel to the neck, both extending to infinity; (b)~$\partial M$ transverse to the neck. Note that in case~(b), the min-max limit could in principle be a closed minimal hypersurface in the interior of $M$, away from $\partial M$; see Remark~\ref{rem:closed-vs-free}.}
+\caption{A good set $U$ (shaded) inside a non-compact manifold $M$ with boundary $\partial M$ (bold). The free boundary $\partial_F U \subset \partial M$ is the portion of $\partial M$ adjacent to $U$ (green dashed), and the interior boundary $\partial_I U$ (green dashed) sits at a narrow neck, so $\mathbf{M}(\partial_I U)$ is small relative to $W_\partial(U)$. (a)~$\partial M$ parallel to the neck, both extending to infinity; (b)~$\partial M$ transverse to the neck. Note that in case~(b), the min-max limit could in principle be a closed minimal hypersurface in the interior of $M$, away from $\partial M$; see Remark~\ref{rem:closed-vs-free}.}
 
 
 \label{fig:good-set}

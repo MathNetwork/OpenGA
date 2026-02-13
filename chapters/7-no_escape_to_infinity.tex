@@ -130,21 +130,21 @@ Let $U$ be a good set.
                 (4,3) .. controls (4.5,2) and (5,1) .. (5,0);
 
               % Boundary of Omega' - upper part (blue, to intersection point)
-              \draw[ultra thick, blue!70]
+              \draw[ultra thick, cyan!80!blue]
                 (3,6) .. controls (3,5) and (3.5,4) .. (4,3);
 
               % Omega' lower part outside circle (blue overdraw)
               \begin{scope}
                 \pgfseteorule
                 \clip (-2,-1) rectangle (12,7) (4,3) circle (1.2);
-                \draw[ultra thick, blue!70]
+                \draw[ultra thick, cyan!80!blue]
                   (4,3) .. controls (4.5,2) and (5,1) .. (5,0);
               \end{scope}
 
               % U boundary left part inside circle (blue)
               \begin{scope}
                 \clip (4,3) circle (1.2);
-                \draw[ultra thick, blue!70]
+                \draw[ultra thick, cyan!80!blue]
                   (2,0) .. controls (2,1.5) and (3,2.5) .. (4,3);
               \end{scope}
 
@@ -161,7 +161,7 @@ Let $U$ be a good set.
                 \clip (-1,0) -- (-1,6) -- (3,6)
                   .. controls (3,5) and (3.5,4) .. (4,3)
                   .. controls (4.5,2) and (5,1) .. (5,0) -- cycle;
-                \draw[ultra thick, blue!70] (4,3) circle (1.2);
+                \draw[ultra thick, cyan!80!blue] (4,3) circle (1.2);
               \end{scope}
               \node[brown!70!black, above right] at (4.8,3.8) {$B_i'$};
 
@@ -171,7 +171,7 @@ Let $U$ be a good set.
               % Labels
               \node[green!50!black, font=\large] at (1.5,3.5) {$\Omega'$};
               \node[red!50!black, font=\large] at (7.5,3) {$\mathcal{U}$};
-              \node[blue!70, above] at (1.5,6) {$\Omega'\setminus(B_i'\cap \mathcal{U})$};
+              \node[cyan!80!blue, above] at (1.5,6) {$\Omega'\setminus(B_i'\cap \mathcal{U})$};
               \node[brown!70!black, right] at (11,-0.4) {\color{brown!70!black}$\partial M$};
             \end{tikzpicture}
             \caption{Pushing $\Omega'$ outside of $B_1'\cap U$. The region $\Omega'$ (green) overlaps with $\mathcal{U}$ (pink) near the ball $B_i'$. The set $\Omega' \setminus (B_i' \cap \mathcal{U})$ is obtained by removing the portion of $\Omega'$ inside $B_i' \cap \mathcal{U}$.}

@@ -77,7 +77,7 @@ We will also need a slightly different version of this lemma for a non-compact s
             \centering
             \begin{tikzpicture}[scale=1.0]
               % Omega_1 (left region, shaded)
-              \fill[red!12] (-4.5,0)
+              \fill[red!20] (-4.5,0)
                 .. controls (-4.5,0.3) and (-4.8,1) .. (-4.8,2.5)
                 .. controls (-4.8,4) and (-3.5,4.5) .. (-2,4.5)
                 .. controls (-1,4.5) and (-0.6,3.5) .. (-0.6,2.5)
@@ -85,7 +85,7 @@ We will also need a slightly different version of this lemma for a non-compact s
                 -- cycle;
 
               % Omega_2 (right region, shaded)
-              \fill[red!12] (4.5,0)
+              \fill[red!20] (4.5,0)
                 .. controls (4.5,0.3) and (4.8,1) .. (4.8,2.5)
                 .. controls (4.8,4) and (3.5,4.5) .. (2,4.5)
                 .. controls (1,4.5) and (0.6,3.5) .. (0.6,2.5)
@@ -93,14 +93,14 @@ We will also need a slightly different version of this lemma for a non-compact s
                 -- cycle;
 
               % Omega_1 boundary (dashed)
-              \draw[thick, dashed] (-4.5,0)
+              \draw[thick, dashed, brown!70!black] (-4.5,0)
                 .. controls (-4.5,0.3) and (-4.8,1) .. (-4.8,2.5)
                 .. controls (-4.8,4) and (-3.5,4.5) .. (-2,4.5)
                 .. controls (-1,4.5) and (-0.6,3.5) .. (-0.6,2.5)
                 .. controls (-0.6,1.2) and (-1,0.3) .. (-1.5,0);
 
               % Omega_2 boundary (dashed)
-              \draw[thick, dashed] (4.5,0)
+              \draw[thick, dashed, brown!70!black] (4.5,0)
                 .. controls (4.5,0.3) and (4.8,1) .. (4.8,2.5)
                 .. controls (4.8,4) and (3.5,4.5) .. (2,4.5)
                 .. controls (1,4.5) and (0.6,3.5) .. (0.6,2.5)
@@ -111,8 +111,8 @@ We will also need a slightly different version of this lemma for a non-compact s
                 .. controls (0,3.5) and (-0.15,2) .. (0,0);
 
               % partial N (bottom boundary, bold red)
-              \draw[very thick, red!70!black] (-5,0) -- (5,0);
-              \node[red!70!black, below] at (4.2,-0.15) {$\partial N$};
+              \draw[very thick, brown!70!black] (-5,0) -- (5,0);
+              \node[brown!70!black, below] at (4.2,-0.15) {$\partial N$};
 
               % A foliation leaf in the gap (thin gray curves)
               \draw[thin, gray] (-0.6,0.6)
