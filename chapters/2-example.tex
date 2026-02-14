@@ -1,3 +1,4 @@
+% !TEX root = ../thesis.tex
 \chapter{Settings and Preliminaries}\label{ch:preliminaries}
 
 This chapter establishes the foundational framework for the free boundary min-max theory in complete Riemannian manifolds with boundary.
@@ -231,7 +232,7 @@ W(U) := \inf\bigl\{ F(\{\Omega_t\}) : \{\Omega_t\} \text{ is a sweepout of } (U,
 \end{definition}
 
 \begin{remark}\label{rem:free-boundary-automatic}
-The free boundary condition is built into the Caccioppoli framework: by Proposition~\ref{prop:cacc-cycle}, each reduced boundary $\partial^*\Omega_t$ induces a mod~$2$ relative cycle $\partial\llrr{\Omega_t} \in \mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)$, whose ``boundary'' (in the sense of currents) is automatically supported on $\partial M$. Note that the sweepout ``fills'' $U$ in the sense that the fillings $\Omega_t$ transition from being disjoint from $U$ to containing $U$. Throughout this thesis we assume $\partial_F U \neq \emptyset$, i.e.\ $\overline{U} \cap \partial M \neq \emptyset$: this is essential for the min-max limit to be a free boundary minimal hypersurface. When $\partial_F U = \emptyset$, one recovers a closed minimal hypersurface, which is already covered by the work of Chambers--Liokumovich~\cite{CL20}.\xinze{Ask Yevgeny: is it accurate to say the closed case is already covered by Chambers--Liokumovich?}
+The free boundary condition is built into the Caccioppoli framework: by Proposition~\ref{prop:cacc-cycle}, each reduced boundary $\partial^*\Omega_t$ induces a mod~$2$ relative cycle $\partial\llrr{\Omega_t} \in \mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)$, whose ``boundary'' (in the sense of currents) is automatically supported on $\partial M$. Note that the sweepout ``fills'' $U$ in the sense that the fillings $\Omega_t$ transition from being disjoint from $U$ to containing $U$. Throughout this thesis we assume $\partial_F U \neq \emptyset$, i.e.\ $\overline{U} \cap \partial M \neq \emptyset$: this is essential for the min-max limit to be a free boundary minimal hypersurface. When $\partial_F U = \emptyset$, one recovers a closed minimal hypersurface, which is already covered by the work of Chambers--Liokumovich~\cite{CL20}.
 \end{remark}
 
 The following proposition provides the bridge between the Caccioppoli sweepout framework and the cycle-valued maps used in Li--Zhou~\cite{LZ17}.
@@ -403,7 +404,7 @@ where $\partial_I U = \partial \llbracket U \rrbracket \llcorner \mathrm{int}(M)
 \end{definition}
 
 \begin{remark}[Closed vs.\ free boundary limits]\label{rem:closed-vs-free}
-\xinze{Discuss with Yevgeny. The min-max theory of Li--Zhou~\cite{LZ17} produces a stationary varifold whose support is a minimal hypersurface, but does not by itself guarantee that this hypersurface has free boundary on $\partial M$: in general, the limit could be a closed minimal hypersurface in the interior of $M$ (see \cite[Remark~1.3]{LZ17}). When $M$ is a compact domain in $\mathbb{R}^{n+1}$, this cannot happen since $\mathbb{R}^{n+1}$ admits no closed minimal hypersurface. In the non-compact setting, however, closed minimal hypersurfaces may exist, and one must verify that the good set construction produces a limit that genuinely touches $\partial M$.}
+The min-max theory of Li--Zhou~\cite{LZ17} produces a stationary varifold whose support is a minimal hypersurface, but does not by itself guarantee that $\partial\Sigma \neq \varnothing$: in general, the limit could be a closed minimal hypersurface in the interior of $M$ (see \cite[Remark~1.3]{LZ17}). Following the standard convention, a closed minimal hypersurface is regarded as a (degenerate) free boundary minimal hypersurface with $\partial\Sigma = \varnothing$; the conditions $\partial\Sigma \subset \partial M$ and the orthogonal meeting condition in Theorem~\ref{thm:main} are then vacuously satisfied. When $M$ is a compact domain in $\mathbb{R}^{n+1}$, the closed case cannot occur since $\mathbb{R}^{n+1}$ admits no closed minimal hypersurface.
 \end{remark}
 
 \begin{lemma}[Existence of good sets]\label{lem:good-set-existence}
