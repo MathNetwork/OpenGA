@@ -1,20 +1,168 @@
+% !TEX root = ../thesis.tex
 \chapter{Introduction}
 \label{ch:intro}
 
-\begin{theorem}[Main Theorem]\label{thm:main}
-Let $(M^{n+1}, g)$ be a complete Riemannian manifold with non-empty smooth boundary $\partial M$, $2 \leq n \leq 6$.  Let $U \subset M$ be a \emph{good set} (Definition~\ref{def:good-set}), i.e., a bounded open set of finite perimeter satisfying $\mathbf{M}(\partial_I U) \leq \frac{1}{10}\, W_\partial(U)$, with $\overline{U} \cap \partial M \neq \varnothing$.  Then there exists a smooth, almost properly embedded free boundary minimal hypersurface $(\Sigma,\partial\Sigma)\subset(M,\partial M)$ with $\partial\Sigma\subset\partial M$ and $\Sigma$ meeting $\partial M$ orthogonally, satisfying
-\[
-\mathcal{H}^n(\Sigma)\le W_\partial(U)+\mathbf{M}(\partial_IU)
-\qquad\text{and}\qquad
-\Sigma\cap\overline{U}\neq\varnothing.
-\]
-\end{theorem}
-\xinze{The min-max theory of Li--Zhou (Remark~1.3(a) of \cite{LZ17}) does not guarantee $\partial\Sigma \neq \varnothing$: the limit could be a closed minimal hypersurface. A possible modified statement:
+The existence of minimal hypersurfaces is a central problem in differential geometry and the calculus of variations. The Almgren--Pitts min-max theory~\cite{Alm65, Pit81}, together with the regularity results of Schoen--Simon~\cite{SS81}, establishes that every closed Riemannian manifold $M^{n+1}$ with $2 \leq n \leq 6$ contains a smooth, closed, embedded minimal hypersurface. This foundational result has since inspired far-reaching developments, including the resolution of the Willmore conjecture by Marques--Neves~\cite{MN14}, Yau's conjecture on infinitely many minimal hypersurfaces by Marques--Neves~\cite{MN17} (for positive Ricci curvature) and Song~\cite{Song18} (in full generality), and the generic equidistribution results of Irie--Marques--Neves~\cite{IMN17} and Marques--Neves--Song~\cite{MNS}.
 
-\medskip
-\noindent\textbf{Modified version.} Under the same hypotheses, there exists a smooth, almost properly embedded minimal hypersurface $\Sigma \subset M$ with $\Sigma \cap \overline{U} \neq \varnothing$ and $\mathcal{H}^n(\Sigma) \leq W_\partial(U) + \mathbf{M}(\partial_I U)$. Moreover, $\Sigma$ is either:
-\begin{enumerate}
-    \item a free boundary minimal hypersurface with $\partial\Sigma \subset \partial M$, $\Sigma$ meeting $\partial M$ orthogonally; or
-    \item a closed (compact without boundary) embedded minimal hypersurface in the interior of $M$.
+Two natural directions of generalization arise. The first concerns manifolds \emph{with boundary}: given a compact Riemannian manifold $M$ with non-empty boundary $\partial M$, one seeks \emph{free boundary minimal hypersurfaces} --- hypersurfaces that are minimal in the interior and meet $\partial M$ orthogonally along their boundary. Li--Zhou~\cite{LZ17} developed a min-max theory for free boundary minimal hypersurfaces and proved that every smooth compact Riemannian manifold $M^{n+1}$ ($2 \leq n \leq 6$) with $\partial M \neq \varnothing$ contains such a hypersurface, without any assumption on the geometry or topology of $M$ or $\partial M$.
+
+The second direction concerns \emph{non-compact} manifolds. For complete non-compact manifolds without boundary, Chambers--Liokumovich~\cite{CL20} introduced a localized min-max framework based on \emph{good sets}: bounded open sets $U \subset M$ whose interior boundary $\partial_I U$ is small relative to the width $W(U)$. Using good sets, they proved that every complete non-compact manifold of finite volume (more generally, of sublinear volume growth) contains a closed embedded minimal hypersurface.
+
+This thesis combines both directions: we develop a min-max theory for free boundary minimal hypersurfaces on \emph{complete, non-compact} Riemannian manifolds \emph{with boundary}. Our main result is the following (see Figure~\ref{fig:good-set-intro}).
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=0.8]
+  %% (b) 3D symmetric bottle — dM transverse to neck
+  \begin{scope}[xshift=-3.5cm]
+    % Fill body only (no tube fill above ∂_I U)
+    \shade[left color=fillB!60, right color=fillB!15]
+      (-1.5,0)
+      .. controls (-1.5,0.3) and (-2,0.7) .. (-2,1.5)
+      .. controls (-2,2.8) and (-0.5,3.2) .. (-0.5,3.5)
+      arc (180:360:0.5 and 0.13)
+      .. controls (0.5,3.2) and (2,2.8) .. (2,1.5)
+      .. controls (2,0.7) and (1.5,0.3) .. (1.5,0)
+      arc (0:-180:1.5 and 0.4);
+
+    % Left profile
+    \draw[thick] (-1.5,0)
+      .. controls (-1.5,0.3) and (-2,0.7) .. (-2,1.5)
+      .. controls (-2,2.8) and (-0.5,3.2) .. (-0.5,3.5)
+      -- (-0.5,5.5);
+    % Right profile
+    \draw[thick] (1.5,0)
+      .. controls (1.5,0.3) and (2,0.7) .. (2,1.5)
+      .. controls (2,2.8) and (0.5,3.2) .. (0.5,3.5)
+      -- (0.5,5.5);
+
+    % Base ellipse — front half (solid, ∂M)
+    \draw[very thick] (1.5,0) arc (0:-180:1.5 and 0.4);
+    % Base ellipse — back half (dashed)
+    \draw[thick, dashed] (1.5,0) arc (0:180:1.5 and 0.4);
+    \node[below] at (0,-0.55) {$\partial M = \textcolor{bindB!40}{\partial_F U}$};
+
+    % Neck ellipse (∂_I U) — front half
+    \draw[thick, bindB] (0.5,3.5) arc (0:-180:0.5 and 0.13);
+    % Neck ellipse — back half (dashed)
+    \draw[thick, bindB, dashed] (0.5,3.5) arc (0:180:0.5 and 0.13);
+    \node[bindB, right] at (0.65,3.5) {$\partial_I U$};
+
+    % Label U
+    \node[bindB] at (0,1.3) {\large $U$};
+
+    % Dots for non-compactness
+    \node at (-0.5,5.8) {$\vdots$};
+    \node at (0.5,5.8) {$\vdots$};
+    \node[above, font=\small] at (0,6.0) {$\to \infty$};
+
+    % Narrow neck annotation
+    \draw[<-, >=stealth, thin] (-0.5,3.9) -- (-1.8,4.5)
+      node[left, font=\small] {narrow neck};
+
+    % Closed minimal hypersurface (red ellipse at widest point)
+    \draw[thick, bindA] (2,1.5) arc (0:-180:2 and 0.5);
+    \draw[thick, bindA, dashed] (2,1.5) arc (0:180:2 and 0.5);
+    \node[bindA, right, font=\small] at (2.1,1.5) {$\Sigma$};
+
+    % ∂_F U overlay on front arc (topmost layer, light blue)
+    \draw[very thick, bindB!40] (1.5,0) arc (0:-180:1.5 and 0.4);
+
+    % Subcaption
+    \node[below, font=\small] at (0,-1.3) {(b)};
+  \end{scope}
+
+  %% (a) 3D half-bottle — dM = cut face, parallel to neck
+  \begin{scope}[xshift=3.5cm]
+    % Fill body (full cross-section: right profile → neck back arc → back cut face)
+    \shade[left color=fillB!60, right color=fillB!15]
+      (0,-0.65)
+      .. controls (1.5,-0.65) and (2,0.3) .. (2,1.5)
+      .. controls (2,2.8) and (0.5,3.2) .. (0.5,3.5)
+      arc (0:100:0.5 and 0.13)
+      .. controls (-0.087,3.0) and (-0.35,2.2) .. (-0.35,1.523)
+      arc (-180:-90:0.35 and 2.173) -- cycle;
+
+    % Right profile (outer surface, from bottom vertex up)
+    \draw[thick] (0,-0.65)
+      .. controls (1.5,-0.65) and (2,0.3) .. (2,1.5)
+      .. controls (2,2.8) and (0.5,3.2) .. (0.5,3.5)
+      -- (0.5,5.5);
+
+
+    % Tube of cut face — front line (from front edge top to infinity)
+    \draw[thick] (0.087,3.372) -- (0.087,5.5);
+    % Tube of cut face — back line (from back edge top to infinity)
+    \draw[thick] (-0.087,3.628) -- (-0.087,5.5);
+
+    % Cut face — front side: bottom arc + top bezier
+    \draw[thick] (0,-0.65) arc (-90:0:0.35 and 2.043)
+      .. controls (0.35,2.5) and (0.087,3.1) .. (0.087,3.372);
+
+    % Cut face — back side: bottom arc + top bezier
+    \draw[thick] (0,-0.65) arc (-90:-180:0.35 and 2.173)
+      .. controls (-0.35,2.2) and (-0.087,3.0) .. (-0.087,3.628);
+
+    % Neck (∂_I U) — front arc (solid, slightly shortened)
+    \draw[thick, bindB] (0.087,3.372) arc (-80:0:0.5 and 0.13);
+    % Neck — back arc (dashed, slightly extended)
+    \draw[thick, bindB, dashed] (0.5,3.5) arc (0:100:0.5 and 0.13);
+    \node[bindB, right] at (0.65,3.5) {$\partial_I U$};
+
+    % Label U
+    \node[bindB] at (1.2,2.3) {\large $U$};
+
+    % Labels for ∂M and ∂_F U
+    \node[left, font=\small] at (-0.15,4.8) {$\partial M$};
+    \node[bindB!40, below left, font=\small] at (-0.3,-0.65) {$\partial_F U$};
+
+    % Dots for non-compactness (one above each vertical line)
+    \node at (-0.087,5.8) {$\vdots$};
+    \node at (0.087,5.8) {$\vdots$};
+    \node at (0.5,5.8) {$\vdots$};
+    \node[above, font=\small] at (0.25,6.0) {$\to \infty$};
+
+    % Narrow neck annotation
+    \draw[<-, >=stealth, thin] (0.5,3.9) -- (1.5,4.5)
+      node[right, font=\small] {narrow neck};
+
+    % Free boundary minimal hypersurface (red ellipse, same size as figure (b))
+    % Front solid arc: stop at cut face front surface (θ=-80°, x≈0.35)
+    \draw[thick, bindA] (2,1.5) arc (0:-80:2 and 0.5);
+    % Back dashed arc: stop at cut face back surface (θ=100°, x≈-0.35)
+    \draw[thick, bindA, dashed] (2,1.5) arc (0:100:2 and 0.5);
+    \node[bindA, right, font=\small] at (2.1,1.5) {$\Sigma$};
+
+    % ∂_F U overlay on front cut face (topmost layer, light blue)
+    \draw[very thick, bindB!40] (0,-0.65) arc (-90:0:0.35 and 2.043)
+      .. controls (0.35,2.5) and (0.087,3.1) .. (0.087,3.372);
+    % ∂_F U overlay on back cut face (topmost layer, light blue)
+    \draw[very thick, bindB!40] (0,-0.65) arc (-90:-180:0.35 and 2.173)
+      .. controls (-0.35,2.2) and (-0.087,3.0) .. (-0.087,3.628);
+
+    % Intersection dots with ∂_F U (topmost layer)
+    \fill[bindA] ({2*cos(-80)},{1.5+0.5*sin(-80)}) circle (2.5pt);
+    \fill[bindA] ({2*cos(100)},{1.5+0.5*sin(100)}) circle (2.5pt);
+    % ∂Σ label with arrows to both dots
+    \node[bindA, left, font=\small] (dSigma) at (-1.2,1.5) {$\partial\Sigma$};
+    \draw[->, >=stealth, bindA, thin, shorten >=4pt] (dSigma) -- ({2*cos(-80)},{1.5+0.5*sin(-80)});
+    \draw[->, >=stealth, bindA, thin, shorten >=4pt] (dSigma) -- ({2*cos(100)},{1.5+0.5*sin(100)});
+
+    % Subcaption
+    \node[below, font=\small] at (0.5,-1.0) {(a)};
+  \end{scope}
+\end{tikzpicture}
+\caption{A good set $U$ (shaded) inside a non-compact manifold $M$ with boundary $\partial M$ (bold). The \emph{free boundary} $\partial_F U \subset \partial M$ is the portion of $\partial M$ adjacent to $U$, and the \emph{interior boundary} $\partial_I U$ sits at a narrow neck, so $\mathbf{M}(\partial_I U)$ is small relative to $W_\partial(U)$. (a)~$\partial M$ parallel to the neck, both extending to infinity; (b)~$\partial M$ transverse to the neck.}
+\label{fig:good-set-intro}
+\end{figure}
+
+\begin{theorem}[Main Theorem]\label{thm:main}
+Let $(M^{n+1}, g)$ be a complete Riemannian manifold with non-empty smooth boundary $\partial M$, $2 \leq n \leq 6$.  Let $U \subset M$ be a \emph{good set} (Definition~\ref{def:good-set}), i.e., a bounded open set of finite perimeter satisfying $\mathbf{M}(\partial_I U) \leq \frac{1}{10}\, W_\partial(U)$, with $\overline{U} \cap \partial M \neq \varnothing$.  Then there exists a smooth, almost properly embedded minimal hypersurface $(\Sigma,\partial\Sigma)\subset(M,\partial M)$ with (possibly empty) boundary $\partial\Sigma\subset\partial M$ such that
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item $\Sigma$ is minimal in the interior and meets $\partial M$ orthogonally along $\partial\Sigma$;
+    \item \textup{(Area bound)} $\mathcal{H}^n(\Sigma)\le W_\partial(U)+\mathbf{M}(\partial_IU)$;
+    \item \textup{(Localization)} $\Sigma\cap\overline{U}\neq\varnothing$.
 \end{enumerate}
-Discuss with Yevgeny: can case (2) be ruled out by the good set construction or by geometric assumptions on $M$?}
+\end{theorem}
+
+The two conclusions in the theorem address issues specific to the non-compact setting. The area bound $\mathcal{H}^n(\Sigma) \leq W_\partial(U) + \mathbf{M}(\partial_I U)$ gives quantitative control on the size of the minimal hypersurface produced by the min-max process; combined with the good set condition $\mathbf{M}(\partial_I U) \leq \frac{1}{10}\, W_\partial(U)$, this yields $\mathcal{H}^n(\Sigma) \leq \frac{11}{10}\, W_\partial(U)$, so the area is controlled at the scale of the width. The localization condition $\Sigma \cap \overline{U} \neq \varnothing$ ensures that the limit hypersurface does not escape to infinity: it genuinely passes through the good set $U$. In the compact setting both conclusions are automatic, but on non-compact manifolds they require the good set machinery of Chambers--Liokumovich~\cite{CL20} together with the no-escape-to-infinity argument developed in Chapter~\ref{ch:no-escape-to-infinity}.
