@@ -78,13 +78,13 @@ Let $U$ be a good set.
             \centering
             \begin{tikzpicture}[scale=0.7]
               % U region (pink/salmon, hill shape on the right)
-              \fill[red!20]
+              \fill[fillA]
                 (2,0) .. controls (2,1.5) and (3,2.5) .. (4,3)
                 .. controls (6,4) and (8,5) .. (10,4)
                 .. controls (11,3.5) and (11,1) .. (11,0) -- cycle;
 
               % Omega' region (sage green, left block, semi-transparent so red shows through)
-              \fill[green!40!gray, fill opacity=0.5]
+              \fill[fillB, fill opacity=0.5]
                 (-1,0) -- (-1,6) -- (3,6)
                 .. controls (3,5) and (3.5,4) .. (4,3)
                 .. controls (4.5,2) and (5,1) .. (5,0) -- cycle;
@@ -97,7 +97,7 @@ Let $U$ be a good set.
                 \begin{scope}
                   \pgfseteorule
                   \clip (-2,-1) rectangle (12,7) (4,3) circle (1.2);
-                  \fill[pattern=north east lines, pattern color=cyan!60!blue]
+                  \fill[pattern=north east lines, pattern color=hatchcol]
                     (-2,-1) rectangle (12,7);
                 \end{scope}
               \end{scope}
@@ -114,44 +114,44 @@ Let $U$ be a good set.
                     (2,0) .. controls (2,1.5) and (3,2.5) .. (4,3)
                     .. controls (6,4) and (8,5) .. (10,4)
                     .. controls (11,3.5) and (11,1) .. (11,0) -- cycle;
-                  \fill[pattern=north east lines, pattern color=cyan!60!blue]
+                  \fill[pattern=north east lines, pattern color=hatchcol]
                     (-2,-1) rectangle (12,7);
                 \end{scope}
               \end{scope}
 
               % Boundary of U (red)
-              \draw[very thick, red!70!black]
+              \draw[very thick, bindA]
                 (2,0) .. controls (2,1.5) and (3,2.5) .. (4,3)
                 .. controls (6,4) and (8,5) .. (10,4)
                 .. controls (11,3.5) and (11,1) .. (11,0);
 
               % Boundary of Omega' - lower part (green)
-              \draw[very thick, green!50!black]
+              \draw[very thick, bindB]
                 (4,3) .. controls (4.5,2) and (5,1) .. (5,0);
 
               % Boundary of Omega' - upper part (blue, to intersection point)
-              \draw[ultra thick, cyan!80!blue]
+              \draw[ultra thick, hlcol]
                 (3,6) .. controls (3,5) and (3.5,4) .. (4,3);
 
               % Omega' lower part outside circle (blue overdraw)
               \begin{scope}
                 \pgfseteorule
                 \clip (-2,-1) rectangle (12,7) (4,3) circle (1.2);
-                \draw[ultra thick, cyan!80!blue]
+                \draw[ultra thick, hlcol]
                   (4,3) .. controls (4.5,2) and (5,1) .. (5,0);
               \end{scope}
 
               % U boundary left part inside circle (blue)
               \begin{scope}
                 \clip (4,3) circle (1.2);
-                \draw[ultra thick, cyan!80!blue]
+                \draw[ultra thick, hlcol]
                   (2,0) .. controls (2,1.5) and (3,2.5) .. (4,3);
               \end{scope}
 
 
 
               % Circle B_i' (brown)
-              \draw[thick, brown!70!black] (4,3) circle (1.2);
+              \draw[thick, black] (4,3) circle (1.2);
 
               % Circle arc inside intersection of Omega' and U (blue)
               \begin{scope}
@@ -161,20 +161,20 @@ Let $U$ be a good set.
                 \clip (-1,0) -- (-1,6) -- (3,6)
                   .. controls (3,5) and (3.5,4) .. (4,3)
                   .. controls (4.5,2) and (5,1) .. (5,0) -- cycle;
-                \draw[ultra thick, cyan!80!blue] (4,3) circle (1.2);
+                \draw[ultra thick, hlcol] (4,3) circle (1.2);
               \end{scope}
-              \node[brown!70!black, above right] at (4.8,3.8) {$B_i'$};
+              \node[black, above right] at (4.8,3.8) {$B_i'$};
 
               % Bottom line (partial M)
-              \draw[very thick, brown!70!black] (-1,0) -- (11,0);
+              \draw[very thick, black] (-1,0) -- (11,0);
 
               % Labels
-              \node[green!50!black, font=\large] at (1.5,3.5) {$\Omega'$};
-              \node[red!50!black, font=\large] at (7.5,3) {$\mathcal{U}$};
-              \node[cyan!80!blue, above] at (1.5,6) {$\Omega'\setminus(B_i'\cap \mathcal{U})$};
-              \node[brown!70!black, right] at (11,-0.4) {\color{brown!70!black}$\partial M$};
+              \node[bindB, font=\large] at (1.5,3.5) {$\Omega'$};
+              \node[bindA, font=\large] at (7.5,3) {$\mathcal{U}$};
+              \node[hlcol, above] at (1.5,6) {$\Omega'\setminus(B_i'\cap \mathcal{U})$};
+              \node[black, right] at (11,-0.4) {\color{black}$\partial M$};
             \end{tikzpicture}
-            \caption{Pushing $\Omega'$ outside of $B_1'\cap U$. The region $\Omega'$ (green) overlaps with $\mathcal{U}$ (pink) near the ball $B_i'$. The set $\Omega' \setminus (B_i' \cap \mathcal{U})$ is obtained by removing the portion of $\Omega'$ inside $B_i' \cap \mathcal{U}$.}
+            \caption{Pushing $\Omega'$ outside of $B_1'\cap U$. The region $\Omega'$ (blue) overlaps with $\mathcal{U}$ (red) near the ball $B_i'$. The set $\Omega' \setminus (B_i' \cap \mathcal{U})$ is obtained by removing the portion of $\Omega'$ inside $B_i' \cap \mathcal{U}$.}
             \label{fig:2675}
         \end{figure}
         
@@ -361,12 +361,12 @@ which survives the nested replacement and underwrites the final contradiction.
   \begin{tikzpicture}[y=1cm]
     % --- Background bands (below axis) ---
     % B bands (green, matching Omega' color scheme)
-    \fill[green!15!gray!20] (0.3,-0.4) rectangle (1.2,0.4);
-    \fill[green!15!gray!20] (2.0,-0.4) rectangle (3.2,0.4);
-    \fill[green!15!gray!20] (5.5,-0.4) rectangle (8.5,0.4);
+    \fill[fillB] (0.3,-0.4) rectangle (1.2,0.4);
+    \fill[fillB] (2.0,-0.4) rectangle (3.2,0.4);
+    \fill[fillB] (5.5,-0.4) rectangle (8.5,0.4);
 
     % A band (red, matching U color scheme)
-    \fill[red!20] (3.8,-0.4) rectangle (4.8,0.4);
+    \fill[fillA] (3.8,-0.4) rectangle (4.8,0.4);
 
     % --- Axis ---
     \draw[-{Stealth}] (-0.3,0) -- (10.5,0) node[below=3pt] {$t$};
@@ -376,7 +376,7 @@ which survives the nested replacement and underwrites the final contradiction.
     \draw (9.0,0.1) -- (9.0,-0.1) node[below=4pt] {$t_1$};
 
     % --- I = [t0,t1] ---
-    \draw[line width=2.5pt, cyan!40!blue, opacity=0.5] (5.0,0) -- (9.0,0);
+    \draw[line width=2.5pt, hlcol, opacity=0.5] (5.0,0) -- (9.0,0);
     % Dashed lines from t0, t1 down to brace
     \draw[dashed, gray] (5.0,-0.1) -- (5.0,-1.0);
     \draw[dashed, gray] (9.0,-0.1) -- (9.0,-1.0);
@@ -384,8 +384,8 @@ which survives the nested replacement and underwrites the final contradiction.
       (5.0,-1.1) -- (9.0,-1.1) node[midway, below=6pt] {$I=[t_0,t_1]$};
 
     % --- I' (connected component of B inside I) ---
-    \draw[line width=2pt, cyan!80!blue] (5.5,0) -- (8.5,0);
-    \node[cyan!80!blue] at (7.0,0.55) {$I'$};
+    \draw[line width=2pt, hlcol] (5.5,0) -- (8.5,0);
+    \node[hlcol] at (7.0,0.55) {$I'$};
 
     % --- Conditions with arrows ---
     \node at (3.0,1.6) {$g(t_0)\le \varepsilon_0$};
@@ -395,11 +395,11 @@ which survives the nested replacement and underwrites the final contradiction.
     \draw[-{Stealth}, thick] (9.0,1.3) -- (9.0,0.15);
 
     % --- Legend ---
-    \fill[green!15!gray!20] (0.3,-2.5) rectangle (0.7,-2.2);
-    \node[anchor=west, green!50!black, font=\small] at (0.8,-2.35)
+    \fill[fillB] (0.3,-2.5) rectangle (0.7,-2.2);
+    \node[anchor=west, bindB, font=\small] at (0.8,-2.35)
       {$B=\{t: g(t)\in(\varepsilon_0,\,\mathrm{Vol}(U)-\varepsilon_0)\}$};
-    \fill[red!20] (6.5,-2.5) rectangle (6.9,-2.2);
-    \node[anchor=west, red!70!black, font=\small] at (7.0,-2.35)
+    \fill[fillA] (6.5,-2.5) rectangle (6.9,-2.2);
+    \node[anchor=west, bindA, font=\small] at (7.0,-2.35)
       {$A=\{\mathcal{H}^n(\Gamma_t)\ge W_g(U)\}$};
   \end{tikzpicture}
   \caption{Time–axis schematic. The blue bands show $B=\{t:\ g(t)\in(\varepsilon_0,\ \mathrm{Vol}(U)-\varepsilon_0)\}$; the red band shows $A=\{t:\ \mathcal H^n(\Gamma_t\cap M)\ge W_g(U)\}$ with $A\cap B=\varnothing$. A connected component $I'\subset B$ is enlarged to $I=[t_0,t_1]$ with $g(t_0)\le\varepsilon_0$, $g(t_1)\ge \mathrm{Vol}(U)-\varepsilon_0$.}

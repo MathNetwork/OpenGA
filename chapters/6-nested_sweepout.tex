@@ -118,62 +118,62 @@ Fix $\br{\Gamma_t} \in \mathcal{S}(U)$ with the corresponding open sets $\br{\Om
               % === PANEL 1: Omega_{s_j^0}' ===
 
               % Fill U_j^1 (peach)
-              \fill[red!20]
+              \fill[fillA]
                 (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                 .. controls (3,5.5) and (3.2,7) .. (3.5,9) -- cycle;
 
               % Fill U_j^2 (sage green)
-              \fill[green!15!gray!20]
+              \fill[fillB]
                 (2.5,4.5) .. controls (1.8,3.5) and (0.2,1.5) .. (0.5,0)
                 -- (3.5,0) .. controls (3.8,1.5) and (3.2,3.5) .. (2.5,4.5) -- cycle;
 
               % Hatching for interior of Omega_{s_j^0}'
-              \fill[pattern=north east lines, pattern color=cyan!60!blue]
+              \fill[pattern=north east lines, pattern color=hatchcol]
                 (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                 .. controls (3.2,3.5) and (3.8,1.5) .. (3.5,0)
                 -- (5,0) -- (5,9) -- cycle;
 
               % Draw Gamma_sj (red)
-              \draw[very thick, red!70!black]
+              \draw[very thick, bindA]
                 (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                 .. controls (3.2,3.5) and (3.8,1.5) .. (3.5,0);
 
               % Draw Gamma_sj+1 (dark green)
-              \draw[very thick, green!50!black]
+              \draw[very thick, bindB]
                 (3.5,9) .. controls (3.2,7) and (3,5.5) .. (2.5,4.5)
                 .. controls (1.8,3.5) and (0.2,1.5) .. (0.5,0);
 
               % Circle B_i'
-              \draw[thick, brown!70!black] (2.5,4.5) circle (1.3);
+              \draw[thick, black] (2.5,4.5) circle (1.3);
 
               % Blue highlight on Gamma_sj (top layer)
-              \draw[line width=2pt, cyan!80!blue]
+              \draw[line width=2pt, hlcol]
                 (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                 .. controls (3.2,3.5) and (3.8,1.5) .. (3.5,0);
 
               % Labels
-              \node[red!70!black] at (1.8,7) {\large $U_j^1$};
-              \node[green!50!black] at (2,2) {\large $U_j^2$};
-              \node[red!70!black, left] at (0.3,8.5) {$\Gamma_{s_j}$};
-              \node[green!50!black, left] at (0.3,0.5) {$\Gamma_{s_{j+1}}$};
-              \node[brown!70!black, left] at (1.2,5) {$B_i'$};
-              \node[cyan!80!blue, below] at (2,-0.3) {\large $\Omega_{s_j^0}'$};
+              \node[bindA] at (1.8,7) {\large $U_j^1$};
+              \node[bindB] at (2,2) {\large $U_j^2$};
+              \node[bindA, left] at (0.3,8.5) {$\Gamma_{s_j}$};
+              \node[bindB, left] at (0.3,0.5) {$\Gamma_{s_{j+1}}$};
+              \node[black, left] at (1.2,5) {$B_i'$};
+              \node[hlcol, below] at (2,-0.3) {\large $\Omega_{s_j^0}'$};
 
               % === PANEL 2: Omega_{s_j^1}' (remove B_i' cap U_j^1) ===
               \begin{scope}[xshift=7cm]
 
               % Fill U_j^1 (peach)
-              \fill[red!20]
+              \fill[fillA]
                 (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                 .. controls (3,5.5) and (3.2,7) .. (3.5,9) -- cycle;
 
               % Fill U_j^2 (sage green)
-              \fill[green!15!gray!20]
+              \fill[fillB]
                 (2.5,4.5) .. controls (1.8,3.5) and (0.2,1.5) .. (0.5,0)
                 -- (3.5,0) .. controls (3.8,1.5) and (3.2,3.5) .. (2.5,4.5) -- cycle;
 
               % Hatching for interior of Omega_{s_j^1}' (right of Gamma_sj)
-              \fill[pattern=north east lines, pattern color=cyan!60!blue]
+              \fill[pattern=north east lines, pattern color=hatchcol]
                 (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                 .. controls (3.2,3.5) and (3.8,1.5) .. (3.5,0)
                 -- (5,0) -- (5,9) -- cycle;
@@ -183,56 +183,56 @@ Fix $\br{\Gamma_t} \in \mathcal{S}(U)$ with the corresponding open sets $\br{\Om
                 \fill[white]
                   (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                   .. controls (3,5.5) and (3.2,7) .. (3.5,9) -- cycle;
-                \fill[red!20]
+                \fill[fillA]
                   (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                   .. controls (3,5.5) and (3.2,7) .. (3.5,9) -- cycle;
               \end{scope}
 
               % Draw Gamma_sj (red)
-              \draw[very thick, red!70!black]
+              \draw[very thick, bindA]
                 (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                 .. controls (3.2,3.5) and (3.8,1.5) .. (3.5,0);
 
               % Draw Gamma_sj+1 (dark green)
-              \draw[very thick, green!50!black]
+              \draw[very thick, bindB]
                 (3.5,9) .. controls (3.2,7) and (3,5.5) .. (2.5,4.5)
                 .. controls (1.8,3.5) and (0.2,1.5) .. (0.5,0);
 
               % Circle B_i'
-              \draw[thick, brown!70!black] (2.5,4.5) circle (1.3);
+              \draw[thick, black] (2.5,4.5) circle (1.3);
 
               % Blue highlights (top layer)
               % Gamma_sj outside circle
               \begin{scope}
                 \pgfseteorule
                 \clip (-1,-1) rectangle (5,10) (2.5,4.5) circle (1.3);
-                \draw[line width=2pt, cyan!80!blue]
+                \draw[line width=2pt, hlcol]
                   (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                   .. controls (3.2,3.5) and (3.8,1.5) .. (3.5,0);
               \end{scope}
               % Arc of B_i' inside U_j^1
-              \draw[line width=2pt, cyan!80!blue]
+              \draw[line width=2pt, hlcol]
                 (2.92,5.73) arc (71:123:1.3);
               % Upper green curve inside circle
               \begin{scope}
                 \clip (2.5,4.5) circle (1.3);
-                \draw[line width=2pt, cyan!80!blue]
+                \draw[line width=2pt, hlcol]
                   (3.5,9) .. controls (3.2,7) and (3,5.5) .. (2.5,4.5);
               \end{scope}
               % Lower red curve inside circle
               \begin{scope}
                 \clip (2.5,4.5) circle (1.3);
-                \draw[line width=2pt, cyan!80!blue]
+                \draw[line width=2pt, hlcol]
                   (2.5,4.5) .. controls (3.2,3.5) and (3.8,1.5) .. (3.5,0);
               \end{scope}
 
               % Labels
-              \node[red!70!black] at (1.8,7) {\large $U_j^1$};
-              \node[green!50!black] at (2,2) {\large $U_j^2$};
-              \node[red!70!black, left] at (0.3,8.5) {$\Gamma_{s_j}$};
-              \node[green!50!black, left] at (0.3,0.5) {$\Gamma_{s_{j+1}}$};
-              \node[brown!70!black, left] at (1.2,5) {$B_i'$};
-              \node[cyan!80!blue, below] at (2,-0.3) {\large $\Omega_{s_j^1}'$};
+              \node[bindA] at (1.8,7) {\large $U_j^1$};
+              \node[bindB] at (2,2) {\large $U_j^2$};
+              \node[bindA, left] at (0.3,8.5) {$\Gamma_{s_j}$};
+              \node[bindB, left] at (0.3,0.5) {$\Gamma_{s_{j+1}}$};
+              \node[black, left] at (1.2,5) {$B_i'$};
+              \node[hlcol, below] at (2,-0.3) {\large $\Omega_{s_j^1}'$};
 
               \end{scope}
 
@@ -240,17 +240,17 @@ Fix $\br{\Gamma_t} \in \mathcal{S}(U)$ with the corresponding open sets $\br{\Om
               \begin{scope}[xshift=14cm]
 
               % Fill U_j^1 (peach)
-              \fill[red!20]
+              \fill[fillA]
                 (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                 .. controls (3,5.5) and (3.2,7) .. (3.5,9) -- cycle;
 
               % Fill U_j^2 (sage green)
-              \fill[green!15!gray!20]
+              \fill[fillB]
                 (2.5,4.5) .. controls (1.8,3.5) and (0.2,1.5) .. (0.5,0)
                 -- (3.5,0) .. controls (3.8,1.5) and (3.2,3.5) .. (2.5,4.5) -- cycle;
 
               % Hatching for interior of Omega_{s_j^2}' (right of Gamma_sj)
-              \fill[pattern=north east lines, pattern color=cyan!60!blue]
+              \fill[pattern=north east lines, pattern color=hatchcol]
                 (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                 .. controls (3.2,3.5) and (3.8,1.5) .. (3.5,0)
                 -- (5,0) -- (5,9) -- cycle;
@@ -260,70 +260,70 @@ Fix $\br{\Gamma_t} \in \mathcal{S}(U)$ with the corresponding open sets $\br{\Om
                 \fill[white]
                   (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                   .. controls (3,5.5) and (3.2,7) .. (3.5,9) -- cycle;
-                \fill[red!20]
+                \fill[fillA]
                   (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                   .. controls (3,5.5) and (3.2,7) .. (3.5,9) -- cycle;
               \end{scope}
               % Add hatching in B_i' cap U_j^2
               \begin{scope}
                 \clip (2.5,4.5) circle (1.3);
-                \fill[pattern=north east lines, pattern color=cyan!60!blue]
+                \fill[pattern=north east lines, pattern color=hatchcol]
                   (2.5,4.5) .. controls (1.8,3.5) and (0.2,1.5) .. (0.5,0)
                   -- (3.5,0) .. controls (3.8,1.5) and (3.2,3.5) .. (2.5,4.5) -- cycle;
               \end{scope}
 
               % Draw Gamma_sj (red)
-              \draw[very thick, red!70!black]
+              \draw[very thick, bindA]
                 (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                 .. controls (3.2,3.5) and (3.8,1.5) .. (3.5,0);
 
               % Draw Gamma_sj+1 (dark green)
-              \draw[very thick, green!50!black]
+              \draw[very thick, bindB]
                 (3.5,9) .. controls (3.2,7) and (3,5.5) .. (2.5,4.5)
                 .. controls (1.8,3.5) and (0.2,1.5) .. (0.5,0);
 
               % Circle B_i'
-              \draw[thick, brown!70!black] (2.5,4.5) circle (1.3);
+              \draw[thick, black] (2.5,4.5) circle (1.3);
 
               % Blue highlights (top layer)
               % Gamma_sj outside circle
               \begin{scope}
                 \pgfseteorule
                 \clip (-1,-1) rectangle (5,10) (2.5,4.5) circle (1.3);
-                \draw[line width=2pt, cyan!80!blue]
+                \draw[line width=2pt, hlcol]
                   (0.5,9) .. controls (0.8,7) and (1.8,5.5) .. (2.5,4.5)
                   .. controls (3.2,3.5) and (3.8,1.5) .. (3.5,0);
               \end{scope}
               % Arc of B_i' inside U_j^1
-              \draw[line width=2pt, cyan!80!blue]
+              \draw[line width=2pt, hlcol]
                 (2.92,5.73) arc (71:123:1.3);
               % Upper green curve inside circle
               \begin{scope}
                 \clip (2.5,4.5) circle (1.3);
-                \draw[line width=2pt, cyan!80!blue]
+                \draw[line width=2pt, hlcol]
                   (3.5,9) .. controls (3.2,7) and (3,5.5) .. (2.5,4.5);
               \end{scope}
               % Lower green curve inside circle
               \begin{scope}
                 \clip (2.5,4.5) circle (1.3);
-                \draw[line width=2pt, cyan!80!blue]
+                \draw[line width=2pt, hlcol]
                   (2.5,4.5) .. controls (1.8,3.5) and (0.2,1.5) .. (0.5,0);
               \end{scope}
               % Arc of B_i' inside U_j^2
-              \draw[line width=2pt, cyan!80!blue]
+              \draw[line width=2pt, hlcol]
                 (1.75,3.44) arc (235:297:1.3);
 
               % Labels
-              \node[red!70!black] at (1.8,7) {\large $U_j^1$};
-              \node[green!50!black] at (2,2) {\large $U_j^2$};
-              \node[red!70!black, left] at (0.3,8.5) {$\Gamma_{s_j}$};
-              \node[green!50!black, left] at (0.3,0.5) {$\Gamma_{s_{j+1}}$};
-              \node[brown!70!black, left] at (1.2,5) {$B_i'$};
-              \node[cyan!80!blue, below] at (2,-0.3) {\large $\Omega_{s_j^2}'$};
+              \node[bindA] at (1.8,7) {\large $U_j^1$};
+              \node[bindB] at (2,2) {\large $U_j^2$};
+              \node[bindA, left] at (0.3,8.5) {$\Gamma_{s_j}$};
+              \node[bindB, left] at (0.3,0.5) {$\Gamma_{s_{j+1}}$};
+              \node[black, left] at (1.2,5) {$B_i'$};
+              \node[hlcol, below] at (2,-0.3) {\large $\Omega_{s_j^2}'$};
 
               \end{scope}
             \end{tikzpicture}
-            \caption{Construction of $\Omega_{s_j^{2i - 2}}'$, $\Omega_{s_j^{2i - 1}}'$, $\Omega_{s_j^{2i}}'$ for $i = 1$. The two curves $\Gamma_{s_j}$ (red) and $\Gamma_{s_{j+1}}$ (green) cross near $B_i'$, creating $U_j^1 = \Omega_{s_j} \setminus \Omega_{s_{j+1}}$ (peach, hatched) and $U_j^2 = \Omega_{s_{j+1}} \setminus \Omega_{s_j}$ (green). \textbf{Left}: $\Omega_{s_j^0}' = \Omega_{s_j}'$. \textbf{Middle}: $\Omega_{s_j^1}' = \Omega_{s_j^0}' \setminus (B_i' \cap U_j^1)$; the hatched part inside $B_i'$ is removed. \textbf{Right}: $\Omega_{s_j^2}' = \Omega_{s_j^1}' \cup (B_i' \cap U_j^2)$; the green part inside $B_i'$ is added.}
+            \caption{Construction of $\Omega_{s_j^{2i - 2}}'$, $\Omega_{s_j^{2i - 1}}'$, $\Omega_{s_j^{2i}}'$ for $i = 1$. The two curves $\Gamma_{s_j}$ (red) and $\Gamma_{s_{j+1}}$ (blue) cross near $B_i'$, creating $U_j^1 = \Omega_{s_j} \setminus \Omega_{s_{j+1}}$ (red, hatched) and $U_j^2 = \Omega_{s_{j+1}} \setminus \Omega_{s_j}$ (blue). \textbf{Left}: $\Omega_{s_j^0}' = \Omega_{s_j}'$. \textbf{Middle}: $\Omega_{s_j^1}' = \Omega_{s_j^0}' \setminus (B_i' \cap U_j^1)$; the hatched part inside $B_i'$ is removed. \textbf{Right}: $\Omega_{s_j^2}' = \Omega_{s_j^1}' \cup (B_i' \cap U_j^2)$; the blue part inside $B_i'$ is added.}
             \label{fig:2670}
         \end{figure}
 

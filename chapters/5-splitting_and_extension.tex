@@ -16,78 +16,78 @@ The extension lemma is a key ingredient in the monotonisation algorithm. It allo
                   .. controls (0,0.8) and (0.2,2) .. (1,3)
                   .. controls (1.8,3.8) and (2.8,3) .. (2.8,1.5)
                   .. controls (2.8,0.5) and (2.5,0) .. (2.5,0) -- cycle;
-                \fill[orange!25] (-3,0)
+                \fill[fillC] (-3,0)
                   .. controls (-3,1.2) and (-2.8,3.2) .. (-1,4.3)
                   .. controls (0.5,5) and (1.8,3.8) .. (1.8,2)
                   .. controls (1.8,0.8) and (1.5,0) .. (1.5,0) -- cycle;
               \end{scope}
 
-              % Omega_1 boundary (large green!50!black arc)
-              \draw[thick, green!50!black] (-4,0)
+              % Omega_1 boundary (large arc)
+              \draw[thick, bindB] (-4,0)
                 .. controls (-4.1,2.5) and (-3,5.5) .. (-0.3,6.5)
                 .. controls (2.5,6) and (3.8,3) .. (3.5,0);
 
-              % Omega_0 boundary (green!50!black, larger blob on the left)
-              \draw[thick, green!50!black] (-3,0)
+              % Omega_0 boundary (larger blob on the left)
+              \draw[thick, bindB] (-3,0)
                 .. controls (-3,1.2) and (-2.8,3.2) .. (-1,4.3)
                 .. controls (0.5,5) and (1.8,3.8) .. (1.8,2)
                 .. controls (1.8,0.8) and (1.5,0) .. (1.5,0);
 
-              % Omega boundary = Gamma (red/brown, smaller blob on the right)
-              \draw[thick, red!70!black] (0,0)
+              % Omega boundary = Gamma (smaller blob on the right)
+              \draw[thick, bindA] (0,0)
                 .. controls (0,0.8) and (0.2,2) .. (1,3)
                 .. controls (1.8,3.8) and (2.8,3) .. (2.8,1.5)
                 .. controls (2.8,0.5) and (2.5,0) .. (2.5,0);
 
               % partial M (bottom boundary)
-              \draw[very thick, brown!70!black] (-4.5,0) -- (4,0);
+              \draw[very thick] (-4.5,0) -- (4,0);
 
               % Labels
-              \node[green!50!black] at (-1.5,3) {\large $\Omega_0$};
-              \node[red!70!black] at (2.2,2.5) {$\Omega$};
-              \node[green!50!black, right] at (3.6,1.5) {$\Omega_1$};
-              \node[orange!70!black] at (0.8,1.2) {$\tilde{\Omega}_0$};
+              \node[bindB] at (-1.5,3) {\large $\Omega_0$};
+              \node[bindA] at (2.2,2.5) {$\Omega$};
+              \node[bindB, right] at (3.6,1.5) {$\Omega_1$};
+              \node[fillC!70!black] at (0.8,1.2) {$\tilde{\Omega}_0$};
               \node[below] at (3.5,-0.15) {$\partial M$};
 
               % === RIGHT PANEL: Case II ===
               \begin{scope}[xshift=10.5cm]
 
               % Fill Omega_1 region (orange)
-              \fill[orange!25] (-4,0)
+              \fill[fillC] (-4,0)
                 .. controls (-4.1,2.5) and (-3,5.5) .. (-0.3,6.5)
                 .. controls (2.5,6) and (3.8,3) .. (3.5,0) -- cycle;
 
               % Fill Omega region (orange, union with Omega_1)
-              \fill[orange!25] (-3.5,0)
+              \fill[fillC] (-3.5,0)
                 .. controls (-3.5,2) and (-3,5.5) .. (-0.5,7.5)
                 .. controls (1.5,8) and (2.5,4) .. (2.5,1.5)
                 .. controls (2.5,0.5) and (2.2,0) .. (2,0) -- cycle;
 
-              % Omega_1 boundary (solid green!50!black arc)
-              \draw[thick, green!50!black] (-4,0)
+              % Omega_1 boundary (solid arc)
+              \draw[thick, bindB] (-4,0)
                 .. controls (-4.1,2.5) and (-3,5.5) .. (-0.3,6.5)
                 .. controls (2.5,6) and (3.8,3) .. (3.5,0);
 
-              % Omega_0 boundary (green!50!black)
-              \draw[thick, green!50!black] (-3,0)
+              % Omega_0 boundary
+              \draw[thick, bindB] (-3,0)
                 .. controls (-3,1.2) and (-2.8,3.2) .. (-1,4.3)
                 .. controls (0.5,5) and (1.8,3.8) .. (1.8,2)
                 .. controls (1.8,0.8) and (1.5,0) .. (1.5,0);
 
-              % Omega boundary = Gamma (red/brown)
-              \draw[thick, red!70!black] (-3.5,0)
+              % Omega boundary = Gamma
+              \draw[thick, bindA] (-3.5,0)
                 .. controls (-3.5,2) and (-3,5.5) .. (-0.5,7.5)
                 .. controls (1.5,8) and (2.5,4) .. (2.5,1.5)
                 .. controls (2.5,0.5) and (2.2,0) .. (2,0);
 
               % partial M (bottom boundary)
-              \draw[very thick, brown!70!black] (-4.5,0) -- (4,0);
+              \draw[very thick] (-4.5,0) -- (4,0);
 
               % Labels
-              \node[green!50!black] at (-1.5,3) {\large $\Omega_0$};
-              \node[red!70!black, left] at (-3.5,4) {\large $\Omega$};
-              \node[green!50!black, right] at (3.6,1.5) {$\Omega_1$};
-              \node[orange!70!black] at (2.8,4) {$\tilde{\Omega}_1$};
+              \node[bindB] at (-1.5,3) {\large $\Omega_0$};
+              \node[bindA, left] at (-3.5,4) {\large $\Omega$};
+              \node[bindB, right] at (3.6,1.5) {$\Omega_1$};
+              \node[fillC!70!black] at (2.8,4) {$\tilde{\Omega}_1$};
               \node[below] at (3.5,-0.15) {$\partial M$};
 
               \end{scope}

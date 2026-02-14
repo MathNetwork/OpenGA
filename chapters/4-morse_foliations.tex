@@ -77,7 +77,7 @@ We will also need a slightly different version of this lemma for a non-compact s
             \centering
             \begin{tikzpicture}[scale=1.0]
               % Omega_1 (left region, shaded)
-              \fill[red!20] (-4.5,0)
+              \fill[fillA] (-4.5,0)
                 .. controls (-4.5,0.3) and (-4.8,1) .. (-4.8,2.5)
                 .. controls (-4.8,4) and (-3.5,4.5) .. (-2,4.5)
                 .. controls (-1,4.5) and (-0.6,3.5) .. (-0.6,2.5)
@@ -85,7 +85,7 @@ We will also need a slightly different version of this lemma for a non-compact s
                 -- cycle;
 
               % Omega_2 (right region, shaded)
-              \fill[red!20] (4.5,0)
+              \fill[fillA] (4.5,0)
                 .. controls (4.5,0.3) and (4.8,1) .. (4.8,2.5)
                 .. controls (4.8,4) and (3.5,4.5) .. (2,4.5)
                 .. controls (1,4.5) and (0.6,3.5) .. (0.6,2.5)
@@ -93,26 +93,26 @@ We will also need a slightly different version of this lemma for a non-compact s
                 -- cycle;
 
               % Omega_1 boundary (dashed)
-              \draw[thick, dashed, brown!70!black] (-4.5,0)
+              \draw[thick, dashed, bindA] (-4.5,0)
                 .. controls (-4.5,0.3) and (-4.8,1) .. (-4.8,2.5)
                 .. controls (-4.8,4) and (-3.5,4.5) .. (-2,4.5)
                 .. controls (-1,4.5) and (-0.6,3.5) .. (-0.6,2.5)
                 .. controls (-0.6,1.2) and (-1,0.3) .. (-1.5,0);
 
               % Omega_2 boundary (dashed)
-              \draw[thick, dashed, brown!70!black] (4.5,0)
+              \draw[thick, dashed, bindA] (4.5,0)
                 .. controls (4.5,0.3) and (4.8,1) .. (4.8,2.5)
                 .. controls (4.8,4) and (3.5,4.5) .. (2,4.5)
                 .. controls (1,4.5) and (0.6,3.5) .. (0.6,2.5)
                 .. controls (0.6,1.2) and (1,0.3) .. (1.5,0);
 
-              % Sigma (separating hypersurface, solid green)
-              \draw[thick, green!50!black] (0,4.8)
+              % Sigma (separating hypersurface, solid)
+              \draw[thick, bindB] (0,4.8)
                 .. controls (0,3.5) and (-0.15,2) .. (0,0);
 
-              % partial N (bottom boundary, bold red)
-              \draw[very thick, brown!70!black] (-5,0) -- (5,0);
-              \node[brown!70!black, below] at (4.2,-0.15) {$\partial N$};
+              % partial N (bottom boundary, bold)
+              \draw[very thick] (-5,0) -- (5,0);
+              \node[below] at (4.2,-0.15) {$\partial N$};
 
               % A foliation leaf in the gap (thin gray curves)
               \draw[thin, gray] (-0.6,0.6)
@@ -127,13 +127,13 @@ We will also need a slightly different version of this lemma for a non-compact s
               % Labels
               \node at (-3,2.5) {\large $\Omega_1$};
               \node at (3,2.5) {\large $\Omega_2$};
-              \node[green!50!black, above] at (0,4.8) {$\Sigma$};
+              \node[bindB, above] at (0,4.8) {$\Sigma$};
 
               % Gap label
               \draw[<-, >=stealth, thin] (0.3,0.3) -- (2.5,-0.8)
                 node[right, font=\small] {$(f^{-1}(t)\cap N)\setminus(\Omega_1\cup\Omega_2)$};
             \end{tikzpicture}
-            \caption{Gluing two submanifolds using a Morse function. The hypersurface $\Sigma$ (green) separates $N$ into two regions; $\Omega_1$ and $\Omega_2$ (shaded) are inward perturbations of these regions. The foliation leaves (gray) in the gap $N \setminus (\Omega_1 \cup \Omega_2)$ connect $\partial\Omega_1 \cup \partial\Omega_2$ to $\partial N$.}
+            \caption{Gluing two submanifolds using a Morse function. The hypersurface $\Sigma$ (blue) separates $N$ into two regions; $\Omega_1$ and $\Omega_2$ (shaded) are inward perturbations of these regions. The foliation leaves (gray) in the gap $N \setminus (\Omega_1 \cup \Omega_2)$ connect $\partial\Omega_1 \cup \partial\Omega_2$ to $\partial N$.}
             \label{fig:gluing-morse}
         \end{figure}
 
