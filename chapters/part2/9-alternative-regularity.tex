@@ -3,7 +3,26 @@
 
 \section{Introduction}
 
-In this chapter, we combine nested sweepouts with the non-excessive framework of Chodosh--Liokumovich--Spolaor~\cite{CLS22} and apply Wickramasekera's regularity theorem~\cite{Wic14} to obtain minimal hypersurfaces in closed Riemannian manifolds.
+In the classical Almgren--Pitts min-max theory~\cite{Alm65, Pit81}, the regularity of the min-max hypersurface is established through two key ingredients: the \emph{almost minimizing} property, which is obtained from a combinatorial selection argument, and the Schoen--Simon regularity theory~\cite{SS81} for stable minimal hypersurfaces. The framework operates with integral currents, so integrality of the limit object is built into the construction from the outset.
+
+Chodosh--Liokumovich--Spolaor~\cite{CLS22} introduced an alternative approach to min-max theory based on \emph{non-excessive sweepouts}. Rather than working with integral currents, their framework operates with varifolds and sweepouts by Caccioppoli sets. The non-excessive condition---roughly, that critical slices of the sweepout cannot be locally replaced by competitors of strictly smaller mass---provides structural control that replaces the almost minimizing property of Almgren--Pitts. This approach has led to striking applications, including generic regularity of min-max hypersurfaces in dimension~$8$ and a bound relating the Morse index to the number of non-area-minimizing singularities~\cite{CLS22}.
+
+A key step in the non-excessive framework is the construction of \emph{optimal nested sweepouts}: optimal sweepouts whose sublevel sets are monotonically increasing. The existence of such sweepouts relies on the monotonisation technique of Chambers--Liokumovich~\cite{CL20}, which converts arbitrary sweepouts into nested ones with controlled mass increase. The nested sweepout machinery developed in Part~1 of this thesis (Sections~\ref{ch:morse-foliation}--\ref{ch:nested-sweepout}) provides exactly this input.
+
+In this chapter, we explore an alternative path to regularity within the non-excessive framework: instead of the Schoen--Simon theory, we use Wickramasekera's regularity theorem~\cite{Wic14} for stable codimension~$1$ integral varifolds. Wickramasekera's theorem gives optimal regularity (empty singular set for $2 \leq n \leq 6$) under two hypotheses: (i)~the varifold is a stable integral varifold, and (ii)~it satisfies the \emph{$\alpha$-structural hypothesis} for some $\alpha \in (0, 1/2)$---no singular point has a neighbourhood in which the support consists of three or more embedded $C^{1,\alpha}$ hypersurfaces-with-boundary meeting only along their common boundary. Combining these tools, we obtain:
+
+\noindent\textbf{Main result} (informal)\textbf{.}
+\textit{Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. Then the non-excessive min-max construction, using nested sweepouts as input and Wickramasekera's theorem for regularity, produces a smooth, closed, embedded minimal hypersurface, provided no mass cancellation occurs.}
+
+The proof proceeds in three steps. First, we show that in the absence of mass cancellation, the limit varifold is integral: since the varifold mass equals the width, the approximating Caccioppoli sets converge with no loss of perimeter, and the De~Lellis--Tasnady integrality criterion~\cite[Proposition~A.1]{DLT13} applies. Second, we verify the $\alpha$-structural hypothesis by analyzing blow-up cones at potential singular points and using the non-excessive condition to rule out configurations where three or more sheets meet. Third, the non-excessive structure also ensures stability (or one-sided minimization), so Wickramasekera's theorem~\cite{Wic14} (or the one-sided regularity of Liu~\cite{Liu19}) yields smoothness.
+
+\medskip
+\noindent\textbf{The mass cancellation problem.}
+The mass cancellation case---where the current masses $\mathbf{M}(\Phi(x_i))$ converge to the width $W$ but $\mathbf{M}(\Phi(x_0)) < W$ at the limit parameter $x_0$---remains an open problem. In this situation, sheets of the Caccioppoli boundaries with opposite orientations cancel in the flat topology while contributing positively to varifold mass, and the De~Lellis--Tasnady criterion no longer applies. Establishing integrality of the limit varifold without the no-cancellation hypothesis appears to require fundamentally new ideas, and we formulate this as a conjecture (Conjecture~\ref{conj:mass-cancellation-integrality}).
+
+\medskip
+\noindent\textbf{Organization.}
+Section~\ref{sec:non-excessive-prelim} reviews the non-excessive sweepout framework of~\cite{CLS22}, including the definitions of excessive intervals, non-excessive points, and homotopic minimizers. Section~\ref{sec:integrality} establishes integrality of the limit varifold without mass cancellation and discusses the mass cancellation case as an open problem. The final section verifies the $\alpha$-structural hypothesis via Wickramasekera's regularity theorem~\cite{Wic14} and completes the proof of the main theorem.
 
 \section{Non-Excessive Sweepouts}\label{sec:non-excessive-prelim}
 An alternative approach to min--max theory, developed by Chodosh--Liokumovich--Spolaor~\cite{CLS22}, is based on the notion of \emph{non-excessive sweepouts}. The non-excessive condition provides additional structural control that simplifies the regularity analysis.
@@ -152,7 +171,7 @@ In this chapter, we establish integrality and regularity without mass cancellati
 }
 
 
-\section{Integrality without Mass Cancellation}
+\section{Integrality without Mass Cancellation}\label{sec:integrality}
 
 \begin{theorem}[Integrality without mass cancellation]\label{thm:integrality-mult-one}
     Let $(M^{n+1},g)$ be a closed Riemannian manifold with $n \geq 2$, and let $V$ be a
