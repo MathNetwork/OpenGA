@@ -1,7 +1,9 @@
 % !TEX root = ../thesis.tex
 \chapter{Morse Foliations with Controlled Area of Fibers}\label{ch:morse-foliation}
 
-The goal of this chapter is to develop technical tools for constructing \emph{nested} sweepouts from arbitrary sweepouts. The central problem is the following: given a sweepout $\{\tau_t, Q_t\}$ that may not be nested (i.e., $Q_s \not\leq Q_t$ for $s < t$), how can we deform it into a nested sweepout while controlling the mass of the slices?
+The goal of this chapter is to develop technical tools for constructing \emph{nested} sweepouts from arbitrary sweepouts. The central problem is the following: given a sweepout $\{\Omega_t\}$ that may not be nested (i.e., $\Omega_s \not\subset \Omega_t$ for $s < t$), how can we deform it into a nested sweepout while controlling the area of the level sets?
+
+Recall that a smooth function $f\colon M \to \mathbb{R}$ is \emph{$\partial$-transverse}\label{def:boundary-transverse} if $f|_{\partial M}$ has no critical points, i.e.\ $\nabla_{\partial M}(f|_{\partial M}) \neq 0$ everywhere on $\partial M$; a \emph{$\partial$-transverse Morse function} is a Morse function on $M$ that is also $\partial$-transverse.
 
 Our strategy is to work locally: we construct $\partial$-transverse Morse functions on regions of $M$ whose level sets provide the desired nested structure. The key technical results are Lemma~\ref{lem:morse-foliation-1} and Lemma~\ref{lem:morse-foliation-non-compact}, which show that given any Morse function $f$ and a target hypersurface $\Sigma$, we can perturb $f$ to a new Morse function $g$ having $\Sigma$ as a level set, while preserving mass bounds on the slices. These local constructions are then glued together in Chapter~\ref{ch:nested-sweepout} to produce global nested sweepouts.
 
@@ -13,7 +15,7 @@ Our strategy is to work locally: we construct $\partial$-transverse Morse functi
     \begin{enumerate}
         \item[(1)] $g^{-1}(b) = \Sigma$;
         \item[(2)] $f^{-1}([a, t)) \subset N_{\eps/2}(g^{-1}([a, t))) \subset N_\eps(f^{-1}([a, t)))$;
-        \item[(3)] $\mathbf{M}(\langle \llbracket N \rrbracket, g, t \rangle) \leq \mathbf{M}(\partial_I f^{-1}([a, t])) + \eps$;
+        \item[(3)] $\mathcal{H}^n(g^{-1}(t)) \leq \mathcal{H}^n(\partial_I f^{-1}([a, t])) + \eps$;
         \item[(4)] If $\dist(x, f(\Sigma)) > \eps$ then $f^{-1}(x) = g^{-1}(x)$.
     \end{enumerate}
 \end{lemma}
@@ -25,7 +27,7 @@ We will also need a slightly different version of this lemma for a non-compact s
     \begin{enumerate}
         \item[(1)] $g^{-1}(b) = \Sigma$;
         \item[(2)] $f^{-1}((-\infty, t)) \subset N_{\eps/2}(g^{-1}((-\infty, t))) \subset N_\eps(f^{-1}((-\infty, t)))$;
-        \item[(3)] $\mathbf{M}(\langle \llbracket N \rrbracket, g, t \rangle) \leq \mathbf{M}(\partial_I f^{-1}((-\infty, t])) + \eps$;
+        \item[(3)] $\mathcal{H}^n(g^{-1}(t)) \leq \mathcal{H}^n(\partial_I f^{-1}((-\infty, t])) + \eps$;
         \item[(4)] If $\dist(x, f(\Sigma)) > \eps$ then $f^{-1}(x) = g^{-1}(x)$.
     \end{enumerate}
 \end{lemma}
@@ -37,7 +39,7 @@ We will also need a slightly different version of this lemma for a non-compact s
     \begin{enumerate}
         \item[(1)] $\Omega_1$ is a relative inward $\eps$-perturbation of $V_1$; $\Omega_2$ is a relative inward $\eps$-perturbation of $V_2$.
         \item[(2)] $g^{-1}(0) = \partial\Omega_1\cup\partial\Omega_2$ and $g^{-1}(1) = \partial N$;
-        \item[(3)] $\mathbf{M}(\langle \llbracket N \rrbracket, g, t \rangle) \leq \mathbf{M}(\partial_I N) + 2\,\mathcal{H}^n(\Sigma) + \eps$.
+        \item[(3)] $\mathcal{H}^n(g^{-1}(t)) \leq \mathbf{M}(\partial_I N) + 2\,\mathcal{H}^n(\Sigma) + \eps$.
     \end{enumerate}
 \end{lemma}
 \begin{proof}
@@ -51,7 +53,7 @@ We will also need a slightly different version of this lemma for a non-compact s
             \item[(ii)] The restriction $f|_\Sigma$ is also Morse: by Sard's theorem, $f|_\Sigma$ is Morse for a generic choice of $f$.
             \item[(iii)] The mass bound
         \begin{equation*}
-            \mathbf{M}(\langle \llbracket N \rrbracket, f, t \rangle) \leq \mathbf{M}(\partial_I N) + \eps/10
+            \mathcal{H}^n(f^{-1}(t)) \leq \mathbf{M}(\partial_I N) + \eps/10
         \end{equation*}
         holds for $t \in [0, \delta_1]$: since $f = \operatorname{sdist}(\cdot, \partial N)$ in $N_{\delta_1}(\partial N)$, the level set $f^{-1}(t)$ converges to $\partial N$ in the $C^1$ sense as $t \to 0$, so $\mathcal{H}^n(f^{-1}(t) \cap N)$ converges to $\mathcal{H}^n(\partial_I N)$, and we can choose $\delta_1$ small enough for this bound to hold.
         \end{enumerate} Pick $\delta_2 \in (0, \delta_1)$ so that for $t \in (0, \delta_2)$,
@@ -144,7 +146,7 @@ We will also need a slightly different version of this lemma for a non-compact s
 
         It follows that
         \begin{equation*}
-            \mathbf{M}(\langle \llbracket N\backslash(\Omega_1\cup\Omega_2) \rrbracket, f, t \rangle) \leq 2\,\mathcal{H}^n(\Sigma) + \mathbf{M}(\partial_I N) + \eps/2.
+            \mathcal{H}^n(f^{-1}(t) \cap \operatorname{cl}(N\setminus(\Omega_1\cup\Omega_2))) \leq 2\,\mathcal{H}^n(\Sigma) + \mathbf{M}(\partial_I N) + \eps/2.
         \end{equation*}
         We now verify that the hypotheses of Lemma~\ref{lem:morse-foliation-non-compact} are satisfied for the restriction $f|_{N\backslash(\Omega_1\cup\Omega_2)}$:
         \begin{itemize}
@@ -155,6 +157,6 @@ We will also need a slightly different version of this lemma for a non-compact s
         \end{itemize}
         Applying Lemma~\ref{lem:morse-foliation-non-compact}, we obtain the desired function $g$ and the corresponding foliation, i.e.
         \begin{equation*}
-            \mathbf{M}(\langle \llbracket N \rrbracket, g, t \rangle) \leq 2\,\mathcal{H}^n(\Sigma) + \mathbf{M}(\partial_I N) + \eps.
+            \mathcal{H}^n(g^{-1}(t)) \leq 2\,\mathcal{H}^n(\Sigma) + \mathbf{M}(\partial_I N) + \eps.
         \end{equation*}
     \end{proof}

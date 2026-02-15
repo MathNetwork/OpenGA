@@ -151,7 +151,7 @@ The extension lemma is a key ingredient in the monotonisation algorithm. It allo
             \begin{enumerate}
                 \item $g^{-1}(1) = \Gamma$;
                 \item $f^{-1}([-1, t)) \subset N_{\eps/4}(g^{-1}([-1, t))) \subset N_{\eps/2}(f^{-1}([-1, t)))$;
-                \item $\mathbf{M}(\langle \llbracket \Omega \rrbracket, g, t \rangle) \leq \mathbf{M}(\partial_I f^{-1}([-1, t])) + \eps/2$;
+                \item $\mathcal{H}^n(g^{-1}(t)) \leq \mathcal{H}^n(\partial_I f^{-1}([-1, t])) + \eps/2$;
                 \item If $\dist(x, f(\Gamma)) \geq \eps/2$ then $f^{-1}(x) = g^{-1}(x)$.
             \end{enumerate}
             It follows from 3.\ that
@@ -206,7 +206,7 @@ The extension lemma is a key ingredient in the monotonisation algorithm. It allo
             \begin{enumerate}
                 \item $\Tilde{g}^{-1}(0) = \Gamma$;
                 \item $\Tilde{f}^{-1}((-\infty, t)) \subset N_{\eps/4}(\Tilde{g}^{-1}((-\infty, t))) \subset N_{\eps/2}(\Tilde{f}^{-1}((-\infty, t)))$;
-                \item $\mathbf{M}(\langle \llbracket M\backslash\Omega \rrbracket, \Tilde{g}, t \rangle) \leq \mathbf{M}(\partial_I\Tilde{f}^{-1}((-\infty, t])) + \frac{\eps}{2}$;
+                \item $\mathcal{H}^n(\Tilde{g}^{-1}(t)) \leq \mathcal{H}^n(\partial_I\Tilde{f}^{-1}((-\infty, t])) + \frac{\eps}{2}$;
                 \item If $\dist(x, \Tilde{f}(\Sigma)) > \eps$ then $\Tilde{f}^{-1}(x) = \Tilde{g}^{-1}(x)$.
             \end{enumerate}
             We define $g(x) = -\Tilde{g}(x)$ for $x \in M\backslash\Omega$ and extend it to a $\partial$-transverse Morse function from $M$ to $[-1, \infty)$ in an arbitrary way. By property (2) of Lemma~\ref{lem:morse-foliation-non-compact} we take that (possibly after a small perturbation)

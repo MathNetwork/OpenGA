@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  9 FEB 2026 12:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  14 FEB 2026 20:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1229,14 +1229,14 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count346
 \calc@Cskip=\skip118
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 79.
-Package hyperref Info: Option `linktocpage' set `true' on input line 79.
-Package hyperref Info: Option `breaklinks' set `true' on input line 79.
-Package hyperref Info: Option `pageanchor' set `true' on input line 79.
-Package hyperref Info: Option `plainpages' set `false' on input line 79.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 79.
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 79.
-Package hyperref Info: Option `hypertexnames' set `true' on input line 79.
+Package hyperref Info: Option `colorlinks' set `true' on input line 88.
+Package hyperref Info: Option `linktocpage' set `true' on input line 88.
+Package hyperref Info: Option `breaklinks' set `true' on input line 88.
+Package hyperref Info: Option `pageanchor' set `true' on input line 88.
+Package hyperref Info: Option `plainpages' set `false' on input line 88.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 88.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 88.
+Package hyperref Info: Option `hypertexnames' set `true' on input line 88.
 \c@theorem=\count347
 )
 Package typearea Info: These are the values describing the layout:
@@ -1265,12 +1265,10 @@ File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
 ) (./frontbackmatter/dedication.aux) (./frontbackmatter/acknowledgements.aux)
 (./frontbackmatter/publications.aux) (./frontbackmatter/contents.aux)
 (./chapters/1-introduction.aux) (./chapters/2-example.aux)
-(./chapters/3-structure_of_the_proof.aux) (./chapters/4-morse_foliations.aux)
-(./chapters/5-splitting_and_extension.aux) (./chapters/6-nested_sweepout.aux)
-(./chapters/7-no_escape_to_infinity.aux)
+(./chapters/4-morse_foliations.aux) (./chapters/5-splitting_and_extension.aux)
+(./chapters/6-nested_sweepout.aux) (./chapters/7-no_escape_to_infinity.aux)
 (./chapters/8-convergence-of-min-max.aux)
-(./chapters/9-alternative-regularity.aux) (./chapters/appendix1.aux)
-(./frontbackmatter/bibliography.aux))
+(./chapters/9-alternative-regularity.aux) (./frontbackmatter/bibliography.aux))
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
@@ -1302,7 +1300,6 @@ Package scrbase Info: activating english \listfigurename on input line 29.
 Package scrbase Info: activating english \listtablename on input line 29.
 Package scrbase Info: activating english \bibname on input line 29.
 Package scrbase Info: activating english \indexname on input line 29.
-
 (/usr/local/texlive/2025basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count348
@@ -1572,9 +1569,13 @@ Package microtype Info: Character `029' is missing
 
  (./chapters/1-introduction.tex
 Chapter 1.
-Package hyperref Info: bookmark level for unknown theorem defaults to 0 on inpu
-t line 4.
-)
+
+Overfull \hbox (1.2287pt too wide) in paragraph at lines 5--6
+\T1/pplj/m/n/10.95 (-20) (in full gen-er-al-ity), and the generic equidis-tri-b
+u-tion re-sults of Irie--Marques--
+ []
+
+
 
 [1
 
@@ -1586,12 +1587,32 @@ t line 4.
 
 
 ]
+Overfull \hbox (11.63858pt too wide) in paragraph at lines 154--155
+ [][] 
+ []
+
+Package hyperref Info: bookmark level for unknown theorem defaults to 0 on inpu
+t line 159.
+
+
+[2]
+
+[3]
+Package hyperref Info: bookmark level for unknown remark defaults to 0 on input
+ line 174.
+
+
+[4])
+
+[5]
+
+[6]
 \openout2 = `chapters/2-example.aux'.
 
  (./chapters/2-example.tex
 Chapter 2.
 LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 
-7.
+8.
 (/usr/local/texlive/2025basic/texmf-dist/tex/latex/psnfss/ufplmbb.fd
 File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
 )
@@ -1599,52 +1620,52 @@ File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
 File: mt-euf.cfg 2006/07/03 v1.1 microtype config. file: AMS Euler Fraktur (RS)
 
 )
-Package hyperref Info: bookmark level for unknown definition defaults to 0 on i
-nput line 19.
 
-
-[2
+[7
 
 
 
 
 ]
-Package hyperref Info: bookmark level for unknown remark defaults to 0 on input
- line 23.
+pdfTeX warning (ext4): destination with the same identifier (name{remark.1}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.32 T
+      hroughout this thesis we work with $\mathbb{Z}_2$ coefficients. The re...
+Package hyperref Info: bookmark level for unknown definition defaults to 0 on i
+nput line 35.
+Package hyperref Info: bookmark level for unknown proposition defaults to 0 on 
+input line 47.
 
 
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplj/m/sc/10'.
 (microtype)             Ignoring protrusion settings for this character.
-[3]
-Package hyperref Info: bookmark level for unknown proposition defaults to 0 on 
-input line 42.
-
-
-[4]
-Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input 
-line 86.
-
-
-[5]
-
-[6]
-Underfull \hbox (badness 1838) in paragraph at lines 125--126
-\T1/pplj/m/n/10.95 (+20) cor-re-spond to fam-i-lies in $\OT1/zplm/b/n/10.95 Z[]
-\OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 M\OT1/pplx/m/n/10.95 , \OML/zplm/m/it
-/10.95 @M\OT1/pplx/m/n/10.95 ; \U/fplmbb/m/n/10.95 Z[]\OT1/zplm/m/n/10.95 )$ \T
-1/pplj/m/n/10.95 (+20) (Li--Zhou orig-i-nally use
+[8]
+Overfull \hbox (0.64561pt too wide) in paragraph at lines 61--62
+[]\T1/pplj/m/n/10.95 (-20) The chain com-plex ax-iom gives $\OML/zplm/m/it/10.9
+5 @\OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 @\U/stmry/m/n/10.95 J\OT1/zplm/m/n
+/10.95 
+\U/stmry/m/n/10.95 K\OT1/zplm/m/n/10.95 ) = \OML/zplm/m/it/10.95 @[]\U/stmry/m/
+n/10.95 J\OT1/zplm/m/n/10.95 
+\U/stmry/m/n/10.95 K \OT1/zplm/m/n/10.95 = \OT1/pplx/m/n/10.95 0$\T1/pplj/m/n/1
+0.95 (-20) , so $[]\OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 @\OT1/zplm/m/n/10.
+95 (\OML/zplm/m/it/10.95 @\U/stmry/m/n/10.95 J\OT1/zplm/m/n/10.95 
+\U/stmry/m/n/10.95 K\OT1/zplm/m/n/10.95 )) =
  []
 
 
 
-[7]
-Package hyperref Info: bookmark level for unknown corollary defaults to 0 on in
-put line 151.
+[9]
+
+[10]
+Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input 
+line 104.
 
 
-[8]
-Overfull \hbox (11.42094pt too wide) detected at line 190
+[11]
+Overfull \hbox (11.42094pt too wide) detected at line 141
 \OT1/zplm/b/n/10.95 F\OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 V\OT1/pplx/m/n/1
 0.95 , \OML/zplm/m/it/10.95 W\OT1/zplm/m/n/10.95 ) := [][][] \OML/zplm/m/it/10.
 95 f dV \OMS/zplm/m/n/10.95 ^^@ [] \OML/zplm/m/it/10.95 f dW \OT1/zplm/m/n/10.9
@@ -1657,88 +1678,60 @@ n/10.95 ) \OMS/zplm/m/n/10.95 ^^T \OT1/pplx/m/n/10.95 1[].
 
 
 
-[9]
-pdfTeX warning (ext4): destination with the same identifier (name{definition.1}
+[12]
+pdfTeX warning (ext4): destination with the same identifier (name{definition.2}
 ) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.217 F
-       or a map $\phi : I(m, j)_0 \to \mathbf{Z}_n(A, B;\mathbb{Z}_2)$, the ...
-
-pdfTeX warning (ext4): destination with the same identifier (name{definition.3}
-) has been already used, duplicate ignored
+l.169 T
+       he \emph{width} of $(U, \partial_F U)$ is
+pdfTeX warning (ext4): destination with the same identifier (name{proposition.3
+}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.237 T
-       wo $(m, \mathbf{M})$-homotopy sequences $S = \{\phi_i\}$ and $S' = \{...
-
-Overfull \hbox (44.52356pt too wide) detected at line 240
-\OML/zplm/m/it/10.95 ^^Y[]\OT1/zplm/m/n/10.95 (\OT1/zplm/b/n/10.95 Z[]\OT1/zplm
-/m/n/10.95 (\OML/zplm/m/it/10.95 M\OT1/pplx/m/n/10.95 , \OML/zplm/m/it/10.95 @M
-\OT1/pplx/m/n/10.95 ; \U/fplmbb/m/n/10.95 Z[]\OT1/zplm/m/n/10.95 )\OT1/pplx/m/n
-/10.95 , \OMS/zplm/m/n/10.95 f\OT1/pplx/m/n/10.95 0\OMS/zplm/m/n/10.95 g\OT1/zp
-lm/m/n/10.95 ) := \OMS/zplm/m/n/10.95 f[]g\OT1/pplx/m/n/10.95 .
- []
+l.178 L
+       et $\{\Omega_t\}_{t \in [0,1]}$ be a sweepout of $(U, \partial_F U)$....
 
 
-
-[10]
+[13]
 pdfTeX warning (ext4): destination with the same identifier (name{definition.4}
 ) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.252 L
-       et $U \subset M$ be a bounded relatively open set of finite perimeter...
+l.193 A
+        sweepout $\{\Omega_t\}$ of $(U, \partial_F U)$ is a \emph{good sweep...
 
-
-[11]
-pdfTeX warning (ext4): destination with the same identifier (name{definition.7}
+pdfTeX warning (ext4): destination with the same identifier (name{definition.5}
 ) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.281 A
-        sweepout $S = \{\phi_i\}$ of $(U, \partial_F U)$ is a \emph{nested s...
+l.201 A
+        sweepout $\{\Omega_t\}$ of $(U, \partial_F U)$ is \emph{nested} if $...
+
+pdfTeX warning (ext4): destination with the same identifier (name{definition.6}
+) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.205 A
+        \emph{relative sweepout} of $U$ is a sweepout $\{\Omega_t\}$ of $(U,...
 
 
-[12]
+[14]
 pdfTeX warning (ext4): destination with the same identifier (name{definition.1}
 ) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.319 A
+l.231 A
         bounded open subset $U \subset M$ of finite perimeter is a \emph{goo...
 
-pdfTeX warning (ext4): destination with the same identifier (name{remark.2}) ha
-s been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.327 T
-       he good set condition ensures that mass cannot ``escape to infinity''...
 
-
-[13])
-
-[14]
-\openout2 = `chapters/3-structure_of_the_proof.aux'.
-
- (./chapters/3-structure_of_the_proof.tex
-Chapter 3.
-
-
-[15
-
-
-
-
-
-
-])
+[15])
 
 [16]
 \openout2 = `chapters/4-morse_foliations.aux'.
 
  (./chapters/4-morse_foliations.tex
-Chapter 4.
+Chapter 3.
 
 
 [17
@@ -1749,98 +1742,100 @@ Chapter 4.
 
 
 ]
-pdfTeX warning (ext4): destination with the same identifier (name{lemma.1}) has
+pdfTeX warning (ext4): destination with the same identifier (name{lemma.2}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.33     L
-          et $N^{n + 1}\subset M^{n + 1}$ be a manifold with compact boundar...
+l.24     L
+          et $N \subset M$ be a not necessarily compact submanifold with non...
 
 
 [18]
-<figures/IMG_2671.PNG, id=359, 845.0772pt x 597.432pt>
-File: figures/IMG_2671.PNG Graphic file (type png)
-<use figures/IMG_2671.PNG>
-Package pdftex.def Info: figures/IMG_2671.PNG  used on input line 72.
-(pdftex.def)             Requested size: 284.80109pt x 201.33743pt.
 
+[19
+pdfTeX warning (ext4): destination with the same identifier (name{lemma.1}) has
+ been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.59         \end{enumerate}
+                             Pick $\delta_2 \in (0, \delta_1)$ so that for $...
+]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[19])
+[20]
 
-[20 <./figures/IMG_2671.PNG>]
+[21])
+
+[22]
 \openout2 = `chapters/5-splitting_and_extension.aux'.
 
  (./chapters/5-splitting_and_extension.tex
-Chapter 5.
-<figures/IMG_2674.jpg, id=372, 845.0772pt x 229.8186pt>
-File: figures/IMG_2674.jpg Graphic file (type jpg)
-<use figures/IMG_2674.jpg>
-Package pdftex.def Info: figures/IMG_2674.jpg  used on input line 10.
-(pdftex.def)             Requested size: 284.80109pt x 77.44997pt.
+Chapter 4.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 
 pdfTeX warning (ext4): destination with the same identifier (name{lemma.1}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.15     S
-          uppose that $f: M \to [-1, \infty)$ is a $\partial$-transverse Mor...
+l.100     S
+           uppose that $f: M \to [-1, \infty)$ is a $\partial$-transverse Mo...
 
-Underfull \hbox (badness 1571) in paragraph at lines 15--17
+Underfull \hbox (badness 1571) in paragraph at lines 100--102
 \T1/pplj/m/it/10.95 (+20) func-tion and $[] \OT1/zplm/m/n/10.95 = [][]$ \T1/ppl
 j/m/it/10.95 (+20) is a nested fam-ily of hy-per-sur-
  []
 
 
 
-[21
+[23
 
 
 
 
 
 
- <./figures/IMG_2674.jpg>]
-
-[22]
-
-[23]
+]
 
 [24]
 
 [25]
+
+[26]
+
+[27]
+
+
 pdfTeX warning (ext4): destination with the same identifier (name{theorem.1}) h
 as been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.165     T
-           here exists a constant $C(n)$ so that the following is true. Let ...
-
-
-[26]
+l.249 \begin{theorem}[Falconer]
+                               \label{thm:falconer} [28]
 pdfTeX warning (ext4): destination with the same identifier (name{lemma.2}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.172     L
+l.257     L
            et $\eps > 0$, $L > 0$. Suppose $\Omega_0 \subset \Omega_1$ be bo...
 
 
-[27]
-
-[28])
-
 [29]
+
+[30])
+
+[31]
 \openout2 = `chapters/6-nested_sweepout.aux'.
 
  (./chapters/6-nested_sweepout.tex
-Chapter 6.
+Chapter 5.
 
 
-[30
+[32
 
 
 
@@ -1852,54 +1847,48 @@ pdfTeX warning (ext4): destination with the same identifier (name{lemma.1}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.35     F
+l.36     F
           or any $\eps > 0$ there exists a partition $0 = t_0 < \dots < t_N ...
 
 
-[31]
-
-[32]
-
 [33]
-<figures/IMG_2670.jpg, id=480, 814.0011pt x 494.5677pt>
-File: figures/IMG_2670.jpg Graphic file (type jpg)
-<use figures/IMG_2670.jpg>
-Package pdftex.def Info: figures/IMG_2670.jpg  used on input line 110.
-(pdftex.def)             Requested size: 284.80109pt x 173.04091pt.
 
-
-[34 <./figures/IMG_2670.jpg>]
+[34]
 
 [35]
 
 [36]
-pdfTeX warning (ext4): destination with the same identifier (name{proposition.1
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.188     S
-           uppose $\br{\Gamma_t^a}$ and $\br{\Gamma_t^b}$ are two nested fam...
-
 
 [37]
 
-[38])
+[38]
+pdfTeX warning (ext4): destination with the same identifier (name{proposition.1
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.404     S
+           uppose $\br{\Gamma_t^a}$ and $\br{\Gamma_t^b}$ are two nested fam...
+
 
 [39]
+
+[40])
+
+[41]
 \openout2 = `chapters/7-no_escape_to_infinity.aux'.
 
  (./chapters/7-no_escape_to_infinity.tex
-Chapter 7.
+Chapter 6.
 
 pdfTeX warning (ext4): destination with the same identifier (name{proposition.1
 }) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.15     F
+l.16     F
           or every good set $U$, there exists a positive constant $\eps(U)$ ...
 
 
-[40
+[42
 
 
 
@@ -1911,64 +1900,42 @@ pdfTeX warning (ext4): destination with the same identifier (name{lemma.1}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.30     T
+l.31     T
           here exist $\eps(U) > 0$, $\eps_0(U) > 0$ and $\eps_1(U) > 0$ such...
 
 
-[41]
+[43]
 
-[42]
-<figures/IMG_2675.jpg, id=550, 717.4002pt x 352.6776pt>
-File: figures/IMG_2675.jpg Graphic file (type jpg)
-<use figures/IMG_2675.jpg>
-Package pdftex.def Info: figures/IMG_2675.jpg  used on input line 79.
-(pdftex.def)             Requested size: 284.80109pt x 140.01378pt.
+[44]
 
-
-[43 <./figures/IMG_2675.jpg>]
+[45]
 pdfTeX warning (ext4): destination with the same identifier (name{definition.1}
 ) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.120     F
+l.218     F
            unction $f(t)$ is \textbf{$\delta$-continuous} if the oscillation
 pdfTeX warning (ext4): destination with the same identifier (name{lemma.2}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.127     L
+l.225     L
            et $U$ be a bounded relative open subset to $M$ with smooth relat...
 
-
-[44]
-
-[45]
 
 [46]
 
 [47]
 
 [48]
-<figures/IMG_2676.PNG, id=616, 845.0772pt x 597.432pt>
-File: figures/IMG_2676.PNG Graphic file (type png)
-<use figures/IMG_2676.PNG>
-Package pdftex.def Info: figures/IMG_2676.PNG  used on input line 336.
-(pdftex.def)             Requested size: 284.80109pt x 201.33743pt.
-
 
 [49]
 
-[50 <./figures/IMG_2676.PNG>]
-<figures/IMG_2677.JPG, id=630, 3521.155pt x 2489.3pt>
-File: figures/IMG_2677.JPG Graphic file (type jpg)
-<use figures/IMG_2677.JPG>
-Package pdftex.def Info: figures/IMG_2677.JPG  used on input line 374.
-(pdftex.def)             Requested size: 284.80109pt x 201.31313pt.
-
+[50]
 
 [51]
 
-[52 <./figures/IMG_2677.JPG>]
+[52]
 
 [53])
 
@@ -1976,7 +1943,7 @@ Package pdftex.def Info: figures/IMG_2677.JPG  used on input line 374.
 \openout2 = `chapters/8-convergence-of-min-max.aux'.
 
  (./chapters/8-convergence-of-min-max.tex
-Chapter 8.
+Chapter 7.
 
 
 [55
@@ -1991,8 +1958,17 @@ pdfTeX warning (ext4): destination with the same identifier (name{lemma.1}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.24 F
-      or every $i$ there exist a continuous map $\Phi_{U_i,W_i}:\mathcal{V}^...
+l.31 F
+      or every~$i$ there exist a continuous map $\Phi_{U_i,W_i}:\mathcal{V}^...
+
+Underfull \hbox (badness 2799) in paragraph at lines 34--35
+[]\T1/pplj/m/n/10.95 (+20) (Inactivity be-low thresh-old) \T1/pplj/m/it/10.95 (
++20) If $\OMS/zplm/m/n/10.95 k\OML/zplm/m/it/10.95 V\OMS/zplm/m/n/10.95 k\OT1/z
+plm/m/n/10.95 ([][]) \OMS/zplm/m/n/10.95 ^^T \OT1/pplx/m/n/10.95 5 \OT1/zplm/b/
+n/10.95 M\OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 @[]U\OT1/zplm/m/n/10.95 )$\T
+1/pplj/m/it/10.95 (+20) , then
+ []
+
 
 
 [56]
@@ -2000,41 +1976,41 @@ pdfTeX warning (ext4): destination with the same identifier (name{remark.2}) ha
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.43 A
-      n important feature of the pull-tight construction is that it does not...
+l.49 T
+      he constants $5\,\mathbf{M}(\partial_IU)$ and $9\,\mathbf{M}(\partial_...
 
-
-[57]
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{definition.1}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.76 ...e boundary {\cite[Definition~4.18]{LZ17}}]
-                                                  \label{def:am-free-bdy}
-[58]
-pdfTeX warning (ext4): destination with the same identifier (name{definition.2}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.89 F
-      or $p\in M$ and $0<s<r$, set
 pdfTeX warning (ext4): destination with the same identifier (name{proposition.3
 }) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.101 I
-       f $V\in\mathcal{V}_n(M)$ is almost minimizing in a relatively open se...
+l.59 A
+      fter passing to a subsequence, $\{\mathbf{P}_i(\Gamma_t^i)\}$ is a min...
+
+
+[57]
+
+[58]
+pdfTeX warning (ext4): destination with the same identifier (name{definition.1}
+) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.89 L
+      et $U\subset M$ be relatively open. For $\varepsilon,\delta>0$, define...
 
 
 [59]
-pdfTeX warning (ext4): destination with the same identifier (name{remark.5}) ha
-s been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{definition.2}
+) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.114 T
-       he restriction $2 \leq n \leq 6$ arises from the regularity theory. F...
+l.103 F
+       or $p\in M$ and $0<s<r$, set
+pdfTeX warning (ext4): destination with the same identifier (name{proposition.3
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.117 I
+       f $V\in\mathcal{V}_n(M)$ is almost minimizing in a relatively open se...
 
 
 [60]
@@ -2042,43 +2018,31 @@ pdfTeX warning (ext4): destination with the same identifier (name{proposition.1
 }) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.126 A
+l.137 A
        fter passing to a further subsequence, $V$ is almost minimizing in sm...
-
-pdfTeX warning (ext4): destination with the same identifier (name{proposition.2
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.132 T
-       here exist finitely many connected, smooth, almost properly embedded ...
 
 
 [61]
 
 [62]
+Package hyperref Info: bookmark level for unknown corollary defaults to 0 on in
+put line 185.
+)
 
-[63])
-
-[64]
+[63]
 \openout2 = `chapters/9-alternative-regularity.aux'.
 
  (./chapters/9-alternative-regularity.tex
-Chapter 9.
-
-LaTeX Warning: Reference `ch:sweepouts' on page 65 undefined on input line 8.
-
-
-LaTeX Warning: Reference `def:height' on page 65 undefined on input line 8.
-
+Chapter 8.
 
 pdfTeX warning (ext4): destination with the same identifier (name{definition.1}
 ) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.11 A
+l.12 A
        sweepout $\{\Phi(x) = \partial \Omega(x)\}$ is called
 
-[65
+[64
 
 
 
@@ -2090,161 +2054,117 @@ pdfTeX warning (ext4): destination with the same identifier (name{definition.2}
 ) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.21 G
+l.22 G
       iven a sweepout $\Phi$, define
-pdfTeX warning (ext4): destination with the same identifier (name{definition.3}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.37 S
-      uppose $\{\Phi(x) = \partial\Omega(x)\}$ is a sweepout. Given a connec...
-
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{theorem.4}) h
 as been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.55 ... hypersurface~{\cite[Theorem~3.1]{CLS22}}]
+l.56 ... hypersurface~{\cite[Theorem~3.1]{CLS22}}]
                                                   \label{thm:non-excessive-e...
+[65]
+
 [66]
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{remark.6}) ha
-s been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.76 T
-      he varifold $V$ obtained from Proposition~\ref{thm:CLS-stationary} is ...
-[67]
-pdfTeX warning (ext4): destination with the same identifier (name{definition.7}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.90 L
-      et $\Sigma = \bdy\Omega$ be a Caccioppoli set in $M$, and let $U \subs...
-
 pdfTeX warning (ext4): destination with the same identifier (name{definition.8}
 ) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.105 F
+l.106 F
        or a varifold $V$ arising from a min-max procedure, we define the set...
 
-Overfull \hbox (47.19138pt too wide) detected at line 112
+Overfull \hbox (47.19138pt too wide) detected at line 113
 \U/euf/m/n/10.95 h[]\OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 V\OT1/zplm/m/n/10
 .95 ) := [] \OT1/pplx/m/n/10.95 .
  []
 
 
 
-[68]
+[67]
 pdfTeX warning (ext4): destination with the same identifier (name{definition.9}
 ) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.123 L
+l.124 L
        et $\Phi$ be a non-excessive (ONVP) sweepout with width $W$, and let ...
 
 pdfTeX warning (ext4): destination with the same identifier (name{theorem.1}) h
 as been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.139     L
+l.140     L
            et $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n ...
 
 
-[69]
+[68]
 Package hyperref Info: bookmark level for unknown conjecture defaults to 0 on i
-nput line 144.
+nput line 145.
 
 pdfTeX warning (ext4): destination with the same identifier (name{theorem.1}) h
 as been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.155     L
+l.156     L
            et $(M^{n+1},g)$ be a closed Riemannian manifold with $n \geq 2$,...
 
 pdfTeX warning (ext4): destination with the same identifier (name{proposition.2
 }) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.169     L
+l.170     L
            et $\{\Omega^k\}$ be a sequence of Caccioppoli sets and $U$ an op...
 
 
+[69]
+
 [70]
-
-LaTeX Warning: Reference `sec:caccioppoli' on page 71 undefined on input line 1
-84.
-
-
-LaTeX Warning: Reference `ch:sweepouts' on page 71 undefined on input line 203.
-
-
-
-
-[71]
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{proposition.3
 }) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.240 ...\ref{conj:mass-cancellation-integrality}]
+l.241 ...\ref{conj:mass-cancellation-integrality}]
                                                   \label{prop:regularity-wit...
-[72]
-pdfTeX warning (ext4): destination with the same identifier (name{remark.4}) ha
-s been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.245 T
-       he fundamental obstruction to proving Conjecture~\ref{conj:mass-cance...
-
+[71]
 pdfTeX warning (ext4): destination with the same identifier (name{theorem.1}) h
 as been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.263     L
+l.264     L
            et $V$ be a stable integral $n$-varifold in a closed $(n+1)$-dime...
 
 
-[73]
+[72]
 pdfTeX warning (ext4): destination with the same identifier (name{definition.2}
 ) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.269 F
+l.270 F
        or $\alpha \in (0, 1/2)$, a stationary integral varifold $V$ satisfie...
 
 pdfTeX warning (ext4): destination with the same identifier (name{remark.3}) ha
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.276 B
+l.277 B
        y Wickramasekera's theorem, the following are equivalent for a stable...
 
 pdfTeX warning (ext4): destination with the same identifier (name{theorem.4}) h
 as been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.288     L
+l.289     L
            et $V$ be the stationary integral varifold from Theorem~\ref{thm:...
 
 
-[74]
-pdfTeX warning (ext4): destination with the same identifier (name{remark.5}) ha
-s been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.306 W
-       e explain why Cases 1a and 1b below are exhaustive, and why stability...
+[73]
 
+[74]
 
 [75]
-
-[76]
-Overfull \hbox (48.36835pt too wide) detected at line 385
+Overfull \hbox (48.36835pt too wide) detected at line 386
 [][][]\U/euf/m/n/10.95 h[]\OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 V\OT1/zplm/
 m/n/10.95 ) := [] \OT1/pplx/m/n/10.95 .
  []
@@ -2256,191 +2176,40 @@ pdfTeX warning (ext4): destination with the same identifier (name{remark.6}) ha
 s been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.393 ...in{remark}[Dimension of the singular set]
+l.394 ...in{remark}[Dimension of the singular set]
                                                   \label{rem:sing-dimension}
-[77]
+[76]
 
-[78]
+[77]
 pdfTeX warning (ext4): destination with the same identifier (name{definition.8}
 ) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.429 G
+l.430 G
        iven $\varepsilon, \tau > 0$ with $\Sigma = \spt(V) \subset \overline...
 
 
-[79]
-Underfull \hbox (badness 1199) in paragraph at lines 469--471
-[]\T1/pplj/m/n/10.95 (+20) By Propo-si-tion [][]9.4.9[][],
+[78]
+Underfull \hbox (badness 1199) in paragraph at lines 470--472
+[]\T1/pplj/m/n/10.95 (+20) By Propo-si-tion [][]8.4.9[][],
  []
 
 
-Underfull \hbox (badness 1609) in paragraph at lines 485--486
+Underfull \hbox (badness 1609) in paragraph at lines 486--487
 []\T1/pplj/m/n/10.95 (+20) Therefore, $\OML/zplm/m/it/10.95 V$ \T1/pplj/m/n/10.
 95 (+20) sat-is-fies all hy-pothe-ses of Wick-ra-masek-era's the-o-
  []
 
 
 
-[80])
+[79])
 
-[81]
-\openout2 = `chapters/appendix1.aux'.
-
- (./chapters/appendix1.tex
-Appendix A.
-
-pdfTeX warning (ext4): destination with the same identifier (name{definition.1}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.9 A
-      family $\{\Gamma_t\}_{t \in [0, 1]}$ of closed subsets of $M$ is a \te...
-
-pdfTeX warning (ext4): destination with the same identifier (name{definition.2}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.28 L
-      et $U \subset M$ be a bounded relative open subset. A family $\{\Gamma...
-
-
-[82
-
-
-
-
-
-
-]
-pdfTeX warning (ext4): destination with the same identifier (name{definition.3}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.41 L
-      et $\varepsilon>0$ and $U\subset M$ be a relative open set. A relative...
-
-pdfTeX warning (ext4): destination with the same identifier (name{definition.4}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.56 L
-      et $\nu\in\{\mathcal F,\mathbf M,\mathbf F\}$ and $\varepsilon,\delta>0$.
-
-
-[83]
-pdfTeX warning (ext4): destination with the same identifier (name{remark.6}) ha
-s been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.96 L
-      emma~\ref{lem:relative-interpolation} is the relative version of the i...
-
-
-[84]
-
-[85]
-pdfTeX warning (ext4): destination with the same identifier (name{definition.1}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.165 L
-       et $p \in \partial M$. Suppose $(x_1,x_2,\cdots,x_n)$ is a geodesic n...
-
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{lemma.2}) has
- been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.186 ...tric and connection in Fermi coordinates]
-                                                  \label{lem:fermi-metric}
-[86]
-
-[87]
-pdfTeX warning (ext4): destination with the same identifier (name{lemma.3}) has
- been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.244 T
-       he Fermi distance function $\tilde r$ is smooth (where it is defined)...
-
-
-[88]
-pdfTeX warning (ext4): destination with the same identifier (name{definition.4}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.287 F
-       or each $p \in \partial M$, we define the \emph{Fermi half-ball} and ...
-
-pdfTeX warning (ext4): destination with the same identifier (name{lemma.5}) has
- been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.299 T
-       here exists a constant $r_{\mathrm{Fermi}}>0$, depending only on the ...
-
-
-[89]
-pdfTeX warning (ext4): destination with the same identifier (name{remark.6}) ha
-s been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.319 F
-       ermi coordinates are particularly useful in the regularity theory for...
-
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{definition.1}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.339 \begin{definition}[Stationary varifold]
-                                             \label{def:stationary-varifold}
-[90]
-pdfTeX warning (ext4): destination with the same identifier (name{definition.2}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.356 A
-        stationary integral $n$-varifold $V$ is \emph{stable} if its regular...
-
-
-[91]
-pdfTeX warning (ext4): destination with the same identifier (name{remark.3}) ha
-s been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.385 T
-       he $\alpha$-Structural Hypothesis is implied by either of the followi...
-
-pdfTeX warning (ext4): destination with the same identifier (name{theorem.4}) h
-as been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.402 L
-       et $V$ be a stable integral $n$-varifold on a smooth $(n+1)$-dimensio...
-
-
-[92]
-
-[93]
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{remark.5}) ha
-s been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.467 ...}[Comparison with area-minimizing theory]
-                                                   [94])
-
-[95]
+[80]
 \openout2 = `frontbackmatter/bibliography.aux'.
 
  (./frontbackmatter/bibliography.tex (./thesis.bbl
 
-[96
+[81
 
 
 
@@ -2451,37 +2220,32 @@ l.467 ...}[Comparison with area-minimizing theory]
 
 ]
 
-[97]))
+[82]))
 
-[98] (./thesis.aux (./frontbackmatter/titlepage.aux)
+[83] (./thesis.aux (./frontbackmatter/titlepage.aux)
 (./frontbackmatter/abstract.aux) (./frontbackmatter/dedication.aux)
 (./frontbackmatter/acknowledgements.aux) (./frontbackmatter/publications.aux)
 (./frontbackmatter/contents.aux) (./chapters/1-introduction.aux)
-(./chapters/2-example.aux) (./chapters/3-structure_of_the_proof.aux)
-(./chapters/4-morse_foliations.aux) (./chapters/5-splitting_and_extension.aux)
-(./chapters/6-nested_sweepout.aux) (./chapters/7-no_escape_to_infinity.aux)
+(./chapters/2-example.aux) (./chapters/4-morse_foliations.aux)
+(./chapters/5-splitting_and_extension.aux) (./chapters/6-nested_sweepout.aux)
+(./chapters/7-no_escape_to_infinity.aux)
 (./chapters/8-convergence-of-min-max.aux)
-(./chapters/9-alternative-regularity.aux) (./chapters/appendix1.aux)
-(./frontbackmatter/bibliography.aux))
+(./chapters/9-alternative-regularity.aux) (./frontbackmatter/bibliography.aux))
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2020/03/25>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `thesis.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 38725 strings out of 474662
- 790574 string characters out of 5751110
- 1371179 words of memory out of 5000000
- 59718 multiletter control sequences out of 15000+600000
- 720201 words of font info for 817 fonts, out of 8000000 for 9000
+ 38657 strings out of 474662
+ 788041 string characters out of 5751110
+ 1379514 words of memory out of 5000000
+ 59739 multiletter control sequences out of 15000+600000
+ 730237 words of font info for 859 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 115i,23n,123p,10901b,1064s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 115i,23n,122p,10901b,1145s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmex1
 0.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mmi10.pfb></usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/
@@ -2500,13 +2264,12 @@ s/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025basic/texmf-
 dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/2025basic/texmf-dis
 t/fonts/type1/public/stmaryrd/stmary10.pfb></usr/local/texlive/2025basic/texmf-
 dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2025basic/texmf-di
-st/fonts/type1/urw/palatino/uplbi8a.pfb></usr/local/texlive/2025basic/texmf-dis
-t/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2025basic/texmf-dist/
-fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on thesis.pdf (105 pages, 11901988 bytes).
+st/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2025basic/texmf-dist
+/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on thesis.pdf (90 pages, 466293 bytes).
 PDF statistics:
- 1445 PDF objects out of 1728 (max. 8388607)
- 1262 compressed objects within 13 object streams
- 442 named destinations out of 1000 (max. 500000)
- 138611 words of extra memory for PDF output out of 154059 (max. 10000000)
+ 1237 PDF objects out of 1440 (max. 8388607)
+ 1078 compressed objects within 11 object streams
+ 324 named destinations out of 1000 (max. 500000)
+ 147759 words of extra memory for PDF output out of 154059 (max. 10000000)
 

@@ -9,58 +9,56 @@ A level-1 auxiliary file: frontbackmatter/publications.aux
 A level-1 auxiliary file: frontbackmatter/contents.aux
 A level-1 auxiliary file: chapters/1-introduction.aux
 A level-1 auxiliary file: chapters/2-example.aux
-A level-1 auxiliary file: chapters/3-structure_of_the_proof.aux
 A level-1 auxiliary file: chapters/4-morse_foliations.aux
 A level-1 auxiliary file: chapters/5-splitting_and_extension.aux
 A level-1 auxiliary file: chapters/6-nested_sweepout.aux
 A level-1 auxiliary file: chapters/7-no_escape_to_infinity.aux
 A level-1 auxiliary file: chapters/8-convergence-of-min-max.aux
 A level-1 auxiliary file: chapters/9-alternative-regularity.aux
-A level-1 auxiliary file: chapters/appendix1.aux
 A level-1 auxiliary file: frontbackmatter/bibliography.aux
 The style file: amsalpha.bst
 Database file #1: thesis.bib
 Warning--missing pages in CL03
 Warning--missing pages in CLS22
-You've used 18 entries,
+You've used 19 entries,
             2624 wiz_defined-function locations,
-            700 strings with 7283 characters,
-and the built_in function-call counts, 6243 in all, are:
-= -- 579
-> -- 227
-< -- 11
-+ -- 70
-- -- 67
-* -- 531
-:= -- 1005
-add.period$ -- 18
-call.type$ -- 18
-change.case$ -- 98
-chr.to.int$ -- 18
-cite$ -- 20
-duplicate$ -- 266
-empty$ -- 524
-format.name$ -- 95
-if$ -- 1253
+            708 strings with 7478 characters,
+and the built_in function-call counts, 6788 in all, are:
+= -- 630
+> -- 273
+< -- 9
++ -- 90
+- -- 85
+* -- 587
+:= -- 1095
+add.period$ -- 19
+call.type$ -- 19
+change.case$ -- 108
+chr.to.int$ -- 19
+cite$ -- 21
+duplicate$ -- 279
+empty$ -- 555
+format.name$ -- 113
+if$ -- 1357
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 38
-newline$ -- 64
-num.names$ -- 54
-pop$ -- 115
+missing$ -- 41
+newline$ -- 67
+num.names$ -- 56
+pop$ -- 125
 preamble$ -- 1
-purify$ -- 116
+purify$ -- 127
 quote$ -- 0
-skip$ -- 183
+skip$ -- 195
 stack$ -- 0
-substring$ -- 412
-swap$ -- 20
-text.length$ -- 11
-text.prefix$ -- 10
+substring$ -- 437
+swap$ -- 21
+text.length$ -- 9
+text.prefix$ -- 9
 top$ -- 0
-type$ -- 132
+type$ -- 136
 warning$ -- 2
-while$ -- 65
+while$ -- 70
 width$ -- 21
-write$ -- 198
+write$ -- 211
 (There were 2 warnings)

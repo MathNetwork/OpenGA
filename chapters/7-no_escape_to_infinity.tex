@@ -69,7 +69,7 @@ Let $U$ be a good set.
         \begin{equation}\label{eq:value-of-eps0}
             \eps_0 := \min\br{\frac{\eps_1 r_0}{20 N}, \brac{\frac{\eps_1}{2^{n + 2}C(n)N}}^{\frac{n + 1}{n}}},
         \end{equation}
-        where $C(n)$ is the constant from Lemma~\ref{lem:morse-separate}. Using the relative coarea formula (Corollary~\ref{cor:coarea-filling}), we may choose a covering $\br{B_i'}$ of $U$ by $N$ balls of radius $r_i \in (r_0/2, r_0)$, so that         \begin{equation}\label{eq:area-of-Bi}
+        where $C(n)$ is the constant from Lemma~\ref{lem:morse-separate}. Using the coarea inequality (Lemma~\ref{lem:coarea}), we may choose a covering $\br{B_i'}$ of $U$ by $N$ balls of radius $r_i \in (r_0/2, r_0)$, so that         \begin{equation}\label{eq:area-of-Bi}
             \mathcal{H}^n((\partial B_i')\cap(\Omega'\cap U)) \leq \frac{4\eps_0}{r_0} \leq \frac{\eps_1}{5N}.
         \end{equation}
         Note that the second inequality follows from the first term in the definition of $\eps_0$ in~\eqref{eq:value-of-eps0}: since $\eps_0 \leq \frac{\eps_1 r_0}{20N}$, we have $\frac{4\eps_0}{r_0} \leq \frac{4\eps_1 r_0}{20Nr_0} = \frac{\eps_1}{5N}$.
@@ -239,7 +239,7 @@ following sense.
         &\le \sup_{t}\mathcal{H}^n(\Gamma_t\cap U)+\varepsilon.
         \end{split}
         \end{equation*}
-        Indeed, the preliminary modification acts only inside finitely many thin annuli and endpoint collars; by (iii)–(iv) of Lemma~\ref{lem:preliminary-modification} the $M$–area increase is $\le\varepsilon$, and restricting to $U$ with the relative coarea formula (Corollary~\ref{cor:coarea-filling}) yields the same $\varepsilon$–bound for the $U$–area.
+        Indeed, the preliminary modification acts only inside finitely many thin annuli and endpoint collars; by (iii)–(iv) of Lemma~\ref{lem:preliminary-modification} the $M$–area increase is $\le\varepsilon$, and restricting to $U$ with the coarea inequality (Lemma~\ref{lem:coarea}) yields the same $\varepsilon$–bound for the $U$–area.
     
         For each subinterval $[t_i,t_{i+1}]$ given by the preliminary modification, we may represent
         $\br{\widetilde{\Gamma}_t}_{t\in[t_i,t_{i+1}]}$ as level sets of an admissible Morse function.
@@ -260,7 +260,7 @@ following sense.
             \qquad
             D_s:=\Omega^+\setminus\Omega^-.
         \end{equation*}
-        Shrinking $\eta>0$ if necessary and using the relative coarea formula (Corollary~\ref{cor:coarea-filling}) and the small-volume choice from Lemma~\ref{lem:preliminary-modification}, we may assume
+        Shrinking $\eta>0$ if necessary and using the coarea inequality (Lemma~\ref{lem:coarea}) and the small-volume choice from Lemma~\ref{lem:preliminary-modification}, we may assume
         \begin{equation*}
           \mathcal{H}^n(\partial D_s\cap U)+
           (\mathcal{H}^{n+1}(D_s))^{\frac{n}{n+1}}

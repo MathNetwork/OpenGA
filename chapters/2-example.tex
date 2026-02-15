@@ -3,7 +3,7 @@
 
 This chapter establishes the foundational framework for the free boundary min-max theory in complete Riemannian manifolds with boundary.
 
-Let $(M^{n+1}, g)$ be a smooth, complete Riemannian manifold with non-empty smooth boundary $\partial M$. We assume $2 \leq n \leq 6$ throughout. We write $\nu_{\partial M}$ for the inward unit normal to $\partial M$. See Appendix~\ref{sec:fermi-coordinates} for details on Fermi coordinates near $\partial M$.
+Let $(M^{n+1}, g)$ be a smooth, complete Riemannian manifold with non-empty smooth boundary $\partial M$. We assume $2 \leq n \leq 6$ throughout. We write $\nu_{\partial M}$ for the inward unit normal to $\partial M$. For details on Fermi coordinates near $\partial M$, see \cite[Section~2]{LZ17}.
 
 We denote by $\mathcal{H}^k$ the $k$-dimensional Hausdorff measure and by $\mathbf{M}(T)$ the mass of a current $T$. We assume $M$ is isometrically embedded in some $\mathbb{R}^L$. For vector fields, let $\mathfrak{X}_c(M)$ denote the space of \emph{compactly supported} smooth vector fields on $M$ that are tangent to $M$:
 \begin{multline*}
@@ -16,7 +16,7 @@ The subspace of vector fields additionally tangent to the boundary is
 \]
 
 \begin{remark}[Role of the isometric embedding]\label{rem:isometric-embedding}
-The assumption that $M$ is isometrically embedded in $\mathbb{R}^L$ (which exists by Nash's embedding theorem~\cite{Nash56}) is needed because integer rectifiable currents are defined as functionals on differential forms in an ambient Euclidean space (see Simon~\cite[\S26--27]{Sim84}, Li--Zhou~\cite[\S3]{LZ17}). The embedding also guarantees the isoperimetric inequalities (Lemmas~\ref{lem:F-isoperimetric} and~\ref{lem:M-isoperimetric}) with constants depending only on the embedding.
+The assumption that $M$ is isometrically embedded in $\mathbb{R}^L$ (which exists by Nash's embedding theorem~\cite{Nash56}) is needed because integer rectifiable currents are defined as functionals on differential forms in an ambient Euclidean space (see Simon~\cite[\S26--27]{Sim84}, Li--Zhou~\cite[\S3]{LZ17}).
 \end{remark}
 
 For a relatively open subset $U \subset M$, we write $\mathrm{int}_M(U)$ for the relative interior of $U$ in $M$. We use $A \Subset B$ to denote that $\overline{A}$ is compact and contained in $B$.
@@ -44,7 +44,6 @@ equipped with the flat topology. The \emph{space of equivalence classes of relat
 Two cycles $T_1, T_2 \in \mathcal{Z}_n(A, B;\mathbb{Z}_2)$ represent the same class $\tau \in \mathbf{Z}_n(A, B;\mathbb{Z}_2)$ if and only if $T_1 - T_2 \in \mathcal{Z}_n(B, B;\mathbb{Z}_2)$, i.e., $T_1 - T_2$ is supported in $B$.
 \end{definition}
 
-\xinze{Proposition and proof rewritten; unified notation $\partial\llrr{\Omega}$ throughout.}
 \begin{proposition}[Caccioppoli sets and mod~$2$ cycles]\label{prop:cacc-cycle}
 Let $\Omega \subset M$ be a measurable subset. Then $\Omega$ is a Caccioppoli set (i.e.\ $\mathrm{Per}(\Omega) < \infty$) if and only if the integration current $\llrr{\Omega} \in \mathcal{R}_{n + 1}(M; \Z_2)$ satisfies $\mass{(\partial\llrr{\Omega})} < \infty$. In this case,
 \begin{equation*}
@@ -86,40 +85,6 @@ For $\tau \in \mathbf{Z}_n(A, B;\mathbb{Z}_2)$, there exists a unique representa
 For $\tau \in \mathbf{Z}_n(A, B;\mathbb{Z}_2)$, the \emph{mass} of $\tau$ is defined as $\mathbf{M}(\tau) := \mathbf{M}(T)$, where $T$ is the canonical representative of $\tau$. By \cite[Lemma~3.3]{LZ17}, $\mathbf{M}(\tau) = \inf_{S \in \tau} \mathbf{M}(S)$, so the canonical representative achieves the infimum of mass over all representatives.
 \end{definition}
 
-\xinze{Review this paragraph again later.}
-The flat norm and isoperimetric lemmas below are the analytic backbone of the min-max theory. The flat norm $\mathcal{F}$ metrises the weak topology on cycles: two cycles are $\mathcal{F}$-close when they differ by a thin filling plus a small boundary residue. The two isoperimetric lemmas serve complementary purposes. The $\mathcal{F}$-isoperimetric lemma (Lemma~\ref{lem:F-isoperimetric}) takes flat-norm proximity as input and produces a filling $Q$ with $\mass(Q) \leq C_M\mathcal{F}(\tau_2 - \tau_1)$; it is the tool for constructing continuous maps into the cycle space, and we use it in Proposition~\ref{prop:sweepout-cycle} to establish the $\mathcal{F}$-continuity of the cycle-valued map $t \mapsto \partial\llrr{\Omega_t}$. The $\mass$-isoperimetric lemma (Lemma~\ref{lem:M-isoperimetric}) takes mass-norm proximity as input and decomposes the difference $T_2 - T_1 = \partial Q + R$ into a filling $Q$ and a boundary remainder $R$ supported on $\partial M$, with $\mass(Q) + \mass(R) \leq C_M \mass(\tau_2 - \tau_1)$; it is used in the pull-tight procedure and almost-minimizing selection of Chapter~\ref{ch:convergence-of-min-max}, where one needs to compare nearby cycles at the level of area.
-
-\begin{definition}[Relative flat norm]\label{def:relative-flat-norm}
-For a compact set $K \subset M$ and $\tau \in \mathbf{Z}_n(A, B;\mathbb{Z}_2)$, the \emph{relative flat norm} is
-\[
-\mathcal{F}^K(\tau) := \inf_{T \in \tau} \mathcal{F}^K(T),
-\]
-where $\mathcal{F}^K(T) := \inf\{\mathbf{M}(T - \partial S) + \mathbf{M}(S) : S \in \mathcal{R}_{n+1}(M;\mathbb{Z}_2), \mathrm{spt}(S) \subset K\}$ is the flat norm of $T$ relative to $K$.
-\end{definition}
-
-\begin{lemma}[$\mathcal{F}$-isoperimetric lemma {\cite[Lemma~3.15]{LZ17}}]\label{lem:F-isoperimetric}
-There exist $\epsilon_M > 0$ and $C_M \geq 1$ depending only on the isometric embedding $M \hookrightarrow \mathbb{R}^L$ such that for any $\tau_1, \tau_2 \in \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ with $\mathcal{F}(\tau_2 - \tau_1) < \epsilon_M$, there exists a mod~$2$ $(n+1)$-current $Q$ (an \emph{isoperimetric choice}) such that:
-\begin{itemize}
-    \item $\mathrm{spt}(Q) \subset M$;
-    \item $\mathrm{spt}(T_2 - T_1 - \partial Q) \subset \partial M$;
-    \item $\mathbf{M}(Q) \leq C_M \mathcal{F}(\tau_2 - \tau_1)$,
-\end{itemize}
-where $T_1, T_2$ are the canonical representatives of $\tau_1, \tau_2$.
-\end{lemma}
-
-\begin{lemma}[$\mathbf{M}$-isoperimetric lemma {\cite[Lemma~3.17]{LZ17}}]\label{lem:M-isoperimetric}
-There exist $\epsilon_M > 0$ and $C_M \geq 1$ depending only on the isometric embedding $M \hookrightarrow \mathbb{R}^L$ such that for any $\tau_1, \tau_2 \in \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ with $\mathbf{M}(\tau_2 - \tau_1) < \epsilon_M$, there exist a mod~$2$ $(n+1)$-current $Q$ and a mod~$2$ rectifiable $n$-current $R$ such that:
-\begin{itemize}
-    \item $\mathrm{spt}(Q) \subset M$, $\mathrm{spt}(R) \subset \partial M$;
-    \item $T_2 - T_1 = \partial Q + R$;
-    \item $\mathbf{M}(Q) + \mathbf{M}(R) \leq C_M \mathbf{M}(\tau_2 - \tau_1)$,
-\end{itemize}
-where $T_1, T_2$ are the canonical representatives.
-\end{lemma}
-
-\xinze{Check this paragraph against Li--Zhou and Ch.8.}
-The isoperimetric lemmas above are stated by Li--Zhou for compact manifolds. When $M$ is non-compact, we apply them to each precompact subset $\overline{K} \subset M$, which is compact and therefore has its own constants $\epsilon_{\overline{K}}, C_{\overline{K}}$. The exhaustion argument of Chapter~\ref{ch:convergence-of-min-max} only requires these constants to exist for each fixed compact piece, not to be uniform over the exhaustion.
-
 Given a Caccioppoli set $\Omega$, we refer to the $(n{+}1)$-current $\llrr{\Omega}$ as the \emph{filling} of the relative cycle $\partial\llrr{\Omega}$. For $\tau \in \mathbf{Z}_n(M, \partial M;\mathbb{Z}_2)$ with canonical representative $T$, the mass restricted to an open set $V$ is $\|\tau\|(V) := \mathbf{M}(T \llcorner V)$.
 
 \begin{definition}[Interior boundary and free boundary part]\label{def:boundary-decomposition}
@@ -134,26 +99,14 @@ where:
 \end{itemize}
 \end{definition}
 
-In Chapters~\ref{ch:nested-sweepout} and~\ref{ch:no-escape-to-infinity}, we localise a global sweepout to a good set $U \subset M$ in order to apply the min-max theory on a precompact domain. This localisation requires cutting the Caccioppoli sets $\Omega_t$ along the interior boundary $\partial_I U$, which may introduce extra area near $\partial_I U$. To control this, we slice the filling $\llrr{\Omega_t}$ by a Lipschitz function (such as the distance to $\partial_I U$) and use the coarea inequality to find cut-off radii where the extra area is small; see Corollary~\ref{cor:coarea-filling} below. The slicing theorem is also used in the proof of the existence of good sets (Lemma~\ref{lem:good-set-existence}), where we slice $\llrr{M}$ by the distance function to find a level set with small interior boundary. The underlying tool is the slicing theorem for mod~$2$ flat chains (Simon~\cite[Sections~28--29]{Sim84}).
+In Chapters~\ref{ch:nested-sweepout} and~\ref{ch:no-escape-to-infinity}, we localise a global sweepout to a good set $U \subset M$ in order to apply the min-max theory on a precompact domain. This localisation requires cutting the Caccioppoli sets $\Omega_t$ along the interior boundary $\partial_I U$, which may introduce extra area near $\partial_I U$. To control this, we use the coarea inequality to find cut-off radii where the extra area is small. Throughout we use the following standard fact:
 
-\begin{theorem}[Slicing~{\cite[28.4, 28.5]{Sim84}}]\label{thm:slicing}
-Let $T \in \mathcal{R}_{n+1}(M;\mathbb{Z}_2)$ and let $f: M \to \mathbb{R}$ be a Lipschitz function. Then for almost every $t \in \mathbb{R}$, the \emph{slice}
+\begin{lemma}[Coarea inequality]\label{lem:coarea}
+Let $\Omega \subset M$ be a bounded open set of finite perimeter and $f\colon M \to \mathbb{R}$ a Lipschitz function. Then for almost every $t \in \mathbb{R}$, the level set $f^{-1}(t) \cap \Omega$ has finite $\mathcal{H}^n$-measure, and
 \[
-\langle T, f, t \rangle \in \mathcal{R}_n(M;\mathbb{Z}_2)
+\int_{\mathbb{R}} \mathcal{H}^n(f^{-1}(t) \cap \Omega)\, dt \leq \int_\Omega |\nabla f|\, d\mathcal{H}^{n+1}.
 \]
-is a well-defined mod~$2$ rectifiable $n$-current satisfying:
-\begin{enumerate}[label=\textup{(\roman*)}]
-    \item (Boundary formula) $\partial \langle T, f, t \rangle = \langle \partial T, f, t \rangle$ wherever $\partial T$ has locally finite mass;
-    \item (Coarea inequality) $\int_{\mathbb{R}} \mathbf{M}(\langle T, f, t \rangle)\, dt \leq \int |\nabla f|\, d\|T\|$.
-\end{enumerate}
-\end{theorem}
-
-\begin{corollary}[Coarea formula for fillings]\label{cor:coarea-filling}
-Let $Q = \llbracket \Omega \rrbracket$ for a bounded open set $\Omega \subset M$ of finite perimeter, and let $f: M \to \mathbb{R}$ be Lipschitz. Then for almost every $t$, the slice $\langle Q, f, t \rangle \in \mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)$ is a relative cycle, and
-\[
-\int_{\mathbb{R}} \mathbf{M}(\langle Q, f, t \rangle)\, dt \leq \int_\Omega |\nabla f|\, d\mathcal{H}^{n+1}.
-\]
-\end{corollary}
+\end{lemma}
 
 The min-max procedure produces limit objects not as currents but as varifolds: the pull-tight argument of Chapter~\ref{ch:convergence-of-min-max} yields a stationary varifold, and the regularity theory (\cite[Theorem~6.2]{LZ17}; see also Chapter~\ref{ch:alternative-regularity}) recovers a smooth minimal hypersurface from it. We recall the basic definitions; standard references include Pitts~\cite{Pit81}, Simon~\cite{Sim84}, Colding--De~Lellis~\cite{CL03}, and De~Lellis--Tasnady~\cite{DLT13}.
 
@@ -178,18 +131,6 @@ A varifold $V \in \mathcal{V}_n(M)$ is:
     \item \emph{stationary with free boundary} if $\delta V(X) = 0$ for all $X \in \mathfrak{X}_{\mathrm{tan}}(M)$.
 \end{enumerate}
 \end{definition}
-
-\begin{definition}[Pushforward of varifolds]\label{def:varifold-pushforward}
-Let $\varphi: M \to M$ be a diffeomorphism. The \emph{pushforward} $\varphi_\sharp V \in \mathcal{V}_n(M)$ is defined by
-\[
-\varphi_\sharp V(A) := \int_{\mathrm{Gr}_n(M)} \mathbf{1}_A(\varphi(x), d\varphi_x(S)) \cdot |J_S \varphi(x)| \, dV(x, S)
-\]
-for Borel $A \subset \mathrm{Gr}_n(M)$, where $J_S \varphi(x) := \det{d\varphi_x|_S}$ is the $n$-dimensional Jacobian of $\varphi$ restricted to $S$.
-\end{definition}
-
-\begin{remark}\label{rem:stationarity-relation}
-Condition~(ii) implies condition~(i) since $\mathfrak{X}_c(\operatorname{int}(M)) \subset \mathfrak{X}_{\mathrm{tan}}(M)$. The additional constraint in~(ii) is that the first variation vanishes even for vector fields that are supported up to $\partial M$, as long as they are tangent to $\partial M$.
-\end{remark}
 
 The pull-tight procedure (Chapter~\ref{ch:convergence-of-min-max}) requires a metric on the space of varifolds that metrises weak-$*$ convergence and behaves well under localisation to open subsets. This role is played by the $\mathbf{F}$-metric.
 
@@ -231,10 +172,6 @@ W(U) := \inf\bigl\{ F(\{\Omega_t\}) : \{\Omega_t\} \text{ is a sweepout of } (U,
 \]
 \end{definition}
 
-\begin{remark}\label{rem:free-boundary-automatic}
-The free boundary condition is built into the Caccioppoli framework: by Proposition~\ref{prop:cacc-cycle}, each reduced boundary $\partial^*\Omega_t$ induces a mod~$2$ relative cycle $\partial\llrr{\Omega_t} \in \mathcal{Z}_n(M, \partial M;\mathbb{Z}_2)$, whose ``boundary'' (in the sense of currents) is automatically supported on $\partial M$. Note that the sweepout ``fills'' $U$ in the sense that the fillings $\Omega_t$ transition from being disjoint from $U$ to containing $U$. Throughout this thesis we assume $\partial_F U \neq \emptyset$, i.e.\ $\overline{U} \cap \partial M \neq \emptyset$: this is essential for the min-max limit to be a free boundary minimal hypersurface. When $\partial_F U = \emptyset$, one recovers a closed minimal hypersurface, which is already covered by the work of Chambers--Liokumovich~\cite{CL20}.
-\end{remark}
-
 The following proposition provides the bridge between the Caccioppoli sweepout framework and the cycle-valued maps used in Li--Zhou~\cite{LZ17}.
 
 \begin{proposition}[From Caccioppoli sweepouts to cycle-valued maps]\label{prop:sweepout-cycle}
@@ -260,10 +197,6 @@ A sweepout $\{\Omega_t\}$ of $(U, \partial_F U)$ is a \emph{good sweepout} if th
 We write $W_g(U)$ for the infimum of heights over all good sweepouts.
 \end{definition}
 
-\begin{definition}[$\partial$-transverse function]\label{def:boundary-transverse}
-A smooth function $f: M \to \mathbb{R}$ is \emph{$\partial$-transverse} if $f|_{\partial M}$ has no critical points, i.e.\ $\nabla_{\partial M}(f|_{\partial M}) \neq 0$ everywhere on $\partial M$.  A \emph{$\partial$-transverse Morse function} is a Morse function on $M$ that is also $\partial$-transverse.
-\end{definition}
-
 \begin{definition}[Nested sweepout]\label{def:nested-sweepout}
 A sweepout $\{\Omega_t\}$ of $(U, \partial_F U)$ is \emph{nested} if $\Omega_s \subset \Omega_t$ for all $0 \leq s \leq t \leq 1$. Equivalently, $\{\Omega_t\}$ arises from a $\partial$-transverse Morse function $f: M \to \mathbb{R}$ via $\Omega_t = f^{-1}((-\infty, c_t))$ for some increasing function $t \mapsto c_t$. We denote the collection of nested sweepouts of $U$ by $\mathcal{S}_n(U)$, and write $W_n(U) := \inf_{S \in \mathcal{S}_n(U)} F(S)$.
 \end{definition}
@@ -284,7 +217,7 @@ Let $U \subset M$ be a bounded open set with smooth boundary. Then:
 \end{proposition}
 
 \begin{proof}
-Part~(i) follows by restricting a nested sweepout to $\overline{U}$ (giving the lower bound) and extending a relative sweepout by adding $\partial_I U$ at each time (giving the upper bound). Part~(ii) is proved by approximating an arbitrary sweepout by nested ones using the coarea formula (Theorem~\ref{thm:slicing}); see \cite[Lemma~4.2]{CL20}. Part~(iii) follows from~(ii) by a cut-off argument using the good set condition.
+Part~(i) follows by restricting a nested sweepout to $\overline{U}$ (giving the lower bound) and extending a relative sweepout by adding $\partial_I U$ at each time (giving the upper bound). Part~(ii) is proved by approximating an arbitrary sweepout by nested ones using the coarea formula; see \cite[Lemma~4.2]{CL20}. Part~(iii) follows from~(ii) by a cut-off argument using the good set condition.
 \end{proof}
 
 
@@ -294,107 +227,6 @@ Part~(i) follows by restricting a nested sweepout to $\overline{U}$ (giving the 
 
 On a compact manifold, the min-max process automatically produces a minimal hypersurface because all mass stays in a bounded region. On a non-compact manifold, mass can escape to infinity during the min-max sequence, and the limit varifold may be trivial. To prevent this, we work inside bounded open sets $U$ whose interior boundary $\partial_I U$ is small relative to the width: sweepouts of $U$ must transfer mass from outside to inside through $\partial_I U$, and when $\mathbf{M}(\partial_I U) \ll W_\partial(U)$, at least one slice must carry substantial mass inside $\overline{U}$. This is the role of good sets, used in the no-escape argument of Chapter~\ref{ch:no-escape-to-infinity}.
 
-\begin{figure}[ht]
-\centering
-\begin{tikzpicture}[scale=0.8]
-  %% (b) dM transverse to neck — bottle vertical
-  \begin{scope}[xshift=-4.5cm]
-    % Shade U (smooth bulging walls)
-    \fill[fillB] (-1.2,0)
-      .. controls (-1.2,0.3) and (-2,0.5) .. (-2,1.5)
-      .. controls (-2,2.8) and (-0.5,3.2) .. (-0.5,3.5)
-      -- (0.5,3.5)
-      .. controls (0.5,3.2) and (2,2.8) .. (2,1.5)
-      .. controls (2,0.5) and (1.2,0.3) .. (1.2,0)
-      -- cycle;
-
-    % Left wall
-    \draw[thick] (-1.2,0)
-      .. controls (-1.2,0.3) and (-2,0.5) .. (-2,1.5)
-      .. controls (-2,2.8) and (-0.5,3.2) .. (-0.5,3.5)
-      -- (-0.5,5.5);
-    % Right wall
-    \draw[thick] (1.2,0)
-      .. controls (1.2,0.3) and (2,0.5) .. (2,1.5)
-      .. controls (2,2.8) and (0.5,3.2) .. (0.5,3.5)
-      -- (0.5,5.5);
-
-    % Boundary of M (bottom, thick)
-    \draw[very thick] (-1.2,0) -- (1.2,0);
-    % Free boundary (dashed overlaid on dM)
-    \draw[thick, dashed, bindB] (-1.2,0) -- (1.2,0);
-    \node[below] at (0,-0.15) {$\partial M = \textcolor{bindB}{\partial_F U}$};
-
-    % Interior boundary (dashed at neck)
-    \draw[thick, dashed, bindB] (-0.5,3.5) -- (0.5,3.5);
-    \node[bindB, right] at (0.65,3.5) {$\partial_I U$};
-
-    % Label U
-    \node[bindB] at (0,1.5) {\large $U$};
-
-    % Dots for non-compactness
-    \node at (-0.5,5.8) {$\vdots$};
-    \node at (0.5,5.8) {$\vdots$};
-    \node[above, font=\small] at (0,6.0) {$\to \infty$};
-
-    % Narrow neck annotation
-    \draw[<-, >=stealth, thin] (-0.5,3.9) -- (-1.8,4.5)
-      node[left, font=\small] {narrow neck};
-
-    % Subcaption
-    \node[below, font=\small] at (0,-1.0) {(b)};
-  \end{scope}
-
-  %% (a) Half-bottle vertical: dM = vertical line on left, extends to infinity downward
-  \begin{scope}[xshift=3.5cm]
-    % Shade U (half-bottle body, one smooth curve for outer wall)
-    \fill[fillB] (0,-0.3)
-      .. controls (0.3,-0.3) and (2,-0.3) .. (2,1.5)
-      .. controls (2,2.8) and (0.5,2.8) .. (0.5,3.5)
-      -- (0,3.5) -- cycle;
-
-    % dM = straight left line (the cut surface), extends down to infinity
-    \draw[very thick] (0,5.5) -- (0,-0.8);
-
-    % Outer wall (one smooth curve: starts from dM, bulges right, narrows at neck)
-    \draw[thick] (0,-0.3)
-      .. controls (0.3,-0.3) and (2,-0.3) .. (2,1.5)
-      .. controls (2,2.8) and (0.5,2.8) .. (0.5,3.5)
-      -- (0.5,5.5);
-
-    % Interior boundary (dashed horizontal at neck)
-    \draw[thick, dashed, bindB] (0,3.5) -- (0.5,3.5);
-    \node[bindB, right] at (0.65,3.5) {$\partial_I U$};
-
-    % Label U
-    \node[bindB] at (0.8,1.5) {\large $U$};
-
-    % Free boundary (dashed line overlaid on dM)
-    \draw[thick, dashed, bindB] (0,-0.3) -- (0,3.5);
-    \node[bindB, left] at (-0.15,1.6) {$\partial_F U$};
-
-    % dM label (below the neck, no overlap)
-    \node[left] at (-0.15,4.8) {$\partial M$};
-
-    % Dots for non-compactness
-    \node at (0,5.8) {$\vdots$};
-    \node at (0.5,5.8) {$\vdots$};
-    \node[above, font=\small] at (0.25,6.0) {$\to \infty$};
-
-    % Narrow neck annotation
-    \draw[<-, >=stealth, thin] (0.5,3.9) -- (1.6,4.5)
-      node[right, font=\small] {narrow neck};
-
-    % Subcaption
-    \node[below, font=\small] at (0.8,-1.0) {(a)};
-  \end{scope}
-\end{tikzpicture}
-\caption{A good set $U$ (shaded) inside a non-compact manifold $M$ with boundary $\partial M$ (bold). The free boundary $\partial_F U \subset \partial M$ is the portion of $\partial M$ adjacent to $U$ (dashed), and the interior boundary $\partial_I U$ (dashed) sits at a narrow neck, so $\mathbf{M}(\partial_I U)$ is small relative to $W_\partial(U)$. (a)~$\partial M$ parallel to the neck, both extending to infinity; (b)~$\partial M$ transverse to the neck. Note that in case~(b), the min-max limit could in principle be a closed minimal hypersurface in the interior of $M$, away from $\partial M$; see Remark~\ref{rem:closed-vs-free}.}
-
-
-\label{fig:good-set}
-\end{figure}
-
 \begin{definition}[Good set]\label{def:good-set}
 A bounded open subset $U \subset M$ of finite perimeter is a \emph{good set} if
 \[
@@ -402,10 +234,6 @@ A bounded open subset $U \subset M$ of finite perimeter is a \emph{good set} if
 \]
 where $\partial_I U = \partial \llbracket U \rrbracket \llcorner \mathrm{int}(M)$ is the interior boundary of $U$.
 \end{definition}
-
-\begin{remark}[Closed vs.\ free boundary limits]\label{rem:closed-vs-free}
-The min-max theory of Li--Zhou~\cite{LZ17} produces a stationary varifold whose support is a minimal hypersurface, but does not by itself guarantee that $\partial\Sigma \neq \varnothing$: in general, the limit could be a closed minimal hypersurface in the interior of $M$ (see \cite[Remark~1.3]{LZ17}). Following the standard convention, a closed minimal hypersurface is regarded as a (degenerate) free boundary minimal hypersurface with $\partial\Sigma = \varnothing$; the conditions $\partial\Sigma \subset \partial M$ and the orthogonal meeting condition in Theorem~\ref{thm:main} are then vacuously satisfied. When $M$ is a compact domain in $\mathbb{R}^{n+1}$, the closed case cannot occur since $\mathbb{R}^{n+1}$ admits no closed minimal hypersurface.
-\end{remark}
 
 \begin{lemma}[Existence of good sets]\label{lem:good-set-existence}
 Let $(M^{n+1}, g)$ be a complete Riemannian manifold with non-empty boundary and sublinear volume growth, i.e.\
@@ -420,13 +248,13 @@ Fix a point $x \in M$ and a radius $r > 0$ such that the local isoperimetric con
 \[
 C_I := \inf\bigl\{\mathbf{M}(\partial_I E) : E \subset B_r(x),\ \mathcal{H}^{n+1}(E) = \tfrac{1}{2}\,\mathcal{H}^{n+1}(B_r(x))\bigr\} > 0.
 \]
-Let $d_x: M \to [0, \infty)$ denote the distance function from $x$. Applying the slicing theorem (Theorem~\ref{thm:slicing}) to the current $T = \llbracket M \rrbracket$ and the Lipschitz function $f = d_x$ with $|\nabla d_x| \leq 1$, we obtain
+Let $d_x: M \to [0, \infty)$ denote the distance function from $x$. Applying the coarea inequality (Lemma~\ref{lem:coarea}) with $\Omega = M \cap B_S(x)$ and $f = d_x$ (noting $|\nabla d_x| \leq 1$), we obtain
 \[
-\int_0^\infty \mathbf{M}(\langle \llbracket M \rrbracket, d_x, R \rangle)\, dR \leq \mathcal{H}^{n+1}(M \cap B_S(x))
+\int_0^S \mathcal{H}^n(d_x^{-1}(R) \cap \mathrm{int}(M))\, dR \leq \mathcal{H}^{n+1}(M \cap B_S(x))
 \]
 for any $S > 0$. The sublinear growth assumption therefore allows us to pick a regular value $R > r$ such that
 \[
-\mathbf{M}(\langle \llbracket M \rrbracket, d_x, R \rangle) \leq \frac{C_I}{100}.
+\mathcal{H}^n(d_x^{-1}(R) \cap \mathrm{int}(M)) \leq \frac{C_I}{100}.
 \]
-Set $U := B_R(x) \cap M$. Since $\partial_I U$ is supported on $\partial B_R(x) \cap \mathrm{int}(M)$, we have $\mathbf{M}(\partial_I U) \leq \mathbf{M}(\langle \llbracket M \rrbracket, d_x, R \rangle) \leq C_I/100$. Any sweepout of $U$ must bisect volume in $B_r(x)$ at some time, so $W_\partial(U) \geq C_I$. Since $\mathbf{M}(\partial_I U) \leq \frac{1}{10} W_\partial(U)$, the set $U$ is good. Finiteness $W_g(U) < \infty$ follows from the existence of a sweepout by slices $\langle \llbracket M \rrbracket, d_x, R' \rangle$ for $R' \in [0, R]$.
+Set $U := B_R(x) \cap M$. Since $\partial_I U \subset d_x^{-1}(R) \cap \mathrm{int}(M)$, we have $\mathbf{M}(\partial_I U) \leq C_I/100$. Any sweepout of $U$ must bisect volume in $B_r(x)$ at some time, so $W_\partial(U) \geq C_I$. Since $\mathbf{M}(\partial_I U) \leq \frac{1}{10} W_\partial(U)$, the set $U$ is good. Finiteness $W_g(U) < \infty$ follows from the existence of a sweepout by level sets $\{d_x < R'\}$ for $R' \in [0, R]$.
 \end{proof}
