@@ -11,25 +11,33 @@ Throughout this chapter, ``stationary'' means stationary in~$M$ with free bounda
 
 Fix a good set $U\subset M$. By Proposition~\ref{prop:nested-sweepout}, there exist good sweepouts of~$U$ with maximal area arbitrarily close to~$W_g(U)$. Since $M$ is non-compact, we cannot pull tight on all of~$M$ at once. Following the strategy of Chambers--Liokumovich~\cite[\S7]{CL20}, we pull tight layer by layer on a bounded exhaustion and use a diagonal argument. The only adaptation to the free boundary setting is that all vector fields must lie in $\mathfrak{X}_{\mathrm{tan}}(M)$ (tangent to~$\partial M$), and ``stationary'' is replaced by ``stationary with free boundary'' throughout; the exhaustion structure and diagonal argument are identical to~\cite{CL20}. On each bounded layer, the local pull--tight map follows Li--Zhou~\cite[Proposition~4.17]{LZ17}.
 
-Let $U_0\Subset U_1\Subset\cdots\Subset M$ be bounded relative open sets with $M=\bigcup_i U_i$ and $U\Subset U_0$. Since each $\overline{U_i}$ is compact, the monotonicity formula and Li--Zhou's estimates apply on each~$U_i$. For each~$i$, choose $W_i$ with $U_i\Subset W_i\Subset U_{i+1}$. Set $C:=2W_g(U)$ and define
+Let $U_0\Subset U_1\Subset\cdots\Subset M$ be bounded relative open sets with $M=\bigcup_i U_i$ and $U\Subset U_0$. Since each $\overline{U_i}$ is compact, the monotonicity formula \cite[Theorem~2.1]{LZ17} and Li--Zhou's estimates \cite[Section~3]{LZ17} apply on each~$U_i$. For each~$i$, choose $W_i$ with $U_i\Subset W_i\Subset U_{i+1}$. Set $C:=2W_g(U)$ and define
 \[
 \mathcal{V}^C(\Omega):=\bigl\{V\in\mathcal{V}_n(M):\operatorname{spt}\|V\|\subset\overline\Omega,\;\|V\|(M)\le C\bigr\},
 \]
 \[
 \mathcal{V}^C_\infty(\Omega):=\bigl\{V\in\mathcal{V}^C(\Omega): V\text{ is stationary in }\Omega\text{ with free boundary}\bigr\}.
 \]
-Both sets are compact under the varifold metric~$\mathbf{F}$ (see \cite[Lemma~3.4]{LZ17}).
+Both sets are compact under the varifold metric~$\mathbf{F}$ when $\Omega$ is bounded (see \cite[Lemma~3.4]{LZ17}). For the full (non-compact) manifold, we define analogously
+\[
+\mathcal{V}^C(M):=\bigl\{V\in\mathcal{V}_n(M): \|V\|(M)\le C\bigr\},
+\]
+\[
+\mathcal{V}^C_\infty(M):=\bigl\{V\in\mathcal{V}^C(M): V\text{ is stationary in }M\text{ with free boundary}\bigr\}.
+\]
+Note that $\mathcal{V}^C(U_j)\subset\mathcal{V}^C(M)$ for every~$j$, but $\mathcal{V}^C(M)$ itself is \emph{not} compact under~$\mathbf{F}$ when $M$ is non-compact (a sequence of varifolds whose supports escape to infinity need not have an $\mathbf{F}$-convergent subsequence). The proof strategy is therefore to extract convergent subsequences in the compact spaces~$\mathcal{V}^C(U_j)$ one layer at a time, and combine them via a diagonal argument to obtain a limit in~$\mathcal{V}^C_\infty(M)$.
 
 \begin{lemma}[Pull--tight map {\cite[Lemma~2.3]{CL20}}]\label{lem:extend-pull-tight}
 For every~$i$ there exist a continuous map $\Phi_{U_i,W_i}:\mathcal{V}^C(M)\to\mathcal{V}^C(M)$ with the following properties for all $V\in\mathcal{V}^C(M)$:
 \begin{enumerate}
     \item \textup{(Mass non-increase)} $\|\Phi_{U_i,W_i}(V)\|(M)\le \|V\|(M)$;
     \item \textup{(Inactivity below threshold)} If $\|V\|(\overline{W}_i)\le 5\,\mathbf{M}(\partial_IU)$, then $\Phi_{U_i,W_i}(V)=V$;
-    \item \textup{(Strict decrease for non-stationary varifolds)} If $\|V\|(\overline{W}_i)\ge 9\,\mathbf{M}(\partial_IU)$ and $V\llcorner \mathrm{Gr}_n(U_i)\notin\mathcal{V}^C_\infty(U_i)$, then
-    \[
-    \|\Phi_{U_i,W_i}(V)\|(M) < \|V\|(M).
-    \]
-    More precisely, if $\mathbf{F}_{U_i}\bigl(V\llcorner \mathrm{Gr}_n(U_i),\,\mathcal{V}^C_\infty(U_i)\bigr)\in\bigl[2^{-(k+1)},2^{-k}\bigr]$ for some $k\in\mathbb{N}$, then the mass decreases by at least $\varepsilon_k(U_i)>0$, where $\varepsilon_k(U_i)\to 0$ as $k\to\infty$.
+    \item \textup{(Strict decrease for non-stationary varifolds)} If $\|V\|(\overline{W}_i)\ge 9\,\mathbf{M}(\partial_IU)$ and $\mathbf{F}_{U_i}\bigl(V\llcorner \mathrm{Gr}_n(U_i),\,\mathcal{V}^C_\infty(U_i)\bigr)\in\bigl[2^{-(k+1)},2^{-k}\bigr]$ for some $k\in\mathbb{N}$, then:
+    \begin{enumerate}[label=\textup{(\alph*)}]
+        \item $\|\Phi_{U_i,W_i}(V)\|(M) \le \|V\|(M) - \varepsilon_k(U_i)$;
+        \item $\mathbf{F}\bigl(V,\,\Phi_{U_i,W_i}(V)\bigr)\le\tau_k(U_i)$;
+    \end{enumerate}
+    where $\varepsilon_k(U_i)\to 0$ and $\tau_k(U_i)\to 0$ as $k\to\infty$.
 \end{enumerate}
 \end{lemma}
 
@@ -56,20 +64,60 @@ After passing to a subsequence, $\{\mathbf{P}_i(\Gamma_t^i)\}$ is a minimizing s
 \[
 \lim_{i\to\infty}\ \sup_{t\in[0,1]}\mathbf{M}\bigl(\mathbf{P}_i(\Gamma_t^i)\bigr)=W_g(U),
 \]
-and any min--max sequence $\mathbf{P}_i(\Gamma_{t_i}^i)$ admits a subsequence converging to a varifold $V\in\mathcal{V}^C_\infty(M)$.
+and any min--max sequence $\mathbf{P}_i(\Gamma_{t_i}^i)$ admits a subsequence converging to a varifold $V\in\mathcal{V}^C_\infty(M)$ that is stationary with free boundary.
 \end{proposition}
 
 \begin{proof}
-For each fixed~$j$, the sequence $\{\mathbf{P}_i(\Gamma_{t_i}^i)\}_{i \geq j}$ has mass $\leq C$ and support in~$\overline{U}_j$, so by compactness of $\mathcal{V}^C(U_j)$ we can extract a subsequence converging in $\mathbf{F}_{U_j}$ to some $V_j \in \mathcal{V}^C(U_j)$. Property~(3) of Lemma~\ref{lem:extend-pull-tight} ensures $V_j \in \mathcal{V}^C_\infty(U_j)$: if $V_j$ were not stationary in~$U_j$, the map $\Phi_{U_j,W_j}$ would decrease the mass of nearby slices by at least $\varepsilon_k(U_j)>0$, contradicting the fact that the total mass converges to~$W_g(U)$.
+Since $M$ is non-compact, $\mathcal{V}^C(M)$ is not compact under~$\mathbf{F}$, so we cannot extract a convergent subsequence in one step. However, each~$\mathcal{V}^C(U_j)$ is compact under~$\mathbf{F}$, so we extract convergent subsequences one layer at a time and combine them via a diagonal argument, following Chambers--Liokumovich~\cite[\S7]{CL20}. This procedure uses only the compactness of~$\mathcal{V}^C(U_j)$ and the properties of Lemma~\ref{lem:extend-pull-tight}; the free boundary condition is already encoded in the lemma.
 
-A standard diagonal argument (extract a subsequence converging in $\mathbf{F}_{U_1}$, then a further subsequence in $\mathbf{F}_{U_2}$, etc.) yields a diagonal subsequence converging in $\mathbf{F}_{U_j}$ for every~$j$. The limit $V$ is well-defined on all of~$M$ and is stationary with free boundary, since every compactly supported $X\in\mathfrak{X}_{\mathrm{tan}}(M)$ is supported in some~$U_j$.
+We claim that for every min--max sequence $\{\mathbf{P}_j(\Gamma_{t_j}^j)\}$ with $\mathbf{M}(\mathbf{P}_j(\Gamma_{t_j}^j))\to W_g(U)$, one has
+\begin{equation}\label{eq:pt-claim}
+\lim_{j\to\infty}\mathbf{F}_{U_i}\bigl(\mathbf{P}_j(\Gamma_{t_j}^j)\llcorner\mathrm{Gr}_n(U_i),\;\mathcal{V}^C_\infty(U_i)\bigr)=0\qquad\text{for every }i.
+\end{equation}
+
+Fix~$i$ and suppose for contradiction that (after passing to a subsequence)
+\[
+\mathbf{F}_{U_i}\bigl(\mathbf{P}_j(\Gamma_{t_j}^j)\llcorner\mathrm{Gr}_n(U_i),\;\mathcal{V}^C_\infty(U_i)\bigr)>\delta
+\]
+for some $\delta>0$ and all~$j$. For each $0\le l\le j$, write
+\[
+V_l^j:=\Phi_{U_l,W_l}\circ\Phi_{U_{l+1},W_{l+1}}\circ\cdots\circ\Phi_{U_j,W_j}\bigl(|\Gamma_{t_j}^j|\bigr),
+\]
+so that $V_0^j=\mathbf{P}_j(\Gamma_{t_j}^j)$ and $V_{j+1}^j=|\Gamma_{t_j}^j|$.
+
+Choose $k$ large enough so that $2^{-k}+\sum_{l=0}^{i}\tau_k(U_l)<\delta/2$, and set $\bar\varepsilon:=\tfrac{1}{2}\min_{0\le l\le i}\varepsilon_k(U_l)$. Fix $j>i$ with $\mathbf{M}(\Gamma_{t_j}^j)\in\bigl(W_g(U)-\bar\varepsilon/10,\;W_g(U)+\bar\varepsilon/10\bigr)$. There are two cases.
+
+\medskip
+\noindent\textit{Case~1.} For some $l\in\{0,\ldots,i\}$, $\mathbf{F}_{U_l}\bigl(V_{l+1}^j\llcorner\mathrm{Gr}_n(U_l),\,\mathcal{V}^C_\infty(U_l)\bigr)>2^{-k}$.
+Then Lemma~\ref{lem:extend-pull-tight}(3a) gives
+\[
+\mathbf{M}(V_0^j)\le\mathbf{M}(V_l^j)\le\mathbf{M}(V_{l+1}^j)-\varepsilon_k(U_l)\le\mathbf{M}(\Gamma_{t_j}^j)-\varepsilon_k(U_l)<W_g(U)-\bar\varepsilon,
+\]
+contradicting $\mathbf{M}(\mathbf{P}_j(\Gamma_{t_j}^j))\to W_g(U)$.
+
+\medskip
+\noindent\textit{Case~2.} For all $l\in\{0,\ldots,i\}$, $\mathbf{F}_{U_l}\bigl(V_{l+1}^j\llcorner\mathrm{Gr}_n(U_l),\,\mathcal{V}^C_\infty(U_l)\bigr)\le 2^{-k}$.
+By Lemma~\ref{lem:extend-pull-tight}(3b),
+\[
+\mathbf{F}_{U_i}\bigl(V_{l+1}^j\llcorner\mathrm{Gr}_n(U_i),\;V_l^j\llcorner\mathrm{Gr}_n(U_i)\bigr)\le\mathbf{F}(V_{l+1}^j,V_l^j)\le\tau_k(U_l).
+\]
+Summing over $l=0,\ldots,i$ and applying the triangle inequality,
+\[
+\mathbf{F}_{U_i}\bigl(V_{i+1}^j\llcorner\mathrm{Gr}_n(U_i),\;V_0^j\llcorner\mathrm{Gr}_n(U_i)\bigr)\le\sum_{l=0}^{i}\tau_k(U_l)<\delta/2.
+\]
+Since $\mathbf{F}_{U_i}(V_{i+1}^j\llcorner\mathrm{Gr}_n(U_i),\,\mathcal{V}^C_\infty(U_i))\le 2^{-k}<\delta/2$, the triangle inequality gives $\mathbf{F}_{U_i}(V_0^j\llcorner\mathrm{Gr}_n(U_i),\,\mathcal{V}^C_\infty(U_i))<\delta$, a contradiction.
+
+\medskip
+This establishes~\eqref{eq:pt-claim}. Now we apply the diagonal argument: by compactness of~$\mathcal{V}^C(U_j)$, extract a subsequence $\{i^{(1)}_k\}$ converging in $\mathbf{F}_{U_1}$, then a further subsequence $\{i^{(2)}_k\}$ converging in $\mathbf{F}_{U_2}$, and so on. The diagonal subsequence $\{i^{(k)}_k\}$ converges in $\mathbf{F}_{U_j}$ for every~$j$. Since $M = \bigcup_j U_j$, the limit varifold $V$ is well-defined on all of~$M$, and by~\eqref{eq:pt-claim} we have $V\llcorner\mathrm{Gr}_n(U_j)\in\mathcal{V}^C_\infty(U_j)$ for every~$j$. It follows that $V$ is stationary with free boundary on all of~$M$: for any $X\in\mathfrak{X}_{\mathrm{tan}}(M)$, the support of~$X$ is contained in some~$U_j$, and $V$ is stationary on~$U_j$, so $\delta V(X) = 0$.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Almost minimizing varifolds with free boundary}\label{sec:am-varifolds}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The pulled-tight varifold $V$ from Proposition~\ref{prop:pt-minimizing} is stationary, but stationarity alone does not yield regularity. Following the Almgren--Pitts strategy, we need the stronger \emph{almost minimizing} property: roughly, $V$ cannot be deformed to decrease its mass by much. We recall the precise definitions from Li--Zhou~\cite[Section~4]{LZ17}.
+The pulled-tight varifold $V$ from Proposition~\ref{prop:pt-minimizing} is stationary, but stationarity alone does not yield regularity. Following the Almgren--Pitts strategy, one needs the stronger \emph{almost minimizing} property: roughly, $V$ cannot be deformed to decrease its mass by much. In this section we collect the relevant definitions and results from Li--Zhou~\cite[Sections~4--6]{LZ17}. The definitions below are local and apply to any complete manifold with boundary. Of the two main results that use them, the regularity theorem \cite[Theorem~6.2]{LZ17} has an entirely local proof (replacements, tangent cones, and boundary blow-ups all take place in a neighbourhood of a single point) and therefore extends to non-compact manifolds without modification. The only step requiring compactness of the ambient manifold is the combinatorial selection of almost minimizing varifolds \cite[Theorem~5.3]{LZ17}; in our setting this is handled by applying the argument on each bounded set in the exhaustion and passing to a diagonal subsequence, exactly as in Chambers--Liokumovich~\cite[\S7]{CL20}. The details are carried out in Section~\ref{sec:main-proof}.
+
+The basic notion captures cycles whose mass cannot be decreased much by local deformations supported in a given open set.
 
 \begin{definition}[Almost minimizing with free boundary {\cite[Definition~4.18]{LZ17}}]\label{def:am-free-bdy}
 Let $U\subset M$ be relatively open. For $\varepsilon,\delta>0$, define $\mathscr{A}_n(U;\varepsilon,\delta;\mathcal{F})$ to be the set of all $\tau\in\mathbf{Z}_n(M,\partial M;\mathbb{Z}_2)$ such that whenever $\tau=\tau_0,\tau_1,\ldots,\tau_m\in\mathbf{Z}_n(M,\partial M;\mathbb{Z}_2)$ is a discrete sequence with
@@ -83,7 +131,7 @@ then $\mathbf{M}(\tau_m)\ge\mathbf{M}(\tau)-\varepsilon$.
 A varifold $V\in\mathcal{V}_n(M)$ is \emph{almost minimizing in $U$ with free boundary} if there exist sequences $\varepsilon_i\to 0$, $\delta_i\to 0$, and $\tau_i\in\mathscr{A}_n(U;\varepsilon_i,\delta_i;\mathcal{F})$ with canonical representatives $T_i\in\tau_i$ such that $\mathbf{F}(|T_i|,V)\le\varepsilon_i$.
 \end{definition}
 
-For regularity, one needs $V$ to be almost minimizing not just in one open set but in sufficiently small annuli around every point. This ensures that the tangent cone at each point is area-minimizing, which is the starting point of the regularity theory.
+For regularity, one needs the almost minimizing property to hold not just in a single open set but in sufficiently small annuli around every point; this ensures that every tangent cone is area-minimizing. At interior points, the annuli are ordinary; near the boundary, one uses half-annuli.
 
 \begin{definition}[Almost minimizing in small annuli {\cite[Definition~5.1]{LZ17}}]\label{def:am-small-annuli}
 For $p\in M$ and $0<s<r$, set
@@ -97,13 +145,13 @@ B_r^+(p)\setminus\overline{B}^+_s(p) & \text{if } p\in\partial M,
 where $B_r^+(p):=B_r(p)\cap M$. A varifold $V\in\mathcal{V}_n(M)$ is \emph{almost minimizing in small annuli with free boundary} if for each $p\in M$ there exists $r_{\mathrm{am}}(p)>0$ such that $V$ is almost minimizing in $\mathcal{A}_{s,r}(p)$ with free boundary for all $0<s<r\le r_{\mathrm{am}}(p)$.
 \end{definition}
 
-Almost minimizing varifolds are automatically stationary:
+A first consequence is that the almost minimizing property already implies stationarity, so no separate stationarity assumption is needed in the regularity theorem.
 
 \begin{proposition}[{\cite[Proposition~4.21]{LZ17}}]\label{prop:am-stationary}
 If $V\in\mathcal{V}_n(M)$ is almost minimizing in a relatively open set $U\subset M$ with free boundary, then $V$ is stationary in $U$ with free boundary.
 \end{proposition}
 
-The main payoff is the following regularity theorem, which converts the almost minimizing property into smooth structure.
+The main payoff is that almost minimizing in small annuli, combined with stationarity, gives full regularity. This is the deepest result in~\cite{LZ17}, relying on replacements, tangent cone classification, and boundary blow-up analysis.
 
 \begin{theorem}[Regularity {\cite[Theorem~6.2]{LZ17}}]\label{thm:main-regularity}
 Let $2\le n\le 6$. Suppose $V\in\mathcal{V}_n(M)$ is stationary in $M$ with free boundary and almost minimizing in small annuli with free boundary. Then there exist $N\in\mathbb{N}$, positive integers $m_1,\ldots,m_N$, and smooth, compact, connected, almost properly embedded free boundary minimal hypersurfaces $(\Sigma_j,\partial\Sigma_j)\subset(M,\partial M)$ such that
@@ -123,7 +171,7 @@ We now assemble the ingredients. Let $V\in\mathcal{V}^C_\infty(M)$ be the pulled
 After passing to a further subsequence, $V$ is almost minimizing in small annuli with free boundary (Definition~\ref{def:am-small-annuli}).
 \end{proposition}
 
-Combining this with the regularity theory, we obtain smooth structure. The proof of Theorem~\ref{thm:main-regularity} in \cite[Section~6]{LZ17} is entirely local---the replacement construction (\cite[Proposition~6.3]{LZ17}) acts inside a compact annular region, the tangent cone analysis (\cite[Proposition~6.11]{LZ17}) uses the monotonicity formula, and the boundary regularity proceeds by blow-up at a single point---so non-compactness of~$M$ causes no difficulty. We conclude:
+Combining Proposition~\ref{prop:am-selection} with the regularity theorem (Theorem~\ref{thm:main-regularity}), we obtain smooth structure. As noted in Section~\ref{sec:am-varifolds}, the proof of Theorem~\ref{thm:main-regularity} is entirely local, so it applies to our non-compact~$M$ without modification:
 
 \begin{proposition}[Regularity of the limit]\label{prop:regular-limit}
 There exist $N\in\mathbb{N}$, positive integers $m_1,\ldots,m_N$, and smooth, compact, connected, almost properly embedded free boundary minimal hypersurfaces $(\Sigma_j,\partial\Sigma_j)\subset (M,\partial M)$ such that $V=\sum_{j=1}^N m_j\,|\Sigma_j|$.
