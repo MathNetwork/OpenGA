@@ -1,10 +1,10 @@
-% !TEX root = ../thesis.tex
+% !TEX root = ../../thesis.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Nested Sweepout}\label{ch:nested-sweepout}
+\section{Nested Sweepout}\label{ch:nested-sweepout}
 
 The construction of nested sweepouts is crucial for our work. As discussed in \cite[§6]{CL20}, nested families allow us to glue local deformations while keeping precise control over the maximal mass of the sweepout. A family $\{\Gamma_t\}_{t\in[0,1]}$ is \emph{nested} if it is given by the level sets of a $\partial$-transverse Morse function, so that the associated regions $\Omega_t = f^{-1}((-\infty,t))$ vary by elementary topological moves (handle attachments or deletions) as $t$ increases.
 
-The main result of this chapter, Proposition~\ref{prop:nested-sweepout}, shows that any sweepout of a bounded relative open set $U$ can be approximated by a nested sweepout with arbitrarily small mass increase. The proof follows the strategy of \cite[Lemma~6.2]{CL20}, adapted to the free-boundary setting, and proceeds in three main steps:
+The main result of this section, Proposition~\ref{prop:nested-sweepout}, shows that any sweepout of a bounded relative open set $U$ can be approximated by a nested sweepout with arbitrarily small mass increase. The proof follows the strategy of \cite[Lemma~6.2]{CL20}, adapted to the free-boundary setting, and proceeds in three main steps:
 
 \begin{enumerate}
 \item \textbf{Step 1 (Preliminary Modification):} Subdivide the original sweepout $\{\Gamma_t\}_{t\in[0,1]}$
@@ -13,7 +13,7 @@ regions $\Omega_t$ are either monotone increasing or monotone decreasing.
 
 \item \textbf{Step 2 (Local Monotonization):} On each subinterval $[t_i, t_{i+1}]$, construct a nested
 family connecting slightly modified versions of $\Omega_{t_i}$ and $\Omega_{t_{i+1}}$. This uses the
-splitting and extension lemmas from Chapter~\ref{ch:splitting-and-extension} to build explicit Morse
+splitting and extension lemmas from Section~\ref{ch:splitting-and-extension} to build explicit Morse
 functions whose level sets have controlled mass.
 
 \item \textbf{Step 3 (Gluing):} Glue the nested families from adjacent intervals into a single global
@@ -30,7 +30,7 @@ The proof of this proposition follows the strategy of~\cite[Lemma 6.2]{CL20}, wi
     \item \emph{$\partial$-transverse Morse functions}: The Morse functions constructed in the preliminary modification are required to be $\partial$-transverse (Definition~\ref{def:boundary-transverse}), ensuring that level sets meet $\partial M$ transversally.
 \end{enumerate}
 
-\section{Step 1: Preliminary Modification}
+\subsection{Step 1: Preliminary Modification}
 Fix $\br{\Gamma_t} \in \mathcal{S}(U)$ with the corresponding open sets $\br{\Omega_t}$ with $\mathcal{F}(\br{\Gamma_t}) \leq A$. We apply the preliminary modification as in \cite[Lemma 6.2]{CL20} to $\br{\Gamma_t}$.
 \begin{lemma}[Preliminary Modification]\label{lem:preliminary-modification}
     For any $\eps > 0$ there exists a partition $0 = t_0 < \dots < t_N = 1$ of $[0, 1]$ and a family $\br{\Gamma_t'}$ with the corresponding family of open sets $\br{\Omega_t'}$, such that the following holds:
@@ -349,7 +349,7 @@ Fix $\br{\Gamma_t} \in \mathcal{S}(U)$ with the corresponding open sets $\br{\Om
         \end{equation*}
     \end{proof}
 \end{lemma}
-\section{Step 2: Local Monotonization}\label{sec:local-monotonization}
+\subsection{Step 2: Local Monotonization}\label{sec:local-monotonization}
 
 Assume that family $\br{\Gamma_t}$ satisfies conclusions of Lemma~\ref{lem:preliminary-modification} for the subdivision $0 = t_0 < \dots < t_N = 1$.
 
@@ -392,7 +392,7 @@ Therefore, we can conclude that
     \item[(2.5)] $\Omega_0^{i + 1}\subset \Omega_1^i$.
 \end{itemize}
 Roughly speaking, the reason why (2.5) holds is because to construct $\Omega_0^{i + 1}$ we push $\Omega_{t_{i + 1}}$ inward (or not at all) and to construct $\Omega_1^{i}$ we push $\Omega_{t_{i + 1}}$ outwards (or not at all).
-\section{Step 3: Gluing Nested Families}
+\subsection{Step 3: Gluing Nested Families}
 
 The final step is to glue together the nested families constructed on each interval $[t_i, t_{i+1}]$
 into a single global nested sweepout of $U$. The key observation from Step 2 is that adjacent

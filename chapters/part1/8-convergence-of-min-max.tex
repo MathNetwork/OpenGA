@@ -1,12 +1,12 @@
-% !TEX root = ../thesis.tex
-\chapter{Convergence of the Min--Max Sequence}\label{ch:convergence-of-min-max}
+% !TEX root = ../../thesis.tex
+\section{Convergence of the Min--Max Sequence}\label{ch:convergence-of-min-max}
 
-This chapter completes the proof of the main theorem. Starting from the good sweepouts constructed in the preceding chapters, we perform a pull--tight deformation on an exhaustion of~$M$, extract a varifold limit that is almost minimizing in small annuli, and apply the regularity theory of Li--Zhou~\cite{LZ17} to obtain a smooth, almost properly embedded free boundary minimal hypersurface.
+This section completes the proof of the main theorem. Starting from the good sweepouts constructed in the preceding sections, we perform a pull--tight deformation on an exhaustion of~$M$, extract a varifold limit that is almost minimizing in small annuli, and apply the regularity theory of Li--Zhou~\cite{LZ17} to obtain a smooth, almost properly embedded free boundary minimal hypersurface.
 
-Throughout this chapter, ``stationary'' means stationary in~$M$ with free boundary (Definition~\ref{def:stationary}).
+Throughout this section, ``stationary'' means stationary in~$M$ with free boundary (Definition~\ref{def:stationary}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Pull--tight on a non-compact manifold}\label{sec:pull-tight}
+\subsection{Pull--tight on a non-compact manifold}\label{sec:pull-tight}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Fix a good set $U\subset M$. By Proposition~\ref{prop:nested-sweepout}, there exist good sweepouts of~$U$ with maximal area arbitrarily close to~$W_g(U)$. Since $M$ is non-compact, we cannot pull tight on all of~$M$ at once. Following Chambers--Liokumovich~\cite[\S7]{CL20}, we pull tight layer by layer on a bounded exhaustion and combine the results via a diagonal argument.
@@ -76,7 +76,7 @@ Next, a diagonal argument produces a subsequence converging in $\mathbf{F}_{U_j}
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Almost minimizing varifolds with free boundary}\label{sec:am-varifolds}
+\subsection{Almost minimizing varifolds with free boundary}\label{sec:am-varifolds}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The pulled-tight varifold $V$ from Proposition~\ref{prop:pt-minimizing} is stationary, but stationarity alone does not yield regularity. Following the Almgren--Pitts strategy, one needs the stronger \emph{almost minimizing} property: roughly, $V$ cannot be deformed to decrease its mass by much. In the closed (boundaryless) setting, this notion was introduced by Pitts~\cite{Pit81} and reformulated by De~Lellis--Tasnady~\cite{DLT13}; the regularity of almost minimizing varifolds was established in~\cite{Pit81,DLT13}. Chambers--Liokumovich~\cite{CL20} use these results directly, as their manifolds have no boundary. For manifolds \emph{with} boundary, Li--Zhou~\cite[Sections~4--6]{LZ17} developed free boundary counterparts of both the almost minimizing definitions and the regularity theory, which are the versions we use here.
@@ -128,7 +128,7 @@ The restriction $2 \leq n \leq 6$ ensures that the singular set is empty; for $n
 \end{theorem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Proof of the main theorem}\label{sec:main-proof}
+\subsection{Proof of the main theorem}\label{sec:main-proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We now assemble the ingredients. Let $V\in\mathcal{V}^C_\infty(M)$ be the pulled-tight varifold limit from Proposition~\ref{prop:pt-minimizing}. In the compact setting, Li--Zhou~\cite[Theorem~5.3]{LZ17} obtain the almost minimizing property from the combinatorial selection argument of Almgren--Pitts~\cite{Pit81}. The key observation for the non-compact case is that this argument is \emph{local}: for each $p\in M$, one only deforms sweepouts inside a bounded neighbourhood of~$p$. Since each~$U_j$ in the exhaustion is bounded, the combinatorial argument applies on~$U_j$ without modification, and a diagonal argument over~$j$ yields:

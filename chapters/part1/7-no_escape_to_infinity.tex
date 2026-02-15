@@ -1,16 +1,11 @@
-% !TEX root = ../thesis.tex
-\chapter{No Escape to Infinity}\label{ch:no-escape-to-infinity}
+% !TEX root = ../../thesis.tex
+\section{No Escape to Infinity}\label{ch:no-escape-to-infinity}
 
 A key difficulty in min--max theory on \emph{complete} manifolds (with or without boundary) is ensuring that the min--max sequence does not ``escape to infinity''---that is, that slices with large area do not concentrate all their mass arbitrarily far from the good set $U$. As observed in \cite{CL20}, this is fundamentally a problem caused by the \emph{completeness} of the manifold: in a compact manifold, such escape is topologically impossible, but in a complete non-compact setting, one must prove that the min--max construction forces slices to remain localized near $U$.
 
-This chapter establishes a quantitative non-escape result: any good sweepout must have at least one slice carrying a definite amount of area inside $U$. The free-boundary setting introduces additional technical complications in the proof (particularly in handling boundary collars and relative isoperimetric estimates), but the fundamental difficulty remains the completeness of the ambient manifold.
+This section establishes a quantitative non-escape result: any good sweepout must have at least one slice carrying a definite amount of area inside $U$. The free-boundary setting introduces additional technical complications in the proof (particularly in handling boundary collars and relative isoperimetric estimates), but the fundamental difficulty remains the completeness of the ambient manifold.
 
-The proof proceeds by contradiction. We assume such a sweepout exists and use the nested sweepout structure from Chapter~\ref{ch:nested-sweepout} to construct a competing sweepout with strictly smaller width, contradicting the definition of $W_g(U)$.
-
-\section{Statement of the Main Result}\label{sec:non-escape-statement}
-
-The main result of this chapter is the following proposition, which provides a quantitative lower
-bound on the area that must remain inside $U$.
+The proof proceeds by contradiction: assuming every slice with large area has negligible intersection with $\overline{U}$, we use the nested sweepout structure from Section~\ref{ch:nested-sweepout} to construct a competing sweepout with strictly smaller width, contradicting the definition of $W_g(U)$. The precise statement is:
 
 \begin{proposition}\label{prop:non-escape}
     For every good set $U$, there exists a positive constant $\eps(U)$ which depends only on $U$ such that the following holds: For every good sweepout $\br{\Gamma_t}$ of $U$ with associated family of open sets $\br{\Omega_t}$, there exists $t' \in [0, 1]$ such that
@@ -22,11 +17,7 @@ bound on the area that must remain inside $U$.
 
 The proof is by contradiction. We assume that Proposition~\ref{prop:non-escape} does not hold, i.e. we can construct a good sweepout with volume of hypersurfaces strictly less than $W_g(U)$. The main tool in the proof is the structure of the nested sweepout from Proposition~\ref{prop:nested-sweepout}.
 
-\section{Pushing Sets Outside Good Sets}\label{sec:pushing-outside}
-
-The first technical ingredient is a lemma that allows us to deform a set with small intersection with $U$ so that it avoids $U$ entirely, while controlling the area increase.
-
-Let $U$ be a good set.
+The first technical ingredient is a lemma that allows us to deform a set with small intersection with $U$ so that it avoids $U$ entirely, while controlling the area increase. Let $U$ be a good set.
 \begin{lemma}\label{lem:nested-sweepout-small-intersection}
     There exist $\eps(U) > 0$, $\eps_0(U) > 0$ and $\eps_1(U) > 0$ such that for any open sets $\Omega'$ the following holds:
     \begin{enumerate}
@@ -198,8 +189,6 @@ Let $U$ be a good set.
     \end{proof}
 \end{lemma}
 
-\section{Proof of the Main Result by Contradiction}\label{sec:proof-by-contradiction}
-
 We are now ready to prove Proposition~\ref{prop:non-escape} by contradiction. Suppose there exists
 a good sweepout $\br{\Gamma_t}_{t \in [0, 1]}$ such that whenever
 \begin{equation*}
@@ -208,8 +197,6 @@ a good sweepout $\br{\Gamma_t}_{t \in [0, 1]}$ such that whenever
 we have $\mathcal{H}^n(\Gamma_t\cap U) < \eps(U)$. Our goal is to construct a good sweepout entirely
 inside $U$ whose maximal slice area is \emph{strictly less} than $W_g(U)$, contradicting the
 definition of $W_g(U)$ as the infimum of maximal areas over all good sweepouts of $U$.
-
-\subsection{Continuity Regularization}
 
 Let $f(t) = \mathcal{H}^n(\Gamma_t\cap U)$. Note that $f(t)$ may not be continuous. However, it is easy
 to see that one can perturb the family $\br{\Gamma_t}$ so that it is $\delta$-continuous in the
@@ -462,8 +449,6 @@ Then, as in \cite[p.~26]{CL20}, we may assume:
   that pushes $\partial_I\overline U$ outside $U$ through slices of area at most $3\mathbf{M}(\partial_IU)$, after absorbing the $O(\varepsilon_0^{\frac{n}{n+1}})$ error into the constant (again by choosing
   $\varepsilon_0(U)$ small). This is the relative version of the short “push across the collar” used in \cite{CL20}.
 \end{enumerate}
-\subsection{Controlling Slices Outside the Good Set}
-
 Before proceeding, we isolate a slice of the nested family whose portion \emph{outside} the shrunken
 set $\overline U$ is uniformly controlled. This is the key bridge between the global width bound and
 a sweepout confined to $\overline U$: once such a slice is found, we can (i) cut the family at that

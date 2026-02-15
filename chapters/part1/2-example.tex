@@ -1,7 +1,7 @@
-% !TEX root = ../thesis.tex
-\chapter{Settings and Preliminaries}\label{ch:preliminaries}
+% !TEX root = ../../thesis.tex
+\section{Settings and Preliminaries}\label{ch:preliminaries}
 
-This chapter establishes the foundational framework for the free boundary min-max theory in complete Riemannian manifolds with boundary.
+This section establishes the foundational framework for the free boundary min-max theory in complete Riemannian manifolds with boundary.
 
 Let $(M^{n+1}, g)$ be a smooth, complete Riemannian manifold with non-empty smooth boundary $\partial M$. We assume $2 \leq n \leq 6$ throughout. We write $\nu_{\partial M}$ for the inward unit normal to $\partial M$. For details on Fermi coordinates near $\partial M$, see \cite[Section~2]{LZ17}.
 
@@ -23,7 +23,7 @@ For a relatively open subset $U \subset M$, we write $\mathrm{int}_M(U)$ for the
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Currents and Varifolds}\label{sec:currents-varifolds}
+\subsection{Currents and Varifolds}\label{sec:currents-varifolds}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We work with currents and relative cycles following Li--Zhou~\cite{LZ17}. We write $\mathcal{R}_k(M;\mathbb{Z}_2)$ for the space of mod~$2$ flat chains supported in $M$, with mass norm $\mathbf{M}$ and flat topology.
@@ -99,7 +99,7 @@ where:
 \end{itemize}
 \end{definition}
 
-In Chapters~\ref{ch:nested-sweepout} and~\ref{ch:no-escape-to-infinity}, we localise a global sweepout to a good set $U \subset M$ in order to apply the min-max theory on a precompact domain. This localisation requires cutting the Caccioppoli sets $\Omega_t$ along the interior boundary $\partial_I U$, which may introduce extra area near $\partial_I U$. To control this, we use the coarea inequality to find cut-off radii where the extra area is small. Throughout we use the following standard fact:
+In Sections~\ref{ch:nested-sweepout} and~\ref{ch:no-escape-to-infinity}, we localise a global sweepout to a good set $U \subset M$ in order to apply the min-max theory on a precompact domain. This localisation requires cutting the Caccioppoli sets $\Omega_t$ along the interior boundary $\partial_I U$, which may introduce extra area near $\partial_I U$. To control this, we use the coarea inequality to find cut-off radii where the extra area is small. Throughout we use the following standard fact:
 
 \begin{lemma}[Coarea inequality]\label{lem:coarea}
 Let $\Omega \subset M$ be a bounded open set of finite perimeter and $f\colon M \to \mathbb{R}$ a Lipschitz function. Then for almost every $t \in \mathbb{R}$, the level set $f^{-1}(t) \cap \Omega$ has finite $\mathcal{H}^n$-measure, and
@@ -108,7 +108,7 @@ Let $\Omega \subset M$ be a bounded open set of finite perimeter and $f\colon M 
 \]
 \end{lemma}
 
-The min-max procedure produces limit objects not as currents but as varifolds: the pull-tight argument of Chapter~\ref{ch:convergence-of-min-max} yields a stationary varifold, and the regularity theory (\cite[Theorem~6.2]{LZ17}; see also Chapter~\ref{ch:alternative-regularity}) recovers a smooth minimal hypersurface from it. We recall the basic definitions; standard references include Pitts~\cite{Pit81}, Simon~\cite{Sim84}, Colding--De~Lellis~\cite{CL03}, and De~Lellis--Tasnady~\cite{DLT13}.
+The min-max procedure produces limit objects not as currents but as varifolds: the pull-tight argument of Section~\ref{ch:convergence-of-min-max} yields a stationary varifold, and the regularity theory (\cite[Theorem~6.2]{LZ17}; see also Chapter~\ref{ch:alternative-regularity}) recovers a smooth minimal hypersurface from it. We recall the basic definitions; standard references include Pitts~\cite{Pit81}, Simon~\cite{Sim84}, Colding--De~Lellis~\cite{CL03}, and De~Lellis--Tasnady~\cite{DLT13}.
 
 \begin{definition}[Varifolds]\label{def:varifold}
 Let $\mathrm{Gr}_n(M)$ denote the Grassmannian bundle of (unoriented) $n$-planes over $M$. An \emph{$n$-varifold} on $M$ is a Radon measure on $\mathrm{Gr}_n(M)$. The space of all $n$-varifolds is denoted $\mathcal{V}_n(M)$, equipped with the weak-$*$ topology.
@@ -132,7 +132,7 @@ A varifold $V \in \mathcal{V}_n(M)$ is:
 \end{enumerate}
 \end{definition}
 
-The pull-tight procedure (Chapter~\ref{ch:convergence-of-min-max}) requires a metric on the space of varifolds that metrises weak-$*$ convergence and behaves well under localisation to open subsets. This role is played by the $\mathbf{F}$-metric.
+The pull-tight procedure (Section~\ref{ch:convergence-of-min-max}) requires a metric on the space of varifolds that metrises weak-$*$ convergence and behaves well under localisation to open subsets. This role is played by the $\mathbf{F}$-metric.
 
 \begin{definition}[$\mathbf{F}$-metric]\label{def:F-metric}
 The \emph{$\mathbf{F}$-metric} on $\mathcal{V}_n(M)$ is defined by
@@ -143,10 +143,10 @@ On sets of uniformly bounded mass, $\mathbf{F}$ metrizes the weak-$*$ topology. 
 \end{definition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Sweepouts, Width, and Good Sets}\label{sec:sweepouts}
+\subsection{Sweepouts, Width, and Good Sets}\label{sec:sweepouts}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The cut-and-paste operations in our proof (splitting, extension, and nested sweepout construction in Chapters~\ref{ch:splitting-and-extension}--\ref{ch:no-escape-to-infinity}) are most naturally described using Caccioppoli sets. We therefore adopt a continuous sweepout framework based on Caccioppoli sets (sets of finite perimeter), following the approach of Chambers--Liokumovich~\cite{CL20} and De~Lellis--Tasnady~\cite{DLT13}. In Proposition~\ref{prop:sweepout-cycle} below, we show that every Caccioppoli sweepout gives rise to a continuous map into the space of mod~$2$ relative cycles; this is the bridge that allows us to invoke the min-max machinery of Li--Zhou~\cite{LZ17} (pull-tight, almost minimizing, regularity) developed in the cycle-valued setting. For applications to non-compact manifolds, we consider sweepouts of bounded open sets.
+The cut-and-paste operations in our proof (splitting, extension, and nested sweepout construction in Sections~\ref{ch:splitting-and-extension}--\ref{ch:no-escape-to-infinity}) are most naturally described using Caccioppoli sets. We therefore adopt a continuous sweepout framework based on Caccioppoli sets (sets of finite perimeter), following the approach of Chambers--Liokumovich~\cite{CL20} and De~Lellis--Tasnady~\cite{DLT13}. In Proposition~\ref{prop:sweepout-cycle} below, we show that every Caccioppoli sweepout gives rise to a continuous map into the space of mod~$2$ relative cycles; this is the bridge that allows us to invoke the min-max machinery of Li--Zhou~\cite{LZ17} (pull-tight, almost minimizing, regularity) developed in the cycle-valued setting. For applications to non-compact manifolds, we consider sweepouts of bounded open sets.
 
 \begin{definition}[Sweepout of $(U, \partial_F U)$]\label{def:sweepout}
 Let $U \subset M$ be a bounded relatively open set of finite perimeter. A \emph{sweepout of $(U, \partial_F U)$} is a family of Caccioppoli sets $\{\Omega_t\}_{t \in [0,1]}$ in $M$ satisfying:
