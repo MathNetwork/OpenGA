@@ -17,6 +17,8 @@ By De~Giorgi's structure theorem, the distributional derivative $D\chi_E$ of a C
 \mathbf{M}(\partial E) = \mathrm{Per}(E) \qquad \text{and} \qquad \mathcal{F}(\partial E, \partial F) = \|\chi_E - \chi_F\|_{L^1} = \mathrm{Vol}(E \triangle F).
 \]
 
+The min-max construction produces limits not in the space of Caccioppoli sets but in the space of varifolds, which we now recall.
+
 \begin{definition}[Varifold]\label{def:p2-varifold}
 An \emph{$n$-varifold} on $M$ is a Radon measure on the Grassmannian bundle $\mathrm{Gr}_n(M)$. We denote the space of $n$-varifolds by $\mathcal{V}_n(M)$. Given a cycle $\Gamma = \partial \Omega \in \mathcal{Z}_n(M; \mathbb{Z}_2)$, we write $|\Gamma|$ for the associated integral varifold:
 \[
@@ -25,6 +27,8 @@ An \emph{$n$-varifold} on $M$ is a Radon measure on the Grassmannian bundle $\ma
 \end{definition}
 
 We will switch freely between the equivalent notations $\mathbf{M}(\Phi(x))$ and $\mathrm{Per}(\Omega(x))$.
+
+For an $\mathcal{H}^n$-rectifiable set $\Sigma$, the approximate tangent plane $T_p\Sigma$ exists and is unique at $\mathcal{H}^n$-a.e.\ point $p \in \Sigma$ (cf.~\cite[Section~11]{Sim84}).
 
 \begin{definition}[Stationary and stable varifolds]\label{def:p2-stationary}
 A varifold $V \in \mathcal{V}_n(M)$ is \emph{stationary} if its first variation vanishes:
@@ -35,8 +39,40 @@ A stationary varifold $V$ is \emph{stable} if, in addition, the second variation
 \end{definition}
 
 \begin{definition}[Tangent cone~{\cite[Chapter~8]{Sim84}}]\label{def:p2-tangent-cone}
-Let $V$ be a stationary $n$-varifold in $M$ and $Z \in \spt\|V\|$. For $\rho > 0$, the \emph{blow-up} of $V$ at $Z$ with scale $\rho$ is the varifold $(\eta_{Z,\rho})_\# V$, where $\eta_{Z,\rho}(x) = (x - Z)/\rho$ in normal coordinates centred at $Z$. A \emph{tangent cone} of $V$ at $Z$ is any varifold limit $C = \lim_{j \to \infty} (\eta_{Z,\rho_j})_\# V$ for some sequence $\rho_j \to 0$. By the monotonicity formula, at least one such limit exists; it is a stationary cone in $\mathbb{R}^{n+1}$.
+Let $V$ be a stationary $n$-varifold in $M$ and $Z \in \spt\|V\|$. For $\rho > 0$, the \emph{blow-up} of $V$ at $Z$ with scale $\rho$ is the varifold $(\eta_{Z,\rho})_\# V$, where $\eta_{Z,\rho}(x) = (x - Z)/\rho$ in normal coordinates centred at $Z$. A \emph{tangent cone} of $V$ at $Z$ is any varifold limit $C = \lim_{j \to \infty} (\eta_{Z,\rho_j})_\# V$ for some sequence $\rho_j \to 0$. By the monotonicity formula (Proposition~\ref{prop:p2-monotonicity} below), at least one such limit exists; it is a stationary cone in $\mathbb{R}^{n+1}$.
 \end{definition}
+
+We next collect several quantitative tools from geometric measure theory that will be used in the regularity arguments of Sections~\ref{sec:alpha-verification} and~\ref{sec:mass-cancellation-integrality}.
+
+\begin{definition}[Varifold convergence~{\cite[Section~38]{Sim84}}]\label{def:p2-varifold-convergence}
+A sequence of $n$-varifolds $\{V_i\}$ \emph{converges} to $V \in \mathcal{V}_n(M)$ if $V_i \to V$ as Radon measures on $\mathrm{Gr}_n(M)$, i.e., $\int f \, dV_i \to \int f \, dV$ for every $f \in C_c(\mathrm{Gr}_n(M))$.
+\end{definition}
+
+\begin{proposition}[Monotonicity formula~{\cite[Section~17]{Sim84}}]\label{prop:p2-monotonicity}
+Let $V$ be a stationary $n$-varifold in $(M^{n+1}, g)$ and $p \in \spt\|V\|$. Then the density ratio $\omega_n^{-1} r^{-n} \|V\|(B_r(p))$ is monotone non-decreasing in $r$ (for $r$ small enough that the exponential map at $p$ is a diffeomorphism). In particular, at least one tangent cone exists at every point of $\spt\|V\|$.
+\end{proposition}
+
+\begin{definition}[Density]\label{def:p2-density}
+For a stationary $n$-varifold $V$ and $p \in M$, the \emph{density} of $V$ at $p$ is
+\[
+\Theta(\|V\|, p) := \lim_{r \to 0} \omega_n^{-1} r^{-n} \|V\|(B_r(p)).
+\]
+By the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), this limit exists. Moreover, $\Theta(\|V\|, p) \geq 1$ for every $p \in \spt\|V\|$.
+\end{definition}
+
+\begin{definition}[Tilt-excess~{\cite[Section~22]{Sim84}}]\label{def:p2-tilt-excess}
+The \emph{tilt-excess} of a varifold $W \in \mathcal{V}_n(M)$ in $B_r(p)$ relative to an $n$-plane $P$ is
+\[
+E(W, B_r(p), P) := r^{-n} \int_{B_r(p) \times G(n,n+1)} |S - P|^2 \, dW(x, S).
+\]
+If $V$ is a rectifiable $n$-varifold with approximate tangent plane $P$ at $p$, then $E(V, B_r(p), P) \to 0$ as $r \to 0$.
+\end{definition}
+
+\begin{proposition}[Federer regularity for Caccioppoli sets~{\cite[Section~37]{Sim84}}]\label{prop:p2-federer-regularity}
+Let $\Omega$ be a Caccioppoli set in $(M^{n+1}, g)$. Then $\dim_{\mathcal{H}}(\partial\Omega \setminus \partial^*\Omega) \leq n - 7$. In particular, when $n \leq 6$, $\partial\Omega = \partial^*\Omega$ is a smooth compact embedded hypersurface (without boundary if $M$ is closed).
+\end{proposition}
+
+Finally, we set up the min-max framework following Chodosh--Liokumovich--Spolaor~\cite{CLS22}.
 
 \begin{definition}[Sweepout and width~{\cite[Definition~1.1]{CLS22}}]\label{def:p2-sweepout}
 A \emph{sweepout} of $M$ is a map $\Phi \colon [0,1] \to \mathcal{Z}_n(M; \mathbb{Z}_2)$ continuous in $\mathcal{F}$-topology such that $\Phi(x) = \partial \Omega(x)$, where $\{\Omega(x) : x \in [0,1]\}$ is a family of Caccioppoli sets with $\Omega(0) = \varnothing$ and $\Omega(1) = M$. We denote by $\mathcal{S}$ the collection of all such sweepouts. The \emph{width} of $M$ is
