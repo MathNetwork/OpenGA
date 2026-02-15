@@ -1,0 +1,104 @@
+% !TEX root = ../../thesis.tex
+
+\section{Integrality}\label{sec:integrality}
+
+Wickramasekera's regularity theorem (Theorem~\ref{thm:wickramasekera}) requires its input varifold to be integral. In this section, we establish integrality of the limit varifold $V$ in both the no-mass-cancellation and mass-cancellation cases. The first case uses the de~Lellis--Tasnady criterion (Proposition~\ref{prop:p2-DLT-integrality}); the second exploits nestedness of the sweepout to count sheets directly via a graphical decomposition lemma.
+
+\subsection{The no-mass-cancellation case}\label{subsec:integrality-no-cancel}
+
+\begin{theorem}[Integrality without mass cancellation]\label{prop:limit-dichotomy}\label{thm:integrality-mult-one}
+Assume no mass cancellation occurs at $x_0$, i.e., $\mathbf{M}(\Phi(x_0)) = W$. Then $V = |\partial^*\Omega(x_0)|$; in particular, $V$ is an integral varifold.
+\end{theorem}
+
+\begin{proof}
+Since $\Phi$ is continuous in the flat topology, we have $\Omega(x_i) \to \Omega(x_0)$ in $L^1(M)$, so $D\chi_{\Omega(x_i)} \to D\chi_{\Omega(x_0)}$ weakly as measures. Moreover, the no-mass-cancellation hypothesis gives
+\[
+\mathrm{Per}(\Omega(x_i)) = \mathbf{M}(\Phi(x_i)) \to W = \mathbf{M}(\Phi(x_0)) = \mathrm{Per}(\Omega(x_0)).
+\]
+Both conditions of Proposition~\ref{prop:p2-DLT-integrality} are satisfied, so $V = |\partial^*\Omega(x_0)|$ is the integral varifold induced by the Caccioppoli boundary $\partial^*\Omega(x_0)$.
+\end{proof}
+
+The identification $V = |\partial^*\Omega(x_0)|$ has two important consequences beyond integrality: it tells us that $V$ is the boundary of a Caccioppoli set, which constrains the possible tangent cones (Section~\ref{subsec:tangent-cones}), and it connects $V$ to the non-excessive structure of the sweepout, which provides the homotopic minimizing property.
+
+\subsection{The mass cancellation case}\label{subsec:integrality-cancel}
+
+When mass cancellation occurs ($\mathbf{M}(\Phi(x_0)) < W$), we still have $\Omega(x_i) \to \Omega(x_0)$ in $L^1$, but the perimeter convergence condition in Proposition~\ref{prop:p2-DLT-integrality} fails:
+\[
+    \mathrm{Per}(\Omega(x_i)) \to W > \mathrm{Per}(\Omega(x_0)).
+\]
+The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. Instead, we exploit the nestedness of the sweepout to count sheets and deduce integrality directly. The main tool is the following graphical decomposition lemma for Caccioppoli boundaries converging to a stationary varifold.
+
+\begin{lemma}[Sheet decomposition]\label{lem:sheet-decomposition}
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. Let $\{\Omega_i\}$ be a sequence of Caccioppoli sets with $|\partial^*\Omega_i| \to V$ as varifolds, where $V$ is a stationary rectifiable $n$-varifold. Suppose that $p \in \spt\|V\|$ is a point where $V$ has a unique tangent plane $P = T_p\Sigma$ and finite density $\theta(p) = \Theta(\|V\|, p) \in (0, \infty)$ (these conditions hold at $\mathcal{H}^n$-a.e.\ point of $\Sigma$ by rectifiability; see Section~\ref{sec:p2-prelim} and~\cite[Section~11]{Sim84}).
+
+Then for every $\varepsilon > 0$, there exist $r_0 > 0$ and $i_0 \in \mathbb{N}$ such that for a.e.\ $r \in (0, r_0)$ and all $i \geq i_0$, the following holds:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item $\partial^*\Omega_i \cap B_r(p)$ consists of exactly $k$ smooth connected components $\Sigma_i^1, \ldots, \Sigma_i^k$, where $k = k(r)$ is independent of $i$ and satisfies $\theta(p) = k$;
+    \item each $\Sigma_i^j$ is the graph of a smooth function $u_i^j \colon \Omega_i^j \to \mathbb{R}$ over a domain $\Omega_i^j \subset D_r$ with $\|Du_i^j\|_{C^0} < \varepsilon$ and $\mathcal{H}^n(D_r \setminus \Omega_i^j) < \varepsilon \omega_n r^n$, where $D_r = P \cap B_r(p)$;
+    \item the area of each sheet satisfies $|\mathcal{H}^n(\Sigma_i^j) - \omega_n r^n| < \varepsilon \omega_n r^n$.
+\end{enumerate}
+In particular, $\theta(p) \in \mathbb{Z}_{>0}$.
+\end{lemma}
+
+\begin{proof}
+The proof combines three ingredients: the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), graphical decomposition under small tilt-excess (Definition~\ref{def:p2-tilt-excess}), and the sphere constraint to exclude partial sheets.
+
+\medskip\noindent\textbf{Step~1: Setup.}
+Working in normal coordinates centered at $p$, we identify a neighborhood of $p$ with a neighborhood of the origin in $\mathbb{R}^{n+1}$, the tangent plane $P$ with $\mathbb{R}^n \times \{0\}$, and write $D_r = \{y \in \mathbb{R}^n : |y| < r\}$ for the $n$-disk in $P$. Since $V$ has tangent varifold $\theta(p)|P|$ at $p$, the density ratio satisfies
+\[
+    \omega_n^{-1} r^{-n} \|V\|(B_r(p)) \to \theta(p) \quad \text{as } r \to 0.
+\]
+
+\medskip\noindent\textbf{Step~2: Tilt-excess control.}
+Since $V$ has tangent plane $P$ at $p$, the tilt-excess (Definition~\ref{def:p2-tilt-excess}) satisfies $E(V, B_r(p), P) \to 0$ as $r \to 0$. The varifold convergence $|\partial^*\Omega_i| \to V$ (Definition~\ref{def:p2-varifold-convergence}) implies $E(|\partial^*\Omega_i|, B_r(p), P) \to E(V, B_r(p), P)$ for each generic $r$ (with $\|V\|(\partial B_r(p)) = 0$). Combining: for every $\delta > 0$, there exist $r_1 > 0$ and $i_1$ such that for $r < r_1$ and $i > i_1$,
+\[
+    E(|\partial^*\Omega_i|, B_r(p), P) < \delta.
+\]
+
+\medskip\noindent\textbf{Step~3: Graphical decomposition.}
+Since each $\partial^*\Omega_i$ is a smooth embedded hypersurface (Proposition~\ref{prop:p2-federer-regularity}), we apply the following standard result (cf.~\cite[Chapter~7]{Sim84} and~\cite[Lemma~2.1]{Wic14}): there exists $\delta_0 = \delta_0(n) > 0$ such that if $\Sigma$ is a smooth closed embedded hypersurface in $B_R(0) \subset \mathbb{R}^{n+1}$ satisfying
+\begin{enumerate}[label=\textup{(H\arabic*)}]
+    \item $\mathcal{H}^n(\Sigma \cap B_R(0)) \leq C \omega_n R^n$ for some constant $C$;
+    \item $R^{-n} \int_{\Sigma \cap B_R(0)} |\nu_\Sigma - e_{n+1}|^2 \, d\mathcal{H}^n < \delta_0$;
+\end{enumerate}
+then for a.e.\ $\rho \in (R/2, R)$, the intersection $\Sigma \cap B_\rho(0)$ consists of finitely many connected components, each the graph of a smooth function $u \colon \Omega_u \to \mathbb{R}$ over a domain $\Omega_u \subset P$ with $\|Du\|_{C^0} \leq C(n)\delta_0^{1/2}$. (The proof uses Chebyshev's inequality to get pointwise control of $|\nu_\Sigma - e_{n+1}|$ outside a small set, then the implicit function theorem to decompose each nearly-flat piece into a graph; embeddedness prevents the graphical pieces from merging or overlapping.)
+
+We apply this with $\Sigma = \partial^*\Omega_i$, $R = 2r$, and $\delta_0$ chosen so that $C(n)\delta_0^{1/2} < \varepsilon$. Condition~(H1) follows from varifold convergence, and condition~(H2) from the tilt-excess bound. Relabeling $\rho$ as $r$ gives, for $r$ small and $i$ large, a decomposition of $\partial^*\Omega_i \cap B_r(p)$ into finitely many smooth graphs $\Sigma_i^1, \ldots, \Sigma_i^{k_i}$ with $u_i^j \colon \Omega_i^j \to \mathbb{R}$ and $\|Du_i^j\|_{C^0} < \varepsilon$.
+
+\medskip\noindent\textbf{Step~4: Each sheet nearly fills $D_r$, and the sheet count is constant.}
+Since $\partial^*\Omega_i$ is compact without boundary (Proposition~\ref{prop:p2-federer-regularity}), the boundary of each graphical piece $\Sigma_i^j$ lies on $\partial B_r(p)$: every $y \in \partial\Omega_i^j$ satisfies $|y|^2 + |u_i^j(y)|^2 = r^2$. Consider a sheet passing through $B_{r/2}(p)$, i.e., there exists $y_0 \in \Omega_i^j$ with $|y_0| < r/2$. Since $V$ has tangent varifold $\theta(p)|P|$ at $p$, the mass of $V$ concentrates near $P$: for any $\alpha > 0$, $\|V\|(\{q \in B_r(p) : \mathrm{dist}(q, P) > \alpha r\}) / (\omega_n r^n) \to 0$ as $r \to 0$. By varifold convergence, $|u_i^j(y_0)| \leq \varepsilon r$ for $i$ large. For any $y \in \partial\Omega_i^j$, the gradient bound gives $|u_i^j(y)| \leq 3\varepsilon r$, and the sphere constraint forces $|y| \geq r(1 - C'\varepsilon^2)$. Therefore $\mathcal{H}^n(D_r \setminus \Omega_i^j) \leq C''\varepsilon^2 \omega_n r^n$, establishing~(ii). Each contributing sheet then has area satisfying $|\mathcal{H}^n(\Sigma_i^j) - \omega_n r^n| < C'''\varepsilon^2\omega_n r^n$, establishing~(iii). (Sheets not passing through $B_{r/2}(p)$ contribute vanishingly small mass near $p$ for generic $r$.)
+
+The total area satisfies $k_i(1 - \varepsilon')\omega_n r^n < \mathcal{H}^n(\partial^*\Omega_i \cap B_r(p)) < k_i(1 + \varepsilon')\omega_n r^n$, where $\varepsilon' = C(\varepsilon^2)$, and converges to $\theta(p)\omega_n r^n$. Choosing $\varepsilon'$ small enough (so that intervals for consecutive integers are disjoint), $k_i$ is uniquely determined for $i$ large, hence eventually constant equal to $k = \theta(p) \in \mathbb{Z}_{>0}$, establishing~(i).
+\end{proof}
+
+We now apply the sheet decomposition lemma to prove integrality.
+
+\begin{proposition}\label{prop:integrality-nested}
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$, and let $\Phi$ be an optimal nested \textup{(}ONVP\textup{)} sweepout with width $W$. Let $x_i \to x_0 \in \mathfrak{m}(\Phi)$ be a min-max sequence, $\Omega(x_0) = \lim \Omega(x_i)$ in $L^1$, and $V$ the varifold limit of $|\partial^*\Omega(x_i)|$. Then $V$ is an integral $n$-varifold.
+\end{proposition}
+
+\begin{proof}
+Write $V = |\partial^*\Omega(x_0)| + V'$, where $V'$ is the non-negative varifold capturing the cancelling mass.
+
+\medskip\noindent\textbf{Step~1: Rectifiability and densities.}
+Since $V$ is stationary (Proposition~\ref{thm:CLS-stationary}), Allard's rectifiability theorem~\cite[Theorem~5.5(1)]{All72} gives that $V = \theta \, \mathcal{H}^n \mres \Sigma$ for an $\mathcal{H}^n$-rectifiable set $\Sigma$ and a function $\theta \colon \Sigma \to (0, \infty)$. The monotonicity formula (Proposition~\ref{prop:p2-monotonicity}) ensures $\theta(p) > 0$ at every $p \in \spt\|V\|$.
+
+\medskip\noindent\textbf{Step~2: Integer density.}
+By Lemma~\ref{lem:sheet-decomposition} applied with $\Omega_i = \Omega(x_i)$, at $\mathcal{H}^n$-a.e.\ point $p$ of $\spt\|V\|$, the density $\theta(p)$ equals the sheet count $k \in \mathbb{Z}_{>0}$. In particular, $\theta(p) \in \mathbb{Z}_{>0}$ a.e. It remains to determine which positive integers arise; the parity is controlled by nestedness.
+
+\medskip\noindent\emph{Case~1: Pure cancellation points ($p \in \spt\|V'\| \setminus \spt\|\partial^*\Omega(x_0)\|$).}
+At such a point, $\Omega(x_0)$ is locally constant near $p$. Say $B_r(p) \subset \Omega(x_0)$. If $x_i > x_0$, nestedness gives $B_r(p) \subset \Omega(x_i)$ and $\partial^*\Omega(x_i) \cap B_r(p) = \varnothing$; thus only parameters $x_i < x_0$ contribute sheets. For such $x_i$, $\Omega(x_i) \subset \Omega(x_0)$, so $\Omega(x_i) \cap B_r(p) = B_r(p)$ minus thin slabs, each bounded by two sheets. Therefore $k$ is even. (The case $B_r(p) \subset M \setminus \overline{\Omega(x_0)}$ is analogous.) The geometric mechanism is \emph{folding}: each pair of sheets bounds a slab that collapses as $x_i \to x_0$ (by volume parametrization: $\mathrm{Vol}(\Omega(x_i) \triangle \Omega(x_0)) = |x_i - x_0| \to 0$), contributing multiplicity~$2$.
+
+\medskip\noindent\emph{Case~2: Mixed regular points ($p \in \mathrm{reg}(\partial^*\Omega(x_0)) \cap \spt\|V'\|$).}
+Here $\partial^*\Omega(x_0)$ is smooth near $p$ (Proposition~\ref{prop:p2-federer-regularity}). By Lemma~\ref{lem:sheet-decomposition}, the $k$ sheets are ordered by height: $u_i^1 < \cdots < u_i^k$. By a volume comparison argument---since $\Omega(x_i)$ occupies alternating slabs and $\Omega(x_i) \to \Omega(x_0)$ in $L^1$---exactly one sheet (the \emph{tracking sheet}) satisfies $\|u_i^{j_0} - u_0\|_{L^\infty} \to 0$, where $u_0$ parametrizes $\partial^*\Omega(x_0)$. The remaining $k - 1$ cancelling sheets come in pairs by the same slab argument as Case~1. Therefore $k - 1$ is even, i.e., $k$ is odd.
+
+\medskip\noindent\emph{Case~3: Singular points of $\partial^*\Omega(x_0)$.}
+For $n \leq 6$, Federer regularity (Proposition~\ref{prop:p2-federer-regularity}) gives $\partial\Omega(x_0) = \partial^*\Omega(x_0)$, so this case is empty.
+
+\medskip\noindent\textbf{Step~3: Conclusion.}
+Combining Cases~1--3, $\theta(p) \in \mathbb{Z}_{>0}$ at $\mathcal{H}^n$-a.e.\ point. Together with rectifiability, $V$ is integral.
+\end{proof}
+
+\begin{remark}\label{rem:sheet-decomposition}
+The sheet decomposition lemma (Lemma~\ref{lem:sheet-decomposition}) is a general result about Caccioppoli boundaries converging to a stationary varifold, independent of the min-max context. It is closely related to the Sheeting Theorem in Wickramasekera's regularity theory~\cite{Wic14}, which provides a multi-valued graphical decomposition for stable integral varifolds. The difference is that our lemma applies to the \emph{approximating} varifolds $|\partial^*\Omega_i|$ (multiplicity-$1$, smooth for $n \leq 6$) rather than the limit $V$, avoiding the need to assume integrality a priori. The non-excessive hypothesis is not used in the proof of integrality; it enters only in the regularity step (Section~\ref{sec:regularity}).
+\end{remark}

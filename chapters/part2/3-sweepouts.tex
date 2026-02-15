@@ -1,7 +1,7 @@
 % !TEX root = ../../thesis.tex
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Non-Excessive Sweepouts}\label{sec:non-excessive-prelim}
+\section{ONVP Sweepouts}\label{sec:non-excessive-prelim}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We now review the non-excessive min-max framework of Chodosh--Liokumovich--Spolaor~\cite{CLS22}. The central idea is to refine the class of optimal sweepouts by imposing a condition---\emph{non-excessiveness}---that prevents critical slices from being locally replaceable by competitors of strictly smaller mass. This additional structure, absent in the classical Almgren--Pitts theory, leads to strong geometric control on the limit varifold. We work throughout with ONVP sweepouts (Definition~\ref{def:p2-onvp}).
@@ -59,21 +59,7 @@ Let $\Phi$ be a non-excessive (ONVP) sweepout with width $W$, and let $x_0 \in \
 \end{itemize}
 \end{definition}
 
-This dichotomy governs the integrality of the limit varifold:
-
-\begin{theorem}[Integrality without mass cancellation]\label{prop:limit-dichotomy}\label{thm:integrality-mult-one}
-Assume no mass cancellation occurs at $x_0$, i.e., $\mathbf{M}(\Phi(x_0)) = W$. Then $V = |\partial^*\Omega(x_0)|$; in particular, $V$ is an integral varifold.
-\end{theorem}
-
-\begin{proof}
-Since $\Phi$ is continuous in the flat topology, we have $\Omega(x_i) \to \Omega(x_0)$ in $L^1(M)$, so $D\chi_{\Omega(x_i)} \to D\chi_{\Omega(x_0)}$ weakly as measures. Moreover, the no-mass-cancellation hypothesis gives
-\[
-\mathrm{Per}(\Omega(x_i)) = \mathbf{M}(\Phi(x_i)) \to W = \mathbf{M}(\Phi(x_0)) = \mathrm{Per}(\Omega(x_0)).
-\]
-Both conditions of Proposition~\ref{prop:p2-DLT-integrality} are satisfied, so $V = |\partial^*\Omega(x_0)|$ is the integral varifold induced by the Caccioppoli boundary $\partial^*\Omega(x_0)$.
-\end{proof}
-
-When mass cancellation occurs ($\mathbf{M}(\Phi(x_0)) < W$), we still have $\Omega(x_i) \to \Omega(x_0)$ in $L^1$, but the perimeter convergence condition in Proposition~\ref{prop:p2-DLT-integrality} fails: the mass defect $W - \mathbf{M}(\Phi(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ with opposite orientations that cancel in the flat topology while contributing positively to varifold mass, and the integrality of $V$ is not guaranteed. This case remains open (Conjecture~\ref{conj:mass-cancellation-integrality}).
+This dichotomy governs the integrality of the limit varifold; both cases are treated in Section~\ref{sec:integrality}.
 
 Beyond stationarity and integrality, the non-excessive condition provides local geometric information about the limit varifold: critical slices are \emph{one-sided homotopic minimizers} in small balls, meaning they cannot be deformed to competitors of strictly smaller mass on either the inner or the outer side. This property is the mechanism through which non-excessiveness controls the regularity of the limit.
 
@@ -103,4 +89,4 @@ points} by
 \]
 \end{definition}
 
-The set $\mathfrak{h}_{\mathrm{nm}}(V)$ consists of points where the varifold fails to be one-sided minimizing in every neighborhood. A key consequence of~\cite[Proposition~3.1]{CLS22} is that for non-excessive sweepouts without mass cancellation, this set is at most finite. In particular, the limit varifold is one-sided homotopic minimizing---hence stable---at all but finitely many points. This will be used in Section~\ref{sec:alpha-verification} to verify the $\alpha$-structural hypothesis required by Wickramasekera's regularity theorem.
+The set $\mathfrak{h}_{\mathrm{nm}}(V)$ consists of points where the varifold fails to be one-sided minimizing in every neighborhood. A key consequence of~\cite[Proposition~3.1]{CLS22} is that for non-excessive sweepouts, this set is at most finite. In particular, the limit varifold is one-sided homotopic minimizing---hence stable---at all but finitely many points. This will be used in Section~\ref{sec:regularity} to verify the hypotheses of Wickramasekera's regularity theorem.
