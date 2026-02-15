@@ -2,7 +2,13 @@
 
 \section{Integrality}\label{sec:integrality}
 
-Wickramasekera's regularity theorem (Theorem~\ref{thm:wickramasekera}) requires its input varifold to be integral. In this section, we establish integrality of the limit varifold $V$ in both the no-mass-cancellation and mass-cancellation cases. The first case uses the de~Lellis--Tasnady criterion (Proposition~\ref{prop:p2-DLT-integrality}); the second exploits nestedness of the sweepout to count sheets directly via a graphical decomposition lemma.
+Integrality of the limit varifold is an essential input to the regularity argument: it ensures that tangent cones at singular points are integral cones, which constrains them to the junction configurations (wedges, folds, and higher-order junctions) needed to derive a contradiction when the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}) fails (see Section~\ref{subsec:junction-resolution}). The main result of this section is:
+
+\begin{theorem}[Integrality of the limit varifold]\label{thm:integrality}
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$, and let $\Phi$ be an optimal nested \textup{(}ONVP\textup{)} sweepout with width $W$. Let $x_i \to x_0 \in \mathfrak{m}(\Phi)$ be a min-max sequence and $V$ the varifold limit of $|\partial^*\Omega(x_i)|$. Then $V$ is an integral $n$-varifold.
+\end{theorem}
+
+The proof splits into two cases according to whether mass cancellation occurs (Definition~\ref{def:mass-cancellation}). The no-mass-cancellation case uses the de~Lellis--Tasnady criterion (Proposition~\ref{prop:p2-DLT-integrality}); the mass-cancellation case exploits nestedness of the sweepout to count sheets directly via a graphical decomposition lemma.
 
 \subsection{The no-mass-cancellation case}\label{subsec:integrality-no-cancel}
 
@@ -17,6 +23,43 @@ Since $\Phi$ is continuous in the flat topology, we have $\Omega(x_i) \to \Omega
 \]
 Both conditions of Proposition~\ref{prop:p2-DLT-integrality} are satisfied, so $V = |\partial^*\Omega(x_0)|$ is the integral varifold induced by the Caccioppoli boundary $\partial^*\Omega(x_0)$.
 \end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[scale=1.0]
+      \def\R{2.2}
+      \def\h{0.9}
+      \pgfmathsetmacro{\a}{sqrt(\R*\R - \h*\h)}
+      \def\ew{0.4}
+      \pgfmathsetmacro{\angR}{atan2(\h, \a)}
+
+      % Fill cap (Omega): front ellipse arc + sphere arc over top
+      \fill[fillA, opacity=0.4]
+        (-\a, \h) arc (180:360:{\a} and {\ew})
+        arc (\angR:180-\angR:\R);
+
+      % Sphere outline
+      \draw[thick] (0,0) circle (\R);
+
+      % Boundary curve — front (solid)
+      \draw[very thick, bindA] (-\a, \h) arc (180:360:{\a} and {\ew});
+      % Boundary curve — back (dashed)
+      \draw[thick, bindA, dashed] (-\a, \h) arc (180:0:{\a} and {\ew});
+
+      % Equator (V) — front (solid)
+      \draw[very thick, bindB] (-\R, 0) arc (180:360:{\R} and {0.45});
+      % Equator (V) — back (dashed)
+      \draw[thick, bindB, dashed] (-\R, 0) arc (180:0:{\R} and {0.45});
+
+      % Labels
+      \node[bindA] at (0, 1.75) {$\Omega(x_i)$};
+      \node[bindA, right] at (\a+0.1, \h-0.15) {$|\partial^*\!\Omega(x_i)|$};
+      \node[bindB, right] at (\R+0.1, -0.15) {$V = |\partial^*\!\Omega(x_0)|$};
+      \node[above left] at ({-\R*cos(40)}, {\R*sin(40)}) {$M$};
+    \end{tikzpicture}
+    \caption{A Caccioppoli set $\Omega$ (shaded cap) on a closed manifold $M \cong S^{n+1}$, with reduced boundary $\partial^*\!\Omega$ (solid curve). When no mass cancellation occurs, the limit varifold equals $V = |\partial^*\!\Omega(x_0)|$, the integral varifold induced by $\partial^*\!\Omega(x_0)$ with multiplicity~$1$.}
+    \label{fig:caccioppoli-set}
+\end{figure}
 
 The identification $V = |\partial^*\Omega(x_0)|$ has two important consequences beyond integrality: it tells us that $V$ is the boundary of a Caccioppoli set, which constrains the possible tangent cones (Section~\ref{subsec:tangent-cones}), and it connects $V$ to the non-excessive structure of the sweepout, which provides the homotopic minimizing property.
 

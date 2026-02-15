@@ -1,0 +1,53 @@
+% !TEX root = ../../thesis.tex
+
+\section{Regularity tools}\label{sec:regularity-tools}
+
+The limit varifold $V$ from the min-max construction is stationary (Proposition~\ref{thm:CLS-stationary}). To promote it to a smooth embedded minimal hypersurface, we need a regularity theorem. We review two approaches: the classical Schoen--Simon theory used in the Almgren--Pitts framework, and Wickramasekera's theory for stable codimension~$1$ integral varifolds. The latter is better suited to the non-excessive setting, and we adopt it here.
+
+\subsection{The classical approach: Schoen--Simon}\label{subsec:classical-regularity}
+
+The Schoen--Simon regularity theorem~\cite{SS81} applies to stable codimension~$1$ integral varifolds $V$ satisfying one of the following conditions:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item $V$ is \emph{almost minimizing} in sufficiently small annuli, or
+    \item $\mathcal{H}^{n-2}(\sing V) = 0$ (or more generally $\mathcal{H}^{n-2}(\sing V) < \infty$).
+\end{enumerate}
+Under either condition, $\sing V = \emptyset$ for $2 \leq n \leq 6$.
+
+In the Almgren--Pitts theory~\cite{Alm65, Pit81}, the almost minimizing property is produced by a combinatorial selection procedure operating in the space of integral currents. The frameworks of Colding--de~Lellis~\cite{CL03} and de~Lellis--Tasnady~\cite{DLT13} simplify the sweepout machinery but retain the same regularity pipeline: an almost minimizing property plus Schoen--Simon.
+
+In the non-excessive framework of Chodosh--Liokumovich--Spolaor \cite{CLS22}, the almost minimizing property is not directly available: the geometric condition is \emph{one-sided homotopic minimization}, which provides stability but does not immediately yield the almost minimizing condition in annuli that Schoen--Simon requires. In~\cite{CLS22}, this gap is bridged by invoking the Almgren--Pitts pull-tight and regularity theory as a black box. To close this gap without relying on Almgren--Pitts, we turn to a more general regularity theorem.
+
+\subsection{Wickramasekera's approach}\label{subsec:wickramasekera-approach}
+
+Wickramasekera's regularity theorem~\cite{Wic14} applies to stable codimension~$1$ integral varifolds satisfying the \emph{$\alpha$-structural hypothesis}, a condition on the local geometry of the singular set. Unlike Schoen--Simon, it does not require the almost minimizing property or an a priori bound on the Hausdorff dimension of $\sing V$.
+
+\begin{definition}[$\alpha$-structural hypothesis]\label{defn:alpha-structural}
+For $\alpha \in (0, 1/2)$, a stationary integral varifold $V$ satisfies the \emph{$\alpha$-structural hypothesis} if no singular point
+of $V$ has a neighborhood in which $V$ corresponds to a union of embedded $C^{1,\alpha}$ hypersurfaces-with-boundary
+meeting only along their common $C^{1,\alpha}$ boundary, with multiplicity a constant positive integer
+on each of the constituent hypersurfaces-with-boundary.
+\end{definition}
+
+\begin{theorem}[Wickramasekera~{\cite{Wic14}}]\label{thm:wickramasekera}
+    Let $V$ be a stable integral $n$-varifold in a closed $(n+1)$-dimensional Riemannian manifold
+    with $2\leq n\leq 6$. If $V$ satisfies the $\alpha$-structural hypothesis for some $\alpha \in (0, 1/2)$,
+    then $\sing V = \emptyset$, i.e., $\spt\|V\|$ is a smooth embedded minimal hypersurface.
+\end{theorem}
+
+Wickramasekera's theorem strictly subsumes the Schoen--Simon theory: if $\mathcal{H}^{n-2}(\sing V) = 0$, then the $\alpha$-structural hypothesis holds vacuously (a junction of $C^{1,\alpha}$ hypersurfaces-with-boundary along an $(n-1)$-dimensional boundary would produce an $(n-1)$-dimensional singular set, contradicting $\mathcal{H}^{n-2}(\sing V) = 0$). Similarly, the almost minimizing property implies $\mathcal{H}^{n-2}(\sing V) = 0$ by Schoen--Simon, and thus implies the $\alpha$-structural hypothesis.
+
+The proof of Theorem~\ref{thm:wickramasekera} is substantially more involved than Schoen--Simon, requiring a simultaneous induction on two regularity results: the \emph{Sheeting Theorem} (near points of density $q \geq 2$, the varifold decomposes into smooth graphs) and the \emph{Minimum Distance Theorem} (a quantitative gap between the density of $V$ and the density of singular cones). The induction is powered by coarse and fine blow-up analysis together with Simon's $L^2$-estimates for the blow-up functions.
+
+\subsection{Suitability to the non-excessive setting}\label{subsec:suitability}
+
+The non-excessive framework provides exactly the inputs that Wickramasekera's theorem requires, without passing through the almost minimizing property:
+
+\begin{itemize}
+    \item \textbf{Stability.} The non-excessive condition ensures that the limit varifold $V$ is one-sided homotopic minimizing at all but finitely many points~\cite[Proposition~3.1]{CLS22}. One-sided homotopic minimization implies local stability, which extends to global stability by a partition-of-unity argument (Proposition~\ref{prop:stability}).
+
+    \item \textbf{Integrality.} Integrality is established independently of the regularity theory: in the no-mass-cancellation case by the de~Lellis--Tasnady criterion, and in the mass-cancellation case by a sheet-counting argument exploiting nestedness (Theorem~\ref{thm:integrality}).
+
+    \item \textbf{The $\alpha$-structural hypothesis.} In the no-mass-cancellation case, $V = |\partial^*\Omega(x_0)|$ is the boundary of a Caccioppoli set, which constrains tangent cones to wedges and folds---configurations incompatible with the $\alpha$-structural failure. In the mass-cancellation case, nestedness constrains the possible junction structures, and any remaining junctions are ruled out by area-minimizing replacements (Theorem~\ref{thm:alpha-hypo}).
+\end{itemize}
+
+Thus the non-excessive framework bypasses the almost minimizing property entirely: the route to regularity runs through stability and the $\alpha$-structural hypothesis, both of which are verified directly from the geometric structure of the sweepout.

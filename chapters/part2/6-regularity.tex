@@ -2,20 +2,7 @@
 
 \section{Regularity}\label{sec:regularity}
 
-By Proposition~\ref{thm:CLS-stationary}, the limit varifold $V$ is stationary; by Theorem~\ref{thm:integrality-mult-one} (no mass cancellation) or Proposition~\ref{prop:integrality-nested} (mass cancellation), $V$ is integral. To promote $V$ to a smooth embedded minimal hypersurface, we apply Wickramasekera's regularity theorem, which requires two further inputs: \emph{stability} and the \emph{$\alpha$-structural hypothesis}. This section verifies both, in both the no-mass-cancellation and mass-cancellation cases.
-
-\begin{definition}[$\alpha$-structural hypothesis]\label{defn:alpha-structural}
-For $\alpha \in (0, 1/2)$, a stationary integral varifold $V$ satisfies the \emph{$\alpha$-structural hypothesis} if no singular point
-of $V$ has a neighborhood in which $V$ corresponds to a union of embedded $C^{1,\alpha}$ hypersurfaces-with-boundary
-meeting only along their common $C^{1,\alpha}$ boundary, with multiplicity a constant positive integer
-on each of the constituent hypersurfaces-with-boundary.
-\end{definition}
-
-\begin{theorem}[Wickramasekera~{\cite{Wic14}}]\label{thm:wickramasekera}
-    Let $V$ be a stable integral $n$-varifold in a closed $(n+1)$-dimensional Riemannian manifold
-    with $2\leq n\leq 6$. If $V$ satisfies the $\alpha$-structural hypothesis for some $\alpha \in (0, 1/2)$,
-    then $\sing V = \emptyset$, i.e., $\spt\|V\|$ is a smooth embedded minimal hypersurface.
-\end{theorem}
+By Proposition~\ref{thm:CLS-stationary}, the limit varifold $V$ is stationary; by Theorem~\ref{thm:integrality}, $V$ is integral. To promote $V$ to a smooth embedded minimal hypersurface, we apply Wickramasekera's regularity theorem (Theorem~\ref{thm:wickramasekera}), which requires two further inputs: \emph{stability} and the \emph{$\alpha$-structural hypothesis} (Definition~\ref{defn:alpha-structural}). This section verifies both, in both the no-mass-cancellation and mass-cancellation cases.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Stability}\label{subsec:stability}
@@ -236,12 +223,5 @@ In both cases, we reach a contradiction. Therefore, the $\alpha$-structural hypo
 \begin{proof}[Proof of Theorem~\ref{thm:non-excessive-main}]
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. By Theorem~\ref{thm:non-excessive-existence}, there exists a non-excessive ONVP sweepout $\Phi \in \Snm$. By Proposition~\ref{thm:CLS-stationary}, there exists a stationary varifold $V$ with $\mathbf{M}(V) = W$.
 
-\medskip\noindent\emph{Case 1: No mass cancellation.}
-By Theorem~\ref{thm:integrality-mult-one}, $V = |\partial^*\Omega(x_0)|$ is an integral varifold. By Proposition~\ref{prop:stability}, $V$ is stable. By Theorem~\ref{thm:alpha-hypo}, $V$ satisfies the $\alpha$-structural hypothesis. Therefore, all hypotheses of Wickramasekera's theorem (Theorem~\ref{thm:wickramasekera}) are satisfied, and $\sing V = \emptyset$.
-
-\medskip\noindent\emph{Case 2: Mass cancellation.}
-By Proposition~\ref{prop:integrality-nested}, $V$ is an integral varifold. By Proposition~\ref{prop:stability}, $V$ is stable. By Theorem~\ref{thm:alpha-hypo}, $V$ satisfies the $\alpha$-structural hypothesis. Again, all hypotheses of Wickramasekera's theorem are satisfied, and $\sing V = \emptyset$.
-
-\medskip
-In both cases, $\spt\|V\|$ is a smooth, closed, embedded minimal hypersurface in $M$.
+By Theorem~\ref{thm:integrality}, $V$ is an integral varifold (regardless of whether mass cancellation occurs). By Proposition~\ref{prop:stability}, $V$ is stable. By Theorem~\ref{thm:alpha-hypo}, $V$ satisfies the $\alpha$-structural hypothesis. Therefore, all hypotheses of Wickramasekera's theorem (Theorem~\ref{thm:wickramasekera}) are satisfied, and $\sing V = \emptyset$. Thus $\spt\|V\|$ is a smooth, closed, embedded minimal hypersurface in $M$.
 \end{proof}
