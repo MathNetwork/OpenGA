@@ -143,7 +143,7 @@ On sets of uniformly bounded mass, $\mathbf{F}$ metrizes the weak-$*$ topology. 
 \end{definition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Sweepouts and Width}\label{sec:sweepouts}
+\section{Sweepouts, Width, and Good Sets}\label{sec:sweepouts}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The cut-and-paste operations in our proof (splitting, extension, and nested sweepout construction in Chapters~\ref{ch:splitting-and-extension}--\ref{ch:no-escape-to-infinity}) are most naturally described using Caccioppoli sets. We therefore adopt a continuous sweepout framework based on Caccioppoli sets (sets of finite perimeter), following the approach of Chambers--Liokumovich~\cite{CL20} and De~Lellis--Tasnady~\cite{DLT13}. In Proposition~\ref{prop:sweepout-cycle} below, we show that every Caccioppoli sweepout gives rise to a continuous map into the space of mod~$2$ relative cycles; this is the bridge that allows us to invoke the min-max machinery of Li--Zhou~\cite{LZ17} (pull-tight, almost minimizing, regularity) developed in the cycle-valued setting. For applications to non-compact manifolds, we consider sweepouts of bounded open sets.
@@ -212,7 +212,7 @@ Let $U \subset M$ be a bounded open set with smooth boundary. Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
     \item $W_\partial(U) \leq W_n(U) \leq W_\partial(U) + \mathbf{M}(\partial_I U)$;
     \item $W_n(U) = W(U)$, where $W(U)$ is the width over all sweepouts;
-    \item If $U$ is a good set (Definition~\ref{def:good-set}; see Section~\ref{sec:good-sets}), then $W_g(U) = W(U)$.
+    \item If $U$ is a good set (Definition~\ref{def:good-set} below), then $W_g(U) = W(U)$.
 \end{enumerate}
 \end{proposition}
 
@@ -220,12 +220,6 @@ Let $U \subset M$ be a bounded open set with smooth boundary. Then:
 Part~(i) follows by restricting a nested sweepout to $\overline{U}$ (giving the lower bound) and extending a relative sweepout by adding $\partial_I U$ at each time (giving the upper bound). Part~(ii) is proved by approximating an arbitrary sweepout by nested ones using the coarea formula; see \cite[Lemma~4.2]{CL20}. Part~(iii) follows from~(ii) by a cut-off argument using the good set condition.
 \end{proof}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Good Sets}\label{sec:good-sets}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-On a compact manifold, the min-max process automatically produces a minimal hypersurface because all mass stays in a bounded region. On a non-compact manifold, mass can escape to infinity during the min-max sequence, and the limit varifold may be trivial. To prevent this, we work inside bounded open sets $U$ whose interior boundary $\partial_I U$ is small relative to the width: sweepouts of $U$ must transfer mass from outside to inside through $\partial_I U$, and when $\mathbf{M}(\partial_I U) \ll W_\partial(U)$, at least one slice must carry substantial mass inside $\overline{U}$. This is the role of good sets, used in the no-escape argument of Chapter~\ref{ch:no-escape-to-infinity}.
 
 \begin{definition}[Good set]\label{def:good-set}
 A bounded open subset $U \subset M$ of finite perimeter is a \emph{good set} if

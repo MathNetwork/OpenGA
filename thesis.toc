@@ -4,42 +4,39 @@
 \contentsline {chapter}{\numberline {1}{Introduction}}{1}{chapter.1}%
 \contentsline {chapter}{\numberline {2}{Settings and Preliminaries}}{7}{chapter.2}%
 \contentsline {section}{\numberline {2.1}{Currents and Varifolds}}{8}{section.2.1}%
-\contentsline {section}{\numberline {2.2}{Sweepouts and Width}}{12}{section.2.2}%
-\contentsline {section}{\numberline {2.3}{Good Sets}}{15}{section.2.3}%
+\contentsline {section}{\numberline {2.2}{Sweepouts, Width, and Good Sets}}{12}{section.2.2}%
 \contentsline {chapter}{\numberline {3}{Morse Foliations with Controlled Area of Fibers}}{17}{chapter.3}%
-\contentsline {section}{\numberline {3.1}{Gluing Morse Foliations}}{18}{section.3.1}%
-\contentsline {section}{\numberline {3.2}{Gluing Morse Foliations on Separated Manifolds}}{19}{section.3.2}%
-\contentsline {chapter}{\numberline {4}{Splitting and Extension Lemmas}}{23}{chapter.4}%
-\contentsline {section}{\numberline {4.1}{The Extension Lemma}}{23}{section.4.1}%
-\contentsline {section}{\numberline {4.2}{The Splitting Lemma}}{29}{section.4.2}%
-\contentsline {chapter}{\numberline {5}{Nested Sweepout}}{32}{chapter.5}%
-\contentsline {section}{\numberline {5.1}{Step 1: Preliminary Modification}}{33}{section.5.1}%
-\contentsline {section}{\numberline {5.2}{Step 2: Local Monotonization}}{37}{section.5.2}%
-\contentsline {section}{\numberline {5.3}{Step 3: Gluing Nested Families}}{39}{section.5.3}%
-\contentsline {chapter}{\numberline {6}{No Escape to Infinity}}{42}{chapter.6}%
-\contentsline {section}{\numberline {6.1}{Statement of the Main Result}}{42}{section.6.1}%
-\contentsline {section}{\numberline {6.2}{Pushing Sets Outside Good Sets}}{43}{section.6.2}%
-\contentsline {section}{\numberline {6.3}{Proof of the Main Result by Contradiction}}{46}{section.6.3}%
-\contentsline {subsection}{{Continuity Regularization}}{46}{subsection*.7}%
-\contentsline {subsection}{{Controlling Slices Outside the Good Set}}{53}{subsection*.9}%
-\contentsline {chapter}{\numberline {7}{Convergence of the Min--Max Sequence}}{55}{chapter.7}%
-\contentsline {section}{\numberline {7.1}{Pull--tight on a non-compact manifold}}{55}{section.7.1}%
-\contentsline {section}{\numberline {7.2}{Almost minimizing varifolds with free boundary}}{58}{section.7.2}%
-\contentsline {section}{\numberline {7.3}{Proof of the main theorem}}{61}{section.7.3}%
-\contentsline {chapter}{\numberline {8}{Alternative Regularity via Non-Excessive Sweepouts}}{64}{chapter.8}%
-\contentsline {section}{\numberline {8.1}{Non-Excessive Sweepouts}}{64}{section.8.1}%
-\contentsline {subsection}{{Excessive Intervals and Non-Excessive Points}}{65}{subsection*.10}%
-\contentsline {subsection}{{Non-Excessive Sweepouts and Stationary Varifolds}}{66}{subsection*.11}%
-\contentsline {subsection}{{Homotopic Minimizers and Non-Minimizing Points}}{67}{subsection*.12}%
-\contentsline {subsection}{{The Integrality Issue}}{68}{subsection*.13}%
-\contentsline {section}{\numberline {8.2}{Main Result}}{69}{section.8.2}%
-\contentsline {section}{\numberline {8.3}{Integrality without Mass Cancellation}}{69}{section.8.3}%
-\contentsline {subsection}{{Case 1: No Mass Loss}}{69}{subsection*.14}%
-\contentsline {subsection}{{Case 2: Mass Cancellation}}{72}{subsection*.15}%
-\contentsline {section}{\numberline {8.4}{Regularity via Wickramasekera's Theorem}}{72}{section.8.4}%
-\contentsline {subsection}{{Verification of the $\alpha $-Structural Hypothesis}}{73}{subsection*.16}%
-\contentsline {subsubsection}{{Case 1: No Mass Cancellation}}{74}{subsubsection*.17}%
-\contentsline {subsubsection}{{Case 2: Mass Cancellation}}{77}{subsubsection*.18}%
-\contentsline {subsection}{{Proof of the Main Theorem}}{80}{subsection*.19}%
-\contentsline {chapter}{Bibliography}{81}{section*.20}%
+\contentsline {chapter}{\numberline {4}{Splitting and Extension Lemmas}}{22}{chapter.4}%
+\contentsline {section}{\numberline {4.1}{The Extension Lemma}}{22}{section.4.1}%
+\contentsline {section}{\numberline {4.2}{The Splitting Lemma}}{28}{section.4.2}%
+\contentsline {chapter}{\numberline {5}{Nested Sweepout}}{31}{chapter.5}%
+\contentsline {section}{\numberline {5.1}{Step 1: Preliminary Modification}}{32}{section.5.1}%
+\contentsline {section}{\numberline {5.2}{Step 2: Local Monotonization}}{36}{section.5.2}%
+\contentsline {section}{\numberline {5.3}{Step 3: Gluing Nested Families}}{38}{section.5.3}%
+\contentsline {chapter}{\numberline {6}{No Escape to Infinity}}{41}{chapter.6}%
+\contentsline {section}{\numberline {6.1}{Statement of the Main Result}}{41}{section.6.1}%
+\contentsline {section}{\numberline {6.2}{Pushing Sets Outside Good Sets}}{42}{section.6.2}%
+\contentsline {section}{\numberline {6.3}{Proof of the Main Result by Contradiction}}{45}{section.6.3}%
+\contentsline {subsection}{{Continuity Regularization}}{45}{subsection*.7}%
+\contentsline {subsection}{{Controlling Slices Outside the Good Set}}{52}{subsection*.9}%
+\contentsline {chapter}{\numberline {7}{Convergence of the Min--Max Sequence}}{54}{chapter.7}%
+\contentsline {section}{\numberline {7.1}{Pull--tight on a non-compact manifold}}{54}{section.7.1}%
+\contentsline {section}{\numberline {7.2}{Almost minimizing varifolds with free boundary}}{57}{section.7.2}%
+\contentsline {section}{\numberline {7.3}{Proof of the main theorem}}{60}{section.7.3}%
+\contentsline {chapter}{\numberline {8}{Alternative Regularity via Non-Excessive Sweepouts}}{63}{chapter.8}%
+\contentsline {section}{\numberline {8.1}{Non-Excessive Sweepouts}}{63}{section.8.1}%
+\contentsline {subsection}{{Excessive Intervals and Non-Excessive Points}}{64}{subsection*.10}%
+\contentsline {subsection}{{Non-Excessive Sweepouts and Stationary Varifolds}}{65}{subsection*.11}%
+\contentsline {subsection}{{Homotopic Minimizers and Non-Minimizing Points}}{66}{subsection*.12}%
+\contentsline {subsection}{{The Integrality Issue}}{67}{subsection*.13}%
+\contentsline {section}{\numberline {8.2}{Main Result}}{68}{section.8.2}%
+\contentsline {section}{\numberline {8.3}{Integrality without Mass Cancellation}}{68}{section.8.3}%
+\contentsline {subsection}{{Case 1: No Mass Loss}}{68}{subsection*.14}%
+\contentsline {subsection}{{Case 2: Mass Cancellation}}{71}{subsection*.15}%
+\contentsline {section}{\numberline {8.4}{Regularity via Wickramasekera's Theorem}}{71}{section.8.4}%
+\contentsline {subsection}{{Verification of the $\alpha $-Structural Hypothesis}}{72}{subsection*.16}%
+\contentsline {subsubsection}{{Case 1: No Mass Cancellation}}{73}{subsubsection*.17}%
+\contentsline {subsubsection}{{Case 2: Mass Cancellation}}{76}{subsubsection*.18}%
+\contentsline {subsection}{{Proof of the Main Theorem}}{79}{subsection*.19}%
+\contentsline {chapter}{Bibliography}{80}{section*.20}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

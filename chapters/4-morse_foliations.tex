@@ -3,11 +3,10 @@
 
 The goal of this chapter is to develop technical tools for constructing \emph{nested} sweepouts from arbitrary sweepouts. The central problem is the following: given a sweepout $\{\Omega_t\}$ that may not be nested (i.e., $\Omega_s \not\subset \Omega_t$ for $s < t$), how can we deform it into a nested sweepout while controlling the area of the level sets?
 
-Recall that a smooth function $f\colon M \to \mathbb{R}$ is \emph{$\partial$-transverse}\label{def:boundary-transverse} if $f|_{\partial M}$ has no critical points, i.e.\ $\nabla_{\partial M}(f|_{\partial M}) \neq 0$ everywhere on $\partial M$; a \emph{$\partial$-transverse Morse function} is a Morse function on $M$ that is also $\partial$-transverse.
+A smooth function $f\colon M \to \mathbb{R}$ is \emph{$\partial$-transverse}\label{def:boundary-transverse} if $f|_{\partial M}$ has no critical points, i.e.\ $\nabla_{\partial M}(f|_{\partial M}) \neq 0$ everywhere on $\partial M$; a \emph{$\partial$-transverse Morse function} is a Morse function on $M$ that is also $\partial$-transverse. By standard transversality theory (Hirsch~\cite[Chapter~4]{Hir76}), the set of $\partial$-transverse Morse functions is residual in $C^\infty(M, \mathbb{R})$, since both the Morse condition and $\partial$-transversality are open and dense. Moreover, $\partial$-transversality is preserved under sufficiently small perturbations; since the perturbations in the proofs below are either supported in $\operatorname{int}(M)$ or arbitrarily small, the $\partial$-transverse condition is maintained throughout.
 
-Our strategy is to work locally: we construct $\partial$-transverse Morse functions on regions of $M$ whose level sets provide the desired nested structure. The key technical results are Lemma~\ref{lem:morse-foliation-1} and Lemma~\ref{lem:morse-foliation-non-compact}, which show that given any Morse function $f$ and a target hypersurface $\Sigma$, we can perturb $f$ to a new Morse function $g$ having $\Sigma$ as a level set, while preserving mass bounds on the slices. These local constructions are then glued together in Chapter~\ref{ch:nested-sweepout} to produce global nested sweepouts.
+The $\partial$-transverse condition ensures that level sets $f^{-1}(t)$ meet $\partial M$ transversally, so $\mathcal{H}^n(f^{-1}(t) \cap \partial M) = 0$ and the area $\mathcal{H}^n(f^{-1}(t))$ counts only the interior part. Consequently, all results in this chapter follow Chambers--Liokumovich~\cite[\S3--4]{CL20} without essential modification. The key technical results are Lemma~\ref{lem:morse-foliation-1} and Lemma~\ref{lem:morse-foliation-non-compact}, which show that given any $\partial$-transverse Morse function $f$ and a target hypersurface $\Sigma$, one can perturb $f$ to a new Morse function $g$ having $\Sigma$ as a level set while preserving area bounds. These local constructions are glued together in Chapter~\ref{ch:nested-sweepout} to produce global nested sweepouts.
 
-\section{Gluing Morse Foliations}
 \begin{lemma}\label{lem:morse-foliation-1}
     Let $N^{n + 1} \subset M^{n + 1}$ be a compact submanifold with non-empty boundary. Let $f: N \to [a, b]$ be a $\partial$-transverse Morse function. Let $\Sigma^n$ be a closed submanifold of $\partial N$.
 
@@ -31,7 +30,6 @@ We will also need a slightly different version of this lemma for a non-compact s
         \item[(4)] If $\dist(x, f(\Sigma)) > \eps$ then $f^{-1}(x) = g^{-1}(x)$.
     \end{enumerate}
 \end{lemma}
-\section[Gluing Morse Foliations on Separated Manifolds]{Gluing Morse Foliations on a Manifold Separated by a hypersurface transverse to the boundary}
 \begin{lemma}\label{lem:morse-separate}
     Let $N^{n + 1}\subset M^{n + 1}$ be a manifold with compact boundary $\partial N$ and $\Sigma$ be a hypersurface with $\partial\Sigma \subset \partial N$ and such that $\Sigma$ intersects $\partial N$ transversally and separates $N$ into two disjoint regions $N\backslash \Sigma = V_1 \sqcup V_2$.
 
