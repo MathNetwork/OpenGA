@@ -1,0 +1,20 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.blg
+*.bbl
+*.fdb_latexmk
+*.fls
+*.out
+*.toc
+*.synctex.gz
+*.pdf
+
+# OS files
+.DS_Store
+
+# IDE
+.vscode/
+
+# Overleaf copy
+Thesis_Overleaf/
