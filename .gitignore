@@ -19,5 +19,8 @@
 # Overleaf copy
 Thesis_Overleaf/
 
+# Backup files
+**/backup/
+
 # Reference papers
 arXiv-*/
