@@ -7,7 +7,7 @@ In the classical Almgren--Pitts min-max theory~\cite{Alm65, Pit81}, the regulari
 
 Chodosh--Liokumovich--Spolaor~\cite{CLS22} introduced an alternative approach to min-max theory based on \emph{non-excessive sweepouts}. Rather than working with integral currents, their framework operates with varifolds and sweepouts by Caccioppoli sets. The non-excessive condition---roughly, that critical slices of the sweepout cannot be locally replaced by competitors of strictly smaller mass---provides structural control that replaces the almost minimizing property of Almgren--Pitts. This approach has led to striking applications, including generic regularity of min-max hypersurfaces in dimension~$8$ and a bound relating the Morse index to the number of non-area-minimizing singularities~\cite{CLS22}.
 
-A key step in the non-excessive framework is the construction of \emph{optimal nested sweepouts}: optimal sweepouts whose sublevel sets are monotonically increasing. The existence of such sweepouts relies on the monotonisation technique of Chambers--Liokumovich~\cite{CL20}, which converts arbitrary sweepouts into nested ones with controlled mass increase. The nested sweepout machinery developed in Part~1 of this thesis (Sections~\ref{ch:morse-foliation}--\ref{ch:nested-sweepout}) provides exactly this input.
+A key step in the non-excessive framework is the construction of \emph{optimal nested sweepouts}: optimal sweepouts whose sublevel sets are monotonically increasing. The existence of such sweepouts relies on the monotonisation technique of Chambers--Liokumovich~\cite{CL20}, which converts arbitrary sweepouts into nested ones with controlled mass increase. The nested sweepout machinery developed in Part~1 of this thesis provides exactly this input (see Proposition~\ref{prop:p2-onvp-existence}).
 
 In this chapter, we explore an alternative path to regularity within the non-excessive framework: instead of the Schoen--Simon theory, we use Wickramasekera's regularity theorem~\cite{Wic14} for stable codimension~$1$ integral varifolds. Wickramasekera's theorem gives optimal regularity (empty singular set for $2 \leq n \leq 6$) under two hypotheses: (i)~the varifold is a stable integral varifold, and (ii)~it satisfies the \emph{$\alpha$-structural hypothesis} for some $\alpha \in (0, 1/2)$---no singular point has a neighbourhood in which the support consists of three or more embedded $C^{1,\alpha}$ hypersurfaces-with-boundary meeting only along their common boundary. Combining these tools, we obtain:
 
@@ -22,18 +22,75 @@ The mass cancellation case---where the current masses $\mathbf{M}(\Phi(x_i))$ co
 
 \medskip
 \noindent\textbf{Organization.}
+Section~\ref{sec:p2-prelim} collects the basic definitions: Caccioppoli sets, varifolds, sweepouts, width, and the integrality criterion of De~Lellis--Tasnady.
 Section~\ref{sec:non-excessive-prelim} reviews the non-excessive sweepout framework of~\cite{CLS22}, including the definitions of excessive intervals, non-excessive points, and homotopic minimizers. Section~\ref{sec:integrality} establishes integrality of the limit varifold without mass cancellation and discusses the mass cancellation case as an open problem. The final section verifies the $\alpha$-structural hypothesis via Wickramasekera's regularity theorem~\cite{Wic14} and completes the proof of the main theorem.
 
-\section{Non-Excessive Sweepouts}\label{sec:non-excessive-prelim}
-An alternative approach to min--max theory, developed by Chodosh--Liokumovich--Spolaor~\cite{CLS22}, is based on the notion of \emph{non-excessive sweepouts}. The non-excessive condition provides additional structural control that simplifies the regularity analysis.
+\section{Preliminaries}\label{sec:p2-prelim}
 
-We use the notation from Section~\ref{sec:sweepouts}. Recall that a sweepout $\{\Omega_t\}_{t\in[0,1]}$ of $M$ is a continuous family of Caccioppoli sets with $\Omega_0 = \emptyset$ and $\Omega_1 = M$ (Definition~\ref{def:sweepout}). The width is $W = W(M)$ as in Definition~\ref{def:width}.
+Throughout this chapter, $(M^{n+1}, g)$ denotes a smooth, closed (compact without boundary) Riemannian manifold with $2 \leq n \leq 6$. We write $\mathcal{H}^k$ for the $k$-dimensional Hausdorff measure and $\mathbf{M}(T)$ for the mass of a current $T$.
+
+\subsection{Caccioppoli sets and varifolds}
+
+A measurable subset $\Omega \subset M$ is a \emph{Caccioppoli set} (set of finite perimeter) if the distributional derivative $D\mathbf{1}_\Omega$ is a finite Radon measure. Its \emph{perimeter} in an open set $U$ is $\mathrm{Per}(\Omega, U) := |D\mathbf{1}_\Omega|(U)$, and its \emph{reduced boundary} $\partial^*\Omega$ is the set of points where $D\mathbf{1}_\Omega$ has an approximate unit normal. By De~Giorgi's structure theorem, $\mathrm{Per}(\Omega, U) = \mathcal{H}^n(\partial^*\Omega \cap U)$.
+
+An \emph{$n$-varifold} on $M$ is a Radon measure on the Grassmannian bundle $\mathrm{Gr}_n(M)$. Each Caccioppoli set $\Omega$ induces a varifold $|\partial^*\Omega|$ by
+\[
+|\partial^*\Omega|(f) = \int_{\partial^*\Omega} f(x, T_x(\partial^*\Omega))\, d\mathcal{H}^n(x).
+\]
+A varifold $V$ is \emph{stationary} if $\delta V(X) := \int_{\mathrm{Gr}_n(M)} \operatorname{div}_S X \, dV = 0$ for every $X \in \mathfrak{X}_c(M)$. It is \emph{stable} if, in addition, the second variation is non-negative for all compactly supported normal deformations of $\mathrm{reg}\, V$.
+
+\subsection{Sweepouts and width}
+
+\begin{definition}[Sweepout]\label{def:p2-sweepout}
+A \emph{sweepout} of $M$ is a family of Caccioppoli sets $\{\Omega_t\}_{t \in [0,1]}$ satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item $\Omega_0 = \varnothing$ and $\Omega_1 = M$;
+    \item $t \mapsto \mathbf{1}_{\Omega_t}$ is continuous in $L^1(M)$;
+    \item $\sup_{t} \mathrm{Per}(\Omega_t) < \infty$;
+    \item (no mass concentration) $\lim_{r \to 0} \sup_{t} \mathrm{Per}(\Omega_t, B_r(x)) = 0$ for every $x \in M$.
+\end{enumerate}
+The \emph{height} of the sweepout is $\mathcal{F}(\{\Omega_t\}) := \sup_{t} \mathrm{Per}(\Omega_t)$.
+\end{definition}
+
+\begin{definition}[Width]\label{def:p2-width}
+The \emph{width} of $M$ is
+$W = W(M) := \inf\bigl\{\mathcal{F}(\{\Omega_t\}) : \{\Omega_t\} \text{ is a sweepout of } M\bigr\}$.
+\end{definition}
+
+\begin{definition}[Nested sweepout]\label{def:p2-nested}
+A sweepout $\{\Omega_t\}$ is \emph{nested} if $\Omega_s \subset \Omega_t$ for all $0 \leq s \leq t \leq 1$.
+\end{definition}
+
+The monotonisation technique of Chambers--Liokumovich~\cite{CL20} shows that every sweepout can be approximated by a nested sweepout with arbitrarily small mass increase. Combined with an Arzel\`a--Ascoli argument and volume reparametrisation, this yields:
+
+\begin{proposition}[Existence of optimal nested sweepouts~{\cite[Theorem~1.5]{CLS22}, \cite{CL20}}]\label{prop:p2-onvp-existence}
+There exists an optimal nested sweepout $\{\Omega_t\}$ of $M$ with $\mathcal{F}(\{\Omega_t\}) = W$.
+\end{proposition}
+
+\subsection{Integrality criterion}
+
+The following proposition from the appendix of De~Lellis--Tasnady~\cite{DLT13} gives a criterion for varifold convergence of Caccioppoli boundaries:
+
+\begin{proposition}[Varifolds vs.\ Caccioppoli set limits~{\cite[Proposition~A.1]{DLT13}}]\label{prop:p2-DLT-integrality}
+    Let $\{\Omega^k\}$ be a sequence of Caccioppoli sets and $U$ an open subset of $M$. Assume that
+    \begin{enumerate}[label=\textup{(\roman*)}]
+        \item $D\mathbf{1}_{\Omega^k} \to D\mathbf{1}_\Omega$ in the sense of measures in $U$;
+        \item $\mathrm{Per}(\Omega^k, U) \to \mathrm{Per}(\Omega, U)$
+    \end{enumerate}
+    for some Caccioppoli set $\Omega$. Then the varifolds $|\partial^*\Omega^k|$ converge to $|\partial^*\Omega|$ in the sense of varifolds.
+\end{proposition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Non-Excessive Sweepouts}\label{sec:non-excessive-prelim}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+An alternative approach to min--max theory, developed by Chodosh--Liokumovich--Spolaor~\cite{CLS22}, is based on the notion of \emph{non-excessive sweepouts}. The non-excessive condition provides additional structural control that simplifies the regularity analysis.
 
 \begin{definition}[Optimal nested volume parametrized sweepout]\label{def:onvp}
 A sweepout $\{\Phi(x) = \partial \Omega(x)\}$ is called
 \begin{itemize}
     \item \emph{optimal} if $\mathcal{F}(\Phi) = W$;
-    \item \emph{nested} if $\Omega(x_1) \subset \Omega(x_2)$ for all $0\leq x_1 \leq x_2\leq 1$ (cf.\ Definition~\ref{def:nested-sweepout});
+    \item \emph{nested} if $\Omega(x_1) \subset \Omega(x_2)$ for all $0\leq x_1 \leq x_2\leq 1$ (Definition~\ref{def:p2-nested});
     \item \emph{volume parametrized} if $\Vol(\Omega(x)) = x$ for every $x\in [0,1]$.
 \end{itemize}
 We call such a sweepout an \emph{optimal nested volume parametrized (ONVP) sweepout}.
@@ -182,28 +239,12 @@ In this chapter, we establish integrality and regularity without mass cancellati
 
 \subsection{Case 1: No Mass Loss}
 
-The reduced boundary $\bdy\Omega$ of a Caccioppoli set $\Omega$ induces a varifold
-$V = \mathcal{H}^n \llcorner \bdy\Omega \otimes \delta_{T_x\bdy\Omega}$.
-
-The key tool is the following proposition from the appendix of De~Lellis--Tasnady~\cite{DLT13}:
-
-\begin{proposition}[Varifolds vs Caccioppoli set limits~{\cite[Proposition A.1]{DLT13}}]\label{prop:DLT-integrality}
-    Let $\{\Omega^k\}$ be a sequence of Caccioppoli sets and $U$ an open subset of $M$. Assume that
-    \begin{itemize}
-        \item[(i)] $D\mathbb{1}_{\Omega^k} \to D\mathbb{1}_\Omega$ in the sense of measures in $U$;
-        \item[(ii)] $\per(\Omega^k, U) \to \per(\Omega, U)$
-    \end{itemize}
-    for some Caccioppoli set $\Omega$. Denote by $V^k$ and $V$ the varifolds induced by $\bdy\Omega^k$
-    and $\bdy\Omega$ respectively, where $\bdy\Omega$ denotes the reduced boundary. Then
-    $V^k \to V$ in the sense of varifolds.
-\end{proposition}
-
 \begin{proof}[Proof of Theorem~\ref{thm:integrality-mult-one}, Case 1]
 By Theorem~\ref{thm:CLS-stationary}, the varifold $V$ arises as the weak limit of varifolds $V_i$
 associated to slices $T_i = \phi(t_i)$ with $\mathbf{M}(T_i) \to \mathcal{F}(\phi)$.
 
 We identify each slice $T_i \in \mathbf{Z}_n(M;\mathbb{Z}_2)$ with its corresponding Caccioppoli set
-$\Omega_i$ (see Proposition~\ref{prop:cacc-cycle}). The
+$\Omega_i$. The
 varifold $V_i$ is then the varifold induced by the reduced boundary $\bdy\Omega_i$, given by
 \[
     V_i = \mathcal{H}^n \llcorner \bdy\Omega_i \otimes \delta_{T_x\bdy\Omega_i}.
@@ -222,7 +263,7 @@ By the \emph{no mass cancellation} hypothesis (Definition~\ref{def:mass-cancella
 \[
     \mathbf{M}(\phi(t^*)) = W.
 \]
-Since the sweepout $\phi$ is continuous in the flat norm topology (see Proposition~\ref{prop:sweepout-cycle}), and flat convergence implies $L^1$ convergence of characteristic functions, we have $\mathbb{1}_{\Omega_i} \to \mathbb{1}_{\Omega(t^*)}$ in $L^1(M)$. By uniqueness of BV limits, the Caccioppoli set $\Omega$ from Step~1 equals $\Omega(t^*)$.
+Since the sweepout $\phi$ is continuous in the flat norm topology, and flat convergence implies $L^1$ convergence of characteristic functions, we have $\mathbb{1}_{\Omega_i} \to \mathbb{1}_{\Omega(t^*)}$ in $L^1(M)$. By uniqueness of BV limits, the Caccioppoli set $\Omega$ from Step~1 equals $\Omega(t^*)$.
 
 Now we can establish perimeter convergence directly:
 \begin{itemize}
@@ -244,8 +285,8 @@ Combining these, we obtain perimeter convergence:
     \per(\Omega_i, M) \to \per(\Omega, M) = W.
 \]
 
-\textbf{Step 3: Application of Proposition~\ref{prop:DLT-integrality}.} By
-Proposition~\ref{prop:DLT-integrality} (De~Lellis--Tasnady, Proposition A.1), since we have both
+\textbf{Step 3: Application of Proposition~\ref{prop:p2-DLT-integrality}.} By
+Proposition~\ref{prop:p2-DLT-integrality} (De~Lellis--Tasnady, Proposition A.1), since we have both
 BV convergence and perimeter convergence, the varifold limit $V$ equals the varifold induced by
 $\bdy\Omega$:
 \[
@@ -268,7 +309,7 @@ The fundamental obstruction to proving Conjecture~\ref{conj:mass-cancellation-in
 \end{remark}
 
 \begin{proof}
-If $V$ is integral, then by Proposition~\ref{prop:DLT-integrality}, there exists a Caccioppoli set $\Omega$ such that
+If $V$ is integral, then by Proposition~\ref{prop:p2-DLT-integrality}, there exists a Caccioppoli set $\Omega$ such that
 \[
     V = \mathcal{H}^n \llcorner \partial^*\Omega \otimes \delta_{T_x\partial^*\Omega}.
 \]
@@ -512,10 +553,8 @@ Therefore, $V$ satisfies all hypotheses of Wickramasekera's theorem~\cite{Wic14}
 We are now ready to prove Theorem~\ref{thm:non-excessive-main}.
 
 \begin{proof}[Proof of Theorem~\ref{thm:non-excessive-main}]
-Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. The nested sweepout
-framework constructed in Sections~\ref{ch:morse-foliation}--\ref{ch:nested-sweepout} provides a continuous
-family of hypersurfaces sweeping out $M$. Applying the non-excessive tightening procedure of
-Chodosh--Liokumovich--Spolaor to this nested sweepout yields a non-excessive sweepout
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. By Proposition~\ref{prop:p2-onvp-existence}, there exists an optimal nested sweepout of $M$. Applying the non-excessive tightening procedure of
+Chodosh--Liokumovich--Spolaor~\cite{CLS22} to this nested sweepout yields a non-excessive sweepout
 $\Phi \in \mathcal{S}_{\text{nm}}$.
 
 By Theorem~\ref{thm:CLS-stationary}, there exists a stationary varifold $V$ with $\mass(V) \leq \mathcal{F}(\Phi)$.
