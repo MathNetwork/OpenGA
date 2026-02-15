@@ -9,7 +9,7 @@ Throughout this chapter, ``stationary'' means stationary in~$M$ with free bounda
 \section{Pull--tight on a non-compact manifold}\label{sec:pull-tight}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Fix a good set $U\subset M$. By Proposition~\ref{prop:nested-sweepout}, there exist good sweepouts of~$U$ with maximal area arbitrarily close to~$W_g(U)$. Since $M$ is non-compact, we cannot pull tight on all of~$M$ at once. Following the strategy of Chambers--Liokumovich~\cite[\S7]{CL20}, we pull tight layer by layer on a bounded exhaustion and use a diagonal argument. The only adaptation to the free boundary setting is that all vector fields must lie in $\mathfrak{X}_{\mathrm{tan}}(M)$ (tangent to~$\partial M$), and ``stationary'' is replaced by ``stationary with free boundary'' throughout; the exhaustion structure and diagonal argument are identical to~\cite{CL20}. On each bounded layer, the local pull--tight map follows Li--Zhou~\cite[Proposition~4.17]{LZ17}.
+Fix a good set $U\subset M$. By Proposition~\ref{prop:nested-sweepout}, there exist good sweepouts of~$U$ with maximal area arbitrarily close to~$W_g(U)$. Since $M$ is non-compact, we cannot pull tight on all of~$M$ at once. Following Chambers--Liokumovich~\cite[\S7]{CL20}, we pull tight layer by layer on a bounded exhaustion and combine the results via a diagonal argument.
 
 Let $U_0\Subset U_1\Subset\cdots\Subset M$ be bounded relative open sets with $M=\bigcup_i U_i$ and $U\Subset U_0$. Since each $\overline{U_i}$ is compact, the monotonicity formula \cite[Theorem~2.1]{LZ17} and Li--Zhou's estimates \cite[Section~3]{LZ17} apply on each~$U_i$. For each~$i$, choose $W_i$ with $U_i\Subset W_i\Subset U_{i+1}$. Set $C:=2W_g(U)$ and define
 \[
@@ -25,7 +25,7 @@ Both sets are compact under the varifold metric~$\mathbf{F}$ when $\Omega$ is bo
 \[
 \mathcal{V}^C_\infty(M):=\bigl\{V\in\mathcal{V}^C(M): V\text{ is stationary in }M\text{ with free boundary}\bigr\}.
 \]
-Note that $\mathcal{V}^C(U_j)\subset\mathcal{V}^C(M)$ for every~$j$, but $\mathcal{V}^C(M)$ itself is \emph{not} compact under~$\mathbf{F}$ when $M$ is non-compact (a sequence of varifolds whose supports escape to infinity need not have an $\mathbf{F}$-convergent subsequence). The proof strategy is therefore to extract convergent subsequences in the compact spaces~$\mathcal{V}^C(U_j)$ one layer at a time, and combine them via a diagonal argument to obtain a limit in~$\mathcal{V}^C_\infty(M)$.
+Note that $\mathcal{V}^C(U_j)\subset\mathcal{V}^C(M)$ for every~$j$, but $\mathcal{V}^C(M)$ itself is \emph{not} compact under~$\mathbf{F}$ when $M$ is non-compact, since a sequence of varifolds whose supports escape to infinity need not have an $\mathbf{F}$-convergent subsequence.
 
 \begin{lemma}[Pull--tight map {\cite[Lemma~2.3]{CL20}}]\label{lem:extend-pull-tight}
 For every~$i$ there exist a continuous map $\Phi_{U_i,W_i}:\mathcal{V}^C(M)\to\mathcal{V}^C(M)$ with the following properties for all $V\in\mathcal{V}^C(M)$:
@@ -42,22 +42,18 @@ For every~$i$ there exist a continuous map $\Phi_{U_i,W_i}:\mathcal{V}^C(M)\to\m
 \end{lemma}
 
 \begin{proof}
-The construction follows \cite[Lemma~2.3]{CL20}, with vector fields restricted to~$\mathfrak{X}_{\mathrm{tan}}(M)$. Since $U_i$ is bounded, $\mathcal{V}^C(U_i)$ and $\mathcal{V}^C_\infty(U_i)$ are compact under~$\mathbf{F}$. For each $V\in\mathcal{V}^C(M)$ with $V\llcorner \mathrm{Gr}_n(U_i)\notin\mathcal{V}^C_\infty(U_i)$, there exists $X\in\mathfrak{X}_{\mathrm{tan}}(M)$ supported in~$U_i$ with $\delta V(X)<0$. By compactness of~$\mathcal{V}^C(U_i)$, a covering and partition-of-unity argument (as in \cite[\S7]{CL20}) produces a continuous map $\Psi:\mathcal{V}^C(M)\to\mathfrak{X}_{\mathrm{tan}}(M)$ with $\operatorname{spt}\Psi(V)\subset W_i$, satisfying $\delta V(\Psi(V))=0$ if $V\in\mathcal{V}^C_\infty(U_i)$ and $\delta V(\Psi(V))<0$ otherwise. Flowing along~$\Psi(V)$ for a suitable time and switching off via a cutoff supported in~$W_i$ yields the map~$\Phi_{U_i,W_i}$ with properties~(1)--(3).
+The construction follows \cite[Lemma~2.3]{CL20} verbatim, with the sole modification that all vector fields are taken in~$\mathfrak{X}_{\mathrm{tan}}(M)$ (tangent to~$\partial M$) rather than~$\mathfrak{X}_c(M)$. This does not affect the argument: the proof uses only that $\mathfrak{X}_{\mathrm{tan}}(M)$ is a closed subspace of~$\mathfrak{X}_c(M)$ on which the covering, partition-of-unity, and flow constructions remain valid, and that non-stationarity with free boundary provides a vector field $X\in\mathfrak{X}_{\mathrm{tan}}(M)$ with $\delta V(X)<0$.
 \end{proof}
 
-\begin{remark}[Pull-tight preserves good sweepout structure]\label{rem:pt-preserves-good}
-The pull-tight procedure does not destroy the good sweepout structure:
-\begin{enumerate}[label=\textup{(\roman*)}]
-    \item By property~(2), endpoints of a good sweepout (which have mass $\leq 5\,\mathbf{M}(\partial_I U)$ by Definition~\ref{def:good-sweepout}) are left unchanged.
-    \item The flow is generated by vector fields supported in~$W_i$. Since $U \Subset U_0 \Subset W_0$, the flow does not transport mass across~$\partial_I U$.
-\end{enumerate}
-Therefore the pulled-tight sequence remains a sequence of good sweepouts, and the non-escape property (Proposition~\ref{prop:non-escape}) applies.
+\begin{remark}[Role of the thresholds]\label{rem:thresholds}
+The constants $5\,\mathbf{M}(\partial_IU)$ and $9\,\mathbf{M}(\partial_IU)$ in Lemma~\ref{lem:extend-pull-tight} are not explained in~\cite{CL20} but play an important role. Endpoints of a good sweepout have mass at most $5\,\mathbf{M}(\partial_IU)$ (Definition~\ref{def:good-sweepout}), so property~(2) leaves them unchanged. Moreover, since the flow is generated by vector fields supported in~$W_i$ with $U\Subset U_0\Subset W_0$, it does not transport mass across~$\partial_IU$. Together, these guarantee that the pull-tight preserves the good sweepout structure, so the non-escape property (Proposition~\ref{prop:non-escape}) remains applicable. On the other hand, the min--max slices have mass close to $W_g(U)\ge\tfrac{9}{10}\,W_\partial(U)\gg 9\,\mathbf{M}(\partial_IU)$ (by the good set condition), so they are well above the threshold in property~(3) and are actively pulled tight. The gap between $5$ and $9$ accommodates a continuous cutoff.
 \end{remark}
 
-Let $\{\Gamma_t^i\}$ be a sequence of good sweepouts with $\sup_t \mathbf{M}(\Gamma_t^i)\downarrow W_g(U)$. Set
+Let $\{\Gamma_t^i\}$ be a sequence of good sweepouts with $\sup_t \mathbf{M}(\Gamma_t^i)\downarrow W_g(U)$. On a compact manifold, one would apply a single pull-tight map to the entire sequence. Here $M$ is non-compact, so instead we pull tight incrementally: the $i$-th sweepout is pulled tight on the first $i$ layers of the exhaustion. Set
 \[
 \mathbf{P}_i:=\Phi_{U_0,W_0}\circ\Phi_{U_1,W_1}\circ\cdots\circ\Phi_{U_i,W_i}.
 \]
+Thus $\mathbf{P}_i(\Gamma_t^i)$ has been pulled tight on $U_0,\ldots,U_i$: as $i\to\infty$ the number of layers grows with the exhaustion, so the limit varifold will be stationary on every~$U_j$ and hence on all of~$M$.
 
 \begin{proposition}[Pulled--tight minimizing sequence]\label{prop:pt-minimizing}
 After passing to a subsequence, $\{\mathbf{P}_i(\Gamma_t^i)\}$ is a minimizing sequence of good sweepouts with
@@ -68,54 +64,24 @@ and any min--max sequence $\mathbf{P}_i(\Gamma_{t_i}^i)$ admits a subsequence co
 \end{proposition}
 
 \begin{proof}
-Since $M$ is non-compact, $\mathcal{V}^C(M)$ is not compact under~$\mathbf{F}$, so we cannot extract a convergent subsequence in one step. However, each~$\mathcal{V}^C(U_j)$ is compact under~$\mathbf{F}$, so we extract convergent subsequences one layer at a time and combine them via a diagonal argument, following Chambers--Liokumovich~\cite[\S7]{CL20}. This procedure uses only the compactness of~$\mathcal{V}^C(U_j)$ and the properties of Lemma~\ref{lem:extend-pull-tight}; the free boundary condition is already encoded in the lemma.
+The free boundary condition does not affect the argument: it relies only on the compactness of~$\mathcal{V}^C(U_j)$ and on properties~(1)--(3) of Lemma~\ref{lem:extend-pull-tight}, all of which hold because the vector fields lie in~$\mathfrak{X}_{\mathrm{tan}}(M)$. The proof follows~\cite[\S7]{CL20}.
 
-We claim that for every min--max sequence $\{\mathbf{P}_j(\Gamma_{t_j}^j)\}$ with $\mathbf{M}(\mathbf{P}_j(\Gamma_{t_j}^j))\to W_g(U)$, one has
+First, a contradiction argument using the mass decrease and $\mathbf{F}$-displacement bounds in Lemma~\ref{lem:extend-pull-tight}(3) shows that for every~$i$,
 \begin{equation}\label{eq:pt-claim}
-\lim_{j\to\infty}\mathbf{F}_{U_i}\bigl(\mathbf{P}_j(\Gamma_{t_j}^j)\llcorner\mathrm{Gr}_n(U_i),\;\mathcal{V}^C_\infty(U_i)\bigr)=0\qquad\text{for every }i.
+\lim_{j\to\infty}\mathbf{F}_{U_i}\bigl(\mathbf{P}_j(\Gamma_{t_j}^j)\llcorner\mathrm{Gr}_n(U_i),\;\mathcal{V}^C_\infty(U_i)\bigr)=0:
 \end{equation}
+if the $\mathbf{F}_{U_i}$-distance stayed bounded away from zero, then either some intermediate layer $\Phi_{U_l,W_l}$ would strictly decrease the mass by the $\varepsilon_k$-bound, or the $\tau_k$-bound and the triangle inequality would force the final varifold close to $\mathcal{V}^C_\infty(U_i)$; in both cases one reaches a contradiction with $\mathbf{M}(\mathbf{P}_j(\Gamma_{t_j}^j))\to W_g(U)$. See~\cite[\S7]{CL20} for the full details.
 
-Fix~$i$ and suppose for contradiction that (after passing to a subsequence)
-\[
-\mathbf{F}_{U_i}\bigl(\mathbf{P}_j(\Gamma_{t_j}^j)\llcorner\mathrm{Gr}_n(U_i),\;\mathcal{V}^C_\infty(U_i)\bigr)>\delta
-\]
-for some $\delta>0$ and all~$j$. For each $0\le l\le j$, write
-\[
-V_l^j:=\Phi_{U_l,W_l}\circ\Phi_{U_{l+1},W_{l+1}}\circ\cdots\circ\Phi_{U_j,W_j}\bigl(|\Gamma_{t_j}^j|\bigr),
-\]
-so that $V_0^j=\mathbf{P}_j(\Gamma_{t_j}^j)$ and $V_{j+1}^j=|\Gamma_{t_j}^j|$.
-
-Choose $k$ large enough so that $2^{-k}+\sum_{l=0}^{i}\tau_k(U_l)<\delta/2$, and set $\bar\varepsilon:=\tfrac{1}{2}\min_{0\le l\le i}\varepsilon_k(U_l)$. Fix $j>i$ with $\mathbf{M}(\Gamma_{t_j}^j)\in\bigl(W_g(U)-\bar\varepsilon/10,\;W_g(U)+\bar\varepsilon/10\bigr)$. There are two cases.
-
-\medskip
-\noindent\textit{Case~1.} For some $l\in\{0,\ldots,i\}$, $\mathbf{F}_{U_l}\bigl(V_{l+1}^j\llcorner\mathrm{Gr}_n(U_l),\,\mathcal{V}^C_\infty(U_l)\bigr)>2^{-k}$.
-Then Lemma~\ref{lem:extend-pull-tight}(3a) gives
-\[
-\mathbf{M}(V_0^j)\le\mathbf{M}(V_l^j)\le\mathbf{M}(V_{l+1}^j)-\varepsilon_k(U_l)\le\mathbf{M}(\Gamma_{t_j}^j)-\varepsilon_k(U_l)<W_g(U)-\bar\varepsilon,
-\]
-contradicting $\mathbf{M}(\mathbf{P}_j(\Gamma_{t_j}^j))\to W_g(U)$.
-
-\medskip
-\noindent\textit{Case~2.} For all $l\in\{0,\ldots,i\}$, $\mathbf{F}_{U_l}\bigl(V_{l+1}^j\llcorner\mathrm{Gr}_n(U_l),\,\mathcal{V}^C_\infty(U_l)\bigr)\le 2^{-k}$.
-By Lemma~\ref{lem:extend-pull-tight}(3b),
-\[
-\mathbf{F}_{U_i}\bigl(V_{l+1}^j\llcorner\mathrm{Gr}_n(U_i),\;V_l^j\llcorner\mathrm{Gr}_n(U_i)\bigr)\le\mathbf{F}(V_{l+1}^j,V_l^j)\le\tau_k(U_l).
-\]
-Summing over $l=0,\ldots,i$ and applying the triangle inequality,
-\[
-\mathbf{F}_{U_i}\bigl(V_{i+1}^j\llcorner\mathrm{Gr}_n(U_i),\;V_0^j\llcorner\mathrm{Gr}_n(U_i)\bigr)\le\sum_{l=0}^{i}\tau_k(U_l)<\delta/2.
-\]
-Since $\mathbf{F}_{U_i}(V_{i+1}^j\llcorner\mathrm{Gr}_n(U_i),\,\mathcal{V}^C_\infty(U_i))\le 2^{-k}<\delta/2$, the triangle inequality gives $\mathbf{F}_{U_i}(V_0^j\llcorner\mathrm{Gr}_n(U_i),\,\mathcal{V}^C_\infty(U_i))<\delta$, a contradiction.
-
-\medskip
-This establishes~\eqref{eq:pt-claim}. Now we apply the diagonal argument: by compactness of~$\mathcal{V}^C(U_j)$, extract a subsequence $\{i^{(1)}_k\}$ converging in $\mathbf{F}_{U_1}$, then a further subsequence $\{i^{(2)}_k\}$ converging in $\mathbf{F}_{U_2}$, and so on. The diagonal subsequence $\{i^{(k)}_k\}$ converges in $\mathbf{F}_{U_j}$ for every~$j$. Since $M = \bigcup_j U_j$, the limit varifold $V$ is well-defined on all of~$M$, and by~\eqref{eq:pt-claim} we have $V\llcorner\mathrm{Gr}_n(U_j)\in\mathcal{V}^C_\infty(U_j)$ for every~$j$. It follows that $V$ is stationary with free boundary on all of~$M$: for any $X\in\mathfrak{X}_{\mathrm{tan}}(M)$, the support of~$X$ is contained in some~$U_j$, and $V$ is stationary on~$U_j$, so $\delta V(X) = 0$.
+Next, a diagonal argument produces a subsequence converging in $\mathbf{F}_{U_j}$ for every~$j$. Since $M = \bigcup_j U_j$, the limit varifold $V$ is well-defined on all of~$M$, and by~\eqref{eq:pt-claim} we have $V\llcorner\mathrm{Gr}_n(U_j)\in\mathcal{V}^C_\infty(U_j)$ for every~$j$. It follows that $V$ is stationary with free boundary on~$M$: for any $X\in\mathfrak{X}_{\mathrm{tan}}(M)$, the support of~$X$ is contained in some~$U_j$, and $V$ is stationary on~$U_j$, so $\delta V(X) = 0$.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Almost minimizing varifolds with free boundary}\label{sec:am-varifolds}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The pulled-tight varifold $V$ from Proposition~\ref{prop:pt-minimizing} is stationary, but stationarity alone does not yield regularity. Following the Almgren--Pitts strategy, one needs the stronger \emph{almost minimizing} property: roughly, $V$ cannot be deformed to decrease its mass by much. In this section we collect the relevant definitions and results from Li--Zhou~\cite[Sections~4--6]{LZ17}. The definitions below are local and apply to any complete manifold with boundary. Of the two main results that use them, the regularity theorem \cite[Theorem~6.2]{LZ17} has an entirely local proof (replacements, tangent cones, and boundary blow-ups all take place in a neighbourhood of a single point) and therefore extends to non-compact manifolds without modification. The only step requiring compactness of the ambient manifold is the combinatorial selection of almost minimizing varifolds \cite[Theorem~5.3]{LZ17}; in our setting this is handled by applying the argument on each bounded set in the exhaustion and passing to a diagonal subsequence, exactly as in Chambers--Liokumovich~\cite[\S7]{CL20}. The details are carried out in Section~\ref{sec:main-proof}.
+The pulled-tight varifold $V$ from Proposition~\ref{prop:pt-minimizing} is stationary, but stationarity alone does not yield regularity. Following the Almgren--Pitts strategy, one needs the stronger \emph{almost minimizing} property: roughly, $V$ cannot be deformed to decrease its mass by much. In the closed (boundaryless) setting, this notion was introduced by Pitts~\cite{Pit81} and reformulated by De~Lellis--Tasnady~\cite{DLT13}; the regularity of almost minimizing varifolds was established in~\cite{Pit81,DLT13}. Chambers--Liokumovich~\cite{CL20} use these results directly, as their manifolds have no boundary. For manifolds \emph{with} boundary, Li--Zhou~\cite[Sections~4--6]{LZ17} developed free boundary counterparts of both the almost minimizing definitions and the regularity theory, which are the versions we use here.
+
+In this section we collect the relevant definitions and results from~\cite{LZ17}. The definitions below are local and apply to any complete manifold with boundary. Of the two main results that use them, the regularity theorem \cite[Theorem~6.2]{LZ17} has an entirely local proof (replacements, tangent cones, and boundary blow-ups all take place in a neighbourhood of a single point) and therefore extends to non-compact manifolds without modification. The only step requiring compactness of the ambient manifold is the combinatorial selection of almost minimizing varifolds \cite[Theorem~5.3]{LZ17}; in our setting this is handled by applying the argument on each bounded set in the exhaustion and passing to a diagonal subsequence, exactly as in~\cite[\S7]{CL20}. The details are carried out in Section~\ref{sec:main-proof}.
 
 The basic notion captures cycles whose mass cannot be decreased much by local deformations supported in a given open set.
 
