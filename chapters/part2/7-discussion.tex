@@ -1,0 +1,75 @@
+% !TEX root = ../../thesis.tex
+
+\section{Integrality in the Mass Cancellation Case}\label{sec:mass-cancellation-integrality}
+
+The no-mass-cancellation hypothesis in Theorem~\ref{thm:non-excessive-main} is the sole obstruction to a fully self-contained regularity theory for non-excessive sweepouts. In this section, we prove that the varifold limit $V$ is integral even in the mass cancellation case, resolving Conjecture~\ref{conj:mass-cancellation-integrality} for $2 \leq n \leq 6$.
+
+Recall the setup: $\Phi$ is a non-excessive ONVP sweepout, $x_i \to x_0 \in \mathfrak{m}(\Phi)$ is a min-max sequence, and $V$ is the varifold limit of $|\partial^*\Omega(x_i)|$. In the no-mass-cancellation case, the de~Lellis--Tasnady criterion (Proposition~\ref{prop:p2-DLT-integrality}) applies because both hypotheses are satisfied: weak measure convergence $D\chi_{\Omega(x_i)} \to D\chi_{\Omega(x_0)}$ follows from flat continuity, and perimeter convergence $\mathrm{Per}(\Omega(x_i)) \to \mathrm{Per}(\Omega(x_0))$ follows from $\mathbf{M}(\Phi(x_0)) = W$. When mass cancellation occurs, $\mathbf{M}(\Phi(x_0)) < W$, so the perimeter convergence fails:
+\[
+    \mathrm{Per}(\Omega(x_i)) \to W > \mathrm{Per}(\Omega(x_0)).
+\]
+The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. Instead, we exploit the nestedness of the sweepout to count sheets and deduce integrality directly.
+
+\begin{proposition}\label{prop:integrality-nested}
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$, and let $\Phi$ be an optimal nested \textup{(}ONVP\textup{)} sweepout with width $W$. Let $x_i \to x_0 \in \mathfrak{m}(\Phi)$ be a min-max sequence, $\Omega(x_0) = \lim \Omega(x_i)$ in $L^1$, and $V$ the varifold limit of $|\partial^*\Omega(x_i)|$. Then $V$ is an integral $n$-varifold.
+\end{proposition}
+
+\begin{proof}
+Write $V = |\partial^*\Omega(x_0)| + V'$, where $V'$ is the non-negative varifold capturing the cancelling mass: $\|V'\|(M) = W - \mathrm{Per}(\Omega(x_0)) \geq 0$.
+
+\medskip\noindent\textbf{Step~1: Rectifiability of $V$ and existence of densities.}
+Since $V$ is stationary (Proposition~\ref{thm:CLS-stationary}), Allard's rectifiability theorem~\cite[Theorem~5.5(1)]{All72} implies that $V$ is a rectifiable $n$-varifold: there exist an $\mathcal{H}^n$-rectifiable set $\Sigma \subset M$ and a locally $\mathcal{H}^n$-integrable function $\theta \colon \Sigma \to (0, \infty)$ such that $V = \theta \, \mathcal{H}^n \mres \Sigma$ (as Radon measures on the Grassmannian, with tangent planes determined by $\Sigma$). Note that this step does \emph{not} assume $\theta$ takes integer values---Allard's rectifiability theorem applies to any varifold with locally bounded first variation, and stationarity ($\delta V = 0$) is a special case.
+
+The monotonicity formula for stationary varifolds~\cite[Section~17]{Sim84} ensures that the density ratio $\omega_n^{-1} r^{-n} \|V\|(B_r(p))$ is non-decreasing in $r$, and therefore the density $\theta(p) = \Theta(\|V\|, p) = \lim_{r \to 0} \omega_n^{-1} r^{-n} \|V\|(B_r(p))$ exists at every $p \in \spt\|V\|$ and satisfies $\theta(p) > 0$. (For a general stationary varifold, $\theta(p) \geq 1$ is \emph{not} guaranteed without integrality; the lower bound $\theta(p) \geq 1$ will follow once we establish $\theta(p) \in \mathbb{Z}_{>0}$.) At $\mathcal{H}^n$-a.e.\ point of $\Sigma$, the density is finite and $V$ has a unique tangent plane $T_p\Sigma$, with tangent varifold $\theta(p) |T_p\Sigma|$. Our goal is to show $\theta(p) \in \mathbb{Z}_{>0}$ at $\mathcal{H}^n$-a.e.\ point.
+
+\medskip\noindent\textbf{Step~2: Graphical decomposition and integer density.}
+The key tool is the regularity of the \emph{approximating} Caccioppoli boundaries, not of the limit $V$ itself. Since $2 \leq n \leq 6$, each $\partial^*\Omega(x_i)$ is a smooth closed embedded hypersurface in $M$ (by the Federer regularity theorem: $\dim_{\mathcal{H}}(\partial\Omega(x_i) \setminus \partial^*\Omega(x_i)) \leq n - 7 < 0$).
+
+Let $p \in \Sigma$ be a point where $\theta(p)$ exists, is finite, and $V$ has a unique tangent plane $P = T_p\Sigma$. Choose $r > 0$ generic (i.e., $\|V\|(\partial B_r(p)) = 0$) and small enough that $\|V\|(B_r(p))$ is close to $\theta(p) \omega_n r^n$. The \emph{tilt-excess} of a varifold $W$ in $B_r(p)$ relative to $P$ is
+\[
+    E(W, B_r(p), P) := r^{-n} \int_{B_r(p) \times G(n,n+1)} |S - P|^2 \, dW(x, S).
+\]
+Since $V$ has tangent plane $P$ at $p$, we have $E(V, B_r(p), P) \to 0$ as $r \to 0$ (cf.~\cite[Section~22]{Sim84}). The varifold convergence $|\partial^*\Omega(x_i)| \to V$ gives $E(|\partial^*\Omega(x_i)|, B_r(p), P) \to E(V, B_r(p), P)$ for each generic $r$. Combining: for every $\delta > 0$, there exist $r_1 > 0$ and $i_1$ such that for $r < r_1$ and $i > i_1$,
+\[
+    E(|\partial^*\Omega(x_i)|, B_r(p), P) < \delta.
+\]
+
+The graphical decomposition of $\partial^*\Omega(x_i) \cap B_r(p)$ into sheets with small gradient follows from a standard argument: the small tilt-excess combined with the smoothness and embeddedness of $\partial^*\Omega(x_i)$ gives, via Chebyshev's inequality and the implicit function theorem, finitely many graphical components for generic $r$ (cf.~\cite[Chapter~7]{Sim84} and~\cite[Lemma~2.1]{Wic14}). Precisely, for $r$ sufficiently small and $i$ sufficiently large, $\partial^*\Omega(x_i) \cap B_r(p)$ consists of finitely many smooth connected components (sheets) $\Sigma_i^1, \ldots, \Sigma_i^{k_i}$, each of which is the graph of a smooth function $u_i^j \colon \Omega_i^j \to \mathbb{R}$ over a domain $\Omega_i^j \subset D_r := P \cap B_r(p)$ with $\|Du_i^j\|_{C^0} < \varepsilon$.
+
+We claim that each sheet passing through $B_{r/2}(p)$ nearly fills $D_r$. Since $\partial^*\Omega(x_i)$ is compact without boundary (using $n \leq 6$), the boundary of each graphical piece $\Sigma_i^j$ lies on $\partial B_r(p)$: every $y \in \partial\Omega_i^j$ satisfies $|y|^2 + |u_i^j(y)|^2 = r^2$. For a sheet passing through $B_{r/2}(p)$, there exists $y_0 \in \Omega_i^j$ with $|y_0| < r/2$. Since $V$ has tangent varifold $\theta(p)|P|$ at $p$, the mass of $V$ concentrates near $P$: for any $\alpha > 0$, $\|V\|(\{q \in B_r(p) : \mathrm{dist}(q, P) > \alpha r\}) / (\omega_n r^n) \to 0$ as $r \to 0$. By varifold convergence, this gives $|u_i^j(y_0)| \leq \varepsilon r$ for $i$ large. For any $y \in \partial\Omega_i^j$, the gradient bound gives $|u_i^j(y)| \leq 3\varepsilon r$, and the sphere constraint forces $|y| \geq r(1 - C'\varepsilon^2)$. Therefore $\mathcal{H}^n(D_r \setminus \Omega_i^j) \leq C''\varepsilon^2 \omega_n r^n$, and each contributing sheet has area in $((1 - C'''\varepsilon^2)\omega_n r^n, (1 + C'''\varepsilon^2)\omega_n r^n)$. (Sheets not passing through $B_{r/2}(p)$ contribute vanishingly small mass near $p$ for generic $r$.)
+
+Denoting the number of contributing sheets by $k_i$, the total area satisfies
+\[
+    k_i(1 - \epsilon)\omega_n r^n < \mathcal{H}^n(\partial^*\Omega(x_i) \cap B_r(p)) < k_i(1 + \epsilon)\omega_n r^n.
+\]
+Since the total area converges to $\theta(p)\omega_n r^n$ and $\epsilon$ can be taken arbitrarily small, $k_i$ is eventually constant and $\theta(p) \in \mathbb{Z}_{>0}$.
+
+It remains to determine which positive integers arise. We distinguish three cases.
+
+\medskip\noindent\emph{Case~1: Pure cancellation points ($p \in \spt\|V'\| \setminus \spt\|\partial^*\Omega(x_0)\|$).}
+At such a point, $\Omega(x_0)$ is locally constant near $p$ (either $B_r(p) \subset \Omega(x_0)$ or $B_r(p) \subset M \setminus \overline{\Omega(x_0)}$ for small $r$), so all mass of $V$ near $p$ comes from cancelling sheets. We claim that $k_i$ is even.
+
+The nestedness constraint orders the sheets by height over $P$, and $\Omega(x_i) \cap B_r(p)$ consists of alternating slabs (``inside'' and ``outside'' $\Omega(x_i)$). Say $B_r(p) \subset \Omega(x_0)$. If $x_i > x_0$, nestedness gives $\Omega(x_0) \subset \Omega(x_i)$, so $B_r(p) \subset \Omega(x_i)$ and $\partial^*\Omega(x_i) \cap B_r(p) = \varnothing$; thus only parameters $x_i < x_0$ contribute sheets in $B_r(p)$. For such $x_i$, nestedness gives $\Omega(x_i) \subset \Omega(x_0)$, so $\Omega(x_i) \cap B_r(p)$ equals $B_r(p)$ minus some thin slabs, each slab bounded by two sheets, requiring $k_i$ even. (The case $B_r(p) \subset M \setminus \overline{\Omega(x_0)}$ is analogous, with sheets coming only from $x_i > x_0$.) Therefore $k_i \in 2\mathbb{Z}_{>0}$, and
+\[
+    \theta(p) = 2m \quad \text{for some } m \in \mathbb{Z}_{>0}.
+\]
+The geometric mechanism is \emph{folding}: each pair of adjacent sheets bounds a thin slab in which $\Omega(x_i)$ differs from $\Omega(x_0)$. As $x_i \to x_0$, the slabs collapse (their volume tends to zero by volume parametrization: $\mathrm{Vol}(\Omega(x_i) \triangle \Omega(x_0)) = |x_i - x_0| \to 0$), but each fold contributes multiplicity~$2$ to the varifold limit.
+
+\medskip\noindent\emph{Case~2: Mixed regular points ($p \in \mathrm{reg}(\partial^*\Omega(x_0)) \cap \spt\|V'\|$).}
+Here $\partial^*\Omega(x_0)$ is a smooth hypersurface near $p$ (since $n \leq 6$), and is itself a graph over $D_r$ with small gradient. The $k_i$ sheets of $\partial^*\Omega(x_i) \cap B_r(p)$ are ordered by height: $u_i^1 < u_i^2 < \cdots < u_i^{k_i}$ (the ordering follows from embeddedness and the small-gradient condition). Since $\Omega(x_i) \to \Omega(x_0)$ in $L^1$, the symmetric difference $\Omega(x_i) \triangle \Omega(x_0)$ has small volume in $B_r(p)$. The boundary $\partial^*\Omega(x_0) \cap B_r(p)$ divides $B_r(p)$ into a lower part (in $\Omega(x_0)$) and an upper part (outside $\Omega(x_0)$). The ordered sheets of $\partial^*\Omega(x_i)$ divide $B_r(p)$ into $k_i + 1$ alternating slabs. By a volume comparison argument: since the sheets are ordered by height and $\Omega(x_i)$ occupies alternating slabs, the $L^1$ convergence $\Omega(x_i) \to \Omega(x_0)$ forces exactly one sheet $u_i^{j_0}$ to satisfy $\|u_i^{j_0} - u_0\|_{L^\infty} \to 0$, where $u_0$ parametrizes $\partial^*\Omega(x_0)$ over $D_r$. This is the \emph{tracking sheet}. (Note that $\partial^*\Omega(x_i)$ and $\partial^*\Omega(x_0)$ are disjoint for $x_i \neq x_0$ by nestedness; the tracking sheet is a different surface that approximates $\partial^*\Omega(x_0)$ geometrically.)
+
+The remaining $k_i - 1$ sheets are cancelling sheets. By the same slab-counting argument as in Case~1---applied to the region between the tracking sheet and $\partial B_r(p)$ on each side---the cancelling sheets come in pairs, each pair bounding a thin slab. Therefore $k_i - 1$ is even, i.e., $k_i$ is odd, and
+\[
+    \theta(p) = 1 + 2m \quad \text{for some } m \in \mathbb{Z}_{\geq 0}.
+\]
+
+\medskip\noindent\emph{Case~3: Singular points of $\partial^*\Omega(x_0)$.}
+For $n \leq 6$, the Federer regularity theorem gives $\partial\Omega(x_0) \setminus \partial^*\Omega(x_0) = \varnothing$, so this case does not arise. For general $n$, De~Giorgi's structure theorem gives $\mathcal{H}^n(\partial\Omega(x_0) \setminus \partial^*\Omega(x_0)) = 0$, so the set of such points has $\mathcal{H}^n$-measure zero.
+
+\medskip\noindent\textbf{Step~3: Conclusion.}
+Combining Cases~1--3, we obtain $\theta(p) \in \mathbb{Z}_{>0}$ at $\mathcal{H}^n$-a.e.\ point of $\spt\|V\|$. Together with the rectifiability from Step~1, this gives that $V$ is an integral varifold.
+\end{proof}
+
+\begin{remark}
+The integer density of $V$ is deduced directly from counting the sheets of the approximating Caccioppoli boundaries---smooth hypersurfaces whose topology in small balls is constrained by nestedness to produce an integer sheet count with definite parity. The non-excessive hypothesis is not used; it remains essential only for the subsequent regularity step (Section~\ref{sec:alpha-verification}).
+\end{remark}

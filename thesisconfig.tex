@@ -31,6 +31,21 @@
   style=classicthesis
 }{classicthesis}
 \usepackage{classicthesis}
+
+% Remove chapter prefix from section numbering (each chapter = independent paper)
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+% Larger, bolder section/subsection headings
+\usepackage{titlesec}
+\titleformat{\section}
+  {\relax}{\textsc{\Large\thesection}}{1em}{\Large\scshape}
+\titleformat{\subsection}
+  {\relax}{\textsc{\large\thesubsection}}{1em}{\large\itshape}
+\titleformat{\subsubsection}
+  {\relax}{\textsc{\normalsize\thesubsubsection}}{1em}{\normalsize\itshape}
+
 \usepackage{mathrsfs}
 % 5) Define classicthesis color names BEFORE any \color{CTtitle} use
 \providecolor{Maroon}{cmyk}{0,0.87,0.68,0.32} % fallback if named table missing

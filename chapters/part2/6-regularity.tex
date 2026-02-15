@@ -1,0 +1,176 @@
+% !TEX root = ../../thesis.tex
+
+\section{Regularity via Wickramasekera's Theorem}\label{sec:alpha-verification}
+
+In this section, we verify the hypotheses of Wickramasekera's regularity theorem and complete the proof of Theorem~\ref{thm:non-excessive-main}. Throughout, we assume no mass cancellation. By Theorem~\ref{thm:integrality-mult-one}, the limit varifold satisfies $V = |\partial^*\Omega(x_0)|$ for the critical slice $\Phi(x_0) = \partial\Omega(x_0)$; in particular, $V$ is integral. This identification is essential: it tells us that $V$ is the boundary of a Caccioppoli set, which constrains the possible tangent cones, and it connects $V$ to the non-excessive structure of the sweepout, which provides the homotopic minimizing property.
+
+\begin{definition}[$\alpha$-structural hypothesis]\label{defn:alpha-structural}
+For $\alpha \in (0, 1/2)$, a stationary integral varifold $V$ satisfies the \emph{$\alpha$-structural hypothesis} if no singular point
+of $V$ has a neighborhood in which $V$ corresponds to a union of embedded $C^{1,\alpha}$ hypersurfaces-with-boundary
+meeting only along their common $C^{1,\alpha}$ boundary, with multiplicity a constant positive integer
+on each of the constituent hypersurfaces-with-boundary.
+\end{definition}
+
+\begin{theorem}[Wickramasekera~{\cite{Wic14}}]\label{thm:wickramasekera}
+    Let $V$ be a stable integral $n$-varifold in a closed $(n+1)$-dimensional Riemannian manifold
+    with $2\leq n\leq 6$. If $V$ satisfies the $\alpha$-structural hypothesis for some $\alpha \in (0, 1/2)$,
+    then $\sing V = \emptyset$, i.e., $\spt\|V\|$ is a smooth embedded minimal hypersurface.
+\end{theorem}
+
+\begin{theorem}[Verification of $\alpha$-structural hypothesis]\label{thm:alpha-hypo}
+    Let $V$ be the stationary integral varifold from Theorem~\ref{thm:integrality-mult-one} arising from a
+    non-excessive sweepout without mass cancellation. Then $V$ satisfies the $\alpha$-structural hypothesis.
+\end{theorem}
+
+Since $V = |\bdy\Omega|$ for some Caccioppoli set $\Omega$ (Theorem~\ref{thm:integrality-mult-one}), tangent cones at singular points are constrained by the Caccioppoli set structure. For stationary boundaries of Caccioppoli sets in $\mathbb{R}^{n+1}$ ($n \leq 6$), the only possible singular cones are:
+\begin{itemize}
+    \item $C = |H_1| + |H_2|$ (two half-hyperplanes meeting at angle $< \pi$) --- a ``wedge'';
+    \item $C = 2|H|$ (single half-hyperplane with multiplicity 2) --- a ``fold''.
+\end{itemize}
+Higher multiplicities or configurations where three or more sheets meet cannot arise, since the boundary of a Caccioppoli set separates $\mathbb{R}^{n+1}$ into exactly two regions ($\Omega$ and $\Omega^c$).
+
+\begin{proof}[Proof of Theorem~\ref{thm:alpha-hypo}]
+Suppose the $\alpha$-structural hypothesis fails at $Z \in \sing V$. Then there exists $\rho > 0$ such that
+\[
+    B_\rho(Z) \setminus \spt\|V\| = \left(\bigsqcup_{i=1}^N E_i\right) \sqcup \left(\bigsqcup_{j=1}^N F_j\right),
+\]
+where $E_i \subset \overline{\Omega}$ and $F_j \subset \overline{\Omega^c}$, and the sheets of $\spt\|V\|$ meet along a common $C^{1,\alpha}$ boundary $\Gamma$ of dimension $n-1$. We show that $Z \in \mathfrak{h}_{\mathrm{nm}}(V)$ (Definition~\ref{def:hnm}) by constructing, for each small $r > 0$, a Caccioppoli set $\Omega_r \subset \Omega$ with $\Omega \triangle \Omega_r \subset B_r(Z)$ and $\mathrm{Per}(\Omega_r, B_r(Z)) < \mathrm{Per}(\Omega, B_r(Z))$, so that $\partial\Omega$ is not inner homotopic minimizing in $B_r(Z)$. An analogous construction on the $F_j$-side shows $\partial\Omega$ is not outer homotopic minimizing either. By the tangent cone classification above, two cases arise:
+
+\begin{itemize}
+    \item \textbf{Case 1a (wedge):} The tangent cone of $V$ at $Z$ is $C = |H_1| + |H_2|$, where $H_1, H_2$ are half-hyperplanes meeting along their common boundary at angle less than $\pi$.
+
+    Write $C = |\bdy\Omega_C|$ for a Caccioppoli set $\Omega_C \subset \mathbb{R}^{n+1}$. Since the angle between $H_1$ and $H_2$ is less than $\pi$, the wedge $\partial\Omega_C$ is not perimeter-minimizing: in each two-dimensional cross-section normal to the edge, the two half-lines of total length $2r$ can be replaced by the chord of length $2r\sin(\theta/2) < 2r$, yielding a Caccioppoli set $\Omega_C' \subset \Omega_C$ with $\Omega_C \triangle \Omega_C' \subset B_1$ and
+    \[
+        \mathrm{Per}_{\mathbb{R}^{n+1}}(\Omega_C', B_1) \leq \mathrm{Per}_{\mathbb{R}^{n+1}}(\Omega_C, B_1) - \delta
+    \]
+    for some $\delta > 0$. As in~\cite[Lemma~3.4]{CLS22}, we choose $C^{1,\alpha}$-coordinates on $M$ around $Z$ with $g_{ij}(Z) = \delta_{ij}$ and rescale this competitor into $B_r(Z)$ to obtain $\Omega_r \subset \Omega$ with
+    \[
+        \mathrm{Per}_g(\Omega_r, B_r(Z)) - \mathrm{Per}_g(\Omega, B_r(Z)) = -r^n \delta(1 + o(1)) \quad \text{as } r \to 0.
+    \]
+
+    \begin{figure}[ht]
+        \centering
+        \begin{tikzpicture}[scale=1.0]
+          % Edge L: shared edge of the two parallelograms, with perspective
+          \coordinate (A) at (-1.8,-0.6);   % near end of edge
+          \coordinate (B) at (1.8,0.6);     % far end of edge
+
+          % H_1 (upper half-plane): parallelogram above L
+          \coordinate (A1) at ($(A)+(1.2,2.4)$);
+          \coordinate (B1) at ($(B)+(1.2,2.4)$);
+
+          % H_2 (lower half-plane): parallelogram below L
+          \coordinate (A2) at ($(A)+(2.4,-1.2)$);
+          \coordinate (B2) at ($(B)+(2.4,-1.2)$);
+
+          % Fill both half-planes
+          \fill[fillA, opacity=0.35] (A) -- (B) -- (B1) -- (A1) -- cycle;
+          \fill[fillA, opacity=0.35] (A) -- (B) -- (B2) -- (A2) -- cycle;
+
+          % Draw H_1 edges
+          \draw[thick, bindA] (A) -- (A1);
+          \draw[thick, bindA] (B) -- (B1);
+          \draw[bindA] (A1) -- (B1);
+
+          % Draw H_2 edges
+          \draw[thick, bindA] (A) -- (A2);
+          \draw[thick, bindA] (B) -- (B2);
+          \draw[bindA] (A2) -- (B2);
+
+          % Edge L (drawn on top)
+          \draw[very thick] (A) -- (B);
+
+          % Midpoint of L and ball B_r
+          \coordinate (M) at ($(A)!0.5!(B)$);
+          % Circle split at tangent points: short arc (right) solid, long arc (left) dashed
+          \draw[gray, thin] ($(M)+(-18:1.2)$) arc[start angle=-18, end angle=55, radius=1.2];
+          \draw[gray, thin, dashed] ($(M)+(55:1.2)$) arc[start angle=55, end angle=342, radius=1.2];
+          \fill[gray] (M) circle (1.5pt);
+          \node[gray, above left] at ($(M)+(135:1.2)$) {$\partial B_r$};
+
+          % Two points on L inside the circle, on either side of M
+          \coordinate (P) at ($(A)!0.35!(B)$);
+          \coordinate (Q) at ($(A)!0.65!(B)$);
+          \fill (P) circle (1.5pt);
+          \fill (Q) circle (1.5pt);
+
+          % Blue gradient shading for chord competitor (between semi-ellipses and chord)
+          \shade[left color=blue!30, right color=blue!5, shading angle=18, opacity=0.5]
+            (P) .. controls (-0.11, 0.69) and (0.50, 1.14) .. (0.69, 0.99)
+            -- (1.14, -0.37)
+            .. controls (1.08, -0.61) and (0.33, -0.61) .. cycle;
+
+          % Gray shading for the wedge region (between chord and arc)
+          \fill[gray, opacity=0.25]
+            (0.69, 0.99) -- (1.14, -0.37)
+            arc[start angle=-18, end angle=55, radius=1.2]
+            -- cycle;
+
+          % Semi-ellipse on H_1 side: solid left part, dashed right part
+          \draw[thick] (P) .. controls (-0.11, 0.69) and (0.50, 1.14) .. (0.69, 0.99);
+          \draw[thin, dashed] (0.69, 0.99) .. controls (0.79, 0.91) and (0.77, 0.65) .. (Q);
+
+          % Semi-ellipse on H_2 side: solid left part, dashed right part
+          \draw[thick] (P) .. controls (0.33, -0.61) and (1.08, -0.61) .. (1.14, -0.37);
+          \draw[thin, dashed] (1.14, -0.37) .. controls (1.18, -0.25) and (1.01, -0.05) .. (Q);
+
+          % Chord competitor: sparse parallel blue lines clipped to competitor region
+          \begin{scope}
+            \clip (P) .. controls (-0.11, 0.69) and (0.50, 1.14) .. (0.69, 0.99)
+              -- (1.14, -0.37)
+              .. controls (1.08, -0.61) and (0.33, -0.61) .. cycle;
+            \foreach \s in {-0.15, 0.1, 0.35, 0.6} {
+              \draw[blue, thin] ({\s-0.9}, {\s/3+2.72}) -- ({\s+0.9}, {\s/3-2.72});
+            }
+          \end{scope}
+
+          % Rightmost solid blue line: shifted slightly right of T1-T2 to cover dashed ellipses
+          \draw[blue, thin] (0.72, 0.97) -- (1.16, -0.37);
+
+          % Past tangent points: dense dashed blue lines in the wedge region
+          \begin{scope}
+            \clip ($(M)+(-18:1.2)$)
+              arc[start angle=-18, end angle=55, radius=1.2]
+              .. controls (0.79, 0.91) and (0.77, 0.65) .. (Q)
+              .. controls (1.01, -0.05) and (1.18, -0.25) .. cycle;
+            \foreach \s in {-0.45,-0.35,...,0.85} {
+              \draw[blue, thin, dashed] ({\s-0.9}, {\s/3+2.72}) -- ({\s+0.9}, {\s/3-2.72});
+            }
+          \end{scope}
+
+          % Angle arc at far end B (interior angle, the Omega_C side)
+          \draw[thin] (B) ++(-27:0.7) arc[start angle=-27, end angle=63, radius=0.7];
+          \node at ($(B)+(18:1.0)$) {$\theta$};
+
+          % Labels
+          \node[bindA, above left] at ($(A1)!0.5!(B1)$) {$H_1$};
+          \node[bindA, below right] at ($(A2)!0.5!(B2)$) {$H_2$};
+          \node[above left] at ($(A)!0.3!(B)$) {$L$};
+        \end{tikzpicture}
+        \caption{The wedge (Case~1a): two half-hyperplanes $H_1, H_2$ meeting along the $(n-1)$-dimensional edge $L$ at angle $\theta < \pi$. In each two-dimensional cross-section normal to $L$, the two half-lines of $H_1 \cap \partial B_r$ and $H_2 \cap \partial B_r$ (black solid arcs) have total length $2r$, while the chord connecting their endpoints (blue lines) has length $2r\sin(\theta/2) < 2r$. Integrating along $L$, the blue surface has strictly less area than $\partial\Omega_C \cap B_r$ (grey region), so the wedge is not perimeter-minimizing.}
+        \label{fig:wedge}
+    \end{figure}
+
+    \item \textbf{Case 1b (fold):} The tangent cone of $V$ at $Z$ is $C = 2|H|$, where $H$ is a half-hyperplane.
+
+    Here $E_i$ is a thin fold region between two sheets of $\spt\|V\|$ that both converge to $H$ at $Z$. Define $\Omega_r = \Omega \setminus (E_i \cap B_r(Z))$. Then $\Omega_r \subset \Omega$ and $\Omega \triangle \Omega_r = E_i \cap B_r(Z) \subset B_r(Z)$. The perimeter change has two contributions: we lose the sheet of $\partial^*\Omega$ separating $E_i$ from $\Omega^c$ inside $B_r(Z)$, saving $\sim \tfrac{1}{2}\omega_n r^n$ of area; and we gain the cross-section $\partial B_r(Z) \cap E_i$ as new boundary. Since $E_i$ is a thin fold closing up at $Z$, $\mathcal{H}^n(\partial B_r(Z) \cap E_i) = o(r^n)$. Therefore
+    \[
+        \mathrm{Per}_g(\Omega_r, B_r(Z)) - \mathrm{Per}_g(\Omega, B_r(Z)) = -r^n \delta(1 + o(1)),
+    \]
+    where $\delta = \omega_n / 2$.
+\end{itemize}
+
+In both cases, $\partial\Omega$ is not one-sided homotopic minimizing in $B_r(Z)$ for all small $r$, so $Z \in \mathfrak{h}_{\mathrm{nm}}(V)$. By~\cite[Proposition~3.1]{CLS22}, $\mathfrak{h}_{\mathrm{nm}}(V)$ is finite, so there exists $\rho' > 0$ such that $\spt\|V\|$ is one-sided homotopic minimizing in $B_r(X)$ for every $X \in \spt\|V\| \setminus B_{\rho'}(Z)$ and some $r > 0$.
+
+However, since the $\alpha$-structural hypothesis fails at $Z$, the common boundary $\Gamma \subset \sing V$ is $(n-1)$-dimensional. In particular, there exist singular points $X \in \sing V \setminus B_{\rho'}(Z)$ at which $V$ is one-sided homotopic minimizing. But $(n-1)$-dimensional singularities cannot occur for one-sided minimizers~\cite{Liu19}, a contradiction. Therefore, the $\alpha$-structural hypothesis holds.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:non-excessive-main}]
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. By Theorem~\ref{thm:non-excessive-existence}, there exists a non-excessive ONVP sweepout $\Phi \in \Snm$.
+
+By Proposition~\ref{thm:CLS-stationary}, there exists a stationary varifold $V$ with $\mathbf{M}(V) = W$.
+
+By the no-mass-cancellation hypothesis (Definition~\ref{def:mass-cancellation}) and Theorem~\ref{thm:integrality-mult-one}, $V$ is an integral varifold.
+
+By Theorem~\ref{thm:alpha-hypo}, $V$ satisfies the $\alpha$-structural hypothesis. The non-excessive condition ensures that $V$ is one-sided homotopic minimizing at all but finitely many points~\cite[Proposition~3.1]{CLS22}; combined with the index bound $\mathrm{Index}(V) \leq 1$ from the min-max construction, this gives stability. Therefore, all hypotheses of Wickramasekera's theorem (Theorem~\ref{thm:wickramasekera}) are satisfied, and $\sing V = \emptyset$.
+\end{proof}

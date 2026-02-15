@@ -7,6 +7,9 @@
 \providecommand{\href}[2]{#2}
 \begin{thebibliography}{MNS19}
 
+\bibitem[All72]{All72}
+William~K. Allard, \emph{On the first variation of a varifold}, Ann. of Math. (2) \textbf{95} (1972), 417--491.
+
 \bibitem[Alm62]{Alm62}
 Frederick~Justin Almgren, \emph{The homotopy groups of the integral cycle groups}, Topology \textbf{1} (1962), no.~4, 257--299.
 
@@ -57,6 +60,9 @@ Jon~T. Pitts, \emph{Existence and regularity of minimal surfaces on riemannian m
 
 \bibitem[Sim84]{Sim84}
 L~Simon, \emph{Lectures on geometric measure theory}, Proceedings of the Centre for Mathematical Analysis, Centre for Mathematical Analysis, Australian National University, 1984.
+
+\bibitem[Smi83]{Smi83}
+Francis~R. Smith, \emph{On the existence of embedded minimal 2-spheres in the 3-sphere, endowed with an arbitrary metric}, Bulletin of the Australian Mathematical Society \textbf{28} (1983), no.~1, 159--160.
 
 \bibitem[Son23]{Song18}
 Antoine Song, \emph{Existence of infinitely many minimal hypersurfaces in closed manifolds}, Annals of Mathematics \textbf{197} (2023), no.~3, 859--895, arXiv:1806.08816.
