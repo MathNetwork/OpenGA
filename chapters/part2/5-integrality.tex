@@ -71,6 +71,110 @@ When mass cancellation occurs ($\mathbf{M}(\Phi(x_0)) < W$), we still have $\Ome
 \]
 The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. Instead, we exploit the nestedness of the sweepout to count sheets and deduce integrality directly. The main tool is the following graphical decomposition lemma for Caccioppoli boundaries converging to a stationary varifold.
 
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[scale=0.75]
+      \def\Ro{2.2}   % outer radius
+      \def\Ri{1.2}   % inner radius
+
+      % ==================== Left copy ====================
+      \begin{scope}[xshift=-3.5cm]
+        \coordinate (OT) at ({2.2*cos(50)}, {2.2*sin(50)});
+        \coordinate (OB) at ({2.2*cos(310)}, {2.2*sin(310)});
+        \coordinate (IT) at ({1.2*cos(50)}, {1.2*sin(50)});
+        \coordinate (IB) at ({1.2*cos(310)}, {1.2*sin(310)});
+
+        % Region 1 (upper-left): angle 110° to 160°
+        \fill[fillA, opacity=0.4]
+          ({2.2*cos(110)}, {2.2*sin(110)}) arc (110:160:\Ro)
+          .. controls ({2.2*cos(160)+0.24*sin(160)}, {2.2*sin(160)-0.24*cos(160)})
+          and ({1.2*cos(160)+0.24*sin(160)}, {1.2*sin(160)-0.24*cos(160)})
+          .. ({1.2*cos(160)}, {1.2*sin(160)})
+          arc (160:110:\Ri)
+          .. controls ({1.2*cos(110)+0.24*sin(110)}, {1.2*sin(110)-0.24*cos(110)})
+          and ({2.2*cos(110)+0.24*sin(110)}, {2.2*sin(110)-0.24*cos(110)})
+          .. cycle;
+        \begin{scope}[shift={({1.7*cos(110)}, {1.7*sin(110)})}, rotate=110]
+          \draw[very thick, bindA] (0.5, 0) arc (0:-180:0.5 and 0.18);
+          \draw[thick, bindA, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
+        \end{scope}
+        \begin{scope}[shift={({1.7*cos(160)}, {1.7*sin(160)})}, rotate=160]
+          \draw[very thick, bindA] (0.5, 0) arc (0:-180:0.5 and 0.18);
+          \draw[thick, bindA, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
+        \end{scope}
+
+        % Region 2 (lower-left): angle 200° to 250°
+        \fill[fillA, opacity=0.4]
+          ({2.2*cos(200)}, {2.2*sin(200)}) arc (200:250:\Ro)
+          .. controls ({2.2*cos(250)+0.24*sin(250)}, {2.2*sin(250)-0.24*cos(250)})
+          and ({1.2*cos(250)+0.24*sin(250)}, {1.2*sin(250)-0.24*cos(250)})
+          .. ({1.2*cos(250)}, {1.2*sin(250)})
+          arc (250:200:\Ri)
+          .. controls ({1.2*cos(200)+0.24*sin(200)}, {1.2*sin(200)-0.24*cos(200)})
+          and ({2.2*cos(200)+0.24*sin(200)}, {2.2*sin(200)-0.24*cos(200)})
+          .. cycle;
+        \begin{scope}[shift={({1.7*cos(200)}, {1.7*sin(200)})}, rotate=200]
+          \draw[very thick, bindA] (0.5, 0) arc (0:-180:0.5 and 0.18);
+          \draw[thick, bindA, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
+        \end{scope}
+        \begin{scope}[shift={({1.7*cos(250)}, {1.7*sin(250)})}, rotate=250]
+          \draw[very thick, bindA] (0.5, 0) arc (0:-180:0.5 and 0.18);
+          \draw[thick, bindA, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
+        \end{scope}
+
+        % Outline
+        \draw[thick] (OT) arc (50:310:\Ro);
+        \draw[thick] (IB) arc (310:50:\Ri);
+        \draw[thick] (OB) to[out=40, in=40, looseness=1.5] (IB);
+        \draw[thick] (IT) to[out=320, in=320, looseness=1.5] (OT);
+
+        \node at (0.5, 0) {$M$};
+      \end{scope}
+
+      % ==================== Right copy ====================
+      \begin{scope}[xshift=3.5cm]
+        \coordinate (OT2) at ({2.2*cos(50)}, {2.2*sin(50)});
+        \coordinate (OB2) at ({2.2*cos(310)}, {2.2*sin(310)});
+        \coordinate (IT2) at ({1.2*cos(50)}, {1.2*sin(50)});
+        \coordinate (IB2) at ({1.2*cos(310)}, {1.2*sin(310)});
+
+        % Single merged region: angle 110° to 250°
+        \fill[fillA, opacity=0.4]
+          ({2.2*cos(110)}, {2.2*sin(110)}) arc (110:250:\Ro)
+          .. controls ({2.2*cos(250)+0.24*sin(250)}, {2.2*sin(250)-0.24*cos(250)})
+          and ({1.2*cos(250)+0.24*sin(250)}, {1.2*sin(250)-0.24*cos(250)})
+          .. ({1.2*cos(250)}, {1.2*sin(250)})
+          arc (250:110:\Ri)
+          .. controls ({1.2*cos(110)+0.24*sin(110)}, {1.2*sin(110)-0.24*cos(110)})
+          and ({2.2*cos(110)+0.24*sin(110)}, {2.2*sin(110)-0.24*cos(110)})
+          .. cycle;
+        \begin{scope}[shift={({1.7*cos(110)}, {1.7*sin(110)})}, rotate=110]
+          \draw[very thick, bindA] (0.5, 0) arc (0:-180:0.5 and 0.18);
+          \draw[thick, bindA, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
+        \end{scope}
+        \begin{scope}[shift={({1.7*cos(250)}, {1.7*sin(250)})}, rotate=250]
+          \draw[very thick, bindA] (0.5, 0) arc (0:-180:0.5 and 0.18);
+          \draw[thick, bindA, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
+        \end{scope}
+        % Blue ellipse at center (180°) — mass cancellation locus
+        \begin{scope}[shift={({1.7*cos(180)}, {1.7*sin(180)})}, rotate=180]
+          \draw[very thick, bindB] (0.5, 0) arc (0:-180:0.5 and 0.18);
+          \draw[thick, bindB, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
+        \end{scope}
+
+        % Outline
+        \draw[thick] (OT2) arc (50:310:\Ro);
+        \draw[thick] (IB2) arc (310:50:\Ri);
+        \draw[thick] (OB2) to[out=40, in=40, looseness=1.5] (IB2);
+        \draw[thick] (IT2) to[out=320, in=320, looseness=1.5] (OT2);
+
+        \node at (0.5, 0) {$M$};
+      \end{scope}
+    \end{tikzpicture}
+    \caption{A closed manifold $M \cong S^2$ bent into a C-shape. \textbf{Left:} two disjoint sweepout slices $\partial^*\Omega(x_i)$ (red) with no mass cancellation. \textbf{Right:} the slices extend and overlap; the blue cross-section marks where the two sheets meet with opposite orientations, so the mass cancels in the varifold limit.}
+    \label{fig:mass-cancellation-manifold}
+\end{figure}
+
 \begin{lemma}[Sheet decomposition]\label{lem:sheet-decomposition}
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. Let $\{\Omega_i\}$ be a sequence of Caccioppoli sets with $|\partial^*\Omega_i| \to V$ as varifolds, where $V$ is a stationary rectifiable $n$-varifold. Suppose that $p \in \spt\|V\|$ is a point where $V$ has a unique tangent plane $P = T_p\Sigma$ and finite density $\theta(p) = \Theta(\|V\|, p) \in (0, \infty)$ (these conditions hold at $\mathcal{H}^n$-a.e.\ point of $\Sigma$ by rectifiability; see Section~\ref{sec:p2-prelim} and~\cite[Section~11]{Sim84}).
 
@@ -82,6 +186,103 @@ Then for every $\varepsilon > 0$, there exist $r_0 > 0$ and $i_0 \in \mathbb{N}$
 \end{enumerate}
 In particular, $\theta(p) \in \mathbb{Z}_{>0}$.
 \end{lemma}
+
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}[b]{0.58\textwidth}
+      \centering
+      \begin{tikzpicture}[xshift=-0.8cm]
+        % Junction point
+        \coordinate (J) at (0,0);
+        % Long arm: slight upward curve to the right
+        \draw[thick] (J) to[out=10, in=170] coordinate[pos=0.75] (P) (3, 0.4);
+        % Tangent line at P (blue)
+        \draw[thick, bindB] ($(P) + (-1.2, -0.12)$) node[left] {$P = T_p\Sigma$} -- ($(P) + (1.2, 0.12)$);
+        % Two short arms going upper-left and lower-left
+        \draw[thick] (J) to[out=140, in=0] (-1.8, 1.2);
+        \draw[thick] (J) to[out=220, in=0] (-1.8, -1.2);
+        % Junction point dot
+        \fill (J) circle (2pt);
+        % Red sheets — thin bright red (outside circle)
+        \draw[thin, red] (-2.2, 1.6) to[out=-10, in=170] ($(P) + (-0.8, 0.3)$) to[out=-10, in=170] ($(P) + (0.8, 0.25)$) to[out=-10, in=170] (3.5, 0.6);
+        \draw[thin, red] (-2.2, -1.6) to[out=10, in=190] ($(P) + (-0.8, -0.25)$) to[out=-5, in=175] ($(P) + (0.8, -0.25)$) to[out=-5, in=175] (3.5, -0.3);
+        \draw[thin, red] (-1.5, 1.0) to[out=350, in=90] (-0.8, 0) to[out=270, in=10] (-1.5, -1.0);
+        % Red sheets — thick (inside circle, clipped)
+        \begin{scope}
+          \clip (P) circle (0.8);
+          \draw[very thick, bindA] (-2.2, 1.6) to[out=-10, in=170] ($(P) + (-0.8, 0.3)$) to[out=-10, in=170] coordinate[pos=0.5] (S1) ($(P) + (0.8, 0.25)$) to[out=-10, in=170] (3.5, 0.6);
+          \draw[very thick, bindA] (-2.2, -1.6) to[out=10, in=190] ($(P) + (-0.8, -0.25)$) to[out=-5, in=175] coordinate[pos=0.5] (S2) ($(P) + (0.8, -0.25)$) to[out=-5, in=175] (3.5, -0.3);
+        \end{scope}
+        % Cut curves at B_r(p) boundary: white eraser then gray circle
+        \draw[white, line width=4pt] (P) circle (0.8);
+        \draw[gray, thick] (P) circle (0.8);
+        \node[gray, above right] at ($(P) + (0.55, 0.55)$) {$B_r(p)$};
+        % Blue point on the long arm (drawn on top)
+        \fill[bindB] (P) circle (2.5pt);
+        % Labels for the two connected components — on top layer
+        \node[bindA] (L1) at ($(P) + (-0.2, 1.4)$) {$\Sigma_i^1$};
+        \draw[bindA, ->] (L1) -- (S1);
+        \node[bindA] (L2) at ($(P) + (-0.2, -1.4)$) {$\Sigma_i^2$};
+        \draw[bindA, ->] (L2) -- (S2);
+        % Label for all three red curves
+        \node[red] at (-2.8, 0) {$\partial^*\Omega(x_i)$};
+      \end{tikzpicture}\\[4pt]
+      \textbf{(a)}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[b]{0.38\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.5]
+        % Define P at origin for this zoomed-in view
+        \coordinate (P) at (0,0);
+        % Named paths for intersection computation
+        \path[name path=circ] (P) circle (0.8);
+        \path[name path=sheet1] (-1.5, 0.5) to[out=-3, in=183] (1.5, 0.44);
+        \path[name path=sheet2] (-1.5, -0.62) to[out=3, in=177] (1.5, -0.68);
+        % Find intersections
+        \path[name intersections={of=circ and sheet1, by={I1L,I1R}}];
+        \path[name intersections={of=circ and sheet2, by={I2L,I2R}}];
+        % Gray circle
+        \draw[gray, thick] (P) circle (0.8);
+        \node[gray, above right] at ($(P) + (0.55, 0.55)$) {$B_r(p)$};
+        % Blue tangent line (clipped to circle) — horizontal
+        \begin{scope}
+          \clip (P) circle (0.8);
+          \draw[thick, bindB] ($(P) + (-1.2, 0)$) -- ($(P) + (1.2, 0)$);
+        \end{scope}
+        % Two thick red sheets (clipped to circle)
+        \begin{scope}
+          \clip (P) circle (0.8);
+          \draw[very thick, bindA] (-1.5, 0.5) to[out=-3, in=183] coordinate[pos=0.5] (S1b) (1.5, 0.44);
+          \draw[very thick, bindA] (-1.5, -0.62) to[out=3, in=177] coordinate[pos=0.5] (S2b) (1.5, -0.68);
+        \end{scope}
+        % Vertical dashed red lines from exact intersections to D_r
+        \draw[thin, bindA, dashed] (I1L) -- (I1L |- P);
+        \draw[thin, bindA, dashed] (I1R) -- (I1R |- P);
+        \draw[thin, bindA, dashed] (I2L) -- (I2L |- P);
+        \draw[thin, bindA, dashed] (I2R) -- (I2R |- P);
+        % Braces for domains on D_r
+        \draw[red, thick, decorate, decoration={brace, mirror, amplitude=4pt}]
+          (I1L |- P) -- (I1R |- P);
+        \node[red] (OL2) at (1.2, -0.25) {$\Omega_i^2$};
+        \draw[red, thin, ->] (OL2) to[bend left=40] (0.15, -0.07);
+        \draw[red, thick, decorate, decoration={brace, amplitude=4pt}]
+          (I2R |- P) -- (I2L |- P);
+        \node[red] (OL1) at (-1.2, 0.25) {$\Omega_i^1$};
+        \draw[red, thin, ->] (OL1) to[bend left=40] (-0.15, 0.07);
+        % Labels outside circle with arrows
+        \node[bindA] (L1b) at ($(P) + (-0.2, 1.3)$) {$\mathrm{graph}(u_i^1)$};
+        \draw[bindA, ->] (L1b) -- (S1b);
+        \node[bindA] (L2b) at ($(P) + (-0.2, -1.3)$) {$\mathrm{graph}(u_i^2)$};
+        \draw[bindA, ->] (L2b) -- (S2b);
+        % Tangent plane label
+        \node[bindB, right] at ($(P) + (0.85, 0)$) {$D_r$};
+      \end{tikzpicture}\\[4pt]
+      \textbf{(b)}
+    \end{minipage}
+    \caption{Sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) with $k = \theta(p) = 2$. \textbf{(a)}~Global view: $\partial^*\Omega(x_i)$ (red) near a point $p$ on the support of $V$, with the ball $B_r(p)$ cutting the boundary into $k = 2$ sheets $\Sigma_i^1, \Sigma_i^2$. \textbf{(b)}~Zoomed view inside $B_r(p)$: each sheet $\Sigma_i^j$ is the graph of a smooth function $u_i^j$ over the tangent plane $P = T_p\Sigma$, with $\|Du_i^j\|_{C^0} < \varepsilon$.}
+    \label{fig:sheet-decomposition}
+\end{figure}
 
 \begin{proof}
 The proof combines three ingredients: the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), graphical decomposition under small tilt-excess (Definition~\ref{def:p2-tilt-excess}), and the sphere constraint to exclude partial sheets.
