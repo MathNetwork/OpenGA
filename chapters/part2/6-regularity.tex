@@ -44,12 +44,11 @@ We claim $N \geq 3$. By~\cite[Remark~(3) following~($\mathcal{S}3$)]{Wic14}, for
 \begin{proof}
 Suppose the $\alpha$-structural hypothesis fails at some $Z \in \sing V$. By Lemma~\ref{lem:wedge}, the tangent cone at $Z$ contains two adjacent half-hyperplanes $P_j^+, P_{j+1}^+$ meeting at angle $\theta_j < \pi$ along a common $(n-1)$-dimensional edge $L$.
 
-\medskip\noindent\textbf{Step~1: Area improvement via chord-beats-arc.}
+\medskip\noindent\textbf{Step~1: Chord-beats-arc on the tangent cone.}
 In each two-dimensional cross-section normal to $L$, the two half-lines $P_j^+ \cap \partial B_r$ and $P_{j+1}^+ \cap \partial B_r$ have total length $2r$, while the chord connecting their endpoints has length $2r\sin(\theta_j/2) < 2r$ (see Figure~\ref{fig:chord-beats-arc}). Integrating along $L$, the replacement surface has strictly less area:
 \[
     \|C\|(B_r) - \|\widetilde{C}\|(B_r) \geq \delta(\theta_j) \cdot r^n > 0.
 \]
-As in~\cite[Lemma~3.4]{CLS22}, choosing $C^{1,\alpha}$-coordinates on $M$ around $Z$ with $g_{ij}(Z) = \delta_{ij}$ and rescaling this competitor into $B_r(Z)$ gives a local area saving of $\delta(\theta_j) r^n (1 + o(1))$ as $r \to 0$.
 
     \begin{figure}[ht]
         \centering
@@ -158,14 +157,19 @@ As in~\cite[Lemma~3.4]{CLS22}, choosing $C^{1,\alpha}$-coordinates on $M$ around
 Theorem~\ref{thm:alpha-hypo} is only invoked in the mass-cancellation case (see the proof of Theorem~\ref{thm:non-excessive-main} below): when no mass cancellation occurs, $V = |\partial^*\Omega(x_0)|$ is already smooth by Federer regularity, so $\sing V = \varnothing$ and the $\alpha$-structural hypothesis is vacuously satisfied.
 \end{remark}
 
-\medskip\noindent\textbf{Step~2: Transfer to the approximating sequence.}
-By varifold convergence $|\partial^*\Omega(x_i)| \to V$, for all $i$ sufficiently large $\partial^*\Omega(x_i) \cap B_r(Z)$ inherits a near-junction structure. Since each $\partial^*\Omega(x_i)$ is the boundary of a Caccioppoli set (smooth for $n \leq 6$ by Proposition~\ref{prop:p2-federer-regularity}), the chord competitor transfers via Caccioppoli surgery on $\Omega(x_i)$: excise the region bounded by the narrowest adjacent pair and the chord surface, yielding a modified set $\Omega(x_i)_r$ with
-\[
-    \mathrm{Per}(\Omega(x_i)) - \mathrm{Per}(\Omega(x_i)_r) \geq \frac{\delta r^n}{2} > 0
-\]
-for all $i$ large, where $\delta$ is independent of $i$.
+\medskip\noindent\textbf{Step~2: Transfer to $B_r(Z)$ and the approximating sequence.}
+We transfer the cone-level area deficit to the approximating Caccioppoli sets. Choose normal coordinates centered at $Z$ so that $g_{ij}(Z) = \delta_{ij}$; then $g_{ij} = \delta_{ij} + O(r)$ in $B_r(Z)$. Since the $\alpha$-structural hypothesis fails at~$Z$, the $C^{1,\alpha}$ branches of $\spt\|V\|$ in $B_\rho(Z)$ converge to the tangent cone under blow-up: at scale~$r$, each branch deviates from its limiting half-hyperplane by $O(r^{1+\alpha})$, and the angle between adjacent branches is $\theta_j + O(r^\alpha)$, which remains $< \pi$ for $r$ sufficiently small.
 
-Since $x_i \to x_0 \in \mathfrak{m}(\Phi)$, the perimeters satisfy $\mathrm{Per}(\Omega(x_i)) \to W$. The surgery modifies only the slices with parameters near $x_0$ (and is the identity elsewhere), producing a sweepout $\tilde{\Phi}$ with
+By varifold convergence $|\partial^*\Omega(x_i)| \to V$ and the sheet decomposition (Lemma~\ref{lem:sheet-decomposition}), for each $r \in (0, \rho)$ sufficiently small and all $i$ sufficiently large, the smooth boundary $\partial^*\Omega(x_i) \cap B_r(Z)$ decomposes into smooth sheets, each a nearly flat graph approximating one of the $C^{1,\alpha}$ branches of $\spt\|V\|$. In particular, two adjacent sheets approximate $P_j^+$ and $P_{j+1}^+$, meeting at angle $\theta_j + O(r^\alpha) < \pi$ in $B_r(Z)$.
+
+\medskip\noindent\textbf{Step~3: Caccioppoli surgery and contradiction with width.}
+We perform chord surgery on the approximating Caccioppoli sets. In $B_r(Z)$, the two smooth sheets of $\partial^*\Omega(x_i)$ corresponding to the narrowest adjacent pair bound a thin wedge-shaped region. Replace these two sheets inside $B_{r/2}(Z)$ by a smooth interpolation surface (the ``chord surface''), which spans the same boundary on $\partial B_{r/2}(Z)$ but cuts across the wedge. The area of the chord surface on the curved sheets differs from the flat case by $O(r^{n+\alpha})$ (from the $C^{1,\alpha}$ deviation of the sheets from half-planes and the $O(r)$ metric deviation), so the net area saving is
+\[
+    \mathrm{Per}(\Omega(x_i), B_r(Z)) - \mathrm{Per}(\Omega(x_i)_r, B_r(Z)) \geq \delta(\theta_j) r^n - O(r^{n+\alpha}) \geq \frac{\delta(\theta_j)}{2}\, r^n > 0
+\]
+for $r$ small and $i$ large, where $\Omega(x_i)_r$ is the modified Caccioppoli set and $\delta(\theta_j) > 0$ depends only on $\theta_j$ and $n$. The surgery is localized in $B_r(Z)$, so $\mathrm{Per}(\Omega(x_i)_r) \leq \mathrm{Per}(\Omega(x_i)) - \delta(\theta_j) r^n / 2$.
+
+Fix such an $r$. Since $x_i \to x_0 \in \mathfrak{m}(\Phi)$ and $\mathrm{Per}(\Omega(x_i)) \to W$, for all $i$ sufficiently large the surgery produces a modified sweepout $\tilde{\Phi}$ that agrees with $\Phi$ outside a neighborhood of $x_0$ and satisfies
 \[
     \sup_x \mathrm{Per}(\tilde{\Omega}(x)) < W.
 \]
