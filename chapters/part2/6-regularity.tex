@@ -33,13 +33,7 @@ Let $V$ be a stationary integral $n$-varifold in $(M^{n+1}, g)$ and $Z \in \sing
 \begin{proof}
 Since the $\alpha$-structural hypothesis fails at $Z$, there exists $\rho > 0$ such that $\spt\|V\| \cap B_\rho(Z)$ consists of finitely many $C^{1,\alpha}$ embedded hypersurfaces-with-boundary meeting along a common $C^{1,\alpha}$ boundary $\Gamma$ of dimension $n - 1$. Blowing up at $Z$, any tangent cone $C$ is a stationary integral cone consisting of $N$ half-hyperplanes $P_1^+, \ldots, P_N^+$ meeting along a common edge $L$, each carrying a positive integer multiplicity $m_j$, with the stationarity balance $\sum_{j=1}^N m_j \nu_j = 0$ (where $\nu_j$ is the outward unit normal to $P_j^+$ in the $2$-plane perpendicular to $L$).
 
-We claim $N \geq 3$. Suppose $N = 2$. The balance condition $m_1 \nu_1 + m_2 \nu_2 = 0$ with $|\nu_j| = 1$ forces $\nu_1 = -\nu_2$ and $m_1 = m_2$, so the two half-hyperplanes form a complete hyperplane $H$ and $C = m_1|H|$ is flat.
-
-If $m_1 = 1$, then $C = |H|$ is a multiplicity-one flat plane. By Allard's regularity theorem~\cite[Theorem~24.2]{Sim84}, $Z \in \reg V$, contradicting $Z \in \sing V$.
-
-If $m_1 \geq 2$, then $C = m_1|H|$ is a flat hyperplane with even multiplicity. The two half-hyperplanes form a single complete hyperplane, so $\spt\|V\|$ near $Z$ is locally a smooth hypersurface carrying higher multiplicity---there is no branching or junction structure of distinct sheets meeting from different directions along a common boundary. Therefore the $\alpha$-structural hypothesis does not fail at such points; they fall within the scope of Wickramasekera's regularity theorem~\cite{Wic14}, which handles high-multiplicity flat tangent cones internally.
-
-Therefore $N \geq 3$. The $N$ half-hyperplanes partition the $2$-plane perpendicular to $L$ into $N$ sectors with angles $\theta_1, \ldots, \theta_N$ summing to $2\pi$. By the pigeonhole principle, $\min_j \theta_j \leq 2\pi/N < \pi$.
+We claim $N \geq 3$. By~\cite[Remark~(3) following~($\mathcal{S}3$)]{Wic14}, for stable codimension~$1$ integral varifolds, the $\alpha$-structural hypothesis~($\mathcal{S}3$) is equivalent to the condition that no tangent cone at a singular point is supported by three or more distinct half-hyperplanes meeting along a common $(n-1)$-dimensional subspace. In particular, $N = 2$ does not constitute a failure of~($\mathcal{S}3$): when the tangent cone is a flat hyperplane (possibly with multiplicity $\geq 2$), the Sheeting Theorem~\cite[Theorem~3.3]{Wic14} ensures regularity. Therefore $N \geq 3$, and the $N$ half-hyperplanes partition the $2$-plane perpendicular to $L$ into $N$ sectors with angles $\theta_1, \ldots, \theta_N$ summing to $2\pi$. By the pigeonhole principle, $\min_j \theta_j \leq 2\pi/N < \pi$.
 \end{proof}
 
 \begin{theorem}[Verification of $\alpha$-structural hypothesis]\label{thm:alpha-hypo}
