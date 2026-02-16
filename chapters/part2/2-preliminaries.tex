@@ -69,11 +69,11 @@ For a stationary $n$-varifold $V$ and $p \in M$, the \emph{density} of $V$ at $p
 \[
 \Theta(\|V\|, p) := \lim_{r \to 0} \omega_n^{-1} r^{-n} \|V\|(B_r(p)).
 \]
-By the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), this limit exists. Moreover, $\Theta(\|V\|, p) \geq 1$ for every $p \in \spt\|V\|$.
+By the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), this limit exists. Moreover, $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$.\xinze{Was: $\geq 1$; the bound $\Theta \geq 1$ requires integrality} If $V$ is integral, then $\Theta(\|V\|, p) \geq 1$ for every $p \in \spt\|V\|$.
 \end{definition}
 
 \begin{proposition}[Allard's rectifiability theorem~{\cite[Theorem~42.4]{Sim84}}]\label{prop:allard-rectifiability}
-Every stationary $n$-varifold $V$ in $(M^{n+1}, g)$ is rectifiable. More precisely, $V = \underline{v}(\Sigma, \theta)$ where $\Sigma \subset \spt\|V\|$ is $\mathcal{H}^n$-rectifiable\xinze{Was: $\Sigma = \spt\|V\|$; cf.\ Pitts thesis Section~2.4(9), lines~678--683} and $\theta(p) = \Theta(\|V\|, p) \geq 1$ for $\mathcal{H}^n$-a.e.\ $p \in \Sigma$.
+Every stationary $n$-varifold $V$ in $(M^{n+1}, g)$ is rectifiable. More precisely, $V = \underline{v}(\Sigma, \theta)$ where $\Sigma \subset \spt\|V\|$ is $\mathcal{H}^n$-rectifiable\xinze{Was: $\Sigma = \spt\|V\|$; cf.\ Pitts thesis Section~2.4(9), lines~678--683} and $\theta(p) = \Theta(\|V\|, p) > 0$ for $\mathcal{H}^n$-a.e.\ $p \in \Sigma$.\xinze{Was: $\geq 1$; same correction as Definition~\ref{def:p2-density}}
 \end{proposition}
 
 \begin{definition}[Tilt-excess~{\cite[cf.\ Section~22]{Sim84}}]\label{def:p2-tilt-excess}
