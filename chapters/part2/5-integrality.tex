@@ -428,64 +428,6 @@ Finally, the total area of the $k_i$ contributing sheets satisfies
 and converges to $\theta(p)\omega_n r^n$. Choosing $\varepsilon$ small enough so that the intervals $[k(1-C\varepsilon^2),\, k(1+C\varepsilon^2)]$ for consecutive integers $k$ are disjoint, the count $k_i$ is uniquely determined for $i$ large, hence eventually constant equal to $k = \theta(p) \in \mathbb{Z}_{>0}$, establishing~(i).
 \end{proof}
 
-\begin{figure}[ht]
-    \centering
-    \begin{minipage}[b]{0.45\textwidth}
-      \centering
-      \begin{tikzpicture}[scale=1.3]
-          \coordinate (O) at (0,0);
-          \def\L{1.8}  % half-length of each line
-          % Shaded regions inside red curves (only round the center tip)
-          \fill[fillA, opacity=0.3] (-0.83, -1.47) [rounded corners=6mm] -- (0, -0.20) [sharp corners] -- (0.83, -1.47) -- cycle;
-          \fill[fillA, opacity=0.3] (1.69, 0.02) [rounded corners=6mm] -- (0.17, 0.10) [sharp corners] -- (0.86, 1.45) -- cycle;
-          \fill[fillA, opacity=0.3] (-0.86, 1.45) [rounded corners=6mm] -- (-0.17, 0.10) [sharp corners] -- (-1.69, 0.02) -- cycle;
-          % Line 1 (horizontal): bright red
-          \draw[thick, red] ($(O) + (-\L, 0)$) -- ($(O) + (\L, 0)$);
-          % Line 2 (60°): lower half bright red, upper half bright blue
-          \draw[thick, red] ($(O) + ({-\L*cos(60)}, {-\L*sin(60)})$) -- (O);
-          \draw[thick, blue] (O) -- ($(O) + ({\L*cos(60)}, {\L*sin(60)})$);
-          % Line 3 (120°): lower half bright red, upper half bright blue
-          \draw[thick, red] ($(O) + ({-\L*cos(120)}, {-\L*sin(120)})$) -- (O);
-          \draw[thick, blue] (O) -- ($(O) + ({\L*cos(120)}, {\L*sin(120)})$);
-          % Red curves: triangle edges with rounded tips
-          \draw[bindA, thin, rounded corners=6mm] (-0.83, -1.47) -- (0, -0.20) -- (0.83, -1.47);
-          \draw[bindA, thin, rounded corners=6mm] (1.69, 0.02) -- (0.17, 0.10) -- (0.86, 1.45);
-          \draw[bindA, thin, rounded corners=6mm] (-0.86, 1.45) -- (-0.17, 0.10) -- (-1.69, 0.02);
-          % Extra red curve + shading in top empty sector (60°-120°), bottom rotated 180°
-          \fill[fillA, opacity=0.3] (0.83, 1.47) [rounded corners=6mm] -- (0, 0.20) [sharp corners] -- (-0.83, 1.47) -- cycle;
-          \draw[bindA, thin, rounded corners=6mm] (0.83, 1.47) -- (0, 0.20) -- (-0.83, 1.47);
-          % Center point
-          \fill (O) circle (2pt);
-          % Labels
-          \node[red, right] at ($(O) + (\L+0.05, 0)$) {$|\partial^*\!\Omega(x_0)|$};
-          \node[blue, above right] at ($(O) + ({\L*cos(60)+0.05}, {\L*sin(60)+0.05})$) {$V'$};
-      \end{tikzpicture}\\[4pt]
-      \textbf{(a)}
-    \end{minipage}%
-    \hfill
-    \begin{minipage}[b]{0.45\textwidth}
-      \centering
-      \begin{tikzpicture}[scale=1.3]
-          \coordinate (O) at (0,0);
-          \def\L{1.8}  % half-length of each line
-          % Red shading: entire region below horizontal line
-          \fill[fillA, opacity=0.3] ($(O) + (-\L, 0)$) -- (O) -- ($(O) + (\L, 0)$)
-            -- ($(O) + ({\L*cos(60)}, {-\L*sin(60)})$) -- ($(O) + ({-\L*cos(60)}, {-\L*sin(60)})$) -- cycle;
-          % Line 1: horizontal
-          \draw[thick] ($(O) + (-\L, 0)$) -- ($(O) + (\L, 0)$);
-          % Line 2 (60°): upper half only
-          \draw[thick] (O) -- ($(O) + ({\L*cos(60)}, {\L*sin(60)})$);
-          % Line 3 (120°): upper half only
-          \draw[thick] (O) -- ($(O) + ({\L*cos(120)}, {\L*sin(120)})$);
-          % Center point
-          \fill (O) circle (2pt);
-      \end{tikzpicture}\\[4pt]
-      \textbf{(b)}
-    \end{minipage}
-    \caption{Decomposition $V = |\partial^*\Omega(x_0)| + V'$ illustrating the three types of points for the integrality argument. Red: $\mathrm{spt}\,|\partial^*\Omega(x_0)|$. Blue: $\mathrm{spt}\,\|V'\|$ (cancelling mass). Along the red branches away from the blue, $\theta = 1$ (only $|\partial^*\Omega(x_0)|$ contributes). Along the blue branches away from the red, $\theta = 2$ (pure cancellation: sheets pair up; see Section~\ref{sec:multiplicity-one} for the parity analysis using nestedness). Where red and blue overlap, $\theta = 1 + 2 = 3$ (mixed regular: one tracking sheet plus one cancelling pair). The black dot marks a singular point ($\mathcal{H}^n$-measure zero), which does not affect integrality.}
-    \label{fig:integrality-cases}
-\end{figure}
-
 \begin{remark}\label{rem:sheet-decomposition}
 The sheet decomposition lemma (Lemma~\ref{lem:sheet-decomposition}) is a general result about Caccioppoli boundaries converging to a stationary varifold, independent of the min-max context. It is closely related to the Sheeting Theorem in Wickramasekera's regularity theory~\cite{Wic14}, which provides a multi-valued graphical decomposition for stable integral varifolds. The difference is that our lemma applies to the \emph{approximating} varifolds $|\partial^*\Omega_i|$ (multiplicity-$1$, smooth for $n \leq 6$) rather than the limit $V$, avoiding the need to assume integrality a priori.
 \end{remark}
