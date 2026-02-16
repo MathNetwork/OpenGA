@@ -2,7 +2,18 @@
 
 \section{Integrality}\label{sec:integrality}
 
-Integrality of the limit varifold is an essential input to the regularity argument: it ensures that tangent cones at singular points are integral cones, which constrains them to the junction configurations (wedges, folds, and higher-order junctions) needed to derive a contradiction when the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}) fails (see Section~\ref{subsec:alpha-structural}). The main result of this section is:
+Integrality of the limit varifold is an essential input to the regularity argument: it ensures that tangent cones at singular points are integral cones, which constrains them to the junction configurations (wedges, folds, and higher-order junctions) needed to derive a contradiction when the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}) fails (see Section~\ref{subsec:alpha-structural}). We begin by recalling the following criterion from de~Lellis--Tasnady~\cite{DLT13}, which gives conditions under which varifold convergence of Caccioppoli boundaries is guaranteed:
+
+\begin{proposition}[Varifolds vs.\ Caccioppoli set limits~{\cite[Proposition~A.1]{DLT13}}]\label{prop:p2-DLT-integrality}
+    Let $\{\Omega^k\}$ be a sequence of Caccioppoli sets and $U$ an open subset of $M$. Assume that
+    \begin{enumerate}[label=\textup{(\roman*)}]
+        \item $D\chi_{\Omega^k} \to D\chi_\Omega$ in the sense of measures in $U$;
+        \item $\mathrm{Per}(\Omega^k, U) \to \mathrm{Per}(\Omega, U)$
+    \end{enumerate}
+    for some Caccioppoli set $\Omega$. Then the varifolds $|\partial^*\Omega^k|$ converge to $|\partial^*\Omega|$ in the sense of varifolds.
+\end{proposition}
+
+The main result of this section is:
 
 \begin{theorem}[Integrality of the limit varifold]\label{thm:integrality}
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$, and let $\Phi$ be an optimal nested \textup{(}ONVP\textup{)} sweepout with width $W$. Let $x_i \to x_0 \in \mathfrak{m}(\Phi)$ be a min-max sequence and $V$ the varifold limit of $|\partial^*\Omega(x_i)|$. Then $V$ is an integral $n$-varifold.

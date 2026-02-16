@@ -88,34 +88,3 @@ If $V$ is a rectifiable $n$-varifold with approximate tangent plane $P$ at $p$, 
 Let $\Omega$ be a Caccioppoli set in $(M^{n+1}, g)$. Then $\dim_{\mathcal{H}}(\partial\Omega \setminus \partial^*\Omega) \leq n - 7$. In particular, when $n \leq 6$, $\partial\Omega = \partial^*\Omega$ is a smooth compact embedded hypersurface (without boundary if $M$ is closed).
 \end{proposition}
 
-Finally, we set up the min-max framework following Chodosh--Liokumovich--Spolaor~\cite{CLS22}.
-
-\begin{definition}[Sweepout and width~{\cite[Definition~1.1]{CLS22}}]\label{def:p2-sweepout}
-A \emph{sweepout} of $M$ is a map $\Phi \colon [0,1] \to \mathcal{Z}_n(M; \mathbb{Z}_2)$ continuous in $\mathcal{F}$-topology such that $\Phi(x) = \partial \Omega(x)$, where $\{\Omega(x) : x \in [0,1]\}$ is a family of Caccioppoli sets with $\Omega(0) = \varnothing$ and $\Omega(1) = M$. We denote by $\mathcal{S}$ the collection of all such sweepouts. The \emph{width} of $M$ is
-\[
-W = W(M) := \inf_{\Phi \in \mathcal{S}} \sup_{x \in [0,1]} \mathbf{M}(\Phi(x)).
-\]
-It is a consequence of the isoperimetric inequality that $W > 0$~\cite[Proposition~0.5]{DLT13}.
-\end{definition}
-
-\begin{definition}[Optimal nested volume parametrized (ONVP) sweepout~{\cite[Definition~1.2]{CLS22}}]\label{def:p2-onvp}
-A sweepout $\{\Phi(x) = \partial \Omega(x)\}$ is called
-\begin{itemize}
-    \item \emph{optimal} if $\sup_{x \in [0,1]} \mathbf{M}(\Phi(x)) = W$;
-    \item \emph{nested} if $\Omega(x_1) \subset \Omega(x_2)$ for all $0 \leq x_1 \leq x_2 \leq 1$;
-    \item \emph{volume parametrized} if $\mathrm{Vol}(\Omega(x)) = x$ for every $x \in [0,1]$.
-\end{itemize}
-\end{definition}
-
-The existence of ONVP sweepouts follows from the monotonisation technique of Chambers--Liokumovich~\cite{CL20} combined with an Arzel\`a--Ascoli compactness argument; see Theorem~\ref{thm:non-excessive-existence} below for the stronger statement that also guarantees the non-excessive property.
-
-We recall the following criterion from de~Lellis--Tasnady~\cite{DLT13}, which gives conditions under which varifold convergence of Caccioppoli boundaries is guaranteed:
-
-\begin{proposition}[Varifolds vs.\ Caccioppoli set limits~{\cite[Proposition~A.1]{DLT13}}]\label{prop:p2-DLT-integrality}
-    Let $\{\Omega^k\}$ be a sequence of Caccioppoli sets and $U$ an open subset of $M$. Assume that
-    \begin{enumerate}[label=\textup{(\roman*)}]
-        \item $D\chi_{\Omega^k} \to D\chi_\Omega$ in the sense of measures in $U$;
-        \item $\mathrm{Per}(\Omega^k, U) \to \mathrm{Per}(\Omega, U)$
-    \end{enumerate}
-    for some Caccioppoli set $\Omega$. Then the varifolds $|\partial^*\Omega^k|$ converge to $|\partial^*\Omega|$ in the sense of varifolds.
-\end{proposition}

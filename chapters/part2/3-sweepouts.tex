@@ -4,7 +4,26 @@
 \section{ONVP Sweepouts}\label{sec:non-excessive-prelim}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We now review the non-excessive min-max framework of Chodosh--Liokumovich--Spolaor~\cite{CLS22}. The central idea is to refine the class of optimal sweepouts by imposing a condition---\emph{non-excessiveness}---that prevents critical slices from being locally replaceable by competitors of strictly smaller mass. This additional structure, absent in the classical Almgren--Pitts theory, leads to strong geometric control on the limit varifold. We work throughout with ONVP sweepouts (Definition~\ref{def:p2-onvp}).
+We now set up the min-max framework following Chodosh--Liokumovich--Spolaor~\cite{CLS22}. The central idea is to refine the class of optimal sweepouts by imposing a condition---\emph{non-excessiveness}---that prevents critical slices from being locally replaceable by competitors of strictly smaller mass. This additional structure, absent in the classical Almgren--Pitts theory, leads to strong geometric control on the limit varifold.
+
+\begin{definition}[Sweepout and width~{\cite[Definition~1.1]{CLS22}}]\label{def:p2-sweepout}
+A \emph{sweepout} of $M$ is a map $\Phi \colon [0,1] \to \mathcal{Z}_n(M; \mathbb{Z}_2)$ continuous in $\mathcal{F}$-topology such that $\Phi(x) = \partial \Omega(x)$, where $\{\Omega(x) : x \in [0,1]\}$ is a family of Caccioppoli sets with $\Omega(0) = \varnothing$ and $\Omega(1) = M$. We denote by $\mathcal{S}$ the collection of all such sweepouts. The \emph{width} of $M$ is
+\[
+W = W(M) := \inf_{\Phi \in \mathcal{S}} \sup_{x \in [0,1]} \mathbf{M}(\Phi(x)).
+\]
+It is a consequence of the isoperimetric inequality that $W > 0$~\cite[Proposition~0.5]{DLT13}.
+\end{definition}
+
+\begin{definition}[Optimal nested volume parametrized (ONVP) sweepout~{\cite[Definition~1.2]{CLS22}}]\label{def:p2-onvp}
+A sweepout $\{\Phi(x) = \partial \Omega(x)\}$ is called
+\begin{itemize}
+    \item \emph{optimal} if $\sup_{x \in [0,1]} \mathbf{M}(\Phi(x)) = W$;
+    \item \emph{nested} if $\Omega(x_1) \subset \Omega(x_2)$ for all $0 \leq x_1 \leq x_2 \leq 1$;
+    \item \emph{volume parametrized} if $\mathrm{Vol}(\Omega(x)) = x$ for every $x \in [0,1]$.
+\end{itemize}
+\end{definition}
+
+We work throughout with ONVP sweepouts. The existence of ONVP sweepouts follows from the monotonisation technique of Chambers--Liokumovich~\cite{CL20} combined with an Arzel\`a--Ascoli compactness argument; see Theorem~\ref{thm:non-excessive-existence} below for the stronger statement that also guarantees the non-excessive property.
 
 Given an optimal sweepout, the \emph{critical domain} identifies the parameter values at which the mass is maximal. The non-excessive condition asks that these critical parameters cannot be avoided by local replacements.
 
