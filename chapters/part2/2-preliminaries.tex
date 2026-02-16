@@ -61,7 +61,7 @@ A sequence of $n$-varifolds $\{V_i\}$ \emph{converges} to $V \in \mathcal{V}_n(M
 \end{definition}
 
 \begin{proposition}[Monotonicity formula~{\cite[Section~17]{Sim84}}]\label{prop:p2-monotonicity}
-Let $V$ be a stationary $n$-varifold in $(M^{n+1}, g)$ and $p \in \spt\|V\|$. Then the density ratio $\omega_n^{-1} r^{-n} \|V\|(B_r(p))$ is monotone non-decreasing in $r$ (for $r$ small enough that the exponential map at $p$ is a diffeomorphism). In particular, at least one tangent cone exists at every point of $\spt\|V\|$.
+Let $V$ be a stationary $n$-varifold in $(M^{n+1}, g)$ and $p \in \spt\|V\|$. There exists a constant $C = C(M, g) > 0$ such that the modified density ratio $e^{Cr}\, \omega_n^{-1} r^{-n} \|V\|(B_r(p))$ is monotone non-decreasing in $r$ (for $r$ small enough that the exponential map at $p$ is a diffeomorphism).\xinze{Was: exact monotonicity without curvature correction; cf.\ Pitts thesis Section~2.4(3), lines~547--560} In particular, at least one tangent cone exists at every point of $\spt\|V\|$.
 \end{proposition}
 
 \begin{definition}[Density]\label{def:p2-density}
@@ -73,7 +73,7 @@ By the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), this limit
 \end{definition}
 
 \begin{proposition}[Allard's rectifiability theorem~{\cite[Theorem~42.4]{Sim84}}]\label{prop:allard-rectifiability}
-Every stationary $n$-varifold $V$ in $(M^{n+1}, g)$ is rectifiable. More precisely, $V = \underline{v}(\Sigma, \theta)$ where $\Sigma = \spt\|V\|$ is $\mathcal{H}^n$-rectifiable and $\theta(p) = \Theta(\|V\|, p) \geq 1$ for $\mathcal{H}^n$-a.e.\ $p \in \Sigma$.
+Every stationary $n$-varifold $V$ in $(M^{n+1}, g)$ is rectifiable. More precisely, $V = \underline{v}(\Sigma, \theta)$ where $\Sigma \subset \spt\|V\|$ is $\mathcal{H}^n$-rectifiable\xinze{Was: $\Sigma = \spt\|V\|$; cf.\ Pitts thesis Section~2.4(9), lines~678--683} and $\theta(p) = \Theta(\|V\|, p) \geq 1$ for $\mathcal{H}^n$-a.e.\ $p \in \Sigma$.
 \end{proposition}
 
 \begin{definition}[Tilt-excess~{\cite[cf.\ Section~22]{Sim84}}]\label{def:p2-tilt-excess}
