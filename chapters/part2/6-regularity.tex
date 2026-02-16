@@ -30,19 +30,26 @@ We remark that the finiteness of $\mathfrak{h}_{\mathrm{nm}}(V)$ in~\cite[Propos
 \end{theorem}
 
 \begin{proof}
-Suppose the $\alpha$-structural hypothesis fails at some $Z \in \sing V$. Then there exists $\rho > 0$ such that $\spt\|V\| \cap B_\rho(Z)$ consists of finitely many $C^{1,\alpha}$ embedded hypersurfaces-with-boundary meeting along a common $C^{1,\alpha}$ boundary $\Gamma$ of dimension $n - 1$. Blowing up at $Z$, any tangent cone $C$ is a stationary integral cone in $\mathbb{R}^{n+1}$ consisting of $N$ half-hyperplanes $P_1^+, \ldots, P_N^+$ meeting along a common $(n-1)$-dimensional edge $L$, each carrying a positive integer multiplicity $m_j$, with the stationarity balance $\sum_{j=1}^N m_j \nu_j = 0$.
+Suppose the $\alpha$-structural hypothesis fails at some $Z \in \sing V$. Then there exists $\rho > 0$ such that $\spt\|V\| \cap B_\rho(Z)$ consists of finitely many $C^{1,\alpha}$ embedded hypersurfaces-with-boundary meeting along a common $C^{1,\alpha}$ boundary $\Gamma$ of dimension $n - 1$. Blowing up at $Z$, any tangent cone $C$ is a stationary integral cone in $\mathbb{R}^{n+1}$ consisting of $N$ half-hyperplanes $P_1^+, \ldots, P_N^+$ meeting along a common $(n-1)$-dimensional edge $L$, each carrying a positive integer multiplicity $m_j$, with the stationarity balance $\sum_{j=1}^N m_j \nu_j = 0$ (where $\nu_j$ is the outward unit normal to $P_j^+$ in the $2$-plane perpendicular to $L$).
 
-\medskip\noindent\textbf{Step~1: Area improvement at the tangent cone level.}
-We show that every such junction cone $C$ admits a local area improvement in $B_r$ for all small $r > 0$.
+\medskip\noindent\textbf{Step~1: Area improvement.}
+We show that in both cases $N = 2$ and $N \geq 3$, the junction structure at $Z$ admits a local area improvement of at least $\delta r^n$ in $B_r(Z)$ for some $\delta > 0$. The two cases require different arguments: the fold case ($N = 2$) uses the local $C^{1,\alpha}$ branch structure; the junction case ($N \geq 3$) uses the non-minimality of the tangent cone.
 
-\medskip\noindent\emph{Case~1: $N = 2$.}
-Two half-hyperplanes $P_1^+, P_2^+$ meet along $L$ at an interior angle $\theta \in (0, \pi]$.
+\medskip\noindent\emph{Case~1: $N = 2$ (fold).}
+The balance condition $m_1 \nu_1 + m_2 \nu_2 = 0$ with $|\nu_j| = 1$ forces $\nu_1 = -\nu_2$ and $m_1 = m_2$, so the two half-hyperplanes form a complete hyperplane: $C = 2m_1 |H|$ with $\theta = \pi$. (In particular, a wedge with $\theta < \pi$ cannot arise as a tangent cone, since it would violate the stationarity balance.)
 
-If $\theta < \pi$ (\emph{wedge}), the chord-beats-arc construction provides an area saving. In each two-dimensional cross-section normal to the edge $L$, the two half-lines $P_1^+ \cap \partial B_r$ and $P_2^+ \cap \partial B_r$ have total length $2r$, while the chord connecting their endpoints has length $2r\sin(\theta/2) < 2r$. Integrating along $L$ and accounting for the multiplicities, the replacement surface has strictly less area:
+The tangent cone $C$ is a flat hyperplane with even multiplicity and is therefore area-minimizing among cones. The area improvement comes instead from the local $C^{1,\alpha}$ structure guaranteed by the $\alpha$-structural failure: the two $C^{1,\alpha}$ branches converge tangentially to $H$ near $Z$, bounding a thin fold region $E$ that collapses as we approach $Z$. Since $\mathcal{H}^n(\partial B_r \cap E) = o(r^n)$, removing $E \cap B_r(Z)$ eliminates one sheet while incurring a negligible cross-section cost, yielding a net area saving of at least $\tfrac{1}{2}\omega_n r^n - o(r^n) > 0$ for all $r$ sufficiently small.
+
+\medskip\noindent\emph{Case~2: $N \geq 3$ (junction).}
+The $N$ half-hyperplanes partition the normal $2$-plane (perpendicular to $L$) into $N$ sectors with angles $\theta_1, \ldots, \theta_N$ summing to $2\pi$. Since $N \geq 3$, the pigeonhole principle gives
 \[
-    \|C\|(B_r) - \|\widetilde{C}\|(B_r) \geq \delta_{\mathrm{wedge}}(\theta) \cdot r^n > 0.
+    \min_j \theta_j \leq \frac{2\pi}{N} < \pi.
 \]
-As in~\cite[Lemma~3.4]{CLS22}, choosing $C^{1,\alpha}$-coordinates on $M$ around $Z$ with $g_{ij}(Z) = \delta_{ij}$ and rescaling this competitor into $B_r(Z)$ gives a local area saving of $\delta(\theta) r^n (1 + o(1))$ as $r \to 0$.
+Let $P_j^+, P_{j+1}^+$ be the pair of adjacent half-hyperplanes bounding this narrowest sector, with angle $\theta_j < \pi$. The chord-beats-arc construction applied to this pair shows that $C$ is not area-minimizing: in each two-dimensional cross-section normal to $L$, the two half-lines $P_j^+ \cap \partial B_r$ and $P_{j+1}^+ \cap \partial B_r$ have total length $2r$, while the chord connecting their endpoints has length $2r\sin(\theta_j/2) < 2r$ (see Figure~\ref{fig:chord-beats-arc}). Integrating along $L$, the replacement surface has strictly less area:
+\[
+    \|C\|(B_r) - \|\widetilde{C}\|(B_r) \geq \delta(\theta_j) \cdot r^n > 0.
+\]
+As in~\cite[Lemma~3.4]{CLS22}, choosing $C^{1,\alpha}$-coordinates on $M$ around $Z$ with $g_{ij}(Z) = \delta_{ij}$ and rescaling this competitor into $B_r(Z)$ gives a local area saving of $\delta(\theta_j) r^n (1 + o(1))$ as $r \to 0$.
 
     \begin{figure}[ht]
         \centering
@@ -136,34 +143,25 @@ As in~\cite[Lemma~3.4]{CLS22}, choosing $C^{1,\alpha}$-coordinates on $M$ around
 
           % Angle arc at far end B (interior angle, the Omega_C side)
           \draw[thin] (B) ++(-27:0.7) arc[start angle=-27, end angle=63, radius=0.7];
-          \node at ($(B)+(18:1.0)$) {$\theta$};
+          \node at ($(B)+(18:1.0)$) {$\theta_j$};
 
           % Labels
-          \node[bindA, above left] at ($(A1)!0.5!(B1)$) {$H_1$};
-          \node[bindA, below right] at ($(A2)!0.5!(B2)$) {$H_2$};
+          \node[bindA, above left] at ($(A1)!0.5!(B1)$) {$P_j^+$};
+          \node[bindA, below right] at ($(A2)!0.5!(B2)$) {$P_{j+1}^+$};
           \node[above left] at ($(A)!0.3!(B)$) {$L$};
         \end{tikzpicture}
-        \caption{The wedge: two half-hyperplanes $H_1, H_2$ meeting along the $(n-1)$-dimensional edge $L$ at angle $\theta < \pi$. In each two-dimensional cross-section normal to $L$, the two half-lines of $H_1 \cap \partial B_r$ and $H_2 \cap \partial B_r$ (black solid arcs) have total length $2r$, while the chord connecting their endpoints (blue lines) has length $2r\sin(\theta/2) < 2r$. Integrating along $L$, the blue surface has strictly less area than the wedge inside $B_r$ (grey region).}
-        \label{fig:wedge}
+        \caption{Chord-beats-arc for an adjacent pair within an $N \geq 3$ junction (Case~2). Two adjacent half-hyperplanes $P_j^+, P_{j+1}^+$ meet along the $(n-1)$-dimensional edge $L$ at angle $\theta_j < \pi$ (selected by the pigeonhole principle). In each $2$-dimensional cross-section normal to $L$, the two half-lines (black solid arcs) have total length $2r$, while the chord (blue hatched surface) has length $2r\sin(\theta_j/2) < 2r$. The grey region is the area saved by the replacement.}
+        \label{fig:chord-beats-arc}
     \end{figure}
 
-If $\theta = \pi$ (\emph{fold}), then $C = (m_1 + m_2)|H|$ for a complete hyperplane $H$. At least one pair of sheets folds onto $H$, bounding a thin region $E$ that collapses at $Z$. Removing $E \cap B_r(Z)$ saves area $\sim \tfrac{1}{2}\omega_n r^n$, since $\mathcal{H}^n(\partial B_r \cap E) = o(r^n)$.
-
-\medskip\noindent\emph{Case~2: $N \geq 3$.}
-The $N$ half-hyperplanes partition the normal $2$-plane (perpendicular to $L$) into $N$ sectors with angles $\theta_1, \ldots, \theta_N$ summing to $2\pi$. Since $N \geq 3$, the pigeonhole principle gives
-\[
-    \min_j \theta_j \leq \frac{2\pi}{N} < \pi.
-\]
-The two half-hyperplanes bounding this narrowest sector form a wedge with angle $\theta_j < \pi$, and the chord-beats-arc argument of Case~1 applies directly to this adjacent pair, yielding an area improvement of $\delta_{\mathrm{wedge}}(\theta_j) \cdot r^n > 0$.
-
 \begin{remark}\label{rem:junction-cases}
-When $V = |\partial^*\Omega(x_0)|$ (no mass cancellation), the boundary of a Caccioppoli set separates $\mathbb{R}^{n+1}$ into exactly two regions, forcing $N \leq 2$. Case~2 arises only in the mass-cancellation setting, where $V$ is not \emph{a priori} the boundary of a single Caccioppoli set and junctions with $N \geq 3$ half-hyperplanes are possible (see Section~\ref{sec:multiplicity-one} for a detailed analysis of these configurations). Nevertheless, the pigeonhole reduction to the wedge case makes the proof uniform across both settings.
+When $V = |\partial^*\Omega(x_0)|$ (no mass cancellation), the boundary of a Caccioppoli set separates $\mathbb{R}^{n+1}$ into exactly two regions, forcing $N \leq 2$; only the fold (Case~1) can occur. Case~2 arises only in the mass-cancellation setting, where $V$ is not \emph{a priori} the boundary of a single Caccioppoli set and junctions with $N \geq 3$ half-hyperplanes are possible (see Section~\ref{sec:multiplicity-one} for a detailed analysis of these configurations).
 \end{remark}
 
-In every case, there exists $\delta > 0$ such that the junction at $Z$ admits a local area improvement of at least $\delta r^n$ in $B_r(Z)$.
+In both cases, there exists $\delta > 0$ such that the junction at $Z$ admits a local area improvement of at least $\delta r^n$ in $B_r(Z)$.
 
 \medskip\noindent\textbf{Step~2: Transfer to the approximating sequence.}
-By varifold convergence $|\partial^*\Omega(x_i)| \to V$, for all $i$ sufficiently large $\partial^*\Omega(x_i) \cap B_r(Z)$ inherits a near-junction structure. Since each $\partial^*\Omega(x_i)$ is the boundary of a Caccioppoli set (smooth for $n \leq 6$ by Proposition~\ref{prop:p2-federer-regularity}), the local competitor from Step~1 transfers via Caccioppoli surgery on $\Omega(x_i)$: in the wedge case, excise the wedge-tip region by setting $\Omega(x_i)_r = \Omega(x_i) \setminus (W_i(r) \cap B_r(Z))$; in the fold case, remove the thin fold layer by setting $\Omega(x_i)_r = \Omega(x_i) \setminus (F_i(r) \cap B_r(Z))$. In each case, the perimeter decreases uniformly:
+By varifold convergence $|\partial^*\Omega(x_i)| \to V$, for all $i$ sufficiently large $\partial^*\Omega(x_i) \cap B_r(Z)$ inherits a near-junction structure. Since each $\partial^*\Omega(x_i)$ is the boundary of a Caccioppoli set (smooth for $n \leq 6$ by Proposition~\ref{prop:p2-federer-regularity}), the local competitor from Step~1 transfers via Caccioppoli surgery on $\Omega(x_i)$: in the fold case, remove the thin fold layer by setting $\Omega(x_i)_r = \Omega(x_i) \setminus (F_i(r) \cap B_r(Z))$; in the junction case, excise the region bounded by the narrowest adjacent pair and the chord surface. In each case, the perimeter decreases uniformly:
 \[
     \mathrm{Per}(\Omega(x_i)) - \mathrm{Per}(\Omega(x_i)_r) \geq \frac{\delta r^n}{2} > 0
 \]
@@ -179,9 +177,7 @@ But $W = \inf_{\Psi} \sup_x \mathrm{Per}(\Psi(x))$ is the min-max width, a contr
 Therefore, the $\alpha$-structural hypothesis holds.
 \end{proof}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Conclusion}\label{subsec:regularity-conclusion}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We can now assemble the full regularity result.
 
 \begin{proof}[Proof of Theorem~\ref{thm:non-excessive-main}]
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. By Theorem~\ref{thm:non-excessive-existence}, there exists a non-excessive ONVP sweepout $\Phi \in \Snm$. By Proposition~\ref{thm:CLS-stationary}, there exists a stationary varifold $V$ with $\mathbf{M}(V) = W$.

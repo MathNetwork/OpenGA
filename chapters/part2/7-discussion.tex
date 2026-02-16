@@ -13,7 +13,7 @@ The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\pa
 \begin{lemma}[Sheet decomposition]\label{lem:sheet-decomposition}
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. Let $\{\Omega_i\}$ be a sequence of Caccioppoli sets with $|\partial^*\Omega_i| \to V$ as varifolds, where $V$ is a stationary rectifiable $n$-varifold. Suppose that $p \in \spt\|V\|$ is a point where $V$ has a unique tangent plane $P = T_p\Sigma$ and finite density $\theta(p) = \Theta(\|V\|, p) \in (0, \infty)$ (these conditions hold at $\mathcal{H}^n$-a.e.\ point of $\Sigma$ by rectifiability; see Section~\ref{sec:p2-prelim} and~\cite[Section~11]{Sim84}).
 
-Then fo（r every $\varepsilon > 0$, there exist $r_0 > 0$ and $i_0 \in \mathbb{N}$ such that for a.e.\ $r \in (0, r_0)$ and all $i \geq i_0$, the following holds:
+Then for every $\varepsilon > 0$, there exist $r_0 > 0$ and $i_0 \in \mathbb{N}$ such that for a.e.\ $r \in (0, r_0)$ and all $i \geq i_0$, the following holds:
 \begin{enumerate}[label=\textup{(\roman*)}]
     \item $\partial^*\Omega_i \cap B_r(p)$ consists of exactly $k$ smooth connected components $\Sigma_i^1, \ldots, \Sigma_i^k$, where $k = k(r)$ is independent of $i$ and satisfies $\theta(p) = k$;
     \item each $\Sigma_i^j$ is the graph of a smooth function $u_i^j \colon \Omega_i^j \to \mathbb{R}$ over a domain $\Omega_i^j \subset D_r$ with $\|Du_i^j\|_{C^0} < \varepsilon$ and $\mathcal{H}^n(D_r \setminus \Omega_i^j) < \varepsilon \omega_n r^n$, where $D_r = P \cap B_r(p)$;
@@ -109,7 +109,13 @@ Blow up $V$ at $Z$: any tangent cone $C$ is a stationary integral cone in $\math
 In every case, there exists $\delta > 0$ such that the junction structure admits a local area improvement of at least $\delta r^n$ in $B_r$.
 
 \medskip\noindent\textbf{Step~1b: Transfer to the approximating sequence.}
-By varifold convergence $|\partial^*\Omega(x_i)| \to V$, for all $i$ sufficiently large $\partial^*\Omega(x_i) \cap B_r(Z)$ inherits a near-junction structure. Since each $\partial^*\Omega(x_i)$ is the smooth boundary of a Caccioppoli set (Proposition~\ref{prop:p2-federer-regularity}), the local competitor from Step~1a transfers via Caccioppoli surgery on $\Omega(x_i)$: in the wedge case, excise the wedge-tip region; in the fold case, remove the thin fold layer. In each case, the perimeter decreases uniformly:
+By varifold convergence $|\partial^*\Omega(x_i)| \to V$, for all $i$ sufficiently large $\partial^*\Omega(x_i) \cap B_r(Z)$ inherits a near-junction structure. Since each $\partial^*\Omega(x_i)$ is the smooth boundary of a Caccioppoli set (Proposition~\ref{prop:p2-federer-regularity}), the local competitor from Step~1a transfers via Caccioppoli surgery on $\Omega(x_i)$:
+\begin{itemize}
+    \item \emph{Wedge:} Set $\Omega(x_i)_r = \Omega(x_i) \setminus (W_i(r) \cap B_r(Z))$, excising the wedge tip.
+    \item \emph{Fold:} Set $\Omega(x_i)_r = \Omega(x_i) \setminus (F_i(r) \cap B_r(Z))$, removing the thin fold layer.
+    \item \emph{Higher-order junction:} Replace $\partial^*\Omega(x_i) \cap B_r(Z)$ by the area-minimizing spanning surface.
+\end{itemize}
+In each case, the perimeter decreases uniformly:
 \[
     \mathrm{Per}(\Omega(x_i)) - \mathrm{Per}(\Omega(x_i)_r) \geq \frac{\delta r^n}{2} > 0
 \]
