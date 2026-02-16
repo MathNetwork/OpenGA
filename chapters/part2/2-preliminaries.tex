@@ -4,7 +4,7 @@
 
 Throughout this chapter, $(M^{n+1}, g)$ denotes a smooth, closed (compact without boundary) Riemannian manifold with $n \geq 2$. We use $\mathcal{Z}_{n}(M; \mathbb{Z}_2)$ to denote the space of mod~$2$ flat cycles in $M$, equipped with the flat norm $\mathcal{F}$.
 
-\begin{definition}[Caccioppoli set]\label{def:p2-caccioppoli}
+\begin{definition}[Caccioppoli set~{\cite[\S14, p.\,71]{Sim84}; \cite[Chapter~12, p.\,117]{Mag12}; \cite[\S1]{CLS22}}]\label{def:p2-caccioppoli}
 A measurable set $E \subset M$ is a \emph{Caccioppoli set} (set of finite perimeter) if
 \[
 \mathrm{Per}(E) := \sup\left\{ \int_M \chi_E \operatorname{div} \omega \,:\, \omega \in \mathfrak{X}(M),\; \|\omega\|_{C^0} \leq 1 \right\} < \infty,
@@ -12,14 +12,14 @@ A measurable set $E \subset M$ is a \emph{Caccioppoli set} (set of finite perime
 where $\chi_E$ denotes the indicator function of $E$. The \emph{perimeter of $E$ in an open set $U$}, denoted $\mathrm{Per}(E, U)$, is the total variation of $D\chi_E$ in $U$.
 \end{definition}
 
-By De~Giorgi's structure theorem, the distributional derivative $D\chi_E$ of a Caccioppoli set $E$ is given by $D\chi_E = \nu_E \, \mathcal{H}^n \mres \partial^* E$, where $\partial^* E$ is the \emph{reduced boundary} of $E$ (an $n$-rectifiable set), and $\nu_E$ is the outward unit normal defined $\mathcal{H}^n$-a.e.\ on $\partial^* E$. This allows us to identify $D\chi_E$ with an element of $\mathcal{Z}_n(M; \mathbb{Z}_2)$, which we denote by $\partial E := \nu_E \, \mathcal{H}^n \mres \partial^* E$. With this identification,
+By De~Giorgi's structure theorem~\cite[Theorem~14.3]{Sim84}, the distributional derivative $D\chi_E$ of a Caccioppoli set $E$ is given by $D\chi_E = \nu_E \, \mathcal{H}^n \mres \partial^* E$, where $\partial^* E$ is the \emph{reduced boundary} of $E$ (an $n$-rectifiable set), and $\nu_E$ is the outward unit normal defined $\mathcal{H}^n$-a.e.\ on $\partial^* E$. This allows us to identify $D\chi_E$ with an element of $\mathcal{Z}_n(M; \mathbb{Z}_2)$, which we denote by $\partial E := \nu_E \, \mathcal{H}^n \mres \partial^* E$. With this identification,
 \[
 \mathbf{M}(\partial E) = \mathrm{Per}(E) \qquad \text{and} \qquad \mathcal{F}(\partial E, \partial F) = \|\chi_E - \chi_F\|_{L^1} = \mathrm{Vol}(E \triangle F).
 \]
 
 The min-max construction produces limits not in the space of Caccioppoli sets but in the space of varifolds, which we now recall.
 
-\begin{definition}[Varifold]\label{def:p2-varifold}
+\begin{definition}[Varifold~{\cite[\S38, p.\,228]{Sim84}}]\label{def:p2-varifold}
 An \emph{$n$-varifold} on $M$ is a Radon measure on the Grassmannian bundle $\mathrm{Gr}_n(M)$. We denote the space of $n$-varifolds by $\mathcal{V}_n(M)$. Given a cycle $\Gamma = \partial \Omega \in \mathcal{Z}_n(M; \mathbb{Z}_2)$, we write $|\Gamma|$ for the associated integral varifold:
 \[
 |\Gamma| = \mathcal{H}^n \mres \partial^* \Omega \otimes \delta_{T_x(\partial^* \Omega)}, \qquad \mu_\Gamma := \mathcal{H}^n \mres \partial^* \Omega.
@@ -28,9 +28,9 @@ An \emph{$n$-varifold} on $M$ is a Radon measure on the Grassmannian bundle $\ma
 
 We will switch freely between the equivalent notations $\mathbf{M}(\Phi(x))$ and $\mathrm{Per}(\Omega(x))$.
 
-For an $\mathcal{H}^n$-rectifiable set $\Sigma$, the approximate tangent plane $T_p\Sigma$ exists and is unique at $\mathcal{H}^n$-a.e.\ point $p \in \Sigma$ (cf.~\cite[Section~11]{Sim84}).
+For an $\mathcal{H}^n$-rectifiable set $\Sigma$, the approximate tangent plane $T_p\Sigma$ exists and is unique at $\mathcal{H}^n$-a.e.\ point $p \in \Sigma$ (cf.~\cite[Theorem~11.8]{Sim84}).
 
-\begin{definition}[Rectifiable varifold~{\cite[Section~15]{Sim84}}]\label{def:rectifiable-varifold}
+\begin{definition}[Rectifiable varifold~{\cite[\S15, p.\,77]{Sim84}}]\label{def:rectifiable-varifold}
 An $n$-varifold $V$ on $(M^{n+1}, g)$ is \emph{rectifiable} if there exist an $\mathcal{H}^n$-rectifiable set $\Sigma \subset M$ and a locally $\mathcal{H}^n$-integrable function $\theta \colon \Sigma \to (0, \infty)$ such that $V = \underline{v}(\Sigma, \theta)$, i.e.,
 \[
 \int f \, dV = \int_\Sigma \theta(p) \, f(p, T_p\Sigma) \, d\mathcal{H}^n(p) \quad \text{for all } f \in C_c(\mathrm{Gr}_n(M)).
@@ -38,11 +38,11 @@ An $n$-varifold $V$ on $(M^{n+1}, g)$ is \emph{rectifiable} if there exist an $\
 We call $\theta$ the \emph{multiplicity function} of $V$.
 \end{definition}
 
-\begin{definition}[Integral varifold]\label{def:integral-varifold}
+\begin{definition}[Integral varifold~{\cite[\S15, p.\,77]{Sim84}}]\label{def:integral-varifold}
 A rectifiable $n$-varifold $V = \underline{v}(\Sigma, \theta)$ on $(M^{n+1}, g)$ is \emph{integral} if the multiplicity function $\theta \colon \Sigma \to (0, \infty)$ satisfies $\theta(p) \in \mathbb{Z}_{>0}$ for $\mathcal{H}^n$-a.e.\ $p \in \Sigma$.
 \end{definition}
 
-\begin{definition}[Stationary and stable varifolds]\label{def:p2-stationary}
+\begin{definition}[Stationary and stable varifolds~{\cite[Definition~16.3]{Sim84}}]\label{def:p2-stationary}
 A varifold $V \in \mathcal{V}_n(M)$ is \emph{stationary} if its first variation vanishes:
 \[
 \delta V(X) := \int_{\mathrm{Gr}_n(M)} \operatorname{div}_S X \, dV = 0 \quad \text{for every } X \in \mathfrak{X}(M).
@@ -50,21 +50,21 @@ A varifold $V \in \mathcal{V}_n(M)$ is \emph{stationary} if its first variation 
 A stationary varifold $V$ is \emph{stable} if, in addition, the second variation $\delta^2 V(\varphi, \varphi) \geq 0$ for all compactly supported normal deformations $\varphi$ of $\reg\, V$.
 \end{definition}
 
-\begin{definition}[Tangent cone~{\cite[Chapter~8]{Sim84}}]\label{def:p2-tangent-cone}
+\begin{definition}[Tangent cone~{\cite[Definition~42.3]{Sim84}}]\label{def:p2-tangent-cone}
 Let $V$ be a stationary $n$-varifold in $M$ and $Z \in \spt\|V\|$. For $\rho > 0$, the \emph{blow-up} of $V$ at $Z$ with scale $\rho$ is the varifold $(\eta_{Z,\rho})_\# V$, where $\eta_{Z,\rho}(x) = (x - Z)/\rho$ in normal coordinates centred at $Z$. A \emph{tangent cone} of $V$ at $Z$ is any varifold limit $C = \lim_{j \to \infty} (\eta_{Z,\rho_j})_\# V$ for some sequence $\rho_j \to 0$. By the monotonicity formula (Proposition~\ref{prop:p2-monotonicity} below), at least one such limit exists; it is a stationary cone in $\mathbb{R}^{n+1}$.
 \end{definition}
 
 We next collect several quantitative tools from geometric measure theory that will be used in the integrality and regularity arguments of Sections~\ref{sec:integrality} and~\ref{sec:regularity}.
 
-\begin{definition}[Varifold convergence~{\cite[Section~38]{Sim84}}]\label{def:p2-varifold-convergence}
+\begin{definition}[Varifold convergence~{\cite[\S38, p.\,228]{Sim84}}]\label{def:p2-varifold-convergence}
 A sequence of $n$-varifolds $\{V_i\}$ \emph{converges} to $V \in \mathcal{V}_n(M)$ if $V_i \to V$ as Radon measures on $\mathrm{Gr}_n(M)$, i.e., $\int f \, dV_i \to \int f \, dV$ for every $f \in C_c(\mathrm{Gr}_n(M))$.
 \end{definition}
 
-\begin{proposition}[Monotonicity formula~{\cite[Section~17]{Sim84}}]\label{prop:p2-monotonicity}
+\begin{proposition}[Monotonicity formula~{\cite[Theorem~17.6]{Sim84}}]\label{prop:p2-monotonicity}
 Let $V$ be a stationary $n$-varifold in $(M^{n+1}, g)$ and $p \in \spt\|V\|$. There exists a constant $C = C(M, g) > 0$ such that the modified density ratio $e^{Cr}\, \omega_n^{-1} r^{-n} \|V\|(B_r(p))$ is monotone non-decreasing in $r$ (for $r$ small enough that the exponential map at $p$ is a diffeomorphism).\xinze{Was: exact monotonicity without curvature correction; cf.\ Pitts thesis Section~2.4(3), lines~547--560} In particular, at least one tangent cone exists at every point of $\spt\|V\|$.
 \end{proposition}
 
-\begin{definition}[Density]\label{def:p2-density}
+\begin{definition}[Density~{\cite[Corollary~17.8]{Sim84}}]\label{def:p2-density}
 For a stationary $n$-varifold $V$ and $p \in M$, the \emph{density} of $V$ at $p$ is
 \[
 \Theta(\|V\|, p) := \lim_{r \to 0} \omega_n^{-1} r^{-n} \|V\|(B_r(p)).
@@ -76,7 +76,7 @@ By the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), this limit
 Every stationary $n$-varifold $V$ in $(M^{n+1}, g)$ is rectifiable. More precisely, $V = \underline{v}(\Sigma, \theta)$ where $\Sigma \subset \spt\|V\|$ is $\mathcal{H}^n$-rectifiable\xinze{Was: $\Sigma = \spt\|V\|$; cf.\ Pitts thesis Section~2.4(9), lines~678--683} and $\theta(p) = \Theta(\|V\|, p) > 0$ for $\mathcal{H}^n$-a.e.\ $p \in \Sigma$.\xinze{Was: $\geq 1$; same correction as Definition~\ref{def:p2-density}}
 \end{proposition}
 
-\begin{definition}[Tilt-excess~{\cite[cf.\ Section~22]{Sim84}}]\label{def:p2-tilt-excess}
+\begin{definition}[Tilt-excess~{\cite[\S22, p.\,111]{Sim84}}]\label{def:p2-tilt-excess}
 The \emph{tilt-excess} of a varifold $W \in \mathcal{V}_n(M)$ in $B_r(p)$ relative to an $n$-plane $P$ is
 \[
 E(W, B_r(p), P) := r^{-n} \int_{B_r(p) \times G(n,n+1)} |S - P|^2 \, dW(x, S).
