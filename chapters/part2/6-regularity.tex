@@ -2,7 +2,7 @@
 
 \section{Regularity}\label{sec:regularity}
 
-By Proposition~\ref{thm:CLS-stationary}, the limit varifold $V$ is stationary; by Theorem~\ref{thm:integrality}, $V$ is integral. In the no-mass-cancellation case, $V = |\partial^*\Omega(x_0)|$ is the varifold induced by a single Caccioppoli boundary, which is already smooth by Federer regularity (Proposition~\ref{prop:p2-federer-regularity}) when $n \leq 6$; combined with stationarity, this directly yields a smooth embedded minimal hypersurface of multiplicity one. The mass-cancellation case requires more work: we apply Wickramasekera's regularity theorem (Theorem~\ref{thm:wickramasekera}), which requires two further inputs---\emph{stability} and the \emph{$\alpha$-structural hypothesis} (Definition~\ref{defn:alpha-structural}). This section verifies both.
+By Proposition~\ref{thm:CLS-stationary}, the limit varifold $V$ is stationary; by Theorem~\ref{thm:integrality}, $V$ is integral. In the no-mass-cancellation case, $V = |\partial^*\Omega(x_0)|$ is a stationary integral varifold of multiplicity one; Allard regularity~\cite[Theorem~24.2]{Sim84} then directly yields a smooth embedded minimal hypersurface. The mass-cancellation case requires more work: we apply Wickramasekera's regularity theorem (Theorem~\ref{thm:wickramasekera}), which requires two further inputs---\emph{stability} and the \emph{$\alpha$-structural hypothesis} (Definition~\ref{defn:alpha-structural}). This section verifies both.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Stability}\label{subsec:stability}
@@ -42,7 +42,7 @@ We claim $N \geq 3$. By~\cite[Remark~(3) following~($\mathcal{S}3$)]{Wic14}, for
 \end{theorem}
 
 \begin{remark}\label{rem:junction-cases}
-Theorem~\ref{thm:alpha-hypo} is only invoked in the mass-cancellation case (see the proof of Theorem~\ref{thm:non-excessive-main} below): when no mass cancellation occurs, $V = |\partial^*\Omega(x_0)|$ is already smooth by Federer regularity, so $\sing V = \varnothing$ and the $\alpha$-structural hypothesis is vacuously satisfied.
+Theorem~\ref{thm:alpha-hypo} is only invoked in the mass-cancellation case (see the proof of Theorem~\ref{thm:non-excessive-main} below): when no mass cancellation occurs, $V = |\partial^*\Omega(x_0)|$ is a stationary varifold of multiplicity one, hence smooth by Allard regularity, so $\sing V = \varnothing$ and the $\alpha$-structural hypothesis is vacuously satisfied.
 \end{remark}
 
 \begin{proof}
@@ -185,7 +185,7 @@ We can now assemble the full regularity result.
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. By Theorem~\ref{thm:non-excessive-existence}, there exists a non-excessive ONVP sweepout $\Phi \in \Snm$. By Proposition~\ref{thm:CLS-stationary}, there exists a stationary varifold $V$ with $\mathbf{M}(V) = W$.
 
 \medskip\noindent\emph{Case~1: no mass cancellation.}
-By Theorem~\ref{thm:integrality-mult-one}, $V = |\partial^*\Omega(x_0)|$. By Federer regularity (Proposition~\ref{prop:p2-federer-regularity}), $\partial^*\Omega(x_0)$ is a smooth, compact, embedded hypersurface. Since $V$ is stationary, $\spt\|V\| = \partial^*\Omega(x_0)$ is a smooth embedded minimal hypersurface of multiplicity one.
+By Theorem~\ref{thm:integrality-mult-one}, $V = |\partial^*\Omega(x_0)|$. Since $V$ is a stationary integral varifold of multiplicity one, Allard regularity~\cite[Theorem~24.2]{Sim84} gives that $\spt\|V\| = \partial^*\Omega(x_0)$ is a smooth, closed, embedded minimal hypersurface of multiplicity one.
 
 \medskip\noindent\emph{Case~2: mass cancellation.}
 By Theorem~\ref{thm:integrality}, $V$ is an integral varifold. By Proposition~\ref{prop:stability}, $V$ is stable. By Theorem~\ref{thm:alpha-hypo}, $V$ satisfies the $\alpha$-structural hypothesis. Therefore, all hypotheses of Wickramasekera's theorem (Theorem~\ref{thm:wickramasekera}) are satisfied, and $\sing V = \varnothing$. Thus $\spt\|V\|$ is a smooth, closed, embedded minimal hypersurface in $M$.
