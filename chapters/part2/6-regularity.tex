@@ -2,7 +2,7 @@
 
 \section{Regularity}\label{sec:regularity}
 
-By Proposition~\ref{thm:CLS-stationary}, the limit varifold $V$ is stationary; by Theorem~\ref{thm:integrality}, $V$ is integral. To promote $V$ to a smooth embedded minimal hypersurface, we apply Wickramasekera's regularity theorem (Theorem~\ref{thm:wickramasekera}), which requires two further inputs: \emph{stability} and the \emph{$\alpha$-structural hypothesis} (Definition~\ref{defn:alpha-structural}). This section verifies both, in both the no-mass-cancellation and mass-cancellation cases.
+By Proposition~\ref{thm:CLS-stationary}, the limit varifold $V$ is stationary; by Theorem~\ref{thm:integrality}, $V$ is integral. To promote $V$ to a smooth embedded minimal hypersurface, we apply Wickramasekera's regularity theorem (Theorem~\ref{thm:wickramasekera}), which requires two further inputs: \emph{stability} and the \emph{$\alpha$-structural hypothesis} (Definition~\ref{defn:alpha-structural}). This section verifies both. The key observation is that the $\alpha$-structural verification reduces in every case---including higher-order junctions arising from mass cancellation---to the elementary chord-beats-arc inequality, yielding a unified argument.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Stability}\label{subsec:stability}
@@ -21,49 +21,28 @@ We remark that the finiteness of $\mathfrak{h}_{\mathrm{nm}}(V)$ in~\cite[Propos
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Tangent cone classification}\label{subsec:tangent-cones}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-The structure of tangent cones at singular points of $V$ depends on whether mass cancellation occurs.
-
-\medskip\noindent\textbf{No mass cancellation.}
-When no mass cancellation occurs, $V = |\partial^*\Omega(x_0)|$ for a Caccioppoli set $\Omega(x_0)$ (Theorem~\ref{thm:integrality-mult-one}). Tangent cones at singular points are constrained by the Caccioppoli set structure. For stationary boundaries of Caccioppoli sets in $\mathbb{R}^{n+1}$ ($n \leq 6$), the only possible singular cones are:
-\begin{itemize}
-    \item $C = |H_1| + |H_2|$ (two half-hyperplanes meeting at angle $< \pi$) --- a ``wedge'';
-    \item $C = 2|H|$ (single half-hyperplane with multiplicity 2) --- a ``fold''.
-\end{itemize}
-Higher multiplicities or configurations where three or more sheets meet cannot arise, since the boundary of a Caccioppoli set separates $\mathbb{R}^{n+1}$ into exactly two regions ($\Omega$ and $\Omega^c$).
-
-\medskip\noindent\textbf{Mass cancellation.}
-When mass cancellation occurs, $V$ is integral (Lemma~\ref{lem:sheet-decomposition}) but is not \emph{a priori} the boundary of a single Caccioppoli set. Tangent cones at singular points are still stationary integral cones in $\mathbb{R}^{n+1}$, but the two-region constraint no longer applies. In addition to wedges and folds, junctions of $N \geq 3$ half-hyperplanes meeting along a common $(n-1)$-dimensional edge can occur. The $\alpha$-structural hypothesis, if it fails, produces exactly such a junction structure at some $Z \in \sing V$: finitely many $C^{1,\alpha}$ hypersurfaces-with-boundary meeting along a common $C^{1,\alpha}$ boundary $\Gamma$ of dimension $n - 1$.
-
-In both cases, the $\alpha$-structural hypothesis is verified by showing that each possible junction structure admits a local area improvement, leading to a contradiction. The details are carried out in the next subsection.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Junction resolution and the $\alpha$-structural hypothesis}\label{subsec:junction-resolution}
+\subsection{The $\alpha$-structural hypothesis}\label{subsec:alpha-structural}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{theorem}[Verification of $\alpha$-structural hypothesis]\label{thm:alpha-hypo}
     Let $V$ be the stationary integral varifold arising from a non-excessive ONVP sweepout $\Phi$
-    with width $W$, via the min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then $V$ satisfies the $\alpha$-structural hypothesis.
+    with width $W$, via the min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then $V$ satisfies the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}).
 \end{theorem}
 
-We treat the no-mass-cancellation and mass-cancellation cases in a unified proof, noting where the arguments diverge.
-
 \begin{proof}
-Suppose the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}) fails at some $Z \in \sing V$. Then there exists $\rho > 0$ such that $\spt\|V\| \cap B_\rho(Z)$ consists of finitely many $C^{1,\alpha}$ embedded hypersurfaces-with-boundary meeting along a common $C^{1,\alpha}$ boundary $\Gamma$ of dimension $n - 1$.
+Suppose the $\alpha$-structural hypothesis fails at some $Z \in \sing V$. Then there exists $\rho > 0$ such that $\spt\|V\| \cap B_\rho(Z)$ consists of finitely many $C^{1,\alpha}$ embedded hypersurfaces-with-boundary meeting along a common $C^{1,\alpha}$ boundary $\Gamma$ of dimension $n - 1$. Blowing up at $Z$, any tangent cone $C$ is a stationary integral cone in $\mathbb{R}^{n+1}$ consisting of $N$ half-hyperplanes $P_1^+, \ldots, P_N^+$ meeting along a common $(n-1)$-dimensional edge $L$, each carrying a positive integer multiplicity $m_j$, with the stationarity balance $\sum_{j=1}^N m_j \nu_j = 0$.
 
-\medskip\noindent\textbf{Step~1: Junction resolution at the tangent cone level.}
-Blow up $V$ at $Z$: any tangent cone $C$ is a stationary integral cone in $\mathbb{R}^{n+1}$. The $\alpha$-structural failure gives $C$ a junction structure. By the tangent cone classification (Section~\ref{subsec:tangent-cones}), three cases arise:
+\medskip\noindent\textbf{Step~1: Area improvement at the tangent cone level.}
+We show that every such junction cone $C$ admits a local area improvement in $B_r$ for all small $r > 0$.
 
-\begin{itemize}
-    \item \textbf{Case 1a (wedge):} The tangent cone is $C = |H_1| + |H_2|$, where $H_1, H_2$ are half-hyperplanes meeting along their common boundary at angle $\theta < \pi$.
+\medskip\noindent\emph{Case~1: $N = 2$.}
+Two half-hyperplanes $P_1^+, P_2^+$ meet along $L$ at an interior angle $\theta \in (0, \pi]$.
 
-    In the no-mass-cancellation case, write $C = |\bdy\Omega_C|$ for a Caccioppoli set $\Omega_C \subset \mathbb{R}^{n+1}$. Since the angle between $H_1$ and $H_2$ is less than $\pi$, the wedge $\partial\Omega_C$ is not perimeter-minimizing: in each two-dimensional cross-section normal to the edge, the two half-lines of total length $2r$ can be replaced by the chord of length $2r\sin(\theta/2) < 2r$, yielding a Caccioppoli set $\Omega_C' \subset \Omega_C$ with $\Omega_C \triangle \Omega_C' \subset B_1$ and
-    \[
-        \mathrm{Per}_{\mathbb{R}^{n+1}}(\Omega_C', B_1) \leq \mathrm{Per}_{\mathbb{R}^{n+1}}(\Omega_C, B_1) - \delta
-    \]
-    for some $\delta = \delta(\theta) > 0$. As in~\cite[Lemma~3.4]{CLS22}, we choose $C^{1,\alpha}$-coordinates on $M$ around $Z$ with $g_{ij}(Z) = \delta_{ij}$ and rescale this competitor into $B_r(Z)$ to obtain a local area saving of $\delta(\theta) r^n (1 + o(1))$ as $r \to 0$. The same chord-beats-arc construction applies in the mass-cancellation case: the wedge geometry is identical regardless of whether $C$ arises as the boundary of a Caccioppoli set.
+If $\theta < \pi$ (\emph{wedge}), the chord-beats-arc construction provides an area saving. In each two-dimensional cross-section normal to the edge $L$, the two half-lines $P_1^+ \cap \partial B_r$ and $P_2^+ \cap \partial B_r$ have total length $2r$, while the chord connecting their endpoints has length $2r\sin(\theta/2) < 2r$. Integrating along $L$ and accounting for the multiplicities, the replacement surface has strictly less area:
+\[
+    \|C\|(B_r) - \|\widetilde{C}\|(B_r) \geq \delta_{\mathrm{wedge}}(\theta) \cdot r^n > 0.
+\]
+As in~\cite[Lemma~3.4]{CLS22}, choosing $C^{1,\alpha}$-coordinates on $M$ around $Z$ with $g_{ij}(Z) = \delta_{ij}$ and rescaling this competitor into $B_r(Z)$ gives a local area saving of $\delta(\theta) r^n (1 + o(1))$ as $r \to 0$.
 
     \begin{figure}[ht]
         \centering
@@ -164,43 +143,27 @@ Blow up $V$ at $Z$: any tangent cone $C$ is a stationary integral cone in $\math
           \node[bindA, below right] at ($(A2)!0.5!(B2)$) {$H_2$};
           \node[above left] at ($(A)!0.3!(B)$) {$L$};
         \end{tikzpicture}
-        \caption{The wedge (Case~1a): two half-hyperplanes $H_1, H_2$ meeting along the $(n-1)$-dimensional edge $L$ at angle $\theta < \pi$. In each two-dimensional cross-section normal to $L$, the two half-lines of $H_1 \cap \partial B_r$ and $H_2 \cap \partial B_r$ (black solid arcs) have total length $2r$, while the chord connecting their endpoints (blue lines) has length $2r\sin(\theta/2) < 2r$. Integrating along $L$, the blue surface has strictly less area than $\partial\Omega_C \cap B_r$ (grey region), so the wedge is not perimeter-minimizing.}
+        \caption{The wedge: two half-hyperplanes $H_1, H_2$ meeting along the $(n-1)$-dimensional edge $L$ at angle $\theta < \pi$. In each two-dimensional cross-section normal to $L$, the two half-lines of $H_1 \cap \partial B_r$ and $H_2 \cap \partial B_r$ (black solid arcs) have total length $2r$, while the chord connecting their endpoints (blue lines) has length $2r\sin(\theta/2) < 2r$. Integrating along $L$, the blue surface has strictly less area than the wedge inside $B_r$ (grey region).}
         \label{fig:wedge}
     \end{figure}
 
-    \item \textbf{Case 1b (fold):} The tangent cone is $C = 2|H|$, where $H$ is a single half-hyperplane with multiplicity~$2$.
+If $\theta = \pi$ (\emph{fold}), then $C = (m_1 + m_2)|H|$ for a complete hyperplane $H$. At least one pair of sheets folds onto $H$, bounding a thin region $E$ that collapses at $Z$. Removing $E \cap B_r(Z)$ saves area $\sim \tfrac{1}{2}\omega_n r^n$, since $\mathcal{H}^n(\partial B_r \cap E) = o(r^n)$.
 
-    In the no-mass-cancellation case, $E_i$ is a thin fold region between two sheets of $\spt\|V\|$ that both converge to $H$ at $Z$. Define $\Omega_r = \Omega \setminus (E_i \cap B_r(Z))$. Then $\Omega_r \subset \Omega$ and $\Omega \triangle \Omega_r = E_i \cap B_r(Z) \subset B_r(Z)$. The perimeter change has two contributions: we lose the sheet of $\partial^*\Omega$ separating $E_i$ from $\Omega^c$ inside $B_r(Z)$, saving $\sim \tfrac{1}{2}\omega_n r^n$ of area; and we gain the cross-section $\partial B_r(Z) \cap E_i$ as new boundary. Since $E_i$ is a thin fold closing up at $Z$, $\mathcal{H}^n(\partial B_r(Z) \cap E_i) = o(r^n)$. Therefore
-    \[
-        \mathrm{Per}_g(\Omega_r, B_r(Z)) - \mathrm{Per}_g(\Omega, B_r(Z)) = -r^n \delta(1 + o(1)),
-    \]
-    where $\delta = \omega_n / 2$. In the mass-cancellation case, the same collapsing construction applies to the two sheets of $V$ converging to $H$ at $Z$, yielding an identical area saving of $(\omega_n/2) r^n$.
+\medskip\noindent\emph{Case~2: $N \geq 3$.}
+The $N$ half-hyperplanes partition the normal $2$-plane (perpendicular to $L$) into $N$ sectors with angles $\theta_1, \ldots, \theta_N$ summing to $2\pi$. Since $N \geq 3$, the pigeonhole principle gives
+\[
+    \min_j \theta_j \leq \frac{2\pi}{N} < \pi.
+\]
+The two half-hyperplanes bounding this narrowest sector form a wedge with angle $\theta_j < \pi$, and the chord-beats-arc argument of Case~1 applies directly to this adjacent pair, yielding an area improvement of $\delta_{\mathrm{wedge}}(\theta_j) \cdot r^n > 0$.
 
-    \item \textbf{Case 1c (higher-order junction, mass cancellation only):} The tangent cone consists of $N \geq 3$ half-hyperplanes meeting along a common $(n-1)$-dimensional edge.
+\begin{remark}\label{rem:junction-cases}
+When $V = |\partial^*\Omega(x_0)|$ (no mass cancellation), the boundary of a Caccioppoli set separates $\mathbb{R}^{n+1}$ into exactly two regions, forcing $N \leq 2$. Case~2 arises only in the mass-cancellation setting, where $V$ is not \emph{a priori} the boundary of a single Caccioppoli set and junctions with $N \geq 3$ half-hyperplanes are possible (see Section~\ref{sec:multiplicity-one} for a detailed analysis of these configurations). Nevertheless, the pigeonhole reduction to the wedge case makes the proof uniform across both settings.
+\end{remark}
 
-    This case cannot arise when $V = |\partial^*\Omega(x_0)|$ (no mass cancellation), since the boundary of a Caccioppoli set separates $\mathbb{R}^{n+1}$ into two regions. In the mass-cancellation case, however, codimension-$1$ junctions with $N \geq 3$ sheets are possible. Such junctions are never area-minimizing in $\mathbb{R}^{n+1}$: an area-minimizing replacement in $B_r$ (which exists by~\cite[Theorem~5.1.6]{Fed69}) has strictly less mass than $C \mres B_r$, yielding a deficit $\delta r^n > 0$.
-\end{itemize}
+In every case, there exists $\delta > 0$ such that the junction at $Z$ admits a local area improvement of at least $\delta r^n$ in $B_r(Z)$.
 
-In every case, there exists $\delta > 0$ such that the junction structure at $Z$ admits a local area improvement of at least $\delta r^n$ in $B_r(Z)$.
-
-\medskip\noindent\textbf{Step~2: Deriving a contradiction.}
-The argument diverges depending on whether mass cancellation occurs.
-
-\medskip\noindent\emph{Case A: No mass cancellation.}
-Here $V = |\partial^*\Omega(x_0)|$. The area improvement from Step~1 shows that $\partial\Omega(x_0)$ is not one-sided homotopic minimizing in $B_r(Z)$ for all small $r$, so $Z \in \mathfrak{h}_{\mathrm{nm}}(V)$ (Definition~\ref{def:hnm}). By~\cite[Proposition~3.1]{CLS22}, $\mathfrak{h}_{\mathrm{nm}}(V)$ is finite, so there exists $\rho' > 0$ such that $\spt\|V\|$ is one-sided homotopic minimizing in $B_r(X)$ for every $X \in \spt\|V\| \setminus B_{\rho'}(Z)$ and some $r > 0$.
-
-However, since the $\alpha$-structural hypothesis fails at $Z$, the common boundary $\Gamma \subset \sing V$ is $(n-1)$-dimensional. In particular, there exist singular points $X \in \sing V \setminus B_{\rho'}(Z)$ at which $V$ is one-sided homotopic minimizing. But $(n-1)$-dimensional singularities cannot occur for one-sided minimizers~\cite{Liu19}, a contradiction.
-
-\medskip\noindent\emph{Case B: Mass cancellation.}
-Here $V \neq |\partial^*\Omega(x_0)|$, so the one-sided minimizing argument of Case~A does not apply directly to $V$. Instead, we transfer the area improvement to the approximating sequence and derive a contradiction with the min-max width.
-
-By varifold convergence $|\partial^*\Omega(x_i)| \to V$, for all $i$ sufficiently large $\partial^*\Omega(x_i) \cap B_r(Z)$ inherits a near-junction structure. Since each $\partial^*\Omega(x_i)$ is the smooth boundary of a Caccioppoli set (Proposition~\ref{prop:p2-federer-regularity}), the local competitor from Step~1 transfers via Caccioppoli surgery on $\Omega(x_i)$:
-\begin{itemize}
-    \item \emph{Wedge:} Set $\Omega(x_i)_r = \Omega(x_i) \setminus (W_i(r) \cap B_r(Z))$, excising the wedge tip.
-    \item \emph{Fold:} Set $\Omega(x_i)_r = \Omega(x_i) \setminus (F_i(r) \cap B_r(Z))$, removing the thin fold layer.
-    \item \emph{Higher-order junction:} Replace $\partial^*\Omega(x_i) \cap B_r(Z)$ by the area-minimizing spanning surface.
-\end{itemize}
-In each case, the perimeter decreases uniformly:
+\medskip\noindent\textbf{Step~2: Transfer to the approximating sequence.}
+By varifold convergence $|\partial^*\Omega(x_i)| \to V$, for all $i$ sufficiently large $\partial^*\Omega(x_i) \cap B_r(Z)$ inherits a near-junction structure. Since each $\partial^*\Omega(x_i)$ is the boundary of a Caccioppoli set (smooth for $n \leq 6$ by Proposition~\ref{prop:p2-federer-regularity}), the local competitor from Step~1 transfers via Caccioppoli surgery on $\Omega(x_i)$: in the wedge case, excise the wedge-tip region by setting $\Omega(x_i)_r = \Omega(x_i) \setminus (W_i(r) \cap B_r(Z))$; in the fold case, remove the thin fold layer by setting $\Omega(x_i)_r = \Omega(x_i) \setminus (F_i(r) \cap B_r(Z))$. In each case, the perimeter decreases uniformly:
 \[
     \mathrm{Per}(\Omega(x_i)) - \mathrm{Per}(\Omega(x_i)_r) \geq \frac{\delta r^n}{2} > 0
 \]
@@ -210,10 +173,10 @@ Since $x_i \to x_0 \in \mathfrak{m}(\Phi)$, the perimeters satisfy $\mathrm{Per}
 \[
     \sup_x \mathrm{Per}(\tilde{\Omega}(x)) < W.
 \]
-But $W = \inf_{\Psi} \sup_x \mathrm{Per}(\Psi(x))$ is the min-max width, where the infimum is over \emph{all} sweepouts in the same homotopy class---not only nested ones. This contradicts the definition of $W$.
+But $W = \inf_{\Psi} \sup_x \mathrm{Per}(\Psi(x))$ is the min-max width, a contradiction.
 
 \medskip
-In both cases, we reach a contradiction. Therefore, the $\alpha$-structural hypothesis holds.
+Therefore, the $\alpha$-structural hypothesis holds.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -30,6 +30,14 @@ We will switch freely between the equivalent notations $\mathbf{M}(\Phi(x))$ and
 
 For an $\mathcal{H}^n$-rectifiable set $\Sigma$, the approximate tangent plane $T_p\Sigma$ exists and is unique at $\mathcal{H}^n$-a.e.\ point $p \in \Sigma$ (cf.~\cite[Section~11]{Sim84}).
 
+\begin{definition}[Rectifiable varifold~{\cite[Section~15]{Sim84}}]\label{def:rectifiable-varifold}
+An $n$-varifold $V$ on $(M^{n+1}, g)$ is \emph{rectifiable} if there exist an $\mathcal{H}^n$-rectifiable set $\Sigma \subset M$ and a locally $\mathcal{H}^n$-integrable function $\theta \colon \Sigma \to (0, \infty)$ such that $V = \underline{v}(\Sigma, \theta)$, i.e.,
+\[
+\int f \, dV = \int_\Sigma \theta(p) \, f(p, T_p\Sigma) \, d\mathcal{H}^n(p) \quad \text{for all } f \in C_c(\mathrm{Gr}_n(M)).
+\]
+We call $\theta$ the \emph{multiplicity function} of $V$.
+\end{definition}
+
 \begin{definition}[Integral varifold]\label{def:integral-varifold}
 A rectifiable $n$-varifold $V = \underline{v}(\Sigma, \theta)$ on $(M^{n+1}, g)$ is \emph{integral} if the multiplicity function $\theta \colon \Sigma \to (0, \infty)$ satisfies $\theta(p) \in \mathbb{Z}_{>0}$ for $\mathcal{H}^n$-a.e.\ $p \in \Sigma$.
 \end{definition}
@@ -63,6 +71,10 @@ For a stationary $n$-varifold $V$ and $p \in M$, the \emph{density} of $V$ at $p
 \]
 By the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), this limit exists. Moreover, $\Theta(\|V\|, p) \geq 1$ for every $p \in \spt\|V\|$.
 \end{definition}
+
+\begin{proposition}[Allard's rectifiability theorem~{\cite[Theorem~42.4]{Sim84}}]\label{prop:allard-rectifiability}
+Every stationary $n$-varifold $V$ in $(M^{n+1}, g)$ is rectifiable. More precisely, $V = \underline{v}(\Sigma, \theta)$ where $\Sigma = \spt\|V\|$ is $\mathcal{H}^n$-rectifiable and $\theta(p) = \Theta(\|V\|, p) \geq 1$ for $\mathcal{H}^n$-a.e.\ $p \in \Sigma$.
+\end{proposition}
 
 \begin{definition}[Tilt-excess~{\cite[cf.\ Section~22]{Sim84}}]\label{def:p2-tilt-excess}
 The \emph{tilt-excess} of a varifold $W \in \mathcal{V}_n(M)$ in $B_r(p)$ relative to an $n$-plane $P$ is

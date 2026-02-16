@@ -2,7 +2,7 @@
 
 \section{Integrality}\label{sec:integrality}
 
-Integrality of the limit varifold is an essential input to the regularity argument: it ensures that tangent cones at singular points are integral cones, which constrains them to the junction configurations (wedges, folds, and higher-order junctions) needed to derive a contradiction when the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}) fails (see Section~\ref{subsec:junction-resolution}). The main result of this section is:
+Integrality of the limit varifold is an essential input to the regularity argument: it ensures that tangent cones at singular points are integral cones, which constrains them to the junction configurations (wedges, folds, and higher-order junctions) needed to derive a contradiction when the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}) fails (see Section~\ref{subsec:alpha-structural}). The main result of this section is:
 
 \begin{theorem}[Integrality of the limit varifold]\label{thm:integrality}
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$, and let $\Phi$ be an optimal nested \textup{(}ONVP\textup{)} sweepout with width $W$. Let $x_i \to x_0 \in \mathfrak{m}(\Phi)$ be a min-max sequence and $V$ the varifold limit of $|\partial^*\Omega(x_i)|$. Then $V$ is an integral $n$-varifold.
@@ -61,7 +61,7 @@ Both conditions of Proposition~\ref{prop:p2-DLT-integrality} are satisfied, so $
     \label{fig:caccioppoli-set}
 \end{figure}
 
-The identification $V = |\partial^*\Omega(x_0)|$ has two important consequences beyond integrality: it tells us that $V$ is the boundary of a Caccioppoli set, which constrains the possible tangent cones (Section~\ref{subsec:tangent-cones}), and it connects $V$ to the non-excessive structure of the sweepout, which provides the homotopic minimizing property.
+The identification $V = |\partial^*\Omega(x_0)|$ has two important consequences beyond integrality: it tells us that $V$ is the boundary of a Caccioppoli set, which constrains the possible tangent cones (see the proof of Theorem~\ref{thm:alpha-hypo}), and it connects $V$ to the non-excessive structure of the sweepout, which provides the homotopic minimizing property.
 
 \subsection{The mass cancellation case}\label{subsec:integrality-cancel}
 
@@ -69,7 +69,7 @@ When mass cancellation occurs ($\mathbf{M}(\Phi(x_0)) < W$), we still have $\Ome
 \[
     \mathrm{Per}(\Omega(x_i)) \to W > \mathrm{Per}(\Omega(x_0)).
 \]
-The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. Instead, we exploit the nestedness of the sweepout to count sheets and deduce integrality directly. The main tool is the following graphical decomposition lemma for Caccioppoli boundaries converging to a stationary varifold.
+The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. Instead, we exploit the nestedness of the sweepout to count sheets and deduce integrality directly. Note that $V$ is rectifiable by Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), since it is stationary (Proposition~\ref{thm:CLS-stationary}). The main tool is the following graphical decomposition lemma.
 
 \begin{figure}[ht]
     \centering

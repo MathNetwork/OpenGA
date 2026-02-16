@@ -98,24 +98,18 @@ By Proposition~\ref{thm:CLS-stationary}, $V$ is stationary; by Lemma~\ref{lem:sh
 Suppose the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}) fails at some $Z \in \sing V$. Then there is a neighborhood of $Z$ in which $\spt\|V\|$ consists of finitely many $C^{1,\alpha}$ embedded hypersurfaces-with-boundary meeting along a common $C^{1,\alpha}$ boundary $\Gamma$ of dimension $n - 1$. We derive a contradiction with the min-max width by constructing a sweepout of strictly smaller width.
 
 \medskip\noindent\textbf{Step~1a: Junction resolution at the tangent cone level.}
-Blow up $V$ at $Z$: any tangent cone $C$ is a stationary integral cone in $\mathbb{R}^{n+1}$. Unlike the no-mass-cancellation case (where $V = |\partial^*\Omega(x_0)|$ constrains tangent cones to wedges and folds), the mass cancellation varifold $V$ is not \emph{a priori} the boundary of a single Caccioppoli set. The $\alpha$-structural failure gives $C$ a junction structure, and three cases arise:
+Blow up $V$ at $Z$: any tangent cone $C$ is a stationary integral cone in $\mathbb{R}^{n+1}$ consisting of $N$ half-hyperplanes meeting along a common $(n-1)$-dimensional edge $L$. The argument is identical to the proof of Theorem~\ref{thm:alpha-hypo}:
 \begin{itemize}
-    \item \emph{Wedge ($\theta < \pi$):} $C = |H_1| + |H_2|$, two half-hyperplanes meeting along an $(n-1)$-edge at angle $\theta < \pi$. The chord-beats-arc replacement (as in the proof of Theorem~\ref{thm:alpha-hypo}, Case~1a) saves area $\delta(\theta) r^n > 0$ in $B_r$.
+    \item \emph{$N = 2$, wedge ($\theta < \pi$):} The chord-beats-arc replacement saves area $\delta(\theta) r^n > 0$ in $B_r$.
 
-    \item \emph{Fold ($\theta = \pi$):} $C = 2|H|$, a single half-hyperplane with multiplicity~$2$. Collapsing the fold saves area $(\omega_n/2) r^n$ (as in Case~1b of Theorem~\ref{thm:alpha-hypo}).
+    \item \emph{$N = 2$, fold ($\theta = \pi$):} Collapsing the fold saves area $(\omega_n/2) r^n$.
 
-    \item \emph{Higher-order junction ($N \geq 3$ sheets):} In the mass cancellation case, tangent cones need not be boundaries, so junctions of $N \geq 3$ half-hyperplanes meeting along a common $(n-1)$-edge can occur. However, codimension-$1$ junctions in $\mathbb{R}^{n+1}$ with $N \geq 3$ are never area-minimizing: an area-minimizing replacement in $B_r$ (which exists by~\cite[Theorem~5.1.6]{Fed69}) has strictly less mass than $C \mres B_r$, yielding a deficit $\delta r^n > 0$.
+    \item \emph{$N \geq 3$:} Since the $N$ sector angles sum to $2\pi$ and $N \geq 3$, at least one adjacent pair has angle $< \pi$, reducing to the wedge case.
 \end{itemize}
 In every case, there exists $\delta > 0$ such that the junction structure admits a local area improvement of at least $\delta r^n$ in $B_r$.
 
 \medskip\noindent\textbf{Step~1b: Transfer to the approximating sequence.}
-By varifold convergence $|\partial^*\Omega(x_i)| \to V$, for all $i$ sufficiently large $\partial^*\Omega(x_i) \cap B_r(Z)$ inherits a near-junction structure. Since each $\partial^*\Omega(x_i)$ is the smooth boundary of a Caccioppoli set (Proposition~\ref{prop:p2-federer-regularity}), the local competitor from Step~1a transfers via Caccioppoli surgery on $\Omega(x_i)$:
-\begin{itemize}
-    \item \emph{Wedge:} Set $\Omega(x_i)_r = \Omega(x_i) \setminus (W_i(r) \cap B_r(Z))$, excising the wedge tip.
-    \item \emph{Fold:} Set $\Omega(x_i)_r = \Omega(x_i) \setminus (F_i(r) \cap B_r(Z))$, removing the thin fold layer.
-    \item \emph{Higher-order junction:} Replace $\partial^*\Omega(x_i) \cap B_r(Z)$ by the area-minimizing spanning surface.
-\end{itemize}
-In each case, the perimeter decreases uniformly:
+By varifold convergence $|\partial^*\Omega(x_i)| \to V$, for all $i$ sufficiently large $\partial^*\Omega(x_i) \cap B_r(Z)$ inherits a near-junction structure. Since each $\partial^*\Omega(x_i)$ is the smooth boundary of a Caccioppoli set (Proposition~\ref{prop:p2-federer-regularity}), the local competitor from Step~1a transfers via Caccioppoli surgery on $\Omega(x_i)$: in the wedge case, excise the wedge-tip region; in the fold case, remove the thin fold layer. In each case, the perimeter decreases uniformly:
 \[
     \mathrm{Per}(\Omega(x_i)) - \mathrm{Per}(\Omega(x_i)_r) \geq \frac{\delta r^n}{2} > 0
 \]
