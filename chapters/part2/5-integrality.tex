@@ -184,7 +184,7 @@ Then for every $\varepsilon > 0$, there exist $r_0 > 0$ and $i_0 \in \mathbb{N}$
     \item each $\Sigma_i^j$ is the graph of a smooth function $u_i^j \colon \Omega_i^j \to \mathbb{R}$ over a domain $\Omega_i^j \subset D_r$ with $\|Du_i^j\|_{C^0} < \varepsilon$ and $\mathcal{H}^n(D_r \setminus \Omega_i^j) < \varepsilon \omega_n r^n$, where $D_r = P \cap B_r(p)$;
     \item the area of each sheet satisfies $|\mathcal{H}^n(\Sigma_i^j) - \omega_n r^n| < \varepsilon \omega_n r^n$.
 \end{enumerate}
-In particular, $\theta(p) \in \mathbb{Z}_{>0}$.
+In particular, $\theta(p) \in \mathbb{Z}_{>0}$, so $V$ is an integral $n$-varifold (Definition~\ref{def:integral-varifold}).
 \end{lemma}
 
 \begin{figure}[ht]
@@ -417,21 +417,63 @@ Finally, the total area of the $k_i$ contributing sheets satisfies
 and converges to $\theta(p)\omega_n r^n$. Choosing $\varepsilon$ small enough so that the intervals $[k(1-C\varepsilon^2),\, k(1+C\varepsilon^2)]$ for consecutive integers $k$ are disjoint, the count $k_i$ is uniquely determined for $i$ large, hence eventually constant equal to $k = \theta(p) \in \mathbb{Z}_{>0}$, establishing~(i).
 \end{proof}
 
-We now apply the sheet decomposition lemma to prove integrality.
-
-\begin{proposition}\label{prop:integrality-nested}
-Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$, and let $\Phi$ be an optimal nested \textup{(}ONVP\textup{)} sweepout with width $W$. Let $x_i \to x_0 \in \mathfrak{m}(\Phi)$ be a min-max sequence, $\Omega(x_0) = \lim \Omega(x_i)$ in $L^1$, and $V$ the varifold limit of $|\partial^*\Omega(x_i)|$. Then $V$ is an integral $n$-varifold.
-\end{proposition}
-
-\begin{proof}
-Write $V = |\partial^*\Omega(x_0)| + V'$, where $V'$ is the non-negative varifold capturing the cancelling mass. Since $V$ is stationary (Proposition~\ref{thm:CLS-stationary}), Allard's rectifiability theorem~\cite[Theorem~5.5(1)]{All72} gives $V = \theta \, \mathcal{H}^n \mres \Sigma$ for an $\mathcal{H}^n$-rectifiable set $\Sigma$ and a density function $\theta \colon \Sigma \to (0, \infty)$. By Lemma~\ref{lem:sheet-decomposition} applied with $\Omega_i = \Omega(x_i)$, the density $\theta(p)$ equals the sheet count $k \in \mathbb{Z}_{>0}$ at $\mathcal{H}^n$-a.e.\ point $p \in \spt\|V\|$. It remains to verify that every positive integer arising as a density is indeed achieved; the parity is controlled by nestedness. We distinguish three cases.
-
-At a \emph{pure cancellation point} $p \in \spt\|V'\| \setminus \spt\|\partial^*\Omega(x_0)\|$, the set $\Omega(x_0)$ is locally constant near $p$. Say $B_r(p) \subset \Omega(x_0)$. If $x_i > x_0$, nestedness gives $B_r(p) \subset \Omega(x_i)$ and $\partial^*\Omega(x_i) \cap B_r(p) = \varnothing$, so only parameters $x_i < x_0$ contribute sheets. For such $x_i$, $\Omega(x_i) \subset \Omega(x_0)$, so $\Omega(x_i) \cap B_r(p) = B_r(p)$ minus thin slabs, each bounded by two sheets. Therefore $k$ is even. (The case $B_r(p) \subset M \setminus \overline{\Omega(x_0)}$ is analogous.) The geometric mechanism is \emph{folding}: each pair of sheets bounds a slab that collapses as $x_i \to x_0$, contributing multiplicity~$2$.
-
-At a \emph{mixed regular point} $p \in \mathrm{reg}(\partial^*\Omega(x_0)) \cap \spt\|V'\|$, the boundary $\partial^*\Omega(x_0)$ is smooth near $p$ (Proposition~\ref{prop:p2-federer-regularity}), and the $k$ sheets from Lemma~\ref{lem:sheet-decomposition} are ordered by height: $u_i^1 < \cdots < u_i^k$. Since $\Omega(x_i)$ occupies alternating slabs and $\Omega(x_i) \to \Omega(x_0)$ in $L^1$, exactly one sheet (the \emph{tracking sheet}) satisfies $\|u_i^{j_0} - u_0\|_{L^\infty} \to 0$, where $u_0$ parametrizes $\partial^*\Omega(x_0)$. The remaining $k - 1$ cancelling sheets come in pairs by the same folding argument. Therefore $k - 1$ is even, i.e., $k$ is odd.
-
-Finally, for $n \leq 6$, Federer regularity (Proposition~\ref{prop:p2-federer-regularity}) gives $\partial\Omega(x_0) = \partial^*\Omega(x_0)$, so there are no singular points to consider. Combining the two cases, $\theta(p) \in \mathbb{Z}_{>0}$ at $\mathcal{H}^n$-a.e.\ point, and together with rectifiability, $V$ is integral.
-\end{proof}
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}[b]{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.3]
+          \coordinate (O) at (0,0);
+          \def\L{1.8}  % half-length of each line
+          % Shaded regions inside red curves (only round the center tip)
+          \fill[fillA, opacity=0.3] (-0.83, -1.47) [rounded corners=6mm] -- (0, -0.20) [sharp corners] -- (0.83, -1.47) -- cycle;
+          \fill[fillA, opacity=0.3] (1.69, 0.02) [rounded corners=6mm] -- (0.17, 0.10) [sharp corners] -- (0.86, 1.45) -- cycle;
+          \fill[fillA, opacity=0.3] (-0.86, 1.45) [rounded corners=6mm] -- (-0.17, 0.10) [sharp corners] -- (-1.69, 0.02) -- cycle;
+          % Line 1 (horizontal): bright red
+          \draw[thick, red] ($(O) + (-\L, 0)$) -- ($(O) + (\L, 0)$);
+          % Line 2 (60°): lower half bright red, upper half bright blue
+          \draw[thick, red] ($(O) + ({-\L*cos(60)}, {-\L*sin(60)})$) -- (O);
+          \draw[thick, blue] (O) -- ($(O) + ({\L*cos(60)}, {\L*sin(60)})$);
+          % Line 3 (120°): lower half bright red, upper half bright blue
+          \draw[thick, red] ($(O) + ({-\L*cos(120)}, {-\L*sin(120)})$) -- (O);
+          \draw[thick, blue] (O) -- ($(O) + ({\L*cos(120)}, {\L*sin(120)})$);
+          % Red curves: triangle edges with rounded tips
+          \draw[bindA, thin, rounded corners=6mm] (-0.83, -1.47) -- (0, -0.20) -- (0.83, -1.47);
+          \draw[bindA, thin, rounded corners=6mm] (1.69, 0.02) -- (0.17, 0.10) -- (0.86, 1.45);
+          \draw[bindA, thin, rounded corners=6mm] (-0.86, 1.45) -- (-0.17, 0.10) -- (-1.69, 0.02);
+          % Extra red curve + shading in top empty sector (60°-120°), bottom rotated 180°
+          \fill[fillA, opacity=0.3] (0.83, 1.47) [rounded corners=6mm] -- (0, 0.20) [sharp corners] -- (-0.83, 1.47) -- cycle;
+          \draw[bindA, thin, rounded corners=6mm] (0.83, 1.47) -- (0, 0.20) -- (-0.83, 1.47);
+          % Center point
+          \fill (O) circle (2pt);
+          % Labels
+          \node[red, right] at ($(O) + (\L+0.05, 0)$) {$|\partial^*\!\Omega(x_0)|$};
+          \node[blue, above right] at ($(O) + ({\L*cos(60)+0.05}, {\L*sin(60)+0.05})$) {$V'$};
+      \end{tikzpicture}\\[4pt]
+      \textbf{(a)}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[b]{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.3]
+          \coordinate (O) at (0,0);
+          \def\L{1.8}  % half-length of each line
+          % Red shading: entire region below horizontal line
+          \fill[fillA, opacity=0.3] ($(O) + (-\L, 0)$) -- (O) -- ($(O) + (\L, 0)$)
+            -- ($(O) + ({\L*cos(60)}, {-\L*sin(60)})$) -- ($(O) + ({-\L*cos(60)}, {-\L*sin(60)})$) -- cycle;
+          % Line 1: horizontal
+          \draw[thick] ($(O) + (-\L, 0)$) -- ($(O) + (\L, 0)$);
+          % Line 2 (60°): upper half only
+          \draw[thick] (O) -- ($(O) + ({\L*cos(60)}, {\L*sin(60)})$);
+          % Line 3 (120°): upper half only
+          \draw[thick] (O) -- ($(O) + ({\L*cos(120)}, {\L*sin(120)})$);
+          % Center point
+          \fill (O) circle (2pt);
+      \end{tikzpicture}\\[4pt]
+      \textbf{(b)}
+    \end{minipage}
+    \caption{Decomposition $V = |\partial^*\Omega(x_0)| + V'$ illustrating the three types of points for the integrality argument. Red: $\mathrm{spt}\,|\partial^*\Omega(x_0)|$. Blue: $\mathrm{spt}\,\|V'\|$ (cancelling mass). Along the red branches away from the blue, $\theta = 1$ (only $|\partial^*\Omega(x_0)|$ contributes). Along the blue branches away from the red, $\theta = 2$ (pure cancellation: sheets pair by nestedness). Where red and blue overlap, $\theta = 1 + 2 = 3$ (mixed regular: one tracking sheet plus one cancelling pair). The black dot marks a singular point ($\mathcal{H}^n$-measure zero), which does not affect integrality.}
+    \label{fig:integrality-cases}
+\end{figure}
 
 \begin{remark}\label{rem:sheet-decomposition}
 The sheet decomposition lemma (Lemma~\ref{lem:sheet-decomposition}) is a general result about Caccioppoli boundaries converging to a stationary varifold, independent of the min-max context. It is closely related to the Sheeting Theorem in Wickramasekera's regularity theory~\cite{Wic14}, which provides a multi-valued graphical decomposition for stable integral varifolds. The difference is that our lemma applies to the \emph{approximating} varifolds $|\partial^*\Omega_i|$ (multiplicity-$1$, smooth for $n \leq 6$) rather than the limit $V$, avoiding the need to assume integrality a priori. The non-excessive hypothesis is not used in the proof of integrality; it enters only in the regularity step (Section~\ref{sec:regularity}).

@@ -7,9 +7,6 @@
 \providecommand{\href}[2]{#2}
 \begin{thebibliography}{MNS19}
 
-\bibitem[All72]{All72}
-William~K. Allard, \emph{On the first variation of a varifold}, Ann. of Math. (2) \textbf{95} (1972), 417--491.
-
 \bibitem[Alm62]{Alm62}
 Frederick~Justin Almgren, \emph{The homotopy groups of the integral cycle groups}, Topology \textbf{1} (1962), no.~4, 257--299.
 

@@ -2,7 +2,25 @@
 
 \section{Towards Multiplicity One}\label{sec:multiplicity-one}
 
-The sheet counting argument in Proposition~\ref{prop:integrality-nested} yields a parity constraint on the density $\theta$ of the limit varifold $V$. At pure cancellation points ($p \in \spt\|V'\| \setminus \spt\|\partial^*\Omega(x_0)\|$), the cancelling sheets pair up, giving $\theta(p) = 2m$ for some $m \geq 1$. At mixed regular points ($p \in \mathrm{reg}(\partial^*\Omega(x_0)) \cap \spt\|V'\|$), one tracking sheet persists and the rest pair, giving $\theta(p) = 1 + 2m$. Thus multiplicity one ($\theta \equiv 1$) is equivalent to $m = 0$ everywhere, which is precisely the no-mass-cancellation condition (Definition~\ref{def:mass-cancellation}).
+The sheet decomposition lemma (Lemma~\ref{lem:sheet-decomposition}) establishes integrality of the limit varifold $V$; we now refine it to a parity constraint on the density.
+
+\begin{proposition}[Parity of the density function]\label{prop:density-parity}
+Write $V = |\partial^*\Omega(x_0)| + V'$, where $V'$ is the non-negative varifold capturing the cancelling mass. Then at $\mathcal{H}^n$-a.e.\ point of $\spt\|V\|$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item at a pure cancellation point $p \in \spt\|V'\| \setminus \spt\|\partial^*\Omega(x_0)\|$, the density $\theta(p)$ is even;
+    \item at a mixed regular point $p \in \mathrm{reg}(\partial^*\Omega(x_0)) \cap \spt\|V'\|$, the density $\theta(p)$ is odd.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+At a \emph{pure cancellation point} $p \in \spt\|V'\| \setminus \spt\|\partial^*\Omega(x_0)\|$, the set $\Omega(x_0)$ is locally constant near $p$. Say $B_r(p) \subset \Omega(x_0)$. If $x_i > x_0$, nestedness gives $B_r(p) \subset \Omega(x_i)$ and $\partial^*\Omega(x_i) \cap B_r(p) = \varnothing$, so only parameters $x_i < x_0$ contribute sheets. For such $x_i$, $\Omega(x_i) \subset \Omega(x_0)$, so $\Omega(x_i) \cap B_r(p) = B_r(p)$ minus thin slabs, each bounded by two sheets. Therefore $k$ is even. (The case $B_r(p) \subset M \setminus \overline{\Omega(x_0)}$ is analogous.) The geometric mechanism is \emph{folding}: each pair of sheets bounds a slab that collapses as $x_i \to x_0$, contributing multiplicity~$2$.
+
+At a \emph{mixed regular point} $p \in \mathrm{reg}(\partial^*\Omega(x_0)) \cap \spt\|V'\|$, the boundary $\partial^*\Omega(x_0)$ is smooth near $p$ (Proposition~\ref{prop:p2-federer-regularity}), and the $k$ sheets from Lemma~\ref{lem:sheet-decomposition} are ordered by height: $u_i^1 < \cdots < u_i^k$. Since $\Omega(x_i)$ occupies alternating slabs and $\Omega(x_i) \to \Omega(x_0)$ in $L^1$, exactly one sheet (the \emph{tracking sheet}) satisfies $\|u_i^{j_0} - u_0\|_{L^\infty} \to 0$, where $u_0$ parametrizes $\partial^*\Omega(x_0)$. The remaining $k - 1$ cancelling sheets come in pairs by the same folding argument. Therefore $k - 1$ is even, i.e., $k$ is odd.
+
+For $n \leq 6$, Federer regularity (Proposition~\ref{prop:p2-federer-regularity}) gives $\partial\Omega(x_0) = \partial^*\Omega(x_0)$, so there are no singular points to consider.
+\end{proof}
+
+Thus multiplicity one ($\theta \equiv 1$) is equivalent to $V' = 0$ everywhere, which is precisely the no-mass-cancellation condition (Definition~\ref{def:mass-cancellation}).
 
 A natural strategy for proving multiplicity one is the following. Suppose $V = k|\Sigma|$ with $k \geq 2$ and $\Sigma$ a smooth closed embedded minimal hypersurface (as guaranteed by Theorem~\ref{thm:non-excessive-main}). One attempts to construct an $I$-replacement family (Definition~\ref{def:excessive-interval}) on an interval $I \ni x_0$ by performing surgery on near-maximal slices: for $x$ with $\mathrm{Per}(\Omega(x))$ close to $W = k \cdot \mathcal{H}^n(\Sigma)$, replace $\Omega(x)$ inside a tubular neighborhood $B_\varepsilon(\Sigma)$ by $\Omega(x_0)$, removing the $k - 1$ cancelling sheet pairs. Since $\mathrm{Per}(\Omega(x_0)) \leq \mathcal{H}^n(\Sigma) = W/k$, and the cutting cost on $\partial B_\varepsilon(\Sigma)$ vanishes as $x \to x_0$ by $L^1$ convergence, the modified perimeter satisfies $\mathrm{Per}(\tilde{\Omega}(x)) \approx W/k \ll W$. This would make $x_0$ excessive, contradicting non-excessiveness.
 
