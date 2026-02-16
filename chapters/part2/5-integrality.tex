@@ -280,39 +280,141 @@ In particular, $\theta(p) \in \mathbb{Z}_{>0}$.
       \end{tikzpicture}\\[4pt]
       \textbf{(b)}
     \end{minipage}
-    \caption{Sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) with $k = \theta(p) = 2$. \textbf{(a)}~Global view: $\partial^*\Omega(x_i)$ (red) near a point $p$ on the support of $V$, with the ball $B_r(p)$ cutting the boundary into $k = 2$ sheets $\Sigma_i^1, \Sigma_i^2$. \textbf{(b)}~Zoomed view inside $B_r(p)$: each sheet $\Sigma_i^j$ is the graph of a smooth function $u_i^j$ over the tangent plane $P = T_p\Sigma$, with $\|Du_i^j\|_{C^0} < \varepsilon$.}
+    \caption{Sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) with $\theta(p) = k = 2$. \textbf{(a)}~Near a regular point $p$, the ball $B_r(p)$ cuts the reduced boundary $\partial^*\Omega(x_i)$ into $k = 2$ connected components $\Sigma_i^1, \Sigma_i^2$. \textbf{(b)}~Inside $B_r(p)$: each $\Sigma_i^j = \mathrm{graph}(u_i^j)$ over a domain $\Omega_i^j \subset D_r = P \cap B_r(p)$.}
     \label{fig:sheet-decomposition}
 \end{figure}
 
+Before giving the proof, we discuss the geometric content of the three conditions; see Figure~\ref{fig:sheet-decomposition} for an illustration with $k = 2$.
+
+Condition~(i) says that, at sufficiently small scales, $\partial^*\Omega_i \cap B_r(p)$ separates into exactly $k = \theta(p)$ smooth sheets (Figure~\ref{fig:sheet-decomposition}(a)). This is the key step that converts the integer density $\theta(p)$ into a geometric count of sheets.
+
+Condition~(ii) encodes two further properties. The gradient bound $\|Du_i^j\|_{C^0} < \varepsilon$ controls the \emph{tilt}: each sheet is nearly parallel to the approximate tangent plane $P = T_p\Sigma$, which is the graphical manifestation of small tilt-excess (Definition~\ref{def:p2-tilt-excess}). The coverage bound $\mathcal{H}^n(D_r \setminus \Omega_i^j) < \varepsilon \omega_n r^n$ says that the domain $\Omega_i^j \subset D_r$ covers all but an $\varepsilon$-fraction of the disk $D_r = P \cap B_r(p)$ (Figure~\ref{fig:sheet-decomposition}(b)). Together, the two bounds say that each sheet is a nearly complete, nearly horizontal graph over $D_r$. Figure~\ref{fig:condition-ii} illustrates two configurations that condition~(ii) excludes: a sheet with large tilt (Figure~\ref{fig:condition-ii}(a); which cannot persist as $i \to \infty$, since varifold convergence forces the tilt-excess to decay), and a sheet with poor coverage (Figure~\ref{fig:condition-ii}(b); whose small domain is incompatible with the mass convergence $\|\partial^*\Omega_i\|(B_r(p)) \to \theta(p)\omega_n r^n$).
+
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}[b]{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.3]
+        \coordinate (O) at (0,0);
+        % Named paths for intersection
+        \path[name path=circA] (O) circle (0.8);
+        \path[name path=sheetA] (-1.5, -0.15) -- (1.5, 0.75);
+        % Gray circle
+        \draw[gray, thick] (O) circle (0.8);
+        % D_r (blue, horizontal)
+        \begin{scope}
+          \clip (O) circle (0.8);
+          \draw[thick, bindB] (-1.2, 0) -- (1.2, 0);
+        \end{scope}
+        \node[bindB, right] at (0.85, 0) {$D_r$};
+        % Tilted sheet above D_r (large tilt)
+        \begin{scope}
+          \clip (O) circle (0.8);
+          \draw[very thick, bindA] (-1.5, -0.15) -- (1.5, 0.75);
+        \end{scope}
+        \node[bindA, above right] at (0.3, 0.75) {$\Sigma_i^j$};
+        % Intersection points
+        \path[name intersections={of=circA and sheetA, by={IAL,IAR}}];
+        % Dashed vertical projections to D_r
+        \draw[thin, bindA, dashed] (IAL) -- (IAL |- O);
+        \draw[thin, bindA, dashed] (IAR) -- (IAR |- O);
+        % Coverage domain brace
+        \draw[red, thick, decorate, decoration={brace, amplitude=3pt}]
+          (IAL |- {(0,-0.1)}) -- (IAR |- {(0,-0.1)}) node[midway, below=4pt, red] {$\Omega_i^j$};
+      \end{tikzpicture}\\[4pt]
+      \textbf{(a)} Large tilt
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[b]{0.45\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=1.3]
+        \coordinate (O) at (0,0);
+        % Named paths for intersection
+        \path[name path=circ] (O) circle (0.8);
+        \path[name path=sheet] (-1.2, 0.75) -- (1.2, 0.75);
+        % Gray circle
+        \draw[gray, thick] (O) circle (0.8);
+        % D_r (blue, horizontal)
+        \begin{scope}
+          \clip (O) circle (0.8);
+          \draw[thick, bindB] (-1.2, 0) -- (1.2, 0);
+        \end{scope}
+        \node[bindB, right] at (0.85, 0) {$D_r$};
+        % Short horizontal sheet high above D_r (poor coverage)
+        \begin{scope}
+          \clip (O) circle (0.8);
+          \draw[very thick, bindA] (-1.2, 0.75) -- (1.2, 0.75);
+        \end{scope}
+        \node[bindA, above] at (0, 0.85) {$\Sigma_i^j$};
+        % Intersection points
+        \path[name intersections={of=circ and sheet, by={IL,IR}}];
+        % Dashed vertical projections to D_r
+        \draw[thin, bindA, dashed] (IL) -- (IL |- O);
+        \draw[thin, bindA, dashed] (IR) -- (IR |- O);
+        % Coverage domain brace
+        \draw[red, thick, decorate, decoration={brace, amplitude=3pt}]
+          (IL |- {(0,-0.1)}) -- (IR |- {(0,-0.1)}) node[midway, below=4pt, red] {$\Omega_i^j$};
+      \end{tikzpicture}\\[4pt]
+      \textbf{(b)} Poor coverage
+    \end{minipage}
+    \caption{Two configurations excluded by condition~(ii) of Lemma~\ref{lem:sheet-decomposition}. In each case the domain $\Omega_i^j$ (brace) is the orthogonal projection of $\Sigma_i^j$ onto $D_r$.}
+    \label{fig:condition-ii}
+\end{figure}
+
+Condition~(iii) is not independent: it follows from conditions~(i) and~(ii) by the area formula for graphs. Since each sheet $\Sigma_i^j = \mathrm{graph}(u_i^j)$, we have
+\[
+    \mathcal{H}^n(\Sigma_i^j) = \int_{\Omega_i^j} \sqrt{1 + |Du_i^j|^2} \, d\mathcal{H}^n.
+\]
+The gradient bound $\|Du_i^j\|_{C^0} < \varepsilon$ from condition~(ii) gives $\sqrt{1 + |Du_i^j|^2} \in (1, \sqrt{1+\varepsilon^2})$, so
+\[
+    \mathcal{H}^n(\Omega_i^j) \leq \mathcal{H}^n(\Sigma_i^j) \leq \sqrt{1+\varepsilon^2} \cdot \mathcal{H}^n(\Omega_i^j).
+\]
+The coverage bound $\mathcal{H}^n(D_r \setminus \Omega_i^j) < \varepsilon\omega_n r^n$ gives $\mathcal{H}^n(\Omega_i^j) \geq (1-\varepsilon)\omega_n r^n$. Combining:
+\[
+    (1-\varepsilon)\omega_n r^n \leq \mathcal{H}^n(\Sigma_i^j) \leq \sqrt{1+\varepsilon^2} \cdot \omega_n r^n.
+\]
+For small $\varepsilon$, both sides are close to $\omega_n r^n$, yielding $|\mathcal{H}^n(\Sigma_i^j) - \omega_n r^n| < C\varepsilon \cdot \omega_n r^n$. We include condition~(iii) in the lemma statement for convenience of citation, but it is logically redundant.
+
+We now turn to the proof, which makes the above heuristics precise.
+
 \begin{proof}
-The proof combines three ingredients: the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), graphical decomposition under small tilt-excess (Definition~\ref{def:p2-tilt-excess}), and the sphere constraint to exclude partial sheets.
+Working in normal coordinates centered at $p$, we identify a neighborhood of $p$ with a neighborhood of the origin in $\mathbb{R}^{n+1}$, the tangent plane $P$ with $\mathbb{R}^n \times \{0\}$, and write $D_r = \{y \in \mathbb{R}^n : |y| < r\}$ for the $n$-disk in $P$. Since $V$ has tangent varifold $\theta(p)|P|$ at $p$, the density ratio satisfies $\omega_n^{-1} r^{-n} \|V\|(B_r(p)) \to \theta(p)$ as $r \to 0$, and the tilt-excess (Definition~\ref{def:p2-tilt-excess}) satisfies $E(V, B_r(p), P) \to 0$. The varifold convergence $|\partial^*\Omega_i| \to V$ transfers both to the approximating boundaries: for any prescribed $\delta_0 > 0$, there exist $r_0 > 0$ and $i_0$ such that for $r < r_0$ and $i > i_0$,
+\begin{gather*}
+    \mathcal{H}^n(\partial^*\Omega_i \cap B_{2r}(p)) \leq C\omega_n r^n, \\
+    (2r)^{-n}\int_{\partial^*\Omega_i \cap B_{2r}(p)} |\nu_{\partial^*\Omega_i} - e_{n+1}|^2 \, d\mathcal{H}^n < \delta_0.
+\end{gather*}
 
-\medskip\noindent\textbf{Step~1: Setup.}
-Working in normal coordinates centered at $p$, we identify a neighborhood of $p$ with a neighborhood of the origin in $\mathbb{R}^{n+1}$, the tangent plane $P$ with $\mathbb{R}^n \times \{0\}$, and write $D_r = \{y \in \mathbb{R}^n : |y| < r\}$ for the $n$-disk in $P$. Since $V$ has tangent varifold $\theta(p)|P|$ at $p$, the density ratio satisfies
+Since each $\partial^*\Omega_i$ is a smooth embedded hypersurface (Proposition~\ref{prop:p2-federer-regularity}), these two bounds force a graphical decomposition (cf.~\cite[Chapter~7]{Sim84} and~\cite[Lemma~2.1]{Wic14}): for a.e.\ $r$ in this range, $\partial^*\Omega_i \cap B_r(p)$ consists of finitely many connected components, each the graph of a smooth function over a domain in $P$ with gradient bounded by $C(n)\delta_0^{1/2}$. Choosing $\delta_0$ so that $C(n)\delta_0^{1/2} < \varepsilon$, we obtain a decomposition of $\partial^*\Omega_i \cap B_r(p)$ into smooth graphs $\Sigma_i^1, \ldots, \Sigma_i^{k_i}$ with $u_i^j \colon \Omega_i^j \to \mathbb{R}$ and $\|Du_i^j\|_{C^0} < \varepsilon$.
+
+It remains to show that each sheet nearly fills $D_r$ and that the sheet count stabilizes. Since $\partial^*\Omega_i$ is compact without boundary (Proposition~\ref{prop:p2-federer-regularity}), the boundary of each graphical piece $\Sigma_i^j$ lies on $\partial B_r(p)$: every $y \in \partial\Omega_i^j$ satisfies the sphere constraint
 \[
-    \omega_n^{-1} r^{-n} \|V\|(B_r(p)) \to \theta(p) \quad \text{as } r \to 0.
+    |y|^2 + |u_i^j(y)|^2 = r^2.
 \]
+We now bound the height $|u_i^j|$ on each contributing sheet. Consider a sheet $\Sigma_i^j$ that intersects $B_{r/2}(p)$: there exists $(y_0, u_i^j(y_0)) \in B_{r/2}(p)$, so $|u_i^j(y_0)| < r/2$. The gradient bound gives $|u_i^j(y)| < r/2 + 2\varepsilon r$ on $\Omega_i^j$. Substituting into the sphere constraint, every boundary point satisfies $|y| \geq r\sqrt{3/4 - C\varepsilon} \geq r/2$ (for $\varepsilon$ small), so $\Omega_i^j \supset D_{r/2}$ and hence $\mathcal{H}^n(\Omega_i^j) \geq 2^{-n}\omega_n r^n$.
 
-\medskip\noindent\textbf{Step~2: Tilt-excess control.}
-Since $V$ has tangent plane $P$ at $p$, the tilt-excess (Definition~\ref{def:p2-tilt-excess}) satisfies $E(V, B_r(p), P) \to 0$ as $r \to 0$. The varifold convergence $|\partial^*\Omega_i| \to V$ (Definition~\ref{def:p2-varifold-convergence}) implies $E(|\partial^*\Omega_i|, B_r(p), P) \to E(V, B_r(p), P)$ for each generic $r$ (with $\|V\|(\partial B_r(p)) = 0$). Combining: for every $\delta > 0$, there exist $r_1 > 0$ and $i_1$ such that for $r < r_1$ and $i > i_1$,
+This crude area lower bound lets us upgrade the height estimate using the tangent plane condition. Since $V$ has tangent varifold $\theta(p)|P|$ at $p$, for any $\alpha > 0$,
 \[
-    E(|\partial^*\Omega_i|, B_r(p), P) < \delta.
+    \|V\|\bigl(\{x \in B_r(p) : \mathrm{dist}(x, P) > \alpha r\}\bigr) = o(r^n) \quad\text{as } r \to 0.
 \]
+By varifold convergence, $\mathcal{H}^n(\partial^*\Omega_i \cap B_r(p) \cap \{|u| > \varepsilon r\}) = o(r^n)$. Since $\mathcal{H}^n(\Omega_i^j) \geq 2^{-n}\omega_n r^n$, the sheet $\Sigma_i^j$ cannot lie entirely in $\{|u| > \varepsilon r\}$ for $r$ small. Therefore there exists $y_1 \in \Omega_i^j$ with $|u_i^j(y_1)| \leq \varepsilon r$. The gradient bound then gives
+\[
+    |u_i^j(y)| \leq |u_i^j(y_1)| + \varepsilon|y - y_1| \leq \varepsilon r + 2\varepsilon r = 3\varepsilon r
+\]
+for all $y \in \Omega_i^j$. Substituting into the sphere constraint:
+\[
+    |y|^2 \geq r^2 - 9\varepsilon^2 r^2, \qquad\text{i.e.,}\qquad |y| \geq r\sqrt{1 - 9\varepsilon^2} \geq r(1 - C\varepsilon^2).
+\]
+Therefore
+\[
+    \mathcal{H}^n(D_r \setminus \Omega_i^j) \leq C\varepsilon^2 \omega_n r^n,
+\]
+establishing~(ii). Condition~(iii) then follows from the area formula for graphs, as shown above. Sheets that do not intersect $B_{r/2}(p)$ are confined to the annular region $B_r(p) \setminus B_{r/2}(p)$; by choosing $r$ generic (so that $\|V\|(\partial B_r(p)) = 0$), their total area is $o(r^n)$ and they do not affect the density at $p$.
 
-\medskip\noindent\textbf{Step~3: Graphical decomposition.}
-Since each $\partial^*\Omega_i$ is a smooth embedded hypersurface (Proposition~\ref{prop:p2-federer-regularity}), we apply the following standard result (cf.~\cite[Chapter~7]{Sim84} and~\cite[Lemma~2.1]{Wic14}): there exists $\delta_0 = \delta_0(n) > 0$ such that if $\Sigma$ is a smooth closed embedded hypersurface in $B_R(0) \subset \mathbb{R}^{n+1}$ satisfying
-\begin{enumerate}[label=\textup{(H\arabic*)}]
-    \item $\mathcal{H}^n(\Sigma \cap B_R(0)) \leq C \omega_n R^n$ for some constant $C$;
-    \item $R^{-n} \int_{\Sigma \cap B_R(0)} |\nu_\Sigma - e_{n+1}|^2 \, d\mathcal{H}^n < \delta_0$;
-\end{enumerate}
-then for a.e.\ $\rho \in (R/2, R)$, the intersection $\Sigma \cap B_\rho(0)$ consists of finitely many connected components, each the graph of a smooth function $u \colon \Omega_u \to \mathbb{R}$ over a domain $\Omega_u \subset P$ with $\|Du\|_{C^0} \leq C(n)\delta_0^{1/2}$. (The proof uses Chebyshev's inequality to get pointwise control of $|\nu_\Sigma - e_{n+1}|$ outside a small set, then the implicit function theorem to decompose each nearly-flat piece into a graph; embeddedness prevents the graphical pieces from merging or overlapping.)
-
-We apply this with $\Sigma = \partial^*\Omega_i$, $R = 2r$, and $\delta_0$ chosen so that $C(n)\delta_0^{1/2} < \varepsilon$. Condition~(H1) follows from varifold convergence, and condition~(H2) from the tilt-excess bound. Relabeling $\rho$ as $r$ gives, for $r$ small and $i$ large, a decomposition of $\partial^*\Omega_i \cap B_r(p)$ into finitely many smooth graphs $\Sigma_i^1, \ldots, \Sigma_i^{k_i}$ with $u_i^j \colon \Omega_i^j \to \mathbb{R}$ and $\|Du_i^j\|_{C^0} < \varepsilon$.
-
-\medskip\noindent\textbf{Step~4: Each sheet nearly fills $D_r$, and the sheet count is constant.}
-Since $\partial^*\Omega_i$ is compact without boundary (Proposition~\ref{prop:p2-federer-regularity}), the boundary of each graphical piece $\Sigma_i^j$ lies on $\partial B_r(p)$: every $y \in \partial\Omega_i^j$ satisfies $|y|^2 + |u_i^j(y)|^2 = r^2$. Consider a sheet passing through $B_{r/2}(p)$, i.e., there exists $y_0 \in \Omega_i^j$ with $|y_0| < r/2$. Since $V$ has tangent varifold $\theta(p)|P|$ at $p$, the mass of $V$ concentrates near $P$: for any $\alpha > 0$, $\|V\|(\{q \in B_r(p) : \mathrm{dist}(q, P) > \alpha r\}) / (\omega_n r^n) \to 0$ as $r \to 0$. By varifold convergence, $|u_i^j(y_0)| \leq \varepsilon r$ for $i$ large. For any $y \in \partial\Omega_i^j$, the gradient bound gives $|u_i^j(y)| \leq 3\varepsilon r$, and the sphere constraint forces $|y| \geq r(1 - C'\varepsilon^2)$. Therefore $\mathcal{H}^n(D_r \setminus \Omega_i^j) \leq C''\varepsilon^2 \omega_n r^n$, establishing~(ii). Each contributing sheet then has area satisfying $|\mathcal{H}^n(\Sigma_i^j) - \omega_n r^n| < C'''\varepsilon^2\omega_n r^n$, establishing~(iii). (Sheets not passing through $B_{r/2}(p)$ contribute vanishingly small mass near $p$ for generic $r$.)
-
-The total area satisfies $k_i(1 - \varepsilon')\omega_n r^n < \mathcal{H}^n(\partial^*\Omega_i \cap B_r(p)) < k_i(1 + \varepsilon')\omega_n r^n$, where $\varepsilon' = C(\varepsilon^2)$, and converges to $\theta(p)\omega_n r^n$. Choosing $\varepsilon'$ small enough (so that intervals for consecutive integers are disjoint), $k_i$ is uniquely determined for $i$ large, hence eventually constant equal to $k = \theta(p) \in \mathbb{Z}_{>0}$, establishing~(i).
+Finally, the total area of the $k_i$ contributing sheets satisfies
+\[
+    k_i(1 - C\varepsilon^2)\omega_n r^n < \mathcal{H}^n(\partial^*\Omega_i \cap B_r(p)) < k_i(1 + C\varepsilon^2)\omega_n r^n,
+\]
+and converges to $\theta(p)\omega_n r^n$. Choosing $\varepsilon$ small enough so that the intervals $[k(1-C\varepsilon^2),\, k(1+C\varepsilon^2)]$ for consecutive integers $k$ are disjoint, the count $k_i$ is uniquely determined for $i$ large, hence eventually constant equal to $k = \theta(p) \in \mathbb{Z}_{>0}$, establishing~(i).
 \end{proof}
 
 We now apply the sheet decomposition lemma to prove integrality.
@@ -322,25 +424,13 @@ Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$, and l
 \end{proposition}
 
 \begin{proof}
-Write $V = |\partial^*\Omega(x_0)| + V'$, where $V'$ is the non-negative varifold capturing the cancelling mass.
+Write $V = |\partial^*\Omega(x_0)| + V'$, where $V'$ is the non-negative varifold capturing the cancelling mass. Since $V$ is stationary (Proposition~\ref{thm:CLS-stationary}), Allard's rectifiability theorem~\cite[Theorem~5.5(1)]{All72} gives $V = \theta \, \mathcal{H}^n \mres \Sigma$ for an $\mathcal{H}^n$-rectifiable set $\Sigma$ and a density function $\theta \colon \Sigma \to (0, \infty)$. By Lemma~\ref{lem:sheet-decomposition} applied with $\Omega_i = \Omega(x_i)$, the density $\theta(p)$ equals the sheet count $k \in \mathbb{Z}_{>0}$ at $\mathcal{H}^n$-a.e.\ point $p \in \spt\|V\|$. It remains to verify that every positive integer arising as a density is indeed achieved; the parity is controlled by nestedness. We distinguish three cases.
 
-\medskip\noindent\textbf{Step~1: Rectifiability and densities.}
-Since $V$ is stationary (Proposition~\ref{thm:CLS-stationary}), Allard's rectifiability theorem~\cite[Theorem~5.5(1)]{All72} gives that $V = \theta \, \mathcal{H}^n \mres \Sigma$ for an $\mathcal{H}^n$-rectifiable set $\Sigma$ and a function $\theta \colon \Sigma \to (0, \infty)$. The monotonicity formula (Proposition~\ref{prop:p2-monotonicity}) ensures $\theta(p) > 0$ at every $p \in \spt\|V\|$.
+At a \emph{pure cancellation point} $p \in \spt\|V'\| \setminus \spt\|\partial^*\Omega(x_0)\|$, the set $\Omega(x_0)$ is locally constant near $p$. Say $B_r(p) \subset \Omega(x_0)$. If $x_i > x_0$, nestedness gives $B_r(p) \subset \Omega(x_i)$ and $\partial^*\Omega(x_i) \cap B_r(p) = \varnothing$, so only parameters $x_i < x_0$ contribute sheets. For such $x_i$, $\Omega(x_i) \subset \Omega(x_0)$, so $\Omega(x_i) \cap B_r(p) = B_r(p)$ minus thin slabs, each bounded by two sheets. Therefore $k$ is even. (The case $B_r(p) \subset M \setminus \overline{\Omega(x_0)}$ is analogous.) The geometric mechanism is \emph{folding}: each pair of sheets bounds a slab that collapses as $x_i \to x_0$, contributing multiplicity~$2$.
 
-\medskip\noindent\textbf{Step~2: Integer density.}
-By Lemma~\ref{lem:sheet-decomposition} applied with $\Omega_i = \Omega(x_i)$, at $\mathcal{H}^n$-a.e.\ point $p$ of $\spt\|V\|$, the density $\theta(p)$ equals the sheet count $k \in \mathbb{Z}_{>0}$. In particular, $\theta(p) \in \mathbb{Z}_{>0}$ a.e. It remains to determine which positive integers arise; the parity is controlled by nestedness.
+At a \emph{mixed regular point} $p \in \mathrm{reg}(\partial^*\Omega(x_0)) \cap \spt\|V'\|$, the boundary $\partial^*\Omega(x_0)$ is smooth near $p$ (Proposition~\ref{prop:p2-federer-regularity}), and the $k$ sheets from Lemma~\ref{lem:sheet-decomposition} are ordered by height: $u_i^1 < \cdots < u_i^k$. Since $\Omega(x_i)$ occupies alternating slabs and $\Omega(x_i) \to \Omega(x_0)$ in $L^1$, exactly one sheet (the \emph{tracking sheet}) satisfies $\|u_i^{j_0} - u_0\|_{L^\infty} \to 0$, where $u_0$ parametrizes $\partial^*\Omega(x_0)$. The remaining $k - 1$ cancelling sheets come in pairs by the same folding argument. Therefore $k - 1$ is even, i.e., $k$ is odd.
 
-\medskip\noindent\emph{Case~1: Pure cancellation points ($p \in \spt\|V'\| \setminus \spt\|\partial^*\Omega(x_0)\|$).}
-At such a point, $\Omega(x_0)$ is locally constant near $p$. Say $B_r(p) \subset \Omega(x_0)$. If $x_i > x_0$, nestedness gives $B_r(p) \subset \Omega(x_i)$ and $\partial^*\Omega(x_i) \cap B_r(p) = \varnothing$; thus only parameters $x_i < x_0$ contribute sheets. For such $x_i$, $\Omega(x_i) \subset \Omega(x_0)$, so $\Omega(x_i) \cap B_r(p) = B_r(p)$ minus thin slabs, each bounded by two sheets. Therefore $k$ is even. (The case $B_r(p) \subset M \setminus \overline{\Omega(x_0)}$ is analogous.) The geometric mechanism is \emph{folding}: each pair of sheets bounds a slab that collapses as $x_i \to x_0$ (by volume parametrization: $\mathrm{Vol}(\Omega(x_i) \triangle \Omega(x_0)) = |x_i - x_0| \to 0$), contributing multiplicity~$2$.
-
-\medskip\noindent\emph{Case~2: Mixed regular points ($p \in \mathrm{reg}(\partial^*\Omega(x_0)) \cap \spt\|V'\|$).}
-Here $\partial^*\Omega(x_0)$ is smooth near $p$ (Proposition~\ref{prop:p2-federer-regularity}). By Lemma~\ref{lem:sheet-decomposition}, the $k$ sheets are ordered by height: $u_i^1 < \cdots < u_i^k$. By a volume comparison argument---since $\Omega(x_i)$ occupies alternating slabs and $\Omega(x_i) \to \Omega(x_0)$ in $L^1$---exactly one sheet (the \emph{tracking sheet}) satisfies $\|u_i^{j_0} - u_0\|_{L^\infty} \to 0$, where $u_0$ parametrizes $\partial^*\Omega(x_0)$. The remaining $k - 1$ cancelling sheets come in pairs by the same slab argument as Case~1. Therefore $k - 1$ is even, i.e., $k$ is odd.
-
-\medskip\noindent\emph{Case~3: Singular points of $\partial^*\Omega(x_0)$.}
-For $n \leq 6$, Federer regularity (Proposition~\ref{prop:p2-federer-regularity}) gives $\partial\Omega(x_0) = \partial^*\Omega(x_0)$, so this case is empty.
-
-\medskip\noindent\textbf{Step~3: Conclusion.}
-Combining Cases~1--3, $\theta(p) \in \mathbb{Z}_{>0}$ at $\mathcal{H}^n$-a.e.\ point. Together with rectifiability, $V$ is integral.
+Finally, for $n \leq 6$, Federer regularity (Proposition~\ref{prop:p2-federer-regularity}) gives $\partial\Omega(x_0) = \partial^*\Omega(x_0)$, so there are no singular points to consider. Combining the two cases, $\theta(p) \in \mathbb{Z}_{>0}$ at $\mathcal{H}^n$-a.e.\ point, and together with rectifiability, $V$ is integral.
 \end{proof}
 
 \begin{remark}\label{rem:sheet-decomposition}
