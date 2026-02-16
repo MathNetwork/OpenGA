@@ -41,6 +41,10 @@ We claim $N \geq 3$. By~\cite[Remark~(3) following~($\mathcal{S}3$)]{Wic14}, for
     with width $W$, via the min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then $V$ satisfies the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}).
 \end{theorem}
 
+\begin{remark}\label{rem:junction-cases}
+Theorem~\ref{thm:alpha-hypo} is only invoked in the mass-cancellation case (see the proof of Theorem~\ref{thm:non-excessive-main} below): when no mass cancellation occurs, $V = |\partial^*\Omega(x_0)|$ is already smooth by Federer regularity, so $\sing V = \varnothing$ and the $\alpha$-structural hypothesis is vacuously satisfied.
+\end{remark}
+
 \begin{proof}
 Suppose the $\alpha$-structural hypothesis fails at some $Z \in \sing V$. By Lemma~\ref{lem:wedge}, the tangent cone at $Z$ contains two adjacent half-hyperplanes $P_j^+, P_{j+1}^+$ meeting at angle $\theta_j < \pi$ along a common $(n-1)$-dimensional edge $L$.
 
@@ -152,10 +156,6 @@ In each two-dimensional cross-section normal to $L$, the two half-lines $P_j^+ \
         \caption{Chord-beats-arc: two adjacent half-hyperplanes $P_j^+, P_{j+1}^+$ meet along the $(n-1)$-dimensional edge $L$ at angle $\theta_j < \pi$ (given by Lemma~\ref{lem:wedge}). In each $2$-dimensional cross-section normal to $L$, the two half-lines (solid arcs on the shaded half-planes) have total length $2r$, while the chord (blue hatched surface) has length $2r\sin(\theta_j/2) < 2r$. The grey region is the area saved by the replacement.}
         \label{fig:chord-beats-arc}
     \end{figure}
-
-\begin{remark}\label{rem:junction-cases}
-Theorem~\ref{thm:alpha-hypo} is only invoked in the mass-cancellation case (see the proof of Theorem~\ref{thm:non-excessive-main} below): when no mass cancellation occurs, $V = |\partial^*\Omega(x_0)|$ is already smooth by Federer regularity, so $\sing V = \varnothing$ and the $\alpha$-structural hypothesis is vacuously satisfied.
-\end{remark}
 
 \medskip\noindent\textbf{Step~2: Transfer to $B_r(Z)$ and the approximating sequence.}
 We transfer the cone-level area deficit to the approximating Caccioppoli sets. Choose normal coordinates centered at $Z$ so that $g_{ij}(Z) = \delta_{ij}$; then $g_{ij} = \delta_{ij} + O(r)$ in $B_r(Z)$. Since the $\alpha$-structural hypothesis fails at~$Z$, the $C^{1,\alpha}$ branches of $\spt\|V\|$ in $B_\rho(Z)$ converge to the tangent cone under blow-up: at scale~$r$, each branch deviates from its limiting half-hyperplane by $O(r^{1+\alpha})$, and the angle between adjacent branches is $\theta_j + O(r^\alpha)$, which remains $< \pi$ for $r$ sufficiently small.

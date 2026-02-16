@@ -63,10 +63,10 @@ Let $(M^{n+1},g)$ be a closed Riemannian manifold with $2\leq n\leq 6$. There ex
 We denote by $\Snm$ the collection of all non-excessive sweepouts. Any optimal sweepout produces a stationary varifold via the standard pull-tight argument:
 
 \begin{proposition}[Stationary varifolds from optimal sweepouts~{\cite[Proposition~1.4]{CL03}}]\label{thm:CLS-stationary}
-Let $(M^{n+1},g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be an optimal sweepout with $\sup_x \mathbf{M}(\Phi(x)) = W$. Then there exists a stationary $n$-varifold $V$ in $M$ with $\mathbf{M}(V) \leq W$.
+Let $(M^{n+1},g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be an optimal sweepout with $\sup_x \mathbf{M}(\Phi(x)) = W$. Then there exists a stationary $n$-varifold $V$ in $M$ with $\mathbf{M}(V) = W$.
 \end{proposition}
 
-This follows from the pull-tight argument of Colding--de~Lellis~\cite{CL03}: varifold compactness produces a limit $V$ of slices whose masses approach $W$, and if every such limit were non-stationary, the tightening flow would produce a sweepout of strictly smaller width, contradicting optimality. The non-excessive condition is not used here; it enters in the analysis of the limit varifold below.
+This follows from the pull-tight argument of Colding--de~Lellis~\cite{CL03}: varifold compactness produces a limit $V$ of slices whose masses approach $W$, and if every such limit were non-stationary, the tightening flow would produce a sweepout of strictly smaller width, contradicting optimality. The equality $\mathbf{M}(V) = W$ holds because $M$ is compact: varifold convergence $|\partial^*\Omega(x_i)| \to V$ in the compact Grassmannian bundle $G_n(M)$ gives $\mathbf{M}(V) = \lim_i \mathbf{M}(|\partial^*\Omega(x_i)|) = W$. The non-excessive condition is not used here; it enters in the analysis of the limit varifold below.
 
 Let $\Phi$ be a non-excessive ONVP sweepout, $x_i \to x_0 \in \mathfrak{m}(\Phi)$ a min-max sequence, and $V$ the varifold limit of $|\partial^*\Omega(x_i)|$ given by Proposition~\ref{thm:CLS-stationary}. A key distinction arises depending on whether the mass of the limit slice equals the width:
 
@@ -83,14 +83,14 @@ This dichotomy governs the integrality of the limit varifold; both cases are tre
 Beyond stationarity and integrality, the non-excessive condition provides local geometric information about the limit varifold: critical slices are \emph{one-sided homotopic minimizers} in small balls, meaning they cannot be deformed to competitors of strictly smaller mass on either the inner or the outer side. This property is the mechanism through which non-excessiveness controls the regularity of the limit.
 
 \begin{definition}[Homotopic minimizers~{\cite[Definition~1.4]{CLS22}}]\label{def:homotopic-minimizer}
-Let $\Sigma = \bdy\Omega$ be a Caccioppoli set in $M$, and let $U \subset M$ be an open set. We say
+Let $\Sigma = \partial^*\Omega$ be a Caccioppoli set in $M$, and let $U \subset M$ be an open set. We say
 that $\Sigma$ is:
 \begin{itemize}
     \item \emph{inner homotopic minimizing in $U$} if there is no Caccioppoli set $E \subset \Omega$
-    with $E \triangle \Omega \subset U$ and $\per(E, U) < \per(\Omega, U)$ that can be connected to
+    with $E \triangle \Omega \subset U$ and $\mathrm{Per}(E, U) < \mathrm{Per}(\Omega, U)$ that can be connected to
     $\Omega$ by a continuous family of Caccioppoli sets in $U$;
     \item \emph{outer homotopic minimizing in $U$} if there is no Caccioppoli set $E \supset \Omega$
-    with $E \triangle \Omega \subset U$ and $\per(E, U) < \per(\Omega, U)$ that can be connected to
+    with $E \triangle \Omega \subset U$ and $\mathrm{Per}(E, U) < \mathrm{Per}(\Omega, U)$ that can be connected to
     $\Omega$ by a continuous family of Caccioppoli sets in $U$;
     \item \emph{one-sided homotopic minimizing in $U$} if it is either inner or outer homotopic
     minimizing in $U$.
