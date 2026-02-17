@@ -61,7 +61,7 @@ A sequence of $n$-varifolds $\{V_i\}$ \emph{converges} to $V \in \mathcal{V}_n(M
 \end{definition}
 
 \begin{proposition}[Monotonicity formula~{\cite[Theorem~17.6]{Sim84}}]\label{prop:p2-monotonicity}
-Let $V$ be a stationary $n$-varifold in $(M^{n+1}, g)$ and $p \in \spt\|V\|$. There exists a constant $C = C(M, g) > 0$ such that the modified density ratio $e^{Cr}\, \omega_n^{-1} r^{-n} \|V\|(B_r(p))$ is monotone non-decreasing in $r$ (for $r$ small enough that the exponential map at $p$ is a diffeomorphism).\xinze{Was: exact monotonicity without curvature correction; cf.\ Pitts thesis Section~2.4(3), lines~547--560} In particular, at least one tangent cone exists at every point of $\spt\|V\|$.
+Let $V$ be a stationary $n$-varifold in $(M^{n+1}, g)$ and $p \in \spt\|V\|$. There exists a constant $C = C(M, g) > 0$ such that the modified density ratio $e^{Cr}\, \omega_n^{-1} r^{-n} \|V\|(B_r(p))$ is monotone non-decreasing in $r$ (for $r$ small enough that the exponential map at $p$ is a diffeomorphism). In particular, at least one tangent cone exists at every point of $\spt\|V\|$.
 \end{proposition}
 
 \begin{definition}[Density~{\cite[Corollary~17.8]{Sim84}}]\label{def:p2-density}
@@ -69,11 +69,13 @@ For a stationary $n$-varifold $V$ and $p \in M$, the \emph{density} of $V$ at $p
 \[
 \Theta(\|V\|, p) := \lim_{r \to 0} \omega_n^{-1} r^{-n} \|V\|(B_r(p)).
 \]
-By the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), this limit exists. Moreover, $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$.\xinze{Was: $\geq 1$; the bound $\Theta \geq 1$ requires integrality} If $V$ is integral, then $\Theta(\|V\|, p) \geq 1$ for every $p \in \spt\|V\|$.
+By the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), this limit exists. Moreover, $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$.
+
+If $V$ is integral, then $\Theta(\|V\|, p) \geq 1$ for every $p \in \spt\|V\|$.
 \end{definition}
 
 \begin{proposition}[Allard's rectifiability theorem~{\cite[Theorem~42.4]{Sim84}}]\label{prop:allard-rectifiability}
-Every stationary $n$-varifold $V$ in $(M^{n+1}, g)$ is rectifiable. More precisely, $V = \underline{v}(\Sigma, \theta)$ where $\Sigma \subset \spt\|V\|$ is $\mathcal{H}^n$-rectifiable\xinze{Was: $\Sigma = \spt\|V\|$; cf.\ Pitts thesis Section~2.4(9), lines~678--683} and $\theta(p) = \Theta(\|V\|, p) > 0$ for $\mathcal{H}^n$-a.e.\ $p \in \Sigma$.\xinze{Was: $\geq 1$; same correction as Definition~\ref{def:p2-density}}
+Every stationary $n$-varifold $V$ in $(M^{n+1}, g)$ is rectifiable. More precisely, $V = \underline{v}(\Sigma, \theta)$ where $\Sigma \subset \spt\|V\|$ is $\mathcal{H}^n$-rectifiable and $\theta(p) = \Theta(\|V\|, p) > 0$ for $\mathcal{H}^n$-a.e.\ $p \in \Sigma$.
 \end{proposition}
 
 \begin{definition}[Tilt-excess~{\cite[\S22, p.\,111]{Sim84}}]\label{def:p2-tilt-excess}
@@ -81,7 +83,24 @@ The \emph{tilt-excess} of a varifold $W \in \mathcal{V}_n(M)$ in $B_r(p)$ relati
 \[
 E(W, B_r(p), P) := r^{-n} \int_{B_r(p) \times G(n,n+1)} |S - P|^2 \, dW(x, S).
 \]
-If $V$ is a rectifiable $n$-varifold with approximate tangent plane $P$ at $p$, then $E(V, B_r(p), P) \to 0$ as $r \to 0$. Indeed, the rescaled varifolds $r^{-n}(\eta_{p,r})_\# V$ converge to the flat varifold $\theta(p)|P|$, so the integrand $|S - P|^2$ concentrates on $S = P$ in the limit.
+Intuitively, the tilt-excess is a scale-invariant $L^2$ measure of how much the tangent planes of $W$ deviate from the reference plane~$P$ inside $B_r(p)$. In the codimension-one case, when $V = \underline{v}(\Sigma, \theta)$ is rectifiable and $\Sigma$ is locally the graph of a function $u$ over $P$, the tilt-excess reduces (up to constants) to the normalised Dirichlet energy $r^{-n} \int |\nabla u|^2$; in particular, $E = 0$ if and only if $\Sigma \cap B_r(p)$ is a portion of a plane parallel to $P$.
+
 \end{definition}
+
+\begin{lemma}[Vanishing of tilt-excess]\label{lem:excess-vanishing}
+Let $V = \underline{v}(\Sigma, \theta)$ be a rectifiable $n$-varifold on $(M^{n+1}, g)$. For $\mathcal{H}^n$-a.e.\ $p \in \Sigma$,
+\[
+    E(V, B_r(p), P) \to 0 \quad \text{as } r \to 0,
+\]
+where $P = T_p\Sigma$ is the approximate tangent plane.
+\end{lemma}
+
+\begin{proof}
+\xinze{Write $\mu = \|V\|$ and $f(x) = |T_x\Sigma - P|^2$, so that $E(V, B_r(p), P) = r^{-n}\int_{B_r(p)} f\,d\mu$. The function $f$ is bounded and $\mu$-measurable, with $f(p) = 0$. By the Lebesgue--Besicovitch differentiation theorem~\cite[Theorem~5.8 and \S5.3]{Mag12}, $\mu$-a.e.\ $p$ is a Lebesgue point of $f$:
+\[
+    \frac{1}{\mu(B_r(p))}\int_{B_r(p)} f\,d\mu \to f(p) = 0.
+\]
+Since $\mu(B_r(p)) = \|V\|(B_r(p)) \sim \theta(p)\,\omega_n\, r^n$ by the definition of density, we conclude $E(V, B_r(p), P) \to 0$.}
+\end{proof}
 
 

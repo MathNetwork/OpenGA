@@ -19,7 +19,7 @@ The main result of this section is:
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$, and let $\Phi$ be an optimal nested \textup{(}ONVP\textup{)} sweepout with width $W$. Let $x_i \to x_0 \in \mathfrak{m}(\Phi)$ be a min-max sequence and $V$ the varifold limit of $|\partial^*\Omega(x_i)|$. Then $V$ is an integral $n$-varifold.
 \end{theorem}
 
-The proof splits into two cases according to whether mass cancellation occurs (Definition~\ref{def:mass-cancellation}). The no-mass-cancellation case uses the de~Lellis--Tasnady criterion (Proposition~\ref{prop:p2-DLT-integrality}); the mass-cancellation case uses a graphical decomposition lemma to count sheets directly (see Remark~\ref{rem:integrality-independence} for a discussion of which hypotheses are actually needed).
+The proof splits into two cases according to whether mass cancellation occurs (Definition~\ref{def:mass-cancellation}). The no-mass-cancellation case uses the de~Lellis--Tasnady criterion (Proposition~\ref{prop:p2-DLT-integrality}); the mass-cancellation case uses nestedness and a graphical decomposition lemma to count sheets directly (see Remark~\ref{rem:integrality-independence}).
 
 \subsection{The no-mass-cancellation case}\label{subsec:integrality-no-cancel}
 
@@ -80,7 +80,7 @@ When mass cancellation occurs ($\mathbf{M}(\Phi(x_0)) < W$), we still have $\Ome
 \[
     \mathrm{Per}(\Omega(x_i)) \to W > \mathrm{Per}(\Omega(x_0)).
 \]
-The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. Instead, we deduce integrality from a graphical decomposition argument that decomposes the approximating boundaries into smooth sheets and shows that the density is a positive integer at $\mathcal{H}^n$-a.e.\ point. Note that $V$ is rectifiable by Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), since it is stationary (Proposition~\ref{thm:CLS-stationary}). The main tool is the following graphical decomposition lemma.
+The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. Instead, we use the nestedness of the sweepout to decompose the approximating boundaries into graphical sheets and show that the density is a positive integer at $\mathcal{H}^n$-a.e.\ point. Note that $V$ is rectifiable by Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), since it is stationary (Proposition~\ref{thm:CLS-stationary}). The main tool is the following graphical decomposition lemma.
 
 \begin{figure}[ht]
     \centering
@@ -187,12 +187,12 @@ The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\pa
 \end{figure}
 
 \begin{lemma}[Sheet decomposition]\label{lem:sheet-decomposition}
-Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. Let $\{\Omega_i\}$ be a sequence of Caccioppoli sets with $|\partial^*\Omega_i| \to V$ as varifolds, where $V$ is a stationary rectifiable $n$-varifold. Suppose that $p \in \spt\|V\|$ is a point where $V$ has a unique tangent plane $P = T_p\Sigma$ and finite density $\theta(p) = \Theta(\|V\|, p) \in (0, \infty)$ (these conditions hold at $\mathcal{H}^n$-a.e.\ point of $\Sigma$ by rectifiability; see Section~\ref{sec:p2-prelim} and~\cite[Section~11]{Sim84}).
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$. Let $\{\Omega_i\}$ be a nested sequence of Caccioppoli sets ($\Omega_1 \subset \Omega_2 \subset \cdots$) with $|\partial^*\Omega_i| \to V$ as varifolds, where $V$ is a stationary $n$-varifold. Suppose that $p \in \spt\|V\|$ is a point where $V$ has a unique tangent plane $P = T_p\Sigma$ and density $\theta(p) = \Theta(\|V\|, p)$ (these conditions hold at $\mathcal{H}^n$-a.e.\ point of $\Sigma$ by rectifiability; see Section~\ref{sec:p2-prelim} and~\cite[Theorem~11.8]{Sim84}).
 
 Then for every $\varepsilon > 0$, there exist $r_0 > 0$ and $i_0 \in \mathbb{N}$ such that for a.e.\ $r \in (0, r_0)$ and all $i \geq i_0$, the following holds:
 \begin{enumerate}[label=\textup{(\roman*)}]
-    \item $\partial^*\Omega_i \cap B_r(p)$ consists of exactly $k$ smooth connected components $\Sigma_i^1, \ldots, \Sigma_i^k$, where $k = k(r)$ is independent of $i$ and satisfies $\theta(p) = k$;
-    \item each $\Sigma_i^j$ is the graph of a smooth function $u_i^j \colon \Omega_i^j \to \mathbb{R}$ over a domain $\Omega_i^j \subset D_r$ with $\|Du_i^j\|_{C^0} < \varepsilon$ and $\mathcal{H}^n(D_r \setminus \Omega_i^j) < \varepsilon \omega_n r^n$, where $D_r = P \cap B_r(p)$;
+    \item $\partial^*\Omega_i \cap B_r(p)$ decomposes into exactly $k$ connected graphical components $\Sigma_i^1, \ldots, \Sigma_i^k$, where $k = k(r)$ is independent of $i$ and satisfies $\theta(p) = k$;
+    \item each $\Sigma_i^j$ is the graph of a Lipschitz function $u_i^j \colon \Omega_i^j \to \mathbb{R}$ over a domain $\Omega_i^j \subset D_r$ with Lipschitz constant $\mathrm{Lip}(u_i^j) < \varepsilon$ and $\mathcal{H}^n(D_r \setminus \Omega_i^j) < \varepsilon \omega_n r^n$, where $D_r = P \cap B_r(p)$;
     \item the area of each sheet satisfies $|\mathcal{H}^n(\Sigma_i^j) - \omega_n r^n| < \varepsilon \omega_n r^n$.
 \end{enumerate}
 In particular, $\theta(p) \in \mathbb{Z}_{>0}$, so $V$ is an integral $n$-varifold (Definition~\ref{def:integral-varifold}).
@@ -297,9 +297,9 @@ In particular, $\theta(p) \in \mathbb{Z}_{>0}$, so $V$ is an integral $n$-varifo
 
 Before giving the proof, we discuss the geometric content of the three conditions; see Figure~\ref{fig:sheet-decomposition} for an illustration with $k = 2$.
 
-Condition~(i) says that, at sufficiently small scales, $\partial^*\Omega_i \cap B_r(p)$ separates into exactly $k = \theta(p)$ smooth sheets (Figure~\ref{fig:sheet-decomposition}(a)). This is the key step that converts the integer density $\theta(p)$ into a geometric count of sheets.
+Condition~(i) says that, at sufficiently small scales, $\partial^*\Omega_i \cap B_r(p)$ separates into exactly $k = \theta(p)$ graphical sheets (Figure~\ref{fig:sheet-decomposition}(a)). This is the key step that converts the integer density $\theta(p)$ into a geometric count of sheets.
 
-Condition~(ii) encodes two further properties. The gradient bound $\|Du_i^j\|_{C^0} < \varepsilon$ controls the \emph{tilt}: each sheet is nearly parallel to the approximate tangent plane $P = T_p\Sigma$, which is the graphical manifestation of small tilt-excess (Definition~\ref{def:p2-tilt-excess}). The coverage bound $\mathcal{H}^n(D_r \setminus \Omega_i^j) < \varepsilon \omega_n r^n$ says that the domain $\Omega_i^j \subset D_r$ covers all but an $\varepsilon$-fraction of the disk $D_r = P \cap B_r(p)$ (Figure~\ref{fig:sheet-decomposition}(b)). Together, the two bounds say that each sheet is a nearly complete, nearly horizontal graph over $D_r$. Figure~\ref{fig:condition-ii} illustrates two configurations that condition~(ii) excludes: a sheet with large tilt (Figure~\ref{fig:condition-ii}(a); which cannot persist as $i \to \infty$, since varifold convergence forces the tilt-excess to decay), and a sheet with poor coverage (Figure~\ref{fig:condition-ii}(b); whose small domain is incompatible with the mass convergence $\|\partial^*\Omega_i\|(B_r(p)) \to \theta(p)\omega_n r^n$).
+Condition~(ii) encodes two further properties. The Lipschitz bound $\mathrm{Lip}(u_i^j) < \varepsilon$ controls the \emph{tilt}: each sheet is nearly parallel to the approximate tangent plane $P = T_p\Sigma$, which is the graphical manifestation of small tilt-excess (Definition~\ref{def:p2-tilt-excess}). The coverage bound $\mathcal{H}^n(D_r \setminus \Omega_i^j) < \varepsilon \omega_n r^n$ says that the domain $\Omega_i^j \subset D_r$ covers all but an $\varepsilon$-fraction of the disk $D_r = P \cap B_r(p)$ (Figure~\ref{fig:sheet-decomposition}(b)). Together, the two bounds say that each sheet is a nearly complete, nearly horizontal graph over $D_r$. Figure~\ref{fig:condition-ii} illustrates two configurations that condition~(ii) excludes: a sheet with large tilt (Figure~\ref{fig:condition-ii}(a); which cannot persist as $i \to \infty$, since varifold convergence forces the tilt-excess to decay), and a sheet with poor coverage (Figure~\ref{fig:condition-ii}(b); whose small domain is incompatible with the mass convergence $\|\partial^*\Omega_i\|(B_r(p)) \to \theta(p)\omega_n r^n$).
 
 \begin{figure}[ht]
     \centering
@@ -376,7 +376,7 @@ Condition~(iii) is not independent: it follows from conditions~(i) and~(ii) by t
 \[
     \mathcal{H}^n(\Sigma_i^j) = \int_{\Omega_i^j} \sqrt{1 + |Du_i^j|^2} \, d\mathcal{H}^n.
 \]
-The gradient bound $\|Du_i^j\|_{C^0} < \varepsilon$ from condition~(ii) gives $\sqrt{1 + |Du_i^j|^2} \in (1, \sqrt{1+\varepsilon^2})$, so
+The Lipschitz bound $\mathrm{Lip}(u_i^j) < \varepsilon$ from condition~(ii) gives $\sqrt{1 + |Du_i^j|^2} \in (1, \sqrt{1+\varepsilon^2})$, so
 \[
     \mathcal{H}^n(\Omega_i^j) \leq \mathcal{H}^n(\Sigma_i^j) \leq \sqrt{1+\varepsilon^2} \cdot \mathcal{H}^n(\Omega_i^j).
 \]
@@ -386,48 +386,68 @@ The coverage bound $\mathcal{H}^n(D_r \setminus \Omega_i^j) < \varepsilon\omega_
 \]
 For small $\varepsilon$, both sides are close to $\omega_n r^n$, yielding $|\mathcal{H}^n(\Sigma_i^j) - \omega_n r^n| < C\varepsilon \cdot \omega_n r^n$. We include condition~(iii) in the lemma statement for convenience of citation, but it is logically redundant.
 
-We now turn to the proof, which makes the above heuristics precise.
+We now turn to the proof of Lemma~\ref{lem:sheet-decomposition}.
 
 \begin{proof}
-Working in normal coordinates centered at $p$, we identify a neighborhood of $p$ with a neighborhood of the origin in $\mathbb{R}^{n+1}$, the tangent plane $P$ with $\mathbb{R}^n \times \{0\}$, and write $D_r = \{y \in \mathbb{R}^n : |y| < r\}$ for the $n$-disk in $P$. Since $V$ has tangent varifold $\theta(p)|P|$ at $p$, the density ratio satisfies $\omega_n^{-1} r^{-n} \|V\|(B_r(p)) \to \theta(p)$ as $r \to 0$, and the tilt-excess (Definition~\ref{def:p2-tilt-excess}) satisfies $E(V, B_r(p), P) \to 0$. The varifold convergence $|\partial^*\Omega_i| \to V$ transfers both to the approximating boundaries: for any prescribed $\delta_0 > 0$, there exist $r_0 > 0$ and $i_0$ such that for $r < r_0$ and $i > i_0$,
-\begin{gather*}
-    \mathcal{H}^n(\partial^*\Omega_i \cap B_{2r}(p)) \leq C\omega_n r^n, \\
-    (2r)^{-n}\int_{\partial^*\Omega_i \cap B_{2r}(p)} |\nu_{\partial^*\Omega_i} - e_{n+1}|^2 \, d\mathcal{H}^n < \delta_0.
-\end{gather*}
+Working in normal coordinates centered at $p$, we identify a neighborhood of $p$ with a neighborhood of the origin in $\mathbb{R}^{n+1}$, the tangent plane $P$ with $\mathbb{R}^n \times \{0\}$, and write $D_r = \{y \in \mathbb{R}^n : |y| < r\}$ for the $n$-disk in $P$. By definition of density (Definition~\ref{def:p2-density}),
+\begin{equation}\label{eq:density-ratio-limit}
+    \omega_n^{-1} r^{-n} \|V\|(B_r(p)) \to \Theta(\|V\|, p) = \theta(p) \quad \text{as } r \to 0,
+\end{equation}
+By varifold convergence $|\partial^*\Omega_i| \to V$, the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), and the vanishing of tilt-excess (Lemma~\ref{lem:excess-vanishing}), for any $\varepsilon > 0$ and all $i$ sufficiently large, the surface $\partial^*\Omega_i \cap B_{2r}(p)$ has mass at most $C\omega_n r^n$ and tilt-excess less than $\varepsilon$. It therefore decomposes into finitely many Lipschitz graphs $\Sigma_i^1, \ldots, \Sigma_i^{k_i}$ over $P$ with Lipschitz constant $\mathrm{Lip}(u_i^j) < C\varepsilon^{1/4}$ (the tilt-excess $< \varepsilon$ bounds the $L^2$ average of $|T_x - P|^2$; separating $\partial^*\Omega_i$ into the region where $|T_x - P|^2 \geq \sqrt{\varepsilon}$ and its complement, the former has $\mathcal{H}^n$-measure $\leq \sqrt{\varepsilon}\,(2r)^n$ while on the latter $|T_x - P| < \varepsilon^{1/4}$, giving $\mathrm{Lip} < C\varepsilon^{1/4}$).
 
-Since each $\partial^*\Omega_i$ is a smooth embedded hypersurface\xinze{Was: cited removed Federer Proposition; smoothness needs justification}, these two bounds force a graphical decomposition (cf.~\cite[Chapter~7]{Sim84} and~\cite[Lemma~2.1]{Wic14}): for a.e.\ $r$ in this range, $\partial^*\Omega_i \cap B_r(p)$ consists of finitely many connected components, each the graph of a smooth function over a domain in $P$ with gradient bounded by $C(n)\delta_0^{1/2}$. Choosing $\delta_0$ so that $C(n)\delta_0^{1/2} < \varepsilon$, we obtain a decomposition of $\partial^*\Omega_i \cap B_r(p)$ into smooth graphs $\Sigma_i^1, \ldots, \Sigma_i^{k_i}$ with $u_i^j \colon \Omega_i^j \to \mathbb{R}$ and $\|Du_i^j\|_{C^0} < \varepsilon$.
+It remains to show that each sheet nearly fills $D_r$ (condition~(ii)) and that the sheet count stabilizes (condition~(i)). The strategy is as follows. By the sphere constraint (Step~1), each sheet has height bounded by $r$ and domain containing $D_{r/2}$, giving a crude area lower bound. By the tangent plane condition (Step~2), this crude bound is upgraded to a sharp height estimate $|u_i^j| \leq C\varepsilon^{1/4} r$, which in turn gives sharp coverage $\Omega_i^j \supset D_{r(1-C\varepsilon^{1/2})}$. The sharp coverage is needed for the counting argument: each sheet has area $(1 \pm C\varepsilon)\omega_n r^n$, so $k_i = \theta(p)$.
+\xinze{Neither step alone suffices: the sphere constraint only gives $|u| < r$ (trivial), while the tangent plane condition requires a prior area lower bound to exclude sheets of negligible area. The fiber counting proof below avoids this two-step argument entirely.}
 
-It remains to show that each sheet nearly fills $D_r$ and that the sheet count stabilizes. Since $\partial^*\Omega_i$ is compact without boundary\xinze{Was: cited removed Federer Proposition}, the boundary of each graphical piece $\Sigma_i^j$ lies on $\partial B_r(p)$: every $y \in \partial\Omega_i^j$ satisfies the sphere constraint
-\[
-    |y|^2 + |u_i^j(y)|^2 = r^2.
-\]
-We now bound the height $|u_i^j|$ on each contributing sheet. Consider a sheet $\Sigma_i^j$ that intersects $B_{r/2}(p)$: there exists $(y_0, u_i^j(y_0)) \in B_{r/2}(p)$, so $|u_i^j(y_0)| < r/2$. The gradient bound gives $|u_i^j(y)| < r/2 + 2\varepsilon r$ on $\Omega_i^j$. Substituting into the sphere constraint, every boundary point satisfies $|y| \geq r\sqrt{3/4 - C\varepsilon} \geq r/2$ (for $\varepsilon$ small), so $\Omega_i^j \supset D_{r/2}$ and hence $\mathcal{H}^n(\Omega_i^j) \geq 2^{-n}\omega_n r^n$.
+\medskip\noindent\textbf{Step~1} (Sphere constraint and crude bound). Since $\partial^*\Omega_i$ has no boundary, each graph $\Sigma_i^j$ can only terminate at $\partial B_r(p)$, so every boundary point of the domain $\Omega_i^j$ satisfies $|y|^2 + |u_i^j(y)|^2 = r^2$. Consider a sheet that intersects $B_{r/2}(p)$: there exists a point with $|u_i^j(y_0)| < r/2$, and since $\mathrm{Lip}(u_i^j) < C\varepsilon^{1/4}$, we have $|u_i^j| < r/2 + C\varepsilon^{1/4} r$ on $\Omega_i^j$. Substituting into the sphere constraint, $\Omega_i^j \supset D_{r/2}$ and hence $\mathcal{H}^n(\Omega_i^j) \geq 2^{-n}\omega_n r^n$.
 
-This crude area lower bound lets us upgrade the height estimate using the tangent plane condition. Since $V$ has tangent varifold $\theta(p)|P|$ at $p$, for any $\alpha > 0$,
+\medskip\noindent\textbf{Step~2} (Tangent plane upgrade). The goal is to show $|u_i^j| \leq C\varepsilon^{1/4} r$ everywhere on each contributing sheet, upgrading the crude bound $|u_i^j| < r$ from Step~1. The key input is that the tangent varifold of $V$ at $p$ is $\theta(p)|P|$, which is supported on $P$. This means that the mass of $V$ far from $P$ is negligible at scale $r$:
 \[
-    \|V\|\bigl(\{x \in B_r(p) : \mathrm{dist}(x, P) > \alpha r\}\bigr) = o(r^n) \quad\text{as } r \to 0.
+    \|V\|(B_r(p) \cap \{\mathrm{dist}(\cdot, P) > \varepsilon^{1/4} r\}) = o(r^n) \quad \text{as } r \to 0.
 \]
-By varifold convergence, $\mathcal{H}^n(\partial^*\Omega_i \cap B_r(p) \cap \{|u| > \varepsilon r\}) = o(r^n)$. Since $\mathcal{H}^n(\Omega_i^j) \geq 2^{-n}\omega_n r^n$, the sheet $\Sigma_i^j$ cannot lie entirely in $\{|u| > \varepsilon r\}$ for $r$ small. Therefore there exists $y_1 \in \Omega_i^j$ with $|u_i^j(y_1)| \leq \varepsilon r$. The gradient bound then gives
-\[
-    |u_i^j(y)| \leq |u_i^j(y_1)| + \varepsilon|y - y_1| \leq \varepsilon r + 2\varepsilon r = 3\varepsilon r
-\]
-for all $y \in \Omega_i^j$. Substituting into the sphere constraint:
-\[
-    |y|^2 \geq r^2 - 9\varepsilon^2 r^2, \qquad\text{i.e.,}\qquad |y| \geq r\sqrt{1 - 9\varepsilon^2} \geq r(1 - C\varepsilon^2).
-\]
-Therefore
-\[
-    \mathcal{H}^n(D_r \setminus \Omega_i^j) \leq C\varepsilon^2 \omega_n r^n,
-\]
-establishing~(ii). Condition~(iii) then follows from the area formula for graphs, as shown above. Sheets that do not intersect $B_{r/2}(p)$ are confined to the annular region $B_r(p) \setminus B_{r/2}(p)$; by choosing $r$ generic (so that $\|V\|(\partial B_r(p)) = 0$), their total area is $o(r^n)$ and they do not affect the density at $p$.
+\xinze{Rescaling: $r^{-n}\|V\|(B_r(p) \cap \{\mathrm{dist}(\cdot, P) > \varepsilon^{1/4} r\})$ equals the mass of the rescaled varifold $(\eta_{p,r})_\# V$ in $B_1 \cap \{\mathrm{dist}(\cdot, P) > \varepsilon^{1/4}\}$. As $r \to 0$, $(\eta_{p,r})_\# V \to \theta(p)|P|$, whose support is $P$. So the mass in $\{\mathrm{dist}(\cdot, P) > \varepsilon^{1/4}\}$ tends to $0$.}
+By varifold convergence, the same holds for $\partial^*\Omega_i$ (for $r$ small, then $i$ large)\xinze{Precisely: for any $\delta > 0$, $\exists\, r_0, i_0$ such that for all $r < r_0$ and $i \geq i_0$, $\mathcal{H}^n(\partial^*\Omega_i \cap B_r(p) \cap \{\mathrm{dist}(\cdot, P) > \varepsilon^{1/4} r\}) < \delta r^n$.}. Since each contributing sheet has area $\geq 2^{-n}\omega_n r^n$ (Step~1) and the total area of $\partial^*\Omega_i \cap B_r(p)$ beyond height $\varepsilon^{1/4} r$ from $P$ is $o(r^n)$, each sheet must contain a point with $|u_i^j| \leq \varepsilon^{1/4} r$. Propagating via $\mathrm{Lip}(u_i^j) < C\varepsilon^{1/4}$ gives $|u_i^j| \leq \varepsilon^{1/4} r + C\varepsilon^{1/4} \cdot 2r \leq C\varepsilon^{1/4} r$ everywhere. The sphere constraint then yields $\Omega_i^j \supset D_{r(1 - C\varepsilon^{1/2})}$, establishing~(ii). Condition~(iii) follows from the area formula for Lipschitz graphs.
 
-Finally, the total area of the $k_i$ contributing sheets satisfies
+\medskip\noindent\textbf{Step~3} (Counting). We count in $B_{r/2}(p)$. Each contributing sheet has domain $\Omega_i^j \supset D_{r/2}$ \textup{(Step~1)} and height $|u_i^j| \leq C\varepsilon^{1/4} r \ll r/2$ \textup{(Step~2)}, so the graph over $D_{r/2}$ lies inside $B_{r/2}(p)$, and the area of each sheet in $B_{r/2}(p)$ satisfies
 \[
-    k_i(1 - C\varepsilon^2)\omega_n r^n < \mathcal{H}^n(\partial^*\Omega_i \cap B_r(p)) < k_i(1 + C\varepsilon^2)\omega_n r^n,
+    (1 - C\varepsilon^{1/2})\omega_n (r/2)^n \leq \mathcal{H}^n(\Sigma_i^j \cap B_{r/2}(p)) \leq (1 + C\varepsilon^{1/2})\omega_n (r/2)^n.
 \]
-and converges to $\theta(p)\omega_n r^n$. Choosing $\varepsilon$ small enough so that the intervals $[k(1-C\varepsilon^2),\, k(1+C\varepsilon^2)]$ for consecutive integers $k$ are disjoint, the count $k_i$ is uniquely determined for $i$ large, hence eventually constant equal to $k = \theta(p) \in \mathbb{Z}_{>0}$, establishing~(i).
+\xinze{Upper bound: $\Sigma_i^j \cap B_{r/2}(p)$ projects into $D_{r/2}$, so $\mathcal{H}^n \leq \int_{D_{r/2}} \sqrt{1 + |Du_i^j|^2} \leq (1 + C\varepsilon^{1/2})\omega_n (r/2)^n$. Lower bound: since $|u_i^j| \leq C\varepsilon^{1/4} r$, the graph over $D_{(r/2)(1-C\varepsilon^{1/2})}$ satisfies $|y|^2 + |u|^2 < (r/2)^2$, giving area $\geq \omega_n ((r/2)(1-C\varepsilon^{1/2}))^n \geq (1-C\varepsilon^{1/2})\omega_n(r/2)^n$.}
+Summing over the $k_i$ sheets, we obtain\xinze{The $k_i$ graphical sheets do not exhaust $\partial^*\Omega_i \cap B_{r/2}(p)$: the non-graphical part (where $|T_x - P|^2 \geq \sqrt{\varepsilon}$) may also contribute. But its total area is $\leq \sqrt{\varepsilon}\,(2r)^n = C\sqrt{\varepsilon}\,(r/2)^n$ (the Chebyshev bound from the paragraph before Step~1), so it is absorbed into the $O(\varepsilon^{1/2})$ error below.}
+\[
+    \mathcal{H}^n(\partial^*\Omega_i \cap B_{r/2}(p)) = k_i \,\omega_n (r/2)^n + O(\varepsilon^{1/2})\,(r/2)^n.
+\]
+Dividing by $\omega_n(r/2)^n$, we get $k_i = \|V\|(B_{r/2}(p)) / (\omega_n(r/2)^n) + O(\varepsilon^{1/2})$\xinze{By varifold convergence, $\mathcal{H}^n(\partial^*\Omega_i \cap B_{r/2}(p)) \to \|V\|(B_{r/2}(p))$ as $i \to \infty$ (for a.e.\ $r$). By the definition of density, $\|V\|(B_{r/2}(p)) / (\omega_n(r/2)^n) \to \theta(p)$ as $r \to 0$. So the argument uses both limits: first $i \to \infty$ for fixed $r$, then $r \to 0$.}. Since $\|V\|(B_{r/2}(p)) / (\omega_n(r/2)^n) \to \theta(p)$ as $r \to 0$ and $k_i \in \mathbb{Z}$, for $r$ and $\varepsilon$ sufficiently small the count $k_i$ equals $\theta(p) \in \mathbb{Z}_{>0}$, establishing~(i).
 \end{proof}
 
-\begin{remark}[Independence of hypotheses]\label{rem:integrality-independence}
-The sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) and integrality (Theorem~\ref{thm:integrality}) do not require nestedness or the non-excessive hypothesis: they hold for any sequence of Caccioppoli sets whose associated varifolds converge to a stationary rectifiable varifold, provided $2 \leq n \leq 6$. (Our sheet decomposition is closely related to Wickramasekera's Sheeting Theorem~\cite[Theorem~3.3]{Wic14}, but applies to the \emph{approximating} varifolds $|\partial^*\Omega_i|$ rather than the limit, avoiding the need to assume integrality a priori.) Similarly, the $\alpha$-structural verification (Theorem~\ref{thm:alpha-hypo}) uses only the Caccioppoli structure and the min-max width. The non-excessive hypothesis enters only in the stability step (Proposition~\ref{prop:stability}), which invokes~\cite[Proposition~3.1]{CLS22}; that proof uses nestedness in an essential way. Nestedness is also used in the parity analysis of Section~\ref{sec:multiplicity-one}.
+\begin{proof}[Alternative proof of integrality via fiber counting]
+\xinze{This proof establishes $\theta(p) \in \mathbb{Z}_{>0}$ using nestedness directly, without the graphical decomposition (Chebyshev, Caccioppoli $\pi$-injectivity, coverage analysis). It does \emph{not} yield the full sheet decomposition (conditions (ii)--(iii)), which is still needed for the regularity and multiplicity arguments of Sections~\ref{sec:regularity} and~\ref{sec:multiplicity-one}.}
+
+$V = \underline{v}(\Sigma, \theta)$ is rectifiable (Allard's theorem, Proposition~\ref{prop:allard-rectifiability}). Since the sweepout is nested, extract a monotone subsequence; WLOG $\Omega_1 \subset \Omega_2 \subset \cdots$. At $\mathcal{H}^n$-a.e.\ $p \in \Sigma$, the tangent plane $P = T_p\Sigma$ and density $\theta(p)$ are well-defined. Work in normal coordinates at $p$ with $P = \mathbb{R}^n \times \{0\}$ and projection $\pi \colon \mathbb{R}^{n+1} \to P$. By varifold convergence, the monotonicity formula, and Lemma~\ref{lem:excess-vanishing}, for small $r$ and large $i$:
+\[
+    \mathcal{H}^n(\partial^*\Omega_i \cap B_r(p)) \leq C\omega_n r^n, \qquad E(|\partial^*\Omega_i|, B_r(p), P) < \delta_0.
+\]
+
+\medskip\noindent\textbf{Step~1} (Area formula). For a.e.\ $y \in D_r$, let $N_i(y) := \#(\partial^*\Omega_i \cap \pi^{-1}(y) \cap B_r(p))$ be the number of boundary crossings along the vertical fiber at $y$. By the area formula for $\pi|_{\partial^*\Omega_i}$,
+\[
+    \int_{D_r} N_i(y) \, d\mathcal{H}^n(y) = \int_{\partial^*\Omega_i \cap B_r(p)} |\nu \cdot e_{n+1}| \, d\mathcal{H}^n.
+\]
+Since $1 - |\nu \cdot e_{n+1}| \leq |T_x(\partial^*\Omega_i) - P|^2$ and the tilt-excess is $< \delta_0$, we obtain
+\[
+    \int_{D_r} N_i(y) \, dy = \mathcal{H}^n(\partial^*\Omega_i \cap B_r(p)) - O(\delta_0 r^n) \;\to\; \theta(p)\,\omega_n r^n.
+\]
+
+\medskip\noindent\textbf{Step~2} (Stabilization by nestedness). Since $\Omega_1 \subset \Omega_2 \subset \cdots$, the one-dimensional characteristic functions $t \mapsto \chi_{\Omega_i}(y, t)$ converge monotonically for each $y$.\xinze{We claim that $N_i(y)$ stabilizes for a.e.\ $y$. Along each fiber, the set $\Omega_i \cap \pi^{-1}(y)$ is a finite union of intervals (for a.e.\ $y$, by the structure theorem for $1$-dimensional BV functions). As $i$ increases, these intervals grow monotonically; new intervals may appear, and existing intervals may merge when the gap between them is filled. Each such event---creation or merger---is permanent (monotonicity of the $\Omega_i$ ensures it cannot be undone). Since $N_i(y) \geq 0$ and each creation-merger pair changes $N_i(y)$ by $+2$ then $-2$, the total number of events at any fiber is bounded by $\sup_i N_i(y)$, which is finite for a.e.\ $y$ (by Fatou's lemma applied to $\int N_i \, dy \leq C\omega_n r^n$).} Therefore $N_i(y)$ stabilizes at a limit $N(y) \in \mathbb{Z}_{\geq 0}$ for a.e.\ $y \in D_r$. By bounded convergence,
+\[
+    \int_{D_r} N(y) \, dy = \theta(p)\,\omega_n r^n.
+\]
+
+\medskip\noindent\textbf{Step~3} (Integrality). Steps~1--2 hold at every scale $r \to 0$ (with the same monotone subsequence), giving $\omega_n^{-1} r^{-n} \int_{D_r} N(y) \, dy = \theta(p) + o(1)$. By the Lebesgue differentiation theorem applied to $N \in L^1_{\mathrm{loc}}(P)$, at $\mathcal{H}^n$-a.e.\ $y$ near $\pi(p)$:
+\[
+    N(y) = \lim_{r \to 0} \frac{1}{\omega_n r^n} \int_{D_r(y)} N \, d\mathcal{H}^n = \theta(p).
+\]
+Since $N(y) \in \mathbb{Z}_{\geq 0}$ and $\theta(p) > 0$ (as $p \in \spt\|V\|$), we conclude $\theta(p) \in \mathbb{Z}_{>0}$.
+\end{proof}
+
+\begin{remark}[Role of nestedness]\label{rem:integrality-independence}
+The sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) uses nestedness to order the sheets and stabilize the sheet count. The graphical decomposition step (Chebyshev + Caccioppoli $\pi$-injectivity) holds for any sequence of Caccioppoli sets, but nestedness simplifies the integrality conclusion. (Our sheet decomposition is closely related to Wickramasekera's Sheeting Theorem~\cite[Theorem~3.3]{Wic14}, but applies to the \emph{approximating} Caccioppoli boundaries $\partial^*\Omega_i$ rather than the limit, avoiding the need to assume integrality or smoothness a priori.) The $\alpha$-structural verification (Theorem~\ref{thm:alpha-hypo}) uses only the Caccioppoli structure and the min-max width. The non-excessive hypothesis enters in the stability step (Proposition~\ref{prop:stability}), which invokes~\cite[Proposition~3.1]{CLS22}. Nestedness is also used in the parity analysis of Section~\ref{sec:multiplicity-one}.
 \end{remark}
