@@ -80,7 +80,7 @@ When mass cancellation occurs ($\mathbf{M}(\Phi(x_0)) < W$), we still have $\Ome
 \[
     \mathrm{Per}(\Omega(x_i)) \to W > \mathrm{Per}(\Omega(x_0)).
 \]
-The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. Instead, we use the nestedness of the sweepout to decompose the approximating boundaries into graphical sheets and show that the density is a positive integer at $\mathcal{H}^n$-a.e.\ point. Note that $V$ is rectifiable by Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), since it is stationary (Proposition~\ref{thm:CLS-stationary}). The main tool is the following graphical decomposition lemma.
+The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. Instead, we use the nestedness of the sweepout to decompose the approximating boundaries into graphical sheets and show that the density is a positive integer at $\mathcal{H}^n$-a.e.\ point. The limit varifold $V$ is rectifiable (Lemma~\ref{lem:density-lower-bound}(i)). The main tool is the following graphical decomposition lemma.
 
 \begin{figure}[ht]
     \centering
@@ -186,36 +186,19 @@ The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\pa
     \label{fig:mass-cancellation-manifold}
 \end{figure}
 
-\begin{lemma}[Density lower bound]\label{lem:density-lower-bound}
-Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be a non-excessive optimal nested \textup{(}ONVP\textup{)} sweepout. Let $V$ be the varifold limit of $|\partial^*\Omega(x_i)|$ along a min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$. In particular, $V$ is rectifiable by Allard's theorem \textup{(Proposition~\ref{prop:allard-rectifiability})}.
+\begin{lemma}[Rectifiability and density lower bound]\label{lem:density-lower-bound}
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be an optimal nested \textup{(}ONVP\textup{)} sweepout. Let $V$ be the varifold limit of $|\partial^*\Omega(x_i)|$ along a min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item $V$ is rectifiable;
+    \item $\Theta(\|V\|, p) \geq 1$ for every $p \in \spt\|V\|$.
+\end{enumerate}
 \end{lemma}
 
 \begin{proof}
-\xinze{\textbf{Gap.} This proof uses the finiteness of $\mathfrak{h}_{\mathrm{nm}}(V)$ (\cite[Proposition~3.2]{CLS22}), which assumes $V$ is already rectifiable (the hypothesis is $V \in \mathcal{R}$; see~\cite[(3.1)]{CLS22}). Since rectifiability is the \emph{conclusion} of this lemma, the argument as stated is circular.
+\textbf{Part~(i).} $V$ is stationary (Proposition~\ref{thm:CLS-stationary}) with $\|V\|(M) = W < \infty$. For any Radon measure $\mu$ on $M$ with $\mu(M) < \infty$, the upper $n$-density $\Theta^{n*}(\mu, p) := \limsup_{r \to 0} \omega_n^{-1} r^{-n}\mu(B_r(p))$ satisfies $\Theta^{n*}(\mu, p) > 0$ for $\mu$-a.e.\ $p$~\cite[Theorem~3.5(1)]{Sim84}\xinze{Simon states this for Radon measures on $\mathbb{R}^{n+1}$. For a closed Riemannian manifold $(M, g)$, work in normal coordinates: the metric balls $B_r^g(p)$ satisfy $B_{r(1-Cr^2)}^e(p) \subset B_r^g(p) \subset B_{r(1+Cr^2)}^e(p)$ for $r < \mathrm{inj}(M)$, so the $n$-densities with respect to $g$-balls and Euclidean balls agree.}. Since $V$ is stationary, the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}) ensures that the density $\Theta(\|V\|, p) = \lim_{r \to 0} \omega_n^{-1} r^{-n} \|V\|(B_r(p))$ exists at every $p \in M$; in particular $\Theta(\|V\|, p) = \Theta^{n*}(\|V\|, p) > 0$ for $\|V\|$-a.e.\ $p$. By Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), $V$ is rectifiable.
 
 \medskip
-\textbf{How DLT13 avoids the circle.} De~Lellis--Tasnady~\cite[Lemma~3.5]{DLT13} prove $\Theta \geq c > 0$ \emph{without} assuming rectifiability: they use the \emph{replacement property} (a consequence of Pitts' combinatorial min-max). Given $x \in \spt\|V\|$ and $0 < r < \mathrm{inj}(M)/4$, one replaces $V$ by a varifold $V'$ in the annulus $\mathrm{An}(x, r, 2r)$. The replacement $V'$ coincides with $V$ outside $\mathrm{An}$, and $V'\lfloor\mathrm{An}$ is a stable minimal hypersurface. The strong maximum principle forces $V'\lfloor\mathrm{An} \neq 0$, so there exists $y \in \mathrm{An}$ with $\theta(y, V') \geq 1$. The monotonicity formula then gives $\|V\|(B_{4r}(x)) = \|V'\|(B_{4r}(x)) \geq c\,r^n$, hence $\Theta(x, V) \geq c/\omega_n > 0$. This argument uses only stationarity, the replacement property, and the maximum principle---no rectifiability.
-
-\medskip
-\textbf{Possible fix for our framework.} (a)~Invoke DLT13's replacement property (which is available in the Almgren--Pitts framework underlying CLS) to establish $\Theta > 0$ and rectifiability first, then apply $\mathfrak{h}_{\mathrm{nm}}$ finiteness only for stability and regularity (Sections~\ref{sec:regularity}--\ref{sec:multiplicity-one}). (b)~Alternatively, show that the one-sided homotopic minimizing property of the approximating slices (which does \emph{not} require rectifiability of $V$) directly gives the isoperimetric iteration below; this requires verifying that \cite[Proposition~3.1]{CLS22} can be applied without the rectifiability hypothesis, using only the sweepout structure. We proceed with approach~(b), contingent on this verification.}
-
-\medskip\noindent
-\textbf{Step~1} (Generic points). Let $p \in \spt\|V\| \setminus \mathfrak{h}_{\mathrm{nm}}(V)$. By definition (Definition~\ref{def:hnm}), $V$ is one-sided homotopic minimizing in $B_r(p)$ for some $r > 0$. WLOG the approximating slices $\Omega_i = \Omega(x_i)$ are inner homotopic minimizing in $B_r(p)$ for all $i$ sufficiently large\xinze{More precisely, $p \notin \mathfrak{h}_{\mathrm{nm}}(V)$ means: for some $r > 0$, $\spt\|V\| \cap B_r(p)$ is one-sided homotopic minimizing; \cite[Proposition~3.1]{CLS22} ensures this property is inherited by the approximating slices $\Omega(x_i)$ for $i$ large.}. For such $\Omega_i$ and a.e.\ $\rho \in (0, r)$, the continuous inner deformation $t \mapsto \Omega_i \setminus \bar{B}_{t\rho}(p)$ ($t \in [0,1]$) gives a competitor with perimeter in $B_r(p)$ equal to $\mathrm{Per}(\Omega_i, B_r(p)) - \mathrm{Per}(\Omega_i, B_\rho(p)) + \mathcal{H}^n(\Omega_i \cap \partial B_\rho(p))$. The inner homotopic minimizing property forces
-\begin{equation}\label{eq:hm-comparison}
-    \mathrm{Per}(\Omega_i, B_\rho(p)) \leq \mathcal{H}^n(\Omega_i \cap \partial B_\rho(p)) = f_i'(\rho) \quad \text{for a.e.\ } \rho \in (0, r),
-\end{equation}
-where $f_i(\rho) := |\Omega_i \cap B_\rho(p)|$. The relative isoperimetric inequality on $(M, g)$ gives $f_i(\rho)^{n/(n+1)} \leq C\,\mathrm{Per}(\Omega_i, B_\rho(p))$ for $\rho$ small enough that $f_i(\rho) \leq |B_\rho(p)|/2$, where $C = C(M,g)$\xinze{Since $p \in \spt\|D\chi_{\Omega_i}\|$, we have $f_i(\rho) > 0$ for all $\rho > 0$, and $f_i(0) = 0$, so $f_i < |B_\rho|/2$ for small $\rho$. The relative isoperimetric inequality on a Riemannian manifold~\cite[Theorem~2.1]{Heb99} states $\min(|E \cap B_\rho|, |B_\rho \setminus E|)^{n/(n+1)} \leq C\,\mathrm{Per}(E, B_\rho)$.}. Combined with~\eqref{eq:hm-comparison}:
-\[
-    f_i(\rho)^{n/(n+1)} \leq C\, f_i'(\rho).
-\]
-Integrating\xinze{Write $g = f_i^{1/(n+1)}$. Then $g' = \frac{1}{n+1} f_i^{-n/(n+1)} f_i' \geq \frac{1}{(n+1)C}$ a.e.\ where $f_i > 0$. Since $g(0) = 0$, we get $g(\rho) \geq \rho/((n+1)C)$, i.e.\ $f_i(\rho) \geq (\rho/((n+1)C))^{n+1}$.}: $f_i(\rho) \geq c_1 \rho^{n+1}$ for $c_1 = c_1(M,g) > 0$ and all $\rho \in (0, r)$. Then
-\[
-    \mathrm{Per}(\Omega_i, B_\rho(p)) \geq C^{-1} f_i(\rho)^{n/(n+1)} \geq c_0\, \rho^n,
-\]
-where $c_0 = c_0(M,g) > 0$. The Portmanteau theorem (closed-set version: $\|V\|(\bar{B}_\rho(p)) \geq \limsup \|\partial^*\Omega_i\|(\bar{B}_\rho(p))$) then gives $\|V\|(\bar{B}_\rho(p)) \geq c_0\, \rho^n$ for all small $\rho$, so $\Theta(\|V\|, p) \geq c_0/\omega_n > 0$.
-
-\medskip
-\textbf{Step~2} (Exceptional points). The set $\mathfrak{h}_{\mathrm{nm}}(V)$ is finite by~\cite[Proposition~3.2]{CLS22}. For $p \in \mathfrak{h}_{\mathrm{nm}}(V)$, the support $\spt\|V\|$ cannot reduce to $\{p\}$ in any ball (as the monotonicity formula would force $\Theta(p) = +\infty$)\xinze{If $\spt\|V\| \cap B_r(p) = \{p\}$, then $\|V\|(B_\rho(p))$ is constant for $\rho \in (0, r)$, so $e^{C\rho}\rho^{-n}\|V\|(B_\rho(p)) \to +\infty$ as $\rho \to 0$, contradicting the monotonicity bound $\leq e^{Cr}r^{-n}\|V\|(B_r(p)) < \infty$.}, so for any $r > 0$ there exists $q \in (\spt\|V\| \setminus \mathfrak{h}_{\mathrm{nm}}(V)) \cap B_{r/2}(p)$. By Step~1, $\Theta(\|V\|, q) \geq c_0/\omega_n$. The monotonicity formula at $q$ gives $\|V\|(B_{r/2}(q)) \geq \omega_n \Theta(\|V\|, q)\, e^{-Cr/2} (r/2)^n \geq c_0\, e^{-Cr/2}\, (r/2)^n$. Since $B_{r/2}(q) \subset B_r(p)$, taking $r \to 0$ yields $\Theta(\|V\|, p) \geq c_0/(2^n\omega_n) > 0$.
+\textbf{Part~(ii).} Once $V$ is rectifiable, Theorem~\ref{thm:integrality} (proved below via the sheet decomposition) gives that $V$ is integral. For integral stationary varifolds, $\Theta(\|V\|, p) \geq 1$ for every $p \in \spt\|V\|$\xinze{If $V$ is integral and $p \in \spt\|V\|$, every tangent cone $C$ at $p$ is a non-zero stationary integral cone in $\mathbb{R}^{n+1}$, so $\Theta(\|C\|, 0) \geq 1$. Since $\Theta(\|V\|, p) = \Theta(\|C\|, 0)$ by the definition of tangent cone, $\Theta(\|V\|, p) \geq 1$.}.
 \end{proof}
 
 \begin{lemma}[Sheet decomposition]\label{lem:sheet-decomposition}
