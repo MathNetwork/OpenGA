@@ -69,13 +69,13 @@ For a stationary $n$-varifold $V$ and $p \in M$, the \emph{density} of $V$ at $p
 \[
 \Theta(\|V\|, p) := \lim_{r \to 0} \omega_n^{-1} r^{-n} \|V\|(B_r(p)).
 \]
-By the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), this limit exists. Moreover, $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$.
+By the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}), this limit exists and $\Theta(\|V\|, p) \geq 0$ for every $p \in M$, with $\Theta(\|V\|, p) < \infty$ for every $p$ when $\|V\|(M) < \infty$.
 
 If $V$ is integral, then $\Theta(\|V\|, p) \geq 1$ for every $p \in \spt\|V\|$.
 \end{definition}
 
-\begin{proposition}[Allard's rectifiability theorem~{\cite[Theorem~42.4]{Sim84}}]\label{prop:allard-rectifiability}
-Every stationary $n$-varifold $V$ in $(M^{n+1}, g)$ is rectifiable. More precisely, $V = \underline{v}(\Sigma, \theta)$ where $\Sigma \subset \spt\|V\|$ is $\mathcal{H}^n$-rectifiable and $\theta(p) = \Theta(\|V\|, p) > 0$ for $\mathcal{H}^n$-a.e.\ $p \in \Sigma$.
+\begin{proposition}[Allard's rectifiability theorem~{\cite[Theorem~5.5(1)]{All72}; \cite[Theorem~42.4]{Sim84}}]\label{prop:allard-rectifiability}
+Let $V$ be a stationary $n$-varifold in $(M^{n+1}, g)$ with $\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e.\ $p$. Then $V$ is rectifiable: $V = \underline{v}(\Sigma, \theta)$ where $\Sigma \subset \spt\|V\|$ is $\mathcal{H}^n$-rectifiable and $\theta(p) = \Theta(\|V\|, p) > 0$ for $\mathcal{H}^n$-a.e.\ $p \in \Sigma$.
 \end{proposition}
 
 \begin{definition}[Tilt-excess~{\cite[\S22, p.\,111]{Sim84}}]\label{def:p2-tilt-excess}
