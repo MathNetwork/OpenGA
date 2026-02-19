@@ -2,7 +2,7 @@
 
 \section{Regularity}\label{sec:regularity}
 
-By Proposition~\ref{thm:CLS-stationary}, the limit varifold $V$ is stationary; by Theorem~\ref{thm:integrality}, $V$ is integral. In the no-mass-cancellation case, $V = |\partial^*\Omega(x_0)|$ is a stationary integral varifold of multiplicity one; Allard regularity~\cite[Theorem~24.2]{Sim84}\xinze{Was: Federer regularity (Proposition removed)} then directly yields a smooth embedded minimal hypersurface. The mass-cancellation case requires more work: we apply Wickramasekera's regularity theorem (Theorem~\ref{thm:wickramasekera}), which requires two further inputs---\emph{stability} and the \emph{$\alpha$-structural hypothesis} (Definition~\ref{defn:alpha-structural}). This section verifies both.
+By Proposition~\ref{thm:CLS-stationary}, the limit varifold $V$ is stationary; by Theorem~\ref{thm:integrality}, $V$ is integral. To promote $V$ to a smooth hypersurface, we apply Wickramasekera's regularity theorem (Theorem~\ref{thm:wickramasekera}), which requires two further inputs---\emph{stability} and the \emph{$\alpha$-structural hypothesis} (Definition~\ref{defn:alpha-structural}). This section verifies both, in a unified argument that applies regardless of whether mass cancellation occurs.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Stability}\label{subsec:stability}
@@ -20,33 +20,19 @@ By~\cite[Proposition~3.1]{CLS22}, the set $\mathfrak{h}_{\mathrm{nm}}(V)$ of non
 We remark that the finiteness of $\mathfrak{h}_{\mathrm{nm}}(V)$ in~\cite[Proposition~3.1]{CLS22} relies on both the non-excessive property and the nestedness of the sweepout: the proof constructs replacement families by ``gluing in'' one-sided homotopies, and nestedness ($\Omega(x_1) \subset \Omega(x_2)$) ensures that the parameter sets on which these replacements are defined are intervals. Nestedness is also used in the integrality argument (see Remark~\ref{rem:integrality-independence}). We also note that~\cite[Proposition~3.1]{CLS22} does not require the identification $V = |\partial^*\Omega(x_0)|$; in particular, the argument applies equally in the mass-cancellation case.
 \end{proof}
 
+It remains to verify the $\alpha$-structural hypothesis $(\mathcal{S}3)$. Note that even in the no-mass-cancellation case, where $V = |\partial^*\Omega(x_0)|$ has multiplicity one, the support $\spt\|V\|$ can have singular points where multiple branches meet (e.g., $N = 4$ half-hyperplanes in a balanced configuration); multiplicity one alone does not preclude such junctions. The following verification applies uniformly to both the mass-cancellation and no-mass-cancellation cases.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The $\alpha$-structural hypothesis}\label{subsec:alpha-structural}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-We first show that the fold case ($N = 2$) cannot arise at a genuine singular point, so any failure of the $\alpha$-structural hypothesis produces a wedge with angle $< \pi$.
-
-\begin{lemma}[Wedge at singular junctions]\label{lem:wedge}
-Let $V$ be a stable stationary integral $n$-varifold in $(M^{n+1}, g)$ and $Z \in \sing V$ a point at which the $\alpha$-structural hypothesis \textup{(}Definition~\textup{\ref{defn:alpha-structural})} fails. Then any tangent cone $C$ of $V$ at $Z$ consists of $N \geq 3$ half-hyperplanes $P_1^+, \ldots, P_N^+$ meeting along a common $(n-1)$-dimensional edge $L$. In particular, there exist two adjacent half-hyperplanes meeting at angle $\theta < \pi$.
-\end{lemma}
-
-\begin{proof}
-Since the $\alpha$-structural hypothesis fails at $Z$, there exists $\rho > 0$ such that $\spt\|V\| \cap B_\rho(Z)$ consists of finitely many $C^{1,\alpha}$ embedded hypersurfaces-with-boundary meeting along a common $C^{1,\alpha}$ boundary $\Gamma$ of dimension $n - 1$. Blowing up at $Z$, any tangent cone $C$ is a stationary integral cone consisting of $N$ half-hyperplanes $P_1^+, \ldots, P_N^+$ meeting along a common edge $L$, each carrying a positive integer multiplicity $m_j$, with the stationarity balance $\sum_{j=1}^N m_j \nu_j = 0$ (where $\nu_j$ is the outward unit normal to $P_j^+$ in the $2$-plane perpendicular to $L$).
-
-We claim $N \geq 3$. By~\cite[Remark~(3) following~($\mathcal{S}3$)]{Wic14}, for stable codimension~$1$ integral varifolds, the $\alpha$-structural hypothesis~($\mathcal{S}3$) is equivalent to the condition that no tangent cone at a singular point is supported by three or more distinct half-hyperplanes meeting along a common $(n-1)$-dimensional subspace. In particular, $N = 2$ does not constitute a failure of~($\mathcal{S}3$): when the tangent cone is a flat hyperplane (possibly with multiplicity $\geq 2$), the Sheeting Theorem~\cite[Theorem~3.3]{Wic14} ensures regularity. Therefore $N \geq 3$, and the $N$ half-hyperplanes partition the $2$-plane perpendicular to $L$ into $N$ sectors with angles $\theta_1, \ldots, \theta_N$ summing to $2\pi$. By the pigeonhole principle, $\min_j \theta_j \leq 2\pi/N < \pi$.
-\end{proof}
 
 \begin{theorem}[Verification of $\alpha$-structural hypothesis]\label{thm:alpha-hypo}
     Let $V$ be the stationary integral varifold arising from a non-excessive ONVP sweepout $\Phi$
     with width $W$, via the min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then $V$ satisfies the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}).
 \end{theorem}
 
-\begin{remark}\label{rem:junction-cases}
-Theorem~\ref{thm:alpha-hypo} is only invoked in the mass-cancellation case (see the proof of Theorem~\ref{thm:non-excessive-main} below): when no mass cancellation occurs, $V = |\partial^*\Omega(x_0)|$ is a stationary varifold of multiplicity one, hence smooth by Allard regularity\xinze{Was: Federer regularity}, so $\sing V = \varnothing$ and the $\alpha$-structural hypothesis is vacuously satisfied.
-\end{remark}
-
 \begin{proof}
-Suppose the $\alpha$-structural hypothesis fails at some $Z \in \sing V$. By Lemma~\ref{lem:wedge}, the tangent cone at $Z$ contains two adjacent half-hyperplanes $P_j^+, P_{j+1}^+$ meeting at angle $\theta_j < \pi$ along a common $(n-1)$-dimensional edge $L$.
+Suppose the $\alpha$-structural hypothesis fails at some $Z \in \sing V$. By definition, $\spt\|V\| \cap B_\rho(Z)$ consists of finitely many $C^{1,\alpha}$ hypersurfaces-with-boundary meeting along a common $C^{1,\alpha}$ boundary $\Gamma$. Blowing up at $Z$, any tangent cone $C$ consists of $N$ half-hyperplanes $P_1^+, \ldots, P_N^+$ meeting along a common edge $L$, with the stationarity balance $\sum_{j=1}^N m_j \nu_j = 0$. By Remark~\ref{rem:S-alpha-remarks}(ii), $N \geq 3$, so the pigeonhole principle gives two adjacent half-hyperplanes $P_j^+, P_{j+1}^+$ meeting at angle $\theta_j \leq 2\pi/N < \pi$.
 
 \medskip\noindent\textbf{Step~1: Chord-beats-arc on the tangent cone.}
 In each two-dimensional cross-section normal to $L$, the two half-lines $P_j^+ \cap \partial B_r$ and $P_{j+1}^+ \cap \partial B_r$ have total length $2r$, while the chord connecting their endpoints has length $2r\sin(\theta_j/2) < 2r$ (see Figure~\ref{fig:chord-beats-arc}). Integrating along $L$, the replacement surface has strictly less area:
@@ -153,7 +139,7 @@ In each two-dimensional cross-section normal to $L$, the two half-lines $P_j^+ \
           \node[bindA, below right] at ($(A2)!0.5!(B2)$) {$P_{j+1}^+$};
           \node[above left] at ($(A)!0.3!(B)$) {$L$};
         \end{tikzpicture}
-        \caption{Chord-beats-arc: two adjacent half-hyperplanes $P_j^+, P_{j+1}^+$ meet along the $(n-1)$-dimensional edge $L$ at angle $\theta_j < \pi$ (given by Lemma~\ref{lem:wedge}). In each $2$-dimensional cross-section normal to $L$, the two half-lines (solid arcs on the shaded half-planes) have total length $2r$, while the chord (blue hatched surface) has length $2r\sin(\theta_j/2) < 2r$. The grey region is the area saved by the replacement.}
+        \caption{Chord-beats-arc: two adjacent half-hyperplanes $P_j^+, P_{j+1}^+$ meet along the $(n-1)$-dimensional edge $L$ at angle $\theta_j < \pi$ (by the balancing condition and pigeonhole, Remark~\ref{rem:S-alpha-remarks}(ii)). In each $2$-dimensional cross-section normal to $L$, the two half-lines (solid arcs on the shaded half-planes) have total length $2r$, while the chord (blue hatched surface) has length $2r\sin(\theta_j/2) < 2r$. The grey region is the area saved by the replacement.}
         \label{fig:chord-beats-arc}
     \end{figure}
 
@@ -161,19 +147,298 @@ In each two-dimensional cross-section normal to $L$, the two half-lines $P_j^+ \
 We transfer the cone-level area deficit to the approximating Caccioppoli sets. Choose normal coordinates centered at $Z$ so that $g_{ij}(Z) = \delta_{ij}$; then $g_{ij} = \delta_{ij} + O(r)$ in $B_r(Z)$. Since the $\alpha$-structural hypothesis fails at~$Z$, the $C^{1,\alpha}$ branches of $\spt\|V\|$ in $B_\rho(Z)$ converge to the tangent cone under blow-up: at scale~$r$, each branch deviates from its limiting half-hyperplane by $O(r^{1+\alpha})$, and the angle between adjacent branches is $\theta_j + O(r^\alpha)$, which remains $< \pi$ for $r$ sufficiently small.
 
 By varifold convergence $|\partial^*\Omega(x_i)| \to V$ and the sheet decomposition (Lemma~\ref{lem:sheet-decomposition}), for each $r \in (0, \rho)$ sufficiently small and all $i$ sufficiently large, the smooth boundary $\partial^*\Omega(x_i) \cap B_r(Z)$ decomposes into smooth sheets, each a nearly flat graph approximating one of the $C^{1,\alpha}$ branches of $\spt\|V\|$. In particular, two adjacent sheets approximate $P_j^+$ and $P_{j+1}^+$, meeting at angle $\theta_j + O(r^\alpha) < \pi$ in $B_r(Z)$.
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[scale=1.0]
+      % Ball B_r(Z)
+      \draw[gray, thin, dashed] (0,0) circle (2.5);
+      \node[gray] at (-1.4, 2.1) {\small $\partial B_r(Z)$};
+
+      % Tangent angle at Z for each curve
+      \pgfmathsetmacro{\tA}{34}   % curve 1 tangent angle
+      \pgfmathsetmacro{\tB}{-34}  % curve 2 tangent angle
+
+      % Tangent lines at Z (gray dashed) — exact directions from \tA, \tB
+      \draw[gray!60, dashed, thin] ({-2.8*cos(\tA)}, {-2.8*sin(\tA)}) -- ({2.8*cos(\tA)}, {2.8*sin(\tA)});
+      \draw[gray!60, dashed, thin] ({-2.8*cos(\tB)}, {-2.8*sin(\tB)}) -- ({2.8*cos(\tB)}, {2.8*sin(\tB)});
+
+      % Labels for P_1^+ through P_4^+ (four half-lines = rays from Z)
+      \node[gray!60] at ({2.95*cos(\tB)}, {2.95*sin(\tB)-0.25}) {\small $P_1^+$};
+      \node[gray!60] at ({2.95*cos(\tA)}, {2.95*sin(\tA)+0.25}) {\small $P_2^+$};
+      \node[gray!60] at ({-2.95*cos(\tA)}, {-2.95*sin(\tA)+0.25}) {\small $P_3^+$};
+      \node[gray!60] at ({-2.95*cos(\tB)}, {-2.95*sin(\tB)-0.25}) {\small $P_4^+$};
+
+      % θ_1: P_1 (-34°) to P_2 (34°) — narrow angle, upper wedge
+      \draw[thin] ({0.6*cos(\tB)}, {0.6*sin(\tB)}) arc[start angle=\tB, end angle=\tA, radius=0.6];
+      \node at ({0.9*cos(0)}, {0.9*sin(0)}) {\small $\theta_1$};
+
+      % θ_2: P_2 (34°) to P_3 (146°) — wide angle, left
+      \draw[thin] ({0.85*cos(\tA)}, {0.85*sin(\tA)}) arc[start angle=\tA, end angle={180+\tB}, radius=0.85];
+      \node at ({1.15*cos(90)}, {1.15*sin(90)}) {\small $\theta_2$};
+
+      % θ_3: P_3 (146°) to P_4 (214°) — narrow angle, lower wedge
+      \draw[thin] ({0.6*cos(180+\tB)}, {0.6*sin(180+\tB)}) arc[start angle={180+\tB}, end angle={180+\tA}, radius=0.6];
+      \node at ({0.9*cos(180)}, {0.9*sin(180)}) {\small $\theta_3$};
+
+      % θ_4: P_4 (214°) to P_1 (326°) — wide angle, right
+      \draw[thin] ({0.85*cos(180+\tA)}, {0.85*sin(180+\tA)}) arc[start angle={180+\tA}, end angle={360+\tB}, radius=0.85];
+      \node at ({1.15*cos(270)}, {1.15*sin(270)}) {\small $\theta_4$};
+
+      % Upper shaded region (between curve 1 right branch and curve 2 left branch)
+      \begin{scope}
+      \clip (-3.2,-3.2) rectangle (3.2,3.2);
+      \fill[fillA, opacity=0.2]
+        (0,0)
+        .. controls ({0.4*cos(\tA)}, {0.4*sin(\tA)}) and ({0.9*cos(\tA)}, {0.9*sin(\tA)}) ..
+        ({2.5*cos(\tA)+0.6*sin(\tA)}, {2.5*sin(\tA)-0.6*cos(\tA)})
+        -- (3.2, 3.2) -- (-3.2, 3.2)
+        -- ({-2.5*cos(\tB)-0.6*sin(\tB)}, {-2.5*sin(\tB)+0.6*cos(\tB)})
+        .. controls ({-0.9*cos(\tB)}, {-0.9*sin(\tB)}) and ({-0.4*cos(\tB)}, {-0.4*sin(\tB)}) ..
+        (0,0);
+      \end{scope}
+
+      % Lower shaded region (between curve 2 right branch and curve 1 left branch)
+      \begin{scope}
+      \clip (-3.2,-3.2) rectangle (3.2,3.2);
+      \fill[fillA, opacity=0.2]
+        (0,0)
+        .. controls ({0.4*cos(\tB)}, {0.4*sin(\tB)}) and ({0.9*cos(\tB)}, {0.9*sin(\tB)}) ..
+        ({2.5*cos(\tB)+0.6*sin(\tB)}, {2.5*sin(\tB)-0.6*cos(\tB)})
+        -- (3.2, -3.2) -- (-3.2, -3.2)
+        -- ({-2.5*cos(\tA)-0.6*sin(\tA)}, {-2.5*sin(\tA)+0.6*cos(\tA)})
+        .. controls ({-0.9*cos(\tA)}, {-0.9*sin(\tA)}) and ({-0.4*cos(\tA)}, {-0.4*sin(\tA)}) ..
+        (0,0);
+      \end{scope}
+
+      % Curve 1: control points near Z lie on tangent direction \tA
+      \draw[bindA, thick]
+        ({-2.5*cos(\tA) - 0.6*sin(\tA)}, {-2.5*sin(\tA) + 0.6*cos(\tA)})
+        .. controls ({-0.9*cos(\tA)}, {-0.9*sin(\tA)}) and ({-0.4*cos(\tA)}, {-0.4*sin(\tA)}) .. (0,0)
+        .. controls ({0.4*cos(\tA)}, {0.4*sin(\tA)}) and ({0.9*cos(\tA)}, {0.9*sin(\tA)}) ..
+        ({2.5*cos(\tA) + 0.6*sin(\tA)}, {2.5*sin(\tA) - 0.6*cos(\tA)});
+
+      % Curve 2: control points near Z lie on tangent direction \tB
+      \draw[bindA, thick]
+        ({-2.5*cos(\tB) - 0.6*sin(\tB)}, {-2.5*sin(\tB) + 0.6*cos(\tB)})
+        .. controls ({-0.9*cos(\tB)}, {-0.9*sin(\tB)}) and ({-0.4*cos(\tB)}, {-0.4*sin(\tB)}) .. (0,0)
+        .. controls ({0.4*cos(\tB)}, {0.4*sin(\tB)}) and ({0.9*cos(\tB)}, {0.9*sin(\tB)}) ..
+        ({2.5*cos(\tB) + 0.6*sin(\tB)}, {2.5*sin(\tB) - 0.6*cos(\tB)});
+
+      % Blue curve (∂*Ω_i sheet) in upper wedge, just above the red boundary
+      \draw[blue, thick]
+        (-1.65, 2.05) .. controls (-0.8, 0.7) and (-0.2, 0.35) .. (0, 0.3)
+        .. controls (0.2, 0.25) and (0.8, 0.6) .. (2.3, 1.05);
+
+      % Blue curve (∂*Ω_i sheet) in lower wedge, rotated 180° from the upper one
+      \draw[blue, thick]
+        (1.65, -2.05) .. controls (0.8, -0.7) and (0.2, -0.35) .. (0, -0.3)
+        .. controls (-0.2, -0.25) and (-0.8, -0.6) .. (-2.3, -1.05);
+
+      % Point Z
+      \fill (0,0) circle (1.5pt);
+      \node[left] at (-0.1, 0) {$Z$};
+    \end{tikzpicture}
+    \caption{Cross-section normal to $L$ at $Z$: the tangent cone half-lines $P_j^+, P_{j+1}^+$ (gray dashed) and the $C^{1,\alpha}$ branches of $\spt\|V\|$ (red solid). The branches deviate from the half-lines by $O(r^{1+\alpha})$; the angle between adjacent branches is $\theta_j + O(r^\alpha) < \pi$.}
+    \label{fig:transfer}
+\end{figure}
 
 \medskip\noindent\textbf{Step~3: Caccioppoli surgery and contradiction with width.}
-We perform chord surgery on the approximating Caccioppoli sets. In $B_r(Z)$, the two smooth sheets of $\partial^*\Omega(x_i)$ corresponding to the narrowest adjacent pair bound a thin wedge-shaped region. Replace these two sheets inside $B_{r/2}(Z)$ by a smooth interpolation surface (the ``chord surface''), which spans the same boundary on $\partial B_{r/2}(Z)$ but cuts across the wedge. The area of the chord surface on the curved sheets differs from the flat case by $O(r^{n+\alpha})$ (from the $C^{1,\alpha}$ deviation of the sheets from half-planes and the $O(r)$ metric deviation), so the net area saving is
-\[
-    \mathrm{Per}(\Omega(x_i), B_r(Z)) - \mathrm{Per}(\Omega(x_i)_r, B_r(Z)) \geq \delta(\theta_j) r^n - O(r^{n+\alpha}) \geq \frac{\delta(\theta_j)}{2}\, r^n > 0
-\]
-for $r$ small and $i$ large, where $\Omega(x_i)_r$ is the modified Caccioppoli set and $\delta(\theta_j) > 0$ depends only on $\theta_j$ and $n$. The surgery is localized in $B_r(Z)$, so $\mathrm{Per}(\Omega(x_i)_r) \leq \mathrm{Per}(\Omega(x_i)) - \delta(\theta_j) r^n / 2$.
+We perform chord surgery on the approximating Caccioppoli sets. In $B_r(Z)$, the two smooth sheets of $\partial^*\Omega(x_i)$ corresponding to the narrowest adjacent pair bound a thin wedge-shaped region. Replace these two sheets inside $B_{r/2}(Z)$ by a smooth interpolation surface (the ``chord surface''), which spans the same boundary on $\partial B_{r/2}(Z)$ but cuts across the wedge.
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[scale=1.0]
+      % Ball B_r(Z)
+      \draw[gray, thin, dashed] (0,0) circle (2.5);
+      \node[gray] at (-1.4, 2.1) {\small $\partial B_r(Z)$};
 
-Fix such an $r$. Since the $\alpha$-structural hypothesis fails at $Z \in \sing V$ and the junction structure is a property of $V$ (not of the approximating sequence), the same surgery applies to any slice $\Omega(x)$ with $x$ near $x_0$ and $\mathbf{M}(\partial^*\Omega(x))$ close to $W$: varifold convergence holds along any such sequence, producing the same near-junction sheets in $B_r(Z)$. Since $x_i \to x_0 \in \mathfrak{m}(\Phi)$ and $\mathrm{Per}(\Omega(x_i)) \to W$, the surgery produces a modified sweepout $\tilde{\Phi}$ that agrees with $\Phi$ outside a neighborhood of $x_0$ and satisfies
+      % Tangent angle at Z for each curve
+      \pgfmathsetmacro{\tA}{34}   % curve 1 tangent angle
+      \pgfmathsetmacro{\tB}{-34}  % curve 2 tangent angle
+
+      % Tangent lines at Z (gray dashed) — exact directions from \tA, \tB
+      \draw[gray!60, dashed, thin] ({-2.8*cos(\tA)}, {-2.8*sin(\tA)}) -- ({2.8*cos(\tA)}, {2.8*sin(\tA)});
+      \draw[gray!60, dashed, thin] ({-2.8*cos(\tB)}, {-2.8*sin(\tB)}) -- ({2.8*cos(\tB)}, {2.8*sin(\tB)});
+
+      % Labels for P_1^+ through P_4^+ (four half-lines = rays from Z)
+      \node[gray!60] at ({2.95*cos(\tB)}, {2.95*sin(\tB)-0.25}) {\small $P_1^+$};
+      \node[gray!60] at ({2.95*cos(\tA)}, {2.95*sin(\tA)+0.25}) {\small $P_2^+$};
+      \node[gray!60] at ({-2.95*cos(\tA)}, {-2.95*sin(\tA)+0.25}) {\small $P_3^+$};
+      \node[gray!60] at ({-2.95*cos(\tB)}, {-2.95*sin(\tB)-0.25}) {\small $P_4^+$};
+
+      % Upper shaded region (between curve 1 right branch and curve 2 left branch)
+      \begin{scope}
+      \clip (-3.2,-3.2) rectangle (3.2,3.2);
+      \fill[fillA, opacity=0.2]
+        (0,0)
+        .. controls ({0.4*cos(\tA)}, {0.4*sin(\tA)}) and ({0.9*cos(\tA)}, {0.9*sin(\tA)}) ..
+        ({2.5*cos(\tA)+0.6*sin(\tA)}, {2.5*sin(\tA)-0.6*cos(\tA)})
+        -- (3.2, 3.2) -- (-3.2, 3.2)
+        -- ({-2.5*cos(\tB)-0.6*sin(\tB)}, {-2.5*sin(\tB)+0.6*cos(\tB)})
+        .. controls ({-0.9*cos(\tB)}, {-0.9*sin(\tB)}) and ({-0.4*cos(\tB)}, {-0.4*sin(\tB)}) ..
+        (0,0);
+      \end{scope}
+
+      % Lower shaded region (between curve 2 right branch and curve 1 left branch)
+      \begin{scope}
+      \clip (-3.2,-3.2) rectangle (3.2,3.2);
+      \fill[fillA, opacity=0.2]
+        (0,0)
+        .. controls ({0.4*cos(\tB)}, {0.4*sin(\tB)}) and ({0.9*cos(\tB)}, {0.9*sin(\tB)}) ..
+        ({2.5*cos(\tB)+0.6*sin(\tB)}, {2.5*sin(\tB)-0.6*cos(\tB)})
+        -- (3.2, -3.2) -- (-3.2, -3.2)
+        -- ({-2.5*cos(\tA)-0.6*sin(\tA)}, {-2.5*sin(\tA)+0.6*cos(\tA)})
+        .. controls ({-0.9*cos(\tA)}, {-0.9*sin(\tA)}) and ({-0.4*cos(\tA)}, {-0.4*sin(\tA)}) ..
+        (0,0);
+      \end{scope}
+
+      % Red curves OUTSIDE B_{r/2} (solid — retained)
+      \begin{scope}
+        \pgfseteorule\clip (-3.5,-3.5) rectangle (3.5,3.5) (0,0) circle (1.25);
+        \draw[bindA, thick]
+          ({-2.5*cos(\tA) - 0.6*sin(\tA)}, {-2.5*sin(\tA) + 0.6*cos(\tA)})
+          .. controls ({-0.9*cos(\tA)}, {-0.9*sin(\tA)}) and ({-0.4*cos(\tA)}, {-0.4*sin(\tA)}) .. (0,0)
+          .. controls ({0.4*cos(\tA)}, {0.4*sin(\tA)}) and ({0.9*cos(\tA)}, {0.9*sin(\tA)}) ..
+          ({2.5*cos(\tA) + 0.6*sin(\tA)}, {2.5*sin(\tA) - 0.6*cos(\tA)});
+        \draw[bindA, thick]
+          ({-2.5*cos(\tB) - 0.6*sin(\tB)}, {-2.5*sin(\tB) + 0.6*cos(\tB)})
+          .. controls ({-0.9*cos(\tB)}, {-0.9*sin(\tB)}) and ({-0.4*cos(\tB)}, {-0.4*sin(\tB)}) .. (0,0)
+          .. controls ({0.4*cos(\tB)}, {0.4*sin(\tB)}) and ({0.9*cos(\tB)}, {0.9*sin(\tB)}) ..
+          ({2.5*cos(\tB) + 0.6*sin(\tB)}, {2.5*sin(\tB) - 0.6*cos(\tB)});
+      \end{scope}
+
+      % Intersection points of RED curves with ∂B_{r/2}
+      % Upper wedge: right branch of curve 1 (P_2^+) and left branch of curve 2 (toward P_3^+)
+      \coordinate (UR) at (1.13, 0.54);    % curve 1 right branch ∩ ∂B_{r/2}
+      \coordinate (UL) at (-0.93, 0.84);   % curve 2 left branch ∩ ∂B_{r/2}
+      % Lower wedge: left branch of curve 1 (P_4^+) and right branch of curve 2 (toward P_1^+)
+      \coordinate (LL) at (-1.13, -0.54);  % curve 1 left branch ∩ ∂B_{r/2}
+      \coordinate (LR) at (0.93, -0.84);   % curve 2 right branch ∩ ∂B_{r/2}
+
+      % Saved area in upper wedge (between red curves and chord, inside B_{r/2})
+      \begin{scope}
+        \clip (0,0) circle (1.25);
+        \fill[blue!12, opacity=0.6]
+          (0,0)
+          .. controls (0.22, 0.15) and (0.48, 0.33) .. (UR)
+          -- (UL)
+          .. controls (-0.48, 0.33) and (-0.22, 0.15) .. (0,0);
+      \end{scope}
+
+      % Saved area in lower wedge
+      \begin{scope}
+        \clip (0,0) circle (1.25);
+        \fill[blue!12, opacity=0.6]
+          (0,0)
+          .. controls (-0.22, -0.15) and (-0.48, -0.33) .. (LL)
+          -- (LR)
+          .. controls (0.48, -0.33) and (0.22, -0.15) .. (0,0);
+      \end{scope}
+
+      % Blue curves (∂*Ω(x) sheets) — OUTSIDE B_{r/2} only (solid)
+      \begin{scope}
+        \pgfseteorule\clip (-3.5,-3.5) rectangle (3.5,3.5) (0,0) circle (1.25);
+        \draw[blue, thick]
+          (-1.65, 2.05) .. controls (-0.8, 0.7) and (-0.2, 0.35) .. (0, 0.3)
+          .. controls (0.2, 0.25) and (0.8, 0.6) .. (2.3, 1.05);
+        \draw[blue, thick]
+          (1.65, -2.05) .. controls (0.8, -0.7) and (0.2, -0.35) .. (0, -0.3)
+          .. controls (-0.2, -0.25) and (-0.8, -0.6) .. (-2.3, -1.05);
+      \end{scope}
+
+      % Red curves INSIDE B_{r/2} — dashed (replaced by chord surgery)
+      \begin{scope}
+        \clip (0,0) circle (1.25);
+        \draw[bindA, thick, dashed, opacity=0.4]
+          ({-2.5*cos(\tA) - 0.6*sin(\tA)}, {-2.5*sin(\tA) + 0.6*cos(\tA)})
+          .. controls ({-0.9*cos(\tA)}, {-0.9*sin(\tA)}) and ({-0.4*cos(\tA)}, {-0.4*sin(\tA)}) .. (0,0)
+          .. controls ({0.4*cos(\tA)}, {0.4*sin(\tA)}) and ({0.9*cos(\tA)}, {0.9*sin(\tA)}) ..
+          ({2.5*cos(\tA) + 0.6*sin(\tA)}, {2.5*sin(\tA) - 0.6*cos(\tA)});
+        \draw[bindA, thick, dashed, opacity=0.4]
+          ({-2.5*cos(\tB) - 0.6*sin(\tB)}, {-2.5*sin(\tB) + 0.6*cos(\tB)})
+          .. controls ({-0.9*cos(\tB)}, {-0.9*sin(\tB)}) and ({-0.4*cos(\tB)}, {-0.4*sin(\tB)}) .. (0,0)
+          .. controls ({0.4*cos(\tB)}, {0.4*sin(\tB)}) and ({0.9*cos(\tB)}, {0.9*sin(\tB)}) ..
+          ({2.5*cos(\tB) + 0.6*sin(\tB)}, {2.5*sin(\tB) - 0.6*cos(\tB)});
+      \end{scope}
+
+      % Chord surfaces S_chord (green, connecting red-curve traces on ∂B_{r/2})
+      \draw[green!50!black, very thick] (UL) -- (UR);
+      \draw[green!50!black, very thick] (LR) -- (LL);
+
+      % Intersection points γ_j, γ_{j+1} on ∂B_{r/2}
+      \fill (UL) circle (1.8pt);
+      \fill (UR) circle (1.8pt);
+      \fill (LR) circle (1.8pt);
+      \fill (LL) circle (1.8pt);
+
+      % Labels
+      \node[above left, font=\small] at (UL) {$\gamma_j$};
+      \node[right, font=\small] at (UR) {$\gamma_{j+1}$};
+      \node[green!50!black, above, font=\small] at (0.1, 0.75) {$S_{\mathrm{chord}}$};
+
+      % Inner ball B_{r/2}(Z)
+      \draw[gray, thin, dashed] (0,0) circle (1.25);
+      \node[gray] at (-0.7, -1.15) {\small $\partial B_{r/2}$};
+
+      % Point Z
+      \fill (0,0) circle (1.5pt);
+      \node[left] at (-0.1, 0) {$Z$};
+    \end{tikzpicture}
+    \caption{Chord surgery (cross-section normal to $L$). The sheets of $\partial^*\Omega(x)$ (blue solid) approximate the $C^{1,\alpha}$ branches of $\spt\|V\|$ (red) in the narrow wedge regions. Inside $B_{r/2}(Z)$ (inner dashed circle), the original sheets (blue dashed) are replaced by chord surfaces $S_{\mathrm{chord}}$ (green), connecting the traces $\gamma_j, \gamma_{j+1}$ on $\partial B_{r/2}(Z)$. The shaded region is the area saved by the surgery: $\geq \delta(\theta_j) r^n / 2 > 0$.}
+    \label{fig:surgery}
+\end{figure}
+
+\noindent\textbf{Step~3a: Chord surgery on a single slice.}
+Let $\Sigma_j(x)$ and $\Sigma_{j+1}(x)$ denote the two adjacent sheets of $\partial^*\Omega(x)$ in $B_r(Z)$ approximating $P_j^+$ and $P_{j+1}^+$. Work in normal coordinates centered at $Z$ and decompose $\mathbb{R}^{n+1} = L \oplus L^\perp$, where $L$ is the $(n-1)$-dimensional edge of the tangent cone. For $\rho \in (0, r/2]$ and $y \in L$ with $|y| < \rho$, let $\Pi_y := \{y\} + L^\perp$ be the $2$-dimensional affine plane through $y$ perpendicular to $L$. Each sheet $\Sigma_k(x)$ ($k = j, j+1$) intersects the circle $\partial B_\rho(Z) \cap \Pi_y$ transversally at a point $p_k(y,x)$ on the narrow-wedge side. Define the \emph{chord surface at scale~$\rho$} as the ruled surface
 \[
-    \sup_x \mathrm{Per}(\tilde{\Omega}(x)) < W.
+    S_{\mathrm{chord}}^{\rho}(x) \;:=\; \big\{(1-t)\, p_j(y,x) + t\, p_{j+1}(y,x) \,:\, y \in L \cap B_{\rho}(Z),\; t \in [0,1]\big\},
 \]
-But $W = \inf_{\Psi} \sup_x \mathrm{Per}(\Psi(x))$ is the min-max width, a contradiction.
+i.e., in each cross-section $\Pi_y$ the two sheet-arcs inside $B_\rho(Z)$ are replaced by the straight segment connecting their trace points on $\partial B_\rho(Z)$. Let $T_{\rho}(x) \subset B_{\rho}(Z)$ denote the open region bounded by $\Sigma_j(x) \cap B_{\rho}(Z)$, $\Sigma_{j+1}(x) \cap B_{\rho}(Z)$, and $S_{\mathrm{chord}}^{\rho}(x)$---the \emph{wedge tip} cut off by the chord (see Figure~\ref{fig:surgery}). The surgered set is
+\[
+    \Omega(x)_\rho \;:=\; \Omega(x) \,\triangle\, T_\rho(x).
+\]
+Since $T_\rho(x) \subset B_\rho(Z)$, the set $\Omega(x)_\rho$ agrees with $\Omega(x)$ outside $B_\rho(Z)$, and inside $B_\rho(Z)$ the two sheets $\Sigma_j(x), \Sigma_{j+1}(x)$ are replaced by the single chord surface $S_{\mathrm{chord}}^{\rho}(x)$. The symmetric difference formulation handles both possible orientations of the wedge (whether $T_\rho(x) \subset \Omega(x)$ or $T_\rho(x) \subset M \setminus \Omega(x)$) uniformly.
+
+In each cross-section $\Pi_y$, the chord segment $\overline{p_j\, p_{j+1}}$ has length $2\rho_y\sin(\theta_j/2)$, strictly less than the total length $2\rho_y$ of the two sheet-arcs it replaces (where $\rho_y = \sqrt{\rho^2 - |y|^2}$). Integrating along $L$ and accounting for the $C^{1,\alpha}$ deviation of the sheets and the $O(\rho)$ metric distortion:
+\[
+    \mathrm{Per}(\Omega(x)_\rho) \leq \mathrm{Per}(\Omega(x)) - \frac{\delta(\theta_j)}{2}\, \rho^n,
+\]
+where $\delta(\theta_j) > 0$ depends only on $\theta_j$ and $n$. The constant $\delta(\theta_j)$ and the radius $r$ depend on the tangent cone geometry at $Z$---the $C^{1,\alpha}$ branches of $\spt\|V\|$---but not on the individual slice; the saving is therefore uniform over all slices whose boundary decomposes into the same sheet structure.
+
+\medskip\noindent\textbf{Step~3b: Uniformity over nearby slices.}
+By continuity of $\Phi$ in the flat topology, there exists $\varepsilon > 0$ such that for every $x$ with $|x - x_0| < \varepsilon$, the boundary $\partial^*\Omega(x) \cap B_r(Z)$ admits the same sheet decomposition as described in Step~3a. The chord surgery at any scale $\rho \leq r/2$ then saves at least $\delta(\theta_j)\rho^n/2 > 0$ uniformly for all such $x$.
+
+\medskip\noindent\textbf{Step~3c: Modified sweepout with $\mathcal{F}$-continuity.}
+A na\"ive piecewise definition---performing the full surgery for $|x - x_0| < \varepsilon$ and no surgery otherwise---fails to be $\mathcal{F}$-continuous at $|x - x_0| = \varepsilon$, since the surgery modifies $\Omega(x)$ by a fixed positive volume inside $B_{r/2}(Z)$.
+
+To ensure continuity, we use a \emph{shrinking surgery ball}. Let $\eta \colon [0,\infty) \to [0,1]$ be a smooth non-increasing function with $\eta \equiv 1$ on $[0, \tfrac{1}{2}]$ and $\eta \equiv 0$ on $[1, \infty)$. Define the \emph{shrinking surgery radius} $\rho(x) := (r/2)\cdot\eta(|x - x_0|/\varepsilon)$, so that $\rho(x) = r/2$ for $|x - x_0| \leq \varepsilon/2$ and $\rho(x) = 0$ for $|x - x_0| \geq \varepsilon$. The chord surgery at scale $\rho(x)$ is well defined whenever $\rho(x) > 0$ (the sheet decomposition holds at every scale $\leq r/2$). Set
+\[
+    \tilde{\Omega}(x) \;:=\; \Omega(x) \,\triangle\, T_{\rho(x)}(x),
+\]
+with the convention $T_0(x) := \varnothing$. Thus $\tilde{\Omega}(x) = \Omega(x)$ for $|x - x_0| \geq \varepsilon$, and $\tilde{\Omega}(x) = \Omega(x)_{r/2}$ for $|x - x_0| \leq \varepsilon/2$.
+
+We verify that $\tilde{\Phi}(x) := \partial\tilde{\Omega}(x)$ is $\mathcal{F}$-continuous. By the triangle inequality for the flat metric,
+\[
+    \mathrm{Vol}\big(\tilde{\Omega}(x) \,\triangle\, \tilde{\Omega}(y)\big)
+    \;\leq\; \mathrm{Vol}\big(\Omega(x) \,\triangle\, \Omega(y)\big)
+    \;+\; \mathrm{Vol}\big(T_{\rho(x)}(x) \,\triangle\, T_{\rho(y)}(y)\big).
+\]
+The first term tends to zero as $y \to x$ by $\mathcal{F}$-continuity of $\Phi$. For the second term, note that $T_\rho(x)$ depends on $x$ through the sheets $\Sigma_j(x)$, $\Sigma_{j+1}(x)$ and the scale $\rho(x)$. As $y \to x$: the scale $\rho(y) \to \rho(x)$ by smoothness of $\eta$; and the sheets converge in $C^1(B_r(Z))$, since flat convergence $\Omega(y) \to \Omega(x)$ combined with the uniform perimeter bound (all slices have $\mathrm{Per} \leq W + 1$) implies varifold convergence of boundaries, which for graphical sheets with small $C^{1,\alpha}$ norm over the tangent half-hyperplanes upgrades to smooth convergence by standard graphical estimates~\cite[Theorem~24.2]{Sim84}. Therefore $\mathrm{Vol}(T_{\rho(x)}(x) \,\triangle\, T_{\rho(y)}(y)) \to 0$, and $\tilde{\Phi}$ is $\mathcal{F}$-continuous on $[0,1]$.
+
+\medskip\noindent\textbf{Step~3d: Replacement family and contradiction.}
+Since $\theta_j < \pi$, the chord surface has strictly less area than the two sheets it replaces at every scale: for any $x$ with $|x - x_0| < \varepsilon$,
+\[
+    \mathrm{Per}\big(\tilde{\Omega}(x)\big) \leq \mathrm{Per}\big(\Omega(x)\big) - \frac{\delta(\theta_j)}{2}\,\rho(x)^n.
+\]
+Set $I := (x_0 - \varepsilon,\, x_0 + \varepsilon)$. Since $\tilde{\Omega}(x) = \Omega(x)$ at the endpoints $x = x_0 \pm \varepsilon$, we claim that $\tilde{\Phi}|_{\bar{I}}$ is an $I$-replacement family for $\Phi$ (Definition~\ref{def:excessive-interval}). Indeed, for each $x \in I$ we have $\rho(x) > 0$ and $\rho$ is continuous, so
+\begin{align*}
+    \limsup_{I \ni y \to x}\, \mathrm{Per}\big(\tilde{\Omega}(y)\big)
+    &\;\leq\; \limsup_{y \to x}\, \mathrm{Per}\big(\Omega(y)\big)
+    - \frac{\delta(\theta_j)}{2}\,\rho(x)^n \\
+    &\;\leq\; W - \frac{\delta(\theta_j)}{2}\,\rho(x)^n
+    \;<\; W,
+\end{align*}
+where the second inequality uses $\limsup_{y \to x}\,\mathbf{M}(\Phi(y)) = M(x) \leq W$.
+Therefore $I$ is an excessive interval for $\Phi$ containing $x_0$, which means $x_0$ is excessive---contradicting the non-excessive property of $\Phi$ (Definition~\ref{def:excessive-interval}).
 
 \medskip
 Therefore, the $\alpha$-structural hypothesis holds.
@@ -182,11 +447,7 @@ Therefore, the $\alpha$-structural hypothesis holds.
 We can now assemble the full regularity result.
 
 \begin{proof}[Proof of Theorem~\ref{thm:non-excessive-main}]
-Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $2 \leq n \leq 6$. By Theorem~\ref{thm:non-excessive-existence}, there exists a non-excessive ONVP sweepout $\Phi \in \Snm$. By Proposition~\ref{thm:CLS-stationary}, there exists a stationary varifold $V$ with $\mathbf{M}(V) = W$.
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$. By Theorem~\ref{thm:non-excessive-existence}, there exists a non-excessive ONVP sweepout $\Phi \in \Snm$. By Proposition~\ref{thm:CLS-stationary}, there exists a stationary varifold $V$ with $\mathbf{M}(V) = W$.
 
-\medskip\noindent\emph{Case~1: no mass cancellation.}
-By Theorem~\ref{thm:integrality-mult-one}, $V = |\partial^*\Omega(x_0)|$. Since $V$ is a stationary integral varifold of multiplicity one, Allard regularity~\cite[Theorem~24.2]{Sim84}\xinze{Was: Federer regularity (Proposition removed)} gives that $\spt\|V\| = \partial^*\Omega(x_0)$ is a smooth, closed, embedded minimal hypersurface of multiplicity one.
-
-\medskip\noindent\emph{Case~2: mass cancellation.}
-By Theorem~\ref{thm:integrality}, $V$ is an integral varifold. By Proposition~\ref{prop:stability}, $V$ is stable. By Theorem~\ref{thm:alpha-hypo}, $V$ satisfies the $\alpha$-structural hypothesis. Therefore, all hypotheses of Wickramasekera's theorem (Theorem~\ref{thm:wickramasekera}) are satisfied, and $\sing V = \varnothing$. Thus $\spt\|V\|$ is a smooth, closed, embedded minimal hypersurface in $M$.
+By Theorem~\ref{thm:integrality}, $V$ is an integral varifold. By Proposition~\ref{prop:stability}, $V$ is stable. By Theorem~\ref{thm:alpha-hypo}, $V$ satisfies the $\alpha$-structural hypothesis. Therefore $V \in \mathcal{S}_\alpha$, and Wickramasekera's theorem (Theorem~\ref{thm:wickramasekera}) gives the stated regularity: $\sing V = \varnothing$ for $2 \leq n \leq 6$, $\sing V$ discrete for $n = 7$, and $\mathcal{H}^{n-7+\gamma}(\sing V) = 0$ for each $\gamma > 0$ when $n \geq 8$.
 \end{proof}

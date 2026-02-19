@@ -19,35 +19,102 @@ In the non-excessive framework of Chodosh--Liokumovich--Spolaor \cite{CLS22}, th
 
 \subsection{Wickramasekera's approach}\label{subsec:wickramasekera-approach}
 
-Wickramasekera's regularity theorem~\cite{Wic14} applies to stable codimension~$1$ integral varifolds satisfying the \emph{$\alpha$-structural hypothesis}, a condition on the local geometry of the singular set. Unlike Schoen--Simon, it does not require the almost minimizing property or an a priori bound on the Hausdorff dimension of $\sing V$.
+Wickramasekera's regularity theorem~\cite{Wic14} applies to a class of stable codimension~$1$ integral varifolds defined by three hypotheses. We state them following~\cite[Section~2]{Wic14}, adapted from the Euclidean ball $B_2^{n+1}(0)$ to a Riemannian manifold.
 
-\begin{definition}[$\alpha$-structural hypothesis]\label{defn:alpha-structural}
-For $\alpha \in (0, 1/2)$, a stationary integral varifold $V$ satisfies the \emph{$\alpha$-structural hypothesis} if no singular point
-of $V$ has a neighborhood in which $V$ corresponds to a union of embedded $C^{1,\alpha}$ hypersurfaces-with-boundary
-meeting only along their common $C^{1,\alpha}$ boundary, with multiplicity a constant positive integer
-on each of the constituent hypersurfaces-with-boundary.
+\begin{definition}[The class $\mathcal{S}_\alpha$~{\cite[Section~2]{Wic14}}]\label{defn:class-S-alpha}
+Fix $\alpha \in (0, 1)$. Let $V$ be an integral $n$-varifold on an open subset $U$ of a smooth $(n+1)$-dimensional Riemannian manifold $(N, g)$, with $\|V\|(U) < \infty$. We say $V \in \mathcal{S}_\alpha$ if $V$ satisfies the following three conditions:
+\begin{itemize}
+\item[$(\mathcal{S}1)$] \textbf{Stationarity.} $V$ has vanishing first variation:
+\[
+    \delta V(X) = \int \operatorname{div}_S X \, dV(x, S) = 0 \quad \text{for every } X \in \mathfrak{X}_c(U).
+\]
+
+\item[$(\mathcal{S}2)$] \textbf{Stability.} For each open set $\Omega \subset U$ such that $\sing V \cap \Omega = \varnothing$ (if $2 \leq n \leq 6$) or $\mathcal{H}^{n-7+\gamma}(\sing V \cap \Omega) = 0$ for every $\gamma > 0$ (if $n \geq 7$),
+\[
+    \int_{\reg V \cap \Omega} |A|^2 \zeta^2 \, d\mathcal{H}^n \leq \int_{\reg V \cap \Omega} |\nabla \zeta|^2 \, d\mathcal{H}^n \quad \text{for all } \zeta \in C^1_c(\reg V \cap \Omega),
+\]
+where $A$ is the second fundamental form of $\reg V$. Equivalently, $V$ has non-negative second variation for normal deformations compactly supported in $\Omega \setminus \sing V$.
+
+\item[$(\mathcal{S}3)$] \textbf{$\alpha$-structural hypothesis.}\label{defn:alpha-structural} For each $Z \in \sing V$, there exists \emph{no} $\rho > 0$ such that $\spt\|V\| \cap B_\rho(Z)$ is equal to the union of finitely many embedded $C^{1,\alpha}$ hypersurfaces-with-boundary of $B_\rho(Z)$, all having a common $C^{1,\alpha}$ boundary containing $Z$, with no two intersecting except along their common boundary.
+\end{itemize}
 \end{definition}
 
-\begin{theorem}[Wickramasekera~{\cite{Wic14}}]\label{thm:wickramasekera}
-    Let $V$ be a stable integral $n$-varifold in a closed $(n+1)$-dimensional Riemannian manifold
-    with $2\leq n\leq 6$. If $V$ satisfies the $\alpha$-structural hypothesis for some $\alpha \in (0, 1/2)$,
-    then $\sing V = \varnothing$, i.e., $\spt\|V\|$ is a smooth embedded minimal hypersurface.
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[scale=0.85]
+      % Edge Gamma: shared edge of three half-planes, with perspective
+      \coordinate (A) at (-1.6,-0.5);
+      \coordinate (B) at (1.6,0.5);
+
+      % M_1 (upper half-plane): parallelogram above L
+      \coordinate (A1) at ($(A)+(0.6,2.0)$);
+      \coordinate (B1) at ($(B)+(0.6,2.0)$);
+
+      % M_2 (lower-right half-plane): parallelogram to the right of L
+      \coordinate (A2) at ($(A)+(2.0,-0.6)$);
+      \coordinate (B2) at ($(B)+(2.0,-0.6)$);
+
+      % M_3 (lower-left half-plane): parallelogram to the left of L
+      \coordinate (A3) at ($(A)+(-1.8,-1.2)$);
+      \coordinate (B3) at ($(B)+(-1.8,-1.2)$);
+
+      % Intersection of A3--B3 with A--A2 (where M_3 passes behind M_2)
+      \coordinate (I) at (-0.56,-0.81);
+
+      % Fill and draw half-planes (back to front)
+      % M_3 (behind): edges occluded by M_2 are dashed
+      \fill[fillA, opacity=0.2] (A) -- (B) -- (B3) -- (A3) -- cycle;
+      \draw[thick, bindA] (A) -- (A3);
+      \draw[thick, bindA, dashed] (B) -- (B3);
+      \draw[bindA] (A3) -- (I);
+      \draw[bindA, dashed] (I) -- (B3);
+      \node[bindA] at (-0.9,-1.15) {$M_3$};
+
+      % M_1 (upper)
+      \fill[fillA, opacity=0.2] (A) -- (B) -- (B1) -- (A1) -- cycle;
+      \draw[thick, bindA] (A) -- (A1);
+      \draw[thick, bindA] (B) -- (B1);
+      \draw[bindA] (A1) -- (B1);
+      \node[bindA] at (0.33,1.25) {$M_1$};
+
+      % M_2 (lower-right)
+      \fill[fillA, opacity=0.2] (A) -- (B) -- (B2) -- (A2) -- cycle;
+      \draw[thick, bindA] (A) -- (A2);
+      \draw[thick, bindA] (B) -- (B2);
+      \draw[bindA] (A2) -- (B2);
+      \node[bindA] at (1.1,-0.55) {$M_2$};
+
+      % Edge Gamma (drawn on top)
+      \draw[very thick] (A) -- (B);
+      \node[above left] at ($(A)!0.28!(B)$) {$\Gamma$};
+
+      % Singular point Z
+      \coordinate (Z) at ($(A)!0.5!(B)$);
+      \fill (Z) circle (1.5pt);
+      \node[below] at ($(Z)+(0,-0.1)$) {\small $Z$};
+    \end{tikzpicture}
+    \caption{A configuration excluded by the $\alpha$-structural hypothesis $(\mathcal{S}3)$: three $C^{1,\alpha}$ hypersurfaces-with-boundary $M_1, M_2, M_3$ meeting along a common boundary $\Gamma$. The point $Z \in \Gamma$ is a singular point whose tangent cone is a union of three half-hyperplanes.}
+    \label{fig:alpha-structural}
+\end{figure}
+
+\begin{remark}\label{rem:S-alpha-remarks}
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item Since $\reg V$ is open and dense in $\spt\|V\|$ by Allard's regularity theorem, $(\mathcal{S}2)$ is never vacuous; moreover $\mathcal{H}^{n-1}(\sing V) = 0$ trivially implies $(\mathcal{S}3)$, so $\mathcal{S}_\alpha$ contains all stable minimal hypersurfaces with small singular set~\cite[Remarks~(1)--(2) following~$(\mathcal{S}3)$]{Wic14}.
+    \item For $V \in \mathcal{S}_\alpha$, hypothesis $(\mathcal{S}3)$ is equivalent to requiring that no tangent cone at a singular point is supported by \emph{three or more} distinct half-hyperplanes meeting along a common $(n-1)$-dimensional subspace; this equivalence relies on the Sheeting Theorem~\cite[Theorem~3.3]{Wic14} and the Minimum Distance Theorem~\cite[Theorem~3.4]{Wic14}; see also~\cite[Remark~(3) following~$(\mathcal{S}3)$]{Wic14}. The case of exactly two half-hyperplanes is already excluded by stationarity: a stationary cone supported on $N$ half-hyperplanes $P_1^+, \ldots, P_N^+$ meeting along a common edge $L$ satisfies the balancing condition $\sum_{j=1}^N \nu_j = 0$, where $\nu_j$ is the outward unit conormal of $P_j^+$ along $L$. When $N = 2$, this forces $\nu_1 = -\nu_2$, so the two half-hyperplanes form a single hyperplane and $Z$ is a regular point.
+\end{enumerate}
+\end{remark}
+
+The main regularity result is:
+
+\begin{theorem}[Regularity and Compactness~{\cite[Theorem~3.1, manifold version Theorem~6.1]{Wic14}}]\label{thm:wickramasekera}
+    Let $(N^{n+1}, g)$ be a smooth Riemannian manifold and $\alpha \in (0, 1/2)$. If $V \in \mathcal{S}_\alpha$ on $N$ with $\|V\|(N) < \infty$, then:
+    \begin{enumerate}[label=\textup{(\alph*)}]
+        \item $\sing V = \varnothing$ if $2 \leq n \leq 6$;
+        \item $\sing V$ is discrete if $n = 7$;
+        \item $\mathcal{H}^{n-7+\gamma}(\sing V) = 0$ for each $\gamma > 0$ if $n \geq 8$.
+    \end{enumerate}
+    In particular, for $2 \leq n \leq 6$, $\spt\|V\|$ is a smooth embedded minimal hypersurface.
 \end{theorem}
 
-Wickramasekera's theorem strictly subsumes the Schoen--Simon theory: if $\mathcal{H}^{n-2}(\sing V) = 0$, then the $\alpha$-structural hypothesis holds vacuously (a junction of $C^{1,\alpha}$ hypersurfaces-with-boundary along an $(n-1)$-dimensional boundary would produce an $(n-1)$-dimensional singular set, contradicting $\mathcal{H}^{n-2}(\sing V) = 0$). Similarly, the almost minimizing property implies $\mathcal{H}^{n-2}(\sing V) = 0$ by Schoen--Simon, and thus implies the $\alpha$-structural hypothesis.
+Wickramasekera's theorem strictly subsumes Schoen--Simon: if $\mathcal{H}^{n-2}(\sing V) = 0$, then $(\mathcal{S}3)$ holds vacuously (a junction of $C^{1,\alpha}$ hypersurfaces-with-boundary along an $(n-1)$-dimensional boundary would produce an $(n-1)$-dimensional singular set). Similarly, the almost minimizing property implies $\mathcal{H}^{n-2}(\sing V) = 0$ by Schoen--Simon, and thus implies $(\mathcal{S}3)$.
 
-The proof of Theorem~\ref{thm:wickramasekera} is substantially more involved than Schoen--Simon, requiring a simultaneous induction on two regularity results: the \emph{Sheeting Theorem} (near points of density $q \geq 2$, the varifold decomposes into smooth graphs) and the \emph{Minimum Distance Theorem} (a quantitative gap between the density of $V$ and the density of singular cones). The induction is powered by coarse and fine blow-up analysis together with Simon's $L^2$-estimates for the blow-up functions.
-
-\subsection{Suitability to the non-excessive setting}\label{subsec:suitability}
-
-The non-excessive framework provides exactly the inputs that Wickramasekera's theorem requires, without passing through the almost minimizing property:
-
-\begin{itemize}
-    \item \textbf{Stability.} The non-excessive condition ensures that the limit varifold $V$ is one-sided homotopic minimizing at all but finitely many points~\cite[Proposition~3.1]{CLS22}. One-sided homotopic minimization implies local stability, which extends to global stability by a partition-of-unity argument (Proposition~\ref{prop:stability}).
-
-    \item \textbf{Integrality.} Integrality is established independently of the regularity theory: in the no-mass-cancellation case by the de~Lellis--Tasnady criterion, and in the mass-cancellation case by a graphical decomposition argument that decomposes the approximating boundaries into smooth sheets (Theorem~\ref{thm:integrality}). Neither nestedness nor the non-excessive condition is used.
-
-    \item \textbf{The $\alpha$-structural hypothesis.} If the hypothesis fails at a singular point $Z$, the tangent cone consists of $N$ half-hyperplanes meeting along a common edge. The fold case $N = 2$ is excluded by~\cite[Remark~(3) following~($\mathcal{S}3$)]{Wic14}: for stable codimension~$1$ integral varifolds, the $\alpha$-structural hypothesis is equivalent to requiring $N \geq 3$, and flat tangent cones (with any multiplicity) are handled by the Sheeting Theorem (Lemma~\ref{lem:wedge}). Therefore $N \geq 3$, and the pigeonhole principle produces an adjacent pair with angle $< \pi$; a chord-beats-arc replacement then yields a local area saving that, transferred to the approximating Caccioppoli sets, contradicts the min-max width (Theorem~\ref{thm:alpha-hypo}).
-\end{itemize}
-
-Thus the non-excessive framework bypasses the almost minimizing property entirely: the route to regularity runs through stability and the $\alpha$-structural hypothesis, both of which are verified directly from the geometric structure of the sweepout.
