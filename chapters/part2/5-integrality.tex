@@ -187,19 +187,26 @@ The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\pa
 \end{figure}
 
 \begin{lemma}[Density lower bound]\label{lem:density-lower-bound}
-Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be an optimal nested \textup{(}ONVP\textup{)} sweepout. Let $V$ be the varifold limit of $|\partial^*\Omega(x_i)|$ along a min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$. In particular, $V$ is rectifiable by Allard's theorem \textup{(Proposition~\ref{prop:allard-rectifiability})}.
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be a non-excessive optimal nested \textup{(}ONVP\textup{)} sweepout. Let $V$ be the varifold limit of $|\partial^*\Omega(x_i)|$ along a min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$. In particular, $V$ is rectifiable by Allard's theorem \textup{(Proposition~\ref{prop:allard-rectifiability})}.
 \end{lemma}
 
 \begin{proof}
-Fix $p \in \spt\|V\|$ and $r \in (0, \mathrm{inj}(M)/4)$. Since $\|V\|(B_{r/4}(p)) > 0$, varifold convergence gives $\|\partial^*\Omega_i\|(B_{r/4}(p)) > 0$ for all $i$ sufficiently large, so there exists $q_i \in \spt\|D\chi_{\Omega_i}\| \cap B_{r/4}(p)$. The relative isoperimetric inequality on $(M, g)$ provides a constant $c_0 = c_0(M, g) > 0$ such that
+\textbf{Step~1} (Generic points). Let $p \in \spt\|V\| \setminus \mathfrak{h}_{\mathrm{nm}}(V)$. By definition (Definition~\ref{def:hnm}), $V$ is one-sided homotopic minimizing in $B_r(p)$ for some $r > 0$. WLOG the approximating slices $\Omega_i = \Omega(x_i)$ are inner homotopic minimizing in $B_r(p)$ for all $i$ sufficiently large\xinze{More precisely, $p \notin \mathfrak{h}_{\mathrm{nm}}(V)$ means: for some $r > 0$, $\spt\|V\| \cap B_r(p)$ is one-sided homotopic minimizing; \cite[Proposition~3.1]{CLS22} ensures this property is inherited by the approximating slices $\Omega(x_i)$ for $i$ large.}. For such $\Omega_i$ and a.e.\ $\rho \in (0, r)$, the continuous inner deformation $t \mapsto \Omega_i \setminus \bar{B}_{t\rho}(p)$ ($t \in [0,1]$) gives a competitor with perimeter in $B_r(p)$ equal to $\mathrm{Per}(\Omega_i, B_r(p)) - \mathrm{Per}(\Omega_i, B_\rho(p)) + \mathcal{H}^n(\Omega_i \cap \partial B_\rho(p))$. The inner homotopic minimizing property forces
+\begin{equation}\label{eq:hm-comparison}
+    \mathrm{Per}(\Omega_i, B_\rho(p)) \leq \mathcal{H}^n(\Omega_i \cap \partial B_\rho(p)) = f_i'(\rho) \quad \text{for a.e.\ } \rho \in (0, r),
+\end{equation}
+where $f_i(\rho) := |\Omega_i \cap B_\rho(p)|$. The relative isoperimetric inequality on $(M, g)$ gives $f_i(\rho)^{n/(n+1)} \leq C\,\mathrm{Per}(\Omega_i, B_\rho(p))$ for $\rho$ small enough that $f_i(\rho) \leq |B_\rho(p)|/2$, where $C = C(M,g)$\xinze{Since $p \in \spt\|D\chi_{\Omega_i}\|$, we have $f_i(\rho) > 0$ for all $\rho > 0$, and $f_i(0) = 0$, so $f_i < |B_\rho|/2$ for small $\rho$. The relative isoperimetric inequality on a Riemannian manifold~\cite[Theorem~2.1]{Heb99} states $\min(|E \cap B_\rho|, |B_\rho \setminus E|)^{n/(n+1)} \leq C\,\mathrm{Per}(E, B_\rho)$.}. Combined with~\eqref{eq:hm-comparison}:
 \[
-    \mathrm{Per}(\Omega_i, B_{r/2}(q_i)) \geq c_0\, r^n
+    f_i(\rho)^{n/(n+1)} \leq C\, f_i'(\rho).
 \]
-for every Caccioppoli set $\Omega_i$ and every $q_i \in \spt\|D\chi_{\Omega_i}\|$\xinze{At $q \in \spt|D\chi_\Omega|$, both $\Omega$ and $M \setminus \Omega$ have positive $(n{+}1)$-density; the relative isoperimetric inequality converts this volume lower bound into a perimeter lower bound $\mathrm{Per}(\Omega, B_\rho(q)) \geq c\rho^n$. See~\cite[Proposition~3.62]{AFP00} for the Euclidean case; the Riemannian version follows by metric equivalence in geodesic normal coordinates.}. Since $B_{r/2}(q_i) \subset B_r(p)$, the Portmanteau theorem for weak-$*$ convergence (applied to the closed ball $\bar{B}_r(p)$) gives
+Integrating\xinze{Write $g = f_i^{1/(n+1)}$. Then $g' = \frac{1}{n+1} f_i^{-n/(n+1)} f_i' \geq \frac{1}{(n+1)C}$ a.e.\ where $f_i > 0$. Since $g(0) = 0$, we get $g(\rho) \geq \rho/((n+1)C)$, i.e.\ $f_i(\rho) \geq (\rho/((n+1)C))^{n+1}$.}: $f_i(\rho) \geq c_1 \rho^{n+1}$ for $c_1 = c_1(M,g) > 0$ and all $\rho \in (0, r)$. Then
 \[
-    \|V\|(\bar{B}_r(p)) \geq \limsup_{i \to \infty} \|\partial^*\Omega_i\|(\bar{B}_r(p)) \geq c_0\, r^n.
+    \mathrm{Per}(\Omega_i, B_\rho(p)) \geq C^{-1} f_i(\rho)^{n/(n+1)} \geq c_0\, \rho^n,
 \]
-Since this holds for all small $r$, the density satisfies $\Theta(\|V\|, p) \geq c_0/\omega_n > 0$.
+where $c_0 = c_0(M,g) > 0$. The Portmanteau theorem (closed-set version: $\|V\|(\bar{B}_\rho(p)) \geq \limsup \|\partial^*\Omega_i\|(\bar{B}_\rho(p))$) then gives $\|V\|(\bar{B}_\rho(p)) \geq c_0\, \rho^n$ for all small $\rho$, so $\Theta(\|V\|, p) \geq c_0/\omega_n > 0$.
+
+\medskip
+\textbf{Step~2} (Exceptional points). The set $\mathfrak{h}_{\mathrm{nm}}(V)$ is finite by~\cite[Proposition~3.1]{CLS22}. For $p \in \mathfrak{h}_{\mathrm{nm}}(V)$, the support $\spt\|V\|$ cannot reduce to $\{p\}$ in any ball (as the monotonicity formula would force $\Theta(p) = +\infty$)\xinze{If $\spt\|V\| \cap B_r(p) = \{p\}$, then $\|V\|(B_\rho(p))$ is constant for $\rho \in (0, r)$, so $e^{C\rho}\rho^{-n}\|V\|(B_\rho(p)) \to +\infty$ as $\rho \to 0$, contradicting the monotonicity bound $\leq e^{Cr}r^{-n}\|V\|(B_r(p)) < \infty$.}, so for any $r > 0$ there exists $q \in (\spt\|V\| \setminus \mathfrak{h}_{\mathrm{nm}}(V)) \cap B_{r/2}(p)$. By Step~1, $\Theta(\|V\|, q) \geq c_0/\omega_n$. The monotonicity formula at $q$ gives $\|V\|(B_{r/2}(q)) \geq \omega_n \Theta(\|V\|, q)\, e^{-Cr/2} (r/2)^n \geq c_0\, e^{-Cr/2}\, (r/2)^n$. Since $B_{r/2}(q) \subset B_r(p)$, taking $r \to 0$ yields $\Theta(\|V\|, p) \geq c_0/(2^n\omega_n) > 0$.
 \end{proof}
 
 \begin{lemma}[Sheet decomposition]\label{lem:sheet-decomposition}
