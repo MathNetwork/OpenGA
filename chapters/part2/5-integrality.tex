@@ -191,7 +191,7 @@ Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Ph
 \end{lemma}
 
 \begin{proof}
-By Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), it suffices to show that $\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e.\ $p$. Since $V$ is stationary, the density $\Theta(\|V\|, p)$ exists at every point (Proposition~\ref{prop:p2-monotonicity}). We argue by contradiction: suppose $\Theta(\|V\|, p) = 0$ for some $p \in \spt\|V\|$.
+By Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), it suffices to show that $\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e.\ $p$. Since $V$ is stationary, the density $\Theta(\|V\|, p)$ exists at every point (Proposition~\ref{prop:p2-monotonicity}). We argue by contradiction: suppose $\|V\|(\{p \in \spt\|V\| : \Theta(\|V\|, p) = 0\}) > 0$. Since $\Phi$ is a non-excessive ONVP sweepout, by~\cite[Proposition~3.1]{CLS22} the set $\mathfrak{h}_{\mathrm{nm}}(V)$ of non-homotopic-minimizing points is at most finite (Definition~\ref{def:hnm}), hence $\|V\|$-null\xinze{Each singleton has $\|V\|$-measure zero: $\|V\|(\{q\}) \leq \|V\|(B_r(q)) \leq C r^n \to 0$ by the monotonicity formula. So a finite set is $\|V\|$-null.}. Therefore there exists $p \in \spt\|V\| \setminus \mathfrak{h}_{\mathrm{nm}}(V)$ with $\Theta(\|V\|, p) = 0$.
 
 \medskip\noindent\textbf{Step~1} (Vanishing mass at small scales).
 Since the modified density ratio $e^{Cr}\,\omega_n^{-1} r^{-n}\|V\|(B_r(p))$ is non-decreasing in $r$ (Proposition~\ref{prop:p2-monotonicity}) and its limit as $r \to 0$ equals $\Theta(\|V\|, p) = 0$, we have
@@ -223,76 +223,70 @@ Applying~\eqref{eq:relative-isoperimetric} to $\Omega = \Omega(x_i)$ and using~\
 for each good $r < \min(r_0, r_1)$ and all $i \geq i_0(r, \varepsilon)$. Since $\varepsilon > 0$ is arbitrary, the smaller side has volume $o(r^{n+1})$ as $r \to 0$ then $i \to \infty$: the set $\Omega(x_i) \cap B_r(p)$ is either nearly empty or nearly full.
 
 \medskip\noindent\textbf{Step~3} (Replacement and contradiction with non-excessiveness; cf.~\cite[Proposition~5.1]{DLT13}).
-By Step~2, replacing $\Omega(x_i)$ by $M \setminus \Omega(x_i)$ if necessary (which swaps inner and outer but preserves the reduced boundary), we may assume
+By passing to a subsequence, we may assume $x_i \nearrow x_0$, so that $x_0 \in \mathfrak{m}_L(\Phi)$ and $x_0$ is not left excessive (Theorem~\ref{thm:non-excessive-existence}). By Step~2, passing to a further subsequence, either
+$\mathcal{L}^{n+1}(\Omega(x_i) \cap B_r(p)) = o(r^{n+1})$ (nearly empty) or
+$\mathcal{L}^{n+1}(B_r(p) \setminus \Omega(x_i)) = o(r^{n+1})$ (nearly full).
+Let $f_i(\rho)$ denote the smaller volume:
 \begin{equation}\label{eq:volume-small}
-    V_i(r) := \mathcal{L}^{n+1}(\Omega(x_i) \cap B_r(p)) = o(r^{n+1}).
+    f_i(r) := \min\bigl(\mathcal{L}^{n+1}(\Omega(x_i) \cap B_r(p)),\;\mathcal{L}^{n+1}(B_r(p) \setminus \Omega(x_i))\bigr) = o(r^{n+1}).
 \end{equation}
 
 \emph{Finding a good radius.}
-The coarea formula for the distance function $d_p = \mathrm{dist}(\cdot, p)$ gives
-\[
-    V_i'(\rho) = \mathcal{H}^n(\partial B_\rho(p) \cap \Omega(x_i)^{(1)}) \quad \text{for a.e.\ } \rho,
-\]
-and the relative isoperimetric inequality in $B_\rho(p)$ gives
+The coarea formula gives $f_i'(\rho) = \mathcal{H}^n(\partial B_\rho(p) \cap S_i)$ for a.e.\ $\rho$, where $S_i = \Omega(x_i)^{(1)}$ in the nearly-empty case and $S_i = \Omega(x_i)^{(0)}$ in the nearly-full case. The relative isoperimetric inequality gives
 \begin{equation}\label{eq:isoperimetric-lower}
-    \mathrm{Per}(\Omega(x_i), B_\rho(p)) \geq c_n\, V_i(\rho)^{n/(n+1)}
+    \mathrm{Per}(\Omega(x_i), B_\rho(p)) \geq c_n\, f_i(\rho)^{n/(n+1)}
 \end{equation}
-whenever $0 < V_i(\rho) \leq \frac{1}{2}\mathcal{L}^{n+1}(B_\rho(p))$, where $c_n > 0$ depends only on $(M, g, n)$.
+whenever $0 < f_i(\rho) \leq \frac{1}{2}\mathcal{L}^{n+1}(B_\rho(p))$, where $c_n > 0$ depends only on $(M, g, n)$.
 
-We claim that there exists $\rho_i \in (0, r)$ with $V_i(\rho_i) > 0$ and
+We claim that there exists $\rho_i \in (0, r)$ with $f_i(\rho_i) > 0$ and
 \begin{equation}\label{eq:good-radius}
-    V_i'(\rho_i) < c_n\, V_i(\rho_i)^{n/(n+1)} \leq \mathrm{Per}(\Omega(x_i), B_{\rho_i}(p)).
+    f_i'(\rho_i) < c_n\, f_i(\rho_i)^{n/(n+1)} \leq \mathrm{Per}(\Omega(x_i), B_{\rho_i}(p)).
 \end{equation}
 Indeed, $p \in \spt\|V\|$ gives $\|V\|(B_{r/2}(p)) > 0$, so
 $\mathrm{Per}(\Omega(x_i), B_{r/2}(p)) > 0$ for $i$ large,
-forcing $V_i(\rho) > 0$ for all $\rho \geq r/2$.
-If $V_i'(\rho) \geq c_n\, V_i(\rho)^{n/(n+1)}$ for a.e.\
-$\rho \in (r/2, r)$, set $\varphi = V_i^{1/(n+1)}$ and integrate:
+forcing $f_i(\rho) > 0$ for all $\rho \geq r/2$ (since $\mathrm{Per} > 0$ implies $\partial^*\Omega(x_i) \cap B_{r/2} \neq \emptyset$, so both $\Omega(x_i)$ and its complement have positive volume near any point of the reduced boundary).
+If $f_i'(\rho) \geq c_n\, f_i(\rho)^{n/(n+1)}$ for a.e.\
+$\rho \in (r/2, r)$, set $\varphi = f_i^{1/(n+1)}$ and integrate:
 \[
-    \varphi'(\rho) = \frac{V_i'(\rho)}{(n{+}1)\,V_i(\rho)^{n/(n+1)}} \geq \frac{c_n}{n{+}1} \quad \text{a.e.\ on } (r/2, r),
+    \varphi'(\rho) = \frac{f_i'(\rho)}{(n{+}1)\,f_i(\rho)^{n/(n+1)}} \geq \frac{c_n}{n{+}1} \quad \text{a.e.\ on } (r/2, r),
 \]
-so $V_i(r)^{1/(n+1)} \geq V_i(r/2)^{1/(n+1)} + c_n r / (2(n{+}1))$, giving
-$V_i(r) \geq c_0\, r^{n+1}$ for a constant $c_0 = c_0(n, M) > 0$.
+so $f_i(r)^{1/(n+1)} \geq f_i(r/2)^{1/(n+1)} + c_n r / (2(n{+}1))$, giving
+$f_i(r) \geq c_0\, r^{n+1}$ for a constant $c_0 = c_0(n, M) > 0$.
 This contradicts~\eqref{eq:volume-small} for $r$ small and $i$ large.
 So~\eqref{eq:good-radius} holds for some $\rho_i \in (r/2, r)$.
 
 \emph{Construction of the replacement.}
 Define the Caccioppoli set
 \[
-    E_i := \Omega(x_i) \setminus \overline{B}_{\rho_i}(p).
+    E_i := \begin{cases} \Omega(x_i) \setminus \overline{B}_{\rho_i}(p) & \text{(nearly empty)}, \\[2pt]
+    \Omega(x_i) \cup \overline{B}_{\rho_i}(p) & \text{(nearly full)}.
+    \end{cases}
 \]
-Then $E_i \subset \Omega(x_i)$, $E_i \mathbin{\triangle} \Omega(x_i) = \Omega(x_i) \cap \overline{B}_{\rho_i}(p) \subset B_r(p)$, and for a.e.\ $\rho_i$ (chosen so that $\|V\|(\partial B_{\rho_i}(p)) = 0$ and $\mathcal{H}^{n-1}(\partial^*\Omega(x_i) \cap \partial B_{\rho_i}(p)) = 0$):
+In either case, $E_i = \Omega(x_i)$ outside $B_r(p)$. For a.e.\ $\rho_i$ (chosen so that $\|V\|(\partial B_{\rho_i}(p)) = 0$ and $\mathcal{H}^{n-1}(\partial^*\Omega(x_i) \cap \partial B_{\rho_i}(p)) = 0$):
 \begin{align}
     \mathrm{Per}(E_i, B_r(p))
     &= \mathrm{Per}(\Omega(x_i),\, B_r(p) \setminus \overline{B}_{\rho_i})
-       + \mathcal{H}^n(\partial B_{\rho_i}(p) \cap \Omega(x_i)^{(1)}), \label{eq:per-replacement} \\
+       + f_i'(\rho_i), \label{eq:per-replacement} \\
     \mathrm{Per}(\Omega(x_i), B_r(p))
     &= \mathrm{Per}(\Omega(x_i),\, B_r(p) \setminus \overline{B}_{\rho_i})
        + \mathrm{Per}(\Omega(x_i), B_{\rho_i}(p)). \label{eq:per-original}
 \end{align}
-Subtracting~\eqref{eq:per-original} from~\eqref{eq:per-replacement} and applying~\eqref{eq:good-radius}:
+Here~\eqref{eq:per-replacement} holds because the reduced boundary of $E_i$ inside $B_r(p)$ consists of $\partial^*\Omega(x_i)$ in the annulus $B_r \setminus \overline{B}_{\rho_i}$ together with the spherical cap $\partial B_{\rho_i} \cap S_i$, whose $\mathcal{H}^n$-measure equals $f_i'(\rho_i)$ by the coarea formula. Subtracting~\eqref{eq:per-original} from~\eqref{eq:per-replacement} and applying~\eqref{eq:good-radius}:
 \begin{equation}\label{eq:per-decrease}
-    \mathrm{Per}(E_i, B_r(p)) - \mathrm{Per}(\Omega(x_i), B_r(p))
-    = V_i'(\rho_i) - \mathrm{Per}(\Omega(x_i), B_{\rho_i}(p)) < 0.
+    \mathrm{Per}(E_i) - \mathrm{Per}(\Omega(x_i))
+    = f_i'(\rho_i) - \mathrm{Per}(\Omega(x_i), B_{\rho_i}(p)) < 0.
 \end{equation}
-Since $E_i = \Omega(x_i)$ outside $B_r(p)$, the total perimeter satisfies
-\begin{align*}
-    \mathrm{Per}(E_i, M)
-    &= \mathrm{Per}(\Omega(x_i), M)
-       + \bigl[\mathrm{Per}(E_i, B_r(p)) - \mathrm{Per}(\Omega(x_i), B_r(p))\bigr] \\
-    &< \mathrm{Per}(\Omega(x_i), M).
-\end{align*}
 
-\emph{Continuous deformation.}
-The family $\{E_i^s\}_{s \in [0, \rho_i]}$ defined by $E_i^s := \Omega(x_i) \setminus \overline{B}_s(p)$ is continuous in $L^1(M)$: $\mathcal{L}^{n+1}(E_i^s \mathbin{\triangle} E_i^{s'}) = \mathcal{L}^{n+1}(\Omega(x_i) \cap (B_{\max(s,s')} \setminus B_{\min(s,s')})) \to 0$ as $s' \to s$. Moreover, $E_i^0 = \Omega(x_i)$, $E_i^{\rho_i} = E_i$, and $E_i^s \subset \Omega(x_i)$ for every $s$.
-
-\emph{Contradiction.}
-Since $\Phi$ is a non-excessive ONVP sweepout, by~\cite[Proposition~3.1]{CLS22} the set $\mathfrak{h}_{\mathrm{nm}}(V)$ of non-homotopic-minimizing points is at most finite (Definition~\ref{def:hnm}). Now suppose $p \in \spt\|V\| \setminus \mathfrak{h}_{\mathrm{nm}}(V)$ with $\Theta(\|V\|, p) = 0$. Since $p \notin \mathfrak{h}_{\mathrm{nm}}(V)$, there exists $r_p > 0$ such that for all $i$ sufficiently large, $\partial^*\Omega(x_i)$ is one-sided homotopic minimizing in $B_{r_p}(p)$\xinze{CLS22 Prop~3.1 shows $\mathfrak{h}_{\mathrm{nm}}(V)$ is finite via the sweepout: for $p \notin \mathfrak{h}_{\mathrm{nm}}(V)$, non-excessiveness prevents the slices $\Omega(x_i)$ from being improved by a local homotopic deformation in $B_{r_p}(p)$, for all $i$ large. The precise mechanism: if the slices could be improved, one could build an $I$-replacement family contradicting non-excessiveness of $\Phi$.}. By nestedness, the same side (inner or outer) is small for all $i$ large\xinze{In the nearly-empty case ($V_i(r) = o(r^{n+1})$), inner fails. In the nearly-full case ($\mathcal{L}^{n+1}(B_r \setminus \Omega(x_i)) = o(r^{n+1})$), outer fails. By nestedness, $x_i \leq x_j \Rightarrow \Omega(x_i) \subset \Omega(x_j)$, so the same side is small for ALL $i$ large.}. Taking $r < r_p$ in the construction above, the replacement $E_i$ satisfies $E_i \subset \Omega(x_i)$ (resp.\ $E_i \supset \Omega(x_i)$), $\mathrm{Per}(E_i, B_r(p)) < \mathrm{Per}(\Omega(x_i), B_r(p))$, and is connected to $\Omega(x_i)$ by a continuous inner (resp.\ outer) deformation. This contradicts the one-sided homotopic minimality of $\partial^*\Omega(x_i)$ in $B_{r_p}(p)$ (Definition~\ref{def:homotopic-minimizer}).
-
-Therefore $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\| \setminus \mathfrak{h}_{\mathrm{nm}}(V)$. Since $\mathfrak{h}_{\mathrm{nm}}(V)$ is finite and $\|V\|(\{q\}) = 0$ for each $q$ (by the monotonicity formula: $\|V\|(B_r(q)) \leq C r^n \to 0$), we conclude $\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e.\ $p$.
-
-\medskip
-We conclude that $\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e.\ $p$. By Allard's rectifiability theorem, $V$ is rectifiable.
+\emph{Contradiction with non-excessiveness.}
+Since $\mathrm{Per}(E_i) < \mathrm{Per}(\Omega(x_i)) \leq W$, define the $[x_i, x_0]$-replacement family
+\[
+    \Omega^I(x) := \begin{cases} \Omega(x_i) & x = x_i, \\ E_i & x \in (x_i, x_0), \\ \Omega(x_0) & x = x_0. \end{cases}
+\]
+The endpoints satisfy $\Omega^I(x_i) = \Omega(x_i)$ and $\Omega^I(x_0) = \Omega(x_0)$. For every $x \in [x_i, x_0]$,
+\[
+    \limsup_{[x_i, x_0] \ni y \to x} \mathbf{M}(|\partial^*\Omega^I(y)|) = \mathrm{Per}(E_i) < W,
+\]
+since the limsup excludes $y = x$ and $\Omega^I(y) = E_i$ for all $y \in (x_i, x_0)$. Thus $[x_i, x_0]$ is an excessive interval with $(x_i, x_0] \subset [x_i, x_0]$, making $x_0$ left excessive (Definition~\ref{def:excessive-interval})---contradicting the non-excessiveness of $\Phi$ (Theorem~\ref{thm:non-excessive-existence}). Therefore $\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e.\ $p$, and $V$ is rectifiable by Allard's rectifiability theorem.
 \end{proof}
 
 \begin{lemma}[Sheet decomposition]\label{lem:sheet-decomposition}
