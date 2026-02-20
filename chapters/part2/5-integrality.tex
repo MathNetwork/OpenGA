@@ -4,6 +4,7 @@
 
 Integrality of the limit varifold is an essential input to the regularity argument: it ensures that tangent cones at singular points are integral cones, which constrains them to the junction configurations (wedges, folds, and higher-order junctions) needed to derive a contradiction when the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}) fails (see Section~\ref{subsec:alpha-structural}). We begin by recalling the following criterion from de~Lellis--Tasnady~\cite{DLT13}, which gives conditions under which varifold convergence of Caccioppoli boundaries is guaranteed:
 
+\xinze{The following proposition works only for the case of non-mass cancellation. It is actually covered by Lemma 5.4}
 \begin{proposition}[Varifolds vs.\ Caccioppoli set limits~{\cite[Proposition~A.1]{DLT13}}]\label{prop:p2-DLT-integrality}
     Let $\{\Omega^k\}$ be a sequence of Caccioppoli sets and $U$ an open subset of $M$. Assume that
     \begin{enumerate}[label=\textup{(\roman*)}]
@@ -73,6 +74,7 @@ Both conditions of Proposition~\ref{prop:p2-DLT-integrality} are satisfied, so $
 \end{figure}
 
 The identification $V = |\partial^*\Omega(x_0)|$ has two important consequences beyond integrality: it tells us that $V$ is the boundary of a Caccioppoli set, which constrains the possible tangent cones (see the proof of Theorem~\ref{thm:alpha-hypo}), and it connects $V$ to the non-excessive structure of the sweepout, which provides the homotopic minimizing property.
+\xinze{is this gives us any regularity?}
 
 \subsection{The mass cancellation case}\label{subsec:integrality-cancel}
 
@@ -80,7 +82,9 @@ When mass cancellation occurs ($\mathbf{M}(\Phi(x_0)) < W$), we still have $\Ome
 \[
     \mathrm{Per}(\Omega(x_i)) \to W > \mathrm{Per}(\Omega(x_0)).
 \]
-The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. Instead, we use the nestedness of the sweepout to decompose the approximating boundaries into graphical sheets and show that the density is a positive integer at $\mathcal{H}^n$-a.e.\ point. Note that $V$ is rectifiable by Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), since it is stationary (Proposition~\ref{thm:CLS-stationary}). The main tool is the following graphical decomposition lemma.
+The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. Instead, we use the nestedness of the sweepout to decompose the approximating boundaries into graphical sheets and show that the density is a positive integer at $\mathcal{H}^n$-a.e.\ point.
+\xinze{This is not precise, rectifiability and integrality are two seperate lemmas. The former one does not use rectifiability.}
+Note that $V$ is rectifiable by Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), since it is stationary (Proposition~\ref{thm:CLS-stationary}). The main tool is the following graphical decomposition lemma.
 
 \begin{figure}[ht]
     \centering
@@ -188,6 +192,7 @@ The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\pa
 
 \begin{lemma}[Sheet decomposition]\label{lem:sheet-decomposition}
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$. Let $\{\Omega_i\}$ be a nested sequence of Caccioppoli sets ($\Omega_1 \subset \Omega_2 \subset \cdots$) with $|\partial^*\Omega_i| \to V$ as varifolds, where $V$ is a stationary $n$-varifold. Suppose that $p \in \spt\|V\|$ is a point where $V$ has a unique tangent plane $P = T_p\Sigma$ and density $\theta(p) = \Theta(\|V\|, p)$ (these conditions hold at $\mathcal{H}^n$-a.e.\ point of $\Sigma$ by rectifiability; see Section~\ref{sec:p2-prelim} and~\cite[Theorem~11.8]{Sim84}).
+\xinze{should have density positive?}
 
 Then for every $\varepsilon > 0$, there exist $r_0 > 0$ and $i_0 \in \mathbb{N}$ such that for a.e.\ $r \in (0, r_0)$ and all $i \geq i_0$, the following holds:
 \begin{enumerate}[label=\textup{(\roman*)}]
