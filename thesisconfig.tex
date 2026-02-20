@@ -37,13 +37,15 @@
 \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
 
-% Number figures and tables by section (not chapter)
+% Number figures, tables, and equations by section (not chapter)
 \makeatletter
 \@removefromreset{figure}{chapter}
 \@removefromreset{table}{chapter}
+\@removefromreset{equation}{chapter}
 \makeatother
 \counterwithin{figure}{section}
 \counterwithin{table}{section}
+\counterwithin{equation}{section}
 
 % Larger, bolder section/subsection headings
 \usepackage{titlesec}
