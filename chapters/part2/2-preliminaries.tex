@@ -17,6 +17,15 @@ By De~Giorgi's structure theorem~\cite[Theorem~14.3]{Sim84}, the distributional 
 \mathbf{M}(\partial E) = \mathrm{Per}(E) \qquad \text{and} \qquad \mathcal{F}(\partial E, \partial F) = \|\chi_E - \chi_F\|_{L^1} = \mathrm{Vol}(E \triangle F).
 \]
 
+A fundamental tool for Caccioppoli sets is the relative isoperimetric inequality, which controls volume by perimeter inside geodesic balls:
+
+\begin{proposition}[Relative isoperimetric inequality~{\cite[Proposition~12.37]{Mag12}}]\label{prop:relative-isoperimetric}
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold. There exist constants $r_1 > 0$ and $C_I > 0$ depending on $(M, g, n)$ such that for every Caccioppoli set $\Omega \subset M$, every $p \in M$, and every $\rho < r_1$,
+\begin{equation}\label{eq:rel-isop}
+    \min\bigl(\mathcal{L}^{n+1}(\Omega \cap B_\rho(p)),\; \mathcal{L}^{n+1}(B_\rho(p) \setminus \Omega)\bigr)^{n/(n+1)} \leq C_I\, \mathrm{Per}(\Omega, B_\rho(p)).
+\end{equation}
+\end{proposition}
+
 The min-max construction produces limits not in the space of Caccioppoli sets but in the space of varifolds, which we now recall.
 
 \begin{definition}[Varifold~{\cite[\S38, p.\,228]{Sim84}}]\label{def:p2-varifold}

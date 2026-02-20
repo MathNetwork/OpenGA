@@ -190,6 +190,8 @@ The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\pa
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be a non-excessive ONVP sweepout. Let $V$ be the varifold limit of $|\partial^*\Omega(x_i)|$ along a min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then $V$ is rectifiable.
 \end{lemma}
 
+The idea is that vanishing density creates local waste in the sweepout. If $\Theta(\|V\|, p) = 0$, then the volume enclosed by $\partial^*\Omega(x_i)$ inside $B_\rho(p)$ grows slower than $\rho^{n+1}$. The relative isoperimetric inequality forces this slow growth to be incompatible with the boundary being efficient: at some radius, the reduced boundary inside $B_\rho$ is strictly longer than the spherical cap that would enclose the same region. Replacing the boundary by the cap produces a Caccioppoli set $E_i$ with $\mathrm{Per}(E_i) < \mathrm{Per}(\Omega(x_i)) \leq W$. Using $E_i$ as a constant $I$-replacement family on $[x_i, x_0]$ then exhibits an excessive interval, contradicting the non-excessiveness of the sweepout.
+
 \begin{proof}
 By Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), it suffices to show that $\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e.\ $p$. Since $V$ is stationary, the density $\Theta(\|V\|, p)$ exists at every point (Proposition~\ref{prop:p2-monotonicity}). We argue by contradiction: suppose $\|V\|(\{p \in \spt\|V\| : \Theta(\|V\|, p) = 0\}) > 0$; then there exists $p \in \spt\|V\|$ with $\Theta(\|V\|, p) = 0$.
 
@@ -209,11 +211,7 @@ Combining: for every $\varepsilon > 0$, there exists $r_0 > 0$ such that for eac
 \end{equation}
 
 \medskip\noindent\textbf{Step~2} (Volume dichotomy via the isoperimetric inequality).
-The relative isoperimetric inequality on $(M, g)$ (see e.g.~\cite[Proposition~12.37]{Mag12}) states: there exist $r_1 > 0$ and $C_I > 0$ (depending on $M, g, n$) such that for every Caccioppoli set $\Omega$ and every $\rho < r_1$,
-\begin{equation}\label{eq:relative-isoperimetric}
-    \min\bigl(\mathcal{L}^{n+1}(\Omega \cap B_\rho(p)),\; \mathcal{L}^{n+1}(B_\rho(p) \setminus \Omega)\bigr)^{n/(n+1)} \leq C_I\, \mathrm{Per}(\Omega, B_\rho(p)).
-\end{equation}
-Applying~\eqref{eq:relative-isoperimetric} to $\Omega = \Omega(x_i)$ and using~\eqref{eq:per-small}:
+Applying the relative isoperimetric inequality (Proposition~\ref{prop:relative-isoperimetric}) to $\Omega = \Omega(x_i)$ and using~\eqref{eq:per-small}:
 \begin{multline}\label{eq:volume-dichotomy}
     \min\bigl(\mathcal{L}^{n+1}(\Omega(x_i) \cap B_r(p)),\;
     \mathcal{L}^{n+1}(B_r(p) \setminus \Omega(x_i))\bigr) \\
@@ -232,7 +230,7 @@ Let $f_i(\rho)$ denote the smaller volume:
 \end{equation}
 
 \emph{Finding a good radius.}
-The coarea formula gives $f_i'(\rho) = \mathcal{H}^n(\partial B_\rho(p) \cap S_i)$ for a.e.\ $\rho$, where $S_i = \Omega(x_i)^{(1)}$ in the nearly-empty case and $S_i = \Omega(x_i)^{(0)}$ in the nearly-full case. The relative isoperimetric inequality gives
+The coarea formula gives $f_i'(\rho) = \mathcal{H}^n(\partial B_\rho(p) \cap S_i)$ for a.e.\ $\rho$, where $S_i = \Omega(x_i)^{(1)}$ in the nearly-empty case and $S_i = \Omega(x_i)^{(0)}$ in the nearly-full case. The relative isoperimetric inequality (Proposition~\ref{prop:relative-isoperimetric}) gives
 \begin{equation}\label{eq:isoperimetric-lower}
     \mathrm{Per}(\Omega(x_i), B_\rho(p)) \geq c_n\, f_i(\rho)^{n/(n+1)}
 \end{equation}
