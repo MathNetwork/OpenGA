@@ -277,6 +277,89 @@ Here~\eqref{eq:per-replacement} holds because the reduced boundary of $E_i$ insi
     = f_i'(\rho_i) - \mathrm{Per}(\Omega(x_i), B_{\rho_i}(p)) < 0.
 \end{equation}
 
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[scale=1.05]
+      \def\R{1.5}
+
+      % ===== Left: Nearly empty =====
+      \begin{scope}[xshift=-3.6cm]
+        % Entry (150°) and exit (210°) on circle
+        \coordinate (T) at ({\R*cos(150)}, {\R*sin(150)});
+        \coordinate (B) at ({\R*cos(210)}, {\R*sin(210)});
+
+        % Fill small crescent (Ω ∩ B_ρ)
+        \fill[fillA, opacity=0.35]
+          (T) .. controls (-1.05, 0.45) and (-1.2, 0.2) .. (-0.95, 0)
+              .. controls (-1.2, -0.2) and (-1.05, -0.45) .. (B)
+          arc (210:150:\R) -- cycle;
+
+        % Circle outline
+        \draw[gray!50, thick] (0,0) circle (\R);
+
+        % Wiggly boundary (∂*Ω inside B_ρ) — RED: gets removed
+        \draw[bindA, thick]
+          (T) .. controls (-1.05, 0.45) and (-1.2, 0.2) .. (-0.95, 0)
+              .. controls (-1.2, -0.2) and (-1.05, -0.45) .. (B);
+
+        % Smooth cap (∂B_ρ on the small side) — BLUE dashed: gets added
+        \draw[bindB, thick, densely dashed]
+          (B) arc (210:150:\R);
+
+        % Center
+        \fill (0,0) circle (1pt);
+        \node[right, font=\footnotesize] at (0.05,0) {$p$};
+
+        % Side labels
+        \node[bindA, font=\footnotesize] at (-0.55, 0.05) {$\partial^*\!\Omega$};
+        \node[font=\footnotesize, anchor=north] at (0, -1.9) {Nearly empty};
+        \node[font=\footnotesize, anchor=north] at (0, -2.3) {$E_i = \Omega(x_i) \setminus \overline{B}_\rho$};
+      \end{scope}
+
+      % ===== Right: Nearly full =====
+      \begin{scope}[xshift=3.6cm]
+        \coordinate (T) at ({\R*cos(150)}, {\R*sin(150)});
+        \coordinate (B) at ({\R*cos(210)}, {\R*sin(210)});
+
+        % Fill large region: entire disk minus the small crescent
+        \fill[fillA, opacity=0.35] (0,0) circle (\R);
+        \fill[white]
+          (T) .. controls (-1.05, 0.45) and (-1.2, 0.2) .. (-0.95, 0)
+              .. controls (-1.2, -0.2) and (-1.05, -0.45) .. (B)
+          arc (210:150:\R) -- cycle;
+
+        % Circle outline
+        \draw[gray!50, thick] (0,0) circle (\R);
+
+        % Wiggly boundary — RED
+        \draw[bindA, thick]
+          (T) .. controls (-1.05, 0.45) and (-1.2, 0.2) .. (-0.95, 0)
+              .. controls (-1.2, -0.2) and (-1.05, -0.45) .. (B);
+
+        % Smooth cap — BLUE dashed
+        \draw[bindB, thick, densely dashed]
+          (B) arc (210:150:\R);
+
+        % Center
+        \fill (0,0) circle (1pt);
+        \node[right, font=\footnotesize] at (0.05,0) {$p$};
+
+        % Side labels
+        \node[bindA, font=\footnotesize] at (-0.55, 0.05) {$\partial^*\!\Omega$};
+        \node[font=\footnotesize, anchor=north] at (0, -1.9) {Nearly full};
+        \node[font=\footnotesize, anchor=north] at (0, -2.3) {$E_i = \Omega(x_i) \cup \overline{B}_\rho$};
+      \end{scope}
+
+      % Middle annotation
+      \node[font=\small, text width=2.8cm, align=center] at (0, 0) {%
+        \textcolor{bindA}{$\mathrm{Per}(\Omega, B_\rho)$}\\[2pt]
+        $>$\\[2pt]
+        \textcolor{bindB}{$f_i'(\rho_i)$}};
+    \end{tikzpicture}
+    \caption{Isoperimetric replacement in $B_\rho(p)$. The wiggly reduced boundary $\partial^*\Omega(x_i)$ inside $B_\rho$ (\textcolor{bindA}{red}, removed) is longer than the smooth spherical cap on $\partial B_\rho$ (\textcolor{bindB}{blue dashed}, added), so $\mathrm{Per}(E_i) < \mathrm{Per}(\Omega(x_i))$.}
+    \label{fig:isoperimetric-replacement}
+\end{figure}
+
 \emph{Contradiction with non-excessiveness.}
 Since $\mathrm{Per}(E_i) < \mathrm{Per}(\Omega(x_i)) \leq W$, define the $[x_i, x_0]$-replacement family
 \[
@@ -288,6 +371,64 @@ The endpoints satisfy $\Omega^I(x_i) = \Omega(x_i)$ and $\Omega^I(x_0) = \Omega(
 \]
 since the limsup excludes $y = x$ and $\Omega^I(y) = E_i$ for all $y \in (x_i, x_0)$. Thus $[x_i, x_0]$ is an excessive interval with $(x_i, x_0] \subset [x_i, x_0]$, making $x_0$ left excessive (Definition~\ref{def:excessive-interval})---contradicting the non-excessiveness of $\Phi$ (Theorem~\ref{thm:non-excessive-existence}). Therefore $\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e.\ $p$, and $V$ is rectifiable by Allard's rectifiability theorem.
 \end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[scale=0.92, >=Stealth]
+      % Axes
+      \draw[->] (-0.3, 0) -- (7.0, 0) node[right, font=\small] {$x$};
+      \draw[->] (0, -0.3) -- (0, 4.5) node[above, font=\small] {$\mathrm{Per}$};
+
+      % Width line W
+      \draw[dashed, gray] (-0.1, 3.8) -- (6.8, 3.8);
+      \node[left, font=\small] at (-0.1, 3.8) {$W$};
+
+      % Per(Ω(x)) curve — gray, approaching W near x_0
+      \draw[thick, gray!65]
+        (0.3, 1.2) .. controls (1.0, 2.0) and (1.5, 2.8) .. (2.0, 3.2)
+        .. controls (2.5, 3.5) and (2.8, 3.65) .. (3.2, 3.7);
+      \draw[thick, gray!65]
+        (3.2, 3.7) .. controls (3.5, 3.72) and (3.8, 3.75) .. (4.3, 3.73);
+      \draw[thick, gray!65]
+        (4.3, 3.73) .. controls (4.8, 3.68) and (5.3, 3.3) .. (5.8, 2.5)
+        .. controls (6.1, 2.0) and (6.3, 1.6) .. (6.5, 1.3);
+      \node[gray!65, font=\footnotesize, above] at (5.6, 2.7) {$\mathrm{Per}(\Omega(x))$};
+
+      % Mark x_i and x_0
+      \draw[gray!40, thin, dashed] (3.2, 0) -- (3.2, 3.7);
+      \draw[gray!40, thin, dashed] (4.3, 0) -- (4.3, 3.73);
+      \node[below, font=\small] at (3.2, 0) {$x_i$};
+      \node[below, font=\small] at (4.3, 0) {$x_0$};
+
+      % Constant I-replacement: Per(E_i) on (x_i, x_0)
+      \draw[very thick, bindB] (3.2, 2.6) -- (4.3, 2.6);
+      \node[bindB, font=\small, right] at (4.4, 2.6) {$\mathrm{Per}(E_i)$};
+
+      % Endpoint dots: original curve
+      \fill[bindA] (3.2, 3.7) circle (2.2pt);
+      \fill[bindA] (4.3, 3.73) circle (2.2pt);
+      % Endpoint dots: replacement (open circles at endpoints)
+      \draw[bindB, thick, fill=white] (3.2, 2.6) circle (2.2pt);
+      \draw[bindB, thick, fill=white] (4.3, 2.6) circle (2.2pt);
+
+      % Vertical arrows: endpoint matching
+      \draw[->, gray!60, thick] (3.2, 3.5) -- (3.2, 2.82);
+      \draw[->, gray!60, thick] (4.3, 3.53) -- (4.3, 2.82);
+      \node[gray!60, font=\tiny, right] at (3.25, 3.15) {$\Omega^I\!=\!\Omega$};
+      \node[gray!60, font=\tiny, left] at (4.25, 3.15) {$\Omega^I\!=\!\Omega$};
+
+      % Brace for excessive interval
+      \draw[decorate, decoration={brace, amplitude=4pt, mirror}]
+        (3.2, -0.55) -- (4.3, -0.55)
+        node[midway, below=4pt, font=\small] {excessive interval};
+
+      % Gap arrow
+      \draw[<->, thick] (6.4, 2.6) -- (6.4, 3.8);
+      \node[font=\footnotesize, right] at (6.45, 3.2) {$< W$};
+    \end{tikzpicture}
+    \caption{The constant $I$-replacement. On the interval $[x_i, x_0]$, the family $\Omega^I(x) = E_i$ (\textcolor{bindB}{blue}) has $\mathrm{Per}(E_i) < W$ everywhere, while the endpoints match the original sweepout (\textcolor{bindA}{red dots}). This makes $[x_i, x_0]$ an excessive interval, contradicting non-excessiveness.}
+    \label{fig:constant-I-replacement}
+\end{figure}
 
 \begin{lemma}[Sheet decomposition]\label{lem:sheet-decomposition}
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$. Let $\{\Omega_i\}$ be a nested sequence of Caccioppoli sets ($\Omega_1 \subset \Omega_2 \subset \cdots$) with $|\partial^*\Omega_i| \to V$ as varifolds, where $V$ is a stationary $n$-varifold. Suppose that $p \in \spt\|V\|$ is a point where $V$ has a unique tangent plane $P = T_p\Sigma$ and density $\theta(p) = \Theta(\|V\|, p)$ (these conditions hold at $\mathcal{H}^n$-a.e.\ point of $\Sigma$ by rectifiability; see Section~\ref{sec:p2-prelim} and~\cite[Theorem~11.8]{Sim84}).
