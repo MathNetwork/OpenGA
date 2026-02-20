@@ -186,14 +186,14 @@ The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\pa
     \label{fig:mass-cancellation-manifold}
 \end{figure}
 
-\begin{lemma}[Rectifiability of the limit varifold]\label{lem:density-lower-bound}
-Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be a non-excessive ONVP sweepout. Let $V$ be the varifold limit of $|\partial^*\Omega(x_i)|$ along a min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then $V$ is rectifiable.
+\begin{lemma}[Positive density and rectifiability of the limit varifold]\label{lem:density-lower-bound}
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be a non-excessive ONVP sweepout. Let $V$ be the varifold limit of $|\partial^*\Omega(x_i)|$ along a min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$. In particular, $V$ is rectifiable by Allard's theorem (Proposition~\ref{prop:allard-rectifiability}).
 \end{lemma}
 
 The idea is that vanishing density creates local waste in the sweepout. If $\Theta(\|V\|, p) = 0$, then the volume enclosed by $\partial^*\Omega(x_i)$ inside $B_\rho(p)$ grows slower than $\rho^{n+1}$. The relative isoperimetric inequality forces this slow growth to be incompatible with the boundary being efficient: at some radius, the reduced boundary inside $B_\rho$ is strictly longer than the spherical cap that would enclose the same region. Replacing the boundary by the cap produces a Caccioppoli set $E_i$ with $\mathrm{Per}(E_i) < \mathrm{Per}(\Omega(x_i)) \leq W$. Using $E_i$ as a constant $I$-replacement family on $[x_i, x_0]$ then exhibits an excessive interval, contradicting the non-excessiveness of the sweepout.
 
 \begin{proof}
-By Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), it suffices to show that $\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e.\ $p$. Since $V$ is stationary, the density $\Theta(\|V\|, p)$ exists at every point (Proposition~\ref{prop:p2-monotonicity}). We argue by contradiction: suppose $\|V\|(\{p \in \spt\|V\| : \Theta(\|V\|, p) = 0\}) > 0$; then there exists $p \in \spt\|V\|$ with $\Theta(\|V\|, p) = 0$.
+Since $V$ is stationary, the density $\Theta(\|V\|, p)$ exists at every point (Proposition~\ref{prop:p2-monotonicity}). We argue by contradiction: suppose there exists $p \in \spt\|V\|$ with $\Theta(\|V\|, p) = 0$.
 
 \medskip\noindent\textbf{Step~1} (Vanishing mass at small scales).
 Since the modified density ratio $e^{Cr}\,\omega_n^{-1} r^{-n}\|V\|(B_r(p))$ is non-decreasing in $r$ (Proposition~\ref{prop:p2-monotonicity}) and its limit as $r \to 0$ equals $\Theta(\|V\|, p) = 0$, we have
