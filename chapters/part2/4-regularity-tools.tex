@@ -2,24 +2,9 @@
 
 \section{Regularity tools}\label{sec:regularity-tools}
 
-The limit varifold $V$ from the min-max construction is stationary (Proposition~\ref{thm:CLS-stationary}). To promote it to a smooth embedded minimal hypersurface, we need a regularity theorem. We review two approaches: the classical Schoen--Simon theory used in the Almgren--Pitts framework, and Wickramasekera's theory for stable codimension~$1$ integral varifolds. The latter is better suited to the non-excessive setting, and we adopt it here.
+The limit varifold $V$ from the min-max construction is stationary (Proposition~\ref{thm:CLS-stationary}). To promote it to a smooth embedded minimal hypersurface, we need a regularity theorem. The classical tool is the Schoen--Simon regularity theorem~\cite{SS81}, which applies to stable codimension~$1$ integral varifolds $V$ that are either \emph{almost minimizing} in sufficiently small annuli or satisfy $\mathcal{H}^{n-2}(\sing V) = 0$; under either condition, $\sing V = \varnothing$ for $2 \leq n \leq 6$. In the Almgren--Pitts theory~\cite{Alm65, Pit81} and its refinements by Colding--de~Lellis~\cite{CL03} and de~Lellis--Tasnady~\cite{DLT13}, the almost minimizing property is produced by a combinatorial selection procedure, and Schoen--Simon then gives full regularity.
 
-\subsection{The classical approach: Schoen--Simon}\label{subsec:classical-regularity}
-
-The Schoen--Simon regularity theorem~\cite{SS81} applies to stable codimension~$1$ integral varifolds $V$ satisfying one of the following conditions:
-\begin{enumerate}[label=\textup{(\roman*)}]
-    \item $V$ is \emph{almost minimizing} in sufficiently small annuli, or
-    \item $\mathcal{H}^{n-2}(\sing V) = 0$ (or more generally $\mathcal{H}^{n-2}(\sing V) < \infty$).
-\end{enumerate}
-Under either condition, $\sing V = \varnothing$ for $2 \leq n \leq 6$.
-
-In the Almgren--Pitts theory~\cite{Alm65, Pit81}, the almost minimizing property is produced by a combinatorial selection procedure operating in the space of integral currents. The frameworks of Colding--de~Lellis~\cite{CL03} and de~Lellis--Tasnady~\cite{DLT13} simplify the sweepout machinery but retain the same regularity pipeline: an almost minimizing property plus Schoen--Simon.
-
-In the non-excessive framework of Chodosh--Liokumovich--Spolaor \cite{CLS22}, the almost minimizing property is not directly available: the geometric condition is \emph{one-sided homotopic minimization}, which provides stability but does not immediately yield the almost minimizing condition in annuli that Schoen--Simon requires. In~\cite{CLS22}, this gap is bridged by invoking the Almgren--Pitts pull-tight and regularity theory as a black box. To close this gap without relying on Almgren--Pitts, we turn to a more general regularity theorem.
-
-\subsection{Wickramasekera's approach}\label{subsec:wickramasekera-approach}
-
-Wickramasekera's regularity theorem~\cite{Wic14} applies to a class of stable codimension~$1$ integral varifolds defined by three hypotheses. We state them following~\cite[Section~2]{Wic14}, adapted from the Euclidean ball $B_2^{n+1}(0)$ to a Riemannian manifold.
+In the non-excessive framework of Chodosh--Liokumovich--Spolaor~\cite{CLS22}, however, the geometric condition is \emph{one-sided homotopic minimization} (Definition~\ref{def:homotopic-minimizer}), which provides stability but does not immediately yield the almost minimizing condition in annuli that Schoen--Simon requires. In~\cite{CLS22}, this gap is bridged by invoking the Almgren--Pitts regularity theory as a black box. To close this gap without relying on Almgren--Pitts, we turn to Wickramasekera's regularity theorem~\cite{Wic14}, which applies to a broader class of stable codimension~$1$ integral varifolds defined by three hypotheses. We state them following~\cite[Section~2]{Wic14}, adapted from the Euclidean ball $B_2^{n+1}(0)$ to a Riemannian manifold.
 
 \begin{definition}[The class $\mathcal{S}_\alpha$~{\cite[Section~2]{Wic14}}]\label{defn:class-S-alpha}
 Fix $\alpha \in (0, 1)$. Let $V$ be an integral $n$-varifold on an open subset $U$ of a smooth $(n+1)$-dimensional Riemannian manifold $(N, g)$, with $\|V\|(U) < \infty$. We say $V \in \mathcal{S}_\alpha$ if $V$ satisfies the following three conditions:

@@ -2,9 +2,8 @@
 
 \section{Integrality}\label{sec:integrality}
 
-Integrality of the limit varifold is an essential input to the regularity argument: it ensures that tangent cones at singular points are integral cones, which constrains them to the junction configurations (wedges, folds, and higher-order junctions) needed to derive a contradiction when the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}) fails (see Section~\ref{subsec:alpha-structural}). We begin by recalling the following criterion from de~Lellis--Tasnady~\cite{DLT13}, which gives conditions under which varifold convergence of Caccioppoli boundaries is guaranteed:
+Integrality of the limit varifold is an essential input to the regularity argument: it ensures that tangent cones at singular points are integral cones, which constrains them to the junction configurations (wedges, folds, and higher-order junctions) needed to derive a contradiction when the $\alpha$-structural hypothesis (Definition~\ref{defn:alpha-structural}) fails (see Section~\ref{subsec:alpha-structural}). We begin by recalling the following criterion from de~Lellis--Tasnady~\cite{DLT13}, used in the no-mass-cancellation case (Section~\ref{subsec:integrality-no-cancel}):
 
-\xinze{The following proposition works only for the case of non-mass cancellation. It is actually covered by Lemma 5.4}
 \begin{proposition}[Varifolds vs.\ Caccioppoli set limits~{\cite[Proposition~A.1]{DLT13}}]\label{prop:p2-DLT-integrality}
     Let $\{\Omega^k\}$ be a sequence of Caccioppoli sets and $U$ an open subset of $M$. Assume that
     \begin{enumerate}[label=\textup{(\roman*)}]
@@ -73,8 +72,7 @@ Both conditions of Proposition~\ref{prop:p2-DLT-integrality} are satisfied, so $
     \label{fig:caccioppoli-set}
 \end{figure}
 
-The identification $V = |\partial^*\Omega(x_0)|$ has two important consequences beyond integrality: it tells us that $V$ is the boundary of a Caccioppoli set, which constrains the possible tangent cones (see the proof of Theorem~\ref{thm:alpha-hypo}), and it connects $V$ to the non-excessive structure of the sweepout, which provides the homotopic minimizing property.
-\xinze{is this gives us any regularity?}
+The identification $V = |\partial^*\Omega(x_0)|$ has two important consequences beyond integrality: it tells us that $V$ is the boundary of a Caccioppoli set, which constrains the possible tangent cones and is used to verify the $\alpha$-structural hypothesis (Theorem~\ref{thm:alpha-hypo}); and it connects $V$ to the non-excessive structure of the sweepout, which provides the homotopic minimizing property and hence stability (Proposition~\ref{prop:stability}). Together with integrality, these are the inputs to Wickramasekera's regularity theorem (Section~\ref{sec:regularity}).
 
 \subsection{The mass cancellation case}\label{subsec:integrality-cancel}
 
@@ -82,113 +80,12 @@ When mass cancellation occurs ($\mathbf{M}(\Phi(x_0)) < W$), we still have $\Ome
 \[
     \mathrm{Per}(\Omega(x_i)) \to W > \mathrm{Per}(\Omega(x_0)).
 \]
-The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. Instead, we use the nestedness of the sweepout to decompose the approximating boundaries into graphical sheets and show that the density is a positive integer at $\mathcal{H}^n$-a.e.\ point.
-\xinze{This is not precise, rectifiability and integrality are two seperate lemmas. The former one does not use rectifiability.}
-The limit varifold $V$ is rectifiable (Lemma~\ref{lem:density-lower-bound}). The main tool is the following graphical decomposition lemma.
-
-\begin{figure}[ht]
-    \centering
-    \begin{tikzpicture}[scale=0.75]
-      \def\Ro{2.2}   % outer radius
-      \def\Ri{1.2}   % inner radius
-
-      % ==================== Left copy ====================
-      \begin{scope}[xshift=-3.5cm]
-        \coordinate (OT) at ({2.2*cos(50)}, {2.2*sin(50)});
-        \coordinate (OB) at ({2.2*cos(310)}, {2.2*sin(310)});
-        \coordinate (IT) at ({1.2*cos(50)}, {1.2*sin(50)});
-        \coordinate (IB) at ({1.2*cos(310)}, {1.2*sin(310)});
-
-        % Region 1 (upper-left): angle 110° to 160°
-        \fill[fillA, opacity=0.4]
-          ({2.2*cos(110)}, {2.2*sin(110)}) arc (110:160:\Ro)
-          .. controls ({2.2*cos(160)+0.24*sin(160)}, {2.2*sin(160)-0.24*cos(160)})
-          and ({1.2*cos(160)+0.24*sin(160)}, {1.2*sin(160)-0.24*cos(160)})
-          .. ({1.2*cos(160)}, {1.2*sin(160)})
-          arc (160:110:\Ri)
-          .. controls ({1.2*cos(110)+0.24*sin(110)}, {1.2*sin(110)-0.24*cos(110)})
-          and ({2.2*cos(110)+0.24*sin(110)}, {2.2*sin(110)-0.24*cos(110)})
-          .. cycle;
-        \begin{scope}[shift={({1.7*cos(110)}, {1.7*sin(110)})}, rotate=110]
-          \draw[very thick, bindA] (0.5, 0) arc (0:-180:0.5 and 0.18);
-          \draw[thick, bindA, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
-        \end{scope}
-        \begin{scope}[shift={({1.7*cos(160)}, {1.7*sin(160)})}, rotate=160]
-          \draw[very thick, bindA] (0.5, 0) arc (0:-180:0.5 and 0.18);
-          \draw[thick, bindA, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
-        \end{scope}
-
-        % Region 2 (lower-left): angle 200° to 250°
-        \fill[fillA, opacity=0.4]
-          ({2.2*cos(200)}, {2.2*sin(200)}) arc (200:250:\Ro)
-          .. controls ({2.2*cos(250)+0.24*sin(250)}, {2.2*sin(250)-0.24*cos(250)})
-          and ({1.2*cos(250)+0.24*sin(250)}, {1.2*sin(250)-0.24*cos(250)})
-          .. ({1.2*cos(250)}, {1.2*sin(250)})
-          arc (250:200:\Ri)
-          .. controls ({1.2*cos(200)+0.24*sin(200)}, {1.2*sin(200)-0.24*cos(200)})
-          and ({2.2*cos(200)+0.24*sin(200)}, {2.2*sin(200)-0.24*cos(200)})
-          .. cycle;
-        \begin{scope}[shift={({1.7*cos(200)}, {1.7*sin(200)})}, rotate=200]
-          \draw[very thick, bindA] (0.5, 0) arc (0:-180:0.5 and 0.18);
-          \draw[thick, bindA, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
-        \end{scope}
-        \begin{scope}[shift={({1.7*cos(250)}, {1.7*sin(250)})}, rotate=250]
-          \draw[very thick, bindA] (0.5, 0) arc (0:-180:0.5 and 0.18);
-          \draw[thick, bindA, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
-        \end{scope}
-
-        % Outline
-        \draw[thick] (OT) arc (50:310:\Ro);
-        \draw[thick] (IB) arc (310:50:\Ri);
-        \draw[thick] (OB) to[out=40, in=40, looseness=1.5] (IB);
-        \draw[thick] (IT) to[out=320, in=320, looseness=1.5] (OT);
-
-        \node at (0.5, 0) {$M$};
-      \end{scope}
-
-      % ==================== Right copy ====================
-      \begin{scope}[xshift=3.5cm]
-        \coordinate (OT2) at ({2.2*cos(50)}, {2.2*sin(50)});
-        \coordinate (OB2) at ({2.2*cos(310)}, {2.2*sin(310)});
-        \coordinate (IT2) at ({1.2*cos(50)}, {1.2*sin(50)});
-        \coordinate (IB2) at ({1.2*cos(310)}, {1.2*sin(310)});
-
-        % Single merged region: angle 110° to 250°
-        \fill[fillA, opacity=0.4]
-          ({2.2*cos(110)}, {2.2*sin(110)}) arc (110:250:\Ro)
-          .. controls ({2.2*cos(250)+0.24*sin(250)}, {2.2*sin(250)-0.24*cos(250)})
-          and ({1.2*cos(250)+0.24*sin(250)}, {1.2*sin(250)-0.24*cos(250)})
-          .. ({1.2*cos(250)}, {1.2*sin(250)})
-          arc (250:110:\Ri)
-          .. controls ({1.2*cos(110)+0.24*sin(110)}, {1.2*sin(110)-0.24*cos(110)})
-          and ({2.2*cos(110)+0.24*sin(110)}, {2.2*sin(110)-0.24*cos(110)})
-          .. cycle;
-        \begin{scope}[shift={({1.7*cos(110)}, {1.7*sin(110)})}, rotate=110]
-          \draw[very thick, bindA] (0.5, 0) arc (0:-180:0.5 and 0.18);
-          \draw[thick, bindA, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
-        \end{scope}
-        \begin{scope}[shift={({1.7*cos(250)}, {1.7*sin(250)})}, rotate=250]
-          \draw[very thick, bindA] (0.5, 0) arc (0:-180:0.5 and 0.18);
-          \draw[thick, bindA, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
-        \end{scope}
-        % Blue ellipse at center (180°) — mass cancellation locus
-        \begin{scope}[shift={({1.7*cos(180)}, {1.7*sin(180)})}, rotate=180]
-          \draw[very thick, bindB] (0.5, 0) arc (0:-180:0.5 and 0.18);
-          \draw[thick, bindB, dashed] (0.5, 0) arc (0:180:0.5 and 0.18);
-        \end{scope}
-
-        % Outline
-        \draw[thick] (OT2) arc (50:310:\Ro);
-        \draw[thick] (IB2) arc (310:50:\Ri);
-        \draw[thick] (OB2) to[out=40, in=40, looseness=1.5] (IB2);
-        \draw[thick] (IT2) to[out=320, in=320, looseness=1.5] (OT2);
-
-        \node at (0.5, 0) {$M$};
-      \end{scope}
-    \end{tikzpicture}
-    \caption{A closed manifold $M \cong S^2$ bent into a C-shape. \textbf{Left:} two disjoint sweepout slices $\partial^*\Omega(x_i)$ (red) with no mass cancellation. \textbf{Right:} the slices extend and overlap; the blue cross-section marks where the two sheets meet with opposite orientations, so the mass cancels in the varifold limit.}
-    \label{fig:mass-cancellation-manifold}
-\end{figure}
+The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. The argument proceeds in two independent steps:
+\begin{enumerate}[label=\textup{(\roman*)}]
+    \item \emph{Rectifiability.} The density $\Theta(\|V\|, p)$ is positive at every $p \in \spt\|V\|$ (Lemma~\ref{lem:density-lower-bound}), so $V$ is rectifiable by Allard's theorem. This step uses only the non-excessive structure and does not require rectifiability as input.
+    \item \emph{Integrality.} Using nestedness and a graphical decomposition (Lemma~\ref{lem:sheet-decomposition}), the density is shown to be a positive integer at $\mathcal{H}^n$-a.e.\ point.
+\end{enumerate}
+The main tool for step~(ii) is the following graphical decomposition lemma.
 
 \begin{lemma}[Positive density and rectifiability of the limit varifold]\label{lem:density-lower-bound}
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be a non-excessive ONVP sweepout. Let $V$ be the varifold limit of $|\partial^*\Omega(x_i)|$ along a min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$. In particular, $V$ is rectifiable by Allard's theorem (Proposition~\ref{prop:allard-rectifiability}).
@@ -234,37 +131,38 @@ Let $f_i(\rho)$ denote the smaller volume:
 \end{equation}
 
 \emph{Finding a good radius.}
-The coarea formula gives $f_i'(\rho) = \mathcal{H}^n(\partial B_\rho(p) \cap S_i)$ for a.e.\ $\rho$, where $S_i = \Omega(x_i)^{(1)}$ in the nearly-empty case and $S_i = \Omega(x_i)^{(0)}$ in the nearly-full case. The relative isoperimetric inequality (Proposition~\ref{prop:relative-isoperimetric}) gives
-\begin{equation}\label{eq:isoperimetric-lower}
-    \mathrm{Per}(\Omega(x_i), B_\rho(p)) \geq c_n\, f_i(\rho)^{n/(n+1)}
-\end{equation}
-whenever $0 < f_i(\rho) \leq \frac{1}{2}\mathcal{L}^{n+1}(B_\rho(p))$, where $c_n > 0$ depends only on $(M, g, n)$.
+The goal is to find a radius $\rho_i$ at which the boundary $\partial B_{\rho_i}(p)$ slices off less of $S_i$ than the isoperimetric inequality accounts for, so that we can construct a cheaper replacement.
 
-We claim that there exists $\rho_i \in (0, r)$ with $f_i(\rho_i) > 0$ and
+Let $S_i$ denote the side achieving the minimum in~\eqref{eq:volume-small}: $S_i = \Omega(x_i)$ if $\mathcal{L}^{n+1}(\Omega(x_i) \cap B_r(p)) \leq \mathcal{L}^{n+1}(B_r(p) \setminus \Omega(x_i))$, and $S_i = B_r(p) \setminus \Omega(x_i)$ otherwise, so that $f_i(\rho) = \mathcal{L}^{n+1}(S_i \cap B_\rho(p))$. The coarea formula gives
+\[
+    f_i'(\rho) = \mathcal{H}^n(\partial B_\rho(p) \cap S_i) \quad \text{for a.e.\ } \rho \in (0, r).
+\]
+Meanwhile, the relative isoperimetric inequality (Proposition~\ref{prop:relative-isoperimetric}) gives
+\begin{equation}\label{eq:isoperimetric-lower}
+    \mathrm{Per}(\Omega(x_i), B_\rho(p)) \geq c_n\, f_i(\rho)^{n/(n+1)},
+\end{equation}
+where $c_n = c_n(M, g, n) > 0$. We claim that there exists $\rho_i \in (r/2, r)$ with $f_i(\rho_i) > 0$ and
 \begin{equation}\label{eq:good-radius}
     f_i'(\rho_i) < c_n\, f_i(\rho_i)^{n/(n+1)} \leq \mathrm{Per}(\Omega(x_i), B_{\rho_i}(p)).
 \end{equation}
-Indeed, $p \in \spt\|V\|$ gives $\|V\|(B_{r/2}(p)) > 0$, so
-$\mathrm{Per}(\Omega(x_i), B_{r/2}(p)) > 0$ for $i$ large,
-forcing $f_i(\rho) > 0$ for all $\rho \geq r/2$ (since $\mathrm{Per} > 0$ implies $\partial^*\Omega(x_i) \cap B_{r/2} \neq \emptyset$, so both $\Omega(x_i)$ and its complement have positive volume near any point of the reduced boundary).
-If $f_i'(\rho) \geq c_n\, f_i(\rho)^{n/(n+1)}$ for a.e.\
-$\rho \in (r/2, r)$, set $\varphi = f_i^{1/(n+1)}$ and integrate:
+The first inequality in~\eqref{eq:good-radius} says that the ``slice cost'' $\mathcal{H}^n(\partial B_{\rho_i} \cap S_i)$ is strictly less than the perimeter inside $B_{\rho_i}$; at such a radius, replacing $\Omega(x_i)$ inside $B_{\rho_i}$ by filling in (or emptying out) $S_i$ reduces the total perimeter.
+
+To prove the claim, note that $p \in \spt\|V\|$ gives $\|V\|(B_{r/2}(p)) > 0$, so by~\eqref{eq:mass-transfer}, $\mathrm{Per}(\Omega(x_i), B_{r/2}(p)) > 0$ for $i$ large. This forces $f_i(\rho) > 0$ for all $\rho \geq r/2$: indeed, $\mathrm{Per} > 0$ gives a point $q \in \partial^*\Omega(x_i) \cap B_{r/2}(p)$, and at any reduced boundary point the set $\Omega(x_i)$ has $\mathcal{L}^{n+1}$-density $1/2$, so both $\Omega(x_i)$ and its complement have positive volume in $B_\rho(p) \supset B_{r/2}(p) \ni q$. Now suppose for contradiction that $f_i'(\rho) \geq c_n\, f_i(\rho)^{n/(n+1)}$ for a.e.\ $\rho \in (r/2, r)$. By the ODE comparison argument of~\cite[Proposition~5.1, Step~2]{DLT13}, setting $\varphi = f_i^{1/(n+1)}$ and dividing:
 \[
-    \varphi'(\rho) = \frac{f_i'(\rho)}{(n{+}1)\,f_i(\rho)^{n/(n+1)}} \geq \frac{c_n}{n{+}1} \quad \text{a.e.\ on } (r/2, r),
+    \varphi'(\rho) = \frac{f_i'(\rho)}{(n{+}1)\,f_i(\rho)^{n/(n+1)}} \geq \frac{c_n}{n{+}1} \quad \text{a.e.\ on } (r/2, r).
 \]
-so $f_i(r)^{1/(n+1)} \geq f_i(r/2)^{1/(n+1)} + c_n r / (2(n{+}1))$, giving
-$f_i(r) \geq c_0\, r^{n+1}$ for a constant $c_0 = c_0(n, M) > 0$.
-This contradicts~\eqref{eq:volume-small} for $r$ small and $i$ large.
-So~\eqref{eq:good-radius} holds for some $\rho_i \in (r/2, r)$.
+Integrating over $(r/2, r)$:
+\[
+    f_i(r)^{1/(n+1)} \geq f_i(r/2)^{1/(n+1)} + \frac{c_n\, r}{2(n{+}1)} \geq \frac{c_n\, r}{2(n{+}1)},
+\]
+hence $f_i(r) \geq (c_n / (2(n{+}1)))^{n+1}\, r^{n+1}$. Since $(c_n/(2(n{+}1)))^{n+1} > 0$ is independent of $r$ and $i$, this contradicts $f_i(r) = o(r^{n+1})$ from~\eqref{eq:volume-small}, establishing the claim.
 
 \emph{Construction of the replacement.}
 Define the Caccioppoli set
 \[
-    E_i := \begin{cases} \Omega(x_i) \setminus \overline{B}_{\rho_i}(p) & \text{(nearly empty)}, \\[2pt]
-    \Omega(x_i) \cup \overline{B}_{\rho_i}(p) & \text{(nearly full)}.
-    \end{cases}
+    E_i := \Omega(x_i) \triangle (S_i \cap \overline{B}_{\rho_i}(p)),
 \]
-In either case, $E_i = \Omega(x_i)$ outside $B_r(p)$. For a.e.\ $\rho_i$ (chosen so that $\|V\|(\partial B_{\rho_i}(p)) = 0$ and $\mathcal{H}^{n-1}(\partial^*\Omega(x_i) \cap \partial B_{\rho_i}(p)) = 0$):
+which removes the small side $S_i$ from $\Omega(x_i)$ inside $B_{\rho_i}(p)$. The set $E_i$ agrees with $\Omega(x_i)$ outside $B_{\rho_i}(p)$, while inside $B_{\rho_i}(p)$ the boundary $\partial^*\Omega(x_i) \cap B_{\rho_i}$ is replaced by the spherical slice $\partial B_{\rho_i} \cap S_i$ (see Figure~\ref{fig:isoperimetric-replacement}). For a.e.\ $\rho_i$ (chosen so that $\|V\|(\partial B_{\rho_i}(p)) = 0$ and $\mathcal{H}^{n-1}(\partial^*\Omega(x_i) \cap \partial B_{\rho_i}(p)) = 0$):
 \begin{align}
     \mathrm{Per}(E_i, B_r(p))
     &= \mathrm{Per}(\Omega(x_i),\, B_r(p) \setminus \overline{B}_{\rho_i})
@@ -433,8 +331,7 @@ since the limsup excludes $y = x$ and $\Omega^I(y) = E_i$ for all $y \in (x_i, x
 \end{figure}
 
 \begin{lemma}[Sheet decomposition]\label{lem:sheet-decomposition}
-Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$. Let $\{\Omega_i\}$ be a nested sequence of Caccioppoli sets ($\Omega_1 \subset \Omega_2 \subset \cdots$) with $|\partial^*\Omega_i| \to V$ as varifolds, where $V$ is a stationary $n$-varifold. Suppose that $p \in \spt\|V\|$ is a point where $V$ has a unique tangent plane $P = T_p\Sigma$ and density $\theta(p) = \Theta(\|V\|, p)$ (these conditions hold at $\mathcal{H}^n$-a.e.\ point of $\Sigma$ by rectifiability; see Section~\ref{sec:p2-prelim} and~\cite[Theorem~11.8]{Sim84}).
-\xinze{should have density positive?}
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$. Let $\{\Omega_i\}$ be a nested sequence of Caccioppoli sets ($\Omega_1 \subset \Omega_2 \subset \cdots$) with $|\partial^*\Omega_i| \to V$ as varifolds, where $V$ is a rectifiable stationary $n$-varifold with support $\Sigma$. Let $p \in \Sigma$ be a point with unique tangent plane $P = T_p\Sigma$ and positive density $\theta(p) = \Theta(\|V\|, p) > 0$ (by rectifiability, these conditions hold at $\mathcal{H}^n$-a.e.\ point of $\Sigma$; see Section~\ref{sec:p2-prelim}).
 
 Then for every $\varepsilon > 0$, there exist $r_0 > 0$ and $i_0 \in \mathbb{N}$ such that for a.e.\ $r \in (0, r_0)$ and all $i \geq i_0$, the following holds:
 \begin{enumerate}[label=\textup{(\roman*)}]
