@@ -243,7 +243,7 @@ Let $\Phi$ be a non-excessive ONVP sweepout, $x_i \to x_0 \in \mathfrak{m}(\Phi)
 \begin{figure}[ht]
     \centering
     % ==================== (a) X-shaped ====================
-    \begin{tikzpicture}[scale=0.8]
+    \begin{tikzpicture}[scale=0.65]
       % --- Ω_2 fill (outermost layer): left+right sectors ---
       \begin{scope}
       \clip (0,0) circle (2.5);
@@ -295,7 +295,7 @@ Let $\Phi$ be a non-excessive ONVP sweepout, $x_i \to x_0 \in \mathfrak{m}(\Phi)
       % ∂*Ω_1: X (branches)
       \draw[bindA, thick] ({2.5*cos(225)}, {2.5*sin(225)}) -- (0,0) -- ({2.5*cos(45)}, {2.5*sin(45)});
       \draw[bindA, thick] ({2.5*cos(315)}, {2.5*sin(315)}) -- (0,0) -- ({2.5*cos(135)}, {2.5*sin(135)});
-      \node[bindA, font=\small] at (2.3, 2.0) {$\partial^*\!\Omega_1$};
+      \node[bindA, font=\scriptsize, anchor=north west] at ({2.5*cos(315)}, {2.5*sin(315)}) {$\partial^*\!\Omega_1 = \spt\|V\|$};
 
       % ∂*Ω_0: left+right curves (innermost)
       \draw[bindA!50, thin]
@@ -324,9 +324,9 @@ Let $\Phi$ be a non-excessive ONVP sweepout, $x_i \to x_0 \in \mathfrak{m}(\Phi)
 
       \node at (0, -3.0) {(a)};
     \end{tikzpicture}
-    \hfill
+    \qquad
     % ==================== (b) Y-shaped: 3 branches at 120° ====================
-    \begin{tikzpicture}[scale=0.8]
+    \begin{tikzpicture}[scale=0.65]
       % --- Ξ_2 fill (outermost layer): region above bottom arc ---
       \begin{scope}
       \clip (0,0) circle (2.5);
@@ -373,9 +373,10 @@ Let $\Phi$ be a non-excessive ONVP sweepout, $x_i \to x_0 \in \mathfrak{m}(\Phi)
 
       % ∂*Ξ_1: Y branches
       \draw[bindB, thick, dashed] (0,0) -- ({2.5*cos(90)}, {2.5*sin(90)});
+      \node[bindB, font=\scriptsize, anchor=west] at ({0.3}, {1.3}) {$\spt\|V\| \setminus \partial^*\!\Xi_i$};
       \draw[bindA, thick] (0,0) -- ({2.5*cos(210)}, {2.5*sin(210)});
       \draw[bindA, thick] (0,0) -- ({2.5*cos(330)}, {2.5*sin(330)});
-      \node[bindA, font=\small] at (1.2, 0) {$\partial^*\!\Xi_1$};
+      \node[bindA, font=\scriptsize, anchor=north west] at ({2.5*cos(330)}, {2.5*sin(330)}) {$\partial^*\!\Xi_1 \neq \spt\|V\|$};
 
       % ∂*Ξ_0: right wedge curve (between 330° and 90°, offset 5° inward)
       \draw[bindA!50, thin]
@@ -388,7 +389,7 @@ Let $\Phi$ be a non-excessive ONVP sweepout, $x_i \to x_0 \in \mathfrak{m}(\Phi)
         ({2.5*cos(95)}, {2.5*sin(95)})
         .. controls (-0.45, 0.25) and (-0.45, -0.25) ..
         ({2.5*cos(205)}, {2.5*sin(205)});
-      \node[bindA!50, font=\small] at (-0.7, 2.8) {$\partial^*\!\Xi_0$};
+      \node[bindA!50, font=\small] at (3.2, 0) {$\partial^*\!\Xi_0$};
 
       % ∂*Ξ_2: bottom wedge curve (between 210° and 330°, offset 5° inward)
       \draw[bindA!50, thin]
