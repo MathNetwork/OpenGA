@@ -27,6 +27,44 @@ We work throughout with ONVP sweepouts. The existence of ONVP sweepouts follows 
 
 Given an optimal sweepout, the \emph{critical domain} identifies the parameter values at which the mass is maximal. The non-excessive condition asks that these critical parameters cannot be avoided by local replacements.
 
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[xscale=1.2, yscale=0.8]
+      % Axes
+      \draw[->] (-0.3, 0) -- (9.5, 0) node[right] {$x$};
+      \draw[->] (0, -0.3) -- (0, 4.5) node[above] {$\mathbf{M}$};
+      % Tick marks
+      \draw (0.2, -0.1) -- (0.2, 0.1) node[below=3pt] {$0$};
+      \draw (9.0, -0.1) -- (9.0, 0.1) node[below=3pt] {$1$};
+      % Width line W
+      \draw[dashed, thick] (-0.2, 3.8) -- (9.3, 3.8) node[right] {$W$};
+      % Mass curve with discontinuities at x and z
+      % Segment 1: 0 to x (open circle at W)
+      \draw[thick, bindA] (0.2, 0.3) .. controls (1.2, 1.5) and (1.8, 3.2) .. (2.4, 3.72);
+      \node[circle, fill=white, draw=bindA, thick, inner sep=0, minimum size=6pt] at (2.5, 3.8) {};
+      % Segment 2: x to z, passing through y at W
+      \node[circle, fill=bindA, inner sep=0, minimum size=6pt] at (2.5, 1.6) {};
+      \draw[thick, bindA] (2.5, 1.6) .. controls (3.2, 2.8) and (4.2, 3.6) .. (5.5, 3.8)
+        .. controls (6.2, 3.6) and (6.8, 2.8) .. (7.2, 2.2);
+      \node[circle, fill=bindA, inner sep=0, minimum size=6pt] at (7.2, 2.2) {};
+      % Segment 3: z to 1 (open circle at W)
+      \node[circle, fill=white, draw=bindA, thick, inner sep=0, minimum size=6pt] at (7.2, 3.8) {};
+      \draw[thick, bindA] (7.3, 3.72) .. controls (7.8, 2.5) and (8.5, 0.8) .. (9.0, 0.3);
+      \node[bindA, above left] at (1.5, 1.5) {$\mathbf{M}(\Phi(x))$};
+      % Mark x
+      \draw (2.5, -0.1) -- (2.5, 0.1) node[below=3pt] {$x$};
+      \draw[dotted, thin] (2.5, 0.1) -- (2.5, 1.6);
+      % Mark y (at W)
+      \draw (5.5, -0.1) -- (5.5, 0.1) node[below=3pt] {$y$};
+      \draw[dotted, thin] (5.5, 0.1) -- (5.5, 3.8);
+      % Mark z
+      \draw (7.2, -0.1) -- (7.2, 0.1) node[below=3pt] {$z$};
+      \draw[dotted, thin] (7.2, 0.1) -- (7.2, 1.2);
+    \end{tikzpicture}
+    \caption{The mass function $x \mapsto \mathbf{M}(\Phi(x))$ of a sweepout with jump discontinuities. All three marked points are critical ($M(x) = M(y) = M(z) = W$). The point $x$ is left critical only ($x \in \mathfrak{m}_L \setminus \mathfrak{m}_R$): the mass approaches $W$ from the left but drops after the jump. The point $z$ is right critical only ($z \in \mathfrak{m}_R \setminus \mathfrak{m}_L$): the mass approaches $W$ from the right but not from the left. The point $y$ is both left and right critical ($y \in \mathfrak{m}_L \cap \mathfrak{m}_R$), illustrating that the intersection need not be empty.}
+    \label{fig:critical-points}
+\end{figure}
+
 \begin{definition}[Critical set~{\cite[Definition~1.5]{CLS22}}]\label{def:critical-set}
 Given a sweepout $\Phi$, define
 \[
@@ -36,7 +74,9 @@ If $\Phi$ is an optimal sweepout, the \emph{critical domain of $\Phi$} is
 \[
 \mathfrak{m}(\Phi)=\{ x \in [0,1]: M(x) =W \}.
 \]
-We denote by $\mathfrak{m}_L(\Phi)$ and $\mathfrak{m}_R(\Phi)$ the sets of left and right critical points.
+A point $x \in \mathfrak{m}(\Phi)$ is a \emph{left critical point} if there exists a sequence $x_i \nearrow x$ with $\mathbf{M}(\Phi(x_i)) \to W$, and a \emph{right critical point} if there exists $x_i \searrow x$ with $\mathbf{M}(\Phi(x_i)) \to W$. We denote by $\mathfrak{m}_L(\Phi)$ and $\mathfrak{m}_R(\Phi)$ the sets of left and right critical points, respectively. Note that $\mathfrak{m}(\Phi) = \mathfrak{m}_L(\Phi) \cup \mathfrak{m}_R(\Phi)$, and the intersection $\mathfrak{m}_L(\Phi) \cap \mathfrak{m}_R(\Phi)$ need not be empty.
+
+A sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$ is a \emph{min-max sequence} if $|\partial^*\Omega(x_i)|$ converges in the varifold sense to a varifold $V$ with $\|V\|(M) = W$.
 \end{definition}
 
 \begin{definition}[Excessive intervals and points~{\cite[Definition~2.1]{CLS22}}]\label{def:excessive-interval}
@@ -54,7 +94,137 @@ for $\Phi$. A point $x$ is called \emph{left excessive for $\Phi$} (resp.\ \emph
 $(x-\varepsilon, x] \subset I$ (resp.\ $[x, x+\varepsilon) \subset I$) for some $\varepsilon > 0$.
 \end{definition}
 
-A sweepout is called \emph{non-excessive} if no critical point is excessive on its critical side. The fundamental result of~\cite{CLS22} is that such sweepouts exist:
+\begin{figure}[H]
+    \centering
+    % ==================== Top: original mass curve ====================
+    \begin{tikzpicture}[xscale=0.8, yscale=0.55]
+      % Axes
+      \draw[->] (-0.3, 0) -- (9.5, 0) node[right] {$x$};
+      \draw[->] (0, -0.3) -- (0, 4.5) node[above] {$\mathbf{M}$};
+      % Tick marks
+      \draw (0.2, -0.1) -- (0.2, 0.1) node[below=3pt] {$0$};
+      \draw (9.0, -0.1) -- (9.0, 0.1) node[below=3pt] {$1$};
+      % Width line W
+      \draw[dashed, thick] (-0.2, 3.8) -- (9.3, 3.8) node[right] {$W$};
+      % Segment 1: 0 to x (open circle at W)
+      \draw[thick, bindA] (0.2, 0.3) .. controls (1.2, 1.5) and (1.8, 3.2) .. (2.4, 3.72);
+      \node[circle, fill=white, draw=bindA, thick, inner sep=0, minimum size=5pt] at (2.5, 3.8) {};
+      % Segment 2: x to z, passing through y at W
+      \node[circle, fill=bindA, inner sep=0, minimum size=5pt] at (2.5, 1.6) {};
+      \draw[thick, bindA] (2.5, 1.6) .. controls (3.2, 2.8) and (4.2, 3.6) .. (5.5, 3.8)
+        .. controls (6.2, 3.6) and (6.8, 2.8) .. (7.2, 2.2);
+      \node[circle, fill=bindA, inner sep=0, minimum size=5pt] at (7.2, 2.2) {};
+      % Segment 3: z to 1 (open circle at W)
+      \node[circle, fill=white, draw=bindA, thick, inner sep=0, minimum size=5pt] at (7.2, 3.8) {};
+      \draw[thick, bindA] (7.3, 3.72) .. controls (7.8, 2.5) and (8.5, 0.8) .. (9.0, 0.3);
+      \node[bindA, above left] at (1.5, 1.5) {$\mathbf{M}(\Phi(x))$};
+      % Mark x
+      \draw (2.5, -0.1) -- (2.5, 0.1) node[below=3pt] {$x$};
+      \draw[dotted, thin] (2.5, 0.1) -- (2.5, 1.6);
+      % Mark y (at W)
+      \draw (5.5, -0.1) -- (5.5, 0.1) node[below=3pt] {$y$};
+      \draw[dotted, thin] (5.5, 0.1) -- (5.5, 3.8);
+      % Mark z
+      \draw (7.2, -0.1) -- (7.2, 0.1) node[below=3pt] {$z$};
+      \draw[dotted, thin] (7.2, 0.1) -- (7.2, 1.2);
+      % === I_x replacement (left of x) ===
+      \draw[thick, blue!60!black] (1.2, -1.0) -- (2.5, -1.0);
+      \draw[thick, blue!60!black] (1.2, -1.2) -- (1.2, -0.8);
+      \draw[thick, blue!60!black] (2.5, -1.2) -- (2.5, -0.8);
+      \node[below, font=\small] at (1.85, -1.2) {$I_1$};
+      \node[circle, fill=blue!60!black, inner sep=0, minimum size=4pt] at (1.2, 1.80) {};
+      \draw[thick, blue!60!black, dashed] (1.2, 1.80) .. controls (1.6, 2.0) and (2.1, 1.8) .. (2.5, 1.6);
+      % === I_y replacement (both sides of y) ===
+      \draw[thick, blue!60!black] (4.3, -1.0) -- (6.4, -1.0);
+      \draw[thick, blue!60!black] (4.3, -1.2) -- (4.3, -0.8);
+      \draw[thick, blue!60!black] (6.4, -1.2) -- (6.4, -0.8);
+      \node[below, font=\small] at (5.35, -1.2) {$I_2$};
+      \node[circle, fill=blue!60!black, inner sep=0, minimum size=4pt] at (4.3, 3.40) {};
+      \node[circle, fill=blue!60!black, inner sep=0, minimum size=4pt] at (6.4, 3.22) {};
+      \draw[thick, blue!60!black, dashed] (4.3, 3.40) .. controls (4.8, 3.1) and (5.2, 2.9) .. (5.5, 2.8)
+        .. controls (5.8, 2.9) and (6.0, 3.1) .. (6.4, 3.22);
+      % === I_z replacement (right of z) ===
+      \draw[thick, blue!60!black] (7.2, -1.0) -- (8.3, -1.0);
+      \draw[thick, blue!60!black] (7.2, -1.2) -- (7.2, -0.8);
+      \draw[thick, blue!60!black] (8.3, -1.2) -- (8.3, -0.8);
+      \node[below, font=\small] at (7.75, -1.2) {$I_3$};
+      \node[circle, fill=blue!60!black, inner sep=0, minimum size=4pt] at (8.3, 1.45) {};
+      \draw[thick, blue!60!black, dashed] (7.2, 2.2) .. controls (7.5, 2.0) and (8.0, 1.6) .. (8.3, 1.45);
+    \end{tikzpicture}
+
+    \smallskip
+    (a)
+    \vspace{0.5em}
+
+    % ==================== (b) Monotone increasing ====================
+    \begin{tikzpicture}[xscale=0.52, yscale=0.45]
+      % Axes
+      \draw[->] (-0.3, 0) -- (9.5, 0) node[right] {$x$};
+      \draw[->] (0, -0.3) -- (0, 4.5) node[above] {$\mathbf{M}$};
+      % Tick marks
+      \draw (0.2, -0.1) -- (0.2, 0.1) node[below=3pt] {$0$};
+      \draw (9.0, -0.1) -- (9.0, 0.1) node[below=3pt] {$1$};
+      % Width line W
+      \draw[dashed, thick] (-0.2, 3.8) -- (9.3, 3.8) node[right] {$W$};
+      % Monotone increasing curve: 0 → W (open circle at top, filled at 0)
+      \draw[thick, bindA] (0.2, 0.3) .. controls (2.5, 0.8) and (5.0, 2.5) .. (8.9, 3.72);
+      \node[circle, fill=white, draw=bindA, thick, inner sep=0, minimum size=5pt] at (9.0, 3.8) {};
+      \node[circle, fill=bindA, inner sep=0, minimum size=5pt] at (9.0, 0) {};
+      \draw[dotted, thin] (9.0, 0.15) -- (9.0, 3.65);
+      % Replacement interval I and curve
+      \draw[thick, blue!60!black] (5.5, -1.5) -- (9.0, -1.5);
+      \draw[thick, blue!60!black] (5.5, -1.7) -- (5.5, -1.3);
+      \draw[thick, blue!60!black] (9.0, -1.7) -- (9.0, -1.3);
+      \node[below] at (7.25, -1.7) {$I$};
+      \node[circle, fill=blue!60!black, inner sep=0, minimum size=4pt] at (5.5, 2.43) {};
+      \draw[thick, blue!60!black, dashed] (5.5, 2.43) .. controls (6.5, 2.6) and (7.8, 2.5) .. (9.0, 0);
+      \node at (4.5, -1.8) {(b)};
+    \end{tikzpicture}
+    \hfill
+    % ==================== (c) Monotone decreasing ====================
+    \begin{tikzpicture}[xscale=0.52, yscale=0.45]
+      % Axes
+      \draw[->] (-0.3, 0) -- (9.5, 0) node[right] {$x$};
+      \draw[->] (0, -0.3) -- (0, 4.5) node[above] {$\mathbf{M}$};
+      % Tick marks
+      \draw (0.2, -0.1) -- (0.2, 0.1) node[below=3pt] {$0$};
+      \draw (9.0, -0.1) -- (9.0, 0.1) node[below=3pt] {$1$};
+      % Width line W
+      \draw[dashed, thick] (-0.2, 3.8) -- (9.3, 3.8) node[right] {$W$};
+      % Monotone decreasing curve: open circle at W, filled at 0, then decreasing
+      \node[circle, fill=white, draw=bindA, thick, inner sep=0, minimum size=5pt] at (0.2, 3.8) {};
+      \node[circle, fill=bindA, inner sep=0, minimum size=5pt] at (0.2, 0) {};
+      \draw[dotted, thin] (0.2, 0.15) -- (0.2, 3.65);
+      \draw[thick, bindA] (0.3, 3.72) .. controls (4.0, 2.5) and (6.5, 0.8) .. (9.0, 0.3);
+      % Replacement interval I and curve
+      \draw[thick, blue!60!black] (0.2, -1.5) -- (3.7, -1.5);
+      \draw[thick, blue!60!black] (0.2, -1.7) -- (0.2, -1.3);
+      \draw[thick, blue!60!black] (3.7, -1.7) -- (3.7, -1.3);
+      \node[below] at (1.95, -1.7) {$I$};
+      \draw[thick, blue!60!black, dashed] (0.2, 0) .. controls (1.5, 2.5) and (2.5, 2.5) .. (3.7, 2.39);
+      \node[circle, fill=blue!60!black, inner sep=0, minimum size=4pt] at (3.7, 2.39) {};
+      \node at (4.5, -1.8) {(c)};
+    \end{tikzpicture}
+    \caption{Excessive intervals and $I$-replacement families. (a)~A mass curve with critical points $x \in \mathfrak{m}_L \setminus \mathfrak{m}_R$, $y \in \mathfrak{m}_L \cap \mathfrak{m}_R$, $z \in \mathfrak{m}_R \setminus \mathfrak{m}_L$; blue dashed curves indicate replacement families on $I_1, I_2, I_3$ with mass strictly below $W$. (b)~A left-critical-only point at $x = 1$. (c)~A right-critical-only point at $x = 0$. See Remark~\ref{rem:excessive-critical}.}
+    \label{fig:excessive-remark}
+\end{figure}
+
+\begin{remark}\label{rem:excessive-critical}
+The left/right excessive distinction is non-trivial only on the side where the mass approaches $W$. Concretely, let $x \in \mathfrak{m}(\Phi)$ be an interior point of $[0,1]$.
+\begin{itemize}
+    \item If $x \in \mathfrak{m}_L \setminus \mathfrak{m}_R$ (left critical only), then left excessive is non-trivial while right excessive is automatic: the mass to the right of $x$ is already strictly below $W$, so any excessive interval $I \supset (x - \varepsilon, x]$ can be extended to $I' \supset (x - \varepsilon, x + \delta]$ by keeping the original $\Omega$ on the right.
+    \item Symmetrically, if $x \in \mathfrak{m}_R \setminus \mathfrak{m}_L$, then right excessive is non-trivial while left excessive is automatic.
+    \item Both directions are non-trivial only at points in $\mathfrak{m}_L \cap \mathfrak{m}_R$.
+\end{itemize}
+In particular, for interior critical points, the non-excessive condition imposes a genuine constraint only on the side from which the mass approaches $W$.
+
+At the endpoints, only one side exists: $x = 0$ can only belong to $\mathfrak{m}_R$ and $x = 1$ can only belong to $\mathfrak{m}_L$. Since there is no opposite side to extend into, the excessive condition on that sole critical side is genuinely non-trivial (see Figure~\ref{fig:excessive-remark}(b)--(c)).
+\end{remark}
+
+
+A sweepout is called \emph{non-excessive} if no critical point is excessive on its critical side. The key advantage of non-excessiveness is that it enables \emph{local} contradiction arguments: if a property (such as integrality or regularity) fails at a point $p \in \spt\|V\|$, one can construct an $I$-replacement that lowers mass in a neighbourhood of $p$, producing an excessive interval and contradicting the non-excessive hypothesis. This is in contrast with classical min-max, where one must build a \emph{global} competitor sweepout of smaller width. We will exploit this local mechanism directly in the integrality (Section~\ref{sec:integrality}) and regularity (Section~\ref{sec:regularity}) arguments.
+
+The fundamental result of~\cite{CLS22} is that non-excessive sweepouts exist:
 
 \begin{theorem}[Existence of non-excessive sweepouts~{\cite[Theorem~2.2]{CLS22}}]\label{thm:non-excessive-existence}
 Let $(M^{n+1},g)$ be a closed Riemannian manifold with $2\leq n\leq 6$. There exists an (ONVP) sweepout $\Psi$ such that every $x\in \mathfrak{m}_L(\Psi)$ is not left excessive and every $x \in \mathfrak{m}_R(\Psi)$ is not right excessive.
@@ -69,6 +239,172 @@ Let $(M^{n+1},g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi
 This follows from the pull-tight argument of Colding--de~Lellis~\cite{CL03}: varifold compactness produces a limit $V$ of slices whose masses approach $W$, and if every such limit were non-stationary, the tightening flow would produce a sweepout of strictly smaller width, contradicting optimality. The equality $\mathbf{M}(V) = W$ holds because $M$ is compact: varifold convergence $|\partial^*\Omega(x_i)| \to V$ in the compact Grassmannian bundle $G_n(M)$ gives $\mathbf{M}(V) = \lim_i \mathbf{M}(|\partial^*\Omega(x_i)|) = W$. The non-excessive condition is not used here; it enters in the analysis of the limit varifold below.
 
 Let $\Phi$ be a non-excessive ONVP sweepout, $x_i \to x_0 \in \mathfrak{m}(\Phi)$ a min-max sequence, and $V$ the varifold limit of $|\partial^*\Omega(x_i)|$ given by Proposition~\ref{thm:CLS-stationary}. A key distinction arises depending on whether the mass of the limit slice equals the width:
+
+\begin{figure}[ht]
+    \centering
+    % ==================== (a) X-shaped ====================
+    \begin{tikzpicture}[scale=0.8]
+      % --- Ω_2 fill (outermost layer): left+right sectors ---
+      \begin{scope}
+      \clip (0,0) circle (2.5);
+      \fill[red!40, opacity=0.3]
+        ({2.5*cos(130)}, {2.5*sin(130)})
+        .. controls (-0.2, 0.5) and (0.2, 0.5) ..
+        ({2.5*cos(50)}, {2.5*sin(50)})
+        -- (4, 4) -- (4, -4) --
+        ({2.5*cos(310)}, {2.5*sin(310)})
+        .. controls (-0.2, -0.5) and (0.2, -0.5) ..
+        ({2.5*cos(230)}, {2.5*sin(230)})
+        -- (-4, -4) -- (-4, 4) -- cycle;
+      \end{scope}
+
+      % --- Ω_0 outer fill (middle layer): right of right curve ---
+      \begin{scope}
+      \clip (0,0) circle (2.5);
+      \fill[red!40, opacity=1.0]
+        ({2.5*cos(40)}, {2.5*sin(40)})
+        .. controls (0.5, 0.2) and (0.5, -0.2) ..
+        ({2.5*cos(320)}, {2.5*sin(320)})
+        -- (4, -4) -- (4, 4) -- cycle;
+      \end{scope}
+
+      % --- Ω_0 outer fill (middle layer): left of left curve ---
+      \begin{scope}
+      \clip (0,0) circle (2.5);
+      \fill[red!40, opacity=1.0]
+        ({2.5*cos(140)}, {2.5*sin(140)})
+        .. controls (-0.5, 0.2) and (-0.5, -0.2) ..
+        ({2.5*cos(220)}, {2.5*sin(220)})
+        -- (-4, -4) -- (-4, 4) -- cycle;
+      \end{scope}
+
+      % --- Ω_1 fill (innermost layer): right wedge of X ---
+      \begin{scope}
+      \clip (0,0) circle (2.5);
+      \fill[red!40, opacity=0.5]
+        (0,0) -- ({4*cos(45)}, {4*sin(45)}) -- ({4*cos(315)}, {4*sin(315)}) -- cycle;
+      \end{scope}
+
+      % --- Ω_1 fill (innermost layer): left wedge of X ---
+      \begin{scope}
+      \clip (0,0) circle (2.5);
+      \fill[red!40, opacity=0.5]
+        (0,0) -- ({4*cos(135)}, {4*sin(135)}) -- ({4*cos(225)}, {4*sin(225)}) -- cycle;
+      \end{scope}
+
+      % ∂*Ω_1: X (branches)
+      \draw[bindA, thick] ({2.5*cos(225)}, {2.5*sin(225)}) -- (0,0) -- ({2.5*cos(45)}, {2.5*sin(45)});
+      \draw[bindA, thick] ({2.5*cos(315)}, {2.5*sin(315)}) -- (0,0) -- ({2.5*cos(135)}, {2.5*sin(135)});
+      \node[bindA, font=\small] at (2.3, 2.0) {$\partial^*\!\Omega_1$};
+
+      % ∂*Ω_0: left+right curves (innermost)
+      \draw[bindA!50, thin]
+        ({2.5*cos(40)}, {2.5*sin(40)})
+        .. controls (0.5, 0.2) and (0.5, -0.2) ..
+        ({2.5*cos(320)}, {2.5*sin(320)});
+      \draw[bindA!50, thin]
+        ({2.5*cos(140)}, {2.5*sin(140)})
+        .. controls (-0.5, 0.2) and (-0.5, -0.2) ..
+        ({2.5*cos(220)}, {2.5*sin(220)});
+      \node[bindA!50, font=\small] at (3.2, 0) {$\partial^*\!\Omega_0$};
+
+      % ∂*Ω_2: top+bottom curves (outermost)
+      \draw[bindA!50, thin]
+        ({2.5*cos(130)}, {2.5*sin(130)})
+        .. controls (-0.2, 0.5) and (0.2, 0.5) ..
+        ({2.5*cos(50)}, {2.5*sin(50)});
+      \draw[bindA!50, thin]
+        ({2.5*cos(230)}, {2.5*sin(230)})
+        .. controls (0.2, -0.5) and (-0.2, -0.5) ..
+        ({2.5*cos(310)}, {2.5*sin(310)});
+      \node[bindA!50, font=\small] at (0.15, -1.6) {$\partial^*\!\Omega_2$};
+
+      % Intersection point
+      \fill (0,0) circle (1.5pt);
+
+      \node at (0, -3.0) {(a)};
+    \end{tikzpicture}
+    \hfill
+    % ==================== (b) Y-shaped: 3 branches at 120° ====================
+    \begin{tikzpicture}[scale=0.8]
+      % --- Ξ_2 fill (outermost layer): region above bottom arc ---
+      \begin{scope}
+      \clip (0,0) circle (2.5);
+      \fill[red!40, opacity=0.3]
+        ({2.5*cos(215)}, {2.5*sin(215)})
+        .. controls (-0.25, -0.45) and (0.25, -0.45) ..
+        ({2.5*cos(325)}, {2.5*sin(325)})
+        -- (4, 4) -- (-4, 4) -- cycle;
+      \end{scope}
+
+      % --- Ξ_0 fill (middle layer): right of right arc ---
+      \begin{scope}
+      \clip (0,0) circle (2.5);
+      \fill[red!40, opacity=1.0]
+        ({2.5*cos(85)}, {2.5*sin(85)})
+        .. controls (0.45, 0.25) and (0.45, -0.25) ..
+        ({2.5*cos(335)}, {2.5*sin(335)})
+        -- (4, -4) -- (4, 4) -- cycle;
+      \end{scope}
+
+      % --- Ξ_0 fill (middle layer): left of left arc ---
+      \begin{scope}
+      \clip (0,0) circle (2.5);
+      \fill[red!40, opacity=1.0]
+        ({2.5*cos(95)}, {2.5*sin(95)})
+        .. controls (-0.45, 0.25) and (-0.45, -0.25) ..
+        ({2.5*cos(205)}, {2.5*sin(205)})
+        -- (-4, -4) -- (-4, 4) -- cycle;
+      \end{scope}
+
+      % --- Ξ_1 fill (innermost layer): right wedge ---
+      \begin{scope}
+      \clip (0,0) circle (2.5);
+      \fill[red!40, opacity=0.5]
+        (0,0) -- ({4*cos(330)}, {4*sin(330)}) -- ({4*cos(0)}, {4*sin(0)}) -- ({4*cos(90)}, {4*sin(90)}) -- cycle;
+      \end{scope}
+
+      % --- Ξ_1 fill (innermost layer): left wedge ---
+      \begin{scope}
+      \clip (0,0) circle (2.5);
+      \fill[red!40, opacity=0.5]
+        (0,0) -- ({4*cos(90)}, {4*sin(90)}) -- ({4*cos(150)}, {4*sin(150)}) -- ({4*cos(210)}, {4*sin(210)}) -- cycle;
+      \end{scope}
+
+      % ∂*Ξ_1: Y branches
+      \draw[bindB, thick, dashed] (0,0) -- ({2.5*cos(90)}, {2.5*sin(90)});
+      \draw[bindA, thick] (0,0) -- ({2.5*cos(210)}, {2.5*sin(210)});
+      \draw[bindA, thick] (0,0) -- ({2.5*cos(330)}, {2.5*sin(330)});
+      \node[bindA, font=\small] at (1.2, 0) {$\partial^*\!\Xi_1$};
+
+      % ∂*Ξ_0: right wedge curve (between 330° and 90°, offset 5° inward)
+      \draw[bindA!50, thin]
+        ({2.5*cos(85)}, {2.5*sin(85)})
+        .. controls (0.45, 0.25) and (0.45, -0.25) ..
+        ({2.5*cos(335)}, {2.5*sin(335)});
+
+      % ∂*Ξ_0: left wedge curve (between 90° and 210°, offset 5° inward)
+      \draw[bindA!50, thin]
+        ({2.5*cos(95)}, {2.5*sin(95)})
+        .. controls (-0.45, 0.25) and (-0.45, -0.25) ..
+        ({2.5*cos(205)}, {2.5*sin(205)});
+      \node[bindA!50, font=\small] at (-0.7, 2.8) {$\partial^*\!\Xi_0$};
+
+      % ∂*Ξ_2: bottom wedge curve (between 210° and 330°, offset 5° inward)
+      \draw[bindA!50, thin]
+        ({2.5*cos(325)}, {2.5*sin(325)})
+        .. controls (0.25, -0.45) and (-0.25, -0.45) ..
+        ({2.5*cos(215)}, {2.5*sin(215)});
+      \node[bindA!50, font=\small] at (0, -1.2) {$\partial^*\!\Xi_2$};
+
+      % Intersection point
+      \fill (0,0) circle (1.5pt);
+
+      \node at (0, -3.0) {(b)};
+    \end{tikzpicture}
+    \caption{Cross-sections of non-trivial multiple junctions (see the $\alpha$-structure hypothesis in Section~\ref{sec:regularity}). The red branches form $\spt\|V\|$; the lighter curves are the approximating Caccioppoli boundaries $\partial^*\Omega(x_i)$, with shading indicating the nested Caccioppoli sets. \textbf{(a)}~No mass cancellation: $\mathbf{M}(\Phi(x_0)) = W$, so the varifold mass equals the perimeter. \textbf{(b)}~Mass cancellation: $\mathbf{M}(\Phi(x_0)) < W$. The dashed blue branch represents perimeter that cancels in the sense of currents, illustrating the discrepancy between varifold mass $\|V\|(B_r)$ and perimeter $\mathrm{Per}(\Omega(x_0), B_r)$.}
+    \label{fig:regularity-preview}
+\end{figure}
 
 \begin{definition}[Mass cancellation~{\cite[Section~6]{CLS22}}]\label{def:mass-cancellation}
 Let $\Phi$ be a non-excessive (ONVP) sweepout with width $W$, and let $x_0 \in \mathfrak{m}(\Phi)$ be a critical point. We say that:
