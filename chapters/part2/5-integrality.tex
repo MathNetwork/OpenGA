@@ -88,10 +88,10 @@ The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\pa
 The main tool for step~(ii) is the following graphical decomposition lemma.
 
 \begin{lemma}[Positive density and rectifiability of the limit varifold]\label{lem:density-lower-bound}
-Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be a non-excessive ONVP sweepout. Let $V$ be the varifold limit of $|\partial^*\Omega(x_i)|$ along a min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$. In particular, $V$ is rectifiable by Allard's theorem (Proposition~\ref{prop:allard-rectifiability}).
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be a non-excessive ONVP sweepout. Let $V$ be the varifold limit of $|\partial^*\Omega(x_i)|$ along a min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Suppose that mass cancellation occurs at $x_0$, i.e.\ $\mathrm{Per}(\Omega(x_0)) < W$. Then $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$. In particular, $V$ is rectifiable by Allard's theorem (Proposition~\ref{prop:allard-rectifiability}).
 \end{lemma}
 
-The idea is that vanishing density creates local waste in the sweepout. If $\Theta(\|V\|, p) = 0$, then the volume enclosed by $\partial^*\Omega(x_i)$ inside $B_\rho(p)$ grows slower than $\rho^{n+1}$. The relative isoperimetric inequality forces this slow growth to be incompatible with the boundary being efficient: at some radius, the reduced boundary inside $B_\rho$ is strictly longer than the spherical cap that would enclose the same region. Replacing the boundary by the cap produces a Caccioppoli set $E_i$ with $\mathrm{Per}(E_i) < \mathrm{Per}(\Omega(x_i)) \leq W$. Using $E_i$ as a constant $I$-replacement family on $[x_i, x_0]$ then exhibits an excessive interval, contradicting the non-excessiveness of the sweepout.
+The idea is that vanishing density creates local waste in the sweepout. If $\Theta(\|V\|, p) = 0$, then the volume enclosed by $\partial^*\Omega(x_i)$ inside $B_\rho(p)$ grows slower than $\rho^{n+1}$. The relative isoperimetric inequality forces this slow growth to be incompatible with the boundary being efficient: at some radius, the reduced boundary inside $B_\rho$ is strictly longer than the spherical cap that would enclose the same region. Replacing the boundary by the cap produces a Caccioppoli set $E_i$ with $\mathrm{Per}(E_i) < \mathrm{Per}(\Omega(x_i)) \leq W$. This, combined with the mass cancellation hypothesis $\mathrm{Per}(\Omega(x_0)) < W$, allows one to construct an $I$-replacement family exhibiting an excessive interval---contradicting the non-excessiveness of the sweepout.
 
 \begin{proof}
 Since $V$ is stationary, the density $\Theta(\|V\|, p)$ exists at every point (Proposition~\ref{prop:p2-monotonicity}). We argue by contradiction: suppose there exists $p \in \spt\|V\|$ with $\Theta(\|V\|, p) = 0$. The strategy is as follows: the vanishing density forces $\Omega(x_i)$ to be nearly empty or nearly full inside small balls around~$p$. An isoperimetric replacement then produces a Caccioppoli set $E_i$ with strictly less perimeter, from which we construct an $I$-replacement family contradicting the non-excessiveness of $\Phi$.
@@ -266,106 +266,113 @@ Equation~\eqref{eq:per-original} is the additivity of perimeter\xinze{$B_r(p) = 
 \end{figure}
 
 
-\emph{Contradiction with non-excessiveness.}\xinze{Flat continuity of $\Omega^I$: the $I$-replacement family must be \emph{flat continuous}, and the mass condition is only $\limsup_{I \ni y \to x}\mathbf{M}(\Phi^I(y)) < W$ (not pointwise $\mathrm{Per} \leq W$). In particular, $\mathrm{Per}(\Omega(x_i)) = W$ at the endpoint is allowed; we just need $\mathrm{Per} < W$ in a punctured neighbourhood of each point. The construction has two segments:
+\emph{Contradiction with non-excessiveness.}
+We have $\mathrm{Per}(E_i) < \mathrm{Per}(\Omega(x_i)) \leq W$ from~\eqref{eq:per-decrease}, and $\mathrm{Per}(\Omega(x_0)) < W$ by the mass cancellation hypothesis. The goal is to construct a flat-continuous $I$-replacement on $I = (x_i, x_0]$ with $\limsup_{I \ni y \to x}\mathbf{M}(\Phi^I(y)) < W$ for every $x \in I$, making $x_0$ left excessive and contradicting non-excessiveness (Definition~\ref{def:excessive-interval}). Note that $x_i \notin I$, so no limsup condition is imposed at~$x_i$; the difficulty is that $\mathrm{Per}(\Omega(x_i))$ may equal~$W$. We distinguish two cases.
+
+\emph{Case~1: $\liminf_{i \to \infty}\mathrm{Per}(\Omega(x_i)) < W$.}
+Then there exist $\eta > 0$ and a subsequence (still denoted~$\{x_i\}$) with $\mathrm{Per}(\Omega(x_i)) \leq W - \eta$ for all~$i$.
+Since the sweepout is nested and $x_i < x_0$, we have $\Omega(x_i) \subset \Omega(x_0)$ with $\mathrm{Vol}(\Omega(x_0) \setminus \Omega(x_i)) \to 0$.
+Set $W_0 := \max\{W - \eta,\, \mathrm{Per}(\Omega(x_0))\} < W$ (independent of~$i$) and $\varepsilon := (W - W_0)/2 > 0$.
+Lemma~\ref{lem:interpolation} (applied with perimeter bound~$W$ and tolerance~$\varepsilon$) provides $\delta > 0$; for $i$ large enough, $\mathrm{Vol}(\Omega(x_0) \setminus \Omega(x_i)) \leq \delta$, so the lemma yields a nested $\mathcal{F}$-continuous family $\{\Omega_t\}_{t \in [0,1]}$ from $\Omega(x_i)$ to $\Omega(x_0)$ with
+\[
+    \mathrm{Per}(\Omega_t) \leq W_0 + \varepsilon = \frac{W + W_0}{2} < W
+    \quad\text{for all } t \in [0,1].
+\]
+Reparametrising this family on $\bar{I} = [x_i, x_0]$ gives an $I$-replacement with $\mathbf{M}(\Phi^I(x)) < W$ for all $x \in I = (x_i, x_0]$, making $x_0$ left excessive—a contradiction.
+
+\emph{Case~2: $\mathrm{Per}(\Omega(x_i)) \to W$.}
+The Interpolation Lemma alone cannot bring the perimeter below~$W$, since the uniform gap $W - \mathrm{Per}(\Omega(x_i)) \to 0$.
+We need an additional ingredient to decrease perimeter.
+\begin{list}{}{\leftmargin=1.5em \parsep=\parskip \topsep=\smallskipamount \itemsep=\medskipamount}
+\item \emph{Case~2a: $|\partial^*\Omega(x_i)|$ is stationary for infinitely many~$i$.}
+Passing to a subsequence we may assume $V_i := |\partial^*\Omega(x_i)|$ is stationary for every~$i$.
+Fix $R > 0$ smaller than the injectivity radius of $(M,g)$.
+Since $(M,g)$ is closed, the monotonicity formula for stationary varifolds on Riemannian manifolds (see e.g.~\cite[Section~17.6]{Sim83}) gives a constant $C = C(M,g) > 0$ such that for every stationary $n$-varifold $V$ on $(M,g)$, every $q \in \spt\|V\|$, and every $0 < \rho \leq R$,
+\[
+    \|V\|(B_\rho(q)) \geq e^{-C\rho}\,\omega_n\,\Theta^n(\|V\|, q)\,\rho^n.
+\]
+For each~$i$, the density of $V_i$ at every reduced boundary point $q \in \partial^*\Omega(x_i)$ satisfies $\Theta^n(\|V_i\|, q) = 1$ (since $V_i$ has multiplicity one). Setting $c := e^{-CR}\,\omega_n > 0$, which depends only on $(M,g)$, we obtain
+\begin{equation}\label{eq:mono-lower}
+    \|V_i\|(B_\rho(q)) \geq c\,\rho^n
+    \quad \text{for all } q \in \partial^*\Omega(x_i),\; 0 < \rho \leq R,\; i \in \mathbb{N}.
+\end{equation}
+Now pick $q_i \in \partial^*\Omega(x_i) \cap B_{r/2}(p)$ (which is non-empty for large $i$ since $p \in \spt\|V\|$). Applying~\eqref{eq:mono-lower} with $\rho = r/2$ gives $q_i \in B_{r/2}(p) \subset B_r(p)$, so
+\[
+    \|V_i\|(\overline{B}_{r}(p)) \geq \|V_i\|(B_{r/2}(q_i)) \geq c\,(r/2)^n.
+\]
+Since $V_i \to V$ as varifolds and $\overline{B}_{r}(p)$ is closed, the Portmanteau theorem yields
+\[
+    \|V\|(\overline{B}_{r}(p)) \geq \limsup_{i \to \infty} \|V_i\|(\overline{B}_{r}(p)) \geq c\,(r/2)^n.
+\]
+Dividing by $\omega_n r^n$ and letting $r \to 0$ gives $\Theta(\|V\|, p) \geq c/(2^n\omega_n) = e^{-CR}/2^n > 0$. No $I$-replacement is needed.
+
+\item \emph{Case~2b: $|\partial^*\Omega(x_i)|$ is not stationary for all large~$i$.}
+Passing to a subsequence, assume $|\partial^*\Omega(x_i)|$ is non-stationary for every~$i$.
+If the limit varifold $V$ is stationary, then $\Theta(\|V\|, p) > 0$ by the monotonicity formula applied directly to~$V$, so no $I$-replacement is needed.
+Assume therefore that $V$ is non-stationary.
+We construct an explicit $I$-replacement on $I = (x_i, x_0]$ in three steps.
+\begin{list}{}{\leftmargin=1.5em \parsep=\parskip \topsep=\smallskipamount \itemsep=\medskipamount}
+\item \emph{Step~1 (area-decreasing flow with uniform rate).}
+Since $\delta V \neq 0$, there exists a smooth vector field~$X$ (independent of~$i$) with $\delta V(X) < 0$.
+By varifold convergence $|\partial^*\Omega(x_i)| \to V$, we have $\delta|\partial^*\Omega(x_i)|(X) \to \delta V(X)$, so for all large~$i$,
+\[
+    \delta|\partial^*\Omega(x_i)|(X) \leq \tfrac{1}{2}\,\delta V(X) =: -c_0 < 0.
+\]
+Let $\{\Phi_t\}_{t \geq 0}$ denote the diffeomorphisms generated by~$X$.
+The map $t \mapsto \mathrm{Per}(\Phi_t(\Omega(x_i)))$ has derivative $\delta|\partial^*\Omega(x_i)|(X) \leq -c_0$ at $t = 0$, so for a fixed small $t_0 > 0$ (independent of~$i$),
+\[
+    \mathrm{Per}\bigl(\Phi_t(\Omega(x_i))\bigr)
+    \leq W - \tfrac{c_0}{2}\,t
+    \quad\text{for all } t \in [0, t_0].
+\]
+Set $\Omega'_i := \Phi_{t_0}(\Omega(x_i))$, so $\mathrm{Per}(\Omega'_i) \leq W - c_1$ where $c_1 := c_0 t_0/2 > 0$ is independent of~$i$.
+
+\item \emph{Step~2 (restoring nesting and interpolation).}
+Since the sweepout is nested and $x_i < x_0$, we have $\Omega(x_i) \subset \Omega(x_0)$.
+The flow may push part of $\Omega(x_i)$ outside $\Omega(x_0)$, so we restore nesting by setting
+\[
+    \hat\Omega_i := \Omega'_i \cap \Omega(x_0) \;\subset\; \Omega(x_0).
+\]
+We claim $\mathrm{Per}(\hat\Omega_i) < W$ for $i$ large.
+By the lattice property of Caccioppoli sets,
+\begin{equation}\label{eq:lattice}
+    \mathrm{Per}(\Omega'_i \cap \Omega(x_0)) + \mathrm{Per}(\Omega'_i \cup \Omega(x_0))
+    \leq \mathrm{Per}(\Omega'_i) + \mathrm{Per}(\Omega(x_0)).
+\end{equation}
+Since $\Omega(x_i) \subset \Omega(x_0)$ and the flow displacement is bounded,
+$\mathrm{Vol}(\Omega'_i \setminus \Omega(x_0)) \leq \mathrm{Vol}(\Omega'_i \mathbin{\triangle} \Omega(x_i)) \to 0$,
+so $\Omega'_i \cup \Omega(x_0) \to \Omega(x_0)$ in $L^1$.
+By lower semicontinuity of perimeter, $\liminf_i \mathrm{Per}(\Omega'_i \cup \Omega(x_0)) \geq \mathrm{Per}(\Omega(x_0))$.
+Combining with~\eqref{eq:lattice}:
+\[
+    \limsup_{i \to \infty}\mathrm{Per}(\hat\Omega_i)
+    \leq \limsup_i \mathrm{Per}(\Omega'_i)
+    \leq W - c_1 < W,
+\]
+so $\mathrm{Per}(\hat\Omega_i) < W$ for all large~$i$.
+We now verify the hypotheses of Lemma~\ref{lem:interpolation} with $\Omega_0 := \hat\Omega_i$ and $\Omega_1 := \Omega(x_0)$:
 \begin{itemize}
-\item \textbf{Segment 2: $E_i \to \Omega(x_0)$.} Both $\mathrm{Per}(E_i) < W$ and $\mathrm{Per}(\Omega(x_0)) < W$ (mass cancellation). The Interpolation Lemma~\cite[Lemma~2.8]{CLS22} gives a flat-continuous family with $\mathrm{Per} \leq \max + \epsilon < W$. \emph{Settled.}
+\item \emph{Nesting:} $\hat\Omega_i \subset \Omega(x_0)$ by construction.
+\item \emph{Perimeter bound:} $\mathrm{Per}(\hat\Omega_i),\, \mathrm{Per}(\Omega(x_0)) < W$, so both are $\leq L := W$.
+\item \emph{Volume smallness:} $\mathrm{Vol}(\Omega(x_0) \setminus \hat\Omega_i) \leq \mathrm{Vol}(\Omega(x_0) \setminus \Omega(x_i)) + \mathrm{Vol}(\Omega(x_i) \mathbin{\triangle} \Omega'_i) \to 0$.
+\end{itemize}
+Set $W_0 := \max\{\mathrm{Per}(\hat\Omega_i),\, \mathrm{Per}(\Omega(x_0))\} < W$ and $\varepsilon := (W - W_0)/2 > 0$.
+Lemma~\ref{lem:interpolation} provides $\delta > 0$; for $i$ large, $\mathrm{Vol}(\Omega(x_0) \setminus \hat\Omega_i) \leq \delta$, yielding a nested $\mathcal{F}$-continuous family $\{\Omega_t^{(2)}\}_{t \in [0,1]}$ from $\hat\Omega_i$ to $\Omega(x_0)$ with
+$\mathrm{Per}(\Omega_t^{(2)}) \leq (W + W_0)/2 < W$.
 
-\item \textbf{Segment 1: $\Omega(x_i) \to E_i$.} The difficulty: $\mathrm{Per}(\Omega(x_i))$ may equal $W$, so any construction that temporarily increases Per is forbidden. The Interpolation Lemma between $\Omega(x_i)$ and $E_i$ gives $\mathrm{Per} \leq W + \epsilon$, which exceeds $W$.
+\item \emph{Step~3 (concatenation).}
+Define $\Phi^I$ on $\bar{I} = [x_i, x_0]$ in two phases.
+On $[x_i, m]$ (where $m := (x_i+x_0)/2$), reparametrise the path $t \mapsto \Phi_t(\Omega(x_i)) \cap \Omega(x_0)$ for $t \in [0, t_0]$; this is $\mathcal{F}$-continuous and runs from $\Omega(x_i)$ to~$\hat\Omega_i$.
+On $[m, x_0]$, reparametrise the interpolation family from Step~2.
+Then $\Phi^I(x_i) = \partial\Omega(x_i)$, $\Phi^I(x_0) = \partial\Omega(x_0)$, and $\Phi^I$ is $\mathcal{F}$-continuous on~$\bar{I}$.
+For every $x \in I = (x_i, x_0]$: in the flow phase ($x \in (x_i, m]$), the lattice bound gives $\mathrm{Per}(\Phi_t(\Omega(x_i)) \cap \Omega(x_0)) \leq \mathrm{Per}(\Phi_t(\Omega(x_i))) + o_i(1) \leq W - c_0 t/2 + o_i(1) < W$ for $t > 0$ and $i$ large; in the interpolation phase, $\mathrm{Per} < W$ by Step~2.
+Hence $\limsup_{I \ni y \to x}\mathbf{M}(\Phi^I(y)) < W$ for all $x \in I$, so $\Phi^I$ is an $I$-replacement (Definition~\ref{def:excessive-interval}), making $x_0$ left excessive—a contradiction.
+\end{list}% end Steps
+\end{list}% end Cases 2a/2b
 
-\textbf{Strategy: area-decreasing deformation inside $B_{\rho_i}$, then Interpolation Lemma.}
-
-\emph{Key observation.} Set $r_0 := \mathrm{dist}(p, \partial^*\Omega(x_i)) > 0$ (since $p \notin \partial^*\Omega(x_i)$). The region $D := S_i \cap B_{\rho_i}$ and the boundary $\partial^*\Omega(x_i) \cap B_{\rho_i}$ are both contained in the annulus $A := B_{\rho_i}(p) \setminus B_{r_0}(p)$.
-
-\emph{Step (a): One-step area-decreasing replacement.} Inside $B_{\rho_i}$, the boundary $\Sigma_0 := \partial^*\Omega(x_i) \cap B_{\rho_i}$ is a surface with $\partial \Sigma_0 = \hat\Sigma := \partial^*\Omega(x_i) \cap \partial B_{\rho_i}$ (for a.e.\ $\rho_i$ by the coarea formula). The area-minimising surface (Plateau solution) $\Gamma$ in $\overline{B}_{\rho_i}$ with $\partial\Gamma = \hat\Sigma$ satisfies
-\[
-    \mathcal{H}^n(\Gamma) \leq \mathcal{H}^n(\Sigma_0) = \mathrm{Per}(\Omega(x_i), B_{\rho_i}),
-\]
-since $\Sigma_0$ is a competitor. Define $\Omega'$ by replacing the boundary of $\Omega(x_i)$ inside $B_{\rho_i}$ with $\Gamma$ (the enclosed region is chosen on the $E_i$-side). Then
-\[
-    \mathrm{Per}(\Omega') = \mathrm{Per}(\Omega(x_i), M \setminus B_{\rho_i}) + \mathcal{H}^n(\Gamma) \leq \mathrm{Per}(\Omega(x_i)) \leq W.
-\]
-Generically $\Sigma_0$ is NOT area-minimising (it is the boundary of a sweepout slice, not a minimiser), so $\mathcal{H}^n(\Gamma) < \mathrm{Per}(\Omega(x_i), B_{\rho_i})$ and $\mathrm{Per}(\Omega') < W$ strictly.
-
-\emph{Step (b): Continuous deformation $\Omega(x_i) \to \Omega'$ via mean curvature flow.} Consider the level-set mean curvature flow (MCF) of $\Sigma_0$ inside $B_{\rho_i}$ with Dirichlet boundary condition $\hat\Sigma$ on $\partial B_{\rho_i}$. The flow $\{\Sigma_\tau\}_{\tau \geq 0}$ (in the sense of Brakke or level-set solutions) satisfies:
-\begin{enumerate}
-    \item $\tau \mapsto \mathcal{H}^n(\Sigma_\tau)$ is non-increasing (area-decreasing property of MCF);
-    \item the enclosed volume changes continuously in $\tau$ (the flow moves at speed $H$, which is locally integrable);
-    \item as $\tau \to \infty$, $\Sigma_\tau \to \Gamma$ (the flow converges to the area-minimising surface).
-\end{enumerate}
-Define $\Omega_\tau$ to be $\Omega(x_i)$ with the boundary inside $B_{\rho_i}$ replaced by $\Sigma_\tau$. Then $\mathrm{Per}(\Omega_\tau) = \mathrm{Per}(\Omega(x_i), M \setminus B_{\rho_i}) + \mathcal{H}^n(\Sigma_\tau) \leq \mathrm{Per}(\Omega(x_i)) \leq W$ for all $\tau$, and $\tau \mapsto \Omega_\tau$ is flat continuous (volume changes continuously). At some finite time $T$, $\mathrm{Per}(\Omega_T) < W$ strictly.
-
-\emph{Step (c): Interpolation Lemma for the rest.} Now both $\mathrm{Per}(\Omega_T) < W$ and $\mathrm{Per}(E_i) < W$. Apply the Interpolation Lemma to get a flat-continuous family from $\Omega_T$ to $E_i$ with $\mathrm{Per} \leq \max(\mathrm{Per}(\Omega_T), \mathrm{Per}(E_i)) + \epsilon < W$.
-
-\textbf{Open points:} (1) Rigorous existence and regularity of MCF with Dirichlet boundary in $B_{\rho_i}$ (standard for smooth initial data; for rectifiable $\Sigma_0$, use Brakke's existence theorem). (2) The ``generic non-minimality'' of $\Sigma_0$: argue that $\partial^*\Omega(x_i) \cap B_{\rho_i}$ is not area-minimising (e.g.\ by the sweepout structure or the vanishing density regime). (3) Ensure the MCF flow defines a Caccioppoli set at each time (level-set formulation gives this).
-\end{itemize}}
-Since $\mathrm{Per}(E_i) < \mathrm{Per}(\Omega(x_i)) \leq W$, define the $[x_i, x_0]$-replacement family
-\[
-    \Omega^I(x) := \begin{cases} \Omega(x_i) & x = x_i, \\ E_i & x \in (x_i, x_0), \\ \Omega(x_0) & x = x_0. \end{cases}
-\]
-The endpoints satisfy $\Omega^I(x_i) = \Omega(x_i)$ and $\Omega^I(x_0) = \Omega(x_0)$. For every $x \in [x_i, x_0]$,
-\[
-    \limsup_{[x_i, x_0] \ni y \to x} \mathbf{M}(|\partial^*\Omega^I(y)|) = \mathrm{Per}(E_i) < W,
-\]
-since the limsup excludes $y = x$ and $\Omega^I(y) = E_i$ for all $y \in (x_i, x_0)$. Thus $[x_i, x_0]$ is an excessive interval with $(x_i, x_0] \subset [x_i, x_0]$, making $x_0$ left excessive (Definition~\ref{def:excessive-interval})---contradicting the non-excessiveness of $\Phi$ (Theorem~\ref{thm:non-excessive-existence}).\xinze{See the preceding \texttt{xinze} for Segment~1/2 analysis. Segment~2: Interpolation Lemma. Segment~1: MCF inside $B_{\rho_i}$ with Dirichlet b.c.\ gives area-decreasing flat-continuous path $\Omega(x_i) \to \Omega'$ with $\mathrm{Per}(\Omega') < W$; then Interpolation Lemma from $\Omega'$ to $E_i$.} Therefore $\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e.\ $p$, and $V$ is rectifiable by Allard's rectifiability theorem.
+\medskip
+In Cases~1 and~2b we obtain an $I$-replacement contradicting non-excessiveness; in Cases~2a and the stationary sub-case of~2b, the monotonicity formula gives $\Theta(\|V\|, p) > 0$ directly. In all cases $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$, and $V$ is rectifiable by Allard's theorem (Proposition~\ref{prop:allard-rectifiability}).
 \end{proof}
-
-\begin{figure}[ht]
-    \centering
-    \begin{tikzpicture}[scale=0.92, >=Stealth]
-      % Axes
-      \draw[->] (-0.3, 0) -- (7.0, 0) node[right, font=\small] {$x$};
-      \draw[->] (0, -0.3) -- (0, 4.5) node[above, font=\small] {$\mathrm{Per}$};
-
-      % Width line W
-      \draw[dashed, gray] (-0.1, 3.8) -- (6.8, 3.8);
-      \node[left, font=\small] at (-0.1, 3.8) {$W$};
-
-      % Per(Ω(x)) curve — gray, approaching W near x_0
-      \draw[thick, gray!65]
-        (0.3, 1.2) .. controls (1.0, 2.0) and (1.5, 2.8) .. (2.0, 3.2)
-        .. controls (2.5, 3.5) and (2.8, 3.65) .. (3.2, 3.7);
-      \draw[thick, gray!65]
-        (3.2, 3.7) .. controls (3.5, 3.72) and (3.8, 3.75) .. (4.3, 3.73);
-      \draw[thick, gray!65]
-        (4.3, 3.73) .. controls (4.8, 3.68) and (5.3, 3.3) .. (5.8, 2.5)
-        .. controls (6.1, 2.0) and (6.3, 1.6) .. (6.5, 1.3);
-      \node[gray!65, font=\footnotesize, above] at (5.6, 2.7) {$\mathrm{Per}(\Omega(x))$};
-
-      % Mark x_i and x_0
-      \draw[gray!40, thin, dashed] (3.2, 0) -- (3.2, 3.7);
-      \draw[gray!40, thin, dashed] (4.3, 0) -- (4.3, 3.73);
-      \node[below, font=\small] at (3.2, 0) {$x_i$};
-      \node[below, font=\small] at (4.3, 0) {$x_0$};
-
-      % Constant I-replacement: Per(E_i) on (x_i, x_0)
-      \draw[very thick, bindB] (3.2, 2.6) -- (4.3, 2.6);
-      \node[bindB, font=\small, right] at (4.4, 2.6) {$\mathrm{Per}(E_i)$};
-
-      % Endpoint dots: original curve
-      \fill[bindA] (3.2, 3.7) circle (2.2pt);
-      \fill[bindA] (4.3, 3.73) circle (2.2pt);
-      % Endpoint dots: replacement (open circles at endpoints)
-      \draw[bindB, thick, fill=white] (3.2, 2.6) circle (2.2pt);
-      \draw[bindB, thick, fill=white] (4.3, 2.6) circle (2.2pt);
-
-      % Vertical arrows: endpoint matching
-      \draw[->, gray!60, thick] (3.2, 3.5) -- (3.2, 2.82);
-      \draw[->, gray!60, thick] (4.3, 3.53) -- (4.3, 2.82);
-      \node[gray!60, font=\tiny, right] at (3.25, 3.15) {$\Omega^I\!=\!\Omega$};
-      \node[gray!60, font=\tiny, left] at (4.25, 3.15) {$\Omega^I\!=\!\Omega$};
-
-      % Brace for excessive interval
-      \draw[decorate, decoration={brace, amplitude=4pt, mirror}]
-        (3.2, -0.55) -- (4.3, -0.55)
-        node[midway, below=4pt, font=\small] {excessive interval};
-
-      % Gap arrow
-      \draw[<->, thick] (6.4, 2.6) -- (6.4, 3.8);
-      \node[font=\footnotesize, right] at (6.45, 3.2) {$< W$};
-    \end{tikzpicture}
-    \caption{The constant $I$-replacement. On the interval $[x_i, x_0]$, the family $\Omega^I(x) = E_i$ (\textcolor{bindB}{blue}) has $\mathrm{Per}(E_i) < W$ everywhere, while the endpoints match the original sweepout (\textcolor{bindA}{red dots}). This makes $[x_i, x_0]$ an excessive interval, contradicting non-excessiveness.}
-    \label{fig:constant-I-replacement}
-\end{figure}
 
 \begin{lemma}[Sheet decomposition]\label{lem:sheet-decomposition}
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$. Let $\{\Omega_i\}$ be a nested sequence of Caccioppoli sets ($\Omega_1 \subset \Omega_2 \subset \cdots$) with $|\partial^*\Omega_i| \to V$ as varifolds, where $V$ is a rectifiable stationary $n$-varifold with support $\Sigma$. Let $p \in \Sigma$ be a point with unique tangent plane $P = T_p\Sigma$ and positive density $\theta(p) = \Theta(\|V\|, p) > 0$ (by rectifiability, these conditions hold at $\mathcal{H}^n$-a.e.\ point of $\Sigma$; see Section~\ref{sec:p2-prelim}).
