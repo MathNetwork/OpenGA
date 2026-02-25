@@ -1,0 +1,170 @@
+% !TEX root = ../../thesis.tex
+
+\section{Density from one-sided minimality}\label{sec:one-sided-density}
+
+In the mass cancellation case of the integrality argument (Section~\ref{subsec:integrality-cancel}), we need to show that the limit varifold $V$ has positive density everywhere on its support, even though the approximating Caccioppoli boundaries $|\partial^*\Omega_i|$ are not individually stationary. When the slices are one-sided area-minimizing, the density lower bound follows from the isoperimetric argument in Lin's theory of parametric obstacle problems~\cite{Lin85}, combined with a Portmanteau argument to pass the bound to the limit. Positive density then implies rectifiability of $V$ by Allard's theorem (Proposition~\ref{prop:allard-rectifiability}).
+
+We remark that Lin's full regularity theory gives much stronger conclusions when one additionally assumes stationarity of each individual slice: if a Caccioppoli boundary $\partial^*\Omega$ is both stationary and one-sided area-minimizing, then $\spt\|\partial^*\Omega\|$ is a smooth embedded hypersurface outside a singular set of Hausdorff dimension at most $n - 7$ (discrete when $n = 7$), and the associated varifold is stable~\cite[Interior Regularity Theorem, \S0.2]{Lin85}; see also~\cite[Proposition~2.1]{Liu19}. In our setting, however, the individual slices $|\partial^*\Omega_i|$ are not stationary, so we cannot apply Lin's regularity theorem to them directly. Instead, we only use the one-sided minimality to obtain the mass ratio lower bound, which suffices for our purpose.
+
+
+\begin{definition}[One-sided minimizers~{\cite[Definition~1.10]{CLS22}}]\label{def:one-sided-perimeter-min}
+Let $(M^{n+1}, g)$ be a Riemannian manifold, $\Omega$ a Caccioppoli set, and $U \subset M$ open.
+We say $\Omega$ is \emph{locally one-sided inner area-minimizing} in~$U$ if for every $A \Subset U$ and every Caccioppoli set $F$ with $F \mathbin{\triangle} \Omega \subset A$ and $F \subset \Omega$,
+\[
+    \mathrm{Per}(\Omega, A) \leq \mathrm{Per}(F, A).
+\]
+Similarly, $\Omega$ is \emph{locally one-sided outer area-minimizing} in $U$ if the same holds for every $F \supset \Omega$ with $F \mathbin{\triangle} \Omega \subset A$.
+\end{definition}
+
+This is precisely the Caccioppoli version of the parametric obstacle problem studied by Lin~\cite{Lin85}, whose thesis develops the regularity theory for hypersurfaces minimizing a parametric elliptic integrand subject to an obstacle constraint.
+Lin's main formulation~\cite[\S0.2]{Lin85} assumes the obstacle domain has $C^{1,\alpha}$ boundary; this regularity is essential for his interior and boundary regularity theorems, but not for the mass ratio bounds that we use here.
+Indeed, Lin~\cite[\S0.2, p.~12--13]{Lin85} also formulates a Caccioppoli version and proves an Equivalence Lemma showing that its solutions correspond to solutions of the integral-current formulation.
+
+
+Federer's filling inequality~\cite[4.5.9(31)]{Fed69} guarantees that every $(n-1)$-cycle in $\mathbb{R}^{n+1}$ bounds an $n$-rectifiable set of controlled area, but we need the filling to be constrained to a subset (such as a geodesic ball). A Lipschitz retraction allows one to take a filling in the ambient space and project it back into the constraint set, with the Lipschitz constant controlling the area increase.
+
+\begin{definition}[Lipschitz retract]\label{def:lipschitz-retract}
+A closed set $A \subset \mathbb{R}^{n+1}$ (or a closed subset of a Riemannian manifold) is called a \emph{Lipschitz retract} if there exists a Lipschitz map $h\colon V \to A$ from an open neighborhood $V \supset A$ with $h|_A = \mathrm{id}_A$.
+\end{definition}
+
+For sufficiently small geodesic balls in a Riemannian manifold $(M,g)$, the closed ball $\overline{B}_\rho(q)$ is a Lipschitz retract: when $\rho$ is less than the convexity radius of $(M,g)$, the ball is geodesically convex, and the nearest-point projection
+\[
+    h(x) = \exp_q\!\Bigl(\min\bigl(1,\, \rho/d(x,q)\bigr)\, \exp_q^{-1}(x)\Bigr)
+\]
+defines a Lipschitz retraction $h\colon M \to \overline{B}_\rho(q)$ with Lipschitz constant depending only on $(M,g)$.
+
+Combining the filling inequality~\cite[4.5.9(31)]{Fed69} with the constancy theorem~\cite[Theorem~26.27]{Sim83} in our codimension-one setting, we obtain the following competitor construction:
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+    % Step 0: Invisible paths to compute intersections and ellipse parameters
+    \path[name path=circ0] (0,0) circle (2.5);
+    \path[name path=bdry0] (-0.3,3.2) .. controls (-0.3,2.2) and (-0.8,1.0) .. (-1.0,0.2) .. controls (-1.2,-0.6) and (-0.5,-0.8) .. (0.5,-0.6) .. controls (1.5,-0.4) and (2.0,0.0) .. (3.2,0.2);
+    \path[name intersections={of=circ0 and bdry0, by={A,B}}];
+    \coordinate (M) at ($(A)!0.5!(B)$);
+    \path let \p1 = ($(B)-(A)$) in
+        \pgfextra{
+            \pgfmathsetmacro{\smaj}{veclen(\x1,\y1)/2}
+            \pgfmathsetmacro{\smin}{\smaj*0.12}
+            \pgfmathsetmacro{\rang}{atan2(\y1,\x1)}
+            \global\let\smaj\smaj
+            \global\let\smin\smin
+            \global\let\rang\rang
+        };
+    % Layer 1: Shading
+    % Ω: shaded region to the left of ∂*Ω
+    \fill[red!15] (-0.3,3.2) .. controls (-0.3,2.2) and (-0.8,1.0) .. (-1.0,0.2) .. controls (-1.2,-0.6) and (-0.5,-0.8) .. (0.5,-0.6) .. controls (1.5,-0.4) and (2.0,0.0) .. (3.2,0.2) -- (3.2,-2.5) -- (-2.5,-2.5) -- (-2.5,3.2) -- cycle;
+    % W: region between ∂*Ω (right side) and chord A–B, inside ball
+    \begin{scope}
+        \clip (0,0) circle (2.5);
+        % clip to non-Ω side of red curve
+        \clip (-0.3,3.2) .. controls (-0.3,2.2) and (-0.8,1.0) .. (-1.0,0.2) .. controls (-1.2,-0.6) and (-0.5,-0.8) .. (0.5,-0.6) .. controls (1.5,-0.4) and (2.0,0.0) .. (3.2,0.2) -- (3.2,3.2) -- (-0.3,3.2) -- cycle;
+        % fill the red-curve side of chord A–B
+        \fill[blue!15] (A) -- (B) -- (-2.5,3.2) -- (-2.5,-2.5) -- (3.2,-2.5) -- cycle;
+        % fill gap between chord A–B and the solid arc Σ
+        \begin{scope}[shift=(M), rotate=\rang]
+            \fill[blue!15] (\smaj pt,0) arc[start angle=0, end angle=-180, x radius=\smaj pt, y radius=\smin pt] -- cycle;
+        \end{scope}
+    \end{scope}
+    % Layer 2: Lines (on top)
+    \draw[gray, thick] (0,0) circle (2.5);
+    \node[gray] at (2.4,1.8) {\small $B_\rho(q)$};
+    % ∂*Ω
+    \draw[red, very thick] (-0.3,3.2) .. controls (-0.3,2.2) and (-0.8,1.0) .. (-1.0,0.2) .. controls (-1.2,-0.6) and (-0.5,-0.8) .. (0.5,-0.6) .. controls (1.5,-0.4) and (2.0,0.0) .. (3.2,0.2);
+    % Σ: solid front, dashed back, hatched interior (orange)
+    \begin{scope}[shift=(M), rotate=\rang]
+        \fill[pattern=north east lines, pattern color=orange!70] (0,0) ellipse[x radius=\smaj pt, y radius=\smin pt];
+        \draw[blue, thick] (\smaj pt,0) arc[start angle=0, end angle=-180, x radius=\smaj pt, y radius=\smin pt];
+        \draw[blue, thick, dashed] (\smaj pt,0) arc[start angle=0, end angle=180, x radius=\smaj pt, y radius=\smin pt];
+    \end{scope}
+    % Σ label outside with curved arrow to ellipse center
+    \node[orange] (sigmalabel) at (3.0,1.0) {\small $\Sigma$};
+    \draw[->, orange, thin] (sigmalabel) to[bend left=20] (M);
+    % ∂*Ω label
+    \node[red] at (3.6,0.2) {\small $\partial^*\!\Omega$};
+    % W label in the blue shaded region
+    \node[blue!70!black] at (-0.2,0.8) {\small $W$};
+\end{tikzpicture}
+\caption{Constructing the competitor $F = \Omega \cup W$ in $B_\rho(q)$: the filling surface $\Sigma$ spans the slice $\partial^*\Omega \cap \partial B_\rho(q)$, and $W$ is the Caccioppoli set bounded by $\partial^*\Omega \cap B_\rho(q)$ and $\Sigma$.}
+\label{fig:caccioppoli-competitor}
+\end{figure}
+
+\begin{proposition}[Caccioppoli competitor in a geodesic ball~{\cite[4.5.9(31)]{Fed69}; \cite[Theorem~26.27]{Sim83}}]\label{prop:caccioppoli-competitor}
+Let $(M^{n+1}, g)$ be a Riemannian manifold. There exist $r_0 > 0$ and $C = C(n, M, g) > 0$ such that for every Caccioppoli set $\Omega$, every $q \in M$, and a.e.\ $0 < \rho < r_0$, there exists a Caccioppoli set $F$ with $F \supset \Omega$, $F \mathbin{\triangle} \Omega \subset B_\rho(q)$, and
+\begin{equation}\label{eq:caccioppoli-competitor}
+    \mathrm{Per}(F, B_\rho(q)) \leq C\,\mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho(q))^{n/(n-1)}.
+\end{equation}
+The same holds with $F \subset \Omega$ in place of $F \supset \Omega$.
+\end{proposition}
+
+\begin{proof}
+By the coarea formula, for a.e.\ $\rho$ the slice $\partial^*\Omega \cap \partial B_\rho(q)$ is an $(n-1)$-rectifiable set with no boundary (as a current).
+Federer's filling inequality~\cite[4.5.9(31)]{Fed69} states that every compactly supported $(n-1)$-cycle $Z$ in $\mathbb{R}^{n+1}$ bounds an $n$-dimensional integral current of mass at most $C\,\mathbf{M}(Z)^{n/(n-1)}$.
+Applying this to the slice (viewed in normal coordinates) yields an $n$-dimensional surface $\Sigma_0$ spanning it.
+Since $\overline{B}_\rho(q)$ is a Lipschitz retract (Definition~\ref{def:lipschitz-retract}), composing $\Sigma_0$ with the retraction $h \colon M \to \overline{B}_\rho(q)$ produces a surface $\Sigma = h_\#\Sigma_0$ supported in $\overline{B}_\rho(q)$ that still spans the slice, with
+\[
+    \mathcal{H}^n(\Sigma) \leq \mathrm{Lip}(h)^n \, \mathcal{H}^n(\Sigma_0) \leq C\,\mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho(q))^{n/(n-1)}.
+\]
+Now $\Sigma$ and $\partial^*\Omega \cap B_\rho(q)$ share the same boundary (the slice on $\partial B_\rho(q)$), so their difference $(\partial^*\Omega \cap B_\rho(q)) - \Sigma$ is an $n$-cycle in $\overline{B}_\rho(q)$.
+By the constancy theorem~\cite[Theorem~26.27]{Sim83}, every compactly supported $n$-cycle in $\mathbb{R}^{n+1}$ equals $\partial\llrr{W}$ for some Caccioppoli set $W$ (apply the theorem to each connected component of the complement of the cycle's support).
+In our case $W \subset B_\rho(q)$; see Figure~\ref{fig:caccioppoli-competitor}.
+Setting $F = \Omega \cup W$ gives $F \supset \Omega$ and $F \mathbin{\triangle} \Omega = W \subset B_\rho(q)$.
+Since $\partial\llrr{W} = (\partial^*\Omega \cap B_\rho(q)) - \Sigma$ as currents, the set $W$ lies between $\partial^*\Omega \cap B_\rho(q)$ and $\Sigma$.
+Adding $W$ to $\Omega$ therefore absorbs the original boundary piece $\partial^*\Omega \cap B_\rho(q)$ into the interior of $F$: every point of $\partial^*\Omega \cap B_\rho(q)$ has $\Omega$ on one side and $W$ on the other, so it is no longer on $\partial^*F$.
+The only remaining boundary of $F$ inside $B_\rho(q)$ comes from $\Sigma$, so $\partial^*F \cap B_\rho(q) \subset \Sigma$ and
+\[
+    \mathrm{Per}(F, B_\rho(q)) \leq \mathcal{H}^n(\Sigma) \leq C\,\mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho(q))^{n/(n-1)}.
+\]
+For the variant $F \subset \Omega$, take $F = \Omega \setminus W$ instead; the same estimate holds.
+\end{proof}
+
+\begin{proposition}[Mass ratio lower bound for one-sided minimizers]\label{prop:mass-ratio-lower-bound}
+Let $(M^{n+1}, g)$ be a Riemannian manifold, $U \subset M$ open, and $\Omega$ a Caccioppoli set that is locally one-sided (inner or outer) area-minimizing in $U$ (Definition~\ref{def:one-sided-perimeter-min}). Then for every $q \in \partial^*\Omega \cap U$ and every sufficiently small $\rho > 0$,
+\begin{equation}\label{eq:mass-ratio-lower-bound}
+    \mathrm{Per}(\Omega, B_\rho(q)) \geq c\,\rho^n,
+\end{equation}
+where $c > 0$ depends only on $n$ and $(M,g)$.
+\end{proposition}
+
+\begin{proof}
+We follow the isoperimetric argument of~\cite[\S0.3, p.~16]{Lin85}.
+Assume $\Omega$ is locally one-sided outer area-minimizing (the inner case is symmetric).
+Let $q \in \partial^*\Omega \cap U$ and choose $\rho > 0$ small enough that $B_\rho(q) \Subset U$.
+Set $f(\rho) := \mathrm{Per}(\Omega, B_\rho(q))$.
+By the coarea formula, for a.e.\ $\rho$ the slice $\partial^*\Omega \cap \partial B_\rho(q)$ is an $(n-1)$-rectifiable cycle with
+\[
+    \mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho(q)) = f'(\rho).
+\]
+By Proposition~\ref{prop:caccioppoli-competitor}, there exists a Caccioppoli set $F$ with $F \supset \Omega$ and $F \mathbin{\triangle} \Omega \subset B_\rho(q) \Subset U$, so $F$ is an admissible competitor in Definition~\ref{def:one-sided-perimeter-min}.
+By one-sided outer area-minimality and~\eqref{eq:caccioppoli-competitor},
+\[
+    f(\rho) = \mathrm{Per}(\Omega, B_\rho(q)) \leq \mathrm{Per}(F, B_\rho(q)) \leq C\,f'(\rho)^{n/(n-1)},
+\]
+i.e., $f(\rho)^{(n-1)/n} \leq C\,f'(\rho)$.
+Integrating this ODE gives $f(\rho) \geq c\,\rho^n$.
+\end{proof}
+
+Combining the mass ratio bound with a Portmanteau argument, we obtain positive density for the limit varifold:
+
+\begin{lemma}[Density from perimeter minimality on one side]\label{lem:one-sided-density}
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$.
+Let $\Omega_i$ be Caccioppoli sets with $|\partial^*\Omega_i| \to V$ as varifolds.
+Suppose that for some fixed $R > 0$ and $p \in \spt\|V\|$, each $\Omega_i$ is locally one-sided (inner or outer) area-minimizing in $B_R(p)$ (Definition~\ref{def:one-sided-perimeter-min}; the side may vary with~$i$).
+Then $\Theta(\|V\|, p) > 0$.
+\end{lemma}
+
+\begin{proof}
+Assume $\Omega_i$ is locally one-sided outer area-minimizing in $B_R(p)$ (the inner case is symmetric).
+By Proposition~\ref{prop:mass-ratio-lower-bound}, for every $q \in \partial^*\Omega_i \cap B_{R/2}(p)$ and $0 < r \leq R/4$,
+\begin{equation}\label{eq:one-sided-mass-ratio}
+    \|\partial^*\Omega_i\|(B_r(q)) \geq c\,r^n,
+\end{equation}
+where $c = c(n, M, g) > 0$.
+Since $p \in \spt\|V\|$ and $|\partial^*\Omega_i| \to V$, for each small $r > 0$ there exist $q_i \in \partial^*\Omega_i \cap B_{r/2}(p)$ for all large~$i$.
+Then $B_r(q_i) \subset B_{2r}(p)$ and~\eqref{eq:one-sided-mass-ratio} give
+$\|\partial^*\Omega_i\|(B_{2r}(p)) \geq \|\partial^*\Omega_i\|(B_r(q_i)) \geq c\,r^n$.
+Since $\overline{B}_{2r}(p)$ is closed, the Portmanteau theorem yields
+$\|V\|(\overline{B}_{2r}(p)) \geq \limsup_{i \to \infty} \|\partial^*\Omega_i\|(\overline{B}_{2r}(p)) \geq c\,r^n$.
+Dividing by $\omega_n (2r)^n$ and letting $r \to 0$ gives $\Theta(\|V\|, p) \geq c/(2^n \omega_n) > 0$.
+\end{proof}
