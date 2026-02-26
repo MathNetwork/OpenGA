@@ -318,49 +318,86 @@ The lemma gives $\Theta(\|V\|, p) > 0$ directly.
 
 \item \emph{Case~2b(ii): $\Omega(x_i)$ is not locally one-sided $\varepsilon_0$-almost area-minimizing in $B_R(p)$ for all large~$i$.}
 
-This is the negation of Case~2b(i). For each large~$i$, there exist $(q_i, \eta_i)$ with $B_{\eta_i}(q_i) \subset B_R(p)$ and a Caccioppoli set $F_i$ with $F_i \mathbin{\triangle} \Omega(x_i) \subset B_{\eta_i}(q_i)$ such that
-\[
-    \mathrm{Per}(\Omega(x_i), B_{\eta_i}(q_i)) > \mathrm{Per}(F_i, B_{\eta_i}(q_i)) + \varepsilon_0\,\eta_i^n
-    \geq \varepsilon_0\,\eta_i^n.
-\]
-We show $\Theta(\|V\|, p) > 0$ by distinguishing two sub-cases according to the scale~$\eta_i$.
+This is the negation of Case~2b(i). Define
+\begin{gather*}
+    \bar{\eta}_i := \sup\bigl\{\eta > 0 : \exists\, q \in B_R(p),\; \exists\, F \text{ with } F \subset \Omega(x_i) \text{ or } F \supset \Omega(x_i),\\
+    F \mathbin{\triangle} \Omega(x_i) \subset B_\eta(q) \subset B_R(p),\\
+    \mathrm{Per}(F, B_\eta(q)) < \mathrm{Per}(\Omega(x_i), B_\eta(q)) - \varepsilon_0\,\eta^n\bigr\},
+\end{gather*}
+the largest scale at which a one-sided $\varepsilon_0$-witness exists (on either side) in $B_R(p)$.
+Since Case~2b(ii) is the negation of Case~2b(i), $\bar{\eta}_i > 0$ for all large~$i$.
+Note that $\bar{\eta}_i \leq R$ (since all witness balls lie in $B_R(p)$) and $\mathrm{Per}(\Omega(x_i), B_{\bar{\eta}_i}(q)) \geq \varepsilon_0\,\bar{\eta}_i^n$ for some $q$ (by the definition of the supremum, taking a near-optimal witness).
+We distinguish two sub-cases.
 
-\emph{Sub-case~(a): $\limsup_{i \to \infty} \eta_i > 0$.}
-Passing to a subsequence, $\eta_i \geq c > 0$ for all~$i$.
-Since $B_{\eta_i}(q_i) \subset B_R(p)$,
+\emph{Sub-case~(a): $\limsup_{i \to \infty} \bar{\eta}_i > 0$.}
+Passing to a subsequence, $\bar{\eta}_i \geq c > 0$ for all~$i$.
+A near-optimal witness gives
 \[
     \|V_i\|(B_R(p)) = \mathrm{Per}(\Omega(x_i),\, B_R(p))
-    \geq \mathrm{Per}(\Omega(x_i),\, B_{\eta_i}(q_i))
-    > \varepsilon_0\,c^n.
+    \geq \varepsilon_0\,\bar{\eta}_i^n
+    \geq \varepsilon_0\,c^n.
 \]
 Since $V_i \to V$ and $\overline{B}_R(p)$ is closed, the Portmanteau theorem gives $\|V\|(\overline{B}_R(p)) \geq \varepsilon_0\,c^n$.
 As $V$ is stationary, the monotonicity formula yields $\Theta(\|V\|, p) \geq e^{-CR}\,\varepsilon_0\,c^n / (\omega_n R^n) > 0$.
 
-\emph{Sub-case~(b): $\eta_i \to 0$.}
-Passing to a subsequence, $\eta_i \to 0$.
-Pick $q_i \in \partial^*\Omega(x_i) \cap B_{R/4}(p)$ (non-empty for large~$i$ since $p \in \spt\|V\|$) and set $f_i(\eta) := \mathrm{Per}(\Omega(x_i), B_\eta(q_i))$.
-We show the absorption step in the proof of Proposition~\ref{prop:mass-ratio-lower-bound} holds at every scale, whether or not the one-sided almost-minimality is available.
+\emph{Sub-case~(b): $\bar{\eta}_i \to 0$.}
+At scales above $\bar{\eta}_i$, one-sided minimality holds:
+for every $\rho > \bar{\eta}_i$, every $q$ with $B_\rho(q) \subset B_R(p)$, and every one-sided competitor $F$ with $F \mathbin{\triangle} \Omega(x_i) \subset B_\rho(q)$,
+\[
+    \mathrm{Per}(\Omega(x_i), B_\rho(q)) \leq \mathrm{Per}(F, B_\rho(q)) + \varepsilon_0\,\rho^n
+\]
+(any violating triple would be a witness at scale~$\rho > \bar{\eta}_i$, contradicting the supremum).
+Since $\bar{\eta}_i \to 0$, for any fixed $\rho > 0$ this holds for all large~$i$.
 
-Fix a.e.\ $\eta \in (0, R/4)$.
-By Proposition~\ref{prop:caccioppoli-competitor}, there exists a Caccioppoli set~$F$ with $F \subset \Omega(x_i)$ (resp.\ $F \supset \Omega(x_i)$), $F \mathbin{\triangle} \Omega(x_i) \subset B_\eta(q_i)$, and
-\[
-    \mathrm{Per}(F, B_\eta(q_i)) \leq C\,f_i'(\eta)^{n/(n-1)},
-\]
-where $C = C(n, M, g)$ and $f_i'(\eta) = \mathcal{H}^{n-1}(\partial^*\Omega(x_i) \cap \partial B_\eta(q_i))$ by the coarea formula.
-There are two cases:
+We now run the ODE argument of Proposition~\ref{prop:mass-ratio-lower-bound} on the restricted interval $(\bar{\eta}_i,\, \min(\rho_0, R/4))$.
+Let $\rho_0 > 0$ be a uniform scale (depending only on $(M,g)$) below which every reduced boundary point $q \in \partial^*\Omega$ of any Caccioppoli set satisfies
+\begin{equation}\label{eq:density-one-lower-bound}
+    \mathrm{Per}(\Omega, B_\rho(q)) \geq (\omega_n/2)\,\rho^n
+    \quad \text{for all } \rho < \rho_0.
+\end{equation}
+Indeed, in $\mathbb{R}^n$ the density of $|\partial^*\Omega|$ at every reduced boundary point equals~$1$ \cite[Corollary~15.8]{Mag12}; on $(M,g)$ the same holds with a uniform $\rho_0$ by working in normal coordinates and using the compactness of $(M,g)$.
+Since $p \in \spt\|V\|$ and $V_i \to V$, for each large~$i$ there exists $q_i \in \partial^*\Omega(x_i) \cap B_{R/4}(p)$, so that \eqref{eq:density-one-lower-bound} applies to $\Omega(x_i)$ at $q_i$:
+\begin{equation}\label{eq:density-one-at-qi}
+    f(\rho) := \mathrm{Per}(\Omega(x_i), B_\rho(q_i)) \geq (\omega_n/2)\,\rho^n
+    \quad \text{for all } \rho < \rho_0.
+\end{equation}
+
+In particular, for $\rho \in (\bar{\eta}_i,\, \min(\rho_0, R/4))$ both \eqref{eq:density-one-at-qi} and the one-sided minimality hold, so:
 \begin{enumerate}[label=\textup{(\alph*)}]
-    \item \emph{Almost-minimality holds at $(q_i, \eta)$}: $f_i(\eta) \leq \mathrm{Per}(F, B_\eta(q_i)) + \varepsilon_0\,\eta^n \leq C\,f_i'(\eta)^{n/(n-1)} + \varepsilon_0\,\eta^n$.
-    \item \emph{Almost-minimality fails at $(q_i, \eta)$}: $f_i(\eta) > \mathrm{Per}(F, B_\eta(q_i)) + \varepsilon_0\,\eta^n \geq \varepsilon_0\,\eta^n$.
+    \item \emph{Isoperimetric ODE.} The Caccioppoli competitor (Proposition~\ref{prop:caccioppoli-competitor}) gives a one-sided $F$ with $F \mathbin{\triangle} \Omega(x_i) \subset B_\rho(q_i)$ and
+    \[
+        \mathrm{Per}(F, B_\rho(q_i)) \leq C_0\,f'(\rho)^{n/(n-1)}.
+    \]
+    Since $\rho > \bar{\eta}_i$, the one-sided $\varepsilon_0$-almost minimality gives
+    \begin{align*}
+        f(\rho) = \mathrm{Per}(\Omega(x_i), B_\rho(q_i))
+        &\leq \mathrm{Per}(F, B_\rho(q_i)) + \varepsilon_0\,\rho^n \\
+        &\leq C_0\,f'(\rho)^{n/(n-1)} + \varepsilon_0\,\rho^n.
+    \end{align*}
+    \item \emph{Absorption.} Recall $\varepsilon_0 = \omega_n/4$ (Proposition~\ref{prop:mass-ratio-lower-bound}). By \eqref{eq:density-one-at-qi},
+    \[
+        \varepsilon_0\,\rho^n = \frac{\omega_n}{4}\,\rho^n \leq \frac{1}{2}\cdot\frac{\omega_n}{2}\,\rho^n \leq \frac{f(\rho)}{2}.
+    \]
+    \item \emph{Simplified ODE.} Substituting (b) into (a):
+    \[
+        f(\rho) - \varepsilon_0\,\rho^n \leq C_0\,f'(\rho)^{n/(n-1)}
+        \quad\Longrightarrow\quad
+        \frac{f(\rho)}{2} \leq C_0\,f'(\rho)^{n/(n-1)},
+    \]
+    i.e., $f(\rho)^{(n-1)/n} \leq C'\,f'(\rho)$ where $C' = (2C_0)^{(n-1)/n}$.
 \end{enumerate}
-Since $q_i \in \partial^*\Omega(x_i)$, the density-$1$ condition gives $f_i(\eta) \geq (\omega_n/2)\,\eta^n$ for all sufficiently small~$\eta$.
-With $\varepsilon_0 = \omega_n/4$ as in Proposition~\ref{prop:mass-ratio-lower-bound}, case~(b) gives $f_i(\eta) \geq \varepsilon_0\,\eta^n$, so in particular $\varepsilon_0\,\eta^n \leq f_i(\eta)$.
-In both cases, for all small enough~$\eta$ we have $\varepsilon_0\,\eta^n \leq f_i(\eta)/2$, so
-\[
-    f_i(\eta)/2 \leq C\,f_i'(\eta)^{n/(n-1)}
-\]
-for a.e.\ small~$\eta$ (in case~(a) by subtracting the error; in case~(b) because $f_i(\eta) \leq C\,f_i'(\eta)^{n/(n-1)} + f_i(\eta)$ is trivial, and the sharper bound follows since $\mathrm{Per}(F) \geq 0$ forces $f_i(\eta) \leq C\,f_i'(\eta)^{n/(n-1)} + f_i(\eta) - \varepsilon_0\,\eta^n$, i.e.\ $\varepsilon_0\,\eta^n \leq C\,f_i'(\eta)^{n/(n-1)}$, and $f_i(\eta)/2 \leq f_i(\eta) - \varepsilon_0\,\eta^n \leq C\,f_i'(\eta)^{n/(n-1)}$ once $\varepsilon_0\,\eta^n \leq f_i(\eta)/2$).
-Integrating as in Proposition~\ref{prop:mass-ratio-lower-bound} yields $f_i(\eta) \geq c\,\eta^n$ for $\eta \in (0, R/4)$.
-The Portmanteau argument of Lemma~\ref{lem:one-sided-density} then gives $\Theta(\|V\|, p) > 0$.
+Integrating (c) over $(\bar{\eta}_i,\, \rho_*)$ for any fixed $\rho_* < \min(\rho_0, R/4)$:
+\begin{equation}\label{eq:ode-integration}
+    f(\rho_*)^{1/n} \geq f(\bar{\eta}_i)^{1/n} + \frac{\rho_* - \bar{\eta}_i}{nC'}
+    \geq \frac{\rho_* - \bar{\eta}_i}{nC'}.
+\end{equation}
+For $i$ large enough that $\bar{\eta}_i < \rho_*/2$, \eqref{eq:ode-integration} gives $f(\rho_*) \geq c\,\rho_*^n$ where $c = (2nC')^{-n} > 0$.
+
+Since $q_i \in B_{R/4}(p)$ and $\rho_* < R/4$, we have $B_{\rho_*}(q_i) \subset B_{R/2}(p)$, so
+\begin{equation}\label{eq:mass-lower-bound-Vi}
+    \|V_i\|(\overline{B}_{R/2}(p)) \geq f(\rho_*) \geq c\,\rho_*^n.
+\end{equation}
+Since $\overline{B}_{R/2}(p)$ is closed and $V_i \to V$, the Portmanteau theorem gives $\|V\|(\overline{B}_{R/2}(p)) \geq c\,\rho_*^n > 0$, and the monotonicity formula yields $\Theta(\|V\|, p) > 0$.
 \end{list}% end Cases 2b(i)/2b(ii)
 \end{list}% end Cases 2a/2b
 
