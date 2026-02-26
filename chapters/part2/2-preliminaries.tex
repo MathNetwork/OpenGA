@@ -26,6 +26,15 @@ Let $(M^{n+1}, g)$ be a closed Riemannian manifold. There exist constants $r_1 >
 \end{equation}
 \end{proposition}
 
+We will occasionally need the language of integral currents, which we briefly recall; see~\cite[\S26--27]{Sim83} or~\cite[Chapter~4]{Fed69} for a full treatment.
+
+\begin{definition}[Integral currents and cycles~{\cite[\S26, p.\,131]{Sim83}}]\label{def:p2-integral-current}
+A $k$-dimensional \emph{integral current} $T$ in $\mathbb{R}^{n+1}$ (or in a Riemannian manifold $(M,g)$) is a linear functional on smooth $k$-forms that can be represented by integration over a $k$-rectifiable set with integer-valued multiplicity.
+The \emph{mass} of $T$ is $\mathbf{M}(T) := \sup\{T(\omega) : \|\omega\|_{C^0} \leq 1\}$, and the \emph{boundary} $\partial T$ is the $(k-1)$-current defined by $\partial T(\omega) = T(d\omega)$.
+An integral current $T$ with $\partial T = 0$ is called an \emph{integral cycle}.
+In the codimension-one case ($k = n$ in $\mathbb{R}^{n+1}$), the boundary of a Caccioppoli set $\partial\llrr{E}$ is an $n$-dimensional integral current with $\mathbf{M}(\partial\llrr{E}) = \mathrm{Per}(E)$.
+\end{definition}
+
 The min-max construction produces limits not in the space of Caccioppoli sets but in the space of varifolds, which we now recall.
 
 \begin{definition}[Varifold~{\cite[\S38, p.\,228]{Sim84}}]\label{def:p2-varifold}

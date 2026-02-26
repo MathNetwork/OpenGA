@@ -7,14 +7,35 @@ In the mass cancellation case of the integrality argument (Section~\ref{subsec:i
 We remark that Lin's full regularity theory gives much stronger conclusions when one additionally assumes stationarity of each individual slice: if a Caccioppoli boundary $\partial^*\Omega$ is both stationary and one-sided area-minimizing, then $\spt\|\partial^*\Omega\|$ is a smooth embedded hypersurface outside a singular set of Hausdorff dimension at most $n - 7$ (discrete when $n = 7$), and the associated varifold is stable~\cite[Interior Regularity Theorem, \S0.2]{Lin85}; see also~\cite[Proposition~2.1]{Liu19}. In our setting, however, the individual slices $|\partial^*\Omega_i|$ are not stationary, so we cannot apply Lin's regularity theorem to them directly. Instead, we only use the one-sided minimality to obtain the mass ratio lower bound, which suffices for our purpose.
 
 
-\begin{definition}[One-sided minimizers~{\cite[Definition~1.10]{CLS22}}]\label{def:one-sided-perimeter-min}
-Let $(M^{n+1}, g)$ be a Riemannian manifold, $\Omega$ a Caccioppoli set, and $U \subset M$ open.
-We say $\Omega$ is \emph{locally one-sided inner area-minimizing} in~$U$ if for every $A \Subset U$ and every Caccioppoli set $F$ with $F \mathbin{\triangle} \Omega \subset A$ and $F \subset \Omega$,
+\begin{definition}[One-sided almost minimizers]\label{def:one-sided-perimeter-min}
+Let $(M^{n+1}, g)$ be a Riemannian manifold, $\Omega$ a Caccioppoli set, $U \subset M$ open, and $\varepsilon \geq 0$.
+We say $\Omega$ is \emph{locally one-sided inner $\varepsilon$-almost area-minimizing} in~$U$ if for every $q \in U$, every $\rho > 0$ with $B_\rho(q) \Subset U$, and every Caccioppoli set $F$ with $F \mathbin{\triangle} \Omega \subset B_\rho(q)$ and $F \subset \Omega$,
 \[
-    \mathrm{Per}(\Omega, A) \leq \mathrm{Per}(F, A).
+    \mathrm{Per}(\Omega, B_\rho(q)) \leq \mathrm{Per}(F, B_\rho(q)) + \varepsilon\,\rho^n.
 \]
-Similarly, $\Omega$ is \emph{locally one-sided outer area-minimizing} in $U$ if the same holds for every $F \supset \Omega$ with $F \mathbin{\triangle} \Omega \subset A$.
+Similarly, $\Omega$ is \emph{locally one-sided outer $\varepsilon$-almost area-minimizing} in $U$ if the same holds for every $F \supset \Omega$ with $F \mathbin{\triangle} \Omega \subset B_\rho(q)$.
+When $\varepsilon = 0$ we recover the notion of \emph{locally one-sided area-minimizing}~\cite[Definition~1.10]{CLS22}.
 \end{definition}
+
+\begin{definition}[Two-sided perimeter decrease]\label{def:two-sided-decrease}
+Let $(M^{n+1}, g)$ be a Riemannian manifold, $\Omega$ a Caccioppoli set, and $\varepsilon > 0$.
+We say $\Omega$ admits a \emph{two-sided $\varepsilon$-perimeter decrease at $(q, \rho)$} if there exist Caccioppoli sets $F^-, F^+$ with
+\[
+    F^- \subset \Omega \subset F^+, \qquad F^\pm \mathbin{\triangle} \Omega \subset B_\rho(q),
+\]
+such that
+\[
+    \mathrm{Per}(\Omega, B_\rho(q)) > \mathrm{Per}(F^\pm, B_\rho(q)) + \varepsilon\,\rho^n.
+\]
+Equivalently, $\Omega$ is \emph{not} locally one-sided $\varepsilon$-almost area-minimizing on either side at scale~$\rho$ near~$q$: neither the inner nor the outer almost-minimality inequality of Definition~\ref{def:one-sided-perimeter-min} holds at~$(q, \rho)$.
+\end{definition}
+
+\xinze{The error scaling $\varepsilon\,\rho^n$ is sharp.
+In the mass ratio proof (Proposition~\ref{prop:mass-ratio-lower-bound}), the error enters at a single step: the almost minimality comparison $f(\rho) \leq \mathrm{Per}(F, B_\rho) + \mathrm{ERROR}(\rho)$.
+All other steps are exact: the coarea formula ($f' = \mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho)$), the Caccioppoli competitor ($\mathrm{Per}(F) \leq C\,f'^{n/(n-1)}$), the density at reduced boundary points ($f(\rho)/(\omega_n\rho^n) \to 1$), and the ODE integration.
+The bootstrap absorption requires $\mathrm{ERROR}(\rho) \leq f(\rho)/2 \approx (\omega_n/2)\,\rho^n$, so the error must be $O(\rho^n)$ with a sufficiently small constant.
+A weaker error $\varepsilon\,\rho^\beta$ with $\beta < n$ fails: we would need $\varepsilon \leq (\omega_n/2)\,\rho^{n-\beta} \to 0$, so for any fixed $\varepsilon > 0$ the error dominates $f(\rho)$ at small~$\rho$.
+A stronger error $\alpha(\rho)\,\rho^n$ with $\alpha(\rho) \to 0$ (as in Tamanini~\cite{Tam84}) also works but gives a strictly stronger (harder to satisfy) condition on~$\Omega$, which is undesirable for the case analysis (Definition~\ref{def:one-sided-perimeter-min} with fixed~$\varepsilon$ captures the largest class of sets).}
 
 This is precisely the Caccioppoli version of the parametric obstacle problem studied by Lin~\cite{Lin85}, whose thesis develops the regularity theory for hypersurfaces minimizing a parametric elliptic integrand subject to an obstacle constraint.
 Lin's main formulation~\cite[\S0.2]{Lin85} assumes the obstacle domain has $C^{1,\alpha}$ boundary; this regularity is essential for his interior and boundary regularity theorems, but not for the mass ratio bounds that we use here.
@@ -119,44 +140,58 @@ The only remaining boundary of $F$ inside $B_\rho(q)$ comes from $\Sigma$, so $\
 For the variant $F \subset \Omega$, take $F = \Omega \setminus W$ instead; the same estimate holds.
 \end{proof}
 
-\begin{proposition}[Mass ratio lower bound for one-sided minimizers]\label{prop:mass-ratio-lower-bound}
-Let $(M^{n+1}, g)$ be a Riemannian manifold, $U \subset M$ open, and $\Omega$ a Caccioppoli set that is locally one-sided (inner or outer) area-minimizing in $U$ (Definition~\ref{def:one-sided-perimeter-min}). Then for every $q \in \partial^*\Omega \cap U$ and every sufficiently small $\rho > 0$,
+\begin{proposition}[Mass ratio lower bound from isoperimetric deficit]\label{prop:mass-ratio-lower-bound}
+Let $(M^{n+1}, g)$ be a Riemannian manifold, $U \subset M$ open, $\Omega$ a Caccioppoli set, and $C_0, \varepsilon \geq 0$.
+There exists $\varepsilon_0 = \varepsilon_0(n, M, g) > 0$ such that if $\varepsilon \leq \varepsilon_0$ and $\Omega$ satisfies the \emph{isoperimetric differential inequality}: for every $q \in \partial^*\Omega \cap U$ and a.e.\ $\rho > 0$ with $B_\rho(q) \Subset U$,
+\begin{equation}\label{eq:isoperimetric-ode}
+    \mathrm{Per}(\Omega, B_\rho(q)) \leq C_0\,\mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho(q))^{n/(n-1)} + \varepsilon\,\rho^n,
+\end{equation}
+then for every $q \in \partial^*\Omega \cap U$ and every sufficiently small $\rho > 0$,
 \begin{equation}\label{eq:mass-ratio-lower-bound}
     \mathrm{Per}(\Omega, B_\rho(q)) \geq c\,\rho^n,
 \end{equation}
-where $c > 0$ depends only on $n$ and $(M,g)$.
+where $c > 0$ depends only on $n$, $C_0$, and $(M,g)$.
 \end{proposition}
 
 \begin{proof}
-We follow the isoperimetric argument of~\cite[\S0.3, p.~16]{Lin85}.
-Assume $\Omega$ is locally one-sided outer area-minimizing (the inner case is symmetric).
-Let $q \in \partial^*\Omega \cap U$ and choose $\rho > 0$ small enough that $B_\rho(q) \Subset U$.
-Set $f(\rho) := \mathrm{Per}(\Omega, B_\rho(q))$.
-By the coarea formula, for a.e.\ $\rho$ the slice $\partial^*\Omega \cap \partial B_\rho(q)$ is an $(n-1)$-rectifiable cycle with
+We adapt the isoperimetric argument of~\cite[\S0.3, p.~16]{Lin85}.
+Let $q \in \partial^*\Omega \cap U$ and set $f(\rho) := \mathrm{Per}(\Omega, B_\rho(q))$.
+By the coarea formula, $\mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho(q)) = f'(\rho)$ for a.e.\ $\rho$, so~\eqref{eq:isoperimetric-ode} reads
 \[
-    \mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho(q)) = f'(\rho).
+    f(\rho) \leq C_0\,f'(\rho)^{n/(n-1)} + \varepsilon\,\rho^n.
 \]
-By Proposition~\ref{prop:caccioppoli-competitor}, there exists a Caccioppoli set $F$ with $F \supset \Omega$ and $F \mathbin{\triangle} \Omega \subset B_\rho(q) \Subset U$, so $F$ is an admissible competitor in Definition~\ref{def:one-sided-perimeter-min}.
-By one-sided outer area-minimality and~\eqref{eq:caccioppoli-competitor},
+Since $q \in \partial^*\Omega$, the density of $|\partial^*\Omega|$ at $q$ equals $1$, so $f(\rho)/(\omega_n\rho^n) \to 1$ as $\rho \to 0$.
+In particular, for all sufficiently small $\rho$ we have $f(\rho) \geq (\omega_n/2)\,\rho^n$.
+Choosing $\varepsilon_0 := \omega_n/4$, we have $\varepsilon\,\rho^n \leq f(\rho)/2$ for all such $\rho$\xinze{This absorption step constrains the error: we need $\mathrm{ERROR}(\rho) \leq f(\rho)/2 \approx (\omega_n/2)\,\rho^n$. Hence the error must be $O(\rho^n)$ with a small constant; $\rho^n$ is the sharp scaling since $f(\rho) \sim \rho^n$. In particular, $\varepsilon\,\rho^\beta$ with $\beta < n$ fails because $\rho^\beta \gg \rho^n$ for small~$\rho$.}, and therefore
 \[
-    f(\rho) = \mathrm{Per}(\Omega, B_\rho(q)) \leq \mathrm{Per}(F, B_\rho(q)) \leq C\,f'(\rho)^{n/(n-1)},
+    f(\rho)/2 \leq C_0\,f'(\rho)^{n/(n-1)},
 \]
-i.e., $f(\rho)^{(n-1)/n} \leq C\,f'(\rho)$.
+i.e., $f(\rho)^{(n-1)/n} \leq C'\,f'(\rho)$.
 Integrating this ODE gives $f(\rho) \geq c\,\rho^n$.
+\end{proof}
+
+\begin{corollary}\label{cor:mass-ratio-almost-min}
+Let $C = C(n, M, g) > 0$ be the constant from Proposition~\ref{prop:caccioppoli-competitor}.
+If $\Omega$ is locally one-sided (inner or outer) $\varepsilon$-almost area-minimizing in $U$ (Definition~\ref{def:one-sided-perimeter-min}) with $\varepsilon \leq \varepsilon_0$, then~\eqref{eq:isoperimetric-ode} holds with $C_0 = C$. In particular, the mass ratio lower bound~\eqref{eq:mass-ratio-lower-bound} holds.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:caccioppoli-competitor}, for a.e.\ $\rho$ there exists $F$ with $F \supset \Omega$ (resp.\ $F \subset \Omega$), $F \mathbin{\triangle} \Omega \subset B_\rho(q)$, and $\mathrm{Per}(F, B_\rho(q)) \leq C\,\mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho(q))^{n/(n-1)}$.
+By $\varepsilon$-almost minimality, $\mathrm{Per}(\Omega, B_\rho(q)) \leq \mathrm{Per}(F, B_\rho(q)) + \varepsilon\,\rho^n$, giving~\eqref{eq:isoperimetric-ode}.
 \end{proof}
 
 Combining the mass ratio bound with a Portmanteau argument, we obtain positive density for the limit varifold:
 
-\begin{lemma}[Density from perimeter minimality on one side]\label{lem:one-sided-density}
-Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$.
+\begin{lemma}[Density from one-sided almost minimality]\label{lem:one-sided-density}
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\varepsilon_0 = \varepsilon_0(n, M, g) > 0$ be the constant from Proposition~\ref{prop:mass-ratio-lower-bound} (equivalently, Corollary~\ref{cor:mass-ratio-almost-min}).
 Let $\Omega_i$ be Caccioppoli sets with $|\partial^*\Omega_i| \to V$ as varifolds.
-Suppose that for some fixed $R > 0$ and $p \in \spt\|V\|$, each $\Omega_i$ is locally one-sided (inner or outer) area-minimizing in $B_R(p)$ (Definition~\ref{def:one-sided-perimeter-min}; the side may vary with~$i$).
+Suppose that for some fixed $R > 0$, $p \in \spt\|V\|$, and $\varepsilon \leq \varepsilon_0$, each $\Omega_i$ is locally one-sided (inner or outer) $\varepsilon$-almost area-minimizing in $B_R(p)$ (Definition~\ref{def:one-sided-perimeter-min}; the side may vary with~$i$).
 Then $\Theta(\|V\|, p) > 0$.
 \end{lemma}
 
 \begin{proof}
-Assume $\Omega_i$ is locally one-sided outer area-minimizing in $B_R(p)$ (the inner case is symmetric).
-By Proposition~\ref{prop:mass-ratio-lower-bound}, for every $q \in \partial^*\Omega_i \cap B_{R/2}(p)$ and $0 < r \leq R/4$,
+Assume $\Omega_i$ is locally one-sided outer $\varepsilon$-almost area-minimizing in $B_R(p)$ (the inner case is symmetric).
+By Corollary~\ref{cor:mass-ratio-almost-min}, for every $q \in \partial^*\Omega_i \cap B_{R/2}(p)$ and $0 < r \leq R/4$,
 \begin{equation}\label{eq:one-sided-mass-ratio}
     \|\partial^*\Omega_i\|(B_r(q)) \geq c\,r^n,
 \end{equation}

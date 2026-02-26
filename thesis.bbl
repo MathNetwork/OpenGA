@@ -28,11 +28,20 @@ Otis Chodosh, Yevgeny Liokumovich, and Luca Spolaor, \emph{Singular behavior and
 \bibitem[DLT13]{DLT13}
 Camillo De~Lellis and Dominik Tasnady, \emph{{The existence of embedded minimal hypersurfaces}}, Journal of Differential Geometry \textbf{95} (2013), no.~3, 355 -- 388.
 
+\bibitem[Fed14]{Fed69}
+H.~Federer, \emph{Geometric measure theory}, Classics in Mathematics, Springer Berlin Heidelberg, 2014.
+
 \bibitem[Hir76]{Hir76}
 Morris~W. Hirsch, \emph{Differential topology}, Graduate Texts in Mathematics, vol.~33, Springer-Verlag, New York, 1976.
 
 \bibitem[IMN18]{IMN17}
 Kei Irie, Fernando~C. Marques, and André Neves, \emph{Density of minimal hypersurfaces for generic metrics}, Annals of Mathematics \textbf{187} (2018), no.~3, 963--972.
+
+\bibitem[Lin85]{Lin85}
+F.~Lin, \emph{Regularity for a class of parametric obstacle problems}, University of Minnesota, 1985.
+
+\bibitem[Liu19]{Liu19}
+Zhenhua Liu, \emph{Stationary one-sided area-minimizing hypersurfaces with isolated singularities}, 2019.
 
 \bibitem[LZ21]{LZ17}
 Martin Man-chun Li and Xin Zhou, \emph{Min-max theory for free boundary minimal hypersurfaces {I}: {R}egularity theory}, J. Differential Geom. \textbf{118} (2021), no.~3, 487--553.
@@ -69,6 +78,9 @@ Antoine Song, \emph{Existence of infinitely many minimal hypersurfaces in closed
 
 \bibitem[SS81]{SS81}
 Richard Schoen and Leon Simon, \emph{Regularity of stable minimal hypersurfaces}, Communications on Pure and Applied Mathematics \textbf{34} (1981), no.~6, 741--797.
+
+\bibitem[Tam84]{Tam84}
+Italo Tamanini, \emph{Regularity results for almost minimal oriented hypersurfaces in rn}, Quaderni del Dipartimento Matematica dell'Universita de Lecce, Salento Univeristy, 1984.
 
 \bibitem[Wic14]{Wic14}
 Neshan Wickramasekera, \emph{A general regularity theory for stable codimension 1 integral varifolds}, Annals of Mathematics \textbf{179} (2014), no.~3, 843--1007.
