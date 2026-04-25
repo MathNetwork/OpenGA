@@ -1,4 +1,4 @@
-% !TEX root = ../../thesis.tex
+% !TEX root = ../../main.tex
 
 \section{Integrality}\label{sec:integrality}
 
@@ -16,10 +16,14 @@ Integrality of the limit varifold is an essential input to the regularity argume
 The main result of this section is:
 
 \begin{theorem}[Integrality of the limit varifold]\label{thm:integrality}
-Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be a non-excessive ONVP sweepout with width $W$. Let $x_i \to x_0 \in \mathfrak{m}(\Phi)$ be a min-max sequence and $V$ the varifold limit of $|\partial^*\Omega(x_i)|$. Then $V$ is an integral $n$-varifold.
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be a non-excessive ONVP sweepout with width $W$. Let $x_i \to x_0 \in \mathfrak{m}(\Phi)$ be a min-max sequence and $V$ the varifold limit of $|\partial^*\Omega(x_i)|$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+    \item If no mass cancellation occurs at $x_0$ (i.e., $\mathbf{M}(\Phi(x_0)) = W$), then $V = |\partial^*\Omega(x_0)|$ is an integral $n$-varifold.
+    \item If mass cancellation occurs at $x_0$, then $\|V\|(A) \geq \mathcal{H}^n(\partial^*\Omega(x_0) \cap A)$ for every Borel $A$; moreover the restriction of $V$ to any open neighborhood of $\partial^*\Omega(x_0)$ that is disjoint from $\spt(\|V\| - |D\chi_{\Omega(x_0)}|)$ is integral. Integrality of $V$ on the full support $\spt\|V\|$ is conditional on Conjecture~\ref{conj:density-nonexcessive} (positive density of the varifold limit $\|V\|$-a.e.\ on the cancelled mass $\mu_{\mathrm{c}} = \|V\| - |D\chi_{\Omega(x_0)}|$); see Remark~\ref{rem:cancelled-mass-gap}.
+\end{enumerate}
 \end{theorem}
 
-The proof splits into two cases according to whether mass cancellation occurs (Definition~\ref{def:mass-cancellation}). The no-mass-cancellation case uses the de~Lellis--Tasnady criterion (Proposition~\ref{prop:p2-DLT-integrality}); the mass-cancellation case uses nestedness and a graphical decomposition lemma to count sheets directly (see Remark~\ref{rem:integrality-independence}).
+Part~(a) is the de~Lellis--Tasnady criterion (Theorem~\ref{thm:integrality-mult-one} below); part~(b) is Lemma~\ref{lem:density-lower-bound} combined with the sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) applied to $\mathcal{H}^n$-a.e.\ reduced boundary point, and with the gap in the cancelled mass spelled out in Remark~\ref{rem:cancelled-mass-gap}. Under the multiplicity-one conjecture (no mass cancellation), part~(a) applies and integrality is unconditional.
 
 \subsection{The no-mass-cancellation case}\label{subsec:integrality-no-cancel}
 
@@ -80,19 +84,27 @@ When mass cancellation occurs ($\mathbf{M}(\Phi(x_0)) < W$), we still have $\Ome
 \[
     \mathrm{Per}(\Omega(x_i)) \to W > \mathrm{Per}(\Omega(x_0)).
 \]
-The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}. The argument proceeds in two independent steps:
-\begin{enumerate}[label=\textup{(\roman*)}]
-    \item \emph{Rectifiability.} The density $\Theta(\|V\|, p)$ is positive at every $p \in \spt\|V\|$ (Lemma~\ref{lem:density-lower-bound}), so $V$ is rectifiable by Allard's theorem. This step uses only the non-excessive structure and does not require rectifiability as input.
-    \item \emph{Integrality.} Using nestedness and a graphical decomposition (Lemma~\ref{lem:sheet-decomposition}), the density is shown to be a positive integer at $\mathcal{H}^n$-a.e.\ point.
-\end{enumerate}
-The main tool for step~(ii) is the following graphical decomposition lemma.
+The mass defect $W - \mathrm{Per}(\Omega(x_0)) > 0$ is carried by sheets of $\partial^*\Omega(x_i)$ that converge in pairs, cancelling in the flat topology but contributing positively to varifold mass. In particular, $V \neq |\partial^*\Omega(x_0)|$, and the integrality of $V$ does not follow from Proposition~\ref{prop:p2-DLT-integrality}.
+
+The analysis splits $\|V\|$ into two parts via the comparison
+\begin{equation}\label{eq:V-vs-D-chi-decomp}
+    \|V\| = |D\chi_{\Omega(x_0)}| + \mu_{\mathrm{c}}, \qquad \mu_{\mathrm{c}} := \|V\| - |D\chi_{\Omega(x_0)}| \geq 0,
+\end{equation}
+where the non-negativity $\mu_{\mathrm{c}} \geq 0$ is established in Lemma~\ref{lem:density-lower-bound} by lower semicontinuity of total variation. The first part, $|D\chi_{\Omega(x_0)}|$, is the reduced-boundary component: at each $p \in \partial^*\Omega(x_0)$ density is $\geq 1$, and the sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) further refines this to integer multiplicity. The second part, $\mu_{\mathrm{c}}$ (the \emph{cancelled mass}), satisfies $\mu_{\mathrm{c}}(M) = W - \mathrm{Per}(\Omega(x_0)) > 0$, is supported on the cancellation set where pairs of sheets of $\partial^*\Omega(x_i)$ converge to a common location; establishing its rectifiability and integer multiplicity is a separate problem discussed in Remark~\ref{rem:cancelled-mass-gap}.
+
+The main tool for the $\partial^*\Omega(x_0)$-part is the following graphical decomposition lemma, which we state first.
 
 
-\begin{lemma}[Positive density and rectifiability of the limit varifold]\label{lem:density-lower-bound}
-Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be a non-excessive ONVP sweepout. Let $V$ be the varifold limit of $|\partial^*\Omega(x_i)|$ along a min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Suppose that mass cancellation occurs at $x_0$, i.e.\ $\mathrm{Per}(\Omega(x_0)) < W$. Then $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$. In particular, $V$ is rectifiable by Allard's theorem (Proposition~\ref{prop:allard-rectifiability}).
+\begin{lemma}[Lower bound on the limit mass by the flat limit]\label{lem:density-lower-bound}
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, and let $\Phi$ be a (not necessarily non-excessive) ONVP sweepout. Let $V$ be the varifold limit of $|\partial^*\Omega(x_i)|$ along a min-max sequence $x_i \to x_0 \in \mathfrak{m}(\Phi)$. Then
+\begin{equation}\label{eq:V-dominates-DChi}
+    \|V\|(A) \geq |D\chi_{\Omega(x_0)}|(A) = \mathcal{H}^n(\partial^*\Omega(x_0) \cap A)
+    \quad \text{for every Borel } A \subset M.
+\end{equation}
+In particular, $\Theta(\|V\|, p) \geq 1$ for every $p \in \partial^*\Omega(x_0)$.
 \end{lemma}
 
-The idea is a dichotomy on the almost-minimality of the boundaries $\partial^*\Omega(x_i)$. If infinitely many $\Omega(x_i)$ are one-sided almost area-minimizing near~$p$, then the mass ratio lower bound for almost-minimizers (Proposition~\ref{prop:mass-ratio-lower-bound}) passes to the limit via the Portmanteau theorem, giving $\Theta(\|V\|, p) > 0$. Otherwise, each $\Omega(x_i)$ admits a one-sided competitor that saves $\varepsilon_0\,\eta_i^n$ in perimeter at some scale~$\eta_i$; if $\eta_i \to 0$, then $\Omega(x_i)$ is almost-minimizing at all larger scales, and an ODE integration argument again yields a mass ratio lower bound.
+The inequality~\eqref{eq:V-dominates-DChi} follows from the lower semicontinuity of total variation under $L^1$ convergence, combined with the varifold convergence $|\partial^*\Omega(x_i)| \to V$; non-excessiveness is not used. The lemma gives positive density on $\partial^*\Omega(x_0) \cap \spt\|V\|$, on which the sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) yields integer multiplicity. The complementary cancelled mass $\mu_{\mathrm{c}}$ from~\eqref{eq:V-vs-D-chi-decomp} is treated in Remark~\ref{rem:cancelled-mass-gap}.
 
 % [Commented out: old proof by contradiction via isoperimetric replacement]
 % \begin{proof}
@@ -236,103 +248,77 @@ The idea is a dichotomy on the almost-minimality of the boundaries $\partial^*\O
 % [End commented-out block]
 
 \begin{proof}
-Since $V$ is stationary, the density $\Theta(\|V\|, p)$ exists at every point (Proposition~\ref{prop:p2-monotonicity}).
-Fix $p \in \spt\|V\|$ and $R > 0$ smaller than the injectivity radius of $(M,g)$.
-Let $\varepsilon_0 = \varepsilon_0(n, M, g) > 0$ be the threshold from Proposition~\ref{prop:mass-ratio-lower-bound}.
-We distinguish two cases.
-\begin{list}{}{\leftmargin=1.5em \parsep=\parskip \topsep=\smallskipamount \itemsep=\medskipamount}
-\item \textbf{Case~1:} \emph{$\Omega(x_i)$ is locally one-sided $\varepsilon_0$-almost area-minimizing in $B_R(p)$ for infinitely many~$i$.}
-Passing to a subsequence, each $\Omega(x_i)$ satisfies the hypothesis of Lemma~\ref{lem:one-sided-density} (the minimizing side may vary with~$i$).
-The lemma gives $\Theta(\|V\|, p) > 0$ directly.
+We establish \eqref{eq:V-dominates-DChi} by a duality argument combining lower semicontinuity of total variation with varifold convergence, then deduce the density statement at reduced boundary points.
 
-\item \textbf{Case~2:} \emph{$\Omega(x_i)$ is not locally one-sided $\varepsilon_0$-almost area-minimizing in $B_R(p)$ for all large~$i$.}
+\medskip\noindent\textbf{Step 1} (The measure inequality \eqref{eq:V-dominates-DChi}).
+Fix an open set $U \subset M$ and a function $\phi \in C_c(U)$ with $0 \leq \phi \leq 1$.
+We first show
+\begin{equation}\label{eq:phi-duality-comparison}
+    \int_M \phi\, d|D\chi_{\Omega(x_0)}| \leq \int_M \phi\, d\|V\|.
+\end{equation}
 
-This is the negation of Case~1. Define
-\begin{gather*}
-    \bar{\eta}_i := \sup\bigl\{\eta > 0 : \exists\, q \in B_R(p),\; \exists\, F \text{ with } F \subset \Omega(x_i) \text{ or } F \supset \Omega(x_i),\\
-    F \mathbin{\triangle} \Omega(x_i) \subset B_\eta(q) \subset B_R(p),\\
-    \mathrm{Per}(F, B_\eta(q)) < \mathrm{Per}(\Omega(x_i), B_\eta(q)) - \varepsilon_0\,\eta^n\bigr\},
-\end{gather*}
-the largest scale at which a one-sided $\varepsilon_0$-witness exists (on either side) in $B_R(p)$.
-Since Case~2 is the negation of Case~1, $\bar{\eta}_i > 0$ for all large~$i$.
-Note that $\bar{\eta}_i \leq R$ (since all witness balls lie in $B_R(p)$) and $\mathrm{Per}(\Omega(x_i), B_{\bar{\eta}_i}(q)) \geq \varepsilon_0\,\bar{\eta}_i^n$ for some $q$ (by the definition of the supremum, taking a near-optimal witness).
-We distinguish two sub-cases.
-\begin{list}{}{\leftmargin=1.5em \parsep=\parskip \topsep=\smallskipamount \itemsep=\medskipamount}
-\item \emph{Sub-case~(a): $\limsup_{i \to \infty} \bar{\eta}_i > 0$.}
-Passing to a subsequence, $\bar{\eta}_i \geq c > 0$ for all~$i$.
-A near-optimal witness gives
+Let $\omega \in C^\infty_c(U; TM)$ with pointwise bound $|\omega(x)| \leq \phi(x)$ for every $x$.
+By $\mathcal{F}$-continuity of $\Phi$ on $\bar I$, $\chi_{\Omega(x_i)} \to \chi_{\Omega(x_0)}$ in $L^1(M)$, hence
 \[
-    \|V_i\|(B_R(p)) = \mathrm{Per}(\Omega(x_i),\, B_R(p))
-    \geq \varepsilon_0\,\bar{\eta}_i^n
-    \geq \varepsilon_0\,c^n.
+    \int_M \chi_{\Omega(x_0)}\, \mathrm{div}\, \omega\, d\mathcal{L}^{n+1}
+    = \lim_{i\to\infty} \int_M \chi_{\Omega(x_i)}\, \mathrm{div}\, \omega\, d\mathcal{L}^{n+1}.
 \]
-Since $V_i \to V$ and $\overline{B}_R(p)$ is closed, the Portmanteau theorem gives $\|V\|(\overline{B}_R(p)) \geq \varepsilon_0\,c^n$.
-As $V$ is stationary, the monotonicity formula yields $\Theta(\|V\|, p) \geq e^{-CR}\,\varepsilon_0\,c^n / (\omega_n R^n) > 0$.
-
-\item \emph{Sub-case~(b): $\bar{\eta}_i \to 0$.}
-At scales above $\bar{\eta}_i$, one-sided minimality holds:
-for every $\rho > \bar{\eta}_i$, every $q$ with $B_\rho(q) \subset B_R(p)$, and every one-sided competitor $F$ with $F \mathbin{\triangle} \Omega(x_i) \subset B_\rho(q)$,
+By definition of the distributional derivative, the left side equals $-\int_M \omega\cdot d(D\chi_{\Omega(x_0)})$ and each term on the right equals $-\int_M \omega\cdot d(D\chi_{\Omega(x_i)})$, so
+\begin{equation}\label{eq:omega-limit}
+    \int_M \omega\cdot d(D\chi_{\Omega(x_0)})
+    = \lim_{i\to\infty} \int_M \omega\cdot d(D\chi_{\Omega(x_i)}).
+\end{equation}
+Writing $V_i = |\partial^*\Omega(x_i)|$ and noting $|D\chi_{\Omega(x_i)}|=\|V_i\|$ as Radon measures on $M$,
 \[
-    \mathrm{Per}(\Omega(x_i), B_\rho(q)) \leq \mathrm{Per}(F, B_\rho(q)) + \varepsilon_0\,\rho^n
+    \left|\int_M \omega\cdot d(D\chi_{\Omega(x_i)})\right|
+    \leq \int_M |\omega|\, d|D\chi_{\Omega(x_i)}|
+    \leq \int_M \phi\, d\|V_i\|.
 \]
-(any violating triple would be a witness at scale~$\rho > \bar{\eta}_i$, contradicting the supremum).
-Since $\bar{\eta}_i \to 0$, for any fixed $\rho > 0$ this holds for all large~$i$.
-
-We now run the ODE argument of Proposition~\ref{prop:mass-ratio-lower-bound} on the restricted interval $(\bar{\eta}_i,\, \min(\rho_0, R/4))$.
-Let $\rho_0 > 0$ be a uniform scale (depending only on $(M,g)$) below which every reduced boundary point $q \in \partial^*\Omega$ of any Caccioppoli set satisfies
-\begin{equation}\label{eq:density-one-lower-bound}
-    \mathrm{Per}(\Omega, B_\rho(q)) \geq (\omega_n/2)\,\rho^n
-    \quad \text{for all } \rho < \rho_0.
+Varifold convergence $V_i \to V$ on $\mathrm{Gr}_n(M)$ implies, in particular, $\|V_i\|\to\|V\|$ as Radon measures on $M$ tested against $\phi \in C_c(M)$ (take $f(x,S)=\phi(x)$ in Definition~\ref{def:p2-varifold-convergence}). Combining with \eqref{eq:omega-limit},
+\begin{equation}\label{eq:sup-over-omega}
+    \left|\int_M \omega\cdot d(D\chi_{\Omega(x_0)})\right|
+    \leq \lim_{i\to\infty} \int_M \phi\, d\|V_i\|
+    = \int_M \phi\, d\|V\|.
 \end{equation}
-Indeed, in $\mathbb{R}^n$ the density of $|\partial^*\Omega|$ at every reduced boundary point equals~$1$ \cite[Corollary~15.8]{Mag12}; on $(M,g)$ the same holds with a uniform $\rho_0$ by working in normal coordinates and using the compactness of $(M,g)$.
-Since $p \in \spt\|V\|$ and $V_i \to V$, for each large~$i$ there exists $q_i \in \partial^*\Omega(x_i) \cap B_{R/4}(p)$, so that \eqref{eq:density-one-lower-bound} applies to $\Omega(x_i)$ at $q_i$:
-\begin{equation}\label{eq:density-one-at-qi}
-    f(\rho) := \mathrm{Per}(\Omega(x_i), B_\rho(q_i)) \geq (\omega_n/2)\,\rho^n
-    \quad \text{for all } \rho < \rho_0.
-\end{equation}
+By definition of the Radon measure $|D\chi_{\Omega(x_0)}|$ as the total variation of the vector-valued Radon measure $D\chi_{\Omega(x_0)}$,
+\[
+    \int_M \phi\, d|D\chi_{\Omega(x_0)}|
+    = \sup_{\omega \in C^\infty_c(U;TM),\,|\omega|\leq \phi}
+    \int_M \omega\cdot d(D\chi_{\Omega(x_0)}),
+\]
+so \eqref{eq:phi-duality-comparison} follows from \eqref{eq:sup-over-omega}.
 
-In particular, for $\rho \in (\bar{\eta}_i,\, \min(\rho_0, R/4))$ both \eqref{eq:density-one-at-qi} and the one-sided minimality hold, so:
-\begin{enumerate}[label=\textup{(\alph*)}]
-    \item \emph{Isoperimetric ODE.} The Caccioppoli competitor (Proposition~\ref{prop:caccioppoli-competitor}) gives a one-sided $F$ with $F \mathbin{\triangle} \Omega(x_i) \subset B_\rho(q_i)$ and
-    \[
-        \mathrm{Per}(F, B_\rho(q_i)) \leq C_0\,f'(\rho)^{n/(n-1)}.
-    \]
-    Since $\rho > \bar{\eta}_i$, the one-sided $\varepsilon_0$-almost minimality gives
-    \begin{align*}
-        f(\rho) = \mathrm{Per}(\Omega(x_i), B_\rho(q_i))
-        &\leq \mathrm{Per}(F, B_\rho(q_i)) + \varepsilon_0\,\rho^n \\
-        &\leq C_0\,f'(\rho)^{n/(n-1)} + \varepsilon_0\,\rho^n.
-    \end{align*}
-    \item \emph{Absorption.} Recall $\varepsilon_0 = \omega_n/4$ (Proposition~\ref{prop:mass-ratio-lower-bound}). By \eqref{eq:density-one-at-qi},
-    \[
-        \varepsilon_0\,\rho^n = \frac{\omega_n}{4}\,\rho^n \leq \frac{1}{2}\cdot\frac{\omega_n}{2}\,\rho^n \leq \frac{f(\rho)}{2}.
-    \]
-    \item \emph{Simplified ODE.} Substituting (b) into (a):
-    \[
-        f(\rho) - \varepsilon_0\,\rho^n \leq C_0\,f'(\rho)^{n/(n-1)}
-        \quad\Longrightarrow\quad
-        \frac{f(\rho)}{2} \leq C_0\,f'(\rho)^{n/(n-1)},
-    \]
-    i.e., $f(\rho)^{(n-1)/n} \leq C'\,f'(\rho)$ where $C' = (2C_0)^{(n-1)/n}$.
-\end{enumerate}
-Integrating (c) over $(\bar{\eta}_i,\, \rho_*)$ for any fixed $\rho_* < \min(\rho_0, R/4)$:
-\begin{equation}\label{eq:ode-integration}
-    f(\rho_*)^{1/n} \geq f(\bar{\eta}_i)^{1/n} + \frac{\rho_* - \bar{\eta}_i}{nC'}
-    \geq \frac{\rho_* - \bar{\eta}_i}{nC'}.
-\end{equation}
-For $i$ large enough that $\bar{\eta}_i < \rho_*/2$, \eqref{eq:ode-integration} gives $f(\rho_*) \geq c\,\rho_*^n$ where $c = (2nC')^{-n} > 0$.
+Since \eqref{eq:phi-duality-comparison} holds for every $\phi \in C_c(U)$ with $0\leq\phi\leq 1$, outer regularity of the Radon measures $|D\chi_{\Omega(x_0)}|$ and $\|V\|$ yields $|D\chi_{\Omega(x_0)}|(U) \leq \|V\|(U)$, and inner regularity extends this to all Borel sets $A$, establishing~\eqref{eq:V-dominates-DChi}.
 
-Since $q_i \in B_{R/4}(p)$ and $\rho_* < R/4$, we have $B_{\rho_*}(q_i) \subset B_{R/2}(p)$, so
-\begin{equation}\label{eq:mass-lower-bound-Vi}
-    \|V_i\|(\overline{B}_{R/2}(p)) \geq f(\rho_*) \geq c\,\rho_*^n.
-\end{equation}
-Since $\overline{B}_{R/2}(p)$ is closed and $V_i \to V$, the Portmanteau theorem gives $\|V\|(\overline{B}_{R/2}(p)) \geq c\,\rho_*^n > 0$, and the monotonicity formula yields $\Theta(\|V\|, p) > 0$.
-\end{list}% end Sub-cases (a)/(b)
-\end{list}% end Cases 1/2
-
-\medskip
-In both cases $\Theta(\|V\|, p) > 0$ for every $p \in \spt\|V\|$, and $V$ is rectifiable by Allard's theorem (Proposition~\ref{prop:allard-rectifiability}).
+\medskip\noindent\textbf{Step 2} (Density at reduced boundary points).
+By De~Giorgi's structure theorem, $|D\chi_{\Omega(x_0)}| = \mathcal{H}^n \llcorner \partial^*\Omega(x_0)$, and at every reduced boundary point $p$ the density equals~$1$ \cite[Corollary~15.8]{Mag12}:
+\[
+    \lim_{r\to 0} \frac{|D\chi_{\Omega(x_0)}|(B_r(p))}{\omega_n\, r^n} = 1.
+\]
+Combining with \eqref{eq:V-dominates-DChi} and the existence of $\Theta(\|V\|,p)$ via the monotonicity formula (Proposition~\ref{prop:p2-monotonicity}),
+\[
+    \Theta(\|V\|, p)
+    = \lim_{r\to 0}\frac{\|V\|(B_r(p))}{\omega_n\, r^n}
+    \geq \lim_{r\to 0}\frac{|D\chi_{\Omega(x_0)}|(B_r(p))}{\omega_n\, r^n}
+    = 1
+\]
+for every $p \in \partial^*\Omega(x_0)$.
 \end{proof}
+
+\begin{remark}[The cancelled mass and an open gap]\label{rem:cancelled-mass-gap}
+Lemma~\ref{lem:density-lower-bound} resolves the density lower bound on the reduced-boundary part $\partial^*\Omega(x_0) \cap \spt\|V\|$ but says nothing about the cancelled mass $\mu_{\mathrm{c}}$ from~\eqref{eq:V-vs-D-chi-decomp}. Three statements would close the cancellation case of integrality; we state them as questions and record what is and is not known.
+
+\emph{(Q1) Is $\mu_{\mathrm{c}}$ mutually singular with $\mathcal{H}^n\llcorner\partial^*\Omega(x_0)$?}
+The cancelled mass is carried by pairs of sheets of $\partial^*\Omega(x_i)$ approaching a common location from opposite sides, yielding no contribution to $D\chi_{\Omega(x_i)}$ in the flat limit. Heuristically these sheets accumulate on $\overline{\spt\|V\|} \setminus \partial^*\Omega(x_0)$, but a rigorous statement requires a quantitative compactness argument on the approximating boundaries. We do not prove this here.
+
+\emph{(Q2) Is $\mu_{\mathrm{c}}$ $\mathcal{H}^n$-absolutely continuous with $\Theta^n(\mu_{\mathrm{c}}, p) \geq 1$ $\mu_{\mathrm{c}}$-a.e.?}
+This is the analog of Lemma~\ref{lem:density-lower-bound} for the cancelled mass, and is the main open question in this paper. Resolving it affirmatively---equivalently, establishing Conjecture~\ref{conj:density-nonexcessive}---closes the density lower bound $\Theta^n(\mu_{\mathrm{c}}, p) \geq c$ at $\|V\|$-a.e.\ point, from which rectifiability of $\mu_{\mathrm{c}}$ follows by Allard's theorem (Proposition~\ref{prop:allard-rectifiability}).
+
+\emph{(Q3) If (Q1)--(Q2) hold, is $\mu_{\mathrm{c}}$ an integral varifold?}
+Under (Q1), the tangent plane of $\|V\|$ at $\mathcal{H}^n$-a.e.\ $p \in \partial^*\Omega(x_0)$ coincides with $T_p\partial^*\Omega(x_0)$, and the sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) applies there. Under (Q1)--(Q2), the decomposition also applies at $\mathcal{H}^n$-a.e.\ point of $\spt \mu_{\mathrm{c}}$, giving integer multiplicity by the graphical sheet count.
+
+Under the multiplicity-one conjecture, mass cancellation does not occur; then $\mu_{\mathrm{c}} = 0$, Lemma~\ref{lem:density-lower-bound} gives density $\geq 1$ on all of $\spt\|V\| = \partial^*\Omega(x_0)$, and integrality follows. The gap in (Q2) and the multiplicity-one question thus form a parallel pair of open problems in the mass cancellation case.
+\end{remark}
 
 \begin{lemma}[Sheet decomposition]\label{lem:sheet-decomposition}
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$. Let $\{\Omega_i\}$ be a nested sequence of Caccioppoli sets ($\Omega_1 \subset \Omega_2 \subset \cdots$) with $|\partial^*\Omega_i| \to V$ as varifolds, where $V$ is a rectifiable stationary $n$-varifold with support $\Sigma$. Let $p \in \Sigma$ be a point with unique tangent plane $P = T_p\Sigma$ and positive density $\theta(p) = \Theta(\|V\|, p) > 0$ (by rectifiability, these conditions hold at $\mathcal{H}^n$-a.e.\ point of $\Sigma$; see Section~\ref{sec:p2-prelim}).
@@ -545,33 +531,29 @@ We claim that for any $\varepsilon > 0$, all $r > 0$ sufficiently small, and all
 \begin{equation}\label{eq:tilt-excess-transfer}
     E(|\partial^*\Omega_i|, B_{2r}(p), P) \to E(V, B_{2r}(p), P) \quad \text{as } i \to \infty
 \end{equation}
-for a.e.\ $r$ (those satisfying $\|V\|(\partial B_{2r}(p)) = 0$)\xinze{Write $f(x,S) = \mathbf{1}_{B_{2r}(p)}(x)\,|S - P|^2$, a bounded function on $M \times G(n+1,n)$. Its discontinuity set is $\partial B_{2r}(p) \times G(n+1,n)$, which has $V$-measure $\|V\|(\partial B_{2r}(p))$. For a.e.\ $r$, this is zero (since $r \mapsto \|V\|(B_r(p))$ is monotone, hence has at most countably many jumps). By the Portmanteau theorem for weak-$*$ convergence of Radon measures: if $\mu_i \overset{*}{\rightharpoonup} \mu$ and $f$ is bounded with $\mu$-negligible discontinuity set, then $\int f\,d\mu_i \to \int f\,d\mu$. Applying this to $\mu_i = |\partial^*\Omega_i|$, $\mu = V$ gives~\eqref{eq:tilt-excess-transfer}.}\xinze{The tilt-excess transfer~\eqref{eq:tilt-excess-transfer} uses only varifold convergence (Portmanteau on the Grassmann bundle), and the tilt-excess vanishing of $V$ uses only rectifiability (Lebesgue--Besicovitch). However, the overall integrality conclusion is \emph{not} a trivial consequence of varifold compactness: Allard's compactness theorem for integral varifolds~\cite[Chapter~10]{All72} requires a density lower bound or bounded first variation as hypotheses, which we do not have a priori for the approximating varifolds $|\partial^*\Omega_i|$. The sheet decomposition below provides this density control directly. Specifically: the Caccioppoli structure enters in Step~1 (the reduced boundary $\partial^*\Omega_i$ carries zero boundary as a current, $\partial\llbracket\partial^*\Omega_i\rrbracket = 0$, forcing each Lipschitz graph to extend to $\partial B_r(p)$); nestedness enters in the counting step (fiber counting proof) and in Section~\ref{sec:multiplicity-one}; non-excessiveness enters only in the stability argument (Proposition~\ref{prop:stability}).}. Choosing first $r$ small, then $i$ large, gives the claim. The surface $\partial^*\Omega_i \cap B_{2r}(p)$ therefore decomposes into finitely many Lipschitz graphs $\Sigma_i^1, \ldots, \Sigma_i^{k_i}$ over $P$ with $\mathrm{Lip}(u_i^j) < C\varepsilon^{1/4}$, plus a non-graphical part of $\mathcal{H}^n$-measure $\leq C\sqrt{\varepsilon}\,r^n$\xinze{Tilt-excess $< \varepsilon$ means $r^{-n}\int |T_x - P|^2 \, d\mathcal{H}^n < \varepsilon$. Separate $\partial^*\Omega_i$ into $\{|T_x - P|^2 \geq \sqrt{\varepsilon}\}$ (non-graphical, $\mathcal{H}^n$-measure $\leq \sqrt{\varepsilon}\,(2r)^n$ by Chebyshev) and $\{|T_x - P| < \varepsilon^{1/4}\}$ (graphical, $\mathrm{Lip} < C\varepsilon^{1/4}$).}.
+for a.e.\ $r$ (those satisfying $\|V\|(\partial B_{2r}(p)) = 0$). Choosing first $r$ small, then $i$ large, gives the claim. The surface $\partial^*\Omega_i \cap B_{2r}(p)$ therefore decomposes into finitely many Lipschitz graphs $\Sigma_i^1, \ldots, \Sigma_i^{k_i}$ over $P$ with $\mathrm{Lip}(u_i^j) < C\varepsilon^{1/4}$, plus a non-graphical part of $\mathcal{H}^n$-measure $\leq C\sqrt{\varepsilon}\,r^n$.
 
 It remains to show that each sheet nearly fills $D_r$ (condition~(ii)) and that the sheet count stabilizes (condition~(i)). The strategy is as follows. By the sphere constraint (Step~1), each sheet has height bounded by $r$ and domain containing $D_{r/2}$, giving a crude area lower bound. By the tangent plane condition (Step~2), this crude bound is upgraded to a sharp height estimate $|u_i^j| \leq C\varepsilon^{1/4} r$, which in turn gives sharp coverage $\Omega_i^j \supset D_{r(1-C\varepsilon^{1/2})}$. The sharp coverage is needed for the counting argument: each sheet has area $(1 \pm C\varepsilon)\omega_n r^n$, so $k_i = \theta(p)$.
-\xinze{Neither step alone suffices: the sphere constraint only gives $|u| < r$ (trivial), while the tangent plane condition requires a prior area lower bound to exclude sheets of negligible area. The fiber counting proof below avoids this two-step argument entirely.}
-
 \medskip\noindent\textbf{Step~1} (Sphere constraint and crude bound). Since $\partial^*\Omega_i$ has no boundary, each graph $\Sigma_i^j$ can only terminate at $\partial B_r(p)$, so every boundary point of the domain $\Omega_i^j$ satisfies $|y|^2 + |u_i^j(y)|^2 = r^2$. Consider a sheet that intersects $B_{r/2}(p)$: there exists a point with $|u_i^j(y_0)| < r/2$, and since $\mathrm{Lip}(u_i^j) < C\varepsilon^{1/4}$, we have $|u_i^j| < r/2 + C\varepsilon^{1/4} r$ on $\Omega_i^j$. Substituting into the sphere constraint, $\Omega_i^j \supset D_{r/2}$ and hence $\mathcal{H}^n(\Omega_i^j) \geq 2^{-n}\omega_n r^n$.
 
 \medskip\noindent\textbf{Step~2} (Tangent plane upgrade). The goal is to show $|u_i^j| \leq C\varepsilon^{1/4} r$ everywhere on each contributing sheet, upgrading the crude bound $|u_i^j| < r$ from Step~1. The key input is that the tangent varifold of $V$ at $p$ is $\theta(p)|P|$, which is supported on $P$. This means that the mass of $V$ far from $P$ is negligible at scale $r$:
 \[
     \|V\|(B_r(p) \cap \{\mathrm{dist}(\cdot, P) > \varepsilon^{1/4} r\}) = o(r^n) \quad \text{as } r \to 0.
 \]
-\xinze{Rescaling: $r^{-n}\|V\|(B_r(p) \cap \{\mathrm{dist}(\cdot, P) > \varepsilon^{1/4} r\})$ equals the mass of the rescaled varifold $(\eta_{p,r})_\# V$ in $B_1 \cap \{\mathrm{dist}(\cdot, P) > \varepsilon^{1/4}\}$. As $r \to 0$, $(\eta_{p,r})_\# V \to \theta(p)|P|$, whose support is $P$. So the mass in $\{\mathrm{dist}(\cdot, P) > \varepsilon^{1/4}\}$ tends to $0$.}
-By varifold convergence, the same holds for $\partial^*\Omega_i$ (for $r$ small, then $i$ large)\xinze{Precisely: for any $\delta > 0$, $\exists\, r_0, i_0$ such that for all $r < r_0$ and $i \geq i_0$, $\mathcal{H}^n(\partial^*\Omega_i \cap B_r(p) \cap \{\mathrm{dist}(\cdot, P) > \varepsilon^{1/4} r\}) < \delta r^n$.}. Since each contributing sheet has area $\geq 2^{-n}\omega_n r^n$ (Step~1) and the total area of $\partial^*\Omega_i \cap B_r(p)$ beyond height $\varepsilon^{1/4} r$ from $P$ is $o(r^n)$, each sheet must contain a point with $|u_i^j| \leq \varepsilon^{1/4} r$. Propagating via $\mathrm{Lip}(u_i^j) < C\varepsilon^{1/4}$ gives $|u_i^j| \leq \varepsilon^{1/4} r + C\varepsilon^{1/4} \cdot 2r \leq C\varepsilon^{1/4} r$ everywhere. The sphere constraint then yields $\Omega_i^j \supset D_{r(1 - C\varepsilon^{1/2})}$, establishing~(ii). Condition~(iii) follows from the area formula for Lipschitz graphs.
+By varifold convergence, the same holds for $\partial^*\Omega_i$ (for $r$ small, then $i$ large). Since each contributing sheet has area $\geq 2^{-n}\omega_n r^n$ (Step~1) and the total area of $\partial^*\Omega_i \cap B_r(p)$ beyond height $\varepsilon^{1/4} r$ from $P$ is $o(r^n)$, each sheet must contain a point with $|u_i^j| \leq \varepsilon^{1/4} r$. Propagating via $\mathrm{Lip}(u_i^j) < C\varepsilon^{1/4}$ gives $|u_i^j| \leq \varepsilon^{1/4} r + C\varepsilon^{1/4} \cdot 2r \leq C\varepsilon^{1/4} r$ everywhere. The sphere constraint then yields $\Omega_i^j \supset D_{r(1 - C\varepsilon^{1/2})}$, establishing~(ii). Condition~(iii) follows from the area formula for Lipschitz graphs.
 
 \medskip\noindent\textbf{Step~3} (Counting). We count in $B_{r/2}(p)$. Each contributing sheet has domain $\Omega_i^j \supset D_{r/2}$ \textup{(Step~1)} and height $|u_i^j| \leq C\varepsilon^{1/4} r \ll r/2$ \textup{(Step~2)}, so the graph over $D_{r/2}$ lies inside $B_{r/2}(p)$, and the area of each sheet in $B_{r/2}(p)$ satisfies
 \[
     (1 - C\varepsilon^{1/2})\omega_n (r/2)^n \leq \mathcal{H}^n(\Sigma_i^j \cap B_{r/2}(p)) \leq (1 + C\varepsilon^{1/2})\omega_n (r/2)^n.
 \]
-\xinze{Upper bound: $\Sigma_i^j \cap B_{r/2}(p)$ projects into $D_{r/2}$, so $\mathcal{H}^n \leq \int_{D_{r/2}} \sqrt{1 + |Du_i^j|^2} \leq (1 + C\varepsilon^{1/2})\omega_n (r/2)^n$. Lower bound: since $|u_i^j| \leq C\varepsilon^{1/4} r$, the graph over $D_{(r/2)(1-C\varepsilon^{1/2})}$ satisfies $|y|^2 + |u|^2 < (r/2)^2$, giving area $\geq \omega_n ((r/2)(1-C\varepsilon^{1/2}))^n \geq (1-C\varepsilon^{1/2})\omega_n(r/2)^n$.}
-Summing over the $k_i$ sheets, we obtain\xinze{The $k_i$ graphical sheets do not exhaust $\partial^*\Omega_i \cap B_{r/2}(p)$: the non-graphical part (where $|T_x - P|^2 \geq \sqrt{\varepsilon}$) may also contribute. But its total area is $\leq \sqrt{\varepsilon}\,(2r)^n = C\sqrt{\varepsilon}\,(r/2)^n$ (the Chebyshev bound from the paragraph before Step~1), so it is absorbed into the $O(\varepsilon^{1/2})$ error below.}
+Summing over the $k_i$ sheets, we obtain
 \[
     \mathcal{H}^n(\partial^*\Omega_i \cap B_{r/2}(p)) = k_i \,\omega_n (r/2)^n + O(\varepsilon^{1/2})\,(r/2)^n.
 \]
-Dividing by $\omega_n(r/2)^n$, we get $k_i = \|V\|(B_{r/2}(p)) / (\omega_n(r/2)^n) + O(\varepsilon^{1/2})$\xinze{By varifold convergence, $\mathcal{H}^n(\partial^*\Omega_i \cap B_{r/2}(p)) \to \|V\|(B_{r/2}(p))$ as $i \to \infty$ (for a.e.\ $r$). By the definition of density, $\|V\|(B_{r/2}(p)) / (\omega_n(r/2)^n) \to \theta(p)$ as $r \to 0$. So the argument uses both limits: first $i \to \infty$ for fixed $r$, then $r \to 0$.}. Since $\|V\|(B_{r/2}(p)) / (\omega_n(r/2)^n) \to \theta(p)$ as $r \to 0$ and $k_i \in \mathbb{Z}$, for $r$ and $\varepsilon$ sufficiently small the count $k_i$ equals $\theta(p) \in \mathbb{Z}_{>0}$, establishing~(i).
+Dividing by $\omega_n(r/2)^n$, we get $k_i = \|V\|(B_{r/2}(p)) / (\omega_n(r/2)^n) + O(\varepsilon^{1/2})$. Since $\|V\|(B_{r/2}(p)) / (\omega_n(r/2)^n) \to \theta(p)$ as $r \to 0$ and $k_i \in \mathbb{Z}$, for $r$ and $\varepsilon$ sufficiently small the count $k_i$ equals $\theta(p) \in \mathbb{Z}_{>0}$, establishing~(i).
 \end{proof}
 
 
 \begin{remark}[Role of nestedness]\label{rem:integrality-independence}
-The sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) uses nestedness to order the sheets and stabilize the sheet count. The graphical decomposition step (Chebyshev + Caccioppoli $\pi$-injectivity) holds for any sequence of Caccioppoli sets, but nestedness simplifies the integrality conclusion. (Our sheet decomposition is closely related to Wickramasekera's Sheeting Theorem~\cite[Theorem~3.3]{Wic14}, but applies to the \emph{approximating} Caccioppoli boundaries $\partial^*\Omega_i$ rather than the limit, avoiding the need to assume integrality or smoothness a priori.) The $\alpha$-structural verification (Theorem~\ref{thm:alpha-hypo}) uses only the Caccioppoli structure and the min-max width. The non-excessive hypothesis enters in the stability step (Proposition~\ref{prop:stability}), which invokes~\cite[Proposition~3.1]{CLS22}. Nestedness is also used in the parity analysis of Section~\ref{sec:multiplicity-one}.
+The sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) uses nestedness to order the sheets and stabilize the sheet count. The graphical decomposition step (Chebyshev + Caccioppoli $\pi$-injectivity) holds for any sequence of Caccioppoli sets, but nestedness simplifies the integrality conclusion. (Our sheet decomposition is closely related to Wickramasekera's Sheeting Theorem~\cite[Theorem~3.3]{Wic14}, but applies to the \emph{approximating} Caccioppoli boundaries $\partial^*\Omega_i$ rather than the limit, avoiding the need to assume integrality or smoothness a priori.) The $\alpha$-structural verification (Theorem~\ref{thm:alpha-hypo}) uses only the Caccioppoli structure and the min-max width. The non-excessive hypothesis enters in the stability step (Proposition~\ref{prop:stability}), which invokes~\cite[Proposition~3.1]{CLS22}. Nestedness is also used in the parity analysis underlying the multiplicity-one question.
 \end{remark}

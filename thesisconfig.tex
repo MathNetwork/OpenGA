@@ -1,5 +1,5 @@
 % =========================
-% Settings / packages / newcommands
+% Packages, macros, theorem envs (arXiv / amsart version)
 % =========================
 
 % 1) Encoding & font enc
@@ -8,7 +8,7 @@
 \PassOptionsToPackage{T1}{fontenc}
 \usepackage{fontenc}
 
-% 2) Colors FIRST (with named tables) — needed by classicthesis/titleformat
+% 2) Colors
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 \usepackage{xcolor}
 
@@ -16,111 +16,43 @@
 \usepackage{tikz}
 \usetikzlibrary{calc,arrows.meta,decorations.pathreplacing,patterns,positioning,shapes,fit,intersections}
 
-% 4) Classicthesis (after xcolor)
-\PassOptionsToPackage{
-  drafting=false,
-  tocaligned=false,
-  dottedtoc=true,
-  eulerchapternumbers=true,
-  linedheaders=false,
-  floatperchapter=true,
-  eulermath=false,
-  beramono=true,
-  palatino=true,
-  parts=false,
-  style=classicthesis
-}{classicthesis}
-\usepackage{classicthesis}
-
-% Remove chapter prefix from section numbering (each chapter = independent paper)
-\renewcommand{\thesection}{\arabic{section}}
-\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
-\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
-
-% Number figures, tables, and equations by section (not chapter)
-\makeatletter
-\@removefromreset{figure}{chapter}
-\@removefromreset{table}{chapter}
-\@removefromreset{equation}{chapter}
-\makeatother
-\counterwithin{figure}{section}
-\counterwithin{table}{section}
-\counterwithin{equation}{section}
-
-% Larger, bolder section/subsection headings
-\usepackage{titlesec}
-\titleformat{\section}
-  {\relax}{\textsc{\Large\thesection}}{1em}{\Large\scshape}
-\titleformat{\subsection}
-  {\relax}{\textsc{\large\thesubsection}}{1em}{\large\itshape}
-\titleformat{\subsubsection}
-  {\relax}{\textsc{\normalsize\thesubsubsection}}{1em}{\normalsize\itshape}
-
+% 4) Core math / layout packages
 \usepackage{mathrsfs}
-% 5) Define classicthesis color names BEFORE any \color{CTtitle} use
-\providecolor{Maroon}{cmyk}{0,0.87,0.68,0.32} % fallback if named table missing
-\providecolor{RoyalBlue}{cmyk}{1,0.50,0,0}
-\definecolor{CTurl}{named}{Maroon}
-\definecolor{CTtitle}{named}{Maroon}
-\definecolor{CTlink}{named}{RoyalBlue}
-\definecolor{CTcitation}{named}{Maroon}
-\definecolor{CTsemi}{gray}{0.45}
-
-% ── TikZ diagram palette ──
-\colorlet{bindA}{red!70!black}       % primary curve (Γ, ∂Ω, ∂U)
-\colorlet{bindB}{blue!70!black}      % secondary curve (Ω₀, Ω₁, Σ, ∂Ω')
-\colorlet{fillA}{red!15}             % primary region fill
-\colorlet{fillB}{blue!15}            % secondary region fill
-\colorlet{fillC}{orange!20}          % intersection/special fill
-\colorlet{hlcol}{cyan!70!blue}       % highlight overlay line
-\colorlet{hatchcol}{blue!50}         % hatching pattern color
-
-% 6) Common pkgs
 \PassOptionsToPackage{english}{babel}
 \usepackage{babel}
 \usepackage{enumitem}
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{stmaryrd}
 \usepackage{thmtools}
-\usepackage[onehalfspacing]{setspace}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{xspace}
 \usepackage{calc}
 
-% -------------------------
-% Personal metadata (used by \hypersetup)
-% -------------------------
-\newcommand{\myTitle}{Nested Sweepouts and Free Boundary Min-Max Theory in Complete Riemannian Manifolds\xspace}
-\newcommand{\myName}{Xinze Li\xspace}
-\newcommand{\myDegree}{Doctor of Philosophy\xspace}
-\newcommand{\myDepartment}{Graduate Department of Mathematics\xspace}
-\newcommand{\myUni}{University of Toronto\xspace}
-\newcommand{\myTime}{2025\xspace}
-\newcommand{\mySupervisorOne}{Yevgeny Liokumovich\xspace}
-\newcommand{\mySupervisorTwo}{Vitali Kapovitch\xspace}
-
-% 7) Hyperref setup (classicthesis loads hyperref; we just tune)
+% 5) Hyperref + link colors
+\providecolor{Maroon}{cmyk}{0,0.87,0.68,0.32}
+\providecolor{RoyalBlue}{cmyk}{1,0.50,0,0}
+\usepackage{hyperref}
 \hypersetup{
-  colorlinks=true, linktocpage=true, pdfstartpage=3, pdfstartview=FitV,
-  breaklinks=true, pageanchor=true, pdfpagemode=UseNone,
-  plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,
-  hypertexnames=true, pdfhighlight=/O,
-  urlcolor=CTurl, linkcolor=CTlink, citecolor=CTcitation,
-  pdftitle={\myTitle},
-  pdfauthor={\textcopyright\ \myName, \myDepartment, \myUni},
-  pdfsubject={}, pdfkeywords={}, pdfcreator={pdfLaTeX},
-  pdfproducer={LaTeX with hyperref and classicthesis}
+  colorlinks=true,
+  breaklinks=true,
+  pageanchor=true,
+  plainpages=false,
+  bookmarksnumbered,
+  bookmarksopen=true,
+  bookmarksopenlevel=1,
+  urlcolor=Maroon,
+  linkcolor=RoyalBlue,
+  citecolor=Maroon,
+  pdfcreator={pdfLaTeX}
 }
 
-% 8) Autoref names
+% 6) Autoref names
 \makeatletter
 \@ifpackageloaded{babel}{%
   \addto\extrasenglish{%
     \renewcommand*{\figureautorefname}{Figure}%
     \renewcommand*{\tableautorefname}{Table}%
-    \renewcommand*{\partautorefname}{Part}%
-    \renewcommand*{\chapterautorefname}{Chapter}%
     \renewcommand*{\sectionautorefname}{Section}%
     \renewcommand*{\subsectionautorefname}{Section}%
     \renewcommand*{\subsubsectionautorefname}{Section}%
@@ -139,25 +71,25 @@
 }{}
 \makeatother
 
-% 9) Chapter title formatting (uses CTtitle/CTsemi)
-\makeatletter
-\ifthenelse{\boolean{ct@linedheaders}}{%
-  \titleformat{\chapter}[display]%
-  {\relax}{\raggedleft{\color{CTsemi}\chapterNumber\thechapter} \\ }{0pt}%
-  {\titlerule\vspace*{.9\baselineskip}\raggedright\Large\color{CTtitle}\spacedallcaps}%
-  [\normalsize\vspace*{.8\baselineskip}\titlerule]%
-}{%
-  \titleformat{\chapter}[display]%
-  {\relax}{\mbox{}\oldmarginpar{\vspace*{-3\baselineskip}\color{CTsemi}\chapterNumber\thechapter}}{0pt}%
-  {\raggedright\huge\color{CTtitle}\spacedallcaps}[\normalsize\vspace*{.8\baselineskip}\titlerule]%
-}
-\makeatother
+% 7) Equation/figure/table numbering by section
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
 
-% 10) Slightly relax line-breaking to reduce overfull hboxes in ToC/headers
+% 8) Relax line breaking
 \emergencystretch=2em
 
+% ── TikZ diagram palette ──
+\colorlet{bindA}{red!70!black}       % primary curve
+\colorlet{bindB}{blue!70!black}      % secondary curve
+\colorlet{fillA}{red!15}
+\colorlet{fillB}{blue!15}
+\colorlet{fillC}{orange!20}
+\colorlet{hlcol}{cyan!70!blue}
+\colorlet{hatchcol}{blue!50}
+
 % -------------------------
-% Your macros & theorem envs
+% Macros & theorem envs
 % -------------------------
 
 % closure helper
@@ -175,6 +107,8 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{subclaim}[theorem]{Sub-claim}
 
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
@@ -203,7 +137,7 @@
   {\begin{enumerate}[label=(\alph*'),topsep=-\parskip+\jot,itemsep=-\parskip-\jot]}
   {\end{enumerate}}
 
-% ==== Your existing macros (kept intact) ====
+% ==== Math macros ====
 \newcommand{\cut}{\mathbf{Cut}}
 \newcommand{\mres}{\mathbin{\vrule height 1.6ex depth 0pt width
 0.13ex\vrule height 0.13ex depth 0pt width 1.3ex}}
@@ -235,7 +169,6 @@
 \newcommand{\Om}{\Omega}
 \newcommand{\Si}{\Sigma}
 \newcommand{\G}{\Gamma}
-% \newcommand{\M}{\textbf{M}} % Removed: redefined below as \mathbb{M}
 \newcommand{\haus}{\mathcal{H}}
 \DeclareMathOperator{\diam}{\textbf{diam}}
 \DeclareMathOperator{\rad}{\textbf{rad}}
@@ -253,10 +186,10 @@
 \newcommand{\grad}{\mathbf{grad}}
 \newcommand{\id}{\mathbf{Id}}
 \newcommand{\dive}{\mathbf{div}}
-\newcommand{\bdy}{\partial^*}      % unified boundary notation (reduced boundary)
-\DeclareMathOperator{\per}{per}    % perimeter operator for Caccioppoli sets
+\newcommand{\bdy}{\partial^*}
+\DeclareMathOperator{\per}{per}
 \newcommand{\hess}{\mathbf{Hess}}
-\newcommand{\Hess}{\mathbf{Hess}}  % Alias for \hess
+\newcommand{\Hess}{\mathbf{Hess}}
 \newcommand{\ric}{\mathbf{Ric}}
 \newcommand{\sect}{\mathbf{Sec}}
 \newcommand{\scal}{\mathbf{Scal}}
@@ -287,7 +220,7 @@
 \newcommand{\abs}[1]{\left| #1 \right|}
 \newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
 
-% Draft/collaboration comments (REMOVE THESE BEFORE FINAL SUBMISSION)
+% Draft/collaboration comments (REMOVE BEFORE FINAL SUBMISSION)
 \newcommand{\qst}[1]{\textcolor{red}{(\textbf{Question: }{#1})}}
 \newcommand{\cmt}[1]{\textcolor{blue}{(\textbf{Comments: }{#1})}}
 \newcommand{\cmtv}[1]{\textcolor{magenta}{(\textbf{Vitali: }{#1})}}
@@ -314,7 +247,6 @@
 \newcommand{\mtr}[3]{[\Tilde{#1}\Tilde{#2}\Tilde{#3}]}
 \newcommand{\modcvee}{\Tilde{\curlyvee}}
 \newcommand{\mangle}{\measuredangle}
-% \newcommand{\peri}{\mathbf{Per}} % Removed: duplicate of \Per defined below
 \newcommand{\acts}{\curvearrowright}
 \newcommand{\rank}{\mathbf{rank}}
 \newcommand{\h}{\mathbb{H}}
@@ -337,7 +269,7 @@
 \newcommand{\leb}{\mathbf{L}}
 \newcommand{\vbar}{\underline{v}}
 \newcommand{\aut}{\mathbf{Aut}}
-\newcommand{\M}{\mathbb{M}}  % Model space symbol
+\newcommand{\M}{\mathbb{M}}
 \newcommand{\cptsub}{\subset\subset}
 \newcommand{\fcy}{\mathcal{Z}}
 \newcommand{\fltnorm}{\mathscr{F}}
@@ -356,4 +288,4 @@
 \DeclareMathOperator*{\limessinf}{\lim\,ess\,inf}
 \DeclareMathOperator*{\limesssup}{\lim\,ess\,sup}
 \DeclareMathOperator*{\ess}{ess}
-\newcommand{\Snm}{\mathcal{S}_{\mathrm{nm}}}  % Non-excessive sweepout space
+\newcommand{\Snm}{\mathcal{S}_{\mathrm{nm}}}

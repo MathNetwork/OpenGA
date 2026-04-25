@@ -1,4 +1,4 @@
-% !TEX root = ../../thesis.tex
+% !TEX root = ../../main.tex
 
 \section{Density from one-sided minimality}\label{sec:one-sided-density}
 
@@ -9,19 +9,23 @@ We remark that Lin's full regularity theory gives much stronger conclusions when
 
 \begin{definition}[One-sided almost minimizers]\label{def:one-sided-perimeter-min}
 Let $(M^{n+1}, g)$ be a Riemannian manifold, $\Omega$ a Caccioppoli set, $U \subset M$ open, and $\varepsilon \geq 0$.
-We say $\Omega$ is \emph{locally one-sided inner $\varepsilon$-almost area-minimizing} in~$U$ if for every $q \in U$, every $\rho > 0$ with $B_\rho(q) \Subset U$, and every Caccioppoli set $F$ with $F \mathbin{\triangle} \Omega \subset B_\rho(q)$ and $F \subset \Omega$,
+We say $\Omega$ is \emph{locally one-sided inner $\varepsilon$-almost area-minimizing} in~$U$ if for every $q \in U$, every $\rho > 0$ with $B_\rho(q) \Subset U$, and every Caccioppoli set $F$ with $F \mathbin{\triangle} \Omega \Subset B_\rho(q)$ and $F \subset \Omega$,
 \[
     \mathrm{Per}(\Omega, B_\rho(q)) \leq \mathrm{Per}(F, B_\rho(q)) + \varepsilon\,\rho^n.
 \]
-Similarly, $\Omega$ is \emph{locally one-sided outer $\varepsilon$-almost area-minimizing} in $U$ if the same holds for every $F \supset \Omega$ with $F \mathbin{\triangle} \Omega \subset B_\rho(q)$.
+Similarly, $\Omega$ is \emph{locally one-sided outer $\varepsilon$-almost area-minimizing} in $U$ if the same holds for every $F \supset \Omega$ with $F \mathbin{\triangle} \Omega \Subset B_\rho(q)$.
 When $\varepsilon = 0$ we recover the notion of \emph{locally one-sided area-minimizing}~\cite[Definition~1.10]{CLS22}.
 \end{definition}
+
+\begin{remark}[Compact containment is essential]\label{rem:compact-containment}
+The condition $F \mathbin{\triangle} \Omega \Subset B_\rho(q)$ (compact containment) rather than $\subset B_\rho(q)$ is required to exclude the degenerate competitor $F = \Omega \setminus B_\rho(q)$. For this $F$, $\chi_F \equiv 0$ on the open ball, so $\mathrm{Per}(F, B_\rho(q)) = 0$; with $\subset$ the inequality would force $\mathrm{Per}(\Omega, B_\rho(q)) \leq \varepsilon\,\rho^n$ at all reduced boundary points, which is incompatible with density~$1$ at $\partial^*\Omega$. With $\Subset$, the competitor is required to agree with $\Omega$ in a neighborhood of $\partial B_\rho(q)$, which is the standard convention (e.g.,~\cite[Chapter~21]{Mag12}) and makes the half-space $\Omega = \{x_1 < 0\}$ one-sided $0$-almost area-minimizing in the usual sense.
+\end{remark}
 
 \begin{definition}[Two-sided perimeter decrease]\label{def:two-sided-decrease}
 Let $(M^{n+1}, g)$ be a Riemannian manifold, $\Omega$ a Caccioppoli set, and $\varepsilon > 0$.
 We say $\Omega$ admits a \emph{two-sided $\varepsilon$-perimeter decrease at $(q, \rho)$} if there exist Caccioppoli sets $F^-, F^+$ with
 \[
-    F^- \subset \Omega \subset F^+, \qquad F^\pm \mathbin{\triangle} \Omega \subset B_\rho(q),
+    F^- \subset \Omega \subset F^+, \qquad F^\pm \mathbin{\triangle} \Omega \Subset B_\rho(q),
 \]
 such that
 \[
@@ -29,13 +33,6 @@ such that
 \]
 Equivalently, $\Omega$ is \emph{not} locally one-sided $\varepsilon$-almost area-minimizing on either side at scale~$\rho$ near~$q$: neither the inner nor the outer almost-minimality inequality of Definition~\ref{def:one-sided-perimeter-min} holds at~$(q, \rho)$.
 \end{definition}
-
-\xinze{The error scaling $\varepsilon\,\rho^n$ is sharp.
-In the mass ratio proof (Proposition~\ref{prop:mass-ratio-lower-bound}), the error enters at a single step: the almost minimality comparison $f(\rho) \leq \mathrm{Per}(F, B_\rho) + \mathrm{ERROR}(\rho)$.
-All other steps are exact: the coarea formula ($f' = \mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho)$), the Caccioppoli competitor ($\mathrm{Per}(F) \leq C\,f'^{n/(n-1)}$), the density at reduced boundary points ($f(\rho)/(\omega_n\rho^n) \to 1$), and the ODE integration.
-The bootstrap absorption requires $\mathrm{ERROR}(\rho) \leq f(\rho)/2 \approx (\omega_n/2)\,\rho^n$, so the error must be $O(\rho^n)$ with a sufficiently small constant.
-A weaker error $\varepsilon\,\rho^\beta$ with $\beta < n$ fails: we would need $\varepsilon \leq (\omega_n/2)\,\rho^{n-\beta} \to 0$, so for any fixed $\varepsilon > 0$ the error dominates $f(\rho)$ at small~$\rho$.
-A stronger error $\alpha(\rho)\,\rho^n$ with $\alpha(\rho) \to 0$ (as in Tamanini~\cite{Tam84}) also works but gives a strictly stronger (harder to satisfy) condition on~$\Omega$, which is undesirable for the case analysis (Definition~\ref{def:one-sided-perimeter-min} with fixed~$\varepsilon$ captures the largest class of sets).}
 
 This is precisely the Caccioppoli version of the parametric obstacle problem studied by Lin~\cite{Lin85}, whose thesis develops the regularity theory for hypersurfaces minimizing a parametric elliptic integrand subject to an obstacle constraint.
 Lin's main formulation~\cite[\S0.2]{Lin85} assumes the obstacle domain has $C^{1,\alpha}$ boundary; this regularity is essential for his interior and boundary regularity theorems, but not for the mass ratio bounds that we use here.
@@ -112,7 +109,7 @@ Combining the filling inequality~\cite[4.5.9(31)]{Fed69} with the constancy theo
 \end{figure}
 
 \begin{proposition}[Caccioppoli competitor in a geodesic ball~{\cite[4.5.9(31)]{Fed69}; \cite[Theorem~26.27]{Sim83}}]\label{prop:caccioppoli-competitor}
-Let $(M^{n+1}, g)$ be a Riemannian manifold. There exist $r_0 > 0$ and $C = C(n, M, g) > 0$ such that for every Caccioppoli set $\Omega$, every $q \in M$, and a.e.\ $0 < \rho < r_0$, there exists a Caccioppoli set $F$ with $F \supset \Omega$, $F \mathbin{\triangle} \Omega \subset B_\rho(q)$, and
+Let $(M^{n+1}, g)$ be a Riemannian manifold. There exist $r_0 > 0$ and $C = C(n, M, g) > 0$ such that for every Caccioppoli set $\Omega$, every $q \in M$, and a.e.\ $0 < \rho < r_0$, there exists a Caccioppoli set $F$ with $F \supset \Omega$, $F \mathbin{\triangle} \Omega \Subset B_\rho(q)$, and
 \begin{equation}\label{eq:caccioppoli-competitor}
     \mathrm{Per}(F, B_\rho(q)) \leq C\,\mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho(q))^{n/(n-1)}.
 \end{equation}
@@ -120,24 +117,29 @@ The same holds with $F \subset \Omega$ in place of $F \supset \Omega$.
 \end{proposition}
 
 \begin{proof}
-By the coarea formula, for a.e.\ $\rho$ the slice $\partial^*\Omega \cap \partial B_\rho(q)$ is an $(n-1)$-rectifiable set with no boundary (as a current).
+Fix $\rho$ in the full-measure set of radii where the coarea slice $\partial^*\Omega \cap \partial B_\rho(q)$ is $(n-1)$-rectifiable with no boundary as a current (by the coarea formula).
+We first construct a competitor $F_{\rho'}$ with $F_{\rho'} \mathbin{\triangle} \Omega \subset \overline{B_{\rho'}(q)}$ for each $\rho' < \rho$ close to~$\rho$, then choose $\rho'$ so that $\overline{B_{\rho'}(q)} \Subset B_\rho(q)$ and the slice estimate transfers.
+
 Federer's filling inequality~\cite[4.5.9(31)]{Fed69} states that every compactly supported $(n-1)$-cycle $Z$ in $\mathbb{R}^{n+1}$ bounds an $n$-dimensional integral current of mass at most $C\,\mathbf{M}(Z)^{n/(n-1)}$.
-Applying this to the slice (viewed in normal coordinates) yields an $n$-dimensional surface $\Sigma_0$ spanning it.
-Since $\overline{B}_\rho(q)$ is a Lipschitz retract (Definition~\ref{def:lipschitz-retract}), composing $\Sigma_0$ with the retraction $h \colon M \to \overline{B}_\rho(q)$ produces a surface $\Sigma = h_\#\Sigma_0$ supported in $\overline{B}_\rho(q)$ that still spans the slice, with
+Applying this to the slice at scale $\rho'$ (viewed in normal coordinates) yields an $n$-dimensional surface $\Sigma_0$ spanning $\partial^*\Omega \cap \partial B_{\rho'}(q)$.
+Since $\overline{B}_{\rho'}(q)$ is a Lipschitz retract (Definition~\ref{def:lipschitz-retract}), composing $\Sigma_0$ with the retraction $h_{\rho'} \colon M \to \overline{B}_{\rho'}(q)$ produces a surface $\Sigma_{\rho'} = (h_{\rho'})_\#\Sigma_0$ supported in $\overline{B}_{\rho'}(q)$ that still spans the slice, with
 \[
-    \mathcal{H}^n(\Sigma) \leq \mathrm{Lip}(h)^n \, \mathcal{H}^n(\Sigma_0) \leq C\,\mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho(q))^{n/(n-1)}.
+    \mathcal{H}^n(\Sigma_{\rho'}) \leq \mathrm{Lip}(h_{\rho'})^n \, \mathcal{H}^n(\Sigma_0) \leq C\,\mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_{\rho'}(q))^{n/(n-1)}.
 \]
-Now $\Sigma$ and $\partial^*\Omega \cap B_\rho(q)$ share the same boundary (the slice on $\partial B_\rho(q)$), so their difference $(\partial^*\Omega \cap B_\rho(q)) - \Sigma$ is an $n$-cycle in $\overline{B}_\rho(q)$.
-By the constancy theorem~\cite[Theorem~26.27]{Sim83}, every compactly supported $n$-cycle in $\mathbb{R}^{n+1}$ equals $\partial\llrr{W}$ for some Caccioppoli set $W$ (apply the theorem to each connected component of the complement of the cycle's support).
-In our case $W \subset B_\rho(q)$; see Figure~\ref{fig:caccioppoli-competitor}.
-Setting $F = \Omega \cup W$ gives $F \supset \Omega$ and $F \mathbin{\triangle} \Omega = W \subset B_\rho(q)$.
-Since $\partial\llrr{W} = (\partial^*\Omega \cap B_\rho(q)) - \Sigma$ as currents, the set $W$ lies between $\partial^*\Omega \cap B_\rho(q)$ and $\Sigma$.
-Adding $W$ to $\Omega$ therefore absorbs the original boundary piece $\partial^*\Omega \cap B_\rho(q)$ into the interior of $F$: every point of $\partial^*\Omega \cap B_\rho(q)$ has $\Omega$ on one side and $W$ on the other, so it is no longer on $\partial^*F$.
-The only remaining boundary of $F$ inside $B_\rho(q)$ comes from $\Sigma$, so $\partial^*F \cap B_\rho(q) \subset \Sigma$ and
-\[
-    \mathrm{Per}(F, B_\rho(q)) \leq \mathcal{H}^n(\Sigma) \leq C\,\mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho(q))^{n/(n-1)}.
-\]
-For the variant $F \subset \Omega$, take $F = \Omega \setminus W$ instead; the same estimate holds.
+Now $\Sigma_{\rho'}$ and $\partial^*\Omega \cap B_{\rho'}(q)$ share the same boundary, so their difference is an $n$-cycle supported in $\overline{B}_{\rho'}(q)$.
+By the constancy theorem~\cite[Theorem~26.27]{Sim83}, this cycle equals $\partial\llrr{W_{\rho'}}$ for some Caccioppoli set $W_{\rho'} \subset \overline{B}_{\rho'}(q)$.
+Setting $F_{\rho'} = \Omega \cup W_{\rho'}$ gives $F_{\rho'} \supset \Omega$ and $F_{\rho'} \mathbin{\triangle} \Omega = W_{\rho'} \subset \overline{B_{\rho'}(q)} \Subset B_\rho(q)$.
+As in the original argument (Figure~\ref{fig:caccioppoli-competitor}), the boundary piece $\partial^*\Omega \cap B_{\rho'}(q)$ is absorbed into the interior of $F_{\rho'}$, so $\partial^* F_{\rho'} \cap B_\rho(q) \subset \Sigma_{\rho'} \cup (\partial^*\Omega \cap (B_\rho(q) \setminus \overline{B}_{\rho'}(q)))$ and
+\begin{equation}\label{eq:Frho-prime-bound}
+    \mathrm{Per}(F_{\rho'}, B_\rho(q)) \leq \mathcal{H}^n(\Sigma_{\rho'}) + \mathrm{Per}(\Omega, B_\rho(q) \setminus \overline{B}_{\rho'}(q)).
+\end{equation}
+
+Since the coarea function $\rho \mapsto \mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho(q))$ is $L^1_{\mathrm{loc}}$ and $\mathrm{Per}(\Omega, B_\rho(q) \setminus \overline{B}_{\rho'}(q)) \to 0$ as $\rho' \nearrow \rho$ (by monotone convergence), for the Lebesgue-a.e.\ $\rho$ at which $\rho' \mapsto \mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_{\rho'}(q))$ is approximately continuous at $\rho$, we can choose $\rho' < \rho$ with
+\begin{equation}\label{eq:Frho-prime-slice-bound}
+    \mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_{\rho'}(q))^{n/(n-1)} + \mathrm{Per}(\Omega, B_\rho(q) \setminus \overline{B}_{\rho'}(q)) \leq 2\,\mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_{\rho}(q))^{n/(n-1)}.
+\end{equation}
+Setting $F := F_{\rho'}$ for any such $\rho'$, we obtain~\eqref{eq:caccioppoli-competitor} (with $C$ replaced by $2C$) and $F \mathbin{\triangle} \Omega \Subset B_\rho(q)$.
+For the variant $F \subset \Omega$, take $F = \Omega \setminus W_{\rho'}$ instead; the same estimate holds.
 \end{proof}
 
 \begin{proposition}[Mass ratio lower bound from isoperimetric deficit]\label{prop:mass-ratio-lower-bound}
@@ -162,7 +164,7 @@ By the coarea formula, $\mathcal{H}^{n-1}(\partial^*\Omega \cap \partial B_\rho(
 \]
 Since $q \in \partial^*\Omega$, the density of $|\partial^*\Omega|$ at $q$ equals $1$, so $f(\rho)/(\omega_n\rho^n) \to 1$ as $\rho \to 0$.
 In particular, for all sufficiently small $\rho$ we have $f(\rho) \geq (\omega_n/2)\,\rho^n$.
-Choosing $\varepsilon_0 := \omega_n/4$, we have $\varepsilon\,\rho^n \leq f(\rho)/2$ for all such $\rho$\xinze{This absorption step constrains the error: we need $\mathrm{ERROR}(\rho) \leq f(\rho)/2 \approx (\omega_n/2)\,\rho^n$. Hence the error must be $O(\rho^n)$ with a small constant; $\rho^n$ is the sharp scaling since $f(\rho) \sim \rho^n$. In particular, $\varepsilon\,\rho^\beta$ with $\beta < n$ fails because $\rho^\beta \gg \rho^n$ for small~$\rho$.}, and therefore
+Choosing $\varepsilon_0 := \omega_n/4$, we have $\varepsilon\,\rho^n \leq f(\rho)/2$ for all such $\rho$, and therefore
 \[
     f(\rho)/2 \leq C_0\,f'(\rho)^{n/(n-1)},
 \]
@@ -203,3 +205,107 @@ Since $\overline{B}_{2r}(p)$ is closed, the Portmanteau theorem yields
 $\|V\|(\overline{B}_{2r}(p)) \geq \limsup_{i \to \infty} \|\partial^*\Omega_i\|(\overline{B}_{2r}(p)) \geq c\,r^n$.
 Dividing by $\omega_n (2r)^n$ and letting $r \to 0$ gives $\Theta(\|V\|, p) \geq c/(2^n \omega_n) > 0$.
 \end{proof}
+
+\subsection{The cancelled-mass case (open)}\label{subsec:cancelled-mass-open}
+
+Lemma~\ref{lem:one-sided-density} establishes a density lower bound under the hypothesis of (all-scale) one-sided almost-minimality. In the mass-cancellation case of integrality (Section~\ref{subsec:integrality-cancel}), the cancelled mass $\mu_{\mathrm{c}} = \|V\| - |D\chi_{\Omega(x_0)}|$ is supported away from $\partial^*\Omega(x_0)$, and the corresponding density lower bound on $\spt\mu_{\mathrm{c}}$ is the main open input to integrality. We record the precise statement.
+
+\begin{conjecture}[Positive density on the cancelled mass]\label{conj:density-nonexcessive}
+Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, $\Phi$ a non-excessive ONVP sweepout with width $W$, $x_i \to x_0 \in \mathfrak{m}(\Phi)$ a min-max sequence, and $V$ the varifold limit of $|\partial^*\Omega(x_i)|$. Then
+\[
+    \Theta(\|V\|, p) > 0 \quad \text{for } \|V\|\text{-a.e.\ } p \in \spt\|V\|.
+\]
+\end{conjecture}
+
+By Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), an affirmative answer to Conjecture~\ref{conj:density-nonexcessive} promotes $V$ to a rectifiable varifold; the sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) then upgrades rectifiability to integer multiplicity, closing the integrality of $V$ in the mass-cancellation case (see Remark~\ref{rem:cancelled-mass-gap}).
+
+\subsection{Proof strategy: sweepout-wide \texorpdfstring{$I$}{I}-replacement (in progress)}\label{subsec:proof-strategy}
+
+We outline a strategy towards Conjecture~\ref{conj:density-nonexcessive} by contradiction, reducing it to an interior interpolation problem inside a small ball. The argument is incomplete: the construction of the perimeter-monotone interpolation (Sub-claim~\ref{subclaim:interior-interpolation}) is open. We record the framework, the parts that go through, and the precise gap.
+
+\paragraph{Notation.}
+Let $\Phi = \{\Omega_t\}_{t\in[0,1]}$ be a non-excessive ONVP sweepout with width $W$. After passing to a subsequence we fix $t_i \nearrow t_0 \in \mathfrak{m}(\Phi)$ such that $|\partial^*\Omega_{t_i}| \to V$ as varifolds; by nestedness $\Omega_{t_1} \supset \Omega_{t_2} \supset \cdots$. Throughout this subsection $p \in \spt\|V\|$ is fixed.
+
+\paragraph{Reduction.}
+By the monotonicity formula for stationary varifolds (Proposition~\ref{prop:p2-monotonicity}), it suffices to derive a contradiction from $\Theta(\|V\|, p) < \varepsilon$ for any single $p$ and any sufficiently small $\varepsilon = \varepsilon(n, M, g) > 0$. We split into two cases according to whether $p$ is eventually inside or outside the slices.
+
+\medskip
+\noindent\textbf{Case 1: $p \notin \overline{\Omega_{t_i}}$ for some $i$.}
+There exists $\delta > 0$ with $B_\delta(p) \cap \Omega_{t_i} = \varnothing$. By nestedness, $B_\delta(p) \cap \Omega_{t_j} = \varnothing$ for every $j \ge i$, hence $|\partial^*\Omega_{t_j}|(B_\delta(p)) = 0$ for those~$j$. Passing to the limit, $\|V\|(B_\delta(p)) = 0$, contradicting $p \in \spt\|V\|$.
+
+\medskip
+\noindent\textbf{Case 2: $p \in \bigcap_{i=1}^\infty \overline{\Omega_{t_i}}$ and $\dist(\spt|\partial^*\Omega_{t_i}|, p) \to 0$.}
+At points of $\partial^*\Omega_{t_0}$ the density bound $\Theta(\|V\|, p) \ge 1$ is already supplied by Lemma~\ref{lem:density-lower-bound}, so we may further assume $p \notin \spt\|\partial^*\Omega_{t_0}\|$. By $L^1$-convergence $\Omega_{t_i} \to \Omega_{t_0}$ and the exclusion of Case~1, for some small $r_0 > 0$ we have $B_{r_0}(p) \subset \Omega_{t_0}$ and
+\[
+    \mathrm{Per}(\Omega_{t_0}, B_{r_0}(p)) = 0.
+\]
+
+\paragraph{Quantitative consequences.}
+By the assumption $\Theta(\|V\|, p) < \varepsilon$ and the monotonicity formula, we may choose $r \in (0, r_0)$ with
+\begin{equation}\label{eq:strategy-V-small}
+    \|V\|(B_r(p)) < \varepsilon\, r^n.
+\end{equation}
+The Portmanteau theorem applied to the closed ball gives
+\begin{equation}\label{eq:strategy-Per-small}
+    \limsup_{i \to \infty} \mathrm{Per}(\Omega_{t_i}, B_r(p)) \le \varepsilon\, r^n.
+\end{equation}
+By the coarea formula, after shrinking $r$ slightly, we may further assume that along a subsequence
+\begin{equation}\label{eq:strategy-slice-small}
+    \mathcal{H}^{n-1}(\partial^*\Omega_{t_i} \cap \partial B_r(p)) \le C\, \varepsilon\, r^{n-1}
+\end{equation}
+for all~$i$, where $C = C(n)$.
+
+\paragraph{The proposed $I$-replacement.}
+We construct a competitor family that agrees with $\Phi$ outside $B_r(p)$ and strictly decreases the limit varifold mass at $p$.
+
+\begin{claim}[Sweepout-wide replacement]\label{claim:I-replacement}
+There exists a family $\{\Omega^*_t\}_{t\in[0,1]}$ of Caccioppoli sets satisfying:
+\begin{enumerate}[label=\textup{(\arabic*)}, leftmargin=2em]
+    \item \textup{(Locality.)} $\Omega^*_t \mathbin{\triangle} \Omega_t \Subset B_r(p)$ for every $t \in [0,1]$.
+    \item \textup{(Mass non-increase.)} $\mathrm{Per}(\Omega^*_t) \le \mathrm{Per}(\Omega_t)$ for every $t \in [0,1]$.
+    \item \textup{(Strict decrease in the limit.)} If $|\partial^*\Omega^*_{t_i}| \to V^*$, then $\|V^*\|(B_r(p)) < \|V\|(B_r(p))$.
+\end{enumerate}
+\end{claim}
+
+The construction. Fix a large index $i$ in the chosen subsequence and set
+\[
+    \Omega^*_t :=
+    \begin{cases}
+        \Omega_t & \text{if } t \le t_i \text{ or } t \ge t_0, \\
+        \Psi_t & \text{if } t_i \le t \le t_0,
+    \end{cases}
+\]
+where $\Psi_t$ is a one-parameter family of Caccioppoli sets with
+\[
+    \Psi_t \setminus B_r(p) = \Omega_t \setminus B_r(p), \qquad \Psi_{t_i} = \Omega_{t_i}, \qquad \Psi_{t_0} = \Omega_{t_0},
+\]
+chosen so that $t \mapsto \mathrm{Per}(\Psi_t, B_r(p))$ is non-increasing on $[t_i, t_0]$.
+
+\paragraph{Heuristic justification.}
+Inside the ball:
+\begin{itemize}[leftmargin=1.5em]
+    \item At $t = t_i$, by~\eqref{eq:strategy-Per-small} the slice has $\mathrm{Per}(\Omega_{t_i}, B_r(p)) < \varepsilon\, r^n$, so its boundary inside $B_r(p)$ consists of small ``pockets'' of total mass $\lesssim \varepsilon\, r^n$.
+    \item At $t = t_0$, by Case~2, $\Omega_{t_0} \cap B_r(p) = B_r(p)$ has perimeter zero in the ball.
+    \item The slice trace on the sphere satisfies~\eqref{eq:strategy-slice-small}, so the gluing cost on $\partial B_r(p)$ is controlled.
+\end{itemize}
+The interpolation $\Psi_t$ should continuously contract these pockets to the constant slice $B_r(p)$. The relevant geometric input is the absence of nontrivial closed minimal hypersurfaces in $B_r(p)$ for $r$ less than the convexity radius of $(M,g)$: any Caccioppoli set strictly inside the ball can be deformed towards its constant value with monotonically decreasing perimeter, since there is no obstruction to area contraction.
+
+\begin{subclaim}[Interior interpolation]\label{subclaim:interior-interpolation}
+\textbf{(Open.)} For $r$ less than the convexity radius of $(M,g)$, the family $\Psi_t$ above can be chosen so that:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=2em]
+    \item $t \mapsto \Psi_t$ is continuous in the flat topology and respects the ONVP nestedness across the gluing intervals at $t_i$ and $t_0$;
+    \item $\mathrm{Per}(\Psi_t, B_r(p)) \le \mathrm{Per}(\Omega_t, B_r(p))$ pointwise in $t \in [t_i, t_0]$;
+    \item $\Psi_{t_0} = \Omega_{t_0}$ and the limiting boundary inside $B_r(p)$ has strictly smaller varifold mass than $\|V\|(B_r(p))$.
+\end{enumerate}
+\end{subclaim}
+
+\paragraph{Conclusion modulo Sub-claim~\ref{subclaim:interior-interpolation}.}
+Granting Sub-claim~\ref{subclaim:interior-interpolation}, the modified family $\Phi^* = \{\Omega^*_t\}$ is a continuous ONVP sweepout in the same homotopy class as $\Phi$, with $\sup_t \mathrm{Per}(\Omega^*_t) \le W$ and $\|V^*\|(B_r(p)) < \|V\|(B_r(p))$ at the critical parameter. The pair $(\Phi^*, [t_i, t_0])$ is then an $I$-replacement (Definition~\ref{def:excessive-interval}) making $t_0$ excessive, contradicting the non-excessiveness of $\Phi$. Hence $\Theta(\|V\|, p) > 0$ at every $p \in \spt\|V\|$.
+
+\paragraph{Gap.}
+The proof reduces Conjecture~\ref{conj:density-nonexcessive} to Sub-claim~\ref{subclaim:interior-interpolation}, an interpolation problem strictly inside $B_r(p)$. Two specific issues remain:
+\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=2em]
+    \item \emph{Continuous nestedness.} The interpolation $\Psi_t$ must be ordered: $\Psi_t \subset \Psi_{t'}$ for $t \le t'$ in $[t_i, t_0]$, gluing continuously to $\Omega_{t_i}$ on the lower end and to $\Omega_{t_0}$ on the upper end. A naive contraction of pockets at constant speed need not preserve this ordering.
+    \item \emph{Monotone perimeter under the flow.} Even granting continuity and nestedness, ensuring $t \mapsto \mathrm{Per}(\Psi_t, B_r(p))$ is non-increasing requires either a perimeter-monotone gradient flow inside $B_r(p)$ (e.g., mean curvature flow with prescribed boundary data on $\partial B_r(p)$) or a constraint-respecting area minimization. Both are sensitive to whether the flow develops singularities or attaches to the spherical boundary; the assumption that $B_r(p)$ admits no nontrivial closed minimal hypersurface is the relevant geometric input but does not by itself produce the required flow.
+\end{enumerate}
+A complete construction of $\Psi_t$ achieving (i)--(iii) of Sub-claim~\ref{subclaim:interior-interpolation} is in progress.

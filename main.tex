@@ -1,0 +1,46 @@
+\documentclass[10pt,reqno]{amsart}
+
+\input{thesisconfig}
+
+\title[Alternative Regularity via Non-Excessive Sweepouts]{Alternative Regularity via Non-Excessive Sweepouts}
+
+\author{Xinze Li}
+\address{Department of Mathematics, University of Toronto, Toronto, ON, Canada}
+\email{lixinze@math.utoronto.ca}
+
+\author{Yangyang Li}
+\address{Department of Mathematics, University of Notre Dame, Notre Dame, IN, USA}
+\email{yangyangli@nd.edu}
+
+\begin{document}
+
+\begin{abstract}
+We construct an alternative regularity pipeline for min--max theory based on
+non-excessive sweepouts, removing the dependence on the Almgren--Pitts
+combinatorial selection and the Schoen--Simon regularity theorem. Stationarity
+follows from a pull-tight argument; integrality on the reduced boundary of the
+flat limit follows unconditionally from a lower-semicontinuity comparison
+combined with a graphical sheet decomposition; smoothness follows from
+Wickramasekera's theorem for stable codimension~$1$ integral varifolds. In the
+mass-cancellation case the density lower bound on the cancelled mass remains
+open (Conjecture~\ref{conj:density-nonexcessive}): one must show
+$\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e.\ $p$ in order to apply Allard's
+rectifiability theorem to the cancelled mass.
+\end{abstract}
+
+\maketitle
+
+\input{chapters/part2/1-introduction}
+\input{chapters/part2/2-preliminaries}
+\input{chapters/part2/3-sweepouts}
+\input{chapters/part2/4-regularity-tools}
+\input{chapters/part2/4b-one-sided-density}
+\input{chapters/part2/5-integrality}
+\input{chapters/part2/6-regularity}
+%\input{chapters/part2/7-discussion}  % supplementary; duplicates lem:sheet-decomposition
+%\input{chapters/part2/7-multiplicity}
+
+\bibliographystyle{amsalpha}
+\bibliography{main}
+
+\end{document}

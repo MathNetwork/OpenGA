@@ -1,8 +1,8 @@
-% !TEX root = ../../thesis.tex
+% !TEX root = ../../main.tex
 
 \section{Regularity}\label{sec:regularity}
 
-By Proposition~\ref{thm:CLS-stationary}, the limit varifold $V$ is stationary; by Theorem~\ref{thm:integrality}, $V$ is integral. To promote $V$ to a smooth hypersurface, we apply Wickramasekera's regularity theorem (Theorem~\ref{thm:wickramasekera}), which requires two further inputs---\emph{stability} and the \emph{$\alpha$-structural hypothesis} (Definition~\ref{defn:alpha-structural}). This section verifies both, in a unified argument that applies regardless of whether mass cancellation occurs.
+By Proposition~\ref{thm:CLS-stationary}, the limit varifold $V$ is stationary; by Theorem~\ref{thm:integrality}, $V$ is integral in the no-mass-cancellation case, and in the mass-cancellation case the integrality of $V$ on $\partial^*\Omega(x_0) \cap \spt\|V\|$ holds unconditionally while integrality on the cancelled mass $\mu_{\mathrm{c}}$ is subject to the gap of Remark~\ref{rem:cancelled-mass-gap}. To promote $V$ to a smooth hypersurface, we apply Wickramasekera's regularity theorem (Theorem~\ref{thm:wickramasekera}), which requires two further inputs---\emph{stability} and the \emph{$\alpha$-structural hypothesis} (Definition~\ref{defn:alpha-structural}). The stability and $\alpha$-structural arguments below apply verbatim to the reduced-boundary part of $V$; under the multiplicity-one conjecture (no mass cancellation), they apply to all of $V$ and yield the full conclusion of Theorem~\ref{thm:non-excessive-main}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Stability}\label{subsec:stability}
@@ -449,5 +449,5 @@ We can now assemble the full regularity result.
 \begin{proof}[Proof of Theorem~\ref{thm:non-excessive-main}]
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$. By Theorem~\ref{thm:non-excessive-existence}, there exists a non-excessive ONVP sweepout $\Phi \in \Snm$. By Proposition~\ref{thm:CLS-stationary}, there exists a stationary varifold $V$ with $\mathbf{M}(V) = W$.
 
-By Theorem~\ref{thm:integrality}, $V$ is an integral varifold. By Proposition~\ref{prop:stability}, $V$ is stable. By Theorem~\ref{thm:alpha-hypo}, $V$ satisfies the $\alpha$-structural hypothesis. Therefore $V \in \mathcal{S}_\alpha$, and Wickramasekera's theorem (Theorem~\ref{thm:wickramasekera}) gives the stated regularity: $\sing V = \varnothing$ for $2 \leq n \leq 6$, $\sing V$ discrete for $n = 7$, and $\mathcal{H}^{n-7+\gamma}(\sing V) = 0$ for each $\gamma > 0$ when $n \geq 8$.
+By Theorem~\ref{thm:integrality}(a), $V$ is an integral varifold in the no-mass-cancellation case (and, conditionally on Remark~\ref{rem:cancelled-mass-gap}, also in the mass-cancellation case). By Proposition~\ref{prop:stability}, $V$ is stable. By Theorem~\ref{thm:alpha-hypo}, $V$ satisfies the $\alpha$-structural hypothesis. Therefore $V \in \mathcal{S}_\alpha$, and Wickramasekera's theorem (Theorem~\ref{thm:wickramasekera}) gives the stated regularity: $\sing V = \varnothing$ for $2 \leq n \leq 6$, $\sing V$ discrete for $n = 7$, and $\mathcal{H}^{n-7+\gamma}(\sing V) = 0$ for each $\gamma > 0$ when $n \geq 8$. Thus Theorem~\ref{thm:non-excessive-main} holds unconditionally under no mass cancellation, and otherwise holds conditionally on the resolution of Remark~\ref{rem:cancelled-mass-gap}.
 \end{proof}
