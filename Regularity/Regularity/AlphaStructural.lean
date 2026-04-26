@@ -1,5 +1,6 @@
 import GeometricMeasureTheory.Stationary
 import GeometricMeasureTheory.SecondVariation
+import GeometricMeasureTheory.Stable
 import GeometricMeasureTheory.TangentCone
 import Mathlib.Geometry.Manifold.IsManifold.Basic
 import Mathlib.MeasureTheory.Measure.Map
@@ -53,23 +54,10 @@ is visible to the Lean kernel. -/
 def IsIntegral (V : Varifold M) : Prop :=
   ∀ᵐ p ∂V.massMeasure, ∃ k : ℕ, density V p = (k : ℝ)
 
-/-- $V$ is **stable** ($\mathcal{S}2$, paper §4 Def 4.1):
-$\delta^2 V(\varphi, \varphi) \ge 0$ for every smooth scalar normal
-deformation $\varphi$ compactly supported away from $\mathrm{sing}\,V$.
-
-Defined explicitly as a universally-quantified non-negativity statement
-so that its content is visible to the Lean kernel.
-
-Carries the smooth-manifold typeclass cascade `(I : ModelWithCorners)
-[ChartedSpace H M] [IsManifold I ∞ M]` because `sing I V` requires it. -/
-def IsStable
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-    {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners ℝ E H)
-    [ChartedSpace H M] [IsManifold I ∞ M]
-    (V : Varifold M) : Prop :=
-  ∀ φ : M → ℝ, Function.support φ ⊆ (sing I V)ᶜ →
-    0 ≤ secondVariation I V φ
+-- `IsStable` (paper §4 Def 4.1 (S2)) was moved to
+-- `GeometricMeasureTheory/Stable.lean` as a GMT-level concept (Phase 1.5
+-- Commit D). It is re-imported here unchanged; downstream usage is
+-- unaffected.
 
 /-- The varifold has an **$\alpha$-junction at $Z$**: there exists
 $\rho > 0$ such that $\mathrm{spt}\|V\| \cap B_\rho(Z)$ equals a finite
