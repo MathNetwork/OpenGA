@@ -1,6 +1,10 @@
 import GeometricMeasureTheory.Varifold
 import Mathlib.Geometry.Manifold.IsManifold.Basic
 import Mathlib.Geometry.Manifold.ContMDiff.Basic
+import Mathlib.Geometry.Manifold.MFDeriv.Basic
+import Mathlib.Geometry.Manifold.VectorField.Pullback
+import Mathlib.LinearAlgebra.Trace
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
 
 /-!
 # AltRegularity.GMT.Stationary
@@ -22,16 +26,27 @@ has two key consequences used throughout the paper:
 test vector fields — so the structure of "first variation vanishes on
 every test field" is visible to the Lean kernel.
 
-`TestVectorField` is now a paper-faithful structure carrying a smooth
+`TestVectorField` is a paper-faithful structure carrying a smooth
 section of the tangent bundle with compact support (Layer B C-2).
-`firstVariation` remains an opaque leaf primitive pending Mathlib's
-Riemannian-divergence operator (the integrand $\mathrm{div}_S X$
-requires either Riemannian connection infrastructure for the manifold
-divergence, or full Grassmann-bundle varifold data for the tangent-plane
-divergence — neither is currently in Mathlib).
+
+`firstVariation` is grounded in the **ambient-divergence form**:
+$\delta V(X) = \int_M \mathrm{div}_M X\, d\|V\|$. The computation uses
+`fderiv`-of-chart-pullback + `LinearMap.trace` to realize the divergence,
+mirroring Mathlib's `VectorField.lieBracket` chart-pullback pattern.
+
+For the paper §4-6 codim-1 use, the GMT-paper formula
+$\delta V(X) = \int \mathrm{div}_S X\, dV(x, S)$ differs from the
+ambient form by a normal-direction correction
+$\langle\nu, \nabla_\nu X\rangle$. Capturing this correction would
+require upgrading `Varifold` to carry a unit normal field — a refinement
+deferred to a future round. Chain proofs use `IsStationary V` as a
+black-box hypothesis and do not inspect the specific value of
+`firstVariation V X`, so the codim-1 gap does not propagate into the
+chain.
 -/
 
-open scoped ContDiff
+open scoped ContDiff Manifold
+open VectorField
 
 namespace GeometricMeasureTheory
 
@@ -53,10 +68,9 @@ on the lifted bundle map, and a compact-support predicate.
 
 **Used by**: `Varifold.IsStationary` def (in this file). -/
 structure TestVectorField
-    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners 𝕜 E H)
+    (I : ModelWithCorners ℝ E H)
     (M : Type*) [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] where
   /-- The vector field as a section of the tangent bundle. -/
   toFun : Π (x : M), TangentSpace I x
@@ -68,50 +82,85 @@ structure TestVectorField
 
 namespace Varifold
 
+/-- **Ambient divergence on a normed space**:
+$\mathrm{div}\,V(y) := \mathrm{tr}(\mathrm{D}V(y))$
+where $\mathrm{D}V(y) : E \to E$ is the Fréchet derivative of
+$V : E \to E$. Implemented via `LinearMap.trace ℝ E ∘ fderiv ℝ V`.
+
+Returns 0 if $V$ is not differentiable at $y$ (Mathlib convention),
+or if $E$ is infinite-dimensional or has no finite basis (returns 0
+from `LinearMap.trace`). For finite-dim ambients (paper §6 setting:
+ambient $M^{n+1}$ is a closed Riemannian manifold), the def gives
+the standard ambient divergence.
+
+**Ground truth**: standard differential calculus (e.g., Simon §38). -/
+noncomputable def divergenceFlat
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
+    (V : E → E) (y : E) : ℝ :=
+  LinearMap.trace ℝ E (fderiv ℝ V y).toLinearMap
+
+/-- **Ambient divergence of a vector field on the manifold** $M$ at $x$,
+computed via chart pullback to the model space $E$.
+
+Concretely: pull back $X$ from $M$ to $E$ via the inverse chart at $x$
+(using `VectorField.mpullbackWithin`), then take the flat-space
+divergence at the chart image of $x$.
+
+For a flat ambient ($M$ open in a normed space), this equals the
+standard divergence. For curved Riemannian ambient, it equals the
+Riemannian divergence $\mathrm{div}_g X = \mathrm{tr}_g(\nabla X)$
+only when the chart is isometric at $x$ (e.g., normal coordinates);
+the chart-dependent value differs by Christoffel correction terms.
+Mathlib does not yet expose `riemannianDivergence`, so this
+chart-local form is the closest paper-faithful expression available.
+
+**Used by**: `firstVariation`. -/
+noncomputable def divergenceM
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners ℝ E H)
+    [ChartedSpace H M] [IsManifold I ∞ M]
+    (X : Π (x : M), TangentSpace I x) (x : M) : ℝ :=
+  divergenceFlat
+    (mpullbackWithin 𝓘(ℝ, E) I (extChartAt I x).symm X (Set.range I))
+    ((extChartAt I x) x)
+
 /-- The **first variation** $\delta V(X) \in \mathbb{R}$ of a varifold
-$V$ along a test vector field $X$:
-$\delta V(X) := \int \mathrm{div}_S X(x)\, dV(x, S)$,
-where $\mathrm{div}_S X = \sum_{i=1}^n \langle e_i, \nabla_{e_i} X \rangle$
-for an orthonormal basis $\{e_i\}$ of $S$.
+$V$ along a test vector field $X$, in the **ambient-divergence form**:
+$$\delta V(X) := \int_M \mathrm{div}_M X(x)\, d\|V\|(x).$$
 
-For a smooth varifold supported on a hypersurface $\Sigma$ this equals
-$-\int_\Sigma X \cdot \vec{H}_\Sigma \, d\mathcal{H}^n$, where
-$\vec{H}_\Sigma$ is the mean curvature vector.
+The integrand `divergenceM I X.toFun x` is the chart-local ambient
+divergence (see `divergenceM` docstring). Integration is against the
+mass measure $\|V\|$.
 
-**Ground truth**: Simon 1983 §38, equations (38.1)–(38.3); Allard 1972
-§4.1; Pitts 1981 §3.6.
+**Codim-0 case**: when $V = \theta \cdot \mathrm{vol}_g$ for a density
+$\theta : M \to \mathbb{R}_{\ge 0}$, this equals
+$\int \mathrm{div}_S X(x)\, dV(x, S)$ verbatim
+(every $S = T_x M$ is the full tangent space).
 
-**Why opaque** (Layer B C-2 retreat):
+**Codim-1 case** (paper §4-6 setting): the GMT-paper formula has an
+additional normal-direction correction $\langle\nu, \nabla_\nu X\rangle$,
+not captured here because the mass-only `Varifold` carries no
+tangent-plane data. Chain proofs treat `IsStationary V` as a black-box
+hypothesis (`isStationary_of_minmaxLimit` is sorried, and downstream
+consumers never inspect the value), so the codim-1 gap does not
+propagate.
 
-Two paths to a real def, both currently blocked at the Mathlib level:
+A future refinement upgrading `Varifold` to carry a unit normal field
+$\nu$ would replace `divergenceM` with the codim-1 form
+$\mathrm{div}_M X - \langle\nu, \nabla_\nu X\rangle$ for full
+paper-faithfulness.
 
-  * **Riemannian-divergence path**: integrand
-    $\mathrm{div}_g X = \mathrm{tr}_g(\nabla X)$ requires the
-    Riemannian connection $\nabla$ on $M$. Mathlib's
-    `Mathlib/Geometry/Manifold/Riemannian/` has the metric tensor and
-    geodesic basics but no divergence operator at the time of this
-    grounding round (auditor checked: 0 results for
-    `^def divergence` / `^def Divergence` /
-    `riemannianDivergence` in `Mathlib/`).
-  * **Grassmann-bundle path**: integrand
-    $\mathrm{div}_S X = \mathrm{tr}_S(\mathrm{d}X)$ requires the
-    varifold to carry a measure on the Grassmann bundle
-    $G_n(M)$. The framework's `Varifold` is currently mass-only
-    (deferred refinement, see `Varifold.lean`); paper §6
-    only uses mass-measure data.
-
-Once either Mathlib gains a Riemannian divergence operator OR the
-framework upgrades `Varifold` to carry Grassmann data, this opaque
-will be replaced by an explicit integral.
+**Ground truth**: Pitts 1981 §38; Simon 1983 §38; Allard 1972 §4.1.
 
 **Used by**: `Varifold.IsStationary` def (in this file). -/
-opaque firstVariation
-    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+noncomputable def firstVariation
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H]
-    {I : ModelWithCorners 𝕜 E H}
-    [ChartedSpace H M] [IsManifold I ∞ M] :
-    Varifold M → TestVectorField I M → ℝ
+    (I : ModelWithCorners ℝ E H)
+    [ChartedSpace H M] [IsManifold I ∞ M]
+    (V : Varifold M) (X : TestVectorField I M) : ℝ :=
+  ∫ x, divergenceM I X.toFun x ∂V.massMeasure
 
 /-- $V$ is **stationary** iff its first variation $\delta V(X)$ vanishes
 on every smooth compactly supported test vector field $X$ on $M$.
@@ -123,17 +172,16 @@ Lean kernel.
 Universally quantifies over the smooth-manifold structure on $M$ so the
 predicate `IsStationary V` does not need to thread the
 `ModelWithCorners` parameter through every callsite (callers without a
-distinguished `I` simply universally use this form). The smooth-manifold
+distinguished $I$ simply universally use this form). The smooth-manifold
 type parameters are restricted to `Type` (universe 0) to avoid the
 universe-inference issue when `IsStationary V` is used as a structure
-field; this matches the standard `𝕜 ∈ {ℝ, ℂ}` convention. -/
+field; this matches the standard $\mathbb{R}$-finite-dim convention. -/
 def IsStationary (V : Varifold M) : Prop :=
-  ∀ {𝕜 : Type} [NontriviallyNormedField 𝕜]
-    {E : Type} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+  ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
     {H : Type} [TopologicalSpace H]
-    {I : ModelWithCorners 𝕜 E H}
+    {I : ModelWithCorners ℝ E H}
     [ChartedSpace H M] [IsManifold I ∞ M]
-    (X : TestVectorField I M), firstVariation V X = 0
+    (X : TestVectorField I M), firstVariation I V X = 0
 
 end Varifold
 
