@@ -228,41 +228,85 @@ theorem dlt_criterion
 
 ## 5. CLS22 Theorem 2.2 → `exists_nonExcessive_ONVP`
 
-**Lean signature**: `AltRegularity/Sweepout/NonExcessive.lean:145`
+**Lean signature** (after Round 5 Item 2 strict-alignment):
+`AltRegularity/Sweepout/NonExcessive.lean:163`
 
 ```lean
 theorem exists_nonExcessive_ONVP (M : Type*)
-    [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [CompactSpace M] :
+    [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [CompactSpace M]
+    (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6) :
     ∃ Φ : Sweepout M, NonExcessive Φ ∧ ONVP Φ ∧ 0 < width Φ
 ```
 
 **Cited paper**:
-- File: `arXiv-sources/CLS22-Chodosh-Liokumovich-Spolaor/main.tex`
-- Reference: CLS22, Theorem 2.2
+- File: `arXiv-sources/CLS22-Chodosh-Liokumovich-Spolaor/main.tex:1096-1098`
+- Reference: [CLS22, Theorem `c:non-excessive_minmax`] (numbered "Theorem 2.2"
+  in the paper's bib citation, located in CLS22 §2)
+- Ambient setup: CLS22 §2 line 732 — `(M^{n+1}, g)` closed Riemannian
+  manifold, Vol(M, g) = 1 by scaling; **no dimension restriction in the
+  theorem statement itself**.
 
 **Paper §3 phrasing** (`paper/chapters/part2/3-sweepouts.tex:230-232`):
 
-> [Theorem~thm:non-excessive-existence] Let $(M^{n+1},g)$ be a closed
-> Riemannian manifold with $2\leq n\leq 6$. There exists an (ONVP) sweepout
-> $\Psi$ such that every $x\in \mathfrak{m}_L(\Psi)$ is not left excessive
-> and every $x \in \mathfrak{m}_R(\Psi)$ is not right excessive.
+> Let $(M^{n+1},g)$ be a closed Riemannian manifold with $2 \le n \le 6$.
+> There exists an (ONVP) sweepout $\Psi$ such that every
+> $x \in \mathfrak{m}_L(\Psi)$ is not left excessive and every
+> $x \in \mathfrak{m}_R(\Psi)$ is not right excessive.
 
-**Original statement** (CLS22, Theorem 2.2):
+**Original statement** (CLS22 §2 Theorem `c:non-excessive_minmax`,
+verbatim from `main.tex:1096-1098`):
 
-[TODO: read `CLS22 main.tex` and fill]
+> There exists a (ONVP) sweepout $\Psi$ such that every
+> $x \in \mathfrak{m}_L(\Psi)$ is not left excessive and every
+> $x \in \mathfrak{m}_R(\Psi)$ is not right excessive.
 
 **Alignment check**:
 
-| Component | Lean | Paper §3 | Cited original | Status |
+| Component | Lean (post-strict) | Paper §3 phrase | CLS22 original | Status |
 |---|---|---|---|---|
-| dim hypothesis | `[CompactSpace M]` | $2 \le n \le 6$ | TODO | 🟡 |
-| ONVP | `ONVP Φ` | "(ONVP) sweepout" | TODO | 🟡 |
-| Non-excessive (one-sided form) | `NonExcessive Φ` (combined L+R) | $\mathfrak{m}_L$ not left + $\mathfrak{m}_R$ not right | TODO | 🟡 |
-| Width > 0 | `0 < width Φ` | implicit | TODO | 🟡 |
+| Ambient | `[MetricSpace M] [BorelSpace M] [CompactSpace M]` | $(M^{n+1}, g)$ closed Riemannian | $(M^{n+1}, g)$ closed Riemannian, Vol = 1 | 🟡 (smooth-Riemannian via metric proxy; OK) |
+| Dim hypothesis | `(n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6)` ✓ | $2 \le n \le 6$ ✓ | NONE (paper-added) | ✓ aligned with paper |
+| ONVP | `ONVP Φ` ✓ | "(ONVP) sweepout" ✓ | "(ONVP) sweepout" ✓ | ✓ |
+| Non-excessive form | `NonExcessive Φ` = `∀ t crit, ¬ Excessive` (unified) | left/right separated | left/right separated | ⚠ **Lean is strictly stronger** |
+| Width > 0 | `0 < width Φ` (in conclusion) | implicit (DLT13 Prop 0.5 cited at Def 3.1) | implicit | ⚠ Lean adds explicit; paper/CLS22 implicit via isoperimetric. Acceptable. |
 
-**Hidden gap candidate**: paper §3 phrases non-excessive as a left/right separation; framework's `NonExcessive` is the unified `∀ t crit → ¬ Excessive`. Verify equivalence holds at the cited-paper level.
+**Findings**:
 
-**Status**: 🔴
+1. **Paper adds 2 ≤ n ≤ 6**: CLS22's existence theorem `c:non-excessive_minmax`
+   does **not** restrict the dimension `n`; paper §3 adds `2 ≤ n ≤ 6` because
+   downstream regularity needs it. Lean signature now mirrors paper.
+   ✓ **Aligned.**
+
+2. **NonExcessive form mismatch** ⚠ : CLS22 / paper §3 state the conclusion
+   as the left/right separated form (`m_L ∋ x ⇒ x not left-excessive` AND
+   `m_R ∋ x ⇒ x not right-excessive`). The framework's `Sweepout.NonExcessive`
+   def is the unified form `∀ t, Critical t → ¬ ExcessiveAt t`, which is
+   **strictly stronger** at points in `m_L \ m_R` and `m_R \ m_L` (paper
+   Remark 3.5 / Figure 3.4). The chain proof currently uses
+   `non_excessive_def` (the unified form) — weakening to the left/right form
+   would force the chain to dispatch on left vs right criticality.
+
+   **Tightening note for future round**: introduce
+   `Sweepout.NonExcessiveStrict` (left/right separated form) matching CLS22
+   verbatim, derive the unified form as a strictly stronger version
+   (acceptable for chain proofs), and have `exists_nonExcessive_ONVP`
+   produce the strict form. The chain would then either weaken its
+   hypothesis or split by side. Not blocking; documented here.
+
+3. **Width > 0 explicit** ⚠ : CLS22 doesn't state `W > 0` as part of the
+   theorem; it follows from isoperimetric (DLT13 Prop 0.5). Lean keeps
+   `0 < width Φ` in the conclusion as a convenience output. Acceptable.
+
+**Hidden gap caught**: same as Round 5 Item 1 — paper's `2 ≤ n ≤ 6` was
+implicit in the framework, now threaded through `exists_nonExcessive_ONVP`
+and propagated to `exists_smoothMinimalHypersurface_via_ONVP`.
+
+**Chain break**: Yes, `MinMaxExistence.lean:90` (`exists_smoothMinimalHypersurface_via_ONVP`).
+Fixed by passing `n hn hn6` through (already in scope from Round 5 Item 1).
+
+**Status**: 🟡 (aligned to paper §3 verbatim and CLS22 modulo NonExcessive
+form mismatch documented above; will become 🟢 when NonExcessive form
+mismatch is resolved by introducing the strict form alongside)
 
 ---
 

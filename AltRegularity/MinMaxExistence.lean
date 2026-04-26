@@ -86,8 +86,9 @@ theorem exists_smoothMinimalHypersurface_via_ONVP
        (Sweepout.MassCancellation Φ t₀ ∧
           ((∀ p, SweepoutWideReplacement Φ t₀ V p) →
             Varifold.IsSmoothMinimalHypersurface V))) := by
-  -- (1) CLS22 Theorem 2.2: get a non-excessive ONVP sweepout.
-  obtain ⟨Φ, hne, honvp, hW⟩ := Sweepout.exists_nonExcessive_ONVP M
+  -- (1) CLS22 Theorem 2.2 (paper §3 thm:non-excessive-existence):
+  -- get a non-excessive ONVP sweepout, using paper's 2 ≤ n ≤ 6 hypothesis.
+  obtain ⟨Φ, hne, honvp, hW⟩ := Sweepout.exists_nonExcessive_ONVP M n hn hn6
   -- (2) Pull-tight: get a critical parameter t₀ and varifold limit V.
   obtain ⟨t₀, V, hcrit, hlim⟩ := Sweepout.exists_minmaxLimit hne honvp hW
   -- (3) Dichotomy on mass cancellation.

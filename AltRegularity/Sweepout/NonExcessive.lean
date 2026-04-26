@@ -132,18 +132,38 @@ theorem ireplacement_to_excessive {Φ : Sweepout M} {t₀ : ℝ}
 
 /-! ## CLS22 existence theorem -/
 
-/-- **Existence of non-excessive ONVP sweepouts ([CLS22, Theorem 2.2]).**
+/-- **Existence of non-excessive ONVP sweepouts**
+(paper §3 Theorem~\ref{thm:non-excessive-existence}, citing
+[CLS22, Theorem~\ref{c:non-excessive_minmax}]).
 
-For a closed Riemannian manifold $(M, g)$ of dimension $n+1$ with
-$2 \le n \le 6$, there exists an ONVP sweepout $\Phi$ that is non-excessive
-in the sense of Definition 3.4, with strictly positive width $W(\Phi) > 0$.
+Paper §3 phrasing (verbatim):
 
-This is the foundational existence result of the CLS22 framework, cited as
-a black box. The proof in [CLS22] uses Almgren's discrete-to-continuous
-sweepout argument plus a tightening procedure that establishes the
-non-excessive property at every critical parameter. -/
+> Let $(M^{n+1},g)$ be a closed Riemannian manifold with $2 \le n \le 6$.
+> There exists an (ONVP) sweepout $\Psi$ such that every
+> $x \in \mathfrak{m}_L(\Psi)$ is not left excessive and every
+> $x \in \mathfrak{m}_R(\Psi)$ is not right excessive.
+
+CLS22 phrasing of the same theorem:
+
+> There exists a (ONVP) sweepout $\Psi$ such that every
+> $x \in \mathfrak{m}_L(\Psi)$ is not left excessive and every
+> $x \in \mathfrak{m}_R(\Psi)$ is not right excessive.
+
+(CLS22 omits the "$2 \le n \le 6$" hypothesis — paper §3 adds it because
+downstream regularity arguments require it.)
+
+The strictly positive width $W(\Phi) > 0$ in the conclusion is from
+isoperimetric inequality [DLT13, Proposition 0.5], cited in paper §3
+Definition~\ref{def:p2-sweepout}.
+
+**Note on `NonExcessive` form**: this theorem returns the framework's
+unified `NonExcessive Φ` (`∀ t, Critical → ¬ ExcessiveAt`), which is
+strictly stronger than CLS22's left/right separated form
+(`m_L not left-excessive ∧ m_R not right-excessive`). See
+`references/cite_verification.md` Item 5 for tightening notes. -/
 theorem exists_nonExcessive_ONVP (M : Type*)
-    [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [CompactSpace M] :
+    [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [CompactSpace M]
+    (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6) :
     ∃ Φ : Sweepout M, NonExcessive Φ ∧ ONVP Φ ∧ 0 < width Φ := by sorry
 
 end Sweepout
