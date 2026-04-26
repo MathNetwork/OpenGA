@@ -98,11 +98,30 @@ cones, classification of tangent cones); Wickramasekera 2014 §3
 (Sheeting Theorem and Minimum Distance Theorem give the equivalence
 with the $\alpha$-structural hypothesis).
 
-Encoded as an opaque leaf primitive pending Mathlib's
-half-hyperplane / cone infrastructure. Lives in `Regularity` rather
-than `GeometricMeasureTheory` because the junction-cone configuration
-is regularity-theory-specific (Wickramasekera α-structural), not a
-general GMT primitive.
+**Why opaque** (Layer B C-7 retreat):
+
+The cone classification is paper-faithful in pure linear-algebra terms
+on the model normed space $E$ (no Riemannian curvature needed):
+half-hyperplanes are subsets $\{v \in V \mid f(v) \ge 0\}$ where $V$
+is a codim-1 subspace of $E$ and $f \in V^*$ has kernel equal to the
+$(n-1)$-dim edge subspace; the stationary balance condition is the
+linear identity $\sum_j m_j \nu_j = 0$ on the outward conormals
+$\nu_j \in E$.
+
+The grounding blocker is the **representation gap**: `tangentCone V Z`
+returns a `Varifold M` (not a `Varifold E` on the model normed space),
+so `IsJunctionCone` must transport the cone-on-$E$ classification back
+to $M$ via the chart at $Z$. This requires either:
+  * upgrading `tangentCone` to return a `Varifold E` (changing the
+    chain-proof signature), OR
+  * defining `IsJunctionCone (T : Varifold M)` via "there exists a
+    chart in which $T$ pushes forward to a junction cone on $E$" —
+    requires `tangentCone` ground first, plus chart-pushforward
+    machinery (~150 LOC).
+
+Lives in `Regularity` rather than `GeometricMeasureTheory` because the
+junction-cone configuration is regularity-theory-specific (Wickramasekera
+$\alpha$-structural), not a general GMT primitive.
 
 **Used by**: `Varifold.HasJunction` def (in this file). -/
 opaque IsJunctionCone : Varifold M → Prop
