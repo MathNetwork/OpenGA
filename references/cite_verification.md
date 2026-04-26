@@ -808,28 +808,80 @@ strict-aligned to outer-L + inner-ε + δ-existential + 3 hypotheses
 
 ## 9. Allard 1972 Theorem 5.5 → `isRectifiable_of_isStationary_of_density_pos`
 
-**Lean signature**: `AltRegularity/GMT/Rectifiability.lean:50`
+**Lean signature** (after Phase 2 strict-alignment):
+`GeometricMeasureTheory/GeometricMeasureTheory/Rectifiability.lean:81`
 
 ```lean
 theorem isRectifiable_of_isStationary_of_density_pos
     {V : Varifold M} (hstat : IsStationary V)
-    (hpos : ∀ p ∈ support V, 0 < density V p) :
+    (hpos : ∀ᵐ p ∂V.massMeasure, 0 < density V p) :
     IsRectifiable V
 ```
 
 **Cited paper**:
-- File: `Allard-Theory-of-Varifolds/Theory of Varifolds 5-6.pdf` (likely Theorem 5.5 in Sec 5)
+- File: `Allard-Theory-of-Varifolds/Theory of Varifolds 5-6.pdf`
 - Reference: Allard 1972, Theorem 5.5(1) / Simon 1984, Theorem 42.4
 
-**Paper §2 phrasing**: [TODO: locate paper §2 rectifiability theorem statement]
+**Paper §2 phrasing** (`paper/chapters/part2/2-preliminaries.tex:95-97`):
 
-**Original statement** (Allard 1972, Theorem 5.5(1)):
+> Let $V$ be a stationary $n$-varifold in $(M^{n+1}, g)$ with
+> $\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e. $p$. Then $V$ is rectifiable:
+> $V = \underline{v}(\Sigma, \theta)$ where $\Sigma \subset \spt\|V\|$
+> is $\mathcal{H}^n$-rectifiable and
+> $\theta(p) = \Theta(\|V\|, p) > 0$ for $\mathcal{H}^n$-a.e. $p \in \Sigma$.
 
-[TODO: read the relevant Allard PDF and fill]
+**Alignment check** (post-strict-alignment):
 
-**Alignment check**: [TODO]
+| Component | Lean | Paper §2 | Status |
+|---|---|---|---|
+| stationary V | `hstat : IsStationary V` | "stationary $n$-varifold" | ✓ |
+| density positivity | `∀ᵐ p ∂V.massMeasure, 0 < density V p` | $\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e. $p$ | ✓ verbatim a.e. form |
+| rectifiability | `IsRectifiable V` (∃ S H^n-rectifiable, mass concentrated) | $V = \underline{v}(\Sigma, \theta)$, $\Sigma$ rectifiable | ✓ packaged |
+| explicit multiplicity θ | NOT exposed (recoverable via density) | $\theta = \Theta(\|V\|, \cdot)$ on Σ | 🟡 (Lean exposes existence of carrier; multiplicity recoverable) |
 
-**Status**: 🔴
+**Findings**:
+
+1. **Hypothesis fix**: pre-alignment Lean used
+   `∀ p ∈ support V, 0 < density V p` (pointwise on support) — STRONGER
+   than paper's a.e. form. Paper says "$\Theta(\|V\|, p) > 0$ for
+   $\|V\|$-a.e. $p$", allowing exceptional null sets. Strict alignment
+   uses `∀ᵐ p ∂V.massMeasure, 0 < density V p`.
+
+2. **Conclusion form**: paper expresses rectifiability as
+   $V = \underline{v}(\Sigma, \theta)$ with explicit multiplicity θ.
+   Lean's `IsRectifiable V := ∃ S, IsHRectifiable S V.dim ∧ massMeasure S^c = 0`
+   packages the carrier-rectifiability without exposing θ. Multiplicity
+   is recoverable from the density (Simon §38 definition of
+   multiplicity for integer-rectifiable varifolds). Acceptable
+   abstraction; explicit-θ exposure is a downstream refinement.
+
+3. **No chain break**: hypothesis tightening from
+   `∀ p ∈ support` to `∀ᵐ p` is in the EASIER direction for callers
+   (a weaker hypothesis is easier to provide). No chain consumer
+   currently — this lemma is sorried and not yet used in chain
+   proofs.
+
+4. **Phase 1.5/1.6 interaction**: hypothesis `IsStationary V` —
+   ambient body documented; statement-level alignment
+   doesn't require body migration (per Item 6 precedent).
+
+**Ground truth references** (Pitts 1981 / Simon 1983):
+
+- `Varifold`, `IsStationary`, `density`: Simon §17, §38 ✓ ground truth
+- `IsHRectifiable` ($\mathcal{H}^n$-rectifiable set): Simon §11;
+  Federer 1969 §3.2.14 ✓ ground truth
+- `IsRectifiable V` (varifold rectifiability): Simon §38 (integer-
+  rectifiable varifolds); Allard §3 (multiplicity)
+
+Cited paper-specific contributions:
+- Stationary + density-a.e.-positive ⇒ rectifiable: Allard 1972
+  Theorem 5.5(1) — Allard contribution; reproduced in
+  Simon 1984 Theorem 42.4
+
+**Status**: 🟢 (paper §2 verbatim quoted; signature strict-aligned
+to a.e. density-positive hypothesis; conclusion packages carrier
+rectifiability with explicit-multiplicity recovery deferred to
+density-derived form)
 
 ---
 

@@ -57,12 +57,31 @@ with $\|V\|(S^c) = 0$, using the varifold's intrinsic dimension
 def IsRectifiable (V : Varifold M) : Prop :=
   ∃ S : Set M, IsHRectifiable S V.dim ∧ V.massMeasure Sᶜ = 0
 
-/-- **Rectifiability theorem (Proposition 2.12).**
-A stationary varifold with positive density $\|V\|$-a.e. on its support
-is rectifiable. -/
+/-- **Rectifiability theorem** ([Allard 1972, Theorem 5.5(1)];
+[Simon 1984, Theorem 42.4]; reproduced as paper §2 Proposition
+`prop:allard-rectifiability`).
+
+Verbatim paper §2 statement (`paper/chapters/part2/2-preliminaries.tex:96`):
+> Let $V$ be a stationary $n$-varifold in $(M^{n+1}, g)$ with
+> $\Theta(\|V\|, p) > 0$ for $\|V\|$-a.e. $p$. Then $V$ is rectifiable:
+> $V = \underline{v}(\Sigma, \theta)$ where $\Sigma \subset \spt\|V\|$
+> is $\mathcal{H}^n$-rectifiable and
+> $\theta(p) = \Theta(\|V\|, p) > 0$ for $\mathcal{H}^n$-a.e. $p \in \Sigma$.
+
+The Lean signature uses the **a.e.-density-positive** hypothesis
+(`∀ᵐ p ∂V.massMeasure, 0 < density V p`), matching paper §2 verbatim.
+The conclusion `IsRectifiable V` packages the existence of a
+$\mathcal{H}^n$-rectifiable carrier $\Sigma$ with $V$-mass concentrated
+on it; the explicit multiplicity $\theta = \Theta(\|V\|, \cdot)$ is
+recoverable from the carrier via the density (definition of
+multiplicity for integer-rectifiable varifolds, Simon §38).
+
+**Used by**: `integrality_with_cancellation` (paper §6.1 Theorem 6.3
+case (b), via positive-density hypothesis from
+`positiveDensity_of_sweepoutWideReplacement`). -/
 theorem isRectifiable_of_isStationary_of_density_pos
     {V : Varifold M} (hstat : IsStationary V)
-    (hpos : ∀ p ∈ support V, 0 < density V p) :
+    (hpos : ∀ᵐ p ∂V.massMeasure, 0 < density V p) :
     IsRectifiable V := by sorry
 
 end Varifold
