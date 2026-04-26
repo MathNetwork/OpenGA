@@ -2,6 +2,8 @@ import GeometricMeasureTheory.Varifold
 import GeometricMeasureTheory.TangentCone
 import Mathlib.Geometry.Manifold.IsManifold.Basic
 import Mathlib.Geometry.Manifold.ContMDiff.Basic
+import Mathlib.Topology.VectorBundle.Riemannian
+import Riemannian.InnerProductBridge
 
 /-!
 # AltRegularity.GMT.HasNormal
@@ -95,27 +97,71 @@ class HasNormal
   /-- The unit normal field $\nu(x) \in T_xM$ at each point of $M$. -/
   unitNormal : (x : M) → TangentSpace I x
 
-/-- **Existence axiom for the BV-gradient unit normal direction** of a
-finite-perimeter set on a smooth manifold $M$.
+/-- **Existence axiom for the BV-gradient unit normal direction**
+([Maggi 2012, Definition 15.1, Theorem 15.5]; De Giorgi 1955).
 
-For any finite-perimeter set $\Omega$ on a smooth manifold $M$, there
+For a finite-perimeter set $\Omega$ on a smooth manifold $M$, there
 exists a section $\nu_\Omega : (x : M) \to T_xM$ representing the
-direction of the BV gradient $D\chi_\Omega / |D\chi_\Omega|$ on the
-reduced boundary $\partial^*\Omega$.
+direction of the BV gradient $D\chi_\Omega / |D\chi_\Omega|$, satisfying
+the **unit-norm property** on the reduced boundary:
+$\|\nu_\Omega(x)\| = 1$ for $x \in \partial^*\Omega$.
 
-**Sorry status**: PRE-PAPER. Repair plan: when Mathlib exposes a BV
-gradient operator on charted manifolds (or when framework opts to
-inline the De Giorgi structure theorem, ~80 LOC), replace the
-`Classical.choose` with the explicit BV-gradient direction. -/
+The direction is paper-faithfully defined by the blow-up limit
+$\nu_\Omega(x) = \lim_{r \to 0^+} D\chi_\Omega(B_r(x)) / |D\chi_\Omega(B_r(x))|$,
+which converges $|D\chi_\Omega|$-a.e. to a unit vector by the De Giorgi
+structure theorem.
+
+**Sorry status**: PRE-PAPER. Repair plan: replace `Classical.choose`
+body with the constructive blow-up limit when Mathlib's BV
+infrastructure on charted manifolds matures, or via framework
+self-build of the De Giorgi blow-up (~80 LOC). The unit-norm
+property is preserved by the explicit construction. -/
 theorem ofBoundary_unitNormal_exists
-    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners 𝕜 E H)
+    (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
+    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
     (Ω : FinitePerimeter M) :
-    ∃ _ν : (x : M) → TangentSpace I x, True :=
-  ⟨fun _ => 0, trivial⟩
+    ∃ ν : (x : M) → TangentSpace I x,
+      ∀ x ∈ FinitePerimeter.reducedBoundary Ω, ‖ν x‖ = 1 := by
+  sorry
+
+/-- The **BV gradient direction** $\nu_\Omega(x) \in T_xM$ — the outer
+unit normal to the reduced boundary $\partial^*\Omega$, defined paper-
+faithfully via the blow-up limit
+$\nu_\Omega(x) = \lim_{r \to 0^+} D\chi_\Omega(B_r(x)) / |D\chi_\Omega(B_r(x))|$.
+
+Real `noncomputable def` via `Classical.choose` over the De Giorgi
+existence axiom (`ofBoundary_unitNormal_exists`).
+
+**Ground truth**: Maggi 2012 Definition 15.1; De Giorgi 1955.
+
+**Used by**: `instHasNormalOfBoundary` (codim-1 normal field on
+boundary varifolds). -/
+noncomputable def bvGradientDirection
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners ℝ E H)
+    [ChartedSpace H M] [IsManifold I ∞ M]
+    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+    (Ω : FinitePerimeter M) (x : M) : TangentSpace I x :=
+  Classical.choose (ofBoundary_unitNormal_exists I Ω) x
+
+/-- **Unit norm of BV gradient direction on the reduced boundary**.
+
+For any $x \in \partial^*\Omega$, $\|\nu_\Omega(x)\| = 1$. Extracted
+from `ofBoundary_unitNormal_exists` via `Classical.choose_spec`. -/
+theorem bvGradientDirection_unit_on_reducedBoundary
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners ℝ E H)
+    [ChartedSpace H M] [IsManifold I ∞ M]
+    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+    (Ω : FinitePerimeter M) (x : M)
+    (hx : x ∈ FinitePerimeter.reducedBoundary Ω) :
+    ‖bvGradientDirection I Ω x‖ = 1 :=
+  Classical.choose_spec (ofBoundary_unitNormal_exists I Ω) x hx
 
 /-- `HasNormal` instance for `ofBoundary Ω`: the BV gradient direction
 $\nu_\Omega := D\chi_\Omega / |D\chi_\Omega|$.
@@ -123,14 +169,14 @@ $\nu_\Omega := D\chi_\Omega / |D\chi_\Omega|$.
 **Ground truth**: De Giorgi structure theorem (Maggi 2012 Ch. 15);
 Simon 1983 §27. -/
 noncomputable instance instHasNormalOfBoundary
-    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners 𝕜 E H)
+    (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
+    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
     (Ω : FinitePerimeter M) :
     HasNormal I (Varifold.ofBoundary Ω) where
-  unitNormal := Classical.choose (ofBoundary_unitNormal_exists I Ω)
+  unitNormal := bvGradientDirection I Ω
 
 /-- **Existence axiom for the tangent-cone unit normal direction.**
 
@@ -179,6 +225,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [MeasurableSpace E] [BorelSpace E]
 variable {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
+  [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
 
 noncomputable example (Ω : FinitePerimeter M) :
     Varifold.HasNormal I (Varifold.ofBoundary Ω) := inferInstance
