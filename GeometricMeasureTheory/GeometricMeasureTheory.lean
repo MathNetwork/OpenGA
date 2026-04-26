@@ -23,3 +23,4 @@ import GeometricMeasureTheory.Isoperimetric.ReducedBoundary
 import GeometricMeasureTheory.Isoperimetric.Relative
 import GeometricMeasureTheory.Isoperimetric.BVFunction
 import GeometricMeasureTheory.Isoperimetric.Coarea
+import GeometricMeasureTheory.Isoperimetric.SobolevPoincare
