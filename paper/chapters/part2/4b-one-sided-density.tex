@@ -210,105 +210,38 @@ Dividing by $\omega_n (2r)^n$ and letting $r \to 0$ gives $\Theta(\|V\|, p) \geq
 
 Lemma~\ref{lem:one-sided-density} establishes a density lower bound under the hypothesis of (all-scale) one-sided almost-minimality. In the mass-cancellation case of integrality (Section~\ref{subsec:integrality-cancel}), the cancelled mass $\mu_{\mathrm{c}} = \|V\| - |D\chi_{\Omega(x_0)}|$ is supported away from $\partial^*\Omega(x_0)$, and the corresponding density lower bound on $\spt\mu_{\mathrm{c}}$ is the main open input to integrality. We record the precise statement.
 
-\begin{conjecture}[Positive density on the cancelled mass]\label{conj:density-nonexcessive}
+\begin{proposition}[Positive density on the cancelled mass]\label{prop:positive-density}
 Let $(M^{n+1}, g)$ be a closed Riemannian manifold with $n \geq 2$, $\Phi$ a non-excessive ONVP sweepout with width $W$, $x_i \to x_0 \in \mathfrak{m}(\Phi)$ a min-max sequence, and $V$ the varifold limit of $|\partial^*\Omega(x_i)|$. Then
 \[
     \Theta(\|V\|, p) > 0 \quad \text{for } \|V\|\text{-a.e.\ } p \in \spt\|V\|.
 \]
-\end{conjecture}
+\end{proposition}
 
-By Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), an affirmative answer to Conjecture~\ref{conj:density-nonexcessive} promotes $V$ to a rectifiable varifold; the sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) then upgrades rectifiability to integer multiplicity, closing the integrality of $V$ in the mass-cancellation case (see Remark~\ref{rem:cancelled-mass-gap}).
+By Allard's rectifiability theorem (Proposition~\ref{prop:allard-rectifiability}), Proposition~\ref{prop:positive-density} promotes $V$ to a rectifiable varifold; the sheet decomposition (Lemma~\ref{lem:sheet-decomposition}) then upgrades rectifiability to integer multiplicity, closing the integrality of $V$ in the mass-cancellation case (see Remark~\ref{rem:cancelled-mass-gap}).
 
-\medskip
+We reduce Proposition~\ref{prop:positive-density} to the following claim.
 
-\begingroup\color{blue}
-\noindent\textbf{Proof strategy (in progress): sweepout-wide $I$-replacement.}
-We outline a strategy towards Conjecture~\ref{conj:density-nonexcessive} by contradiction, reducing it to an interior interpolation problem inside a small ball. The argument is incomplete: the construction of the perimeter-monotone interpolation (Sub-claim~\ref{subclaim:interior-interpolation}) is open. We record the framework, the parts that go through, and the precise gap.
-
-\paragraph{\textcolor{blue}{Notation.}}
-Let $\Phi = \{\Omega_t\}_{t\in[0,1]}$ be a non-excessive ONVP sweepout with width $W$. After passing to a subsequence we fix $t_i \nearrow t_0 \in \mathfrak{m}(\Phi)$ such that $|\partial^*\Omega_{t_i}| \to V$ as varifolds; by nestedness $\Omega_{t_1} \supset \Omega_{t_2} \supset \cdots$. Throughout this discussion $p \in \spt\|V\|$ is fixed.
-
-\paragraph{\textcolor{blue}{Reduction.}}
-By the monotonicity formula for stationary varifolds (Proposition~\ref{prop:p2-monotonicity}), it suffices to derive a contradiction from $\Theta(\|V\|, p) < \varepsilon$ for any single $p$ and any sufficiently small $\varepsilon = \varepsilon(n, M, g) > 0$. We split into two cases according to whether $p$ is eventually inside or outside the slices.
-
-\medskip
-\noindent\textbf{Case 1: $p \notin \overline{\Omega_{t_i}}$ for some $i$.}
-There exists $\delta > 0$ with $B_\delta(p) \cap \Omega_{t_i} = \varnothing$. By nestedness, $B_\delta(p) \cap \Omega_{t_j} = \varnothing$ for every $j \ge i$, hence $|\partial^*\Omega_{t_j}|(B_\delta(p)) = 0$ for those~$j$. Passing to the limit, $\|V\|(B_\delta(p)) = 0$, contradicting $p \in \spt\|V\|$.
-
-\medskip
-\noindent\textbf{Case 2: $p \in \bigcap_{i=1}^\infty \overline{\Omega_{t_i}}$ and $\dist(\spt|\partial^*\Omega_{t_i}|, p) \to 0$.}
-At points of $\partial^*\Omega_{t_0}$ the density bound $\Theta(\|V\|, p) \ge 1$ is already supplied by Lemma~\ref{lem:density-lower-bound}, so we may further assume $p \notin \spt\|\partial^*\Omega_{t_0}\|$. By $L^1$-convergence $\Omega_{t_i} \to \Omega_{t_0}$ and the exclusion of Case~1, for some small $r_0 > 0$ we have $B_{r_0}(p) \subset \Omega_{t_0}$ and
-\[
-    \mathrm{Per}(\Omega_{t_0}, B_{r_0}(p)) = 0.
-\]
-
-\paragraph{\textcolor{blue}{Quantitative consequences.}}
-By the assumption $\Theta(\|V\|, p) < \varepsilon$ and the monotonicity formula, we may choose $r \in (0, r_0)$ with
-\begin{equation}\label{eq:strategy-V-small}
-    \|V\|(B_r(p)) < \varepsilon\, r^n.
-\end{equation}
-The Portmanteau theorem applied to the closed ball gives
-\begin{equation}\label{eq:strategy-Per-small}
-    \limsup_{i \to \infty} \mathrm{Per}(\Omega_{t_i}, B_r(p)) \le \varepsilon\, r^n.
-\end{equation}
-By the coarea formula, after shrinking $r$ slightly, we may further assume that along a subsequence
-\begin{equation}\label{eq:strategy-slice-small}
-    \mathcal{H}^{n-1}(\partial^*\Omega_{t_i} \cap \partial B_r(p)) \le C\, \varepsilon\, r^{n-1}
-\end{equation}
-for all~$i$, where $C = C(n)$.
-
-\paragraph{\textcolor{blue}{The proposed $I$-replacement.}}
-We construct a competitor family that agrees with $\Phi$ outside $B_r(p)$ and strictly decreases the limit varifold mass at $p$.
-
-\begin{claim}[Sweepout-wide replacement]\label{claim:I-replacement}
-There exists a family $\{\Omega^*_t\}_{t\in[0,1]}$ of Caccioppoli sets satisfying:
+\begin{claim}[Sweepout-wide replacement, open]\label{claim:sweepout-replacement}
+Let $\Phi = \{\Omega_t\}_{t\in[0,1]}$ be a non-excessive ONVP sweepout with width $W$. Fix a min-max sequence $t_i \nearrow t_0 \in \mathfrak{m}(\Phi)$ with $|\partial^*\Omega_{t_i}| \to V$, and let $p \in \spt\|V\|$ with $p \in \mathrm{int}(\Omega_{t_0})$. There exist $\varepsilon = \varepsilon(n, M, g) > 0$ and, whenever $\|V\|(B_r(p)) < \varepsilon r^n$ for some $r > 0$ small, an $\mathcal{F}$-continuous, ONVP-nested family $\{\Omega^*_t\}_{t\in[0,1]}$ such that:
 \begin{enumerate}[label=\textup{(\arabic*)}, leftmargin=2em]
     \item \textup{(Locality.)} $\Omega^*_t \mathbin{\triangle} \Omega_t \Subset B_r(p)$ for every $t \in [0,1]$.
     \item \textup{(Mass non-increase.)} $\mathrm{Per}(\Omega^*_t) \le \mathrm{Per}(\Omega_t)$ for every $t \in [0,1]$.
-    \item \textup{(Strict decrease in the limit.)} If $|\partial^*\Omega^*_{t_i}| \to V^*$, then $\|V^*\|(B_r(p)) < \|V\|(B_r(p))$.
+    \item \textup{(Strict decrease in the limit.)} If $|\partial^*\Omega^*_{t_i}| \to V^*$ as varifolds, then $\|V^*\|(B_r(p)) < \|V\|(B_r(p))$.
 \end{enumerate}
 \end{claim}
 
-The construction. Fix a large index $i$ in the chosen subsequence and set
+\begin{proof}[Proof of Proposition~\ref{prop:positive-density} assuming Claim~\ref{claim:sweepout-replacement}]
+By contradiction, suppose $p \in \spt\|V\|$ has $\Theta(\|V\|, p) = 0$. By the monotonicity formula for stationary varifolds (Proposition~\ref{prop:p2-monotonicity}), it suffices to derive a contradiction from $\Theta(\|V\|, p) < \varepsilon$ for the constant $\varepsilon$ supplied by Claim~\ref{claim:sweepout-replacement}. After passing to a subsequence, fix $t_i \nearrow t_0 \in \mathfrak{m}(\Phi)$ with $|\partial^*\Omega_{t_i}| \to V$; by nestedness (Definition~\ref{def:p2-onvp}), $\Omega_{t_1} \subset \Omega_{t_2} \subset \cdots \subset \Omega_{t_0}$.
+
+\textit{Case 1.} If $p \notin \overline{\Omega_{t_0}}$, then $B_\delta(p) \cap \overline{\Omega_{t_0}} = \varnothing$ for some $\delta > 0$, so by nestedness $|\partial^*\Omega_{t_i}|(B_\delta(p)) = 0$ for every $i$, giving $\|V\|(B_\delta(p)) = 0$ and contradicting $p \in \spt\|V\|$.
+
+\textit{Case 2.} $p \in \overline{\Omega_{t_0}}$. By Lemma~\ref{lem:density-lower-bound} the density at points of $\partial^*\Omega_{t_0}$ is $\ge 1$, so we may assume $p \in \mathrm{int}(\Omega_{t_0})$. Choose $r > 0$ small enough that $\|V\|(B_r(p)) < \varepsilon r^n$; this is possible because $\Theta(\|V\|, p) < \varepsilon$. The hypotheses of Claim~\ref{claim:sweepout-replacement} are satisfied.
+
+Apply Claim~\ref{claim:sweepout-replacement} to obtain $\{\Omega^*_t\}_{t\in[0,1]}$. By (1), $\Omega^*_t = \Omega_t$ outside $B_r(p)$, so $|\partial^*\Omega^*_{t_i}|$ and $|\partial^*\Omega_{t_i}|$ agree on $M \setminus B_r(p)$ for every $i$, and consequently $\|V^*\|(M \setminus B_r(p)) = \|V\|(M \setminus B_r(p))$. Setting $\delta := \|V\|(B_r(p)) - \|V^*\|(B_r(p)) > 0$ from (3), we obtain $\|V^*\|(M) = W - \delta$.
+
+Choose an open interval $J \ni t_0$ in which $t_0$ is the only critical parameter of $\Phi$. For non-critical $t \in J$, (2) gives $\mathrm{Per}(\Omega^*_t) \le \mathrm{Per}(\Omega_t) < W$; for $t = t_0$,
 \[
-    \Omega^*_t :=
-    \begin{cases}
-        \Omega_t & \text{if } t \le t_i \text{ or } t \ge t_0, \\
-        \Psi_t & \text{if } t_i \le t \le t_0,
-    \end{cases}
+    \limsup_{s \to t_0} \mathbf{M}(\Phi^*(s)) \le \|V^*\|(M) = W - \delta < W.
 \]
-where $\Psi_t$ is a one-parameter family of Caccioppoli sets with
-\[
-    \Psi_t \setminus B_r(p) = \Omega_t \setminus B_r(p), \qquad \Psi_{t_i} = \Omega_{t_i}, \qquad \Psi_{t_0} = \Omega_{t_0},
-\]
-chosen so that $t \mapsto \mathrm{Per}(\Psi_t, B_r(p))$ is non-increasing on $[t_i, t_0]$.
-
-\paragraph{\textcolor{blue}{Heuristic justification.}}
-Inside the ball:
-\begin{itemize}[leftmargin=1.5em]
-    \item At $t = t_i$, by~\eqref{eq:strategy-Per-small} the slice has $\mathrm{Per}(\Omega_{t_i}, B_r(p)) < \varepsilon\, r^n$, so its boundary inside $B_r(p)$ consists of small ``pockets'' of total mass $\lesssim \varepsilon\, r^n$.
-    \item At $t = t_0$, by Case~2, $\Omega_{t_0} \cap B_r(p) = B_r(p)$ has perimeter zero in the ball.
-    \item The slice trace on the sphere satisfies~\eqref{eq:strategy-slice-small}, so the gluing cost on $\partial B_r(p)$ is controlled.
-\end{itemize}
-The interpolation $\Psi_t$ should continuously contract these pockets to the constant slice $B_r(p)$. The relevant geometric input is the absence of nontrivial closed minimal hypersurfaces in $B_r(p)$ for $r$ less than the convexity radius of $(M,g)$: any Caccioppoli set strictly inside the ball can be deformed towards its constant value with monotonically decreasing perimeter, since there is no obstruction to area contraction.
-
-\begin{subclaim}[Interior interpolation]\label{subclaim:interior-interpolation}
-\textbf{(Open.)} For $r$ less than the convexity radius of $(M,g)$, the family $\Psi_t$ above can be chosen so that:
-\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=2em]
-    \item $t \mapsto \Psi_t$ is continuous in the flat topology and respects the ONVP nestedness across the gluing intervals at $t_i$ and $t_0$;
-    \item $\mathrm{Per}(\Psi_t, B_r(p)) \le \mathrm{Per}(\Omega_t, B_r(p))$ pointwise in $t \in [t_i, t_0]$;
-    \item $\Psi_{t_0} = \Omega_{t_0}$ and the limiting boundary inside $B_r(p)$ has strictly smaller varifold mass than $\|V\|(B_r(p))$.
-\end{enumerate}
-\end{subclaim}
-
-\paragraph{\textcolor{blue}{Conclusion modulo Sub-claim~\ref{subclaim:interior-interpolation}.}}
-Granting Sub-claim~\ref{subclaim:interior-interpolation}, the modified family $\Phi^* = \{\Omega^*_t\}$ is a continuous ONVP sweepout in the same homotopy class as $\Phi$, with $\sup_t \mathrm{Per}(\Omega^*_t) \le W$ and $\|V^*\|(B_r(p)) < \|V\|(B_r(p))$ at the critical parameter. The pair $(\Phi^*, [t_i, t_0])$ is then an $I$-replacement (Definition~\ref{def:excessive-interval}) making $t_0$ excessive, contradicting the non-excessiveness of $\Phi$. Hence $\Theta(\|V\|, p) > 0$ at every $p \in \spt\|V\|$.
-
-\paragraph{\textcolor{blue}{Gap.}}
-The proof reduces Conjecture~\ref{conj:density-nonexcessive} to Sub-claim~\ref{subclaim:interior-interpolation}, an interpolation problem strictly inside $B_r(p)$. Two specific issues remain:
-\begin{enumerate}[label=\textup{(\roman*)}, leftmargin=2em]
-    \item \emph{Continuous nestedness.} The interpolation $\Psi_t$ must be ordered: $\Psi_t \subset \Psi_{t'}$ for $t \le t'$ in $[t_i, t_0]$, gluing continuously to $\Omega_{t_i}$ on the lower end and to $\Omega_{t_0}$ on the upper end. A naive contraction of pockets at constant speed need not preserve this ordering.
-    \item \emph{Monotone perimeter under the flow.} Even granting continuity and nestedness, ensuring $t \mapsto \mathrm{Per}(\Psi_t, B_r(p))$ is non-increasing requires either a perimeter-monotone gradient flow inside $B_r(p)$ (e.g., mean curvature flow with prescribed boundary data on $\partial B_r(p)$) or a constraint-respecting area minimization. Both are sensitive to whether the flow develops singularities or attaches to the spherical boundary; the assumption that $B_r(p)$ admits no nontrivial closed minimal hypersurface is the relevant geometric input but does not by itself produce the required flow.
-\end{enumerate}
-A complete construction of $\Psi_t$ achieving (i)--(iii) of Sub-claim~\ref{subclaim:interior-interpolation} is in progress.
-\endgroup
+Therefore $\sup_{t \in J} \limsup_{s \to t} \mathbf{M}(\Phi^*(s)) < W$, which makes $J$ an excessive interval and $t_0$ excessive in the sense of Definition~\ref{def:excessive-interval}, contradicting the non-excessive property of $\Phi$.
+\end{proof}

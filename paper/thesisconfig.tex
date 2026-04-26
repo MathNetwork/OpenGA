@@ -19,6 +19,14 @@
 % 4) Core math / layout packages
 \usepackage[margin=1in]{geometry}
 \usepackage{mathrsfs}
+\usepackage[colorinlistoftodos,textsize=small]{todonotes}
+
+% Inline working-draft markers (remove before submission)
+% Use {\color{...} ...} so the macro arguments can span paragraphs/itemize.
+\newcommand{\GAP}[1]{{\color{red}\textbf{[GAP]} #1}}
+\newcommand{\NEED}[1]{{\color{orange}\textbf{[NEED]} #1}}
+\newcommand{\CHECK}[1]{{\color{blue}\textbf{[CHECK]} #1}}
+\newcommand{\IDEA}[1]{{\color{teal}\textbf{[IDEA]} #1}}
 \PassOptionsToPackage{english}{babel}
 \usepackage{babel}
 \usepackage{enumitem}

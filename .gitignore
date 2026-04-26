@@ -24,3 +24,7 @@ Thesis_Overleaf/
 
 # Reference papers
 resources/
+
+# Lean build artifacts (Mathlib oleans, ~7G)
+.lake/
+lake-packages/
