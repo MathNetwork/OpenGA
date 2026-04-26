@@ -4,6 +4,7 @@ import Regularity.SmoothRegularity
 import GeometricMeasureTheory
 import MinMax
 import Regularity
+import Mathlib.Geometry.Manifold.IsManifold.Basic
 
 /-!
 # AltRegularity.Regularity.StabilityVerification
@@ -51,9 +52,18 @@ kernel-verified semantics.
 namespace AltRegularity
 
 open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter Regularity Regularity.Varifold MinMax.Sweepout MinMax.Sweepout.Varifold
+open scoped ContDiff
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 namespace Varifold
+
+section Smooth
+
+variable {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+  {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+  {H : Type*} [TopologicalSpace H]
+  (I : ModelWithCorners 𝕜 E H)
+  [ChartedSpace H M] [IsManifold I ∞ M]
 
 /-! ## Local-property definitions -/
 
@@ -67,7 +77,7 @@ Defined explicitly as a universally-quantified statement so that the
 structure of "δ² ≥ 0 for all test functions on the ball away from
 singularities" is visible to the Lean kernel. -/
 def LocallyStable (V : Varifold M) (P : M) (r : ℝ) : Prop :=
-  ∀ φ : M → ℝ, Function.support φ ⊆ Metric.ball P r \ sing V →
+  ∀ φ : M → ℝ, Function.support φ ⊆ Metric.ball P r \ sing I V →
     0 ≤ secondVariation V φ
 
 /-! ## Section 6.1 input lemmas -/
@@ -86,16 +96,18 @@ supported normal deformations in $B_r(P)$. -/
 theorem locallyStable_of_oneSidedMinimizing
     {V : Varifold M}
     (h : ∀ P ∈ support V \ MinMax.Sweepout.hnm V, ∃ r > 0, OneSidedMinimizingAt V P r) :
-    ∀ P ∈ support V \ MinMax.Sweepout.hnm V, ∃ r > 0, LocallyStable V P r := by
+    ∀ P ∈ support V \ MinMax.Sweepout.hnm V, ∃ r > 0, LocallyStable I V P r := by
   sorry
 
 /-- **(e) of paper §7.1:** local stability away from an $\mathcal{H}^n$-null
 set extends to global stability via a partition-of-unity argument. -/
 theorem isStable_of_locallyStable_offNullSet
     {V : Varifold M} {N : Set M} (hNullN : N.Finite)
-    (hLocal : ∀ P ∈ support V \ N, ∃ r > 0, LocallyStable V P r) :
-    IsStable V := by
+    (hLocal : ∀ P ∈ support V \ N, ∃ r > 0, LocallyStable I V P r) :
+    IsStable I V := by
   sorry
+
+end Smooth
 
 end Varifold
 
@@ -119,11 +131,16 @@ paper §7.1's three-line proof:
 
 -/
 theorem isStable_of_nonExcessive_minmax
+    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners 𝕜 E H)
+    [ChartedSpace H M] [IsManifold I ∞ M]
     {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
     (hne : MinMax.Sweepout.NonExcessive Φ) (honvp : MinMax.Sweepout.ONVP Φ)
     (hcrit : MinMax.Sweepout.Critical Φ t₀)
     (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V) :
-    Varifold.IsStable V := by
+    Varifold.IsStable I V := by
   -- (a) hnm(V) is finite, by paper §6.1 / CLS22 propositions.
   -- Paper §6.1 explicitly notes: finiteness needs both NonExcessive
   -- AND ONVP (nestedness).
@@ -132,10 +149,10 @@ theorem isStable_of_nonExcessive_minmax
   -- (b) Off hnm(V), V is one-sided homotopic minimizing in some ball.
   have hOneSided := Varifold.oneSidedMinimizing_off_hnm hHnmFinite
   -- (c) One-sided homotopic minimization → local stability (δ²V ≥ 0).
-  have hLocallyStable := Varifold.locallyStable_of_oneSidedMinimizing hOneSided
+  have hLocallyStable := Varifold.locallyStable_of_oneSidedMinimizing (I := I) hOneSided
   -- (d) Finite ⟹ Hⁿ-null is implicit in `hHnmFinite`; (e) consumes it directly.
   -- (e) Local stability off the finite null set + partition of unity →
   -- global stability.
-  exact Varifold.isStable_of_locallyStable_offNullSet hHnmFinite hLocallyStable
+  exact Varifold.isStable_of_locallyStable_offNullSet (I := I) hHnmFinite hLocallyStable
 
 end AltRegularity

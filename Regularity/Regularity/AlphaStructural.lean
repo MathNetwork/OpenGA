@@ -1,8 +1,10 @@
 import GeometricMeasureTheory.Stationary
 import GeometricMeasureTheory.SecondVariation
 import GeometricMeasureTheory.TangentCone
+import Mathlib.Geometry.Manifold.IsManifold.Basic
 
 open GeometricMeasureTheory GeometricMeasureTheory.Varifold
+open scoped ContDiff
 
 /-!
 # AltRegularity.Regularity.AlphaStructural
@@ -55,9 +57,18 @@ $\delta^2 V(\varphi, \varphi) \ge 0$ for every smooth scalar normal
 deformation $\varphi$ compactly supported away from $\mathrm{sing}\,V$.
 
 Defined explicitly as a universally-quantified non-negativity statement
-so that its content is visible to the Lean kernel. -/
-def IsStable (V : Varifold M) : Prop :=
-  ∀ φ : M → ℝ, Function.support φ ⊆ (sing V)ᶜ →
+so that its content is visible to the Lean kernel.
+
+Carries the smooth-manifold typeclass cascade `(I : ModelWithCorners)
+[ChartedSpace H M] [IsManifold I ∞ M]` because `sing I V` requires it. -/
+def IsStable
+    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners 𝕜 E H)
+    [ChartedSpace H M] [IsManifold I ∞ M]
+    (V : Varifold M) : Prop :=
+  ∀ φ : M → ℝ, Function.support φ ⊆ (sing I V)ᶜ →
     0 ≤ secondVariation V φ
 
 /-- The varifold has an **$\alpha$-junction at $Z$**: there exists
@@ -112,24 +123,42 @@ def HasJunction (V : Varifold M) (Z : M) : Prop :=
 paper §4 Def 4.1): no singular point of $V$ admits an $\alpha$-junction.
 
 Defined explicitly as a universally-quantified negation, so the structure
-"no singular point is a junction" is visible to the Lean kernel. -/
-def AlphaStructural (V : Varifold M) (α : ℝ) : Prop :=
-  ∀ Z ∈ sing V, ¬ HasAlphaJunctionAt V Z α
+"no singular point is a junction" is visible to the Lean kernel.
+
+Carries the smooth-manifold typeclass cascade because `sing I V`
+requires it. -/
+def AlphaStructural
+    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners 𝕜 E H)
+    [ChartedSpace H M] [IsManifold I ∞ M]
+    (V : Varifold M) (α : ℝ) : Prop :=
+  ∀ Z ∈ sing I V, ¬ HasAlphaJunctionAt V Z α
 
 /-- The class $\mathcal{S}_\alpha$ (paper §4 Def 4.1, [Wickramasekera
 2014, Section 2]): integral, stationary, stable, and satisfies the
-$\alpha$-structural hypothesis. -/
-structure InClassSAlpha (V : Varifold M) (α : ℝ) : Prop where
+$\alpha$-structural hypothesis.
+
+Carries the smooth-manifold typeclass cascade because `IsStable I V`
+and `AlphaStructural I V α` reference `sing I V`. -/
+structure InClassSAlpha
+    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners 𝕜 E H)
+    [ChartedSpace H M] [IsManifold I ∞ M]
+    (V : Varifold M) (α : ℝ) : Prop where
   /-- ($\mathcal{S}1$) The varifold is stationary: $\delta V = 0$. -/
   stationary : IsStationary V
   /-- The varifold has integer multiplicity. -/
   integral : IsIntegral V
   /-- ($\mathcal{S}2$) The second variation is non-negative on the
   regular part. -/
-  stable : IsStable V
+  stable : IsStable I V
   /-- ($\mathcal{S}3$) The $\alpha$-structural hypothesis at each
   singular point. -/
-  alphaStructural : AlphaStructural V α
+  alphaStructural : AlphaStructural I V α
 
 end Varifold
 

@@ -7,6 +7,7 @@ import AltRegularity.PositiveDensity
 import GeometricMeasureTheory
 import MinMax
 import Regularity
+import Mathlib.Geometry.Manifold.IsManifold.Basic
 
 /-!
 # AltRegularity.MainTheorem
@@ -49,7 +50,13 @@ bridges below.
 namespace AltRegularity
 
 open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter Regularity Regularity.Varifold MinMax.Sweepout MinMax.Sweepout.Varifold
+open scoped ContDiff
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
+variable {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+  {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+  {H : Type*} [TopologicalSpace H]
+  (I : ModelWithCorners 𝕜 E H)
+  [ChartedSpace H M] [IsManifold I ∞ M]
 
 -- Both Section 7 bridges are provided by chain-proof modules:
 --   * `isStable_of_nonExcessive_minmax`
@@ -77,7 +84,7 @@ theorem main_theorem_no_cancellation
     (hne : MinMax.Sweepout.NonExcessive Φ) (honvp : MinMax.Sweepout.ONVP Φ)
     (hcrit : MinMax.Sweepout.Critical Φ t₀) (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V)
     (hno : MinMax.Sweepout.NoMassCancellation Φ t₀) :
-    Varifold.IsSmoothMinimalHypersurface V := by
+    Varifold.IsSmoothMinimalHypersurface I V := by
   -- (1) Stationarity from pull-tight (CL03 / Proposition 3.7).
   have hstat : Varifold.IsStationary V :=
     MinMax.Sweepout.isStationary_of_minmaxLimit hlim
@@ -85,13 +92,13 @@ theorem main_theorem_no_cancellation
   have hint : Varifold.IsIntegral V :=
     integrality_no_cancellation hlim hno
   -- (3) Stability from non-excessiveness (Section 7).
-  have hstable : Varifold.IsStable V :=
-    isStable_of_nonExcessive_minmax hne honvp hcrit hlim
+  have hstable : Varifold.IsStable I V :=
+    isStable_of_nonExcessive_minmax I hne honvp hcrit hlim
   -- (4) α-structural hypothesis from non-excessiveness (Section 7).
   obtain ⟨α, hα0, hα1, hα⟩ :=
-    alphaStructural_of_nonExcessive_minmax hne honvp hcrit hlim
+    alphaStructural_of_nonExcessive_minmax (I := I) hne honvp hcrit hlim
   -- (5) Bundle into the class 𝒮_α.
-  have hclass : Varifold.InClassSAlpha V α :=
+  have hclass : Varifold.InClassSAlpha I V α :=
     { stationary := hstat
       integral := hint
       stable := hstable
@@ -99,7 +106,7 @@ theorem main_theorem_no_cancellation
   -- (6) Apply the smooth regularity theorem for 𝒮_α at 2 ≤ n ≤ 6
   -- (paper §4 Theorem 4.4 "in particular" clause).
   exact Varifold.isSmoothMinimalHypersurface_of_inClassSAlpha
-    ⟨hα0, hα1⟩ hn hn6 hclass
+    I ⟨hα0, hα1⟩ hn hn6 hclass
 
 /-- **Theorem 1.1(b) — Main theorem, mass-cancellation case (conditional
 on the sweepout-wide replacement).**
@@ -117,7 +124,7 @@ theorem main_theorem_with_cancellation
     (hcrit : MinMax.Sweepout.Critical Φ t₀) (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V)
     (hcanc : MinMax.Sweepout.MassCancellation Φ t₀)
     (hReplacement : ∀ p, SweepoutWideReplacement Φ t₀ V p) :
-    Varifold.IsSmoothMinimalHypersurface V := by
+    Varifold.IsSmoothMinimalHypersurface I V := by
   -- (1) Stationarity.
   have hstat : Varifold.IsStationary V :=
     MinMax.Sweepout.isStationary_of_minmaxLimit hlim
@@ -130,19 +137,19 @@ theorem main_theorem_with_cancellation
   have hint : Varifold.IsIntegral V :=
     integrality_with_cancellation hlim hcanc hposDensity
   -- (3) Stability from non-excessiveness.
-  have hstable : Varifold.IsStable V :=
-    isStable_of_nonExcessive_minmax hne honvp hcrit hlim
+  have hstable : Varifold.IsStable I V :=
+    isStable_of_nonExcessive_minmax I hne honvp hcrit hlim
   -- (4) α-structural hypothesis from non-excessiveness.
   obtain ⟨α, hα0, hα1, hα⟩ :=
-    alphaStructural_of_nonExcessive_minmax hne honvp hcrit hlim
+    alphaStructural_of_nonExcessive_minmax (I := I) hne honvp hcrit hlim
   -- (5) Bundle into 𝒮_α.
-  have hclass : Varifold.InClassSAlpha V α :=
+  have hclass : Varifold.InClassSAlpha I V α :=
     { stationary := hstat
       integral := hint
       stable := hstable
       alphaStructural := hα }
   -- (6) Apply the smooth regularity theorem at 2 ≤ n ≤ 6.
   exact Varifold.isSmoothMinimalHypersurface_of_inClassSAlpha
-    ⟨hα0, hα1⟩ hn hn6 hclass
+    I ⟨hα0, hα1⟩ hn hn6 hclass
 
 end AltRegularity

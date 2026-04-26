@@ -6,6 +6,7 @@ import GeometricMeasureTheory.TangentCone
 import GeometricMeasureTheory
 import MinMax
 import Regularity
+import Mathlib.Geometry.Manifold.IsManifold.Basic
 
 /-!
 # AltRegularity.Regularity.AlphaStructuralVerification
@@ -42,7 +43,13 @@ chain itself is fully formalized.
 namespace AltRegularity
 
 open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter Regularity Regularity.Varifold MinMax.Sweepout MinMax.Sweepout.Varifold
+open scoped ContDiff
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
+variable {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+  {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+  {H : Type*} [TopologicalSpace H]
+  (I : ModelWithCorners 𝕜 E H)
+  [ChartedSpace H M] [IsManifold I ∞ M]
 
 /-- The $\alpha$-structural hypothesis fails iff some singular point of
 $V$ is a junction.
@@ -55,7 +62,7 @@ The lib-level concepts `HasJunction` and `IsJunctionCone` live in
 `Regularity.AlphaStructural` (regularity-theory primitives, Wic14
 Remark 3.5(ii)), not in `GeometricMeasureTheory`. -/
 theorem not_alphaStructural_iff_exists_junction (V : Varifold M) (α : ℝ) :
-    ¬ AlphaStructural V α ↔ ∃ Z ∈ sing V, HasJunction V Z := by sorry
+    ¬ AlphaStructural I V α ↔ ∃ Z ∈ sing I V, HasJunction V Z := by sorry
 
 namespace MinMax.Sweepout
 
@@ -81,7 +88,7 @@ The proof in the paper consists of four steps (Step 3a–3d in Section 7):
 theorem ireplacement_of_junction
     {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
     (hne : NonExcessive Φ) (honvp : ONVP Φ) (hcrit : Critical Φ t₀)
-    (hlim : MinMaxLimit Φ t₀ V) {Z : M} (hZ : Z ∈ Varifold.sing V)
+    (hlim : MinMaxLimit Φ t₀ V) {Z : M} (hZ : Z ∈ Varifold.sing I V)
     (hjunc : Varifold.HasJunction V Z) :
     IReplacementExists Φ t₀ := by sorry
 
@@ -106,10 +113,10 @@ theorem alphaStructural_of_nonExcessive_minmax
     {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
     (hne : MinMax.Sweepout.NonExcessive Φ) (honvp : MinMax.Sweepout.ONVP Φ)
     (hcrit : MinMax.Sweepout.Critical Φ t₀) (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V) :
-    ∃ α : ℝ, 0 < α ∧ α < 1 / 2 ∧ Varifold.AlphaStructural V α := by
+    ∃ α : ℝ, 0 < α ∧ α < 1 / 2 ∧ Varifold.AlphaStructural I V α := by
   -- Pick α = 1/4 ∈ (0, 1/2). Any value in (0, 1/2) works.
   refine ⟨1 / 4, by norm_num, by norm_num, ?_⟩
-  -- Prove `AlphaStructural V (1/4)` by contradiction.
+  -- Prove `AlphaStructural I V (1/4)` by contradiction.
   by_contra h_not
   -- Negation gives a junction at some singular point.
   rw [AltRegularity.not_alphaStructural_iff_exists_junction] at h_not
@@ -117,7 +124,7 @@ theorem alphaStructural_of_nonExcessive_minmax
   -- Chord-beats-arc: junction yields a 2-sided $I$-replacement at $t_0$
   -- (paper §6.2 Step 3 — `IReplacementExists` is `Left ∧ Right`).
   have hIRep : MinMax.Sweepout.IReplacementExists Φ t₀ :=
-    MinMax.Sweepout.ireplacement_of_junction hne honvp hcrit hlim hZ hjunc
+    MinMax.Sweepout.ireplacement_of_junction (I := I) hne honvp hcrit hlim hZ hjunc
   -- The 2-sided $I$-replacement at a critical point contradicts
   -- non-excessiveness directly (`NonExcessive` forbids
   -- `IReplacementExists` at every critical point).

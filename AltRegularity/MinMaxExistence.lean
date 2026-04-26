@@ -2,6 +2,7 @@ import AltRegularity.MainTheorem
 import GeometricMeasureTheory
 import MinMax
 import Regularity
+import Mathlib.Geometry.Manifold.IsManifold.Basic
 
 /-!
 # AltRegularity.MinMaxExistence
@@ -55,6 +56,7 @@ boundary (CLS22 Theorem 2.2, CL03 pull-tight, etc.).
 namespace AltRegularity
 
 open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter Regularity Regularity.Varifold MinMax.Sweepout MinMax.Sweepout.Varifold
+open scoped ContDiff
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **End-to-end existence of a smooth minimal hypersurface (paper Theorem 1.1
@@ -79,17 +81,22 @@ existence theorem for closed minimal hypersurfaces, going through the
 ONVP framework + Wickramasekera regularity rather than Almgren–Pitts +
 Schoen–Simon. -/
 theorem exists_smoothMinimalHypersurface_via_ONVP
+    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners 𝕜 E H)
+    [ChartedSpace H M] [IsManifold I ∞ M]
     [CompactSpace M]
     (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6) :
     ∃ (Φ : MinMax.Sweepout M) (t₀ : ℝ) (V : Varifold M),
       MinMax.Sweepout.NonExcessive Φ ∧ MinMax.Sweepout.ONVP Φ ∧
       MinMax.Sweepout.Critical Φ t₀ ∧ MinMax.Sweepout.MinMaxLimit Φ t₀ V ∧
       ((MinMax.Sweepout.NoMassCancellation Φ t₀ ∧
-          Varifold.IsSmoothMinimalHypersurface V)
+          Varifold.IsSmoothMinimalHypersurface I V)
        ∨
        (MinMax.Sweepout.MassCancellation Φ t₀ ∧
           ((∀ p, SweepoutWideReplacement Φ t₀ V p) →
-            Varifold.IsSmoothMinimalHypersurface V))) := by
+            Varifold.IsSmoothMinimalHypersurface I V))) := by
   -- (1) CLS22 Theorem 2.2 (paper §3 thm:non-excessive-existence):
   -- get a non-excessive ONVP sweepout, using paper's 2 ≤ n ≤ 6 hypothesis.
   -- The cited theorem returns the paper-faithful `NonExcessiveStrict`;
@@ -105,9 +112,9 @@ theorem exists_smoothMinimalHypersurface_via_ONVP
     right
     refine ⟨hcanc, ?_⟩
     intro hRep
-    exact main_theorem_with_cancellation n hn hn6 hne honvp hcrit hlim hcanc hRep
+    exact main_theorem_with_cancellation I n hn hn6 hne honvp hcrit hlim hcanc hRep
   · -- No-cancellation case: regularity unconditional.
     left
-    exact ⟨hno, main_theorem_no_cancellation n hn hn6 hne honvp hcrit hlim hno⟩
+    exact ⟨hno, main_theorem_no_cancellation I n hn hn6 hne honvp hcrit hlim hno⟩
 
 end AltRegularity

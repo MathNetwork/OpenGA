@@ -3,6 +3,10 @@ import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
 import Mathlib.Tactic
 import GeometricMeasureTheory.FinitePerimeter
 import Mathlib.MeasureTheory.Measure.Typeclasses.Finite
+import Mathlib.Geometry.Manifold.SmoothEmbedding
+import Mathlib.Geometry.Manifold.IsManifold.Basic
+
+open scoped ContDiff
 
 /-!
 # AltRegularity.GMT.Varifold
@@ -130,33 +134,96 @@ def VarifoldConverge (Vᵢ : ℕ → Varifold M) (V : Varifold M) : Prop :=
       Filter.atTop
       (nhds (∫ x, φ x ∂V.massMeasure))
 
-/-- The **regular set** $\mathrm{reg}\,V$ of a varifold: the largest
-open subset of $\mathrm{spt}\|V\|$ on which the support is locally a
-smooth embedded hypersurface.
+section Smooth
+
+/-- A **local smooth chart** for a subset $T \subseteq M$: witness that
+$T$ is the image of a smooth embedding from some smooth manifold $S$
+into $M$.
+
+The witness bundles all the typeclass infrastructure (norm structure on
+the model space, charted-space + manifold structure on $S$, smooth
+embedding $f$) into a single structure carried by `regular`. Using a
+structure rather than a chain of existentials lets the typeclass
+instances be *fields with `[]` brackets*, which is how Lean propagates
+them at the use site `Manifold.IsSmoothEmbedding J I ⊤ f`.
+
+**Ground truth**: Simon 1983 §41 + §11; the "image of a smooth
+embedding from a manifold" formulation matches Wickramasekera 2014 §2's
+notion of regular point.
+
+**Used by**: `Varifold.regular` def (in this file). -/
+structure LocalSmoothEmbeddingWitness
+    (𝕜 : Type*) [NontriviallyNormedField 𝕜]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners 𝕜 E H)
+    (M : Type*) [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    (T : Set M) where
+  /-- Model normed space for the source manifold. -/
+  E' : Type
+  [normedAddCommGroup_E' : NormedAddCommGroup E']
+  [normedSpace_E' : NormedSpace 𝕜 E']
+  /-- Model topological space for the source manifold. -/
+  H' : Type
+  [topologicalSpace_H' : TopologicalSpace H']
+  /-- Model with corners for the source manifold. -/
+  J : ModelWithCorners 𝕜 E' H'
+  /-- Source manifold whose smooth-embedding image is $T$. -/
+  S : Type
+  [topologicalSpace_S : TopologicalSpace S]
+  [chartedSpace_S : ChartedSpace H' S]
+  [isManifold_S : IsManifold J ∞ S]
+  /-- The smooth embedding $f : S \to M$ with image $T$. -/
+  f : S → M
+  /-- $f$ is a $C^\infty$ embedding (`Manifold.IsSmoothEmbedding`). -/
+  isEmbedding : Manifold.IsSmoothEmbedding J I ∞ f
+  /-- $f$ has range exactly $T$. -/
+  rangeEq : Set.range f = T
+
+/-- The **regular set** $\mathrm{reg}\,V$ of a varifold (with respect
+to the smooth-manifold structure $I$ on $M$): the set of support points
+$p$ admitting an open neighborhood $U$ such that $U \cap \mathrm{spt}\|V\|$
+is the image of a smooth embedding from some smooth manifold.
+
+Defined explicitly via the structure
+`LocalSmoothEmbeddingWitness` carrying a `Manifold.IsSmoothEmbedding`
+witness. This replaces the previous `opaque` placeholder with a
+paper-faithful def grounded against Mathlib's smooth-manifold API.
 
 **Ground truth**: Simon 1983 §41 (regular vs singular set for stationary
-integral varifolds); Wickramasekera 2014 §2 (definition of $\mathrm{reg}\,V$
-in the manifold setting).
+integral varifolds); Wickramasekera 2014 §2 (regular set in the manifold
+setting).
 
-**Why opaque**: a paper-faithful `def` would require Mathlib's
-smooth-manifold-with-corners infrastructure (`IsManifold` typeclass,
-which presupposes `[NontriviallyNormedField 𝕜] [NormedAddCommGroup E]
-[NormedSpace 𝕜 E] [ChartedSpace E M] (I : ModelWithCorners 𝕜 E E)
-[IsManifold I n M]`) plus a notion of "embedded hypersurface" (not in
-Mathlib). The typeclass propagation alone would cascade through ~27
-framework files and substantively change the ambient typeclass profile.
-A "sub-primitive" workaround (introducing an opaque `IsLocallyHypersurface`
-predicate) achieves only net-zero opaque-count reduction.
+**Codimension**: the def admits any codimension; the codim-1 hypersurface
+specialization (paper §4) is enforced at the call site by the relation
+between `V.dim` and the source manifold's dimension. The def itself does
+not constrain `V.dim`.
 
 **Used by**: `Varifold.sing` def (in this file). -/
-opaque regular : Varifold M → Set M
+def regular
+    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners 𝕜 E H)
+    [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    (V : Varifold M) : Set M :=
+  {p | p ∈ support V ∧ ∃ U : Set M, IsOpen U ∧ p ∈ U ∧
+    Nonempty (LocalSmoothEmbeddingWitness 𝕜 I M (U ∩ support V))}
 
 /-- The **singular set** $\mathrm{sing}\,V := \mathrm{spt}\|V\| \setminus
 \mathrm{reg}\,V$ — points of the support that are not regular.
 
 Defined explicitly so the structure "support minus regular part" is
 visible to the Lean kernel. -/
-def sing (V : Varifold M) : Set M := support V \ regular V
+def sing
+    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners 𝕜 E H)
+    [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    (V : Varifold M) : Set M := support V \ regular I V
+
+end Smooth
 
 /-- The **boundary varifold** $|\partial^*\Omega|$ associated to a
 finite-perimeter set: the rectifiable codimension-1 varifold supported

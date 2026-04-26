@@ -1,8 +1,10 @@
 import Regularity.AlphaStructural
 import GeometricMeasureTheory.Rectifiability
 import Mathlib.MeasureTheory.Measure.Hausdorff
+import Mathlib.Geometry.Manifold.IsManifold.Basic
 
 open GeometricMeasureTheory GeometricMeasureTheory.Varifold
+open scoped ContDiff
 
 /-!
 # AltRegularity.Regularity.SmoothRegularity
@@ -43,6 +45,14 @@ variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [Measure
 
 namespace Varifold
 
+section Smooth
+
+variable {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+  {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+  {H : Type*} [TopologicalSpace H]
+  (I : ModelWithCorners 𝕜 E H)
+  [ChartedSpace H M] [IsManifold I ∞ M]
+
 /-- $V$ is a **smooth, closed, embedded minimal hypersurface** of $M$
 (paper §4 Theorem~\ref{thm:wickramasekera}, "in particular" clause for
 $2 \le n \le 6$).
@@ -69,7 +79,7 @@ structure IsSmoothMinimalHypersurface (V : Varifold M) : Prop where
   stationary : IsStationary V
   /-- The singular set is empty: the support is locally a smooth
   embedded hypersurface. -/
-  noSingular : sing V = ∅
+  noSingular : sing I V = ∅
 
 /-- **High-dimensional Hausdorff-small singular set** (paper §4
 Theorem~\ref{thm:wickramasekera} clause (c)): for the codimension-1
@@ -91,7 +101,7 @@ the def itself does not enforce $n \ge 8$.
 **Used by**: `Varifold.regularity_of_inClassSAlpha` (n ≥ 8 case). -/
 def HausdorffSmallSingular (V : Varifold M) (n : ℕ) : Prop :=
   ∀ γ : ℝ, 0 < γ →
-    MeasureTheory.Measure.hausdorffMeasure ((n : ℝ) - 7 + γ) (sing V) = 0
+    MeasureTheory.Measure.hausdorffMeasure ((n : ℝ) - 7 + γ) (sing I V) = 0
 
 /-- **Regularity in the class $\mathcal{S}_\alpha$** (paper §4
 Theorem~\ref{thm:wickramasekera}, [Wickramasekera 2014, Theorem 3.1 /
@@ -105,10 +115,10 @@ via the `isFiniteMeasure` field. -/
 theorem regularity_of_inClassSAlpha
     {V : Varifold M} {α : ℝ} (hα : 0 < α ∧ α < 1/2)
     {n : ℕ} (hn : 2 ≤ n)
-    (hclass : InClassSAlpha V α) :
-    (n ≤ 6 → sing V = ∅) ∧
-    (n = 7 → (sing V).Countable) ∧
-    (8 ≤ n → HausdorffSmallSingular V n) := by sorry
+    (hclass : InClassSAlpha I V α) :
+    (n ≤ 6 → sing I V = ∅) ∧
+    (n = 7 → (sing I V).Countable) ∧
+    (8 ≤ n → HausdorffSmallSingular I V n) := by sorry
 
 /-- **"In particular" clause of paper §4 Theorem~\ref{thm:wickramasekera}**:
 for $2 \le n \le 6$, the support $\mathrm{spt}\|V\|$ is a smooth
@@ -122,8 +132,10 @@ Theorem 1.1. -/
 theorem isSmoothMinimalHypersurface_of_inClassSAlpha
     {V : Varifold M} {α : ℝ} (hα : 0 < α ∧ α < 1/2)
     {n : ℕ} (hn : 2 ≤ n) (hn6 : n ≤ 6)
-    (hclass : InClassSAlpha V α) :
-    IsSmoothMinimalHypersurface V := by sorry
+    (hclass : InClassSAlpha I V α) :
+    IsSmoothMinimalHypersurface I V := by sorry
+
+end Smooth
 
 end Varifold
 
