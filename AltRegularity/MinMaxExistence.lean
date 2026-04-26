@@ -75,7 +75,8 @@ existence theorem for closed minimal hypersurfaces, going through the
 ONVP framework + Wickramasekera regularity rather than Almgren–Pitts +
 Schoen–Simon. -/
 theorem exists_smoothMinimalHypersurface_via_ONVP
-    [CompactSpace M] :
+    [CompactSpace M]
+    (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6) :
     ∃ (Φ : Sweepout M) (t₀ : ℝ) (V : Varifold M),
       Sweepout.NonExcessive Φ ∧ Sweepout.ONVP Φ ∧
       Sweepout.Critical Φ t₀ ∧ Sweepout.MinMaxLimit Φ t₀ V ∧
@@ -96,9 +97,9 @@ theorem exists_smoothMinimalHypersurface_via_ONVP
     right
     refine ⟨hcanc, ?_⟩
     intro hRep
-    exact main_theorem_with_cancellation hne honvp hcrit hlim hcanc hRep
+    exact main_theorem_with_cancellation n hn hn6 hne honvp hcrit hlim hcanc hRep
   · -- No-cancellation case: regularity unconditional.
     left
-    exact ⟨hno, main_theorem_no_cancellation hne honvp hcrit hlim hno⟩
+    exact ⟨hno, main_theorem_no_cancellation n hn hn6 hne honvp hcrit hlim hno⟩
 
 end AltRegularity

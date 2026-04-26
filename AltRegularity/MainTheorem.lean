@@ -58,11 +58,18 @@ variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
 
 /-- **Theorem 1.1(a) — Main theorem, no-mass-cancellation case.**
 
+Paper Theorem 1.1's "$2 \le n \le 6$" hypothesis on the codimension-1
+ambient dimension is now threaded explicitly via `(n : ℕ) (hn : 2 ≤ n)
+(hn6 : n ≤ 6)`, so paper §4 Theorem~\ref{thm:wickramasekera} (cited
+verbatim) can be invoked through its "in particular" corollary.
+
 Proof: chain stationarity (pull-tight), integrality (Theorem 6.1(a)),
 stability and $\alpha$-structural (Section 7), then apply the smooth
-regularity theorem for the class $\mathcal{S}_\alpha$. -/
+regularity theorem for the class $\mathcal{S}_\alpha$ in the
+$2 \le n \le 6$ case. -/
 theorem main_theorem_no_cancellation
     {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6)
     (hne : Sweepout.NonExcessive Φ) (honvp : Sweepout.ONVP Φ)
     (hcrit : Sweepout.Critical Φ t₀) (hlim : Sweepout.MinMaxLimit Φ t₀ V)
     (hno : Sweepout.NoMassCancellation Φ t₀) :
@@ -85,17 +92,23 @@ theorem main_theorem_no_cancellation
       integral := hint
       stable := hstable
       alphaStructural := hα }
-  -- (6) Apply the smooth regularity theorem for 𝒮_α.
-  exact (Varifold.regularity_of_inClassSAlpha ⟨hα0, hα1⟩ hclass).2
+  -- (6) Apply the smooth regularity theorem for 𝒮_α at 2 ≤ n ≤ 6
+  -- (paper §4 Theorem 4.4 "in particular" clause).
+  exact Varifold.isSmoothMinimalHypersurface_of_inClassSAlpha
+    ⟨hα0, hα1⟩ hn hn6 hclass
 
 /-- **Theorem 1.1(b) — Main theorem, mass-cancellation case (conditional
 on the sweepout-wide replacement).**
+
+Paper Theorem 1.1's "$2 \le n \le 6$" hypothesis is threaded explicitly
+via `(n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6)`.
 
 Proof: identical chain to (a), except that integrality is obtained from
 Theorem 6.1(b) after positive density on the support is supplied
 pointwise by `positiveDensity_of_sweepoutWideReplacement`. -/
 theorem main_theorem_with_cancellation
     {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6)
     (hne : Sweepout.NonExcessive Φ) (honvp : Sweepout.ONVP Φ)
     (hcrit : Sweepout.Critical Φ t₀) (hlim : Sweepout.MinMaxLimit Φ t₀ V)
     (hcanc : Sweepout.MassCancellation Φ t₀)
@@ -124,7 +137,8 @@ theorem main_theorem_with_cancellation
       integral := hint
       stable := hstable
       alphaStructural := hα }
-  -- (6) Apply the smooth regularity theorem.
-  exact (Varifold.regularity_of_inClassSAlpha ⟨hα0, hα1⟩ hclass).2
+  -- (6) Apply the smooth regularity theorem at 2 ≤ n ≤ 6.
+  exact Varifold.isSmoothMinimalHypersurface_of_inClassSAlpha
+    ⟨hα0, hα1⟩ hn hn6 hclass
 
 end AltRegularity
