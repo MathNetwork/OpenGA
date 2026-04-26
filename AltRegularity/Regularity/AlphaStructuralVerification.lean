@@ -46,6 +46,7 @@ open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheo
 open scoped ContDiff
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [MeasurableSpace E] [BorelSpace E]
   {H : Type*} [TopologicalSpace H]
   (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
@@ -61,7 +62,7 @@ The lib-level concepts `HasJunction` and `IsJunctionCone` live in
 `Regularity.AlphaStructural` (regularity-theory primitives, Wic14
 Remark 3.5(ii)), not in `GeometricMeasureTheory`. -/
 theorem not_alphaStructural_iff_exists_junction (V : Varifold M) (α : ℝ) :
-    ¬ AlphaStructural I V α ↔ ∃ Z ∈ sing I V, HasJunction V Z := by sorry
+    ¬ AlphaStructural I V α ↔ ∃ Z ∈ sing I V, HasJunction I V Z := by sorry
 
 namespace MinMax.Sweepout
 
@@ -88,7 +89,7 @@ theorem ireplacement_of_junction
     {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
     (hne : NonExcessive Φ) (honvp : ONVP Φ) (hcrit : Critical Φ t₀)
     (hlim : MinMaxLimit Φ t₀ V) {Z : M} (hZ : Z ∈ Varifold.sing I V)
-    (hjunc : Varifold.HasJunction V Z) :
+    (hjunc : Varifold.HasJunction I V Z) :
     IReplacementExists Φ t₀ := by sorry
 
 end MinMax.Sweepout

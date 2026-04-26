@@ -82,6 +82,7 @@ ONVP framework + Wickramasekera regularity rather than Almgren–Pitts +
 Schoen–Simon. -/
 theorem exists_smoothMinimalHypersurface_via_ONVP
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [MeasurableSpace E] [BorelSpace E]
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]

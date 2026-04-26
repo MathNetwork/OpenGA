@@ -134,8 +134,14 @@ This is the configuration excluded by $(\mathcal{S}3)$.
 
 Defined explicitly via the GMT primitive `tangentCone` and the
 regularity-side primitive `IsJunctionCone`. -/
-def HasJunction (V : Varifold M) (Z : M) : Prop :=
-  IsJunctionCone (tangentCone V Z)
+def HasJunction
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [MeasurableSpace E] [BorelSpace E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners ℝ E H)
+    [ChartedSpace H M] [IsManifold I ∞ M]
+    (V : Varifold M) (Z : M) : Prop :=
+  IsJunctionCone (tangentCone I V Z)
 
 /-- $V$ satisfies the **$\alpha$-structural hypothesis** ($\mathcal{S}3$,
 paper §4 Def 4.1): no singular point of $V$ admits an $\alpha$-junction.
