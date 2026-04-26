@@ -47,10 +47,9 @@ namespace Varifold
 
 section Smooth
 
-variable {𝕜 : Type*} [NontriviallyNormedField 𝕜]
-  {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H]
-  (I : ModelWithCorners 𝕜 E H)
+  (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
 
 /-- $V$ is a **smooth, closed, embedded minimal hypersurface** of $M$

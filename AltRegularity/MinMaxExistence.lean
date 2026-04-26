@@ -81,10 +81,9 @@ existence theorem for closed minimal hypersurfaces, going through the
 ONVP framework + Wickramasekera regularity rather than Almgren–Pitts +
 Schoen–Simon. -/
 theorem exists_smoothMinimalHypersurface_via_ONVP
-    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners 𝕜 E H)
+    (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
     [CompactSpace M]
     (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6) :

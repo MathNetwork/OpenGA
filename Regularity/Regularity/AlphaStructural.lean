@@ -62,14 +62,13 @@ so that its content is visible to the Lean kernel.
 Carries the smooth-manifold typeclass cascade `(I : ModelWithCorners)
 [ChartedSpace H M] [IsManifold I ∞ M]` because `sing I V` requires it. -/
 def IsStable
-    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners 𝕜 E H)
+    (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
     (V : Varifold M) : Prop :=
   ∀ φ : M → ℝ, Function.support φ ⊆ (sing I V)ᶜ →
-    0 ≤ secondVariation V φ
+    0 ≤ secondVariation I V φ
 
 /-- The varifold has an **$\alpha$-junction at $Z$**: there exists
 $\rho > 0$ such that $\mathrm{spt}\|V\| \cap B_\rho(Z)$ equals a finite
@@ -147,10 +146,9 @@ Defined explicitly as a universally-quantified negation, so the structure
 Carries the smooth-manifold typeclass cascade because `sing I V`
 requires it. -/
 def AlphaStructural
-    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners 𝕜 E H)
+    (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
     (V : Varifold M) (α : ℝ) : Prop :=
   ∀ Z ∈ sing I V, ¬ HasAlphaJunctionAt V Z α
@@ -162,10 +160,9 @@ $\alpha$-structural hypothesis.
 Carries the smooth-manifold typeclass cascade because `IsStable I V`
 and `AlphaStructural I V α` reference `sing I V`. -/
 structure InClassSAlpha
-    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners 𝕜 E H)
+    (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
     (V : Varifold M) (α : ℝ) : Prop where
   /-- ($\mathcal{S}1$) The varifold is stationary: $\delta V = 0$. -/

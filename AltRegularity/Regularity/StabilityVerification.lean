@@ -59,10 +59,9 @@ namespace Varifold
 
 section Smooth
 
-variable {𝕜 : Type*} [NontriviallyNormedField 𝕜]
-  {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H]
-  (I : ModelWithCorners 𝕜 E H)
+  (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
 
 /-! ## Local-property definitions -/
@@ -78,7 +77,7 @@ structure of "δ² ≥ 0 for all test functions on the ball away from
 singularities" is visible to the Lean kernel. -/
 def LocallyStable (V : Varifold M) (P : M) (r : ℝ) : Prop :=
   ∀ φ : M → ℝ, Function.support φ ⊆ Metric.ball P r \ sing I V →
-    0 ≤ secondVariation V φ
+    0 ≤ secondVariation I V φ
 
 /-! ## Section 6.1 input lemmas -/
 
@@ -131,10 +130,9 @@ paper §7.1's three-line proof:
 
 -/
 theorem isStable_of_nonExcessive_minmax
-    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners 𝕜 E H)
+    (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
     {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
     (hne : MinMax.Sweepout.NonExcessive Φ) (honvp : MinMax.Sweepout.ONVP Φ)
