@@ -29,7 +29,7 @@ Repair: explicit Riesz-duality construction once
 -/
 
 open Bundle
-open scoped ContDiff Manifold
+open scoped ContDiff Manifold Bundle
 
 namespace Riemannian
 
@@ -41,19 +41,26 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
 
 /-- **Existence axiom for the manifold gradient.**
 
-Real construction via Riesz duality
-(`(InnerProductSpace.toDual ℝ (TangentSpace I x)).symm (mfderiv I 𝓘(ℝ, ℝ) f x)`)
-was attempted as Phase 1.6 Spike 3 but blocked: Mathlib's
-`InnerProductSpace.toDual` requires `[InnerProductSpace ℝ (TangentSpace I x)]`
-typeclass, while our cascade provides
-`[RiemannianBundle (fun x ↦ TangentSpace I x)]` (per-fiber inner-product
-*data* without auto-derived `InnerProductSpace` typeclass instances).
-Bridging requires Mathlib infrastructure to derive InnerProductSpace
-on each fiber from the bundle's per-fiber inner product (likely
-`RiemannianBundle.toInnerProductSpace` or similar) — not yet
-available. Riesz duality property recorded as the existence axiom's
-content; constructive form deferred until the typeclass-bridge is
-available. -/
+Phase 1.6 Spike 5 attempted to construct
+`manifoldGradient f x := (InnerProductSpace.toDual ℝ (TangentSpace I x)).symm
+(mfderiv I 𝓘(ℝ, ℝ) f x)` using the Riesz duality. The Mathlib bridge
+fails: even with `[RiemannianBundle (fun x ↦ TangentSpace I x)]` and
+`open Bundle`, the scoped instances providing
+`NormedAddCommGroup (TangentSpace I x)` /
+`InnerProductSpace ℝ (TangentSpace I x)` (Mathlib
+`Topology/VectorBundle/Riemannian.lean` lines ~431, 453) do not fire
+in our cascade — symptoms include
+"failed to synthesize CompleteSpace (TangentSpace I x)" /
+"failed to synthesize UniformSpace (TangentSpace I x)" and similar.
+
+Higher-order unification on `RiemannianBundle (fun x ↦ TangentSpace I x)`
+with the scoped-instance template appears to be the bottleneck;
+investigation deferred to Phase 4 catch-up.
+
+For now, `manifoldGradient_exists` is the existence axiom encoding
+Riesz duality (`inner ℝ (grad f x) v = mfderiv I 𝓘(ℝ, ℝ) f x v`); the
+real def via `InnerProductSpace.toDual.symm` is the Phase 4 repair
+target. -/
 theorem manifoldGradient_exists :
     ∃ _grad : (M → ℝ) → (Π x : M, TangentSpace I x),
       ∀ (f : M → ℝ) (x : M) (v : TangentSpace I x),
@@ -66,8 +73,8 @@ theorem manifoldGradient_exists :
 
 Real `noncomputable def` via `Classical.choose manifoldGradient_exists`.
 Concrete construction via Riesz duality blocked by Mathlib's
-RiemannianBundle ↔ InnerProductSpace bridge (see `manifoldGradient_exists`
-docstring). -/
+RiemannianBundle ↔ TangentSpace scoped-instance higher-order
+unification (see `manifoldGradient_exists` docstring). -/
 noncomputable def manifoldGradient
     (f : M → ℝ) (x : M) : TangentSpace I x :=
   Classical.choose (manifoldGradient_exists (I := I) (M := M)) f x
