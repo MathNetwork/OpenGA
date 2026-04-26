@@ -1,4 +1,5 @@
 import AltRegularity.Sweepout.ONVP
+import AltRegularity.Sweepout.NonExcessive
 import AltRegularity.GMT.Varifold
 
 /-!
@@ -47,8 +48,21 @@ measures along the min-max sequence. -/
 opaque DChiWeakConverge : Sweepout M → ℝ → Prop
 
 /-- Perimeter convergence along the min-max sequence:
-$\mathrm{Per}(\Omega(t_i)) \to \mathrm{Per}(\Omega(t_0))$. -/
-opaque PerimeterConverge : Sweepout M → ℝ → Prop
+$\mathrm{Per}(\Omega(t_i)) \to \mathrm{Per}(\Omega(t_0))$.
+
+By `minmax_mass_eq_width`, every min-max varifold limit $V$ has total
+mass $\|V\|(M) = W(\Phi)$, so along any min-max sequence $t_i \to t_0$
+the perimeters $\mathrm{Per}(\Omega(t_i)) = \mathbf{M}(|\partial^*\Omega(t_i)|)
+\to \|V\|(M) = W$. The convergence to $\mathrm{Per}(\Omega(t_0))$ then
+asserts $\|V\|(M) = \mathrm{Per}(\Omega(t_0))$ for every min-max varifold
+limit—at the predicate level, this is the encoding below.
+
+This unfolds the opaque convergence content of paper §6.1 line 1 in a
+form that is directly provable from `NoMassCancellation` and
+`minmax_mass_eq_width`. -/
+def PerimeterConverge (Φ : Sweepout M) (t₀ : ℝ) : Prop :=
+  ∀ V : Varifold M, MinMaxLimit Φ t₀ V →
+    Varifold.mass V = ((Φ.slice t₀).perim : ℝ)
 
 /-! ## Structural facts -/
 
@@ -69,6 +83,23 @@ distributional derivatives. This is a general fact about BV functions. -/
 theorem dChiWeak_of_l1
     {Φ : Sweepout M} {t₀ : ℝ}
     (hL1 : SlicesL1Converge Φ t₀) : DChiWeakConverge Φ t₀ := by sorry
+
+/-! ## Existence of a min-max limit -/
+
+/-- **Existence of a critical parameter and varifold limit (paper Proposition 3.7,
+[CL03, Proposition 1.4]).**
+
+For a non-excessive ONVP sweepout $\Phi$ with positive width, the standard
+pull-tight argument produces a critical parameter $t_0 \in \mathfrak{m}(\Phi)$
+and a varifold $V$ such that there is a min-max sequence $t_i \to t_0$ along
+which $|\partial^*\Omega_{t_i}| \to V$.
+
+This is a black-box wrapper for the CLS22 / Colding–De Lellis pull-tight
+construction; the substantive work is in `isStationary_of_minmaxLimit`
+(stationarity) and `minmax_mass_eq_width` (mass equals width). -/
+theorem exists_minmaxLimit
+    {Φ : Sweepout M} (hne : NonExcessive Φ) (honvp : ONVP Φ) (hW : 0 < width Φ) :
+    ∃ (t₀ : ℝ) (V : Varifold M), Critical Φ t₀ ∧ MinMaxLimit Φ t₀ V := by sorry
 
 /-! ## Case 1 fact (used by `AltRegularity.PositiveDensity`) -/
 

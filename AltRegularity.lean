@@ -35,10 +35,15 @@ scaffolding for "Alternative Regularity via Non-Excessive Sweepouts."
 
   * `AltRegularity.Regularity.AlphaStructural`  — S₁, S₂, S₃, the class 𝒮_α
   * `AltRegularity.Regularity.AlphaStructuralVerification`
-                                                — Section 7 chord-beats-arc
+                                                — Section 7.2 chord-beats-arc
                                                     chain proof: junction ⟹
                                                     I-replacement ⟹
                                                     contradiction
+  * `AltRegularity.Regularity.StabilityVerification`
+                                                — Section 7.1 chain proof:
+                                                    finite hnm + one-sided
+                                                    minimization + partition
+                                                    of unity ⟹ stability
   * `AltRegularity.Regularity.SmoothRegularity` — smooth regularity for the
                                                     class 𝒮_α (Wickramasekera 2014)
 
@@ -61,6 +66,19 @@ scaffolding for "Alternative Regularity via Non-Excessive Sweepouts."
 ## Section 7 — Main theorem
 
   * `AltRegularity.MainTheorem`                 — Theorem 1.1 (a) (b)
+
+## End-to-end existence corollary
+
+  * `AltRegularity.MinMaxExistence`             — paper narrative
+                                                    end-to-end: CLS22
+                                                    Theorem 2.2 + paper
+                                                    Theorem 1.1 ⟹ existence
+                                                    of a smooth closed
+                                                    embedded minimal
+                                                    hypersurface (no-cancel
+                                                    unconditional;
+                                                    cancel conditional on
+                                                    Conjecture 5.9)
 
 The formalization is in progress. Definitions and structural facts that
 require GMT infrastructure not yet in Mathlib are recorded as
@@ -93,6 +111,7 @@ import AltRegularity.Regularity.AlphaStructural
 import AltRegularity.Regularity.AlphaStructuralVerification
 import AltRegularity.Regularity.ChordBeatsArc
 import AltRegularity.Regularity.SmoothRegularity
+import AltRegularity.Regularity.StabilityVerification
 
 import AltRegularity.OneSidedDensity.AlmostMinimizer
 import AltRegularity.OneSidedDensity.Density
@@ -103,3 +122,4 @@ import AltRegularity.Integrality.Theorem
 
 import AltRegularity.PositiveDensity
 import AltRegularity.MainTheorem
+import AltRegularity.MinMaxExistence

@@ -1,8 +1,8 @@
 import AltRegularity.Integrality.Theorem
-import AltRegularity.Sweepout.HomotopicMinimization
 import AltRegularity.Sweepout.PullTight
 import AltRegularity.Regularity.SmoothRegularity
 import AltRegularity.Regularity.AlphaStructuralVerification
+import AltRegularity.Regularity.StabilityVerification
 import AltRegularity.PositiveDensity
 
 /-!
@@ -47,26 +47,12 @@ namespace AltRegularity
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
 
-/-! ## Section 7 bridges from non-excessiveness to the regularity inputs -/
-
-/-- The min-max varifold limit of a non-excessive ONVP sweepout is stable.
-
-This is the content of Section 7's stability argument: the one-sided
-homotopic-minimizer property (`Sweepout.innerHomotopicMinimizer_of_nonExcessive`)
-implies the second-variation non-negativity on the regular part. -/
-private theorem isStable_of_nonExcessive_minmax
-    {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
-    (hne : Sweepout.NonExcessive Φ) (hcrit : Sweepout.Critical Φ t₀)
-    (_hlim : Sweepout.MinMaxLimit Φ t₀ V) :
-    Varifold.IsStable V := by
-  -- Section 7: stability is derived from the one-sided homotopic
-  -- minimization property at the critical parameter.
-  have _ := Sweepout.innerHomotopicMinimizer_of_nonExcessive hne t₀ hcrit
-  sorry
-
--- The α-structural verification (`alphaStructural_of_nonExcessive_minmax`)
--- is provided by `AltRegularity.Regularity.AlphaStructuralVerification` as
--- a chain proof through the chord-beats-arc construction.
+-- Both Section 7 bridges are provided by chain-proof modules:
+--   * `isStable_of_nonExcessive_minmax`
+--     in `AltRegularity.Regularity.StabilityVerification` (paper §7.1)
+--   * `alphaStructural_of_nonExcessive_minmax`
+--     in `AltRegularity.Regularity.AlphaStructuralVerification` (paper §7.2)
+-- The main theorems below consume them as black-box inputs.
 
 /-! ## Theorem 1.1 -/
 

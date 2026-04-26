@@ -77,11 +77,31 @@ convergence.** The no-mass-cancellation hypothesis is exactly the
 statement that perimeters of the min-max sequence converge to the
 perimeter of the limit slice:
 $\mathrm{Per}(\Omega(t_i)) = \mathbf{M}(\Phi(t_i)) \to W = \mathbf{M}(\Phi(t_0))
-= \mathrm{Per}(\Omega(t_0))$. -/
+= \mathrm{Per}(\Omega(t_0))$.
+
+The 4-step equality chain in the paper proof:
+  (1) $\mathrm{Per}(\Omega(t_i)) = \mathbf{M}(\Phi(t_i))$ — perimeter
+      equals current mass for a Caccioppoli boundary varifold (definitional).
+  (2) $\mathbf{M}(\Phi(t_i)) \to W$ — definition of min-max sequence;
+      packaged in our framework as `minmax_mass_eq_width` applied to any
+      varifold limit of the sequence.
+  (3) $W = \mathbf{M}(\Phi(t_0))$ — `NoMassCancellation` (definition).
+  (4) $\mathbf{M}(\Phi(t_0)) = \mathrm{Per}(\Omega(t_0))$ — same as (1)
+      at the limit parameter (definitional).
+
+The two equality steps (1) and (4) are folded into the `(Φ.slice t₀).perim`
+notation; step (2) is `minmax_mass_eq_width`; step (3) is the input
+hypothesis `hno`. -/
 theorem perimeterConvergence_of_noMassCancellation
     {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
-    (hlim : MinMaxLimit Φ t₀ V) (hno : NoMassCancellation Φ t₀) :
-    PerimeterConverge Φ t₀ := by sorry
+    (_hlim : MinMaxLimit Φ t₀ V) (hno : NoMassCancellation Φ t₀) :
+    PerimeterConverge Φ t₀ := by
+  -- Unfold the def: take any min-max varifold limit V'.
+  intro V' hlim'
+  -- (2) min-max ⟹ Varifold.mass V' = width Φ.
+  rw [minmax_mass_eq_width hlim']
+  -- (3) NoMassCancellation: (Φ.slice t₀).perim = width Φ; symm gives goal.
+  exact hno.symm
 
 end Sweepout
 
