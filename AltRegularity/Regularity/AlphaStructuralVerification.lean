@@ -123,13 +123,13 @@ theorem alphaStructural_of_nonExcessive_minmax
   -- Negation gives a junction at some singular point.
   rw [Varifold.not_alphaStructural_iff_exists_junction] at h_not
   obtain ⟨Z, hZ, hjunc⟩ := h_not
-  -- Chord-beats-arc: junction yields an I-replacement at t₀.
+  -- Chord-beats-arc: junction yields a 2-sided $I$-replacement at $t_0$
+  -- (paper §6.2 Step 3 — `IReplacementExists` is `Left ∧ Right`).
   have hIRep : Sweepout.IReplacementExists Φ t₀ :=
     Sweepout.ireplacement_of_junction hne honvp hcrit hlim hZ hjunc
-  -- I-replacement makes t₀ excessive.
-  have hExc : Sweepout.ExcessiveAt Φ t₀ :=
-    Sweepout.ireplacement_to_excessive hIRep hcrit
-  -- t₀ excessive contradicts the non-excessive property of Φ.
-  exact Sweepout.non_excessive_def hne t₀ hcrit hExc
+  -- The 2-sided $I$-replacement at a critical point contradicts
+  -- non-excessiveness directly (`NonExcessive` forbids
+  -- `IReplacementExists` at every critical point).
+  exact Sweepout.non_excessive_def hne t₀ hcrit hIRep
 
 end AltRegularity

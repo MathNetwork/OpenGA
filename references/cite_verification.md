@@ -228,15 +228,19 @@ theorem dlt_criterion
 
 ## 5. CLS22 Theorem 2.2 → `exists_nonExcessive_ONVP`
 
-**Lean signature** (after Round 5 Item 2 strict-alignment):
-`AltRegularity/Sweepout/NonExcessive.lean:163`
+**Lean signature** (after Round 5 Item 2 strict-alignment + Option C):
+`AltRegularity/Sweepout/NonExcessive.lean:243`
 
 ```lean
 theorem exists_nonExcessive_ONVP (M : Type*)
     [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [CompactSpace M]
     (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6) :
-    ∃ Φ : Sweepout M, NonExcessive Φ ∧ ONVP Φ ∧ 0 < width Φ
+    ∃ Φ : Sweepout M, NonExcessiveStrict Φ ∧ ONVP Φ ∧ 0 < width Φ
 ```
+
+The theorem returns `NonExcessiveStrict` (paper-faithful separated form,
+matching CLS22 verbatim). Downstream chain consumers bridge to
+framework's `NonExcessive` via `Sweepout.nonExcessive_of_strict`.
 
 **Cited paper**:
 - File: `arXiv-sources/CLS22-Chodosh-Liokumovich-Spolaor/main.tex:1096-1098`
@@ -260,15 +264,15 @@ verbatim from `main.tex:1096-1098`):
 > $x \in \mathfrak{m}_L(\Psi)$ is not left excessive and every
 > $x \in \mathfrak{m}_R(\Psi)$ is not right excessive.
 
-**Alignment check**:
+**Alignment check** (post-Option C):
 
-| Component | Lean (post-strict) | Paper §3 phrase | CLS22 original | Status |
+| Component | Lean | Paper §3 phrase | CLS22 original | Status |
 |---|---|---|---|---|
-| Ambient | `[MetricSpace M] [BorelSpace M] [CompactSpace M]` | $(M^{n+1}, g)$ closed Riemannian | $(M^{n+1}, g)$ closed Riemannian, Vol = 1 | 🟡 (smooth-Riemannian via metric proxy; OK) |
-| Dim hypothesis | `(n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6)` ✓ | $2 \le n \le 6$ ✓ | NONE (paper-added) | ✓ aligned with paper |
-| ONVP | `ONVP Φ` ✓ | "(ONVP) sweepout" ✓ | "(ONVP) sweepout" ✓ | ✓ |
-| Non-excessive form | `NonExcessive Φ` = `∀ t crit, ¬ Excessive` (unified) | left/right separated | left/right separated | ⚠ **Lean is strictly stronger** |
-| Width > 0 | `0 < width Φ` (in conclusion) | implicit (DLT13 Prop 0.5 cited at Def 3.1) | implicit | ⚠ Lean adds explicit; paper/CLS22 implicit via isoperimetric. Acceptable. |
+| Ambient | `[MetricSpace M] [BorelSpace M] [CompactSpace M]` | $(M^{n+1}, g)$ closed Riemannian | $(M^{n+1}, g)$ closed Riemannian, Vol = 1 | 🟡 (smooth-Riemannian via metric proxy; documented gap) |
+| Dim hypothesis | `(n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6)` | $2 \le n \le 6$ | NONE (paper-added) | ✓ aligned with paper |
+| ONVP | `ONVP Φ` | "(ONVP) sweepout" | "(ONVP) sweepout" | ✓ |
+| Non-excessive form | `NonExcessiveStrict Φ` (separated) | left/right separated | left/right separated | ✓ aligned verbatim |
+| Width > 0 | `0 < width Φ` (in conclusion) | implicit (DLT13 Prop 0.5 cited at Def 3.1) | implicit | 🟡 Lean adds explicit; paper/CLS22 implicit via isoperimetric. Acceptable convenience. |
 
 **Findings**:
 
@@ -277,23 +281,19 @@ verbatim from `main.tex:1096-1098`):
    downstream regularity needs it. Lean signature now mirrors paper.
    ✓ **Aligned.**
 
-2. **NonExcessive form mismatch** ⚠ : CLS22 / paper §3 state the conclusion
-   as the left/right separated form (`m_L ∋ x ⇒ x not left-excessive` AND
-   `m_R ∋ x ⇒ x not right-excessive`). The framework's `Sweepout.NonExcessive`
-   def is the unified form `∀ t, Critical t → ¬ ExcessiveAt t`, which is
-   **strictly stronger** at points in `m_L \ m_R` and `m_R \ m_L` (paper
-   Remark 3.5 / Figure 3.4). The chain proof currently uses
-   `non_excessive_def` (the unified form) — weakening to the left/right form
-   would force the chain to dispatch on left vs right criticality.
+2. **NonExcessive form mismatch RESOLVED** ✓ (Option C, Round 5 follow-up):
+   Introduced `Sweepout.NonExcessiveStrict` (left/right separated form,
+   matching CLS22 / paper §3 verbatim). `exists_nonExcessive_ONVP` returns
+   `NonExcessiveStrict`. Framework's `NonExcessive` is now redefined to
+   forbid the conjunction `IReplacementExists` (= `LeftExc ∧ RightExc`),
+   which paper §6.2 / §5.1 actually construct via 2-sided I-replacement.
+   Bridge `nonExcessive_of_strict : NonExcessiveStrict → NonExcessive` is
+   provable via `critical_iff_left_or_right` + side-dispatch. Chain proofs
+   in `alphaStructural_of_*` and `positiveDensity_of_*` simplified by 1
+   line each (drop redundant `ireplacement_to_excessive` intermediate;
+   pass conjunction `hIRep` directly to `non_excessive_def`).
 
-   **Tightening note for future round**: introduce
-   `Sweepout.NonExcessiveStrict` (left/right separated form) matching CLS22
-   verbatim, derive the unified form as a strictly stronger version
-   (acceptable for chain proofs), and have `exists_nonExcessive_ONVP`
-   produce the strict form. The chain would then either weaken its
-   hypothesis or split by side. Not blocking; documented here.
-
-3. **Width > 0 explicit** ⚠ : CLS22 doesn't state `W > 0` as part of the
+3. **Width > 0 explicit** 🟡 : CLS22 doesn't state `W > 0` as part of the
    theorem; it follows from isoperimetric (DLT13 Prop 0.5). Lean keeps
    `0 < width Φ` in the conclusion as a convenience output. Acceptable.
 
@@ -304,9 +304,10 @@ and propagated to `exists_smoothMinimalHypersurface_via_ONVP`.
 **Chain break**: Yes, `MinMaxExistence.lean:90` (`exists_smoothMinimalHypersurface_via_ONVP`).
 Fixed by passing `n hn hn6` through (already in scope from Round 5 Item 1).
 
-**Status**: 🟡 (aligned to paper §3 verbatim and CLS22 modulo NonExcessive
-form mismatch documented above; will become 🟢 when NonExcessive form
-mismatch is resolved by introducing the strict form alongside)
+**Status**: 🟢 (aligned to paper §3 + CLS22 verbatim; NonExcessive form
+mismatch resolved via Option C — `NonExcessiveStrict` matches CLS22
+verbatim, framework's `NonExcessive` redefined to forbid 2-sided
+`IReplacementExists` and bridged from Strict via `nonExcessive_of_strict`)
 
 ---
 

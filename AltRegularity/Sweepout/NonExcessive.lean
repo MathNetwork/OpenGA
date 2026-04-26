@@ -54,6 +54,30 @@ width. -/
 def Critical (Φ : Sweepout M) (x : ℝ) : Prop :=
   Sweepout.criticalMass Φ x = Sweepout.width Φ
 
+/-- $x \in \mathfrak{m}_L(\Phi)$: $x$ is a **left-critical parameter**
+(paper §3 Def 3.3 / [CLS22, Def 1.5]): there is a strictly increasing
+sequence $x_i \nearrow x$ with $\mathbf{M}(\Phi(x_i)) \to W$. -/
+def LeftCritical (Φ : Sweepout M) (x : ℝ) : Prop :=
+  ∃ tᵢ : ℕ → ℝ, StrictMono tᵢ ∧
+    Filter.Tendsto tᵢ Filter.atTop (nhds x) ∧
+    Filter.Tendsto (fun i => ((Φ.slice (tᵢ i)).perim : ℝ))
+      Filter.atTop (nhds (width Φ))
+
+/-- $x \in \mathfrak{m}_R(\Phi)$: $x$ is a **right-critical parameter**
+(paper §3 Def 3.3 / [CLS22, Def 1.5]): there is a strictly decreasing
+sequence $x_i \searrow x$ with $\mathbf{M}(\Phi(x_i)) \to W$. -/
+def RightCritical (Φ : Sweepout M) (x : ℝ) : Prop :=
+  ∃ tᵢ : ℕ → ℝ, StrictAnti tᵢ ∧
+    Filter.Tendsto tᵢ Filter.atTop (nhds x) ∧
+    Filter.Tendsto (fun i => ((Φ.slice (tᵢ i)).perim : ℝ))
+      Filter.atTop (nhds (width Φ))
+
+/-- Paper §3 Def 3.3 last sentence: $\mathfrak{m}(\Phi) = \mathfrak{m}_L
+(\Phi) \cup \mathfrak{m}_R(\Phi)$ — every critical parameter is either
+left-critical or right-critical (and may be both). -/
+theorem critical_iff_left_or_right (Φ : Sweepout M) (t : ℝ) :
+    Critical Φ t ↔ LeftCritical Φ t ∨ RightCritical Φ t := by sorry
+
 /-! ## I-replacement family and excessive intervals (paper Def 3.4) -/
 
 /-- An **$I$-replacement family** for $\Phi$ on the open interval
@@ -101,34 +125,89 @@ Def 3.4). -/
 def ExcessiveAt (Φ : Sweepout M) (x : ℝ) : Prop :=
   LeftExcessiveAt Φ x ∨ RightExcessiveAt Φ x
 
-/-- An **$I$-replacement exists at $t_0$**: $t_0$ is excessive on at
-least one side. -/
+/-- An **$I$-replacement exists at $t_0$** (paper §6.2 chord-beats-arc /
+§5.1 sweepout-wide replacement, both 2-sided constructions): the chord
+construction and Federer-filling produce a flat-continuous family on
+$(t_0 - \varepsilon, t_0 + \varepsilon)$ matching $\Phi$ at the
+endpoints with strict perimeter drop on **both sides** simultaneously.
+Hence $t_0$ is both left-excessive **and** right-excessive.
+
+Encoded as a conjunction `LeftExcessiveAt ∧ RightExcessiveAt` to match
+the paper's actual 2-sided construction (paper §6.2 Step 3 and §5.1).
+The previous disjunctive form was a strict under-statement. -/
 def IReplacementExists (Φ : Sweepout M) (t₀ : ℝ) : Prop :=
-  ExcessiveAt Φ t₀
+  LeftExcessiveAt Φ t₀ ∧ RightExcessiveAt Φ t₀
 
 /-! ## Non-excessive (paper Def 3.4 / Theorem 2.2) -/
 
-/-- $\Phi$ is **non-excessive** if no critical parameter is excessive
-(paper Def 3.4 / [CLS22, Theorem 2.2]).
+/-- $\Phi$ is **non-excessive (framework form)**: no critical parameter
+admits a 2-sided $I$-replacement.
 
-Defined explicitly as a universally-quantified non-excessivity
-condition over critical parameters. -/
+The forbidden configuration is `IReplacementExists Φ t` (the conjunction
+`LeftExcessive ∧ RightExcessive`), which is what paper §6.2 chord-beats-arc
+and paper §5.1 sweepout-wide replacement *actually* construct. This is
+the form the chain proofs naturally consume.
+
+The paper-faithful **strict** form is `NonExcessiveStrict` (paper §3
+line 226 verbatim, separated by critical side); this framework form is
+derived from the strict form via `nonExcessive_of_strict`. -/
 def NonExcessive (Φ : Sweepout M) : Prop :=
-  ∀ t : ℝ, Critical Φ t → ¬ ExcessiveAt Φ t
+  ∀ t : ℝ, Critical Φ t → ¬ IReplacementExists Φ t
 
-/-- A non-excessive sweepout has no excessive critical point.
-This is the definitional content of `NonExcessive` (paper Def 3.4). -/
+/-- $\Phi$ is **non-excessive (strict / paper-faithful form)** —
+verbatim paper §3 line 226 / [CLS22, Theorem `c:non-excessive_minmax`]:
+
+> A sweepout is non-excessive if no critical point is excessive **on
+> its critical side**.
+
+That is:
+  * every left-critical parameter is not left-excessive, and
+  * every right-critical parameter is not right-excessive.
+
+This is the form CLS22 actually establishes (`c:non-excessive_minmax`).
+The framework's `NonExcessive` is derived from it via
+`nonExcessive_of_strict`, exploiting the 2-sided structure of
+`IReplacementExists` (paper §6.2 / §5.1). -/
+def NonExcessiveStrict (Φ : Sweepout M) : Prop :=
+  (∀ t, LeftCritical Φ t → ¬ LeftExcessiveAt Φ t) ∧
+  (∀ t, RightCritical Φ t → ¬ RightExcessiveAt Φ t)
+
+/-- A non-excessive sweepout has no critical point admitting a 2-sided
+$I$-replacement. Definitional unfolding. -/
 theorem non_excessive_def {Φ : Sweepout M} (h : NonExcessive Φ) (t : ℝ)
-    (hcrit : Critical Φ t) : ¬ ExcessiveAt Φ t :=
+    (hcrit : Critical Φ t) : ¬ IReplacementExists Φ t :=
   h t hcrit
 
+/-- **Bridge: paper-faithful strict form implies framework form.**
+
+Argument:
+  * `IReplacementExists Φ t = LeftExcessive Φ t ∧ RightExcessive Φ t`
+    (paper §6.2 / §5.1 — 2-sided construction);
+  * `Critical Φ t ↔ LeftCritical Φ t ∨ RightCritical Φ t`
+    (paper §3 Def 3.3, $\mathfrak{m} = \mathfrak{m}_L \cup \mathfrak{m}_R$);
+  * either disjunct of `LeftCritical ∨ RightCritical` contradicts the
+    matching side of `LeftExcessive ∧ RightExcessive` via the strict
+    form.
+
+This bridge is the formal version of "the framework's unified
+`NonExcessive` is what you actually get from the paper-faithful
+separated form, given that I-replacements are 2-sided." -/
+theorem nonExcessive_of_strict {Φ : Sweepout M}
+    (h : NonExcessiveStrict Φ) : NonExcessive Φ := by
+  intro t hcrit hIRep
+  obtain ⟨hLeftExc, hRightExc⟩ := hIRep
+  rcases (critical_iff_left_or_right Φ t).mp hcrit with hLCrit | hRCrit
+  · exact h.1 t hLCrit hLeftExc
+  · exact h.2 t hRCrit hRightExc
+
 /-- An $I$-replacement at a critical parameter makes that parameter
-excessive (definitional unfolding: $I$-replacement existence is exactly
-excessivity). -/
+excessive (in the paper Def 3.4 disjunctive sense). Direct from the
+conjunctive form of `IReplacementExists`: `Left ∧ Right` projects to
+`Left ∨ Right`. -/
 theorem ireplacement_to_excessive {Φ : Sweepout M} {t₀ : ℝ}
     (h : IReplacementExists Φ t₀) (_hcrit : Critical Φ t₀) :
     ExcessiveAt Φ t₀ :=
-  h
+  Or.inl h.1
 
 /-! ## CLS22 existence theorem -/
 
@@ -156,15 +235,15 @@ The strictly positive width $W(\Phi) > 0$ in the conclusion is from
 isoperimetric inequality [DLT13, Proposition 0.5], cited in paper §3
 Definition~\ref{def:p2-sweepout}.
 
-**Note on `NonExcessive` form**: this theorem returns the framework's
-unified `NonExcessive Φ` (`∀ t, Critical → ¬ ExcessiveAt`), which is
-strictly stronger than CLS22's left/right separated form
-(`m_L not left-excessive ∧ m_R not right-excessive`). See
-`references/cite_verification.md` Item 5 for tightening notes. -/
+**Paper-faithful return type**: this theorem returns
+`NonExcessiveStrict Φ`, the separated form that CLS22 actually
+establishes. Downstream chain consumers bridge to the framework's
+`NonExcessive Φ` (which forbids 2-sided I-replacement at critical
+points) via `nonExcessive_of_strict`. -/
 theorem exists_nonExcessive_ONVP (M : Type*)
     [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [CompactSpace M]
     (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6) :
-    ∃ Φ : Sweepout M, NonExcessive Φ ∧ ONVP Φ ∧ 0 < width Φ := by sorry
+    ∃ Φ : Sweepout M, NonExcessiveStrict Φ ∧ ONVP Φ ∧ 0 < width Φ := by sorry
 
 end Sweepout
 

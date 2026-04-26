@@ -83,12 +83,11 @@ theorem positiveDensity_of_sweepoutWideReplacement
     have h1 : 1 ≤ Varifold.density V p :=
       density_lower_bound_rbdy hp_spt hb hlim
     linarith
-  · -- Case 2b: p in int(Ω_{t₀}) ⟹ apply the replacement, get an
-    -- I-replacement, which makes t₀ excessive, contradicting non-excessiveness.
+  · -- Case 2b: p in int(Ω_{t₀}) ⟹ apply the sweepout-wide replacement
+    -- to obtain a 2-sided I-replacement at t₀ (paper §5.1 — `Left ∧ Right`),
+    -- which contradicts non-excessiveness directly.
     have hIRep : Sweepout.IReplacementExists Φ t₀ :=
       hReplacement hne honvp hcrit hlim hp_spt hint hΘ0
-    have hExc : Sweepout.ExcessiveAt Φ t₀ :=
-      Sweepout.ireplacement_to_excessive hIRep hcrit
-    exact Sweepout.non_excessive_def hne t₀ hcrit hExc
+    exact Sweepout.non_excessive_def hne t₀ hcrit hIRep
 
 end AltRegularity
