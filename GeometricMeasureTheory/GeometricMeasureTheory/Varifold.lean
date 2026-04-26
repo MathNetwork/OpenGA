@@ -159,17 +159,27 @@ visible to the Lean kernel. -/
 def sing (V : Varifold M) : Set M := support V \ regular V
 
 /-- The **boundary varifold** $|\partial^*\Omega|$ associated to a
-finite-perimeter set: the rectifiable $n$-varifold supported on the
-reduced boundary $\partial^*\Omega$ with multiplicity 1.
+finite-perimeter set: the rectifiable codimension-1 varifold supported
+on the reduced boundary $\partial^*\Omega$ with multiplicity 1.
+
+Mass measure is `Ω.perimMeasure` (the BV total variation $|D\chi_\Omega|$,
+already a finite Borel measure on $M$ via `Ω.perimFinite`). Dimension
+is set to the placeholder $0$: a paper-faithful value would be
+$(\text{ambient dim of } M) - 1$, but the framework's `M` does not yet
+carry an ambient-dimension typeclass; chain proofs do not depend on the
+exact value of `(ofBoundary Ω).dim`.
 
 **Ground truth**: Simon 1983 §27 (BV / finite-perimeter sets) + §38
 (associated varifold of an integer-rectifiable current); De Giorgi
 structure theorem (Maggi 2012, Ch. 15) for the reduced boundary as a
 rectifiable set.
 
-**Used by**: `Sweepout.MinMaxLimit` def (`Sweepout/MinMaxLimit.lean`),
-`dlt_criterion` (`Integrality/PerimeterConvergence.lean`). -/
-noncomputable opaque ofBoundary : FinitePerimeter M → Varifold M
+**Used by**: `Sweepout.MinMaxLimit` def (`MinMax/Sweepout/MinMaxLimit.lean`),
+`dlt_criterion` (`AltRegularity/Integrality/PerimeterConvergence.lean`). -/
+noncomputable def ofBoundary (Ω : FinitePerimeter M) : Varifold M where
+  dim := 0
+  massMeasure := Ω.perimMeasure
+  isFiniteMeasure := Ω.perimFinite
 
 end Varifold
 

@@ -44,31 +44,18 @@ namespace AltRegularity
 open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter Regularity Regularity.Varifold MinMax.Sweepout MinMax.Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
-namespace Varifold
-
-/-- The varifold $V$ has a **junction** at the point $Z$ (paper §6.2,
-Step 1; Remark 3.5(ii)): the tangent cone to $\|V\|$ at $Z$ is a
-junction cone — supported on $N \ge 3$ distinct half-hyperplanes
-meeting along a common $(n-1)$-dimensional edge with the stationary
-balancing condition $\sum_j m_j \nu_j = 0$ on the outward conormals.
-This is the configuration excluded by $(\mathcal{S}3)$.
-
-Defined explicitly via the GMT primitives `tangentCone` and
-`IsJunctionCone`, so the structural content "tangent cone is a
-junction" is visible to the Lean kernel. -/
-def HasJunction (V : Varifold M) (Z : M) : Prop :=
-  IsJunctionCone (tangentCone V Z)
-
 /-- The $\alpha$-structural hypothesis fails iff some singular point of
 $V$ is a junction.
 
 Forward direction: $\neg (\mathcal{S}3)$ at some $Z$ exhibits an explicit
 half-hyperplane configuration. Reverse direction: a junction at $Z$ is the
-canonical witness to the negation of $(\mathcal{S}3)$. -/
+canonical witness to the negation of $(\mathcal{S}3)$.
+
+The lib-level concepts `HasJunction` and `IsJunctionCone` live in
+`Regularity.AlphaStructural` (regularity-theory primitives, Wic14
+Remark 3.5(ii)), not in `GeometricMeasureTheory`. -/
 theorem not_alphaStructural_iff_exists_junction (V : Varifold M) (α : ℝ) :
     ¬ AlphaStructural V α ↔ ∃ Z ∈ sing V, HasJunction V Z := by sorry
-
-end Varifold
 
 namespace MinMax.Sweepout
 
@@ -125,7 +112,7 @@ theorem alphaStructural_of_nonExcessive_minmax
   -- Prove `AlphaStructural V (1/4)` by contradiction.
   by_contra h_not
   -- Negation gives a junction at some singular point.
-  rw [Varifold.not_alphaStructural_iff_exists_junction] at h_not
+  rw [AltRegularity.not_alphaStructural_iff_exists_junction] at h_not
   obtain ⟨Z, hZ, hjunc⟩ := h_not
   -- Chord-beats-arc: junction yields a 2-sided $I$-replacement at $t_0$
   -- (paper §6.2 Step 3 — `IReplacementExists` is `Left ∧ Right`).

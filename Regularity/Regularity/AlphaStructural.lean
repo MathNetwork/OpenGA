@@ -1,5 +1,6 @@
 import GeometricMeasureTheory.Stationary
 import GeometricMeasureTheory.SecondVariation
+import GeometricMeasureTheory.TangentCone
 
 open GeometricMeasureTheory GeometricMeasureTheory.Varifold
 
@@ -75,6 +76,37 @@ infrastructure.
 
 **Used by**: `Varifold.AlphaStructural` def (in this file). -/
 opaque HasAlphaJunctionAt : Varifold M → M → ℝ → Prop
+
+/-- $C$ is a **junction cone**: a stationary integral cone supported on
+$N \ge 3$ distinct half-hyperplanes $P_1^+, \ldots, P_N^+$ meeting along
+a common $(n-1)$-dimensional edge $L$, with the stationary balance
+condition $\sum_{j=1}^N m_j \nu_j = 0$ on the outward conormals.
+
+**Ground truth**: Simon 1983 §42 (regularity of stationary integral
+cones, classification of tangent cones); Wickramasekera 2014 §3
+(Sheeting Theorem and Minimum Distance Theorem give the equivalence
+with the $\alpha$-structural hypothesis).
+
+Encoded as an opaque leaf primitive pending Mathlib's
+half-hyperplane / cone infrastructure. Lives in `Regularity` rather
+than `GeometricMeasureTheory` because the junction-cone configuration
+is regularity-theory-specific (Wickramasekera α-structural), not a
+general GMT primitive.
+
+**Used by**: `Varifold.HasJunction` def (in this file). -/
+opaque IsJunctionCone : Varifold M → Prop
+
+/-- The varifold $V$ has a **junction** at the point $Z$ (paper §6.2,
+Step 1; Remark 3.5(ii)): the tangent cone to $\|V\|$ at $Z$ is a
+junction cone — supported on $N \ge 3$ distinct half-hyperplanes
+meeting along a common $(n-1)$-dimensional edge with the stationary
+balancing condition $\sum_j m_j \nu_j = 0$ on the outward conormals.
+This is the configuration excluded by $(\mathcal{S}3)$.
+
+Defined explicitly via the GMT primitive `tangentCone` and the
+regularity-side primitive `IsJunctionCone`. -/
+def HasJunction (V : Varifold M) (Z : M) : Prop :=
+  IsJunctionCone (tangentCone V Z)
 
 /-- $V$ satisfies the **$\alpha$-structural hypothesis** ($\mathcal{S}3$,
 paper §4 Def 4.1): no singular point of $V$ admits an $\alpha$-junction.
