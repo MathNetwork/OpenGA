@@ -31,21 +31,32 @@ variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
 
 /-- A smooth, compactly supported vector field on $M$.
 
-Pending Mathlib's smooth-manifold-with-corners infrastructure for $M$,
-this type is left opaque; concrete inhabitants (zero field, bump-times-coord
-fields) will become available once the manifold structure is threaded
-through. -/
+**Ground truth**: standard smooth-manifold concept; Simon 1983 §38
+("vector fields with compact support on $M$"). Pending Mathlib's
+smooth-manifold-with-corners infrastructure for $M$, this type is
+left opaque; concrete inhabitants (zero field, bump-times-coord fields)
+will become available once the manifold structure is threaded through.
+
+**Used by**: `Varifold.IsStationary` def (`GMT/Stationary.lean`). -/
 opaque TestVectorField (M : Type*)
     [MetricSpace M] [MeasurableSpace M] [BorelSpace M] : Type
 
 namespace Varifold
 
 /-- The **first variation** $\delta V(X) \in \mathbb{R}$ of a varifold
-$V$ along a test vector field $X$.
+$V$ along a test vector field $X$:
+$\delta V(X) := \int \mathrm{div}_S X(x)\, dV(x, S)$,
+where $\mathrm{div}_S X = \sum_{i=1}^n \langle e_i, \nabla_{e_i} X \rangle$
+for an orthonormal basis $\{e_i\}$ of $S$.
 
 For a smooth varifold supported on a hypersurface $\Sigma$ this equals
-$-\int_\Sigma X \cdot \vec{H}_\Sigma \, d\mathcal{H}^n$, where $\vec{H}_\Sigma$
-is the mean curvature vector. -/
+$-\int_\Sigma X \cdot \vec{H}_\Sigma \, d\mathcal{H}^n$, where
+$\vec{H}_\Sigma$ is the mean curvature vector.
+
+**Ground truth**: Simon 1983 §38, equations (38.1)–(38.3); Allard 1972
+§4.1; Pitts 1981 §3.6.
+
+**Used by**: `Varifold.IsStationary` def (`GMT/Stationary.lean`). -/
 opaque firstVariation : Varifold M → TestVectorField M → ℝ
 
 /-- $V$ is **stationary** iff its first variation $\delta V(X)$ vanishes

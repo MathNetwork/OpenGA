@@ -73,8 +73,15 @@ Theorem~\ref{thm:wickramasekera} clause (c)): for the codimension-1
 ambient-dimension parameter $n \ge 8$, the conclusion
 $\mathcal{H}^{n-7+\gamma}(\mathrm{sing}\,V) = 0$ for every $\gamma > 0$.
 
+**Ground truth**: Wickramasekera 2014 Theorem 3.1 / Theorem 6.1 (manifold
+version), clause (c). The Hausdorff $n$-measure machinery itself is
+Simon 1983 §3 (Hausdorff measure construction) and §11.
+
 Encoded as an opaque leaf primitive pending Mathlib's
-Hausdorff-measure-on-manifold infrastructure. -/
+Hausdorff-measure-on-manifold infrastructure.
+
+**Used by**: `Varifold.regularity_of_inClassSAlpha` (n ≥ 8 case)
+(`Regularity/SmoothRegularity.lean`). -/
 opaque HausdorffSmallSingular : Varifold M → ℕ → Prop
 
 /-- **Regularity in the class $\mathcal{S}_\alpha$** (paper §4

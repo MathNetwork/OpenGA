@@ -59,12 +59,18 @@ def MinMaxLimit (Φ : Sweepout M) (x₀ : ℝ) (V : Varifold M) : Prop :=
 /-! ## Convergence predicates packaged from a min-max sequence -/
 
 /-- $L^1$ convergence of slice carriers along the min-max sequence
-$t_i \to t_0$: $\mathrm{Vol}(\Omega(t_i) \,\triangle\, \Omega(t_0)) \to 0$. -/
+$t_i \to t_0$: $\mathrm{Vol}(\Omega(t_i) \,\triangle\, \Omega(t_0)) \to 0$.
+
+**Ground truth**: Simon 1983 §13–§14 (BV functions and finite-perimeter
+sets, $L^1_{\mathrm{loc}}$ convergence of indicators). -/
 opaque SlicesL1Converge : Sweepout M → ℝ → Prop
 
 /-- Weak convergence of the distributional derivatives of the indicator
 functions: $D\chi_{\Omega(t_i)} \to D\chi_{\Omega(t_0)}$ in the sense of
-measures along the min-max sequence. -/
+measures along the min-max sequence.
+
+**Ground truth**: Simon 1983 §13–§14 (weak measure convergence of
+distributional derivatives for BV indicators); Maggi 2012, Theorem 12.15. -/
 opaque DChiWeakConverge : Sweepout M → ℝ → Prop
 
 /-- Perimeter convergence along the min-max sequence:

@@ -63,9 +63,15 @@ union of $C^{1,\alpha}$ hypersurfaces-with-boundary all having a common
 $C^{1,\alpha}$ boundary containing $Z$, with no two of them
 intersecting except along this common boundary.
 
+**Ground truth**: Wickramasekera 2014 §2 ($\alpha$-structural hypothesis
+$(\mathcal{S}3)$); the $C^{1,\alpha}$ regularity of hypersurfaces-with-
+boundary is paper-internal to Wic14 and not in Pitts/Simon.
+
 This is the configuration excluded by ($\mathcal{S}3$), encoded as an
 opaque leaf primitive pending Mathlib's $C^{1,\alpha}$-hypersurface
-infrastructure. -/
+infrastructure.
+
+**Used by**: `Varifold.AlphaStructural` def (in this file). -/
 opaque HasAlphaJunctionAt : Varifold M → M → ℝ → Prop
 
 /-- $V$ satisfies the **$\alpha$-structural hypothesis** ($\mathcal{S}3$,

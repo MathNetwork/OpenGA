@@ -53,6 +53,10 @@ def support (V : Varifold M) : Set M :=
 
 /-- Pointwise density $\Theta(\|V\|, p) := \lim_{r \to 0} \|V\|(B_r(p))/(\omega_n r^n)$.
 
+**Ground truth**: Simon 1983 §17 (monotonicity formula for stationary
+varifolds; existence of density at every point); §10–§11 (general
+density-of-measure theory).
+
 The construction requires Mathlib infrastructure for the monotonicity-formula
 limit (Hausdorff $n$-measure, ratio limits) and is deferred to a later
 refinement. -/
@@ -86,18 +90,31 @@ theorem mem_support_iff (V : Varifold M) (p : M) :
 
 /-- **Weak varifold convergence** of a sequence $V_i \to V$.
 
+**Ground truth**: Simon 1983 §38 (varifold convergence as weak-*
+convergence of Radon measures on the Grassmann bundle $G_n(M)$,
+paired against compactly supported continuous test functions);
+Allard 1972 §3.
+
 Encoded as an opaque leaf primitive: in full generality, weak convergence
 of varifolds means convergence of the underlying Radon measures on the
 Grassmann bundle $G_n(M)$ when paired against compactly supported
-continuous test functions. -/
+continuous test functions.
+
+**Used by**: `Sweepout.MinMaxLimit` def (`Sweepout/MinMaxLimit.lean`). -/
 opaque VarifoldConverge : (ℕ → Varifold M) → Varifold M → Prop
 
 /-- The **regular set** $\mathrm{reg}\,V$ of a varifold: the largest
 open subset of $\mathrm{spt}\|V\|$ on which the support is locally a
 smooth embedded hypersurface.
 
+**Ground truth**: Simon 1983 §41 (regular vs singular set for stationary
+integral varifolds); Wickramasekera 2014 §2 (definition of $\mathrm{reg}\,V$
+in the manifold setting).
+
 Encoded as an opaque leaf primitive pending Mathlib's smooth-manifold
-infrastructure. -/
+infrastructure.
+
+**Used by**: `Varifold.sing` def (in this file). -/
 opaque regular : Varifold M → Set M
 
 /-- The **singular set** $\mathrm{sing}\,V := \mathrm{spt}\|V\| \setminus
@@ -109,7 +126,15 @@ def sing (V : Varifold M) : Set M := support V \ regular V
 
 /-- The **boundary varifold** $|\partial^*\Omega|$ associated to a
 finite-perimeter set: the rectifiable $n$-varifold supported on the
-reduced boundary $\partial^*\Omega$ with multiplicity 1. -/
+reduced boundary $\partial^*\Omega$ with multiplicity 1.
+
+**Ground truth**: Simon 1983 §27 (BV / finite-perimeter sets) + §38
+(associated varifold of an integer-rectifiable current); De Giorgi
+structure theorem (Maggi 2012, Ch. 15) for the reduced boundary as a
+rectifiable set.
+
+**Used by**: `Sweepout.MinMaxLimit` def (`Sweepout/MinMaxLimit.lean`),
+`dlt_criterion` (`Integrality/PerimeterConvergence.lean`). -/
 noncomputable opaque ofBoundary : FinitePerimeter M → Varifold M
 
 end Varifold

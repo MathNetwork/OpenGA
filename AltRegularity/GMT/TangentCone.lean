@@ -30,8 +30,14 @@ namespace Varifold
 /-- The **tangent cone** of $V$ at $Z$: the blow-up limit of $V$ under
 rescaling at $Z$, a stationary integral cone in the tangent space.
 
+**Ground truth**: Simon 1983 §42 (varifold tangents, blow-up procedure
+for stationary integral varifolds); Allard 1972 §3.4–§3.6.
+
 Encoded as an opaque leaf primitive pending Mathlib's tangent-measure
-infrastructure. -/
+infrastructure.
+
+**Used by**: `Varifold.HasJunction` def
+(`Regularity/AlphaStructuralVerification.lean`). -/
 noncomputable opaque tangentCone : Varifold M → M → Varifold M
 
 /-- $C$ is a **junction cone**: a stationary integral cone supported on
@@ -39,8 +45,15 @@ $N \ge 3$ distinct half-hyperplanes $P_1^+, \ldots, P_N^+$ meeting along
 a common $(n-1)$-dimensional edge $L$, with the stationary balance
 condition $\sum_{j=1}^N m_j \nu_j = 0$ on the outward conormals.
 
+**Ground truth**: Simon 1983 §42 (regularity of stationary integral
+cones, classification of tangent cones); Wickramasekera 2014 §3
+(Sheeting Theorem and Minimum Distance Theorem give the equivalence
+with the $\alpha$-structural hypothesis).
+
 Encoded as an opaque leaf primitive pending Mathlib's
-half-hyperplane / cone infrastructure. -/
+half-hyperplane / cone infrastructure.
+
+**Used by**: `Varifold.HasJunction` def. -/
 opaque IsJunctionCone : Varifold M → Prop
 
 end Varifold

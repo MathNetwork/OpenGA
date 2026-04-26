@@ -36,6 +36,9 @@ namespace Sweepout
 \mathbf{M}(\Phi(t))$ equals the global width $W = \inf_{\Phi'}
 \sup_t \mathbf{M}(\Phi'(t))$ over all sweepouts.
 
+**Ground truth**: sweepout-specific concept (no direct Pitts/Simon
+analog); CLS22 §2 line 805 + paper §3 Def 3.1.
+
 Encoded as an opaque leaf primitive pending a quantification over
 $\mathcal{S}$ in the framework. -/
 opaque IsOptimal : Sweepout M → Prop
@@ -43,6 +46,10 @@ opaque IsOptimal : Sweepout M → Prop
 /-- $\Phi$ is **volume-parametrized** (paper Def 3.2 third bullet):
 $\mathrm{Vol}(\Omega(t)) = t \cdot \mathrm{Vol}(M)$ for every $t \in
 [0,1]$.
+
+**Ground truth**: sweepout-specific concept; CLS22 §2 (Def 1.2) +
+paper §3 Def 3.2. Volume measure on $M$ is Simon 1983 §3 (Lebesgue
+on $\mathbb{R}^{n+1}$) / standard Riemannian volume form.
 
 Encoded as an opaque leaf primitive pending a reference volume measure
 on $M$. -/

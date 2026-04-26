@@ -24,8 +24,14 @@ namespace FinitePerimeter
 /-- The **flat distance** $\mathcal{F}(\Omega_1, \Omega_2) :=
 \mathrm{Vol}(\Omega_1 \triangle \Omega_2)$.
 
+**Ground truth**: Simon 1983 §31 (flat metric on integral currents);
+for finite-perimeter sets the flat distance specializes to the Lebesgue
+measure of the symmetric difference.
+
 Encoded as an opaque leaf primitive pending a reference volume measure
-on $M$. -/
+on $M$.
+
+**Used by**: `Sweepout.FContinuous` def (`Sweepout/Defs.lean`). -/
 opaque flatDist : FinitePerimeter M → FinitePerimeter M → ℝ
 
 end FinitePerimeter

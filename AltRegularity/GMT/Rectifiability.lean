@@ -29,8 +29,13 @@ variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
 is the countable union of Lipschitz images of bounded subsets of
 $\mathbb{R}^n$, modulo an $\mathcal{H}^n$-null set.
 
+**Ground truth**: Simon 1983 §11 (rectifiable sets, Theorem 11.1 for
+the Lipschitz-image characterization); Federer 1969 §3.2.14.
+
 Pending Mathlib's rectifiable-set infrastructure, this predicate is
-left opaque. -/
+left opaque.
+
+**Used by**: `Varifold.IsRectifiable` def (in this file). -/
 opaque IsHRectifiable : Set M → ℕ → Prop
 
 namespace Varifold

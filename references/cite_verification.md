@@ -12,14 +12,32 @@ the chain proves an off-paper claim.
 
 ## Workflow
 
-1. **Lean signature** is auto-extracted from current source (see file:line).
-2. **Paper §X phrasing** (the paper's own restatement) is filled by
-   reading `paper/chapters/part2/*.tex`.
-3. **Cited original statement** is filled by reading the local PDF /
-   arXiv source listed under "Cited paper file".
-4. **Alignment check** compares each component (hypotheses + conclusion)
-   row-by-row.
-5. **Status** advances 🔴 → 🟡 (mismatch flagged) → 🟢 (verified aligned).
+The verification chain is layered. Each layer must align with the next:
+
+```
+Lean signature (kernel-verified)
+   ↑ Round 5 strict-alignment
+Paper §X phrase (verbatim from paper/chapters/part2/*.tex)
+   ↑ Round 5 verification document
+Cited paper (Wic14, CLS22, DLT13, CL03, Lin85) phrase
+   ↑ Pitts/Simon ground truth references
+Pitts 1981 / Simon 1983 ground truth (GMT primitives)
+   ↑ docstrings (`**Ground truth**: Simon §X` in opaque defs)
+   ↓ future: real defs replacing opaque primitives
+```
+
+Steps for each entry below:
+
+1. **Lean signature** — auto-extracted from current source (file:line).
+2. **Paper §X phrasing** — verbatim quote from `paper/chapters/part2/*.tex`.
+3. **Cited original statement** — verbatim quote from the cited paper
+   (local PDF / arXiv tex source).
+4. **Alignment check** — row-by-row comparison of components.
+5. **Ground truth references** — for each GMT primitive in the statement,
+   the Pitts 1983 / Simon 1981 §X / Allard 1972 §X reference; for
+   cited-paper-specific contributions, note which results are NOT in
+   ground-truth GMT.
+6. **Status** advances 🔴 → 🟡 (mismatch flagged) → 🟢 (verified aligned).
 
 If a mismatch is found, the framework's signature is strict-aligned to
 match (which may surface a hidden gap in the chain — see Round 5 Item 1
@@ -48,6 +66,33 @@ Resources discovered under
 | SSY75 | pdf | `pdf/SSY75-Schoen-Simon-Yau-1975.pdf` |
 | Pitts81 | pdf | `pdf/Existence and regularity of minimal surfaces on Riemannian manifolds by Pitts...pdf` |
 | CL20 | tex | `arXiv-sources/CL20-Chambers-Liokumovich/CLminimal_2018_December.tex` |
+
+### Ground truth sources (Pitts 1981 + Simon 1983)
+
+These two sources are GMT ground truth — every cited paper above (CLS22,
+Wic14, DLT13, CL03, Lin85) is built on top of them. Each opaque GMT
+primitive in `AltRegularity/GMT/*.lean` carries a `**Ground truth**:`
+docstring line pointing to the relevant Pitts/Simon section.
+
+| Framework opaque | Pitts/Simon §X reference |
+|---|---|
+| `Varifold.firstVariation` | Simon §38 (eq. 38.1); Allard §4.1; Pitts §3.6 |
+| `Varifold.secondVariation` | Simon §49; Schoen–Simon 1981 §1 |
+| `Varifold.tangentCone` | Simon §42; Allard §3.4–§3.6 |
+| `Varifold.density` | Simon §17 (monotonicity formula) |
+| `Varifold.regular` | Simon §41 + Wic14 §2 |
+| `Varifold.VarifoldConverge` | Simon §38 (weak-* on $C_c(G_n(M))$) |
+| `Varifold.ofBoundary` | Simon §27 (BV) + §38 (associated varifold) |
+| `IsHRectifiable` | Simon §11; Federer 1969 §3.2.14 |
+| `IsJunctionCone` | Simon §42 + Wic14 §3 |
+| `flatDist` | Simon §31 (flat metric on currents) |
+| `SlicesL1Converge`, `DChiWeakConverge` | Simon §13–§14 (BV) |
+| `IsInnerAlmostMinimizer`, `IsOuterAlmostMinimizer` | Pitts §3.7 |
+| `IsOneSidedCompetitor` | Pitts §3.7 + CLS22 §2 |
+| `TestVectorField` | smooth-manifold standard, Simon §38 |
+| `HasAlphaJunctionAt` | Wic14 §2 — Wic14 contribution, no Pitts/Simon analog |
+| `HausdorffSmallSingular` | Wic14 Theorem 3.1 + Simon §3 (Hausdorff measure) |
+| `IsOptimal`, `IsVolumeParametrized`, `InnerHomotopicMinimizer`, `OuterHomotopicMinimizer` | sweepout-specific (CLS22 §2 + paper §3) |
 
 ---
 
@@ -107,7 +152,23 @@ theorem isSmoothMinimalHypersurface_of_inClassSAlpha
 
 **Hidden gap caught**: paper Theorem 1.1's "$2 \le n \le 6$" hypothesis was implicit in the Lean framework before strict-alignment; now threaded explicitly through `main_theorem_*` and `exists_smoothMinimalHypersurface_via_ONVP`.
 
-**Status**: 🟡 (paper §4 verified verbatim; cited original TODO)
+**Ground truth references** (Pitts 1981 / Simon 1983):
+
+GMT primitives used in the statement:
+- $\mathcal{S}_\alpha$ class (S1)(S2)(S3): Wic14 §2 — Wickramasekera-specific
+- (S1) `IsStationary` / first variation: Simon §38 (eq. 38.1) ✓ ground truth
+- (S2) `IsStable` / second variation: Simon §49 (Jacobi field setup); Schoen–Simon 1981 §1 ✓ ground truth
+- `IsIntegral` (multiplicity): Simon §38 (integer-multiplicity varifolds)
+- `IsRectifiable`: Simon §11 (rectifiable sets)
+- `density`: Simon §17 (monotonicity formula)
+- `regular` / `sing`: Simon §41 + Wic14 §2
+
+Cited paper-specific contributions (not in Pitts/Simon):
+- (S3) $\alpha$-structural hypothesis (`HasAlphaJunctionAt`): Wic14 §2 — original Wic14 contribution
+- Sheeting Theorem + Minimum Distance Theorem (used to relate (S3) to junction tangent cones): Wic14 §3 — Wic14 contribution
+- Singular set Hausdorff dimension bound (clauses (b)(c)): Wic14 main theorem — Wic14 contribution
+
+**Status**: 🟡 (paper §4 verified verbatim; cited Wic14 original statement TODO)
 
 ---
 
@@ -251,6 +312,28 @@ CLS22 `p:def-thm-cancel` (line 1607, cancellation case):
 `isStable_of_nonExcessive_minmax` and propagating from `main_theorem_*`
 (both already have `honvp` in scope).
 
+**Ground truth references** (Pitts 1981 / Simon 1983):
+
+GMT primitives used in the statement:
+- `Varifold`, `MinMaxLimit`, `VarifoldConverge`: Simon §38 (varifold
+  weak convergence on $G_n(M)$); Allard 1972 §3
+- `support`, `OneSidedMinimizingAt`, `IsOneSidedCompetitor`: Pitts 1981
+  §3.7 (almost-minimizing one-sided competitor); CLS22 §2 (Def 1.4 —
+  homotopic minimizer in sweepout context)
+- Caccioppoli surgery / "gluing in" homotopies: Simon §27 (currents)
+  + §13–§14 (BV)
+- Reduced boundary $\partial^*\Omega$ (used in CLS22 proof): Simon §27;
+  De Giorgi structure theorem (Maggi 2012, Ch. 15)
+
+Cited paper-specific contributions:
+- $\mathfrak{h}_{\mathrm{nm}}(V)$ (non-homotopic-minimizing set):
+  CLS22 Def 2.5 + paper §3 Def 3.8 — CLS22 contribution
+- Finiteness via 2-sided $I$-replacement extension argument: CLS22
+  `p:pairs`, `p:def_thm`, `p:def-thm-cancel` (CLS22 §4) — CLS22
+  contribution
+- "Nestedness" (ONVP) requirement for the proof: paper §6.1 remark +
+  CLS22 §3 — sweepout-specific structural use
+
 **Status**: 🟢 (paper §6.1 + CLS22 originals quoted verbatim; aligned
 modulo paper-faithful "finite" vs CLS22 stronger "$\le 1$" — documented;
 NonExcessive form bridged via Option C; ONVP hypothesis paper-explicit
@@ -371,6 +454,30 @@ and propagated to `exists_smoothMinimalHypersurface_via_ONVP`.
 
 **Chain break**: Yes, `MinMaxExistence.lean:90` (`exists_smoothMinimalHypersurface_via_ONVP`).
 Fixed by passing `n hn hn6` through (already in scope from Round 5 Item 1).
+
+**Ground truth references** (Pitts 1981 / Simon 1983):
+
+GMT primitives used in the statement:
+- `Sweepout` (Caccioppoli boundary family): Simon §13–§14 (BV /
+  finite-perimeter sets); De Giorgi structure theorem
+- `FContinuous` / flat distance: Simon §27 (currents) + §31 (flat metric);
+  for Caccioppoli sets specializes to Lebesgue measure of symmetric difference
+- `Critical` / `criticalMass` (limsup mass): Simon §38 (varifold mass);
+  Pitts 1981 §3.4 (sequence-based critical setup)
+- $\mathfrak{m}_L$, $\mathfrak{m}_R$ (left/right critical sets):
+  CLS22 §2 — sweepout-specific concept
+- `width`: paper §3 Def 3.1; standard min-max width definition
+  (Almgren-Pitts, Pitts 1981 §3.1)
+
+Cited paper-specific contributions (not in Pitts/Simon):
+- ONVP (Optimal Nested Volume Parametrized): CLS22 Def 1.2 + paper §3
+  Def 3.2 — sweepout-specific
+- $I$-replacement family / excessive interval: CLS22 Def 2.1 + paper §3
+  Def 3.4 — CLS22 contribution
+- non-excessive (separated form): CLS22 — CLS22 contribution
+- Existence of non-excessive sweepout: CLS22 Theorem `c:non-excessive_minmax`
+  via Almgren's discrete-to-continuous sweepout argument + tightening
+  (built on Pitts 1981 §3.1, Almgren–Pitts theory)
 
 **Status**: 🟢 (aligned to paper §3 + CLS22 verbatim; NonExcessive form
 mismatch resolved via Option C — `NonExcessiveStrict` matches CLS22

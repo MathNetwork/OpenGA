@@ -23,11 +23,18 @@ variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
 namespace FinitePerimeter
 
 /-- $\Omega$ is locally one-sided **inner** $\varepsilon$-almost area
-minimizing in the open set $U$. -/
+minimizing in the open set $U$.
+
+**Ground truth**: Pitts 1981 §3.7 (almost-minimizing varifolds, inner
+side); paper §5.1 Definition 5.1; CLS22 Def 1.10 ($\varepsilon = 0$
+case). -/
 opaque IsInnerAlmostMinimizer : FinitePerimeter M → Set M → ℝ → Prop
 
 /-- $\Omega$ is locally one-sided **outer** $\varepsilon$-almost area
-minimizing in the open set $U$. -/
+minimizing in the open set $U$.
+
+**Ground truth**: Pitts 1981 §3.7 (outer side); paper §5.1 Definition
+5.1; CLS22 Def 1.10. -/
 opaque IsOuterAlmostMinimizer : FinitePerimeter M → Set M → ℝ → Prop
 
 end FinitePerimeter
