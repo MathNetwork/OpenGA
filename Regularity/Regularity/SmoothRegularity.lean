@@ -2,8 +2,9 @@ import Regularity.AlphaStructural
 import GeometricMeasureTheory.Rectifiability
 import Mathlib.MeasureTheory.Measure.Hausdorff
 import Mathlib.Geometry.Manifold.IsManifold.Basic
+import Mathlib.Topology.VectorBundle.Riemannian
 
-open GeometricMeasureTheory GeometricMeasureTheory.Varifold
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold Bundle
 open scoped ContDiff
 
 /-!
@@ -48,9 +49,11 @@ namespace Varifold
 section Smooth
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [CompleteSpace E] [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H]
   (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
+  [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
 
 /-- $V$ is a **smooth, closed, embedded minimal hypersurface** of $M$
 (paper §4 Theorem~\ref{thm:wickramasekera}, "in particular" clause for
@@ -112,7 +115,8 @@ the verbatim 3-case dimension-dependent statement from paper §4. The
 finiteness $\|V\|(N) < \infty$ is implicit in our `Varifold` structure
 via the `isFiniteMeasure` field. -/
 theorem regularity_of_inClassSAlpha
-    {V : Varifold M} {α : ℝ} (hα : 0 < α ∧ α < 1/2)
+    {V : Varifold M} [Varifold.HasNormal I V]
+    {α : ℝ} (hα : 0 < α ∧ α < 1/2)
     {n : ℕ} (hn : 2 ≤ n)
     (hclass : InClassSAlpha I V α) :
     (n ≤ 6 → sing I V = ∅) ∧
@@ -129,7 +133,8 @@ integral; integrality, stationarity from $\mathcal{S}_\alpha$) into the
 `IsSmoothMinimalHypersurface` conclusion used downstream by paper
 Theorem 1.1. -/
 theorem isSmoothMinimalHypersurface_of_inClassSAlpha
-    {V : Varifold M} {α : ℝ} (hα : 0 < α ∧ α < 1/2)
+    {V : Varifold M} [Varifold.HasNormal I V]
+    {α : ℝ} (hα : 0 < α ∧ α < 1/2)
     {n : ℕ} (hn : 2 ≤ n) (hn6 : n ≤ 6)
     (hclass : InClassSAlpha I V α) :
     IsSmoothMinimalHypersurface I V := by sorry

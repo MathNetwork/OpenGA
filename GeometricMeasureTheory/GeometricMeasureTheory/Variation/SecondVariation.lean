@@ -72,9 +72,10 @@ noncomputable def secondVariationFull
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
+    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
     (V : Varifold M) [hN : Varifold.HasNormal I V]
     (φ : M → ℝ) : ℝ :=
-  ∫ x, (manifoldGradientNormSq φ x -
+  ∫ x, (manifoldGradientNormSq I φ x -
         (secondFundamentalFormSqNorm hN.unitNormal x +
          ricci hN.unitNormal hN.unitNormal x) * φ x ^ 2)
       ∂V.massMeasure

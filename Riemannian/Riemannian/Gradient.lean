@@ -83,14 +83,21 @@ defined as $\|\nabla^M f(x)\|^2$ using the inner-product norm on
 Real `noncomputable def` (no `Classical.choose`) — direct
 constructive form via `‖_‖^2`. -/
 noncomputable def manifoldGradientNormSq
+    (I' : ModelWithCorners ℝ E H)
+    [ChartedSpace H M] [IsManifold I' ∞ M]
+    [Bundle.RiemannianBundle (fun x : M => TangentSpace I' x)]
     (f : M → ℝ) (x : M) : ℝ :=
-  ‖manifoldGradient f x‖ ^ 2
+  ‖(manifoldGradient (I := I') f x : TangentSpace I' x)‖ ^ 2
 
 /-- **$|\nabla^M f|^2 \geq 0$**: gradient squared norm is non-negative.
 Direct from `sq_nonneg` on `‖manifoldGradient f x‖`. -/
 @[simp]
-theorem manifoldGradientNormSq_nonneg (f : M → ℝ) (x : M) :
-    0 ≤ manifoldGradientNormSq f x :=
+theorem manifoldGradientNormSq_nonneg
+    (I' : ModelWithCorners ℝ E H)
+    [ChartedSpace H M] [IsManifold I' ∞ M]
+    [Bundle.RiemannianBundle (fun x : M => TangentSpace I' x)]
+    (f : M → ℝ) (x : M) :
+    0 ≤ manifoldGradientNormSq I' f x :=
   sq_nonneg _
 
 end Riemannian

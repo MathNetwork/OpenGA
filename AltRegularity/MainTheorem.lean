@@ -8,6 +8,7 @@ import GeometricMeasureTheory
 import MinMax
 import Regularity
 import Mathlib.Geometry.Manifold.IsManifold.Basic
+import Mathlib.Topology.VectorBundle.Riemannian
 
 /-!
 # AltRegularity.MainTheorem
@@ -54,9 +55,11 @@ open scoped ContDiff
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [MeasurableSpace E] [BorelSpace E]
+  [CompleteSpace E] [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H]
   (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
+  [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
 
 -- Both Section 7 bridges are provided by chain-proof modules:
 --   * `isStable_of_nonExcessive_minmax`
@@ -80,6 +83,7 @@ regularity theorem for the class $\mathcal{S}_\alpha$ in the
 $2 \le n \le 6$ case. -/
 theorem main_theorem_no_cancellation
     {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    [Varifold.HasNormal I V]
     (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6)
     (hne : MinMax.Sweepout.NonExcessive Φ) (honvp : MinMax.Sweepout.ONVP Φ)
     (hcrit : MinMax.Sweepout.Critical Φ t₀) (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V)
@@ -119,6 +123,7 @@ Theorem 6.1(b) after positive density on the support is supplied
 pointwise by `positiveDensity_of_sweepoutWideReplacement`. -/
 theorem main_theorem_with_cancellation
     {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    [Varifold.HasNormal I V]
     (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6)
     (hne : MinMax.Sweepout.NonExcessive Φ) (honvp : MinMax.Sweepout.ONVP Φ)
     (hcrit : MinMax.Sweepout.Critical Φ t₀) (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V)

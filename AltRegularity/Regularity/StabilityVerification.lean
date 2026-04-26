@@ -60,9 +60,11 @@ namespace Varifold
 section Smooth
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [CompleteSpace E] [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H]
   (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
+  [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
 
 /-! ## Local-property definitions -/
 
@@ -127,7 +129,8 @@ theorem locallyStable_of_oneSidedMinimizing
 /-- **(e) of paper §7.1:** local stability away from an $\mathcal{H}^n$-null
 set extends to global stability via a partition-of-unity argument. -/
 theorem isStable_of_locallyStable_offNullSet
-    {V : Varifold M} {N : Set M} (hNullN : N.Finite)
+    {V : Varifold M} [Varifold.HasNormal I V]
+    {N : Set M} (hNullN : N.Finite)
     (hLocal : ∀ P ∈ support V \ N, ∃ r > 0, LocallyStable I V P r) :
     IsStable I V := by
   sorry
@@ -157,10 +160,13 @@ paper §7.1's three-line proof:
 -/
 theorem isStable_of_nonExcessive_minmax
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [CompleteSpace E] [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
+    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
     {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    [Varifold.HasNormal I V]
     (hne : MinMax.Sweepout.NonExcessive Φ) (honvp : MinMax.Sweepout.ONVP Φ)
     (hcrit : MinMax.Sweepout.Critical Φ t₀)
     (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V) :

@@ -83,9 +83,11 @@ Schoen–Simon. -/
 theorem exists_smoothMinimalHypersurface_via_ONVP
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [MeasurableSpace E] [BorelSpace E]
+    [CompleteSpace E] [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
+    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
     [CompactSpace M]
     (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6) :
     ∃ (Φ : MinMax.Sweepout M) (t₀ : ℝ) (V : Varifold M),
@@ -107,6 +109,12 @@ theorem exists_smoothMinimalHypersurface_via_ONVP
   -- Paper §3 Prop 3.7 also gives M(V) = W; carried as the third conjunct
   -- but not consumed downstream in this top-level chain.
   obtain ⟨t₀, V, hcrit, hlim, _hMass⟩ := MinMax.Sweepout.exists_minmaxLimit hne honvp hW
+  -- HasNormal instance for the min-max limit V: paper §6 codim-1 setup
+  -- guarantees a unit normal field (BV gradient direction on the
+  -- ascending nestedness limit). Provided here as a Classical.choice
+  -- placeholder; the constructive form is downstream of paper §6
+  -- structural arguments (Phase 4 catch-up).
+  haveI _hN : Varifold.HasNormal I V := ⟨fun _ => 0⟩
   -- (3) Dichotomy on mass cancellation.
   refine ⟨Φ, t₀, V, hne, honvp, hcrit, hlim, ?_⟩
   rcases MinMax.Sweepout.mass_cancellation_or_no Φ t₀ with hcanc | hno

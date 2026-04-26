@@ -4,8 +4,9 @@ import GeometricMeasureTheory.Stable
 import GeometricMeasureTheory.TangentCone
 import Mathlib.Geometry.Manifold.IsManifold.Basic
 import Mathlib.MeasureTheory.Measure.Map
+import Mathlib.Topology.VectorBundle.Riemannian
 
-open GeometricMeasureTheory GeometricMeasureTheory.Varifold
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold Bundle
 open scoped ContDiff Manifold
 
 /-!
@@ -198,10 +199,13 @@ Carries the smooth-manifold typeclass cascade because `IsStable I V`
 and `AlphaStructural I V α` reference `sing I V`. -/
 structure InClassSAlpha
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [CompleteSpace E] [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
-    (V : Varifold M) (α : ℝ) : Prop where
+    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+    (V : Varifold M) [Varifold.HasNormal I V]
+    (α : ℝ) : Prop where
   /-- ($\mathcal{S}1$) The varifold is stationary: $\delta V = 0$. -/
   stationary : IsStationary V
   /-- The varifold has integer multiplicity. -/

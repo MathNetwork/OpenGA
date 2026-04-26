@@ -1,5 +1,7 @@
 import GeometricMeasureTheory.Varifold
 import GeometricMeasureTheory.SecondVariation
+import GeometricMeasureTheory.Variation.SecondVariation
+import GeometricMeasureTheory.HasNormal
 import Mathlib.Geometry.Manifold.IsManifold.Basic
 
 /-!
@@ -46,29 +48,43 @@ namespace Varifold
 $\delta^2 V(\varphi, \varphi) \ge 0$ for every smooth scalar normal
 deformation $\varphi$ compactly supported away from $\mathrm{sing}\,V$.
 
+**Phase 1.7 body migration**: body uses `Variation.secondVariationFull`
+(full Jacobi form: kinetic $|\nabla\varphi|^2$ + curvature
+$|A|^2 + \mathrm{Ric}(\nu,\nu)$ contribution, post Phase 1.6 Bridge).
+Requires `[Varifold.HasNormal I V]` for the unit normal field.
+
 Carries the smooth-manifold typeclass cascade
-`(I : ModelWithCorners) [ChartedSpace H M] [IsManifold I ∞ M]`
-because `sing I V` requires it. -/
+`(I : ModelWithCorners) [ChartedSpace H M] [IsManifold I ∞ M]
+[CompleteSpace E] [FiniteDimensional ℝ E] [HasNormal I V]`
+because `sing I V` requires it and `secondVariationFull` requires the
+HasNormal-Bridge cascade. -/
 def IsStable
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [CompleteSpace E] [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
-    (V : Varifold M) : Prop :=
+    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+    (V : Varifold M) [Varifold.HasNormal I V] : Prop :=
   ∀ φ : M → ℝ, Function.support φ ⊆ (sing I V)ᶜ →
-    0 ≤ secondVariation I V φ
+    0 ≤ Variation.secondVariationFull I V φ
 
 /-- $V$ is **unstable**: there exists a test direction with negative
-second variation. -/
+second variation.
+
+**Phase 1.7 body migration**: body uses `Variation.secondVariationFull`,
+matching `IsStable`'s migration. -/
 def IsUnstable
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [CompleteSpace E] [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
-    (V : Varifold M) : Prop :=
+    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+    (V : Varifold M) [Varifold.HasNormal I V] : Prop :=
   ∃ φ : M → ℝ,
     Function.support φ ⊆ (sing I V)ᶜ ∧
-    secondVariation I V φ < 0
+    Variation.secondVariationFull I V φ < 0
 
 /-- The **Morse index** of $V$: dimension of the negative eigenspace
 of the Jacobi operator (stub).
@@ -91,12 +107,16 @@ section UXTest
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
   [MeasureTheory.MeasureSpace M]
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [CompleteSpace E] [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
+  [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
 
-example (V : Varifold M) : Prop := Varifold.IsStable I V
+example (V : Varifold M) [Varifold.HasNormal I V] :
+    Prop := Varifold.IsStable I V
 
-example (V : Varifold M) : Prop := Varifold.IsUnstable I V
+example (V : Varifold M) [Varifold.HasNormal I V] :
+    Prop := Varifold.IsUnstable I V
 
 example (V : Varifold M) : Varifold.MorseIndex V = 0 := rfl
 
