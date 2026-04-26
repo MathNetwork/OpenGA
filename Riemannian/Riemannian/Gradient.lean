@@ -42,14 +42,25 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
 
 For any smooth scalar function $f : M \to \mathbb{R}$, there exists a
 section $\nabla^M f$ of the tangent bundle representing the gradient
-via Riesz duality: $\langle \nabla^M f(x), v \rangle = (\mathrm{d}f)_x(v)$.
+via **Riesz duality**:
+$$\langle \nabla^M f(x), v \rangle = (\mathrm{d}f)_x(v)
+  \quad \forall v \in T_xM.$$
+
+The statement encodes the duality, so `Classical.choose_spec`
+extracts the Riesz-duality property as a derived theorem
+(`manifoldGradient_riesz`).
 
 **Sorry status**: PRE-PAPER. Repair plan: replace with
 `(InnerProductSpace.toDual ℝ (TangentSpace I x)).symm (mfderiv I 𝓘(ℝ, ℝ) f x)`
-once `RiemannianBundle (fun x ↦ TangentSpace I x)` is in scope. -/
+once the `InnerProductSpace.toDual` ↔ `RiemannianBundle` wiring is
+verified to compose cleanly. -/
 theorem manifoldGradient_exists :
-    ∃ _grad : (M → ℝ) → (Π x : M, TangentSpace I x), True :=
-  ⟨fun _ _ => 0, trivial⟩
+    ∃ _grad : (M → ℝ) → (Π x : M, TangentSpace I x),
+      ∀ (f : M → ℝ) (x : M) (v : TangentSpace I x),
+        inner ℝ (_grad f x) v = (mfderiv I 𝓘(ℝ, ℝ) f x) v :=
+  ⟨fun _ _ => 0, fun f x v => by
+    simp only [inner_zero_left]
+    sorry⟩
 
 /-- The **manifold gradient** $\nabla^M f : (x : M) \to T_xM$.
 
@@ -59,6 +70,15 @@ Real `noncomputable def` via `Classical.choose manifoldGradient_exists`. -/
 noncomputable def manifoldGradient
     (f : M → ℝ) (x : M) : TangentSpace I x :=
   Classical.choose (manifoldGradient_exists (I := I) (M := M)) f x
+
+/-- **Riesz duality for the manifold gradient**:
+$\langle \nabla^M f(x), v \rangle = (\mathrm{d}f)_x(v)$.
+
+Extracted from `manifoldGradient_exists` via `Classical.choose_spec`. -/
+theorem manifoldGradient_riesz
+    (f : M → ℝ) (x : M) (v : TangentSpace I x) :
+    inner ℝ (manifoldGradient f x) v = (mfderiv I 𝓘(ℝ, ℝ) f x) v :=
+  Classical.choose_spec (manifoldGradient_exists (I := I) (M := M)) f x v
 
 /-- **Existence axiom for $|\nabla^M f|^2$**: there exists a
 **non-negative** real-valued function representing the squared norm of
