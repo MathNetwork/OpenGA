@@ -1,4 +1,8 @@
-import AltRegularity.Sweepout.MinMaxLimit
+import Sweepout.MinMaxLimit
+
+open GeometricMeasureTheory
+
+namespace Sweepout
 
 /-!
 # AltRegularity.Sweepout.MassCancellation
@@ -26,11 +30,10 @@ axiom `perim_slice_le_width`, which captures the definitional content of
 $W(\Phi) = \sup_t \mathrm{Per}(\Phi(t))$.
 -/
 
-namespace AltRegularity
+
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
-namespace Sweepout
 
 /-- Mass cancellation at $t_0$ in $\Phi$: the perimeter of the limit slice
 is strictly less than the width. -/
@@ -103,6 +106,6 @@ theorem perimeterConvergence_of_noMassCancellation
   -- (3) NoMassCancellation: (Φ.slice t₀).perim = width Φ; symm gives goal.
   exact hno.symm
 
-end Sweepout
 
-end AltRegularity
+
+end Sweepout

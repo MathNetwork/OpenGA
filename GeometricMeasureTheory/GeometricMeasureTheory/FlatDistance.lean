@@ -1,4 +1,4 @@
-import AltRegularity.GMT.FinitePerimeter
+import GeometricMeasureTheory.FinitePerimeter
 import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 
 /-!
@@ -16,7 +16,7 @@ formalized as the `MeasureSpace` typeclass instance to be supplied
 downstream.
 -/
 
-namespace AltRegularity
+namespace GeometricMeasureTheory
 
 namespace FinitePerimeter
 
@@ -39,4 +39,4 @@ noncomputable def flatDist (Ω₁ Ω₂ : FinitePerimeter M) : ℝ :=
 
 end FinitePerimeter
 
-end AltRegularity
+end GeometricMeasureTheory

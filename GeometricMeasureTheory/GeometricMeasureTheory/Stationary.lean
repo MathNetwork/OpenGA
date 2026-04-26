@@ -1,4 +1,4 @@
-import AltRegularity.GMT.Varifold
+import GeometricMeasureTheory.Varifold
 
 /-!
 # AltRegularity.GMT.Stationary
@@ -25,7 +25,7 @@ space of smooth compactly supported vector fields on $M$) and
 opaque pending Mathlib-level manifold infrastructure.
 -/
 
-namespace AltRegularity
+namespace GeometricMeasureTheory
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
@@ -70,4 +70,4 @@ def IsStationary (V : Varifold M) : Prop :=
 
 end Varifold
 
-end AltRegularity
+end GeometricMeasureTheory

@@ -1,6 +1,10 @@
-import AltRegularity.Sweepout.Defs
-import AltRegularity.Sweepout.ONVP
+import Sweepout.Defs
+import Sweepout.ONVP
 import Mathlib.Topology.Order.LiminfLimsup
+
+open GeometricMeasureTheory
+
+namespace Sweepout
 
 /-!
 # AltRegularity.Sweepout.NonExcessive
@@ -30,11 +34,10 @@ in opaque predicates. The bridges `non_excessive_def` and
 `ireplacement_to_excessive` reduce to definitional unfolding.
 -/
 
-namespace AltRegularity
+
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
-namespace Sweepout
 
 /-! ## Critical parameters (paper Def 3.3) -/
 
@@ -246,6 +249,6 @@ theorem exists_nonExcessive_ONVP (M : Type*)
     (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6) :
     ∃ Φ : Sweepout M, NonExcessiveStrict Φ ∧ ONVP Φ ∧ 0 < width Φ := by sorry
 
-end Sweepout
 
-end AltRegularity
+
+end Sweepout

@@ -1,5 +1,8 @@
 import AltRegularity.Integrality.ReducedBoundary
-import AltRegularity.Sweepout.NonExcessive
+import Sweepout.NonExcessive
+import GeometricMeasureTheory
+import Sweepout
+import MinimalSurfaceRegularity
 
 /-!
 # AltRegularity.PositiveDensity
@@ -20,6 +23,7 @@ is a finite logical chain that Lean checks formally.
 
 namespace AltRegularity
 
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **Sweepout-wide replacement (statement, open).**

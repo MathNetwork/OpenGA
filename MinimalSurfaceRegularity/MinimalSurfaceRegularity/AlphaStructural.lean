@@ -1,5 +1,7 @@
-import AltRegularity.GMT.Stationary
-import AltRegularity.GMT.SecondVariation
+import GeometricMeasureTheory.Stationary
+import GeometricMeasureTheory.SecondVariation
+
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold
 
 /-!
 # AltRegularity.Regularity.AlphaStructural
@@ -32,7 +34,7 @@ terms of the leaf primitive `Varifold.HasAlphaJunctionAt`. The
 along with integrality.
 -/
 
-namespace AltRegularity
+namespace MinimalSurfaceRegularity
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
@@ -99,4 +101,4 @@ structure InClassSAlpha (V : Varifold M) (α : ℝ) : Prop where
 
 end Varifold
 
-end AltRegularity
+end MinimalSurfaceRegularity

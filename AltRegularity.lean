@@ -93,27 +93,27 @@ lemma. Each is a standalone module addition when ready.
 
 import AltRegularity.Basic
 
-import AltRegularity.GMT.FinitePerimeter
-import AltRegularity.GMT.FlatDistance
-import AltRegularity.GMT.Varifold
-import AltRegularity.GMT.Stationary
-import AltRegularity.GMT.SecondVariation
-import AltRegularity.GMT.TangentCone
-import AltRegularity.GMT.Rectifiability
+import GeometricMeasureTheory.FinitePerimeter
+import GeometricMeasureTheory.FlatDistance
+import GeometricMeasureTheory.Varifold
+import GeometricMeasureTheory.Stationary
+import GeometricMeasureTheory.SecondVariation
+import GeometricMeasureTheory.TangentCone
+import GeometricMeasureTheory.Rectifiability
 
-import AltRegularity.Sweepout.Defs
-import AltRegularity.Sweepout.ONVP
-import AltRegularity.Sweepout.MassCancellation
-import AltRegularity.Sweepout.MinMaxLimit
-import AltRegularity.Sweepout.PullTight
-import AltRegularity.Sweepout.HomotopicMinimization
-import AltRegularity.Sweepout.Interpolation
-import AltRegularity.Sweepout.NonExcessive
+import Sweepout.Defs
+import Sweepout.ONVP
+import Sweepout.MassCancellation
+import Sweepout.MinMaxLimit
+import Sweepout.PullTight
+import Sweepout.HomotopicMinimization
+import Sweepout.Interpolation
+import Sweepout.NonExcessive
 
-import AltRegularity.Regularity.AlphaStructural
+import MinimalSurfaceRegularity.AlphaStructural
 import AltRegularity.Regularity.AlphaStructuralVerification
 import AltRegularity.Regularity.ChordBeatsArc
-import AltRegularity.Regularity.SmoothRegularity
+import MinimalSurfaceRegularity.SmoothRegularity
 import AltRegularity.Regularity.StabilityVerification
 
 import AltRegularity.OneSidedDensity.AlmostMinimizer

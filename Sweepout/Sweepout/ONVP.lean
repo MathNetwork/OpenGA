@@ -1,4 +1,8 @@
-import AltRegularity.Sweepout.Defs
+import Sweepout.Defs
+
+open GeometricMeasureTheory
+
+namespace Sweepout
 
 /-!
 # AltRegularity.Sweepout.ONVP
@@ -26,11 +30,10 @@ infrastructure.
 so that nesting can be extracted directly via `onvp_nested`.
 -/
 
-namespace AltRegularity
+
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
-namespace Sweepout
 
 /-- $\Phi$ is **optimal** (paper Def 3.2 first bullet): no other sweepout
 has strictly smaller width. Equivalently, $\Phi$ realizes the infimum
@@ -79,6 +82,6 @@ theorem onvp_nested {Φ : Sweepout M} (h : ONVP Φ) {s t : ℝ} (hst : s ≤ t) 
     (Φ.slice s).carrier ⊆ (Φ.slice t).carrier :=
   h.2.1 s t hst
 
-end Sweepout
 
-end AltRegularity
+
+end Sweepout

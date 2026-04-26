@@ -1,4 +1,4 @@
-import AltRegularity.GMT.Stationary
+import GeometricMeasureTheory.Stationary
 import Mathlib.MeasureTheory.Measure.Hausdorff
 import Mathlib.Topology.EMetricSpace.Lipschitz
 
@@ -23,7 +23,7 @@ subset $\Sigma$ supporting $\|V\|$ — built on top of the leaf primitive
 The leaf primitive remains opaque pending Mathlib-level GMT infrastructure.
 -/
 
-namespace AltRegularity
+namespace GeometricMeasureTheory
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
@@ -67,4 +67,4 @@ theorem isRectifiable_of_isStationary_of_density_pos
 
 end Varifold
 
-end AltRegularity
+end GeometricMeasureTheory

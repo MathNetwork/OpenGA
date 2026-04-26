@@ -1,6 +1,9 @@
-import AltRegularity.Sweepout.HomotopicMinimization
-import AltRegularity.Regularity.AlphaStructural
-import AltRegularity.Regularity.SmoothRegularity
+import Sweepout.HomotopicMinimization
+import MinimalSurfaceRegularity.AlphaStructural
+import MinimalSurfaceRegularity.SmoothRegularity
+import GeometricMeasureTheory
+import Sweepout
+import MinimalSurfaceRegularity
 
 /-!
 # AltRegularity.Regularity.StabilityVerification
@@ -47,6 +50,7 @@ kernel-verified semantics.
 
 namespace AltRegularity
 
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 namespace Varifold

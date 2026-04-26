@@ -1,5 +1,8 @@
-import AltRegularity.Sweepout.MassCancellation
-import AltRegularity.Regularity.AlphaStructural
+import Sweepout.MassCancellation
+import MinimalSurfaceRegularity.AlphaStructural
+import GeometricMeasureTheory
+import Sweepout
+import MinimalSurfaceRegularity
 
 /-!
 # AltRegularity.Integrality.PerimeterConvergence
@@ -18,6 +21,7 @@ slice, which is integral by definition.
 
 namespace AltRegularity
 
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 namespace Varifold

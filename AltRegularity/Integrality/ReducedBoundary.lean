@@ -1,4 +1,7 @@
-import AltRegularity.Sweepout.MinMaxLimit
+import Sweepout.MinMaxLimit
+import GeometricMeasureTheory
+import Sweepout
+import MinimalSurfaceRegularity
 
 /-!
 # AltRegularity.Integrality.ReducedBoundary
@@ -17,6 +20,7 @@ formalization is deferred.
 
 namespace AltRegularity
 
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **Density lower bound on the reduced boundary (Lemma 6.4).**

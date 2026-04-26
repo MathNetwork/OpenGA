@@ -1,5 +1,8 @@
 import AltRegularity.OneSidedDensity.AlmostMinimizer
-import AltRegularity.GMT.Varifold
+import GeometricMeasureTheory.Varifold
+import GeometricMeasureTheory
+import Sweepout
+import MinimalSurfaceRegularity
 
 /-!
 # AltRegularity.OneSidedDensity.Density
@@ -14,6 +17,7 @@ as varifolds to $V$, then the limit varifold has positive density at $p$.
 
 namespace AltRegularity
 
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **Density from one-sided almost minimality (Lemma 5.8).**

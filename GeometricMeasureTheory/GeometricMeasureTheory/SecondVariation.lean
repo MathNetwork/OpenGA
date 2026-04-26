@@ -1,4 +1,4 @@
-import AltRegularity.GMT.Varifold
+import GeometricMeasureTheory.Varifold
 
 /-!
 # AltRegularity.GMT.SecondVariation
@@ -21,7 +21,7 @@ Encoded as an opaque leaf primitive pending Mathlib's smooth-manifold
 infrastructure for vector fields and second variation.
 -/
 
-namespace AltRegularity
+namespace GeometricMeasureTheory
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
@@ -46,4 +46,4 @@ opaque secondVariation : Varifold M → (M → ℝ) → ℝ
 
 end Varifold
 
-end AltRegularity
+end GeometricMeasureTheory

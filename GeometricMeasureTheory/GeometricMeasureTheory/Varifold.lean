@@ -1,5 +1,7 @@
-import AltRegularity.Basic
-import AltRegularity.GMT.FinitePerimeter
+import Mathlib.Topology.MetricSpace.Defs
+import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+import Mathlib.Tactic
+import GeometricMeasureTheory.FinitePerimeter
 import Mathlib.MeasureTheory.Measure.Typeclasses.Finite
 
 /-!
@@ -17,7 +19,7 @@ subsequent refinement.
 This is part of Section 2 (Preliminaries) of the paper.
 -/
 
-namespace AltRegularity
+namespace GeometricMeasureTheory
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
@@ -146,4 +148,4 @@ noncomputable opaque ofBoundary : FinitePerimeter M → Varifold M
 
 end Varifold
 
-end AltRegularity
+end GeometricMeasureTheory

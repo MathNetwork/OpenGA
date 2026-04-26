@@ -1,6 +1,10 @@
-import AltRegularity.Sweepout.ONVP
-import AltRegularity.Sweepout.NonExcessive
-import AltRegularity.GMT.Varifold
+import Sweepout.ONVP
+import Sweepout.NonExcessive
+import GeometricMeasureTheory.Varifold
+
+open GeometricMeasureTheory
+
+namespace Sweepout
 
 /-!
 # AltRegularity.Sweepout.MinMaxLimit
@@ -36,11 +40,10 @@ De Lellis–Tasnady integrality criterion (paper §6.1):
     no-mass-cancellation hypothesis holds.
 -/
 
-namespace AltRegularity
+
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
-namespace Sweepout
 
 /-- $V$ is a **min-max varifold limit** of $\Phi$ at the parameter
 $x_0$ (paper Def 3.3, last paragraph): there is a sequence
@@ -175,6 +178,6 @@ theorem outside_closure_not_in_spt
     (hout : p ∉ (Φ.slice t₀).topClosure) :
     p ∉ Varifold.support V := by sorry
 
-end Sweepout
 
-end AltRegularity
+
+end Sweepout

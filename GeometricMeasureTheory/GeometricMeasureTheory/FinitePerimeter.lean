@@ -1,4 +1,6 @@
-import AltRegularity.Basic
+import Mathlib.Topology.MetricSpace.Defs
+import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+import Mathlib.Tactic
 import Mathlib.MeasureTheory.Measure.Typeclasses.Finite
 
 /-!
@@ -18,7 +20,7 @@ yet available in Mathlib).
 This is part of Section 2 (Preliminaries) of the paper.
 -/
 
-namespace AltRegularity
+namespace GeometricMeasureTheory
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
@@ -86,4 +88,4 @@ theorem trichotomy (Ω : FinitePerimeter M) (p : M) :
 
 end FinitePerimeter
 
-end AltRegularity
+end GeometricMeasureTheory

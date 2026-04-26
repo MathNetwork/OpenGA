@@ -1,5 +1,7 @@
-import AltRegularity.Regularity.AlphaStructural
-import AltRegularity.GMT.Rectifiability
+import MinimalSurfaceRegularity.AlphaStructural
+import GeometricMeasureTheory.Rectifiability
+
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold
 
 /-!
 # AltRegularity.Regularity.SmoothRegularity
@@ -34,7 +36,7 @@ opaque leaf primitive `Varifold.HausdorffSmallSingular`, pending
 Mathlib's Hausdorff-measure-on-manifold infrastructure.
 -/
 
-namespace AltRegularity
+namespace MinimalSurfaceRegularity
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
@@ -118,4 +120,4 @@ theorem isSmoothMinimalHypersurface_of_inClassSAlpha
 
 end Varifold
 
-end AltRegularity
+end MinimalSurfaceRegularity

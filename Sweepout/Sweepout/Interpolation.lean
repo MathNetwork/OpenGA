@@ -1,4 +1,8 @@
-import AltRegularity.Sweepout.Defs
+import Sweepout.Defs
+
+open GeometricMeasureTheory
+
+namespace Sweepout
 
 /-!
 # AltRegularity.Sweepout.Interpolation
@@ -10,11 +14,10 @@ controlled perimeter overhead. This is the standard tool for gluing
 local modifications into a sweepout-wide family.
 -/
 
-namespace AltRegularity
+
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
-namespace Sweepout
 
 /-- **Interpolation lemma (CLS22 1.12).** Given two nested sets of finite perimeter
 sets $\Omega^- \subseteq \Omega^+$ close in volume and a perimeter cap
@@ -32,6 +35,6 @@ theorem interpolation_lemma
           ((family t).perim : ℝ) ≤ max ((Ωlo.perim : ℝ)) ((Ωhi.perim : ℝ)) + ε := by
   sorry
 
-end Sweepout
 
-end AltRegularity
+
+end Sweepout

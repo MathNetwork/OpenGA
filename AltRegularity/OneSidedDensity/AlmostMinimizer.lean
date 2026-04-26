@@ -1,4 +1,7 @@
-import AltRegularity.GMT.FinitePerimeter
+import GeometricMeasureTheory.FinitePerimeter
+import GeometricMeasureTheory
+import Sweepout
+import MinimalSurfaceRegularity
 
 /-!
 # AltRegularity.OneSidedDensity.AlmostMinimizer
@@ -18,6 +21,7 @@ notion of CLS22 Definition 1.10.
 
 namespace AltRegularity
 
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 namespace FinitePerimeter

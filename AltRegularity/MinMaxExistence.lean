@@ -1,4 +1,7 @@
 import AltRegularity.MainTheorem
+import GeometricMeasureTheory
+import Sweepout
+import MinimalSurfaceRegularity
 
 /-!
 # AltRegularity.MinMaxExistence
@@ -51,6 +54,7 @@ boundary (CLS22 Theorem 2.2, CL03 pull-tight, etc.).
 
 namespace AltRegularity
 
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **End-to-end existence of a smooth minimal hypersurface (paper Theorem 1.1

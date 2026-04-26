@@ -1,5 +1,9 @@
-import AltRegularity.Sweepout.NonExcessive
-import AltRegularity.Sweepout.MinMaxLimit
+import Sweepout.NonExcessive
+import Sweepout.MinMaxLimit
+
+open GeometricMeasureTheory
+
+namespace Sweepout
 
 /-!
 # AltRegularity.Sweepout.HomotopicMinimization
@@ -24,7 +28,7 @@ sweepout-level `Sweepout.InnerHomotopicMinimizer` /
 formalization of the CLS22 sweepout-slice homotopic-minimizer property.
 -/
 
-namespace AltRegularity
+
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
@@ -65,11 +69,10 @@ inequality, with the "one-sided ambient isotopy" content packaged into
 the leaf primitive `IsOneSidedCompetitor`. -/
 def OneSidedMinimizingAt (V : Varifold M) (P : M) (r : ℝ) : Prop :=
   ∀ K : FinitePerimeter M, IsOneSidedCompetitor V K P r →
-    massOn V (Metric.ball P r) ≤ FinitePerimeter.perimOn K (Metric.ball P r)
+    Varifold.massOn V (Metric.ball P r) ≤ FinitePerimeter.perimOn K (Metric.ball P r)
 
 end Varifold
 
-namespace Sweepout
 
 /-! ## Sweepout-level homotopic-minimizer property -/
 
@@ -179,6 +182,6 @@ theorem hnm_finite_of_nonExcessive
     (hlim : MinMaxLimit Φ t₀ V) :
     (hnm V).Finite := by sorry
 
-end Sweepout
 
-end AltRegularity
+
+end Sweepout

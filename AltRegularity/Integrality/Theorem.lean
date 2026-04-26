@@ -1,7 +1,10 @@
 import AltRegularity.Integrality.ReducedBoundary
 import AltRegularity.Integrality.PerimeterConvergence
-import AltRegularity.Sweepout.MassCancellation
-import AltRegularity.Regularity.AlphaStructural
+import Sweepout.MassCancellation
+import MinimalSurfaceRegularity.AlphaStructural
+import GeometricMeasureTheory
+import Sweepout
+import MinimalSurfaceRegularity
 
 /-!
 # AltRegularity.Integrality.Theorem
@@ -24,6 +27,7 @@ and varifold limit $V = \lim |\partial^*\Omega_{t_i}|$:
 
 namespace AltRegularity
 
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **Integrality, no-mass-cancellation case (Theorem 6.1(a)).**

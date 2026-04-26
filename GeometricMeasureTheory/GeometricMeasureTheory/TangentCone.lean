@@ -1,4 +1,4 @@
-import AltRegularity.GMT.Varifold
+import GeometricMeasureTheory.Varifold
 
 /-!
 # AltRegularity.GMT.TangentCone
@@ -21,7 +21,7 @@ The two GMT primitives `tangentCone` (the cone at a point) and
 primitives pending Mathlib's tangent-measure / blow-up infrastructure.
 -/
 
-namespace AltRegularity
+namespace GeometricMeasureTheory
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
@@ -58,4 +58,4 @@ opaque IsJunctionCone : Varifold M → Prop
 
 end Varifold
 
-end AltRegularity
+end GeometricMeasureTheory

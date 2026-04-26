@@ -1,8 +1,11 @@
-import AltRegularity.Sweepout.NonExcessive
-import AltRegularity.Sweepout.MinMaxLimit
-import AltRegularity.Regularity.AlphaStructural
-import AltRegularity.Regularity.SmoothRegularity
-import AltRegularity.GMT.TangentCone
+import Sweepout.NonExcessive
+import Sweepout.MinMaxLimit
+import MinimalSurfaceRegularity.AlphaStructural
+import MinimalSurfaceRegularity.SmoothRegularity
+import GeometricMeasureTheory.TangentCone
+import GeometricMeasureTheory
+import Sweepout
+import MinimalSurfaceRegularity
 
 /-!
 # AltRegularity.Regularity.AlphaStructuralVerification
@@ -38,6 +41,7 @@ chain itself is fully formalized.
 
 namespace AltRegularity
 
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 namespace Varifold

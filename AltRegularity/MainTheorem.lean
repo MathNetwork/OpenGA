@@ -1,9 +1,12 @@
 import AltRegularity.Integrality.Theorem
-import AltRegularity.Sweepout.PullTight
-import AltRegularity.Regularity.SmoothRegularity
+import Sweepout.PullTight
+import MinimalSurfaceRegularity.SmoothRegularity
 import AltRegularity.Regularity.AlphaStructuralVerification
 import AltRegularity.Regularity.StabilityVerification
 import AltRegularity.PositiveDensity
+import GeometricMeasureTheory
+import Sweepout
+import MinimalSurfaceRegularity
 
 /-!
 # AltRegularity.MainTheorem
@@ -45,6 +48,7 @@ bridges below.
 
 namespace AltRegularity
 
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 -- Both Section 7 bridges are provided by chain-proof modules:
