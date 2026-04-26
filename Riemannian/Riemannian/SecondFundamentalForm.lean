@@ -1,4 +1,5 @@
 import Riemannian.Connection
+import Riemannian.InnerProductBridge
 
 /-!
 # Riemannian.SecondFundamentalForm
@@ -39,42 +40,17 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [RiemannianBundle (fun x : M => TangentSpace I x)]
 
-/-- **Existence axiom for codim-1 second fundamental form (scalar form).**
-
-For a unit normal field $\nu$ and tangent vector fields $X, Y$ on $M$,
-there exists a real-valued function representing
-$A(X, Y) := \langle \nabla^M_X Y, \nu \rangle$ at each point, satisfying
-the **symmetry property** $A(X, Y) = A(Y, X)$ when $\nabla^M$ is
-torsion-free (Levi-Civita case) — do Carmo 1992 §6.2.
-
-**Sorry status**: PRE-PAPER. Repair plan: replace with explicit
-inner-product computation $\langle \mathrm{covDeriv}\,X\,Y\,x, \nu(x) \rangle$
-once `RiemannianBundle (fun x ↦ TangentSpace I x)` is wired through
-the typeclass cascade and `inner ℝ` resolves on `TangentSpace I x`.
-Symmetry follows from torsion-freeness of Levi-Civita (commit
-`leviCivitaConnection_torsion_zero`). -/
-theorem secondFundamentalFormScalar_exists :
-    ∃ _A : (Π x : M, TangentSpace I x) → (Π x : M, TangentSpace I x) →
-           (Π x : M, TangentSpace I x) → M → ℝ,
-      ∀ ν X Y x, _A ν X Y x = _A ν Y X x :=
-  ⟨fun _ _ _ _ => 0, fun _ _ _ _ => rfl⟩
-
 /-- The **second fundamental form (codim-1 scalar form)** $A$ at a point:
 $$A(X, Y)(x) := \langle \nabla^M_X Y(x), \nu(x) \rangle.$$
+
+Real `noncomputable def` using `covDeriv` (Levi-Civita) + `inner ℝ`
+on `TangentSpace I x` (provided by the bridge instances in
+`Riemannian.InnerProductBridge`).
 
 **Ground truth**: do Carmo 1992 §6.2. -/
 noncomputable def secondFundamentalFormScalar
     (ν X Y : Π x : M, TangentSpace I x) (x : M) : ℝ :=
-  Classical.choose (secondFundamentalFormScalar_exists (I := I) (M := M)) ν X Y x
-
-/-- **Second fundamental form is symmetric** (codim-1, Levi-Civita):
-$A(X, Y) = A(Y, X)$. Extracted from `secondFundamentalFormScalar_exists`. -/
-@[simp]
-theorem secondFundamentalFormScalar_symm
-    (ν X Y : Π x : M, TangentSpace I x) (x : M) :
-    secondFundamentalFormScalar ν X Y x = secondFundamentalFormScalar ν Y X x :=
-  Classical.choose_spec
-    (secondFundamentalFormScalar_exists (I := I) (M := M)) ν X Y x
+  inner ℝ (covDeriv X Y x) (ν x)
 
 /-- **Existence axiom for $|A|^2$.**
 

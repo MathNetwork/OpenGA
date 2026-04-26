@@ -1,4 +1,5 @@
 import Riemannian.Connection
+import Riemannian.InnerProductBridge
 import Mathlib.Analysis.InnerProductSpace.Dual
 
 /-!
@@ -39,75 +40,57 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [RiemannianBundle (fun x : M => TangentSpace I x)]
 
-/-- **Existence axiom for the manifold gradient.**
+/-- The **manifold gradient** $\nabla^M f : (x : M) \to T_xM$, defined
+via **Riesz duality** on the tangent space.
 
-Phase 1.6 Spike 5 attempted to construct
-`manifoldGradient f x := (InnerProductSpace.toDual ℝ (TangentSpace I x)).symm
-(mfderiv I 𝓘(ℝ, ℝ) f x)` using the Riesz duality. The Mathlib bridge
-fails: even with `[RiemannianBundle (fun x ↦ TangentSpace I x)]` and
-`open Bundle`, the scoped instances providing
-`NormedAddCommGroup (TangentSpace I x)` /
-`InnerProductSpace ℝ (TangentSpace I x)` (Mathlib
-`Topology/VectorBundle/Riemannian.lean` lines ~431, 453) do not fire
-in our cascade — symptoms include
-"failed to synthesize CompleteSpace (TangentSpace I x)" /
-"failed to synthesize UniformSpace (TangentSpace I x)" and similar.
+Concretely: $\nabla^M f(x)$ is the unique $v \in T_xM$ such that
+$\langle v, w \rangle = (\mathrm{d}f)_x(w)$ for all $w \in T_xM$.
+Implemented via Mathlib's `InnerProductSpace.toDual.symm` applied to
+the manifold differential `mfderiv I 𝓘(ℝ, ℝ) f x`.
 
-Higher-order unification on `RiemannianBundle (fun x ↦ TangentSpace I x)`
-with the scoped-instance template appears to be the bottleneck;
-investigation deferred to Phase 4 catch-up.
-
-For now, `manifoldGradient_exists` is the existence axiom encoding
-Riesz duality (`inner ℝ (grad f x) v = mfderiv I 𝓘(ℝ, ℝ) f x v`); the
-real def via `InnerProductSpace.toDual.symm` is the Phase 4 repair
-target. -/
-theorem manifoldGradient_exists :
-    ∃ _grad : (M → ℝ) → (Π x : M, TangentSpace I x),
-      ∀ (f : M → ℝ) (x : M) (v : TangentSpace I x),
-        inner ℝ (_grad f x) v = (mfderiv I 𝓘(ℝ, ℝ) f x) v :=
-  ⟨fun _ _ => 0, fun _ _ _ => by sorry⟩
-
-/-- The **manifold gradient** $\nabla^M f : (x : M) \to T_xM$.
+The `[InnerProductSpace ℝ (TangentSpace I x)]` typeclass is provided
+by `Riemannian.InnerProductBridge.instInnerProductSpaceTangentSpace`,
+the framework's self-built bridge from
+`[RiemannianBundle (fun x ↦ TangentSpace I x)]`.
 
 **Ground truth**: do Carmo 1992 §3 ex. 8.
 
-Real `noncomputable def` via `Classical.choose manifoldGradient_exists`.
-Concrete construction via Riesz duality blocked by Mathlib's
-RiemannianBundle ↔ TangentSpace scoped-instance higher-order
-unification (see `manifoldGradient_exists` docstring). -/
+Real `noncomputable def` (no `Classical.choose` over an existence
+axiom) — Riesz duality is a constructive bijection in Mathlib. -/
 noncomputable def manifoldGradient
     (f : M → ℝ) (x : M) : TangentSpace I x :=
-  Classical.choose (manifoldGradient_exists (I := I) (M := M)) f x
+  (InnerProductSpace.toDual ℝ (TangentSpace I x)).symm (mfderiv I 𝓘(ℝ, ℝ) f x)
 
 /-- **Riesz duality for the manifold gradient**:
 $\langle \nabla^M f(x), v \rangle = (\mathrm{d}f)_x(v)$.
 
-Extracted from `manifoldGradient_exists` via `Classical.choose_spec`. -/
+Holds by construction of `manifoldGradient` via
+`InnerProductSpace.toDual.symm`. -/
 theorem manifoldGradient_riesz
     (f : M → ℝ) (x : M) (v : TangentSpace I x) :
-    inner ℝ (manifoldGradient f x) v = (mfderiv I 𝓘(ℝ, ℝ) f x) v :=
-  Classical.choose_spec (manifoldGradient_exists (I := I) (M := M)) f x v
+    inner ℝ (manifoldGradient f x) v = (mfderiv I 𝓘(ℝ, ℝ) f x) v := by
+  rw [manifoldGradient, InnerProductSpace.toDual_symm_apply]
+  rfl
 
-/-- **Existence axiom for $|\nabla^M f|^2$**: there exists a
-**non-negative** real-valued function representing the squared norm of
-the manifold gradient $|\nabla^M f|^2$. -/
-theorem manifoldGradientNormSq_exists (M : Type*) [TopologicalSpace M] :
-    ∃ _gradSq : (M → ℝ) → M → ℝ, ∀ f x, 0 ≤ _gradSq f x :=
-  ⟨fun _ _ => 0, fun _ _ => le_refl _⟩
-
-/-- The **squared gradient norm** $|\nabla^M f|^2 : M \to \mathbb{R}$.
+/-- The **squared gradient norm** $|\nabla^M f|^2 : M \to \mathbb{R}$,
+defined as $\|\nabla^M f(x)\|^2$ using the inner-product norm on
+`TangentSpace I x` (provided by the bridge instances in
+`Riemannian.InnerProductBridge`).
 
 **Ground truth**: standard; used in Jacobi second-variation formula
-(Simon 1983 §49). -/
+(Simon 1983 §49).
+
+Real `noncomputable def` (no `Classical.choose`) — direct
+constructive form via `‖_‖^2`. -/
 noncomputable def manifoldGradientNormSq
     (f : M → ℝ) (x : M) : ℝ :=
-  Classical.choose (manifoldGradientNormSq_exists M) f x
+  ‖manifoldGradient f x‖ ^ 2
 
 /-- **$|\nabla^M f|^2 \geq 0$**: gradient squared norm is non-negative.
-Extracted from `manifoldGradientNormSq_exists`. -/
+Direct from `sq_nonneg` on `‖manifoldGradient f x‖`. -/
 @[simp]
 theorem manifoldGradientNormSq_nonneg (f : M → ℝ) (x : M) :
     0 ≤ manifoldGradientNormSq f x :=
-  Classical.choose_spec (manifoldGradientNormSq_exists M) f x
+  sq_nonneg _
 
 end Riemannian
