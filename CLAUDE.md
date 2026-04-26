@@ -11,7 +11,7 @@ Two parallel deliverables:
 
 Both deliverables are first-class. Architectural decisions favor long-term software value over short-term paper expedience.
 
-Phase 1 (Layer A + Layer B real grounding) is complete: 20 GMT analysis primitives carry real Lean definitions (mass measure, Hausdorff measure, density, varifold convergence, first/second variation, tangent cone via chart-pullback, smooth embedding, junction cone). 1 primitive (`HasAlphaJunctionAt`) remains opaque pending Mathlib upstream $C^{1,\alpha}$ hypersurface infrastructure.
+Phase 1 (Layer A + Layer B real grounding) is complete: 20 GMT analysis primitives carry real Lean definitions. Phase 1.5 + 1.6 added a 5th independent Riemannian package: 8 of 9 Riemannian primitives (Riemann curvature, Ricci, scalar curvature, second fundamental form + squared norm, mean curvature, manifold gradient + squared norm) are real definitions; only `leviCivitaConnection` remains as an existence axiom (Levi-Civita Koszul, acceptable per textbook standard).
 
 ## Architecture
 
@@ -59,6 +59,12 @@ Do not commit mid-refactor. Complete the task and commit once at end, or fail-an
 ### Stuck protocol
 
 If genuinely stuck after 5+ attempts on same error: report current state, ask for direction. Do not auto-revert.
+
+### Bridge investment for cross-cutting blockers
+
+When a single typeclass gap, scoped-instance non-firing, or API mismatch blocks multiple primitives, the high-leverage move is **bridge investment** — framework self-builds the explicit instance / accessor / typeclass cascade that Mathlib lacks. Bridge cost is typically ~30–100 LOC; cascade unblock is typically 5+ primitives. Refuse to retreat with "this is blocked at infrastructure level" framing without first depth-auditing the bridge cost.
+
+Phase 1.6 canonical example: `InnerProductBridge` (4 explicit instances replicating Mathlib scoped-instance bodies, ~30 LOC) unblocked `manifoldGradient` + `secondFundamentalFormScalar` real defs, cascading to `scalarCurvature` + `secondFundamentalFormSqNorm` + `meanCurvature` via `stdOrthonormalBasis`. Total Phase 1.6: ~250 LOC, 4 commits, single session.
 
 ## Refactor Protocol
 
@@ -111,18 +117,24 @@ Framework is an autonomous high-quality math software library, not a Mathlib-pen
 
 - **Self-impose Mathlib standard, do not cater**: framework uses Mathlib naming conventions, docstring requirements, API design (simp normal form, ext lemmas, typeclass conventions) as a self-imposed bar — not because of intent to PR.
 - **Self-build is first-class**: when Mathlib lacks a primitive (Ricci curvature, second fundamental form, isoperimetric inequality, etc.), framework builds it. Self-built primitives are first-class library content, not temporary workarounds.
-- **Mathlib catch-up is event, not milestone**: framework does not wait for Mathlib. When Mathlib eventually catches up, framework's self-build subset shrinks naturally — those primitives can deprecate / alias / direct-replace at that point.
+- **Mathlib is upstream, not pacemaker**: framework velocity is set by AI-driven formalization, not by Mathlib's PR review cycle. When Mathlib lacks a primitive, has a non-firing scoped instance, hits a higher-order unification limitation, or any other elaboration gap — framework self-builds. Framework does not wait. Mathlib catch-up, when it happens, is a deprecation opportunity for selective framework self-build subset — but framework does not plan around it. Catch-up is bonus, not milestone.
 - **PR readiness is bonus, not motivation**: code built to self-imposed Mathlib standard is naturally compatible for upstream PR if/when relevant. Future PR friction is minimal because design didn't compromise to fit Mathlib's current state.
+
+**Lazy retreat framings to reject:**
+- "This is a Mathlib infrastructure issue, only fixable via PR"
+- "Blocked by Mathlib upstream catch-up"
+- "Deferred until Mathlib's [X] matures"
+
+These framings substitute Mathlib's PR-cycle velocity (months-to-years) for framework's AI-formalization velocity (sessions). Real retreat trigger is *implementation impossibility after depth audit + bridge cost evaluation*, not *upstream-availability framing*.
 
 ## UX Optimization Timing
 
 UX optimizations (`@[simp]` / `@[ext]` / `@[simps]` / `abbrev` / naming polish / API ergonomics) require stable interfaces. Apply only when:
 
 - Framework self-build primitive set has stabilized (no further additions or signature changes expected),
-- Mathlib catch-up event has shrunk the self-build subset to its long-term core,
 - Concepts are settled mathematically and no further refactor is planned.
 
-Premature UX optimization on evolving interfaces wastes work — polish gets discarded when refactor changes signatures. Defer to *event-triggered* timing: typically after Mathlib catch-up, after refactor consolidation, or before `v1.0` release. Phase 5 / Phase 6 work, not now.
+Premature UX optimization on evolving interfaces wastes work — polish gets discarded when refactor changes signatures. Defer to *event-triggered* timing: typically after refactor consolidation or before `v1.0` release. Phase 5 / Phase 6 work, not now.
 
 ## Velocity
 
@@ -135,20 +147,23 @@ This framework moves at software engineering speed, not paper writing speed.
 
 Empirical calibration (Phase 1 session): **20 GMT primitives grounded in a single session**, including 5 Group C primitives requiring smooth-manifold typeclass cascade propagation. Layer B real grounding takes hours per primitive once the chart-pullback pattern is established. Refactor sessions handle ~500–800 LOC architectural changes with chain-proof 0-sorry preservation.
 
+Empirical calibration (Phase 1.6, single session): **~250 LOC, 4 commits, 8 of 9 Riemannian primitives moved Classical.choose → real**. Bridge build (`InnerProductBridge`, ~30 LOC, ~30 minutes after depth audit) cascade-unblocked 5 downstream primitives via `stdOrthonormalBasis` + `LinearMap.trace` + `InnerProductSpace.toDual`, each ~5–10 minutes after the bridge unlock. This velocity reflects framework's AI-formalization pace, not Mathlib's PR-review pace (where the same contribution-set would be months-to-years wallclock).
+
 Do not estimate task cost using traditional mathematician productivity model. Mathlib + Claude Code + cumulative pattern reuse compounds productivity. Mathlib uses `lake exe cache get` — Mathlib is not built locally; do not estimate Mathlib build time as cost.
 
 ## Phase Plan
 
-- **Phase 0** (done): Architecture lock — 4-package monorepo, CLAUDE.md, naming convention.
-- **Phase 1** (done): Layer A + Layer B real grounding. 21 → 1 opaque. GMT analysis primitive lib (varifold, finite perimeter, density, first/second variation, tangent cone, junction cone) real-grounded.
-- **Phase 1.5** (done): Refactor — Riemannian package (Connection / Curvature / SecondFundamentalForm / Gradient, 5th independent lib), Variation/ sub-namespace (firstVariationFull / secondVariationFull with HasNormal-backed codim-1 forms), Varifold.HasNormal typeclass + instances, Stable.lean GMT-level (IsStable / IsUnstable / MorseIndex). Old Stationary.lean / SecondVariation.lean retained as legacy locations until Phase 4 catch-up.
-- **Phase 2**: Round 5 cited theorem strict alignment Items 4–9 (DLT13, `exists_minmaxLimit`, `isStationary_of_minmaxLimit`, `locallyStable_of_oneSidedMinimizing`, `interpolation_lemma`, `isRectifiable_of_isStationary_of_density_pos`).
-- **Phase 3**: Isoperimetric sub-layer + remaining GMT primitive completion (mean curvature, scalar curvature, etc.) per emerging needs.
-- **Phase 4** (passive): Wait for Mathlib catch-up event — Mathlib `Geometry/Manifold/Riemannian/` matures to include Ricci, second fundamental form, $C^{1,\alpha}$ hypersurface infrastructure.
-- **Phase 5** (event-triggered): UX optimization on stabilized interface — `@[simp]`, `@[ext]`, `@[simps]`, `abbrev`, naming polish, API ergonomics.
-- **Phase 6**: Final pre-release polish — GitHub Actions CI, doc-gen4, README rewrite, references.bib, optional Mathlib upstream PR for `GeometricMeasureTheory` subset.
+- **Phase 0** (done): Architecture lock — monorepo, CLAUDE.md, naming convention.
+- **Phase 1** (done): Layer A + Layer B real grounding. 21 → 1 opaque. GMT analysis primitive lib real-grounded.
+- **Phase 1.5** (done): Refactor — Riemannian package (5th independent lib), Variation/ sub-namespace, HasNormal typeclass, Stable.lean GMT-level.
+- **Phase 1.6** (done): Riemannian production-grade — 8 of 9 primitives real (Riemann curvature, Ricci, scalar curvature, second fundamental form + sq norm, mean curvature, manifold gradient + sq norm); only `leviCivitaConnection` remains as existence axiom for Levi-Civita Koszul (acceptable per textbook standard). `InnerProductBridge` self-build canonical example.
+- **Phase 2** (next): Round 5 cited theorem strict alignment Items 4–9 (DLT13, `exists_minmaxLimit`, `isStationary_of_minmaxLimit`, `locallyStable_of_oneSidedMinimizing`, `interpolation_lemma`, `isRectifiable_of_isStationary_of_density_pos`).
+- **Phase 3**: Isoperimetric production-grade lib (parallel to Riemannian, framework self-build standard).
+- **Phase 4**: Long-term completion work — Levi-Civita Koszul construction, additional GMT primitive completion, framework long-term polish. Mathlib catch-up, if it happens during this phase, is a bonus deprecation opportunity, not a phase trigger.
+- **Phase 5** (event-triggered): UX optimization on stabilized framework interface — `@[simp]`, `@[ext]`, `@[simps]`, `abbrev`, naming polish, API ergonomics.
+- **Phase 6**: Final pre-release polish — CI, doc-gen4, README, references.bib, optional Mathlib upstream PR for stabilized lib subsets.
 
-Phase ordering reflects dependency: Phase 1.5 refactor is prerequisite to Phase 2–3 (Round 5 and Isoperimetric work in refactored architecture); Phase 4 is passive event-wait that does not block Phase 2–3; Phase 5 UX requires Phase 4 stability; Phase 6 final polish requires Phase 5.
+Phase ordering reflects dependency: Phase 1.5/1.6 architecture is prerequisite to Phase 2–3; Phase 4 is framework long-term work (not a passive Mathlib wait); Phase 5 UX requires interface stability; Phase 6 final polish requires Phase 5.
 
 ## Identity
 
@@ -158,4 +173,6 @@ Strategic role: 总指挥 — sets direction, decides scope.
 Claude (chat): 参谋 — translates direction into Claude Code prompts.
 Claude Code: executor — runs prompts, mechanical work, build verify.
 
-Roles stable across phases. Strategic decisions (scope, architecture, refactor triggers) belong to Moqian. Translation to executable prompts belongs to Claude (chat). Mechanical execution + build verification belongs to Claude Code. Phase 1 completion validates this division — strategic re-audit at phase boundaries (e.g., current Phase 1 → 1.5 transition) is Moqian + Claude (chat) work; sub-layer execution within phases is Claude Code work.
+Roles stable across phases. Strategic decisions (scope, architecture, refactor triggers) belong to Moqian. Translation to executable prompts belongs to Claude (chat). Mechanical execution + build verification belongs to Claude Code. Phase 1 completion validates this division — strategic re-audit at phase boundaries (e.g., current Phase 1 → 1.5 → 1.6 transition) is Moqian + Claude (chat) work; sub-layer execution within phases is Claude Code work.
+
+When Claude Code reports retreat with framings like "Mathlib infrastructure issue", "blocked by Mathlib upstream", "deferred to Mathlib catch-up event", or "single-session push too risky" — treat these as candidate lazy retreats. Push back to verify true architectural impossibility (depth audit + bridge investment evaluation) before accepting. Real retreat trigger is a documented build error after iteration plus an explicit accessor blocker after depth audit, not a framing-level claim.
