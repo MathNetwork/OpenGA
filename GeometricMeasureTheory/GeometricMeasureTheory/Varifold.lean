@@ -85,14 +85,17 @@ noncomputable def density (V : Varifold M) (p : M) : ℝ :=
 /-- Densities are non-negative. -/
 theorem density_nonneg (V : Varifold M) (p : M) : 0 ≤ density V p := by sorry
 
+omit [MeasureTheory.MeasureSpace M] in
 /-- Total mass is non-negative. -/
 theorem mass_nonneg (V : Varifold M) : 0 ≤ mass V :=
   ENNReal.toReal_nonneg
 
+omit [MeasureTheory.MeasureSpace M] in
 /-- Localized mass is non-negative. -/
 theorem massOn_nonneg (V : Varifold M) (U : Set M) : 0 ≤ massOn V U :=
   ENNReal.toReal_nonneg
 
+omit [MeasureTheory.MeasureSpace M] in
 /-- Localized mass is monotone in the set. -/
 theorem massOn_mono (V : Varifold M) {U W : Set M} (h : U ⊆ W) :
     massOn V U ≤ massOn V W := by
@@ -100,6 +103,7 @@ theorem massOn_mono (V : Varifold M) {U W : Set M} (h : U ⊆ W) :
   exact ENNReal.toReal_mono (MeasureTheory.measure_lt_top V.massMeasure W).ne
     (MeasureTheory.measure_mono h)
 
+omit [MeasureTheory.MeasureSpace M] in
 /-- The total mass equals the localized mass on the whole space. -/
 theorem massOn_univ (V : Varifold M) : massOn V Set.univ = mass V := rfl
 

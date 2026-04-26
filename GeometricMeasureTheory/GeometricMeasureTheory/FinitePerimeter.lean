@@ -63,15 +63,18 @@ indicator converges in $L^1_{\mathrm{loc}}$ to a half-space indicator)
 requires BV-on-manifold infrastructure not yet in Mathlib and is deferred. -/
 noncomputable def rbdy (Ω : FinitePerimeter M) : Set M := by sorry
 
+omit [MeasureTheory.MeasureSpace M] in
 /-- The total perimeter is non-negative as a real number. -/
 theorem perim_nonneg (Ω : FinitePerimeter M) : (0 : ℝ) ≤ (Ω.perim : ℝ) :=
   NNReal.coe_nonneg _
 
+omit [MeasureTheory.MeasureSpace M] in
 /-- Localized perimeter is non-negative. -/
 theorem perimOn_nonneg (Ω : FinitePerimeter M) (U : Set M) :
     0 ≤ perimOn Ω U :=
   ENNReal.toReal_nonneg
 
+omit [MeasureTheory.MeasureSpace M] in
 /-- Localized perimeter on the whole space recovers the total perimeter. -/
 theorem perimOn_univ (Ω : FinitePerimeter M) :
     perimOn Ω Set.univ = (Ω.perim : ℝ) := rfl
