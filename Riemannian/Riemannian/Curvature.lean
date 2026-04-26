@@ -1,4 +1,5 @@
 import Riemannian.Connection
+import Mathlib.LinearAlgebra.Trace
 
 /-!
 # Riemannian.Curvature
@@ -52,46 +53,50 @@ noncomputable def riemannCurvature
   let bracketXY : Π x : M, TangentSpace I x := fun x => mlieBracket I X Y x
   covDeriv X nablaYZ x - covDeriv Y nablaXZ x - covDeriv bracketXY Z x
 
-/-- **Existence axiom for Ricci curvature.**
+/-- **Ricci-trace linear map** at a point: the linear map
+$z \mapsto R(z\text{-extended}, X) Y(x)$ on $T_xM$, where
+$z\text{-extended}$ is the constant section with value $z$.
 
-For any pair of tangent vector fields $X, Y$ on a Riemannian manifold,
-there exists a real-valued function representing the Ricci curvature
-$\mathrm{Ric}(X, Y) := \mathrm{tr}(Z \mapsto R(Z, X) Y)$, satisfying
-the **symmetry property** $\mathrm{Ric}(X, Y) = \mathrm{Ric}(Y, X)$
-(do Carmo 1992 §4 ex. 1).
-
-**Sorry status**: PRE-PAPER. Repair plan: replace with explicit
-trace using `Mathlib.Geometry.Manifold.VectorBundle.LocalFrame`
-(`IsLocalFrameOn.toBasisAt`) once the local-frame typeclass plumbing
-is wired through. The symmetry is preserved by the trace formula
-(via the algebraic Bianchi identity on the Riemann tensor). -/
-theorem ricci_exists :
-    ∃ _ric : (Π x : M, TangentSpace I x) → (Π x : M, TangentSpace I x) → M → ℝ,
-      ∀ X Y x, _ric X Y x = _ric Y X x := by
-  exact ⟨fun _ _ _ => 0, fun _ _ _ => rfl⟩
+For Levi-Civita's $C^\infty$-linearity in arguments, the result depends
+only on $z \in T_xM$ (not the extension); the linearity proofs below
+are PRE-PAPER (deferred). The constant extension is a clean choice that
+makes the formula well-defined regardless of the linearity proofs. -/
+noncomputable def ricciTraceMap
+    (X Y : Π x : M, TangentSpace I x) (x : M) :
+    TangentSpace I x →ₗ[ℝ] TangentSpace I x where
+  toFun z := riemannCurvature (fun _ => z) X Y x
+  map_add' z₁ z₂ := by sorry
+  map_smul' c z := by sorry
 
 /-- The **Ricci curvature** $\mathrm{Ric}(X, Y) \in \mathbb{R}$ at a point
-$x$, defined as the trace of the linear map $Z \mapsto R(Z, X)Y$ on
-$T_xM$.
+$x$, defined as the trace of the linear map $z \mapsto R(z, X)Y$ on
+$T_xM$:
+$$\mathrm{Ric}(X, Y)(x) := \mathrm{tr}(\mathrm{ricciTraceMap}\,X\,Y\,x).$$
 
 **Ground truth**: do Carmo 1992 §4 ex. 1.
 
-Real `noncomputable def` via `Classical.choose ricci_exists`. The
-existence axiom guarantees the symmetry property
-(`ricci_symm` extracts it via `Classical.choose_spec`); the value
-itself is opaque pending Phase 4 catch-up. -/
+Real `noncomputable def` via `LinearMap.trace ℝ (TangentSpace I x)`
+applied to `ricciTraceMap`. The trace operator is well-defined for
+finite-dimensional modules (Mathlib `LinearMap.trace`); since
+$E$ is `[FiniteDimensional ℝ E]` in our cascade, the trace returns
+a meaningful scalar.
+
+The C^∞-linearity proofs inside `ricciTraceMap` are sorry'd
+(PRE-PAPER, repair via Mathlib's `CovariantDerivative` linearity
+lemmas applied through `riemannCurvature`'s defining formula). -/
 noncomputable def ricci
     (X Y : Π x : M, TangentSpace I x) (x : M) : ℝ :=
-  Classical.choose (ricci_exists (I := I) (M := M)) X Y x
+  LinearMap.trace ℝ (TangentSpace I x) (ricciTraceMap X Y x)
 
 /-- **Ricci curvature is symmetric**: $\mathrm{Ric}(X, Y) = \mathrm{Ric}(Y, X)$.
 
-Extracted from `ricci_exists` via `Classical.choose_spec`. This is one
-of the standard tensorial properties (do Carmo 1992 §4 ex. 1). -/
+This is one of the standard tensorial properties (do Carmo 1992 §4
+ex. 1). The proof requires the algebraic Bianchi identity on the
+Riemann tensor (which yields the symmetry of the trace under
+swapping X and Y). PRE-PAPER, repair via constructive proof. -/
 @[simp]
 theorem ricci_symm (X Y : Π x : M, TangentSpace I x) (x : M) :
-    ricci X Y x = ricci Y X x :=
-  Classical.choose_spec (ricci_exists (I := I) (M := M)) X Y x
+    ricci X Y x = ricci Y X x := by sorry
 
 /-- **Existence axiom for scalar curvature.**
 

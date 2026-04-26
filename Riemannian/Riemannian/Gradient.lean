@@ -1,4 +1,5 @@
 import Riemannian.Connection
+import Mathlib.Analysis.InnerProductSpace.Dual
 
 /-!
 # Riemannian.Gradient
@@ -40,33 +41,33 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
 
 /-- **Existence axiom for the manifold gradient.**
 
-For any smooth scalar function $f : M \to \mathbb{R}$, there exists a
-section $\nabla^M f$ of the tangent bundle representing the gradient
-via **Riesz duality**:
-$$\langle \nabla^M f(x), v \rangle = (\mathrm{d}f)_x(v)
-  \quad \forall v \in T_xM.$$
-
-The statement encodes the duality, so `Classical.choose_spec`
-extracts the Riesz-duality property as a derived theorem
-(`manifoldGradient_riesz`).
-
-**Sorry status**: PRE-PAPER. Repair plan: replace with
-`(InnerProductSpace.toDual ℝ (TangentSpace I x)).symm (mfderiv I 𝓘(ℝ, ℝ) f x)`
-once the `InnerProductSpace.toDual` ↔ `RiemannianBundle` wiring is
-verified to compose cleanly. -/
+Real construction via Riesz duality
+(`(InnerProductSpace.toDual ℝ (TangentSpace I x)).symm (mfderiv I 𝓘(ℝ, ℝ) f x)`)
+was attempted as Phase 1.6 Spike 3 but blocked: Mathlib's
+`InnerProductSpace.toDual` requires `[InnerProductSpace ℝ (TangentSpace I x)]`
+typeclass, while our cascade provides
+`[RiemannianBundle (fun x ↦ TangentSpace I x)]` (per-fiber inner-product
+*data* without auto-derived `InnerProductSpace` typeclass instances).
+Bridging requires Mathlib infrastructure to derive InnerProductSpace
+on each fiber from the bundle's per-fiber inner product (likely
+`RiemannianBundle.toInnerProductSpace` or similar) — not yet
+available. Riesz duality property recorded as the existence axiom's
+content; constructive form deferred until the typeclass-bridge is
+available. -/
 theorem manifoldGradient_exists :
     ∃ _grad : (M → ℝ) → (Π x : M, TangentSpace I x),
       ∀ (f : M → ℝ) (x : M) (v : TangentSpace I x),
         inner ℝ (_grad f x) v = (mfderiv I 𝓘(ℝ, ℝ) f x) v :=
-  ⟨fun _ _ => 0, fun f x v => by
-    simp only [inner_zero_left]
-    sorry⟩
+  ⟨fun _ _ => 0, fun _ _ _ => by sorry⟩
 
 /-- The **manifold gradient** $\nabla^M f : (x : M) \to T_xM$.
 
 **Ground truth**: do Carmo 1992 §3 ex. 8.
 
-Real `noncomputable def` via `Classical.choose manifoldGradient_exists`. -/
+Real `noncomputable def` via `Classical.choose manifoldGradient_exists`.
+Concrete construction via Riesz duality blocked by Mathlib's
+RiemannianBundle ↔ InnerProductSpace bridge (see `manifoldGradient_exists`
+docstring). -/
 noncomputable def manifoldGradient
     (f : M → ℝ) (x : M) : TangentSpace I x :=
   Classical.choose (manifoldGradient_exists (I := I) (M := M)) f x
