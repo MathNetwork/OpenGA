@@ -34,16 +34,35 @@ theorem isIntegral_ofBoundary (Ω : FinitePerimeter M) :
 
 end Varifold
 
-/-- **(d) of paper §6.1 Theorem 6.3: the De Lellis–Tasnady criterion
-(Proposition 6.1).**
+/-- **DLT13 Prop A.1 + uniqueness, applied form** ([DLT13, Prop A.1];
+reproduced verbatim as paper §5 Proposition `prop:p2-DLT-integrality`).
 
-If a min-max sequence has weak measure convergence of distributional
-derivatives (`DChiWeakConverge`) and perimeter convergence
-(`PerimeterConverge`), the limit varifold $V$ equals the boundary
-varifold of the limit slice $\Omega(t_0)$.
+DLT13 Prop A.1 verbatim (paper §5 line 8-15):
+> Let $\{\Omega^k\}$ be a sequence of Caccioppoli sets and $U$ an open
+> subset of $M$. Assume that
+> (i) $D\chi_{\Omega^k} \to D\chi_\Omega$ in the sense of measures in $U$;
+> (ii) $\mathrm{Per}(\Omega^k, U) \to \mathrm{Per}(\Omega, U)$
+> for some Caccioppoli set $\Omega$. Then the varifolds
+> $|\partial^*\Omega^k|$ converge to $|\partial^*\Omega|$ in the sense
+> of varifolds.
 
-This is the precise content of Proposition A.1 in De Lellis–Tasnady
-2013, packaged for the paper's min-max setup. -/
+The Lean statement combines DLT13 Prop A.1 with **uniqueness of weak
+varifold limits**: given `hlim` (the min-max sequence converges to V)
+and (i)+(ii), DLT13 gives a second weak limit $|\partial^*\Omega(t_0)|$;
+uniqueness of weak limits identifies $V = |\partial^*\Omega(t_0)|$.
+This is the combined form paper §5 uses in the proof of Theorem
+`thm:integrality(a)`: "Both conditions of Proposition A.1 are satisfied,
+so $V$ is the integral varifold induced by the Caccioppoli boundary
+$\partial^*\Omega(x_0)$."
+
+Signature-level paper-faithful: matches paper §5 USAGE pattern in the
+integrality-theorem proof. The DLT13 verbatim form (convergence-only)
+is recoverable by stripping `hlim` and recasting via `VarifoldConverge`,
+but is not separately exposed since the chain only consumes the
+equality form.
+
+**Used by**: `integrality_no_cancellation` (chain proof step (d) of
+paper §6.1 Theorem 6.3 / paper §5 Theorem `thm:integrality(a)`). -/
 theorem dlt_criterion
     {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
     (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V)

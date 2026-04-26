@@ -343,37 +343,100 @@ and threaded through chain)
 
 ## 4. DLT 2013 Proposition A.1 → `dlt_criterion`
 
-**Lean signature**: `AltRegularity/Integrality/PerimeterConvergence.lean:43`
+**Lean signature**: `AltRegularity/Integrality/PerimeterConvergence.lean:78`
 
 ```lean
 theorem dlt_criterion
-    {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
-    (hlim : Sweepout.MinMaxLimit Φ t₀ V)
-    (hWeak : Sweepout.DChiWeakConverge Φ t₀)
-    (hPer : Sweepout.PerimeterConverge Φ t₀) :
+    {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V)
+    (hWeak : MinMax.Sweepout.DChiWeakConverge Φ t₀)
+    (hPer : MinMax.Sweepout.PerimeterConverge Φ t₀) :
     V = Varifold.ofBoundary (Φ.slice t₀)
 ```
 
 **Cited paper**:
 - File: `arXiv-sources/DLT13-DeLellis-Tasnady/DLT13-DeLellis-Tasnady.tex`
 - Reference: De Lellis–Tasnady, "The existence of embedded minimal hypersurfaces", 2013
-- Theorem: Proposition A.1
+- Theorem: Proposition A.1 (`p:varivscacc`, line 2206)
 
-**Paper §6.1 phrasing**: [TODO: locate exact paper §6.1 line]
+**Paper §5 phrasing** (`paper/chapters/part2/5-integrality.tex:7-15`):
 
-**Original statement** (DLT 2013, Proposition A.1):
+> Let $\{\Omega^k\}$ be a sequence of Caccioppoli sets and $U$ an open
+> subset of $M$. Assume that
+> (i) $D\chi_{\Omega^k} \to D\chi_\Omega$ in the sense of measures in $U$;
+> (ii) $\mathrm{Per}(\Omega^k, U) \to \mathrm{Per}(\Omega, U)$
+> for some Caccioppoli set $\Omega$. Then the varifolds
+> $|\partial^*\Omega^k|$ converge to $|\partial^*\Omega|$ in the sense
+> of varifolds.
 
-[TODO: read `DLT13-DeLellis-Tasnady.tex` and fill]
+**Original statement** (DLT13 Proposition A.1, `p:varivscacc`, verbatim):
 
-**Alignment check**:
+> Let $\{\Omega^k\}$ be a sequence of Caccioppoli sets and $U$ an open
+> subset of $M$. Assume that
+> (i) $D \mathbf{1}_{\Omega^k}\to D\mathbf{1}_\Omega$ in the sense of
+> measures in $U$;
+> (ii) $\per (\Omega^k, U)\to\per(\Omega,U)$
+> for some Caccioppoli set $\Omega$ and denote by $V^k$ and $V$ the
+> varifolds induced by $\partial^\ast\Omega^k$ and $\partial^\ast\Omega$.
+> Then $V^k\to V$ in the sense of varifolds.
 
-| Component | Lean | Paper | Cited original | Status |
+**Alignment check** (Lean = paper §5 / DLT13 + uniqueness applied form):
+
+| Component | Lean | Paper §5 | DLT13 original | Status |
 |---|---|---|---|---|
-| weak convergence | `DChiWeakConverge Φ t₀` (opaque) | TODO | TODO | 🔴 |
-| perimeter convergence | `PerimeterConverge Φ t₀` | TODO | TODO | 🔴 |
-| Conclusion | `V = ofBoundary (Φ.slice t₀)` | TODO | TODO | 🔴 |
+| Sequence of Caccioppoli sets | implicit in `hlim`/`hWeak`/`hPer` (Φ-indexed) | $\{\Omega^k\}$ | $\{\Omega^k\}$ | ✓ packaged |
+| Limit Caccioppoli | `Φ.slice t₀` | $\Omega$ | $\Omega$ | ✓ |
+| (i) weak conv $D\chi$ | `hWeak : DChiWeakConverge Φ t₀` (opaque) | (i) verbatim | (i) verbatim | ✓ |
+| (ii) Per convergence | `hPer : PerimeterConverge Φ t₀` (opaque) | (ii) verbatim | (ii) verbatim | ✓ |
+| Open subset U | implicit (global) | $U$ open | $U$ open | 🟡 (Lean opaque encodes this) |
+| Conclusion | `V = ofBoundary (Φ.slice t₀)` (equality) | "varifolds converge" (convergence) | "$V^k \to V$" (convergence) | 🟡 (combined with uniqueness) |
 
-**Status**: 🔴
+**Findings**:
+
+1. **Hypothesis (i)+(ii) match verbatim**: paper §5 reproduces DLT13
+   verbatim modulo notation ($\mathbf{1}_\Omega$ vs $\chi_\Omega$);
+   Lean's `DChiWeakConverge` and `PerimeterConverge` (opaque GMT
+   primitives) encode the same conditions.
+
+2. **Conclusion form combined with uniqueness**: DLT13 Prop A.1
+   states "varifolds converge"; Lean states equality
+   $V = |\partial^*\Omega(t_0)|$. The combined form is what paper §5
+   uses in the proof of Theorem `thm:integrality(a)` (line 36):
+   "Both conditions of Proposition A.1 are satisfied, so $V$ is the
+   integral varifold induced by the Caccioppoli boundary
+   $\partial^*\Omega(x_0)$." Equality is derived from convergence
+   (DLT13) + uniqueness of weak limit (since `hlim` already gives
+   $V$ as a weak limit). Lean signature matches paper §5 USAGE
+   pattern.
+
+3. **No chain break**: `dlt_criterion` consumed verbatim by
+   `integrality_no_cancellation` step (d) — equality form is what
+   the chain wants.
+
+**Ground truth references** (Pitts 1981 / Simon 1983):
+
+- `Caccioppoli set / FinitePerimeter`: Simon §27 (BV) ✓ ground truth
+- `DChiWeakConverge` (weak convergence of distributional gradients):
+  Simon §13–§14 (BV / weak measure convergence) ✓ ground truth
+- `PerimeterConverge` (perimeter convergence): Simon §27 (perimeter
+  via total variation $|D\chi_\Omega|$) ✓ ground truth
+- `VarifoldConverge`: Simon §38 (varifold weak-* convergence on
+  $G_n(M)$) ✓ ground truth
+- `ofBoundary` (boundary varifold of Caccioppoli set): Simon §38
+  (varifold induced by integer-rectifiable current); De Giorgi
+  structure theorem (Maggi 2012, Ch. 15) for the reduced boundary
+  $\partial^*\Omega$ as rectifiable
+
+Cited paper-specific contributions:
+- The composition (i)+(ii) ⇒ varifold convergence: DLT13 §A
+  Prop A.1 — DLT13 contribution (built on Simon §27 + §38 ground truth)
+- Uniqueness of weak varifold limit: standard fact from Simon §38
+  (weak-* topology on Radon measures on $G_n(M)$)
+
+**Status**: 🟢 (paper §5 + DLT13 originals quoted verbatim; signature
+matches paper §5 USAGE pattern as DLT13 Prop A.1 + uniqueness combined.
+Convergence-only form is recoverable but not separately exposed since
+chain only consumes equality form).
 
 ---
 
