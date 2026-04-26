@@ -104,7 +104,9 @@ theorem exists_smoothMinimalHypersurface_via_ONVP
   obtain ⟨Φ, hneStrict, honvp, hW⟩ := MinMax.Sweepout.exists_nonExcessive_ONVP M n hn hn6
   have hne : MinMax.Sweepout.NonExcessive Φ := MinMax.Sweepout.nonExcessive_of_strict hneStrict
   -- (2) Pull-tight: get a critical parameter t₀ and varifold limit V.
-  obtain ⟨t₀, V, hcrit, hlim⟩ := MinMax.Sweepout.exists_minmaxLimit hne honvp hW
+  -- Paper §3 Prop 3.7 also gives M(V) = W; carried as the third conjunct
+  -- but not consumed downstream in this top-level chain.
+  obtain ⟨t₀, V, hcrit, hlim, _hMass⟩ := MinMax.Sweepout.exists_minmaxLimit hne honvp hW
   -- (3) Dichotomy on mass cancellation.
   refine ⟨Φ, t₀, V, hne, honvp, hcrit, hlim, ?_⟩
   rcases MinMax.Sweepout.mass_cancellation_or_no Φ t₀ with hcanc | hno

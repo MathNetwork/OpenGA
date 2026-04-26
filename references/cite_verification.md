@@ -551,27 +551,89 @@ verbatim, framework's `NonExcessive` redefined to forbid 2-sided
 
 ## 6. Paper §3 + CL03 → `exists_minmaxLimit`
 
-**Lean signature**: `AltRegularity/Sweepout/MinMaxLimit.lean:122`
+**Lean signature** (after Phase 2 strict-alignment):
+`MinMax/MinMax/Sweepout/MinMaxLimit.lean:181`
 
 ```lean
 theorem exists_minmaxLimit
     {Φ : Sweepout M} (hne : NonExcessive Φ) (honvp : ONVP Φ) (hW : 0 < width Φ) :
-    ∃ (t₀ : ℝ) (V : Varifold M), Critical Φ t₀ ∧ MinMaxLimit Φ t₀ V
+    ∃ (t₀ : ℝ) (V : Varifold M),
+      Critical Φ t₀ ∧ MinMaxLimit Φ t₀ V ∧ Varifold.mass V = width Φ
 ```
 
 **Cited paper**:
-- Files: `paper/chapters/part2/3-sweepouts.tex`, `pdf/CL03-Colding-DeLellis-2003.pdf`
-- Reference: paper Proposition 3.7 + CL03 Proposition 1.4
+- Files: `paper/chapters/part2/3-sweepouts.tex` (Proposition `thm:CLS-stationary`),
+  `pdf/CL03-Colding-DeLellis-2003.pdf` (Proposition 1.4)
+- Reference: paper §3 Proposition `thm:CLS-stationary` (cites CL03 Prop 1.4)
 
-**Paper §3 phrasing**: [TODO: locate Proposition 3.7 statement]
+**Paper §3 phrasing** (`paper/chapters/part2/3-sweepouts.tex:236-237`):
 
-**Original statement** (CL03, Proposition 1.4):
+> Let $(M^{n+1},g)$ be a closed Riemannian manifold with $n \geq 2$, and
+> let $\Phi$ be an optimal sweepout with $\sup_x \mathbf{M}(\Phi(x)) = W$.
+> Then there exists a stationary $n$-varifold $V$ in $M$ with
+> $\mathbf{M}(V) = W$.
 
-[TODO: read `CL03 PDF` and fill]
+**Original statement** (CL03 Prop 1.4): per paper §3 line 240, this
+follows from the pull-tight argument of Colding–de Lellis: varifold
+compactness + tightening flow optimality.
 
-**Alignment check**: [TODO]
+**Alignment check** (post-strict-alignment):
 
-**Status**: 🔴
+| Component | Lean | Paper §3 | Status |
+|---|---|---|---|
+| Closed Riemannian | `[BorelSpace M]` etc. (metric proxy) | $(M^{n+1}, g)$ closed | 🟡 (smooth-Riemannian via metric proxy; documented gap) |
+| $n \geq 2$ | implicit (threaded at top-level) | $n \geq 2$ explicit | 🟡 (deferred to top-level `exists_smoothMinimalHypersurface_via_ONVP`) |
+| Optimal sweepout | `NonExcessive Φ ∧ ONVP Φ` | "optimal sweepout" | ✓ |
+| Width = W | `0 < width Φ` (input) | $\sup_x \mathbf{M}(\Phi(x)) = W$ | ✓ (positive-width input; paper W is `width Φ`) |
+| ∃ critical parameter | `∃ t₀, Critical Φ t₀` | implicit in min-max | ✓ |
+| ∃ varifold limit | `∃ V, MinMaxLimit Φ t₀ V` | "stationary $V$" (Lean: stationarity in `isStationary_of_minmaxLimit`) | ✓ split |
+| $\mathbf{M}(V) = W$ | `Varifold.mass V = width Φ` | $\mathbf{M}(V) = W$ | ✓ |
+| stationary V | NOT here (deferred to `isStationary_of_minmaxLimit`, Item 2/6) | "stationary" | ✓ split for modularity |
+
+**Findings**:
+
+1. **Mass conjunct added**: pre-alignment Lean signature did not include
+   the paper's $\mathbf{M}(V) = W$ output. Strict alignment surfaces it
+   as the third conjunct `Varifold.mass V = width Φ`. Chain consumer
+   (`MinMaxExistence.lean:108`) now obtains 5-tuple
+   `⟨t₀, V, hcrit, hlim, _hMass⟩` (mass conjunct unused downstream
+   currently, but available for future strengthenings).
+
+2. **Stationarity split**: paper §3 Prop 3.7 includes "stationary $V$"
+   as part of the conclusion. Lean factors stationarity into the
+   separate `isStationary_of_minmaxLimit` (Item 2/6) — modular split
+   matching the chain proof's structure (`main_theorem_no_cancellation`
+   step 1 calls `isStationary_of_minmaxLimit hlim` separately).
+
+3. **$n \geq 2$ ambient hypothesis**: paper requires this for the
+   pull-tight argument. Framework threads it at the top-level
+   `exists_smoothMinimalHypersurface_via_ONVP`, not at this lemma —
+   `exists_minmaxLimit` itself doesn't reference n in its conclusion.
+   Acceptable per Round 5 Item 5 precedent (CLS22 Theorem 2.2 also
+   carries n-hypothesis at the top-level).
+
+**Chain break**: `MinMaxExistence.lean:107` pattern-match updated from
+4-tuple to 5-tuple (added `_hMass`). No other consumers.
+
+**Ground truth references** (Pitts 1981 / Simon 1983):
+
+- `Sweepout`: Simon §13–§14 (BV / Caccioppoli families); De Giorgi
+  structure theorem
+- `MinMaxLimit`, `Critical`: Simon §38 + Pitts §3.4 (sequence-based
+  critical parameter)
+- `Varifold.mass`: Simon §38
+- `width`: Pitts §3.1 (Almgren-Pitts width); paper §3 Def 3.1
+
+Cited paper-specific contributions:
+- Pull-tight argument with optimality + varifold compactness:
+  CL03 Prop 1.4 — CL03 contribution
+- Mass equality $\mathbf{M}(V) = W$ via Grassmannian-bundle convergence:
+  CL03 + Simon §38
+
+**Status**: 🟢 (paper §3 verbatim quoted; signature strict-aligned with
+mass conjunct added; stationarity factored to separate
+`isStationary_of_minmaxLimit`; n-hypothesis threaded at top-level
+per Item 5 precedent)
 
 ---
 

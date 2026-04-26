@@ -152,19 +152,36 @@ theorem dChiWeak_of_l1
 
 /-! ## Existence of a min-max limit -/
 
-/-- **Existence of a critical parameter and varifold limit (paper Proposition 3.7,
-[CL03, Proposition 1.4]).**
+/-- **Stationary varifolds from optimal sweepouts** (paper §3 Proposition
+`thm:CLS-stationary`, [CL03, Proposition 1.4]).
 
-For a non-excessive ONVP sweepout $\Phi$ with positive width, the standard
-pull-tight argument produces a critical parameter $t_0 \in \mathfrak{m}(\Phi)$
-and a varifold $V$ such that there is a min-max sequence $t_i \to t_0$ along
-which $|\partial^*\Omega_{t_i}| \to V$.
+Verbatim paper §3 statement (`paper/chapters/part2/3-sweepouts.tex:236-237`):
+> Let $(M^{n+1},g)$ be a closed Riemannian manifold with $n \geq 2$, and
+> let $\Phi$ be an optimal sweepout with $\sup_x \mathbf{M}(\Phi(x)) = W$.
+> Then there exists a stationary $n$-varifold $V$ in $M$ with
+> $\mathbf{M}(V) = W$.
 
-This is a black-box wrapper for the CLS22 / Colding–De Lellis pull-tight
+The Lean statement encodes the existence of a critical parameter
+$t_0 \in \mathfrak{m}(\Phi)$ and a varifold limit $V$ along a min-max
+sequence; mass-equality $\mathbf{M}(V) = W$ is included as the final
+conjunct. The stationarity conclusion is deferred to the separate
+`isStationary_of_minmaxLimit` (Pull-tight, Item 6 of Round 5
+alignment).
+
+The `0 < width Φ` hypothesis is the framework's encoding of the paper's
+implicit "$\Phi$ has positive width" (from DLT13 Prop 0.5 isoperimetric
+inequality). The "optimal sweepout" hypothesis is encoded as
+`NonExcessive Φ ∧ ONVP Φ`. The ambient $n \ge 2$ hypothesis is implicit
+in the framework's metric-measure cascade, threaded explicitly at the
+top-level `exists_smoothMinimalHypersurface_via_ONVP`.
+
+This is a black-box wrapper for the Colding–De Lellis pull-tight
 construction. -/
 theorem exists_minmaxLimit
     {Φ : Sweepout M} (hne : NonExcessive Φ) (honvp : ONVP Φ) (hW : 0 < width Φ) :
-    ∃ (t₀ : ℝ) (V : Varifold M), Critical Φ t₀ ∧ MinMaxLimit Φ t₀ V := by sorry
+    ∃ (t₀ : ℝ) (V : Varifold M),
+      Critical Φ t₀ ∧ MinMaxLimit Φ t₀ V ∧ Varifold.mass V = width Φ := by
+  sorry
 
 /-! ## Case 1 fact (used by `AltRegularity.PositiveDensity`) -/
 
