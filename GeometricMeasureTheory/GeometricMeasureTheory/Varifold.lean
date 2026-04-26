@@ -24,20 +24,23 @@ namespace GeometricMeasureTheory
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- An $n$-varifold in $M$ (with $n+1 = \dim M$), modeled provisionally
-by its mass measure $\|V\|$ as a finite Borel measure on $M$. The full
-varifold structure with tangent-plane data on $M \times \mathrm{Gr}(n,
-T_pM)$ is deferred. -/
+by its mass measure $\|V\|$ as a finite Borel measure on $M$ together
+with its intrinsic dimension $n$. The full varifold structure with
+tangent-plane data on $M \times \mathrm{Gr}(n, T_pM)$ is deferred. -/
 structure Varifold (M : Type*)
     [MetricSpace M] [MeasurableSpace M] [BorelSpace M] where
+  /-- Intrinsic dimension $n$ of the varifold. -/
+  dim : ℕ
   /-- The mass measure $\|V\|$ as a Borel measure on $M$. -/
   massMeasure : MeasureTheory.Measure M
   /-- The mass measure has finite total mass. -/
   isFiniteMeasure : MeasureTheory.IsFiniteMeasure massMeasure
 
 /-- The type of $n$-varifolds in $M$ is non-empty: the zero varifold
-provides a concrete witness. -/
+(at dimension $0$) provides a concrete witness. -/
 instance Varifold.instNonempty : Nonempty (Varifold M) :=
-  ⟨{ massMeasure := 0
+  ⟨{ dim := 0
+     massMeasure := 0
      isFiniteMeasure := ⟨by simp⟩ }⟩
 
 namespace Varifold
@@ -53,16 +56,27 @@ neighborhood has positive mass. -/
 def support (V : Varifold M) : Set M :=
   {p | ∀ U ∈ nhds p, V.massMeasure U ≠ 0}
 
-/-- Pointwise density $\Theta(\|V\|, p) := \lim_{r \to 0} \|V\|(B_r(p))/(\omega_n r^n)$.
+/-- Pointwise density $\Theta(\|V\|, p) := \lim_{r \to 0} \|V\|(B_r(p))/(\omega_n r^n)$
+where $n = V.\mathrm{dim}$.
+
+Defined as the `Filter.limsup` of `‖V‖(B_r(p)) / r^n` as $r \to 0^+$,
+omitting the unit-ball-volume constant $\omega_n$ (the constant is
+non-zero, so it cancels in sign-comparison statements like $\Theta > 0$;
+exact-value statements like $\Theta = k$ are interpreted modulo the
+$\omega_n$ normalization).
 
 **Ground truth**: Simon 1983 §17 (monotonicity formula for stationary
 varifolds; existence of density at every point); §10–§11 (general
 density-of-measure theory).
 
-The construction requires Mathlib infrastructure for the monotonicity-formula
-limit (Hausdorff $n$-measure, ratio limits) and is deferred to a later
-refinement. -/
-noncomputable def density (V : Varifold M) (p : M) : ℝ := by sorry
+For non-stationary varifolds the limit may not exist; `limsup` is the
+canonical convention (existence of the limit follows for stationary
+varifolds via Simon §17 monotonicity, but the framework returns
+`limsup` unconditionally to avoid existence hypotheses on callers). -/
+noncomputable def density (V : Varifold M) (p : M) : ℝ :=
+  Filter.limsup
+    (fun r : ℝ => (V.massMeasure (Metric.ball p r)).toReal / r ^ V.dim)
+    (nhdsWithin (0 : ℝ) (Set.Ioi 0))
 
 /-- Densities are non-negative. -/
 theorem density_nonneg (V : Varifold M) (p : M) : 0 ≤ density V p := by sorry

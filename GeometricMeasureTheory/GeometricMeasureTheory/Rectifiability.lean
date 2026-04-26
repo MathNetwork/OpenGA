@@ -49,13 +49,13 @@ def IsHRectifiable (S : Set M) (n : ℕ) : Prop :=
 namespace Varifold
 
 /-- $V$ is **rectifiable** iff its mass measure $\|V\|$ is concentrated
-on an $\mathcal{H}^n$-rectifiable subset of $M$ for some $n$.
+on an $\mathcal{H}^{V.dim}$-rectifiable subset of $M$.
 
 Defined explicitly as an existential over a rectifiable carrier $S$
-with $\|V\|(S^c) = 0$. The dimension $n$ is left existentially
-quantified pending a varifold-dimension parameter on `Varifold` itself. -/
+with $\|V\|(S^c) = 0$, using the varifold's intrinsic dimension
+`V.dim`. -/
 def IsRectifiable (V : Varifold M) : Prop :=
-  ∃ (n : ℕ) (S : Set M), IsHRectifiable S n ∧ V.massMeasure Sᶜ = 0
+  ∃ S : Set M, IsHRectifiable S V.dim ∧ V.massMeasure Sᶜ = 0
 
 /-- **Rectifiability theorem (Proposition 2.12).**
 A stationary varifold with positive density $\|V\|$-a.e. on its support
