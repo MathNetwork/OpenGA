@@ -104,20 +104,31 @@ local mass. -/
 theorem mem_support_iff (V : Varifold M) (p : M) :
     p ∈ support V ↔ ∀ r > 0, 0 < massOn V (Metric.ball p r) := by sorry
 
-/-- **Weak varifold convergence** of a sequence $V_i \to V$.
+/-- **Weak varifold convergence** $V_i \to V$.
+
+Defined via pairing of mass measures against compactly supported
+continuous test functions on $M$:
+$$\int_M \varphi \, d\|V_i\| \to \int_M \varphi \, d\|V\|, \quad
+\forall \varphi \in C_c(M; \mathbb{R}).$$
+
+This is the **mass measure** weak-convergence form, not the full
+varifold weak-* convergence on the Grassmann bundle $G_n(M)$. The
+Grassmann form requires upgrading `Varifold` to carry a measure on
+$M \times G_n(M)$ instead of just the mass measure on $M$, deferred
+to a future round. The mass-measure form suffices for paper §6
+applications (which only use mass measure / support information).
 
 **Ground truth**: Simon 1983 §38 (varifold convergence as weak-*
-convergence of Radon measures on the Grassmann bundle $G_n(M)$,
-paired against compactly supported continuous test functions);
-Allard 1972 §3.
-
-Encoded as an opaque leaf primitive: in full generality, weak convergence
-of varifolds means convergence of the underlying Radon measures on the
-Grassmann bundle $G_n(M)$ when paired against compactly supported
-continuous test functions.
+convergence of Radon measures on the Grassmann bundle, paired against
+compactly supported continuous test functions); Allard 1972 §3.
 
 **Used by**: `Sweepout.MinMaxLimit` def (`Sweepout/MinMaxLimit.lean`). -/
-opaque VarifoldConverge : (ℕ → Varifold M) → Varifold M → Prop
+def VarifoldConverge (Vᵢ : ℕ → Varifold M) (V : Varifold M) : Prop :=
+  ∀ φ : M → ℝ, Continuous φ → HasCompactSupport φ →
+    Filter.Tendsto
+      (fun i => ∫ x, φ x ∂(Vᵢ i).massMeasure)
+      Filter.atTop
+      (nhds (∫ x, φ x ∂V.massMeasure))
 
 /-- The **regular set** $\mathrm{reg}\,V$ of a varifold: the largest
 open subset of $\mathrm{spt}\|V\|$ on which the support is locally a
