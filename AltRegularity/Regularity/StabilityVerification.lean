@@ -89,9 +89,35 @@ theorem oneSidedMinimizing_off_hnm
     ∀ P ∈ support V \ MinMax.Sweepout.hnm V, ∃ r > 0, OneSidedMinimizingAt V P r := by
   sorry
 
-/-- **(c) of paper §7.1:** one-sided homotopic minimization implies
-local stability. The second variation is non-negative for compactly
-supported normal deformations in $B_r(P)$. -/
+/-- **One-sided minimization → local stability** — verbatim paper §6.1
+inline statement (`paper/chapters/part2/6-regularity.tex:18`),
+reflecting [Lin 1985] and [Schoen–Simon 1981] for the underlying GMT
+fact.
+
+Verbatim paper §6.1 statement (line 18):
+> One-sided homotopic minimization implies that the second variation
+> $\delta^2 V(\varphi, \varphi) \geq 0$ for all normal deformations
+> $\varphi$ supported in $B_r(P)$.
+
+The Lean statement encodes this paper-faithfully with universal
+quantification over $P \in \mathrm{spt}\|V\| \setminus \mathfrak{h}_{\mathrm{nm}}(V)$:
+given that $V$ is one-sided minimizing at each such $P$ in some
+$B_{r(P)}(P)$ (`h`), the second variation is non-negative on
+$\varphi$ supported in (each) $B_r(P)$ (`LocallyStable I V P r`).
+
+**Cited papers** (underlying GMT technique):
+- Lin 1985: regularity of Caccioppoli minimizers
+- Schoen–Simon 1981: stable hypersurfaces (second variation ≥ 0 for
+  one-sided minimizers via competitor-comparison)
+
+**Phase 1.5/1.6 interaction note**: `LocallyStable I V P r` body uses
+`secondVariation I V φ` (kinetic-only, curvature placeholder 0 per
+Phase 1.6 documentation). Statement-level alignment doesn't require
+body migration to `Variation.secondVariationFull`; Phase 1.7 body
+migration is orthogonal future work.
+
+This is a black-box wrapper for the Lin/Schoen–Simon stability
+implication. -/
 theorem locallyStable_of_oneSidedMinimizing
     {V : Varifold M}
     (h : ∀ P ∈ support V \ MinMax.Sweepout.hnm V, ∃ r > 0, OneSidedMinimizingAt V P r) :

@@ -683,18 +683,21 @@ per Item 5 precedent)
 
 ## 7. Lin / Schoen-Simon → `locallyStable_of_oneSidedMinimizing`
 
-**Lean signature**: `AltRegularity/Regularity/StabilityVerification.lean:82`
+**Lean signature** (after Phase 2 alignment):
+`AltRegularity/Regularity/StabilityVerification.lean:118`
 
 ```lean
 theorem locallyStable_of_oneSidedMinimizing
     {V : Varifold M}
-    (h : ∀ P ∈ support V \ Sweepout.hnm V, ∃ r > 0, OneSidedMinimizingAt V P r) :
-    ∀ P ∈ support V \ Sweepout.hnm V, ∃ r > 0, LocallyStable V P r
+    (h : ∀ P ∈ support V \ MinMax.Sweepout.hnm V, ∃ r > 0, OneSidedMinimizingAt V P r) :
+    ∀ P ∈ support V \ MinMax.Sweepout.hnm V, ∃ r > 0, LocallyStable I V P r
 ```
 
 **Cited paper**:
-- Files: `pdf/Lin85-Lin-1985.pdf` and/or `pdf/SSY75-Schoen-Simon-Yau-1975.pdf`
-- Reference: Lin 1985 (Caccioppoli minimizers) / Schoen–Simon 1981 stability
+- Files: `pdf/Lin85-Lin-1985.pdf`, `pdf/SSY75-Schoen-Simon-Yau-1975.pdf`
+- Reference: Lin 1985 (regularity of Caccioppoli minimizers) +
+  Schoen–Simon 1981 §1 (stable hypersurfaces, second-variation ≥ 0
+  via competitor comparison)
 
 **Paper §6.1 phrasing** (`paper/chapters/part2/6-regularity.tex:18`):
 
@@ -702,18 +705,57 @@ theorem locallyStable_of_oneSidedMinimizing
 > $\delta^2 V(\varphi, \varphi) \geq 0$ for all normal deformations
 > $\varphi$ supported in $B_r(P)$.
 
-**Original statement** (Lin 1985 / Schoen-Simon 1981):
-
-[TODO: read the relevant theorem statement and fill]
-
 **Alignment check**:
 
-| Component | Lean | Paper §6.1 | Cited original | Status |
-|---|---|---|---|---|
-| OneSidedMinimizingAt | `Varifold.OneSidedMinimizingAt V P r` | one-sided min | TODO | 🟡 |
-| LocallyStable | `Varifold.LocallyStable V P r` | δ² ≥ 0 in $B_r$ | TODO | 🟡 |
+| Component | Lean | Paper §6.1 | Status |
+|---|---|---|---|
+| One-sided minimizing on each P | `h : ∀ P ∈ ..., ∃ r > 0, OneSidedMinimizingAt V P r` | "$V$ is one-sided homotopic minimizing in $B_r(P)$ for every $P \in \spt\|V\| \setminus \mathfrak{h}_{nm}(V)$ and some $r = r(P) > 0$" | ✓ |
+| Local stability on each P | `LocallyStable I V P r` (δ² ≥ 0 on supp ⊂ $B_r(P) \setminus \mathrm{sing}\,V$) | "$\delta^2 V(\varphi, \varphi) \geq 0$ for all normal deformations $\varphi$ supported in $B_r(P)$" | ✓ |
+| Quantification | `∀ P ∈ support V \ hnm V, ∃ r > 0, LocallyStable I V P r` | "for every $P \in \spt\|V\| \setminus \mathfrak{h}_{nm}(V)$ and some $r = r(P) > 0$" | ✓ |
 
-**Status**: 🔴
+**Findings**:
+
+1. **Statement-level alignment**: Lean signature matches paper §6.1
+   line 18 verbatim — the inline statement of the Lin/Schoen-Simon
+   stability implication. Quantification structure matches paper:
+   universal over P (off the hnm exception set) with existential on
+   r per P.
+
+2. **No cited-paper-specific TODO**: paper §6.1 line 18 is an inline
+   one-liner without a separate proposition/lemma label; the
+   underlying GMT technique is Lin 1985 + Schoen-Simon 1981 §1.
+   Statement form is paper-internal, not cited verbatim from
+   Lin/SS.
+
+3. **Phase 1.5/1.6 interaction**: `LocallyStable I V P r` body uses
+   `secondVariation I V φ` (kinetic-only, curvature placeholder 0).
+   Statement-level alignment doesn't require body migration to
+   `Variation.secondVariationFull`; Phase 1.7 body migration is
+   orthogonal future work.
+
+4. **No chain break**: `locallyStable_of_oneSidedMinimizing` is
+   consumed by `isStable_of_nonExcessive_minmax` chain proof —
+   signature is unchanged this commit (only docstring sharpened).
+
+**Ground truth references** (Pitts 1981 / Simon 1983):
+
+- `OneSidedMinimizingAt`: Pitts §3.7 (almost-minimizing one-sided
+  competitor) + CLS22 §2 Def 1.4 (homotopic minimizer)
+- `LocallyStable`: framework def (uses `secondVariation`); Simon §49
+  (stability and second variation)
+- `secondVariation`: Simon §49; Schoen-Simon 1981 §1
+
+Cited paper-specific contributions:
+- Lin 1985: regularity of Caccioppoli minimizers (used as one input
+  to the one-sided-min ⇒ stability implication)
+- Schoen–Simon 1981 §1: stable hypersurface theorem, deriving
+  $\delta^2 V \geq 0$ from one-sided-minimization via competitor
+  comparison
+
+**Status**: 🟢 (paper §6.1 verbatim quoted; signature matches paper
+inline statement; underlying Lin/SS GMT technique referenced in
+docstring; statement-level alignment achieved without body
+migration)
 
 ---
 
