@@ -3,6 +3,8 @@ import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Torsion
 import Mathlib.Geometry.Manifold.VectorBundle.Riemannian
 import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 import Mathlib.Geometry.Manifold.Riemannian.Basic
+import Mathlib.Geometry.Manifold.MFDeriv.Basic
+import Mathlib.Topology.VectorBundle.Riemannian
 
 /-!
 # Riemannian.Connection
@@ -32,17 +34,23 @@ open scoped ContDiff Manifold
 
 namespace Riemannian
 
-variable {𝕜 : Type*} [NontriviallyNormedField 𝕜] [CompleteSpace 𝕜]
-  {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E] [CompleteSpace E]
-  [FiniteDimensional 𝕜 E]
-  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners 𝕜 E H}
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [FiniteDimensional ℝ E]
+  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+  [RiemannianBundle (fun x : M => TangentSpace I x)]
 
 /-- **Existence axiom for the Levi-Civita connection.**
 
-On a Riemannian manifold, there exists a torsion-free covariant derivative
-on the tangent bundle. (Metric compatibility is a separate property,
-captured by additional axioms in future refinements.)
+On a Riemannian manifold, there exists a covariant derivative on the
+tangent bundle that is **torsion-free** and **metric-compatible**. This
+is the Levi-Civita theorem (do Carmo 1992 §2 Theorem 3.6) — existence
++ uniqueness via the Koszul formula.
+
+The statement is the **full Levi-Civita theorem**: torsion-free
+($\mathrm{torsion}(\nabla) = 0$) AND metric-compatible
+($\nabla_X \langle Y, Z \rangle = \langle \nabla_X Y, Z \rangle +
+\langle Y, \nabla_X Z \rangle$ for vector fields $X, Y, Z$ on $M$).
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6.
 
@@ -53,7 +61,11 @@ proof, ~100 LOC), replace `Classical.choose` with the explicit
 construction. -/
 theorem leviCivitaConnection_exists :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
-      cov.torsion = 0 := by
+      cov.torsion = 0 ∧
+      ∀ (X Y Z : Π x : M, TangentSpace I x) (x : M),
+        mfderiv I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y y) (Z y)) x (X x) =
+          inner ℝ (cov.toFun Y x (X x)) (Z x) +
+          inner ℝ (Y x) (cov.toFun Z x (X x)) := by
   sorry
 
 /-- The **Levi-Civita connection** $\nabla$ on the tangent bundle of a
@@ -81,7 +93,23 @@ noncomputable def leviCivitaConnection :
 theorem leviCivitaConnection_torsion_zero :
     (leviCivitaConnection : CovariantDerivative I E
       (fun x : M => TangentSpace I x)).torsion = 0 :=
-  Classical.choose_spec leviCivitaConnection_exists
+  (Classical.choose_spec leviCivitaConnection_exists).1
+
+/-- The Levi-Civita connection is **metric-compatible**: for vector
+fields $X, Y, Z$ on $M$,
+$$\nabla_X \langle Y, Z \rangle =
+  \langle \nabla_X Y, Z \rangle + \langle Y, \nabla_X Z \rangle.$$
+
+This is the second of the two defining properties of Levi-Civita
+(torsion-free + metric-compatible), extracted from the existence
+axiom via `Classical.choose_spec`. -/
+theorem leviCivitaConnection_metric_compatible
+    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
+    mfderiv I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y y) (Z y)) x (X x) =
+      inner ℝ ((leviCivitaConnection (I := I) (M := M)).toFun Y x (X x)) (Z x) +
+      inner ℝ (Y x)
+        ((leviCivitaConnection (I := I) (M := M)).toFun Z x (X x)) :=
+  (Classical.choose_spec leviCivitaConnection_exists).2 X Y Z x
 
 /-- **Covariant derivative of one vector field along another**:
 $(\nabla_X Y)(x) := \nabla\,Y\,x\,(X\,x)$, where $\nabla$ is the
@@ -103,11 +131,12 @@ section UXTest
 
 open Riemannian
 
-noncomputable example {𝕜 : Type*} [NontriviallyNormedField 𝕜] [CompleteSpace 𝕜]
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E] [CompleteSpace E]
-    [FiniteDimensional 𝕜 E]
-    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners 𝕜 E H}
+noncomputable example
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianBundle (fun x : M => TangentSpace I x)]
     (X Y : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x := covDeriv X Y x
 

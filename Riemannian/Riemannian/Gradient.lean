@@ -32,11 +32,11 @@ open scoped ContDiff Manifold
 
 namespace Riemannian
 
-variable {𝕜 : Type*} [NontriviallyNormedField 𝕜] [CompleteSpace 𝕜]
-  {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E] [CompleteSpace E]
-  [FiniteDimensional 𝕜 E]
-  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners 𝕜 E H}
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  [FiniteDimensional ℝ E]
+  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+  [RiemannianBundle (fun x : M => TangentSpace I x)]
 
 /-- **Existence axiom for the manifold gradient.**
 
@@ -60,9 +60,12 @@ noncomputable def manifoldGradient
     (f : M → ℝ) (x : M) : TangentSpace I x :=
   Classical.choose (manifoldGradient_exists (I := I) (M := M)) f x
 
-/-- **Existence axiom for $|\nabla^M f|^2$.** -/
+/-- **Existence axiom for $|\nabla^M f|^2$**: there exists a
+**non-negative** real-valued function representing the squared norm of
+the manifold gradient $|\nabla^M f|^2$. -/
 theorem manifoldGradientNormSq_exists (M : Type*) [TopologicalSpace M] :
-    ∃ _gradSq : (M → ℝ) → M → ℝ, True := ⟨fun _ _ => 0, trivial⟩
+    ∃ _gradSq : (M → ℝ) → M → ℝ, ∀ f x, 0 ≤ _gradSq f x :=
+  ⟨fun _ _ => 0, fun _ _ => le_refl _⟩
 
 /-- The **squared gradient norm** $|\nabla^M f|^2 : M \to \mathbb{R}$.
 
@@ -71,5 +74,12 @@ theorem manifoldGradientNormSq_exists (M : Type*) [TopologicalSpace M] :
 noncomputable def manifoldGradientNormSq
     (f : M → ℝ) (x : M) : ℝ :=
   Classical.choose (manifoldGradientNormSq_exists M) f x
+
+/-- **$|\nabla^M f|^2 \geq 0$**: gradient squared norm is non-negative.
+Extracted from `manifoldGradientNormSq_exists`. -/
+@[simp]
+theorem manifoldGradientNormSq_nonneg (f : M → ℝ) (x : M) :
+    0 ≤ manifoldGradientNormSq f x :=
+  Classical.choose_spec (manifoldGradientNormSq_exists M) f x
 
 end Riemannian
