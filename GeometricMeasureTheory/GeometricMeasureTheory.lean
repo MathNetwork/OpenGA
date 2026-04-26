@@ -18,3 +18,4 @@ import GeometricMeasureTheory.SecondVariation
 import GeometricMeasureTheory.TangentCone
 import GeometricMeasureTheory.Rectifiability
 import GeometricMeasureTheory.Isoperimetric.Basic
+import GeometricMeasureTheory.Isoperimetric.Euclidean
