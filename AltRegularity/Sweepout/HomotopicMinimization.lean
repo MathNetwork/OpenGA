@@ -30,20 +30,30 @@ variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [Measure
 
 namespace Varifold
 
-/-- $K$ is a **one-sided homotopic competitor** for $V$ at the point $P$
-in radius $r$: $K$ is a finite-perimeter set obtained from $V$'s
-support by a one-sided ambient isotopy supported in $B_r(P)$.
+/-- $K$ is a **one-sided competitor** for $V$ at the point $P$ in
+radius $r$ (paper §3 Def 3.7 / [CLS22, Def 1.4], geometric content):
 
-The two sides correspond to the inner ("$K \subseteq \mathrm{spt}\|V\|$
-on $B_r$") and outer ("$K \supseteq \mathrm{spt}\|V\|$ on $B_r$")
-versions; this single predicate quantifies over both.
+  * $K$ agrees with $\mathrm{spt}\|V\|$ outside $B_r(P)$, i.e.,
+    $K \,\triangle\, \mathrm{spt}\|V\| \subseteq B_r(P)$;
+  * $K$ is **one-sided** with respect to $\mathrm{spt}\|V\|$:
+    either $K \subseteq \mathrm{spt}\|V\|$ (inner) or
+    $\mathrm{spt}\|V\| \subseteq K$ (outer).
 
-**Ground truth**: Pitts 1981 §3.7 (almost-minimizing concept,
-one-sided competitor surfaces); CLS22 §2 (Def 1.4 — homotopic
-minimizers in the sweepout context) — paper §3 Def 3.7.
+This captures the geometric inner/outer + symmetric-difference content
+of paper §3 Def 3.7 verbatim. The third condition of paper Def 3.7
+(connectedness via continuous family of Caccioppoli sets in $B_r(P)$)
+is paper-internal homotopy data not encoded here; including it would
+require a `Caccioppoli-homotopic` sub-predicate, which is left for a
+future round when needed by chain proofs.
+
+**Ground truth**: Pitts 1981 §3.7 (almost-minimizing competitor
+surfaces); CLS22 §2 Def 1.4; paper §3 Def 3.7.
 
 **Used by**: `Varifold.OneSidedMinimizingAt` def (in this file). -/
-opaque IsOneSidedCompetitor : Varifold M → FinitePerimeter M → M → ℝ → Prop
+def IsOneSidedCompetitor (V : Varifold M) (K : FinitePerimeter M)
+    (P : M) (r : ℝ) : Prop :=
+  symmDiff K.carrier (Varifold.support V) ⊆ Metric.ball P r ∧
+  (K.carrier ⊆ Varifold.support V ∨ Varifold.support V ⊆ K.carrier)
 
 /-- $V$ is **one-sided homotopic minimizing** at $P$ in radius $r$
 (paper Def 3.7 / [CLS22, Def 1.4]): for every one-sided homotopic
@@ -63,18 +73,42 @@ namespace Sweepout
 
 /-! ## Sweepout-level homotopic-minimizer property -/
 
-/-- $\Phi$ at $t_0$ has the **one-sided homotopic-minimizer** property
-on the inner side: the slice $\Omega_{t_0}$ is a homotopic perimeter
-minimizer among ambient isotopies that do not enlarge it.
+/-- $\Phi$ at $t_0$ has the **inner homotopic-minimizer** property
+(paper §3 Def 3.7 inner variant, sweepout-level lift): for every
+varifold limit $V$ at $t_0$, every $P \in \mathrm{spt}\|V\|$ and every
+radius $r > 0$, every inner one-sided competitor $K$ (with
+$K \subseteq \mathrm{spt}\|V\|$) has perimeter at least the local mass
+of $V$ on $B_r(P)$.
 
-**Ground truth**: CLS22 §2 (sweepout-specific homotopic-minimizer
-property); built on top of Pitts 1981 §3.7 almost-minimizing. -/
-opaque InnerHomotopicMinimizer : Sweepout M → ℝ → Prop
+Defined explicitly via `Varifold.IsOneSidedCompetitor` (grounded), with
+the inner specialization `K.carrier ⊆ V.support`.
 
-/-- Outer homotopic-minimizer property (the symmetric version).
+**Ground truth**: paper §3 Def 3.7 inner variant; CLS22 §2 (Def 1.4);
+Pitts 1981 §3.7. The Caccioppoli-homotopy condition omitted (matches
+`IsOneSidedCompetitor`'s simplification). -/
+def InnerHomotopicMinimizer (Φ : Sweepout M) (t₀ : ℝ) : Prop :=
+  ∀ V : Varifold M, MinMaxLimit Φ t₀ V →
+    ∀ P ∈ Varifold.support V, ∀ r > 0,
+      ∀ K : FinitePerimeter M,
+        Varifold.IsOneSidedCompetitor V K P r →
+        K.carrier ⊆ Varifold.support V →
+        Varifold.massOn V (Metric.ball P r) ≤
+          FinitePerimeter.perimOn K (Metric.ball P r)
 
-**Ground truth**: CLS22 §2; Pitts 1981 §3.7. -/
-opaque OuterHomotopicMinimizer : Sweepout M → ℝ → Prop
+/-- $\Phi$ at $t_0$ has the **outer homotopic-minimizer** property
+(paper §3 Def 3.7 outer variant): same as `InnerHomotopicMinimizer` but
+with the outer specialization `V.support ⊆ K.carrier`.
+
+**Ground truth**: paper §3 Def 3.7 outer variant; CLS22 §2 (Def 1.4);
+Pitts 1981 §3.7. -/
+def OuterHomotopicMinimizer (Φ : Sweepout M) (t₀ : ℝ) : Prop :=
+  ∀ V : Varifold M, MinMaxLimit Φ t₀ V →
+    ∀ P ∈ Varifold.support V, ∀ r > 0,
+      ∀ K : FinitePerimeter M,
+        Varifold.IsOneSidedCompetitor V K P r →
+        Varifold.support V ⊆ K.carrier →
+        Varifold.massOn V (Metric.ball P r) ≤
+          FinitePerimeter.perimOn K (Metric.ball P r)
 
 /-- **Non-excessive ⟹ one-sided homotopic minimization.**
 The non-excessive property at a critical $t_0$ implies the inner (and

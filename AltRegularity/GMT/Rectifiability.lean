@@ -1,4 +1,6 @@
 import AltRegularity.GMT.Stationary
+import Mathlib.MeasureTheory.Measure.Hausdorff
+import Mathlib.Topology.EMetricSpace.Lipschitz
 
 /-!
 # AltRegularity.GMT.Rectifiability
@@ -25,18 +27,24 @@ namespace AltRegularity
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
-/-- A subset $S \subseteq M$ is **$\mathcal{H}^n$-rectifiable** iff it
-is the countable union of Lipschitz images of bounded subsets of
-$\mathbb{R}^n$, modulo an $\mathcal{H}^n$-null set.
+/-- A subset $S \subseteq M$ is **$\mathcal{H}^n$-rectifiable** iff
+$$ S \subseteq \left( \bigcup_{i \in \mathbb{N}} f_i(A_i) \right) \cup N $$
+where each $A_i \subseteq \mathbb{R}^n$ is bounded, each $f_i : \mathbb{R}^n
+\to M$ is Lipschitz on $A_i$, and $\mathcal{H}^n(N) = 0$.
 
-**Ground truth**: Simon 1983 §11 (rectifiable sets, Theorem 11.1 for
-the Lipschitz-image characterization); Federer 1969 §3.2.14.
+This is the standard Simon §11 / Federer §3.2.14 characterization
+expressed with Mathlib's `LipschitzOnWith` and `hausdorffMeasure`.
 
-Pending Mathlib's rectifiable-set infrastructure, this predicate is
-left opaque.
+**Ground truth**: Simon 1983 §11, Theorem 11.1 (Lipschitz-image
+characterization); Federer 1969 §3.2.14.
 
 **Used by**: `Varifold.IsRectifiable` def (in this file). -/
-opaque IsHRectifiable : Set M → ℕ → Prop
+def IsHRectifiable (S : Set M) (n : ℕ) : Prop :=
+  ∃ (A : ℕ → Set (Fin n → ℝ)) (f : ℕ → (Fin n → ℝ) → M)
+    (K : ℕ → NNReal),
+    (∀ i, Bornology.IsBounded (A i)) ∧
+    (∀ i, LipschitzOnWith (K i) (f i) (A i)) ∧
+    MeasureTheory.Measure.hausdorffMeasure (n : ℝ) (S \ ⋃ i, f i '' A i) = 0
 
 namespace Varifold
 

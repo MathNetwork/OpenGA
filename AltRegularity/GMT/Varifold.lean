@@ -111,8 +111,15 @@ smooth embedded hypersurface.
 integral varifolds); Wickramasekera 2014 §2 (definition of $\mathrm{reg}\,V$
 in the manifold setting).
 
-Encoded as an opaque leaf primitive pending Mathlib's smooth-manifold
-infrastructure.
+**Why opaque**: a paper-faithful `def` would require Mathlib's
+smooth-manifold-with-corners infrastructure (`IsManifold` typeclass,
+which presupposes `[NontriviallyNormedField 𝕜] [NormedAddCommGroup E]
+[NormedSpace 𝕜 E] [ChartedSpace E M] (I : ModelWithCorners 𝕜 E E)
+[IsManifold I n M]`) plus a notion of "embedded hypersurface" (not in
+Mathlib). The typeclass propagation alone would cascade through ~27
+framework files and substantively change the ambient typeclass profile.
+A "sub-primitive" workaround (introducing an opaque `IsLocallyHypersurface`
+predicate) achieves only net-zero opaque-count reduction.
 
 **Used by**: `Varifold.sing` def (in this file). -/
 opaque regular : Varifold M → Set M

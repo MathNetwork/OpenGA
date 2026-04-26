@@ -58,20 +58,53 @@ def MinMaxLimit (Φ : Sweepout M) (x₀ : ℝ) (V : Varifold M) : Prop :=
 
 /-! ## Convergence predicates packaged from a min-max sequence -/
 
-/-- $L^1$ convergence of slice carriers along the min-max sequence
-$t_i \to t_0$: $\mathrm{Vol}(\Omega(t_i) \,\triangle\, \Omega(t_0)) \to 0$.
+/-- **$L^1$ convergence of slice carriers** along a min-max sequence
+$t_i \to t_0$:
+$$\mathcal{F}(\Omega(t_i), \Omega(t_0))
+= \mathrm{Vol}(\Omega(t_i) \,\triangle\, \Omega(t_0)) \to 0.$$
+
+For finite-perimeter sets, $L^1_{\mathrm{loc}}$ convergence of indicator
+functions is equivalent to flat-distance convergence (volume of the
+symmetric difference of carriers tending to $0$). The framework's
+`FinitePerimeter.flatDist` (grounded against `MeasureTheory.volume`)
+provides the underlying volume measurement.
 
 **Ground truth**: Simon 1983 §13–§14 (BV functions and finite-perimeter
-sets, $L^1_{\mathrm{loc}}$ convergence of indicators). -/
-opaque SlicesL1Converge : Sweepout M → ℝ → Prop
+sets, $L^1_{\mathrm{loc}}$ convergence of indicators).
 
-/-- Weak convergence of the distributional derivatives of the indicator
-functions: $D\chi_{\Omega(t_i)} \to D\chi_{\Omega(t_0)}$ in the sense of
-measures along the min-max sequence.
+**Used by**: `integrality_no_cancellation` chain
+(`Integrality/Theorem.lean`). -/
+def SlicesL1Converge (Φ : Sweepout M) (t₀ : ℝ) : Prop :=
+  ∃ tᵢ : ℕ → ℝ,
+    (∀ i, tᵢ i ∈ Set.Icc (0 : ℝ) 1) ∧
+    Filter.Tendsto tᵢ Filter.atTop (nhds t₀) ∧
+    Filter.Tendsto
+      (fun i => FinitePerimeter.flatDist (Φ.slice (tᵢ i)) (Φ.slice t₀))
+      Filter.atTop (nhds 0)
+
+/-- **Weak convergence of distributional derivatives of slice indicators**:
+$D\chi_{\Omega(t_i)} \to D\chi_{\Omega(t_0)}$ in the sense of measures
+along a min-max sequence $t_i \to t_0$.
+
+For a finite-perimeter set $\Omega$, the distributional derivative
+$D\chi_\Omega$ is the perimeter measure $|D\chi_\Omega|$ encoded as the
+`perimMeasure` field of `FinitePerimeter`. Weak measure convergence is
+expressed as convergence of pairings against every continuous,
+compactly supported real-valued test function.
 
 **Ground truth**: Simon 1983 §13–§14 (weak measure convergence of
-distributional derivatives for BV indicators); Maggi 2012, Theorem 12.15. -/
-opaque DChiWeakConverge : Sweepout M → ℝ → Prop
+distributional derivatives for BV indicators); Maggi 2012, Theorem 12.15.
+
+**Used by**: `dlt_criterion` (`Integrality/PerimeterConvergence.lean`). -/
+def DChiWeakConverge (Φ : Sweepout M) (t₀ : ℝ) : Prop :=
+  ∃ tᵢ : ℕ → ℝ,
+    (∀ i, tᵢ i ∈ Set.Icc (0 : ℝ) 1) ∧
+    Filter.Tendsto tᵢ Filter.atTop (nhds t₀) ∧
+    ∀ φ : M → ℝ, Continuous φ → HasCompactSupport φ →
+      Filter.Tendsto
+        (fun i => ∫ x, φ x ∂(Φ.slice (tᵢ i)).perimMeasure)
+        Filter.atTop
+        (nhds (∫ x, φ x ∂(Φ.slice t₀).perimMeasure))
 
 /-- Perimeter convergence along the min-max sequence:
 $\mathrm{Per}(\Omega(t_i)) \to \mathrm{Per}(\Omega(t_0))$.

@@ -46,17 +46,21 @@ analog); CLS22 §2 line 805 + paper §3 Def 3.1. -/
 def IsOptimal (Φ : Sweepout M) : Prop :=
   ∀ Φ' : Sweepout M, width Φ ≤ width Φ'
 
-/-- $\Phi$ is **volume-parametrized** (paper Def 3.2 third bullet):
-$\mathrm{Vol}(\Omega(t)) = t \cdot \mathrm{Vol}(M)$ for every $t \in
-[0,1]$.
+/-- $\Phi$ is **volume-parametrized** (paper §3 Def 3.2 third bullet,
+verbatim "$\mathrm{Vol}(\Omega(x)) = x \cdot \mathrm{Vol}(M)$ for every
+$x \in [0,1]$").
+
+Defined explicitly via `MeasureTheory.volume` (the default measure
+provided by `[MeasureSpace M]`).
 
 **Ground truth**: sweepout-specific concept; CLS22 §2 (Def 1.2) +
 paper §3 Def 3.2. Volume measure on $M$ is Simon 1983 §3 (Lebesgue
-on $\mathbb{R}^{n+1}$) / standard Riemannian volume form.
-
-Encoded as an opaque leaf primitive pending a reference volume measure
-on $M$. -/
-opaque IsVolumeParametrized : Sweepout M → Prop
+on $\mathbb{R}^{n+1}$) / standard Riemannian volume form, supplied as
+the `[MeasureSpace M]` instance. -/
+def IsVolumeParametrized (Φ : Sweepout M) : Prop :=
+  ∀ t ∈ Set.Icc (0 : ℝ) 1,
+    (MeasureTheory.volume (Φ.slice t).carrier).toReal =
+      t * (MeasureTheory.volume (Set.univ : Set M)).toReal
 
 /-- $\Phi$ is **Optimal Nested Volume-Parametrized** (paper Def 3.2 /
 [CLS22, Def 1.2]): optimal, nested in $t$, and parametrized by
