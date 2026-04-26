@@ -20,7 +20,7 @@ This is part of Section 2 (Preliminaries) of the paper.
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- A set of finite perimeter in $M$. The structure bundles the carrier
 $\Omega$ together with its perimeter measure $|D\chi_\Omega|$, a finite

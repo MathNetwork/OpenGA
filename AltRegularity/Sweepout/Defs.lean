@@ -25,6 +25,7 @@ primitive `FinitePerimeter.flatDist`. `Sweepout.width` is an explicit
 namespace AltRegularity
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+  [MeasureTheory.MeasureSpace M]
 
 namespace Sweepout
 
@@ -47,7 +48,8 @@ a 1-parameter family of finite-perimeter sets indexed by $\mathbb{R}$
 (in practice the interval $[0,1]$), continuous in the flat topology,
 with empty starting slice and full-volume terminal slice. -/
 structure Sweepout (M : Type*)
-    [MetricSpace M] [MeasurableSpace M] [BorelSpace M] where
+    [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+    [MeasureTheory.MeasureSpace M] where
   /-- The slice $\Omega_t$ at parameter $t$. -/
   slice : ℝ → FinitePerimeter M
   /-- Flat continuity of $t \mapsto \Omega_t$ (paper Def 3.1). -/

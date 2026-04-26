@@ -18,7 +18,7 @@ notion of CLS22 Definition 1.10.
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 namespace FinitePerimeter
 

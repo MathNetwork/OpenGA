@@ -36,7 +36,7 @@ Mathlib's Hausdorff-measure-on-manifold infrastructure.
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 namespace Varifold
 

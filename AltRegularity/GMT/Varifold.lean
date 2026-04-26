@@ -19,7 +19,7 @@ This is part of Section 2 (Preliminaries) of the paper.
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- An $n$-varifold in $M$ (with $n+1 = \dim M$), modeled provisionally
 by its mass measure $\|V\|$ as a finite Borel measure on $M$. The full

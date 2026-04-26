@@ -45,7 +45,7 @@ bridges below.
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 -- Both Section 7 bridges are provided by chain-proof modules:
 --   * `isStable_of_nonExcessive_minmax`

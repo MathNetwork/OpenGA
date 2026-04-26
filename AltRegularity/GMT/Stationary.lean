@@ -27,7 +27,7 @@ opaque pending Mathlib-level manifold infrastructure.
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- A smooth, compactly supported vector field on $M$.
 

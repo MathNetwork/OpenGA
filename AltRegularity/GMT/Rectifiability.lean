@@ -23,7 +23,7 @@ The leaf primitive remains opaque pending Mathlib-level GMT infrastructure.
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- A subset $S \subseteq M$ is **$\mathcal{H}^n$-rectifiable** iff it
 is the countable union of Lipschitz images of bounded subsets of

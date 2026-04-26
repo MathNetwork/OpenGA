@@ -20,7 +20,7 @@ is a finite logical chain that Lean checks formally.
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **Sweepout-wide replacement (statement, open).**
 Under the hypotheses of a non-excessive ONVP sweepout with a min-max limit

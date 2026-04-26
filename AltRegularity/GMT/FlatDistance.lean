@@ -1,38 +1,41 @@
 import AltRegularity.GMT.FinitePerimeter
+import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 
 /-!
 # AltRegularity.GMT.FlatDistance
 
-Flat distance pseudometric on finite-perimeter sets.
-
 For two Caccioppoli sets $\Omega_1, \Omega_2 \subset M$, the **flat
 distance** is $\mathcal{F}(\Omega_1, \Omega_2) := \mathrm{Vol}(\Omega_1
-\triangle \Omega_2)$. This is the pseudometric used in paper
+\,\triangle\, \Omega_2)$. This is the pseudometric used in paper
 Definition 3.1 to define $\mathcal{F}$-continuity of a sweepout.
 
-The leaf-level definition $\mathrm{Vol}(\Omega_1 \triangle \Omega_2)$
-requires a reference volume measure on $M$ and is left as a sorry'd
-opaque primitive pending Mathlib's volume-form-on-manifold infrastructure.
+Defined explicitly in terms of `MeasureTheory.volume` (Mathlib's
+`[MeasureSpace M]` default measure). For the framework's manifold
+ambient $M$, the reference volume is the Riemannian volume form;
+formalized as the `MeasureSpace` typeclass instance to be supplied
+downstream.
 -/
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
-
 namespace FinitePerimeter
 
-/-- The **flat distance** $\mathcal{F}(\Omega_1, \Omega_2) :=
-\mathrm{Vol}(\Omega_1 \triangle \Omega_2)$.
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+  [MeasureTheory.MeasureSpace M]
 
-**Ground truth**: Simon 1983 §31 (flat metric on integral currents);
-for finite-perimeter sets the flat distance specializes to the Lebesgue
-measure of the symmetric difference.
+/-- The **flat distance** between two finite-perimeter sets:
+$\mathcal{F}(\Omega_1, \Omega_2) := \mathrm{Vol}(\Omega_1
+\,\triangle\, \Omega_2)$.
 
-Encoded as an opaque leaf primitive pending a reference volume measure
-on $M$.
+Specialization of the flat norm on integral $n$-currents to indicator
+functions of Caccioppoli sets, where boundary-minimization in the
+general flat norm collapses to the symmetric-difference volume.
+
+**Ground truth**: Simon 1983 §31; specialization Maggi 2012 §15.
 
 **Used by**: `Sweepout.FContinuous` def (`Sweepout/Defs.lean`). -/
-opaque flatDist : FinitePerimeter M → FinitePerimeter M → ℝ
+noncomputable def flatDist (Ω₁ Ω₂ : FinitePerimeter M) : ℝ :=
+  (MeasureTheory.volume (symmDiff Ω₁.carrier Ω₂.carrier)).toReal
 
 end FinitePerimeter
 

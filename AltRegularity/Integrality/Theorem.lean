@@ -24,7 +24,7 @@ and varifold limit $V = \lim |\partial^*\Omega_{t_i}|$:
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **Integrality, no-mass-cancellation case (Theorem 6.1(a)).**
 

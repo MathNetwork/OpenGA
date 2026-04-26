@@ -14,7 +14,7 @@ as varifolds to $V$, then the limit varifold has positive density at $p$.
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **Density from one-sided almost minimality (Lemma 5.8).**
 Given $|\partial^*\Omega_i| \to V$ with each $\Omega_i$ uniformly one-sided

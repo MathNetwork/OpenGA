@@ -28,20 +28,23 @@ so that nesting can be extracted directly via `onvp_nested`.
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 namespace Sweepout
 
-/-- $\Phi$ is **optimal** (paper Def 3.2 first bullet): $\sup_t
-\mathbf{M}(\Phi(t))$ equals the global width $W = \inf_{\Phi'}
-\sup_t \mathbf{M}(\Phi'(t))$ over all sweepouts.
+/-- $\Phi$ is **optimal** (paper Def 3.2 first bullet): no other sweepout
+has strictly smaller width. Equivalently, $\Phi$ realizes the infimum
+$W = \inf_{\Phi'} \sup_t \mathbf{M}(\Phi'(t))$ over all sweepouts of $M$.
+
+Defined explicitly as a universally-quantified inequality
+$\forall \Phi', \mathrm{width}\,\Phi \le \mathrm{width}\,\Phi'$, which
+is equivalent to "$\mathrm{width}\,\Phi$ realizes the infimum" without
+requiring `InfSet` or non-emptyness machinery on `Sweepout M`.
 
 **Ground truth**: sweepout-specific concept (no direct Pitts/Simon
-analog); CLS22 §2 line 805 + paper §3 Def 3.1.
-
-Encoded as an opaque leaf primitive pending a quantification over
-$\mathcal{S}$ in the framework. -/
-opaque IsOptimal : Sweepout M → Prop
+analog); CLS22 §2 line 805 + paper §3 Def 3.1. -/
+def IsOptimal (Φ : Sweepout M) : Prop :=
+  ∀ Φ' : Sweepout M, width Φ ≤ width Φ'
 
 /-- $\Phi$ is **volume-parametrized** (paper Def 3.2 third bullet):
 $\mathrm{Vol}(\Omega(t)) = t \cdot \mathrm{Vol}(M)$ for every $t \in

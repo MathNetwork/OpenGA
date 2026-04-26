@@ -32,7 +32,7 @@ in opaque predicates. The bridges `non_excessive_def` and
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 namespace Sweepout
 
@@ -242,6 +242,7 @@ establishes. Downstream chain consumers bridge to the framework's
 points) via `nonExcessive_of_strict`. -/
 theorem exists_nonExcessive_ONVP (M : Type*)
     [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [CompactSpace M]
+    [MeasureTheory.MeasureSpace M]
     (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6) :
     ∃ Φ : Sweepout M, NonExcessiveStrict Φ ∧ ONVP Φ ∧ 0 < width Φ := by sorry
 

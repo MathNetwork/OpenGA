@@ -17,7 +17,7 @@ formalization is deferred.
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **Density lower bound on the reduced boundary (Lemma 6.4).**
 At a point of $\partial^*\Omega_{t_0} \cap \mathrm{spt}\|V\|$ that is the

@@ -51,7 +51,7 @@ boundary (CLS22 Theorem 2.2, CL03 pull-tight, etc.).
 
 namespace AltRegularity
 
-variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **End-to-end existence of a smooth minimal hypersurface (paper Theorem 1.1
 applied to CLS22 Theorem 2.2).**
