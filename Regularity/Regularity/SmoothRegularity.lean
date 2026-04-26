@@ -1,5 +1,6 @@
 import Regularity.AlphaStructural
 import GeometricMeasureTheory.Rectifiability
+import Mathlib.MeasureTheory.Measure.Hausdorff
 
 open GeometricMeasureTheory GeometricMeasureTheory.Varifold
 
@@ -72,19 +73,25 @@ structure IsSmoothMinimalHypersurface (V : Varifold M) : Prop where
 
 /-- **High-dimensional Hausdorff-small singular set** (paper §4
 Theorem~\ref{thm:wickramasekera} clause (c)): for the codimension-1
-ambient-dimension parameter $n \ge 8$, the conclusion
-$\mathcal{H}^{n-7+\gamma}(\mathrm{sing}\,V) = 0$ for every $\gamma > 0$.
+ambient-dimension parameter $n \ge 8$, the singular set has Hausdorff
+dimension $\le n - 7$:
+$$\mathcal{H}^{n-7+\gamma}(\mathrm{sing}\,V) = 0 \quad \forall \gamma > 0.$$
+
+Defined explicitly via `MeasureTheory.Measure.hausdorffMeasure` at
+exponent $n - 7 + \gamma$.
 
 **Ground truth**: Wickramasekera 2014 Theorem 3.1 / Theorem 6.1 (manifold
-version), clause (c). The Hausdorff $n$-measure machinery itself is
-Simon 1983 §3 (Hausdorff measure construction) and §11.
+version), clause (c). The Hausdorff $n$-measure machinery is Simon 1983
+§3 (Hausdorff measure construction) and §11.
 
-Encoded as an opaque leaf primitive pending Mathlib's
-Hausdorff-measure-on-manifold infrastructure.
+For $n < 8$ the def is vacuous on the sense that callers only invoke
+it under the hypothesis $8 \le n$ (paper Theorem 4.4 clause (c));
+the def itself does not enforce $n \ge 8$.
 
-**Used by**: `Varifold.regularity_of_inClassSAlpha` (n ≥ 8 case)
-(`Regularity/SmoothRegularity.lean`). -/
-opaque HausdorffSmallSingular : Varifold M → ℕ → Prop
+**Used by**: `Varifold.regularity_of_inClassSAlpha` (n ≥ 8 case). -/
+def HausdorffSmallSingular (V : Varifold M) (n : ℕ) : Prop :=
+  ∀ γ : ℝ, 0 < γ →
+    MeasureTheory.Measure.hausdorffMeasure ((n : ℝ) - 7 + γ) (sing V) = 0
 
 /-- **Regularity in the class $\mathcal{S}_\alpha$** (paper §4
 Theorem~\ref{thm:wickramasekera}, [Wickramasekera 2014, Theorem 3.1 /
