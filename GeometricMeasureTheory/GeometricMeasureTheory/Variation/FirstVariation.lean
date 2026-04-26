@@ -1,6 +1,5 @@
 import GeometricMeasureTheory.Variation.Divergence
 import GeometricMeasureTheory.HasNormal
-import GeometricMeasureTheory.Stationary
 import Riemannian.Connection
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 

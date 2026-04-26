@@ -1,6 +1,7 @@
 import GeometricMeasureTheory.Varifold
 import GeometricMeasureTheory.TangentCone
 import Mathlib.Geometry.Manifold.IsManifold.Basic
+import Mathlib.Geometry.Manifold.ContMDiff.Basic
 
 /-!
 # AltRegularity.GMT.HasNormal
@@ -40,6 +41,34 @@ open scoped ContDiff Manifold
 namespace GeometricMeasureTheory
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
+
+/-- A smooth, compactly supported vector field on a smooth manifold $M$.
+
+A test vector field is a section of the tangent bundle $TM$ that is
+$C^\infty$ as a map into the total space and supported on a compact set
+in the base.
+
+**Ground truth**: standard smooth-manifold concept; Simon 1983 §38
+("smooth vector fields with compact support on $M$"); Allard 1972 §3.
+
+Located in `HasNormal.lean` (Phase 1.7) as a foundation file shared
+by `Stationary.lean` and `Variation/FirstVariation.lean` — avoids the
+cycle where `Stationary` would otherwise import `Variation` for the
+full-form body migration.
+
+**Used by**: `Varifold.IsStationary` def; `Variation.firstVariationFull`. -/
+structure TestVectorField
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners ℝ E H)
+    (M : Type*) [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] where
+  /-- The vector field as a section of the tangent bundle. -/
+  toFun : Π (x : M), TangentSpace I x
+  /-- The lifted bundle map $x \mapsto (x, X(x))$ is $C^\infty$. -/
+  contMDiff : ContMDiff I I.tangent ∞ (fun x : M => (toFun x : TangentBundle I M))
+  /-- The vector field has compact support: the closure of the
+  non-vanishing set is compact. -/
+  isCompactSupport : IsCompact (closure {x : M | toFun x ≠ 0})
 
 namespace Varifold
 

@@ -1,4 +1,6 @@
 import GeometricMeasureTheory.Varifold
+import GeometricMeasureTheory.HasNormal
+import GeometricMeasureTheory.Variation.FirstVariation
 import Mathlib.Geometry.Manifold.IsManifold.Basic
 import Mathlib.Geometry.Manifold.ContMDiff.Basic
 import Mathlib.Geometry.Manifold.MFDeriv.Basic
@@ -52,33 +54,10 @@ namespace GeometricMeasureTheory
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
-/-- A smooth, compactly supported vector field on a smooth manifold $M$.
-
-A test vector field is a section of the tangent bundle $TM$ that is
-$C^\infty$ as a map into the total space and supported on a compact set
-in the base.
-
-**Ground truth**: standard smooth-manifold concept; Simon 1983 §38
-("smooth vector fields with compact support on $M$"); Allard 1972 §3.
-
-**Encoding**: as a Mathlib `Π (x : M), TangentSpace I x` (the standard
-section type used in `Mathlib/Geometry/Manifold/VectorField/LieBracket.lean`),
-together with a smoothness predicate via `ContMDiff I I.tangent ∞`
-on the lifted bundle map, and a compact-support predicate.
-
-**Used by**: `Varifold.IsStationary` def (in this file). -/
-structure TestVectorField
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-    {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners ℝ E H)
-    (M : Type*) [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] where
-  /-- The vector field as a section of the tangent bundle. -/
-  toFun : Π (x : M), TangentSpace I x
-  /-- The lifted bundle map $x \mapsto (x, X(x))$ is $C^\infty$. -/
-  contMDiff : ContMDiff I I.tangent ∞ (fun x : M => (toFun x : TangentBundle I M))
-  /-- The vector field has compact support: the closure of the
-  non-vanishing set is compact. -/
-  isCompactSupport : IsCompact (closure {x : M | toFun x ≠ 0})
+-- `TestVectorField` was moved to `HasNormal.lean` (Phase 1.7) to break the
+-- import cycle with `Variation/FirstVariation.lean`. It remains available
+-- via the open `GeometricMeasureTheory` namespace inherited via the
+-- `HasNormal` import below.
 
 namespace Varifold
 
@@ -169,19 +148,30 @@ Defined explicitly as a universally-quantified vanishing statement so
 the structure "$\delta V = 0$ on every test field" is visible to the
 Lean kernel.
 
+**Phase 1.7 body migration** (post Phase 1.6 Bridge unblock): the body
+now uses `Variation.firstVariationFull` (paper-faithful codim-1 form
+with $\langle\nu, \nabla_\nu X\rangle$ correction) instead of the
+ambient `firstVariation` (codim-1 caveat). The `[HasNormal I V]`
+typeclass is universally quantified inside the `∀`, matching the
+"for all smooth-manifold structures and for all unit-normal-field
+choices" form. Framework's `HasNormal` instances for `ofBoundary` /
+`tangentCone` (Phase 1.6 commit `bdc6d4f`) auto-resolve at chain
+consumption sites where `V` comes from a concrete varifold construction.
+
 Universally quantifies over the smooth-manifold structure on $M$ so the
 predicate `IsStationary V` does not need to thread the
-`ModelWithCorners` parameter through every callsite (callers without a
-distinguished $I$ simply universally use this form). The smooth-manifold
+`ModelWithCorners` parameter through every callsite. The smooth-manifold
 type parameters are restricted to `Type` (universe 0) to avoid the
 universe-inference issue when `IsStationary V` is used as a structure
 field; this matches the standard $\mathbb{R}$-finite-dim convention. -/
 def IsStationary (V : Varifold M) : Prop :=
   ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
+    [CompleteSpace E]
     {H : Type} [TopologicalSpace H]
     {I : ModelWithCorners ℝ E H}
     [ChartedSpace H M] [IsManifold I ∞ M]
-    (X : TestVectorField I M), firstVariation I V X = 0
+    [Varifold.HasNormal I V]
+    (X : TestVectorField I M), Variation.firstVariationFull I V X = 0
 
 end Varifold
 
