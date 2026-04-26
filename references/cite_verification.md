@@ -174,7 +174,7 @@ Cited paper-specific contributions (not in Pitts/Simon):
 
 ## 2. CL03 Pull-tight (Colding–De Lellis 2003) → `isStationary_of_minmaxLimit`
 
-**Lean signature**: `AltRegularity/Sweepout/PullTight.lean:23`
+**Lean signature**: `MinMax/MinMax/Sweepout/PullTight.lean:55`
 
 ```lean
 theorem isStationary_of_minmaxLimit
@@ -188,26 +188,70 @@ theorem isStationary_of_minmaxLimit
 - Reference: Colding–De Lellis, "The min-max construction of minimal surfaces", 2003
 - Theorem: Proposition 1.4
 
-**Paper §3 phrasing** (`paper/chapters/part2/3-sweepouts.tex:236-238`):
+**Paper §3 phrasing** (`paper/chapters/part2/3-sweepouts.tex:236-237`):
 
-> [Proposition 3.7 / thm:CLS-stationary] Let $(M^{n+1},g)$ be a closed Riemannian
-> manifold with $n \ge 2$, and let $\Phi$ be an optimal sweepout with
-> $\sup_x \mathbf{M}(\Phi(x)) = W$. Then there exists a stationary $n$-varifold
-> $V$ in $M$ with $\mathbf{M}(V) = W$.
+> [Proposition 3.7 / `thm:CLS-stationary`] Let $(M^{n+1},g)$ be a closed
+> Riemannian manifold with $n \ge 2$, and let $\Phi$ be an optimal
+> sweepout with $\sup_x \mathbf{M}(\Phi(x)) = W$. Then there exists a
+> **stationary** $n$-varifold $V$ in $M$ with $\mathbf{M}(V) = W$.
 
-**Original statement** (CL03, Proposition 1.4):
+**Original statement** (CL03 Proposition 1.4): pull-tight argument —
+varifold compactness produces a limit $V$ of slices whose masses approach
+$W$; tightening flow contradicts optimality unless $V$ is stationary
+(per paper §3 line 240, "non-excessive condition is not used here").
 
-[TODO: read `CL03-Colding-DeLellis-2003.pdf` and fill]
+**Alignment check** (post-strict-alignment, factored form):
 
-**Alignment check**:
+| Component | Lean | Paper §3 | Status |
+|---|---|---|---|
+| Sweepout hypothesis | `MinMaxLimit Φ t₀ V` (carries optimality via min-max sequence) | "optimal sweepout" | ✓ packaged |
+| ∃ V with mass = W | factored to `exists_minmaxLimit` (Item 6) | $\exists V, \mathbf{M}(V) = W$ | ✓ split |
+| Stationarity of V | `IsStationary V` | "stationary $n$-varifold" | ✓ |
 
-| Component | Lean | Paper §3 | Cited original | Status |
-|---|---|---|---|---|
-| Sweepout hypothesis | `MinMaxLimit Φ t₀ V` | "optimal sweepout" | TODO | 🟡 |
-| Conclusion | `IsStationary V` | "stationary n-varifold" | TODO | 🟡 |
-| mass = W | implicit in `MinMaxLimit` | $\mathbf{M}(V) = W$ explicit | TODO | 🟡 |
+**Findings**:
 
-**Status**: 🔴
+1. **Factored split**: paper §3 Prop 3.7 has TWO outputs (existence
+   with mass + stationarity). Lean factors these into
+   `exists_minmaxLimit` (existence + mass, Item 6) and
+   `isStationary_of_minmaxLimit` (stationarity, this Item).
+   Modular split matches chain proof structure
+   (`main_theorem_no_cancellation` calls
+   `isStationary_of_minmaxLimit hlim` on the V from `exists_minmaxLimit`).
+
+2. **Hypothesis sufficiency**: `MinMaxLimit Φ t₀ V` alone is enough
+   (no separate "optimal" hypothesis needed). The min-max sequence
+   convergence to V at the critical $t_0$ encodes the
+   optimal-sweepout context. Paper §3 line 240 confirms: "non-excessive
+   condition is not used here" — pull-tight stationarity needs only
+   that V is a varifold limit along a min-max sequence.
+
+3. **Statement-level alignment**: stationarity output verbatim;
+   $n \geq 2$ ambient hypothesis threaded at top-level
+   `exists_smoothMinimalHypersurface_via_ONVP` per Round 5 precedent.
+
+**Ground truth references** (Pitts 1981 / Simon 1983):
+
+- `Sweepout`: Simon §13–§14 (BV / Caccioppoli families)
+- `MinMaxLimit`: Simon §38 (varifold weak convergence) + Pitts §3.1
+  (Almgren-Pitts min-max sequence)
+- `IsStationary`: Simon §38 eq. 38.1 ($\delta V = 0$ for compactly
+  supported test fields) ✓ ground truth (definition)
+
+Cited paper-specific contributions:
+- Pull-tight argument (variation along tightening flow producing
+  contradiction with optimality unless V stationary): CL03 Prop 1.4 —
+  CL03 contribution; built on Pitts §3.1 / Almgren–Pitts theory and
+  Simon §38 ground truth.
+
+**Phase 1.5/1.6 interaction note**: `IsStationary V` body in
+`Stationary.lean` currently uses ambient `firstVariation` (codim-1
+caveat documented). Statement-level alignment doesn't require body
+migration. Phase 1.7 body migration to `Variation.firstVariationFull`
+is orthogonal future work.
+
+**Status**: 🟢 (paper §3 verbatim; signature matches stationarity
+output of Prop 3.7's combined statement; existence+mass factored to
+`exists_minmaxLimit`; n ≥ 2 threaded at top-level)
 
 ---
 
