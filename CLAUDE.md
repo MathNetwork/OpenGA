@@ -15,18 +15,22 @@ Phase 1 (Layer A + Layer B real grounding) is complete: 20 GMT analysis primitiv
 
 ## Architecture
 
-Four packages, layered:
+Five packages, layered:
 
 ```
-GeometricMeasureTheory     ← infrastructure (Pitts/Simon/Allard primitives)
+Riemannian                 ← lib (Connection, Curvature, SecondFundamentalForm, Gradient)
        ↑
-MinMax                     ← domain (min-max theory, contains Sweepout subnamespace)
-Regularity                 ← domain (regularity theory; Wickramasekera, Allard, Schoen-Simon, etc.)
+GeometricMeasureTheory     ← lib (Variation/, HasNormal, Stable, Varifold, ...)
        ↑
-AltRegularity              ← application (paper-specific chain proofs)
+MinMax                     ← lib (min-max theory, Sweepout subnamespace)
+Regularity                 ← lib (regularity theory; Wickramasekera, Allard, Schoen-Simon, etc.)
+       ↑
+AltRegularity              ← app (paper-specific chain proofs)
 ```
 
 Each package independently buildable. Namespace separation reflects layering.
+Riemannian is independent of paper-domain concerns and is a future spin-out
+candidate as a standalone Lean library (Mathlib upstream / community use).
 GeometricMeasureTheory must not reference paper-specific or domain-specific concepts.
 MinMax and Regularity must not reference paper-specific concepts.
 AltRegularity is the paper-specific app; future papers are separate apps consuming the same lib stack.
@@ -137,7 +141,7 @@ Do not estimate task cost using traditional mathematician productivity model. Ma
 
 - **Phase 0** (done): Architecture lock — 4-package monorepo, CLAUDE.md, naming convention.
 - **Phase 1** (done): Layer A + Layer B real grounding. 21 → 1 opaque. GMT analysis primitive lib (varifold, finite perimeter, density, first/second variation, tangent cone, junction cone) real-grounded.
-- **Phase 1.5** (next): Refactor — Riemannian sub-namespace (Curvature, SecondFundamentalForm, Gradient), Variation sub-namespace (FirstVariation, SecondVariation as primary δ-operators), Varifold normal field, IsStable / IsUnstable / sibling concepts as thin wrappers around δ²V.
+- **Phase 1.5** (done): Refactor — Riemannian package (Connection / Curvature / SecondFundamentalForm / Gradient, 5th independent lib), Variation/ sub-namespace (firstVariationFull / secondVariationFull with HasNormal-backed codim-1 forms), Varifold.HasNormal typeclass + instances, Stable.lean GMT-level (IsStable / IsUnstable / MorseIndex). Old Stationary.lean / SecondVariation.lean retained as legacy locations until Phase 4 catch-up.
 - **Phase 2**: Round 5 cited theorem strict alignment Items 4–9 (DLT13, `exists_minmaxLimit`, `isStationary_of_minmaxLimit`, `locallyStable_of_oneSidedMinimizing`, `interpolation_lemma`, `isRectifiable_of_isStationary_of_density_pos`).
 - **Phase 3**: Isoperimetric sub-layer + remaining GMT primitive completion (mean curvature, scalar curvature, etc.) per emerging needs.
 - **Phase 4** (passive): Wait for Mathlib catch-up event — Mathlib `Geometry/Manifold/Riemannian/` matures to include Ricci, second fundamental form, $C^{1,\alpha}$ hypersurface infrastructure.
