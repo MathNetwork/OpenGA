@@ -550,30 +550,90 @@ theorem locallyStable_of_oneSidedMinimizing
 
 ## 8. CLS22 Lemma 1.12 → `interpolation_lemma`
 
-**Lean signature**: `AltRegularity/Sweepout/Interpolation.lean:25`
+**Lean signature** (after Phase 2 strict-alignment):
+`MinMax/MinMax/Sweepout/Interpolation.lean:50`
 
 ```lean
 theorem interpolation_lemma
-    (Ωlo Ωhi : FinitePerimeter M) (hsub : Ωlo.carrier ⊆ Ωhi.carrier)
-    (ε : ℝ) (hε : 0 < ε) :
-    ∃ family : ℝ → FinitePerimeter M,
-      FContinuous family ∧
-        family 0 = Ωlo ∧ family 1 = Ωhi ∧
-        ∀ t ∈ Set.Icc (0 : ℝ) 1,
-          ((family t).perim : ℝ) ≤ max ((Ωlo.perim : ℝ)) ((Ωhi.perim : ℝ)) + ε
+    (L : ℝ) (hL : 0 < L) (ε : ℝ) (hε : 0 < ε) :
+    ∃ δ : ℝ, 0 < δ ∧
+      ∀ (Ωlo Ωhi : FinitePerimeter M),
+        Ωlo.carrier ⊆ Ωhi.carrier →
+        (Ωlo.perim : ℝ) ≤ L → (Ωhi.perim : ℝ) ≤ L →
+        (MeasureTheory.volume (Ωhi.carrier \ Ωlo.carrier)).toReal ≤ δ →
+        ∃ family : ℝ → FinitePerimeter M,
+          FContinuous family ∧
+            family 0 = Ωlo ∧ family 1 = Ωhi ∧
+            ∀ t ∈ Set.Icc (0 : ℝ) 1,
+              ((family t).perim : ℝ) ≤
+                max ((Ωlo.perim : ℝ)) ((Ωhi.perim : ℝ)) + ε
 ```
 
 **Cited paper**:
-- File: `arXiv-sources/CLS22-Chodosh-Liokumovich-Spolaor/main.tex`
+- File: `arXiv-sources/CLS22-Chodosh-Liokumovich-Spolaor/main.tex` (lemma `l:close in flat`)
 - Reference: CLS22, Lemma 1.12
 
-**Original statement** (CLS22, Lemma 1.12):
+**Paper §2 phrasing** (`paper/chapters/part2/2-preliminaries.tex:134-142`):
 
-[TODO: read `CLS22 main.tex` Lemma 1.12 and fill]
+> Fix $L > 0$. For every $\varepsilon > 0$ there exists $\delta > 0$ such
+> that the following holds. If $\Omega_0, \Omega_1$ are two Caccioppoli
+> sets with $\Omega_0 \subset \Omega_1$, $\mathrm{Per}(\Omega_i) \leq L$
+> for $i = 0, 1$, and $\mathrm{Vol}(\Omega_1 \setminus \Omega_0) \leq \delta$,
+> then there exists a nested $\mathcal{F}$-continuous family
+> $\{\partial\Omega_t\}_{t \in [0,1]}$ with
+> $\mathrm{Per}(\Omega_t) \leq \max\{\mathrm{Per}(\Omega_0),
+>     \mathrm{Per}(\Omega_1)\} + \varepsilon$
+> for all $t \in [0,1]$.
 
-**Alignment check**: [TODO]
+**Original statement** (CLS22 §1, Lemma `l:close in flat`, verbatim):
 
-**Status**: 🔴
+> Fix $L>0$. For every $\eps>0$ there exists $\delta>0$, such that the
+> following holds. If $\Om_0,\Om_1$ are two sets of finite perimeter,
+> such that $\Om_0 \subset \Om_1$, $\Per(\Om_i) \leq L$, $i=0,1$, and
+> $\Vol(\Om_1 \setminus \Om_0)\leq \delta$, then there exists a nested
+> $\cF$-continuous family $\{\partial\Om_t\}_{t \in [0,1]}$ with
+> $\Per(\Om_t)\leq \max\{\Per(\Om_0),\Per(\Om_1)\}+\eps$ for all $t\in[0,1]$.
+
+**Alignment check** (post-strict-alignment):
+
+| Component | Lean | Paper §2 | CLS22 original | Status |
+|---|---|---|---|---|
+| Outer L cap | `(L : ℝ) (hL : 0 < L)` | "Fix $L > 0$" | "Fix $L>0$" | ✓ |
+| Inner ε quantifier | `(ε : ℝ) (hε : 0 < ε)` | "For every $\varepsilon > 0$" | "For every $\eps>0$" | ✓ |
+| δ existential | `∃ δ : ℝ, 0 < δ ∧ ...` | "there exists $\delta > 0$" | "there exists $\delta>0$" | ✓ |
+| Nesting hypothesis | `Ωlo.carrier ⊆ Ωhi.carrier` | $\Omega_0 \subset \Omega_1$ | $\Om_0 \subset \Om_1$ | ✓ |
+| Per cap | `(_ .perim : ℝ) ≤ L` for both | $\mathrm{Per}(\Omega_i) \leq L$ | $\Per(\Om_i) \leq L$ | ✓ |
+| Volume-gap hypothesis | `(volume (Ωhi.carrier \ Ωlo.carrier)).toReal ≤ δ` | $\mathrm{Vol}(\Omega_1 \setminus \Omega_0) \leq \delta$ | $\Vol(\Om_1 \setminus \Om_0)\leq \delta$ | ✓ |
+| F-continuous family | `FContinuous family` | $\mathcal{F}$-continuous | $\cF$-continuous | ✓ |
+| Endpoints | `family 0 = Ωlo ∧ family 1 = Ωhi` | implicit "from $\Omega_0$ to $\Omega_1$" | implicit | ✓ (Lean explicit) |
+| Perim cap | `≤ max(Per Ωlo, Per Ωhi) + ε` | $\max\{\mathrm{Per}(\Omega_0), \mathrm{Per}(\Omega_1)\} + \varepsilon$ | $\max\{\Per(\Om_0), \Per(\Om_1)\} + \eps$ | ✓ |
+
+**Findings**:
+
+1. **Pre-alignment Lean signature was wrong**: missing the outer `L` perimeter cap, the inner `δ` existential quantifier, the per-instance perimeter-cap hypotheses, and the volume-gap hypothesis. The previous form `interpolation_lemma (Ωlo Ωhi)(hsub)(ε)(hε)` produced the family DIRECTLY from `ε`, without the prerequisite that $\Omega_0$ and $\Omega_1$ be close in volume — which is essential (without volume-closeness, the perimeter-cap conclusion fails in general). Strict alignment surfaces all four missing components.
+
+2. **Volume measure**: uses `MeasureTheory.volume` from the framework's
+   `[MeasureTheory.MeasureSpace M]` cascade — matches the paper/CLS22 use of "Vol" without further setup.
+
+3. **No chain break**: `interpolation_lemma` has no consumers in the
+   current chain (paper §5 cancellation chain that uses it is sorried).
+
+**Ground truth references** (Pitts 1981 / Simon 1983):
+
+GMT primitives used in the statement:
+- `FinitePerimeter` (Caccioppoli set): Simon §27 (BV) ✓ ground truth
+- `perim` (BV total variation): Simon §27 (Definition 27.1) ✓ ground truth
+- `FContinuous` / flat metric: Simon §31 (flat metric on currents) ✓ ground truth
+- `MeasureTheory.volume`: standard measure theory; not paper-specific
+
+Cited paper-specific contributions:
+- The interpolation construction (perimeter-cap-preserving F-continuous
+  family from a small-volume nested pair): CLS22 §1 Lemma 1.12 — CLS22
+  contribution (built on Simon §27 + §31 ground truth)
+
+**Status**: 🟢 (paper §2 + CLS22 originals quoted verbatim; signature
+strict-aligned to outer-L + inner-ε + δ-existential + 3 hypotheses
++ F-continuous family + perim cap conclusion).
 
 ---
 
