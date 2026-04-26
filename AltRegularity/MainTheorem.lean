@@ -82,7 +82,7 @@ theorem main_theorem_no_cancellation
     integrality_no_cancellation hlim hno
   -- (3) Stability from non-excessiveness (Section 7).
   have hstable : Varifold.IsStable V :=
-    isStable_of_nonExcessive_minmax hne hcrit hlim
+    isStable_of_nonExcessive_minmax hne honvp hcrit hlim
   -- (4) α-structural hypothesis from non-excessiveness (Section 7).
   obtain ⟨α, hα0, hα1, hα⟩ :=
     alphaStructural_of_nonExcessive_minmax hne honvp hcrit hlim
@@ -127,7 +127,7 @@ theorem main_theorem_with_cancellation
     integrality_with_cancellation hlim hcanc hposDensity
   -- (3) Stability from non-excessiveness.
   have hstable : Varifold.IsStable V :=
-    isStable_of_nonExcessive_minmax hne hcrit hlim
+    isStable_of_nonExcessive_minmax hne honvp hcrit hlim
   -- (4) α-structural hypothesis from non-excessiveness.
   obtain ⟨α, hα0, hα1, hα⟩ :=
     alphaStructural_of_nonExcessive_minmax hne honvp hcrit hlim

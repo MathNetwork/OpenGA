@@ -116,12 +116,15 @@ paper §7.1's three-line proof:
 -/
 theorem isStable_of_nonExcessive_minmax
     {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
-    (hne : Sweepout.NonExcessive Φ) (hcrit : Sweepout.Critical Φ t₀)
+    (hne : Sweepout.NonExcessive Φ) (honvp : Sweepout.ONVP Φ)
+    (hcrit : Sweepout.Critical Φ t₀)
     (hlim : Sweepout.MinMaxLimit Φ t₀ V) :
     Varifold.IsStable V := by
-  -- (a) hnm(V) is finite, by CLS22 Proposition 3.1.
+  -- (a) hnm(V) is finite, by paper §6.1 / CLS22 propositions.
+  -- Paper §6.1 explicitly notes: finiteness needs both NonExcessive
+  -- AND ONVP (nestedness).
   have hHnmFinite : (Sweepout.hnm V).Finite :=
-    Sweepout.hnm_finite_of_nonExcessive hne hcrit hlim
+    Sweepout.hnm_finite_of_nonExcessive hne honvp hcrit hlim
   -- (b) Off hnm(V), V is one-sided homotopic minimizing in some ball.
   have hOneSided := Varifold.oneSidedMinimizing_off_hnm hHnmFinite
   -- (c) One-sided homotopic minimization → local stability (δ²V ≥ 0).

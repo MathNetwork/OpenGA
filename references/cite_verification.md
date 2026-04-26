@@ -152,41 +152,109 @@ theorem isStationary_of_minmaxLimit
 
 ## 3. CLS22 Proposition 3.1 → `hnm_finite_of_nonExcessive`
 
-**Lean signature**: `AltRegularity/Sweepout/HomotopicMinimization.lean:96`
+**Lean signature** (after Round 5 Item 3 strict-alignment):
+`AltRegularity/Sweepout/HomotopicMinimization.lean:135`
 
 ```lean
 theorem hnm_finite_of_nonExcessive
     {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
-    (hne : NonExcessive Φ) (hcrit : Critical Φ t₀)
+    (hne : NonExcessive Φ) (honvp : ONVP Φ) (hcrit : Critical Φ t₀)
     (hlim : MinMaxLimit Φ t₀ V) :
     (hnm V).Finite
 ```
 
 **Cited paper**:
 - File: `arXiv-sources/CLS22-Chodosh-Liokumovich-Spolaor/main.tex`
-- Reference: Chodosh–Liokumovich–Spolaor (CLS22)
-- Theorem: Proposition 3.1
+- Reference: [CLS22] §4 propositions (no single "Proposition 3.1" exists
+  in CLS22 — see note below)
+- Cited under paper-internal labels: `p:pairs` (line 1323), `p:def_thm`
+  (line 1399), `p:def-thm-cancel` (line 1607)
 
-**Paper §6.1 phrasing** (`paper/chapters/part2/6-regularity.tex:18` and `3-sweepouts.tex:451`):
+**Note on CLS22 numbering**: paper §6.1 cites "[CLS22, Proposition 3.1]"
+but CLS22 §3 ("Non-excessive sweepouts", line 1079) does not contain a
+labeled Proposition 3.1. The actual results that establish hnm
+finiteness are in **CLS22 §4** ("Deformation Theorems", line 1275),
+distributed across no-cancellation and cancellation subsections. The
+paper's §3.1 citation is imprecise — `[CLS22, §3-§4]` would be more
+accurate. The framework matches paper §6.1's stated conclusion
+("finite").
 
-> By [CLS22, Proposition 3.1], the set $\mathfrak{h}_{\mathrm{nm}}(V)$ of
-> non-homotopic-minimizing points (Definition 3.8) is finite.
+**Paper §6.1 phrasing** (`paper/chapters/part2/6-regularity.tex:18`):
 
-**Original statement** (CLS22, Proposition 3.1):
+> By [CLS22, Proposition 3.1], the set $\mathfrak{h}_{\mathrm{nm}}(V)$
+> of non-homotopic-minimizing points (Definition 3.8) is finite. ...
+> We remark that the finiteness of $\mathfrak{h}_{\mathrm{nm}}(V)$ in
+> [CLS22, Proposition 3.1] relies on both the non-excessive property
+> **and the nestedness of the sweepout**: the proof constructs
+> replacement families by "gluing in" one-sided homotopies, and
+> nestedness ($\Omega(x_1) \subset \Omega(x_2)$) ensures that the
+> parameter sets on which these replacements are defined are intervals.
 
-[TODO: read `CLS22-Chodosh-Liokumovich-Spolaor/main.tex` and fill]
+**Original statements in CLS22**:
 
-**Alignment check**:
+CLS22 line 1295 (no-cancellation setup `e:no_canc2`):
+> there is a (ONVP) sweepout $\{\Phi(x) = \partial \Omega(x)\}$ and
+> $x_i \nearrow x_0 \in \mathfrak{m}_L(\Phi)$, so that
+> $|\Phi(x_i)| \to |\Sigma| := |\partial \Omega| \in \mathcal{R}$
+> and **$\Phi$ is not left excessive at $x_0$**.
 
-| Component | Lean | Paper §6.1 | Cited original | Status |
+CLS22 `p:def_thm` (line 1399, no-cancellation case, statement 3):
+> If $\mathfrak{h}_{\mathrm{nm}}(\Sigma)$ is non-empty, then $\Sigma$
+> is stable, $\mathcal{H}^0(\mathfrak{h}_{\mathrm{nm}}(\Sigma)) = 1$
+> and for every point $x \in \Sigma \setminus
+> \mathfrak{h}_{\mathrm{nm}}(\Sigma)$ there exists $r > 0$, such that
+> $\Sigma$ is minimizing to one side in $B_r(x)$.
+
+CLS22 `p:def-thm-cancel` (line 1607, cancellation case):
+> Suppose $V = \sum_i \kappa_i |\Sigma_i|$ is as in [e:canc], then
+> each $\Sigma_i$ has stable regular part and
+> $\mathfrak{h}_{\mathrm{nm}}(V) = \emptyset$.
+
+**Alignment check** (post-strict-alignment):
+
+| Component | Lean | Paper §6.1 | CLS22 original | Status |
 |---|---|---|---|---|
-| NonExcessive Φ | `hne` | "non-excessive" | TODO | 🟡 |
-| Critical Φ t₀ | `hcrit` | implicit | TODO | 🟡 |
-| MinMaxLimit Φ t₀ V | `hlim` | min-max limit | TODO | 🟡 |
-| hnm V definition | paper Def 3.8 / `Sweepout.hnm` | Def 2.5 | TODO | 🟡 |
-| Conclusion | `(hnm V).Finite` | "finite" | TODO | 🟡 |
+| NonExcessive form | `hne : NonExcessive Φ` (forbid 2-sided I-replacement) | "non-excessive" | "$\Phi$ not left excessive at $x_0$" (separated form per side) | 🟡 — framework's unified ↔ CLS22 separated via Option C bridge |
+| ONVP hypothesis | `honvp : ONVP Φ` | "non-excessive ONVP" + "nestedness" remark | "(ONVP) sweepout" | ✓ paper-explicit |
+| Critical Φ t₀ | `hcrit : Critical Φ t₀` | "$x_i \to x_0 \in \mathfrak{m}(\Phi)$" | "$x_0 \in \mathfrak{m}_L(\Phi)$" (no-canc) | 🟡 (Lean uses unified Critical; CLS22 uses separated $\mathfrak{m}_L$ / $\mathfrak{m}_R$) |
+| MinMaxLimit Φ t₀ V | `hlim` | "$V$ varifold limit of $|\partial^*\Omega(x_i)|$" | "$|\Phi(x_i)| \to |\Sigma|$" | ✓ |
+| hnm V definition | paper Def 3.8 / `Sweepout.hnm` | Def 3.8 | CLS22 Def 2.5 | ✓ aligned (paper Def 3.8 cites CLS22 Def 2.5) |
+| Conclusion | `(hnm V).Finite` | "finite" | "$\mathcal{H}^0 \le 1$" (no-canc) / "$= \emptyset$" (canc) | 🟡 — framework matches paper §6.1 ("finite"); CLS22 actually proves stronger ("≤ 1") |
 
-**Status**: 🔴
+**Findings**:
+
+1. **ONVP hypothesis added** ✓ : paper §6.1 explicitly states "the
+   finiteness ... relies on both the non-excessive property and the
+   **nestedness of the sweepout**". Framework was missing this; now
+   `honvp : ONVP Φ` is in the signature, propagated through chain via
+   `isStable_of_nonExcessive_minmax` (also gained `honvp`) and both
+   `main_theorem_*`.
+
+2. **Conclusion is paper-faithful but weaker than CLS22**: paper §6.1
+   uses "finite" (matching framework). CLS22's actual conclusion is
+   "$\mathcal{H}^0(\mathfrak{h}_{\mathrm{nm}}) \le 1$" or "$= \emptyset$".
+   Framework follows paper. Tightening to cardinality bound is a future
+   refinement (would need `Set.Subsingleton` or explicit cardinality).
+
+3. **NonExcessive form**: framework's `NonExcessive` (Option C: forbid
+   2-sided I-replacement) and CLS22's separated form ("not left excessive
+   at $x_0$") are equivalent via `nonExcessive_of_strict` bridge. Chain
+   already uses bridge in `MinMaxExistence`.
+
+4. **CLS22 numbering imprecision**: paper §6.1's "[CLS22, Proposition 3.1]"
+   citation does not match a labeled proposition in CLS22 §3. The actual
+   CLS22 results are in §4 (`p:pairs`, `p:def_thm`, `p:def-thm-cancel`).
+   Framework documentation now references the correct CLS22 labels.
+
+**Chain break**: Yes, `StabilityVerification.lean:124` and
+`MainTheorem.lean:85, 130`. Fixed by adding `honvp` to
+`isStable_of_nonExcessive_minmax` and propagating from `main_theorem_*`
+(both already have `honvp` in scope).
+
+**Status**: 🟢 (paper §6.1 + CLS22 originals quoted verbatim; aligned
+modulo paper-faithful "finite" vs CLS22 stronger "$\le 1$" — documented;
+NonExcessive form bridged via Option C; ONVP hypothesis paper-explicit
+and threaded through chain)
 
 ---
 

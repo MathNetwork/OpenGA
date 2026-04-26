@@ -89,13 +89,48 @@ Defined explicitly via `Varifold.OneSidedMinimizingAt`, so the
 def hnm (V : Varifold M) : Set M :=
   {P | P ∈ Varifold.support V ∧ ∀ r > 0, ¬ Varifold.OneSidedMinimizingAt V P r}
 
-/-- **Finiteness of $\mathfrak{h}_{\mathrm{nm}}(V)$** ([CLS22, Proposition 3.1]).
-For the limit varifold of a non-excessive ONVP sweepout, the set of
-non-homotopic-minimizing points is finite. The finiteness uses both the
-non-excessive property and the nestedness of the sweepout. -/
+/-- **Finiteness of $\mathfrak{h}_{\mathrm{nm}}(V)$**
+(paper §6.1 Proposition `prop:stability`, citing [CLS22] §3-§4
+propositions: `p:pairs`, `p:def_thm` for the no-cancellation case,
+`p:def-thm-cancel` for the cancellation case).
+
+Paper §6.1 phrasing (verbatim, line 18):
+
+> By [CLS22, Proposition 3.1], the set $\mathfrak{h}_{\mathrm{nm}}(V)$
+> of non-homotopic-minimizing points is finite. ... We remark that the
+> finiteness ... in [CLS22, Proposition 3.1] relies on both the
+> non-excessive property **and the nestedness of the sweepout**: the
+> proof constructs replacement families by "gluing in" one-sided
+> homotopies, and nestedness ($\Omega(x_1) \subset \Omega(x_2)$)
+> ensures that the parameter sets on which these replacements are
+> defined are intervals.
+
+CLS22 actual statements (combining no-cancellation and cancellation
+cases in CLS22 §4):
+  * **No cancellation** ([CLS22, Proposition `p:def_thm`(3)]):
+    if $\mathfrak{h}_{\mathrm{nm}}(\Sigma)$ is non-empty, then
+    $\mathcal{H}^0(\mathfrak{h}_{\mathrm{nm}}(\Sigma)) = 1$.
+  * **Cancellation** ([CLS22, Proposition `p:def-thm-cancel`]):
+    $\mathfrak{h}_{\mathrm{nm}}(V) = \emptyset$.
+
+Paper §6.1 quotes only "finite"; framework follows paper. The stronger
+"cardinality at most 1" CLS22 conclusion is documented here for future
+tightening but not encoded in the Lean signature.
+
+**Hypothesis on `NonExcessive` form**: the framework's `NonExcessive`
+(forbid 2-sided `IReplacementExists`) is what the chain consumes; via
+Option C bridge `nonExcessive_of_strict`, it is implied by the paper-
+faithful `NonExcessiveStrict`. CLS22's actual hypothesis (e.g., in
+`p:pairs` line 1396, "$x_0 \in \mathfrak{m}_L(\Phi)$" with "$\Phi$ is
+not left excessive at $x_0$") is the separated form, equivalent via
+the bridge.
+
+**ONVP is required**: paper §6.1 explicitly notes the proof "relies on
+both the non-excessive property and the nestedness of the sweepout";
+adding `(honvp : ONVP Φ)` to the hypothesis is paper-faithful. -/
 theorem hnm_finite_of_nonExcessive
     {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
-    (hne : NonExcessive Φ) (hcrit : Critical Φ t₀)
+    (hne : NonExcessive Φ) (honvp : ONVP Φ) (hcrit : Critical Φ t₀)
     (hlim : MinMaxLimit Φ t₀ V) :
     (hnm V).Finite := by sorry
 
