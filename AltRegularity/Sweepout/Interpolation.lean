@@ -16,11 +16,6 @@ variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
 
 namespace Sweepout
 
-/-- $\mathcal{F}$-continuity of a 1-parameter family of sets of finite perimeter:
-$t \mapsto \Omega_t$ is continuous in the flat-distance pseudometric
-$\mathcal{F}(\Omega_s, \Omega_t) = \mathrm{Vol}(\Omega_s \triangle \Omega_t)$. -/
-opaque FContinuous : (ℝ → FinitePerimeter M) → Prop
-
 /-- **Interpolation lemma (CLS22 1.12).** Given two nested sets of finite perimeter
 sets $\Omega^- \subseteq \Omega^+$ close in volume and a perimeter cap
 $P$, there exists an $\mathcal{F}$-continuous nested family

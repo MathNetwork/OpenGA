@@ -1,5 +1,6 @@
 import AltRegularity.Sweepout.HomotopicMinimization
 import AltRegularity.Regularity.AlphaStructural
+import AltRegularity.Regularity.SmoothRegularity
 
 /-!
 # AltRegularity.Regularity.StabilityVerification
@@ -27,6 +28,21 @@ of paper §7.1's proof:
 
 The five sorry'd inputs are CLS22 / GMT prerequisites; the chain
 itself is fully formalized.
+
+## Local-property primitives
+
+`Varifold.LocallyStable` is an explicit `def` so the docstring semantics
+from paper §6.1 (paper sec. "Stability") are encoded directly into Lean
+types. The companion local-property predicate
+`Varifold.OneSidedMinimizingAt` and its leaf primitive
+`Varifold.IsOneSidedCompetitor` live upstream in
+`AltRegularity.Sweepout.HomotopicMinimization` (used by `Sweepout.hnm`).
+
+The leaf primitive `Varifold.secondVariation` (in
+`AltRegularity.GMT.SecondVariation`) is shared between the consume side
+(`InClassSAlpha.stable` via `IsStable`) and the produce side
+(`isStable_of_nonExcessive_minmax` via `LocallyStable`), giving a single
+kernel-verified semantics.
 -/
 
 namespace AltRegularity
@@ -35,15 +51,22 @@ variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
 
 namespace Varifold
 
-/-- $V$ is **locally stable** at the point $P$ in the ball $B_r(P)$:
-the second variation $\delta^2 V(\varphi, \varphi) \ge 0$ for every
-normal deformation $\varphi$ compactly supported in $B_r(P) \setminus \mathrm{sing}\,V$. -/
-opaque LocallyStable : Varifold M → M → ℝ → Prop
+/-! ## Local-property definitions -/
 
-/-- $V$ is one-sided homotopic minimizing in $B_r(P)$ (the local
-analogue at a point $P$ of the slice-level
-`Sweepout.InnerHomotopicMinimizer` property). -/
-opaque OneSidedMinimizingAt : Varifold M → M → ℝ → Prop
+/-- $V$ is **locally stable** at the point $P$ in the ball $B_r(P)$
+(paper §6.1, paragraph after Prop. on stability): the second variation
+$\delta^2 V(\varphi, \varphi) \ge 0$ for every smooth scalar normal
+deformation $\varphi$ compactly supported in
+$B_r(P) \setminus \mathrm{sing}\,V$.
+
+Defined explicitly as a universally-quantified statement so that the
+structure of "δ² ≥ 0 for all test functions on the ball away from
+singularities" is visible to the Lean kernel. -/
+def LocallyStable (V : Varifold M) (P : M) (r : ℝ) : Prop :=
+  ∀ φ : M → ℝ, Function.support φ ⊆ Metric.ball P r \ sing V →
+    0 ≤ secondVariation V φ
+
+/-! ## Section 6.1 input lemmas -/
 
 /-- **(b) of paper §7.1:** away from $\mathfrak{h}_{\mathrm{nm}}(V)$,
 the limit varifold is one-sided homotopic minimizing in some

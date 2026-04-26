@@ -1,4 +1,5 @@
 import AltRegularity.Basic
+import Mathlib.MeasureTheory.Measure.Typeclasses.Finite
 
 /-!
 # AltRegularity.GMT.FinitePerimeter
@@ -6,11 +7,13 @@ import AltRegularity.Basic
 Sets of finite perimeter in a metric measurable space (also known in the
 GMT literature as Caccioppoli sets).
 
-A finite-perimeter set is recorded as a Borel-measurable subset of $M$
-together with its total perimeter. The reduced boundary $\partial^*\Omega$
-and the localized perimeter $\mathrm{Per}(\Omega, U)$ are declared as
-opaque, deferring their definition through the BV theory of indicator
-functions to a future refinement.
+A finite-perimeter set is implemented as a Borel-measurable subset of $M$
+together with its **perimeter measure** $|D\chi_\Omega|$ — a finite
+Borel measure on $M$. The total perimeter $\mathrm{Per}(\Omega)$ and the
+localized perimeter $\mathrm{Per}(\Omega, U)$ are then defined directly
+from this measure. The reduced boundary $\partial^*\Omega$ remains a
+deferred construction (its definition through De Giorgi blow-ups is not
+yet available in Mathlib).
 
 This is part of Section 2 (Preliminaries) of the paper.
 -/
@@ -19,15 +22,20 @@ namespace AltRegularity
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
 
-/-- A set of finite perimeter in $M$. -/
+/-- A set of finite perimeter in $M$. The structure bundles the carrier
+$\Omega$ together with its perimeter measure $|D\chi_\Omega|$, a finite
+Borel measure on $M$ representing the BV total variation of the
+indicator $\chi_\Omega$. -/
 structure FinitePerimeter (M : Type*)
     [MetricSpace M] [MeasurableSpace M] [BorelSpace M] where
   /-- The underlying carrier set $\Omega \subset M$. -/
   carrier : Set M
   /-- The carrier is Borel-measurable. -/
   isMeasurable : MeasurableSet carrier
-  /-- The total perimeter $\mathrm{Per}(\Omega) \in [0, \infty)$. -/
-  perim : NNReal
+  /-- The perimeter measure $|D\chi_\Omega|$ on $M$. -/
+  perimMeasure : MeasureTheory.Measure M
+  /-- The perimeter measure has finite total mass. -/
+  perimFinite : MeasureTheory.IsFiniteMeasure perimMeasure
 
 namespace FinitePerimeter
 
@@ -37,25 +45,34 @@ def topClosure (Ω : FinitePerimeter M) : Set M := closure Ω.carrier
 /-- Topological interior $\mathrm{int}(\Omega)$. -/
 def topInterior (Ω : FinitePerimeter M) : Set M := interior Ω.carrier
 
-/-- The reduced boundary $\partial^*\Omega$ as a subset of $M$.
-A foundational definition through BV/indicator functions is deferred. -/
-opaque rbdy : FinitePerimeter M → Set M
+/-- The total perimeter $\mathrm{Per}(\Omega) := |D\chi_\Omega|(M)
+\in [0, \infty)$, derived from the perimeter measure. -/
+def perim (Ω : FinitePerimeter M) : NNReal := (Ω.perimMeasure Set.univ).toNNReal
 
-/-- Localized perimeter $\mathrm{Per}(\Omega, U) = |D\chi_\Omega|(U)$
+/-- Localized perimeter $\mathrm{Per}(\Omega, U) := |D\chi_\Omega|(U)$
 on a Borel set $U \subset M$. -/
-opaque perimOn : FinitePerimeter M → Set M → ℝ
+def perimOn (Ω : FinitePerimeter M) (U : Set M) : ℝ :=
+  (Ω.perimMeasure U).toReal
+
+/-- The reduced boundary $\partial^*\Omega$ as a subset of $M$.
+
+The construction via De Giorgi blow-ups (points where the rescaled
+indicator converges in $L^1_{\mathrm{loc}}$ to a half-space indicator)
+requires BV-on-manifold infrastructure not yet in Mathlib and is deferred. -/
+noncomputable def rbdy (Ω : FinitePerimeter M) : Set M := by sorry
 
 /-- The total perimeter is non-negative as a real number. -/
-theorem perim_nonneg (Ω : FinitePerimeter M) : (0 : ℝ) ≤ Ω.perim :=
+theorem perim_nonneg (Ω : FinitePerimeter M) : (0 : ℝ) ≤ (Ω.perim : ℝ) :=
   NNReal.coe_nonneg _
 
 /-- Localized perimeter is non-negative. -/
 theorem perimOn_nonneg (Ω : FinitePerimeter M) (U : Set M) :
-    0 ≤ perimOn Ω U := by sorry
+    0 ≤ perimOn Ω U :=
+  ENNReal.toReal_nonneg
 
 /-- Localized perimeter on the whole space recovers the total perimeter. -/
 theorem perimOn_univ (Ω : FinitePerimeter M) :
-    perimOn Ω Set.univ = (Ω.perim : ℝ) := by sorry
+    perimOn Ω Set.univ = (Ω.perim : ℝ) := rfl
 
 /-- The reduced boundary is a subset of the topological closure. -/
 theorem rbdy_subset_topClosure (Ω : FinitePerimeter M) :

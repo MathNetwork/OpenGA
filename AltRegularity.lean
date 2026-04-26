@@ -94,8 +94,11 @@ lemma. Each is a standalone module addition when ready.
 import AltRegularity.Basic
 
 import AltRegularity.GMT.FinitePerimeter
+import AltRegularity.GMT.FlatDistance
 import AltRegularity.GMT.Varifold
 import AltRegularity.GMT.Stationary
+import AltRegularity.GMT.SecondVariation
+import AltRegularity.GMT.TangentCone
 import AltRegularity.GMT.Rectifiability
 
 import AltRegularity.Sweepout.Defs

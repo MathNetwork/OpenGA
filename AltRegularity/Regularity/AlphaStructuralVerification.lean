@@ -2,6 +2,7 @@ import AltRegularity.Sweepout.NonExcessive
 import AltRegularity.Sweepout.MinMaxLimit
 import AltRegularity.Regularity.AlphaStructural
 import AltRegularity.Regularity.SmoothRegularity
+import AltRegularity.GMT.TangentCone
 
 /-!
 # AltRegularity.Regularity.AlphaStructuralVerification
@@ -41,12 +42,18 @@ variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
 
 namespace Varifold
 
-/-- The varifold $V$ has a **junction** at the point $Z$: the tangent cone
-to $\|V\|$ at $Z$ is supported on $N \ge 3$ distinct half-hyperplanes
-meeting along a common $(n-1)$-dimensional edge through $Z$, with the
-stationary balancing condition $\sum \nu_j = 0$ on the conormals. This is
-the configuration excluded by $(\mathcal{S}3)$. -/
-opaque HasJunction (V : Varifold M) (Z : M) : Prop
+/-- The varifold $V$ has a **junction** at the point $Z$ (paper §6.2,
+Step 1; Remark 3.5(ii)): the tangent cone to $\|V\|$ at $Z$ is a
+junction cone — supported on $N \ge 3$ distinct half-hyperplanes
+meeting along a common $(n-1)$-dimensional edge with the stationary
+balancing condition $\sum_j m_j \nu_j = 0$ on the outward conormals.
+This is the configuration excluded by $(\mathcal{S}3)$.
+
+Defined explicitly via the GMT primitives `tangentCone` and
+`IsJunctionCone`, so the structural content "tangent cone is a
+junction" is visible to the Lean kernel. -/
+def HasJunction (V : Varifold M) (Z : M) : Prop :=
+  IsJunctionCone (tangentCone V Z)
 
 /-- The $\alpha$-structural hypothesis fails iff some singular point of
 $V$ is a junction.

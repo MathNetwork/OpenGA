@@ -22,11 +22,6 @@ variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
 
 namespace Varifold
 
-/-- The **boundary varifold** $|\partial^*\Omega|$ associated to a
-finite-perimeter set: the rectifiable $n$-varifold supported on the
-reduced boundary $\partial^*\Omega$ with multiplicity 1. -/
-noncomputable opaque ofBoundary : FinitePerimeter M → Varifold M
-
 /-- **(e) of paper §6.1 Theorem 6.3: $|\partial^*\Omega|$ is integral.**
 The boundary varifold of any finite-perimeter set has integer
 multiplicity (multiplicity 1 on the reduced boundary). -/

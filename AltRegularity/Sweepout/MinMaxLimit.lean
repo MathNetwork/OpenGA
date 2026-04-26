@@ -5,25 +5,35 @@ import AltRegularity.GMT.Varifold
 /-!
 # AltRegularity.Sweepout.MinMaxLimit
 
-Min-max varifold convergence at a critical parameter, the convergence
-predicates packaged from a min-max sequence (used by the DLT criterion),
-and the Case 1 fact about points outside the closure of the limit slice.
+Min-max varifold convergence at a critical parameter (paper Def 3.3,
+last paragraph), the convergence predicates packaged from a min-max
+sequence (used by the DLT criterion of paper §6.1), and the Case 1
+fact about points outside the closure of the limit slice.
 
-Encodes the conclusion of the pull-tight argument from Section 3 of the
-paper: along a min-max sequence $t_i \to t_0$, the slice boundaries
-$|\partial^*\Omega_{t_i}|$ converge to a stationary varifold $V$ with
-total mass equal to the width $W(\Phi)$.
+## Definition style
+
+`MinMaxLimit` is an explicit `def`: there exists a sequence
+$x_i \in [0,1]$ with $x_i \to x_0$ such that the boundary varifolds
+$|\partial^*\Omega(x_i)|$ converge weakly to $V$ and $\|V\|(M) = W(\Phi)$.
+This is the precise content of paper Def 3.3's "min-max sequence".
+
+Two leaf primitives carry the GMT content not yet in Mathlib:
+  * `Varifold.VarifoldConverge` — weak varifold convergence
+    $V_i \to V$ as Radon measures on the Grassmann bundle.
+  * `Varifold.ofBoundary` — the boundary varifold $|\partial^*\Omega|$
+    of a finite-perimeter set.
 
 The three convergence predicates `SlicesL1Converge`, `DChiWeakConverge`,
 and `PerimeterConverge` package the standard ingredients of the
-De Lellis–Tasnady integrality criterion (Section 6.1):
+De Lellis–Tasnady integrality criterion (paper §6.1):
   * **L¹ convergence** of slice carriers, automatic from flat-continuity
     of $\Phi$ and a min-max sequence.
   * **Weak measure convergence** of distributional derivatives
     $D\chi_{\Omega(t_i)} \to D\chi_{\Omega(t_0)}$, automatic from L¹
     convergence of indicators.
-  * **Perimeter convergence** $\mathrm{Per}(\Omega(t_i)) \to \mathrm{Per}(\Omega(t_0))$,
-    which holds **iff** the no-mass-cancellation hypothesis holds.
+  * **Perimeter convergence** $\mathrm{Per}(\Omega(t_i)) \to
+    \mathrm{Per}(\Omega(t_0))$, which holds **iff** the
+    no-mass-cancellation hypothesis holds.
 -/
 
 namespace AltRegularity
@@ -32,9 +42,19 @@ variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
 
 namespace Sweepout
 
-/-- Min-max convergence at $t_0$: there is a sequence $t_i \nearrow t_0$
-along which $|\partial^*\Omega_{t_i}| \to V$ as varifolds. -/
-opaque MinMaxLimit : Sweepout M → ℝ → Varifold M → Prop
+/-- $V$ is a **min-max varifold limit** of $\Phi$ at the parameter
+$x_0$ (paper Def 3.3, last paragraph): there is a sequence
+$x_i \in [0,1]$ with $x_i \to x_0$ such that the boundary varifolds
+$|\partial^*\Omega(x_i)|$ converge weakly to $V$ and $\|V\|(M) = W(\Phi)$.
+
+Defined explicitly as an existential over the approximating sequence
+and the convergence + mass-equality conditions. -/
+def MinMaxLimit (Φ : Sweepout M) (x₀ : ℝ) (V : Varifold M) : Prop :=
+  ∃ x : ℕ → ℝ,
+    (∀ i, x i ∈ Set.Icc (0 : ℝ) 1) ∧
+    Filter.Tendsto x Filter.atTop (nhds x₀) ∧
+    Varifold.VarifoldConverge (fun i => Varifold.ofBoundary (Φ.slice (x i))) V ∧
+    Varifold.mass V = Sweepout.width Φ
 
 /-! ## Convergence predicates packaged from a min-max sequence -/
 
@@ -66,9 +86,12 @@ def PerimeterConverge (Φ : Sweepout M) (t₀ : ℝ) : Prop :=
 
 /-! ## Structural facts -/
 
-/-- The total varifold mass of a min-max limit equals the width. -/
+/-- The total varifold mass of a min-max limit equals the width.
+Provable directly by unfolding the `MinMaxLimit` definition. -/
 theorem minmax_mass_eq_width {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
-    (h : MinMaxLimit Φ t₀ V) : Varifold.mass V = width Φ := by sorry
+    (h : MinMaxLimit Φ t₀ V) : Varifold.mass V = width Φ := by
+  obtain ⟨_, _, _, _, hmass⟩ := h
+  exact hmass
 
 /-- **(a) Flat continuity → L¹ convergence (paper §6.1 line 1).**
 A min-max limit's underlying sequence has $L^1$-converging slice carriers,
@@ -95,8 +118,7 @@ and a varifold $V$ such that there is a min-max sequence $t_i \to t_0$ along
 which $|\partial^*\Omega_{t_i}| \to V$.
 
 This is a black-box wrapper for the CLS22 / Colding–De Lellis pull-tight
-construction; the substantive work is in `isStationary_of_minmaxLimit`
-(stationarity) and `minmax_mass_eq_width` (mass equals width). -/
+construction. -/
 theorem exists_minmaxLimit
     {Φ : Sweepout M} (hne : NonExcessive Φ) (honvp : ONVP Φ) (hW : 0 < width Φ) :
     ∃ (t₀ : ℝ) (V : Varifold M), Critical Φ t₀ ∧ MinMaxLimit Φ t₀ V := by sorry
