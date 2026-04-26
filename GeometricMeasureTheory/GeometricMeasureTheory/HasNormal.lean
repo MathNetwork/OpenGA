@@ -55,6 +55,7 @@ use cases impose it as a side hypothesis when needed.
 `Varifold.IsStable` (full forms).
 
 **Ground truth**: Simon 1983 §27; Allard 1972 §3. -/
+@[ext]
 class HasNormal
     {𝕜 : Type*} [NontriviallyNormedField 𝕜]
     {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
@@ -133,5 +134,29 @@ noncomputable instance instHasNormalTangentCone
   unitNormal := Classical.choose (tangentCone_unitNormal_exists I V Z)
 
 end Varifold
+
+/-! ## UXTest
+
+Self-test section verifying typeclass auto-resolve for `HasNormal`
+instances, namely `instHasNormalOfBoundary` and
+`instHasNormalTangentCone`. If a future refactor changes
+`HasNormal`'s signature or these instances' arguments, the section
+will fail to elaborate, surfacing the regression immediately. -/
+section UXTest
+
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+  [MeasureTheory.MeasureSpace M]
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [MeasurableSpace E] [BorelSpace E]
+variable {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
+  [ChartedSpace H M] [IsManifold I ∞ M]
+
+noncomputable example (Ω : FinitePerimeter M) :
+    Varifold.HasNormal I (Varifold.ofBoundary Ω) := inferInstance
+
+noncomputable example (V : Varifold M) (Z : M) :
+    Varifold.HasNormal I (Varifold.tangentCone I V Z) := inferInstance
+
+end UXTest
 
 end GeometricMeasureTheory

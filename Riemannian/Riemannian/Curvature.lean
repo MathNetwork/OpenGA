@@ -98,3 +98,31 @@ noncomputable def scalarCurvature : M → ℝ :=
   Classical.choose (scalarCurvature_exists M)
 
 end Riemannian
+
+/-! ## UXTest
+
+Self-test verifying curvature primitives resolve their typeclass
+cascade. -/
+section UXTest
+
+open Riemannian
+
+noncomputable example {𝕜 : Type*} [NontriviallyNormedField 𝕜] [CompleteSpace 𝕜]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E] [CompleteSpace E]
+    [FiniteDimensional 𝕜 E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners 𝕜 E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
+    TangentSpace I x := riemannCurvature X Y Z x
+
+noncomputable example {𝕜 : Type*} [NontriviallyNormedField 𝕜] [CompleteSpace 𝕜]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E] [CompleteSpace E]
+    [FiniteDimensional 𝕜 E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners 𝕜 E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    (X Y : Π x : M, TangentSpace I x) (x : M) : ℝ := ricci X Y x
+
+noncomputable example {M : Type*} [TopologicalSpace M] (x : M) : ℝ :=
+  scalarCurvature x
+
+end UXTest

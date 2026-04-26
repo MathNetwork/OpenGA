@@ -94,3 +94,21 @@ noncomputable def covDeriv (X Y : Π x : M, TangentSpace I x) (x : M) :
   ((leviCivitaConnection (I := I) (M := M)).toFun Y x) (X x)
 
 end Riemannian
+
+/-! ## UXTest
+
+Self-test verifying the Levi-Civita connection + `covDeriv` resolve
+their typeclass cascade. Regression guard against signature drift. -/
+section UXTest
+
+open Riemannian
+
+noncomputable example {𝕜 : Type*} [NontriviallyNormedField 𝕜] [CompleteSpace 𝕜]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E] [CompleteSpace E]
+    [FiniteDimensional 𝕜 E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners 𝕜 E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    (X Y : Π x : M, TangentSpace I x) (x : M) :
+    TangentSpace I x := covDeriv X Y x
+
+end UXTest

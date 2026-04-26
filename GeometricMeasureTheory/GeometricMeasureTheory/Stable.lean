@@ -75,9 +75,31 @@ of the Jacobi operator (stub).
 
 **Ground truth**: Simon 1983 §49 (eigenvalue problem for the Jacobi
 operator). Stub returning 0; future development will replace with the
-actual eigencount via spectral decomposition. -/
-def MorseIndex (_V : Varifold M) : ℕ := 0
+actual eigencount via spectral decomposition.
+
+`abbrev` so `rfl` closes `MorseIndex V = 0` directly. -/
+abbrev MorseIndex (_V : Varifold M) : ℕ := 0
 
 end Varifold
+
+/-! ## UXTest
+
+Self-test verifying `IsStable` / `IsUnstable` / `MorseIndex` resolve
+their typeclass cascade correctly. -/
+section UXTest
+
+variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
+  [MeasureTheory.MeasureSpace M]
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
+  [ChartedSpace H M] [IsManifold I ∞ M]
+
+example (V : Varifold M) : Prop := Varifold.IsStable I V
+
+example (V : Varifold M) : Prop := Varifold.IsUnstable I V
+
+example (V : Varifold M) : Varifold.MorseIndex V = 0 := rfl
+
+end UXTest
 
 end GeometricMeasureTheory
