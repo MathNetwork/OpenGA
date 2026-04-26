@@ -1,5 +1,6 @@
 import Riemannian.Connection
 import Riemannian.InnerProductBridge
+import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # Riemannian.SecondFundamentalForm
@@ -52,57 +53,49 @@ noncomputable def secondFundamentalFormScalar
     (ν X Y : Π x : M, TangentSpace I x) (x : M) : ℝ :=
   inner ℝ (covDeriv X Y x) (ν x)
 
-/-- **Existence axiom for $|A|^2$.**
+/-- $|A|^2 : M \to \mathbb{R}$, the squared norm of the second fundamental form,
+defined as $\sum_{i, j} A(e_i, e_j)^2$ over the standard orthonormal
+basis $\{e_i\}$ of `TangentSpace I x` (Mathlib `stdOrthonormalBasis`,
+applicable via the `Riemannian.InnerProductBridge`).
 
-For a unit normal field $\nu$, there exists a **non-negative**
-real-valued function representing the squared norm of the second
-fundamental form: $|A|^2(x) := \sum_{i, j} A(e_i, e_j)(x)^2$ for any
-orthonormal frame $\{e_i\}$ at $x$. Non-negativity is built into the
-existence statement (sum of squares).
-
-**Sorry status**: PRE-PAPER. Repair plan: replace with explicit
-local-frame sum once `LocalFrame.toBasisAt` is wired through;
-non-negativity is preserved trivially since the explicit form is a
-sum of squares. -/
-theorem secondFundamentalFormSqNorm_exists :
-    ∃ _AsqNorm : (Π x : M, TangentSpace I x) → M → ℝ,
-      ∀ ν x, 0 ≤ _AsqNorm ν x :=
-  ⟨fun _ _ => 0, fun _ _ => le_refl _⟩
-
-/-- $|A|^2 : M \to \mathbb{R}$, the squared norm of the second fundamental form.
+The basis-dependent sum equals the basis-independent
+$|A|^2 = \sum_{i, j} A_{ij}^2$ (Frobenius norm) when $\{e_i\}$ is
+orthonormal — which `stdOrthonormalBasis` guarantees.
 
 **Ground truth**: do Carmo 1992 §6.2; Simon 1983 §49 (Jacobi formula
 uses this). -/
 noncomputable def secondFundamentalFormSqNorm
     (ν : Π x : M, TangentSpace I x) (x : M) : ℝ :=
-  Classical.choose (secondFundamentalFormSqNorm_exists (I := I) (M := M)) ν x
+  let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
+    stdOrthonormalBasis ℝ (TangentSpace I x)
+  ∑ i, ∑ j, (secondFundamentalFormScalar (I := I) (M := M) ν
+    (fun (_ : M) => (e i : TangentSpace I x))
+    (fun (_ : M) => (e j : TangentSpace I x)) x) ^ 2
 
-/-- **$|A|^2 \geq 0$**: squared norm is non-negative. Extracted from
-`secondFundamentalFormSqNorm_exists`. -/
+/-- **$|A|^2 \geq 0$**: squared norm is non-negative.
+Direct from sum of squares. -/
 @[simp]
 theorem secondFundamentalFormSqNorm_nonneg
     (ν : Π x : M, TangentSpace I x) (x : M) :
-    0 ≤ secondFundamentalFormSqNorm ν x :=
-  Classical.choose_spec
-    (secondFundamentalFormSqNorm_exists (I := I) (M := M)) ν x
-
-/-- **Existence axiom for the codim-1 mean curvature.**
-
-For a unit normal field $\nu$, there exists a real-valued function
-representing the mean curvature $H := \mathrm{tr}_g A$.
-
-**Sorry status**: PRE-PAPER. Repair plan: replace with explicit
-$g$-trace of `secondFundamentalFormScalar`. -/
-theorem meanCurvature_exists :
-    ∃ _H : (Π x : M, TangentSpace I x) → M → ℝ, True :=
-  ⟨fun _ _ => 0, trivial⟩
+    0 ≤ secondFundamentalFormSqNorm ν x := by
+  unfold secondFundamentalFormSqNorm
+  positivity
 
 /-- The **mean curvature (codim-1 scalar form)** $H : M \to \mathbb{R}$
-of the hypersurface oriented by unit normal $\nu$.
+of the hypersurface oriented by unit normal $\nu$:
+$$H(x) := \mathrm{tr}_g A(x) = \sum_i A(e_i, e_i)(x)$$
+over an orthonormal basis $\{e_i\}$ of `TangentSpace I x`.
+
+Real `noncomputable def` via `stdOrthonormalBasis ℝ (TangentSpace I x)`
++ basis-sum (basis-independent for orthonormal frame).
 
 **Ground truth**: do Carmo 1992 §6.2; standard codim-1 specialization. -/
 noncomputable def meanCurvature
     (ν : Π x : M, TangentSpace I x) (x : M) : ℝ :=
-  Classical.choose (meanCurvature_exists (I := I) (M := M)) ν x
+  let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
+    stdOrthonormalBasis ℝ (TangentSpace I x)
+  ∑ i, secondFundamentalFormScalar (I := I) (M := M) ν
+    (fun (_ : M) => (e i : TangentSpace I x))
+    (fun (_ : M) => (e i : TangentSpace I x)) x
 
 end Riemannian

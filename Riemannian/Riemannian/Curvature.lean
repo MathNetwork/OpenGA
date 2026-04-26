@@ -1,5 +1,7 @@
 import Riemannian.Connection
+import Riemannian.InnerProductBridge
 import Mathlib.LinearAlgebra.Trace
+import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # Riemannian.Curvature
@@ -98,21 +100,24 @@ swapping X and Y). PRE-PAPER, repair via constructive proof. -/
 theorem ricci_symm (X Y : Π x : M, TangentSpace I x) (x : M) :
     ricci X Y x = ricci Y X x := by sorry
 
-/-- **Existence axiom for scalar curvature.**
+/-- The **scalar curvature** $\mathrm{scal}(x) := \mathrm{tr}_g \mathrm{Ric}(x)$.
 
-There exists a real-valued function representing the scalar curvature
-$\mathrm{scal}(x) := \mathrm{tr}_g \mathrm{Ric}(x)$.
+Real `noncomputable def` via summing $\mathrm{Ric}(e_i, e_i)$ over a
+standard orthonormal basis $\{e_i\}$ of `TangentSpace I x` (provided
+by Mathlib's `stdOrthonormalBasis ℝ (TangentSpace I x)` — applicable
+because `Riemannian.InnerProductBridge` gives `InnerProductSpace ℝ`
++ `FiniteDimensional ℝ` on the tangent space).
 
-**Sorry status**: PRE-PAPER. Repair plan: replace with `g`-trace of
-`ricci` once local-frame plumbing is in place. ~10 LOC. -/
-theorem scalarCurvature_exists (M : Type*) [TopologicalSpace M] :
-    ∃ _scal : M → ℝ, True := ⟨fun _ => 0, trivial⟩
-
-/-- The **scalar curvature** $\mathrm{scal} : M \to \mathbb{R}$.
+The choice of orthonormal basis is irrelevant — for any orthonormal
+basis the sum equals the metric trace of Ric, which is basis-independent.
 
 **Ground truth**: do Carmo 1992 §4. -/
-noncomputable def scalarCurvature : M → ℝ :=
-  Classical.choose (scalarCurvature_exists M)
+noncomputable def scalarCurvature (x : M) : ℝ :=
+  let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
+    stdOrthonormalBasis ℝ (TangentSpace I x)
+  ∑ i, ricci (I := I) (M := M)
+    (fun (_ : M) => (e i : TangentSpace I x))
+    (fun (_ : M) => (e i : TangentSpace I x)) x
 
 end Riemannian
 
@@ -141,7 +146,13 @@ noncomputable example
     [RiemannianBundle (fun x : M => TangentSpace I x)]
     (X Y : Π x : M, TangentSpace I x) (x : M) : ℝ := ricci X Y x
 
-noncomputable example {M : Type*} [TopologicalSpace M] (x : M) : ℝ :=
-  scalarCurvature x
+noncomputable example
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianBundle (fun x : M => TangentSpace I x)]
+    (x : M) : ℝ :=
+  scalarCurvature (I := I) x
 
 end UXTest
