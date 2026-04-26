@@ -1,9 +1,9 @@
-import Sweepout.HomotopicMinimization
-import MinimalSurfaceRegularity.AlphaStructural
-import MinimalSurfaceRegularity.SmoothRegularity
+import MinMax.Sweepout.HomotopicMinimization
+import Regularity.AlphaStructural
+import Regularity.SmoothRegularity
 import GeometricMeasureTheory
-import Sweepout
-import MinimalSurfaceRegularity
+import MinMax
+import Regularity
 
 /-!
 # AltRegularity.Regularity.StabilityVerification
@@ -39,7 +39,7 @@ from paper §6.1 (paper sec. "Stability") are encoded directly into Lean
 types. The companion local-property predicate
 `Varifold.OneSidedMinimizingAt` and its leaf primitive
 `Varifold.IsOneSidedCompetitor` live upstream in
-`AltRegularity.Sweepout.HomotopicMinimization` (used by `Sweepout.hnm`).
+`AltRegularity.Sweepout.HomotopicMinimization` (used by `MinMax.Sweepout.hnm`).
 
 The leaf primitive `Varifold.secondVariation` (in
 `AltRegularity.GMT.SecondVariation`) is shared between the consume side
@@ -50,7 +50,7 @@ kernel-verified semantics.
 
 namespace AltRegularity
 
-open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter Regularity Regularity.Varifold MinMax.Sweepout MinMax.Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 namespace Varifold
@@ -76,8 +76,8 @@ def LocallyStable (V : Varifold M) (P : M) (r : ℝ) : Prop :=
 the limit varifold is one-sided homotopic minimizing in some
 neighborhood. -/
 theorem oneSidedMinimizing_off_hnm
-    {V : Varifold M} (hFinite : (Sweepout.hnm V).Finite) :
-    ∀ P ∈ support V \ Sweepout.hnm V, ∃ r > 0, OneSidedMinimizingAt V P r := by
+    {V : Varifold M} (hFinite : (MinMax.Sweepout.hnm V).Finite) :
+    ∀ P ∈ support V \ MinMax.Sweepout.hnm V, ∃ r > 0, OneSidedMinimizingAt V P r := by
   sorry
 
 /-- **(c) of paper §7.1:** one-sided homotopic minimization implies
@@ -85,8 +85,8 @@ local stability. The second variation is non-negative for compactly
 supported normal deformations in $B_r(P)$. -/
 theorem locallyStable_of_oneSidedMinimizing
     {V : Varifold M}
-    (h : ∀ P ∈ support V \ Sweepout.hnm V, ∃ r > 0, OneSidedMinimizingAt V P r) :
-    ∀ P ∈ support V \ Sweepout.hnm V, ∃ r > 0, LocallyStable V P r := by
+    (h : ∀ P ∈ support V \ MinMax.Sweepout.hnm V, ∃ r > 0, OneSidedMinimizingAt V P r) :
+    ∀ P ∈ support V \ MinMax.Sweepout.hnm V, ∃ r > 0, LocallyStable V P r := by
   sorry
 
 /-- **(e) of paper §7.1:** local stability away from an $\mathcal{H}^n$-null
@@ -119,16 +119,16 @@ paper §7.1's three-line proof:
 
 -/
 theorem isStable_of_nonExcessive_minmax
-    {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
-    (hne : Sweepout.NonExcessive Φ) (honvp : Sweepout.ONVP Φ)
-    (hcrit : Sweepout.Critical Φ t₀)
-    (hlim : Sweepout.MinMaxLimit Φ t₀ V) :
+    {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    (hne : MinMax.Sweepout.NonExcessive Φ) (honvp : MinMax.Sweepout.ONVP Φ)
+    (hcrit : MinMax.Sweepout.Critical Φ t₀)
+    (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V) :
     Varifold.IsStable V := by
   -- (a) hnm(V) is finite, by paper §6.1 / CLS22 propositions.
   -- Paper §6.1 explicitly notes: finiteness needs both NonExcessive
   -- AND ONVP (nestedness).
-  have hHnmFinite : (Sweepout.hnm V).Finite :=
-    Sweepout.hnm_finite_of_nonExcessive hne honvp hcrit hlim
+  have hHnmFinite : (MinMax.Sweepout.hnm V).Finite :=
+    MinMax.Sweepout.hnm_finite_of_nonExcessive hne honvp hcrit hlim
   -- (b) Off hnm(V), V is one-sided homotopic minimizing in some ball.
   have hOneSided := Varifold.oneSidedMinimizing_off_hnm hHnmFinite
   -- (c) One-sided homotopic minimization → local stability (δ²V ≥ 0).

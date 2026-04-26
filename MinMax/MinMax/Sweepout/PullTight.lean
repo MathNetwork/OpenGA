@@ -1,9 +1,10 @@
-import Sweepout.MinMaxLimit
+import MinMax.Sweepout.MinMaxLimit
 import GeometricMeasureTheory.Stationary
 
 open GeometricMeasureTheory
+open MinMax
 
-namespace Sweepout
+namespace MinMax.Sweepout
 
 /-!
 # AltRegularity.Sweepout.PullTight
@@ -29,4 +30,4 @@ theorem isStationary_of_minmaxLimit
 
 
 
-end Sweepout
+end MinMax.Sweepout

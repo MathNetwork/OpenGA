@@ -1,8 +1,8 @@
-import Sweepout.MassCancellation
-import MinimalSurfaceRegularity.AlphaStructural
+import MinMax.Sweepout.MassCancellation
+import Regularity.AlphaStructural
 import GeometricMeasureTheory
-import Sweepout
-import MinimalSurfaceRegularity
+import MinMax
+import Regularity
 
 /-!
 # AltRegularity.Integrality.PerimeterConvergence
@@ -21,7 +21,7 @@ slice, which is integral by definition.
 
 namespace AltRegularity
 
-open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter Regularity Regularity.Varifold MinMax.Sweepout MinMax.Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 namespace Varifold
@@ -45,10 +45,10 @@ varifold of the limit slice $\Omega(t_0)$.
 This is the precise content of Proposition A.1 in De Lellis–Tasnady
 2013, packaged for the paper's min-max setup. -/
 theorem dlt_criterion
-    {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
-    (hlim : Sweepout.MinMaxLimit Φ t₀ V)
-    (hWeak : Sweepout.DChiWeakConverge Φ t₀)
-    (hPer : Sweepout.PerimeterConverge Φ t₀) :
+    {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V)
+    (hWeak : MinMax.Sweepout.DChiWeakConverge Φ t₀)
+    (hPer : MinMax.Sweepout.PerimeterConverge Φ t₀) :
     V = Varifold.ofBoundary (Φ.slice t₀) := by sorry
 
 end AltRegularity

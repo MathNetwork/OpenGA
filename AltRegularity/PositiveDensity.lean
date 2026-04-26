@@ -1,8 +1,8 @@
 import AltRegularity.Integrality.ReducedBoundary
-import Sweepout.NonExcessive
+import MinMax.Sweepout.NonExcessive
 import GeometricMeasureTheory
-import Sweepout
-import MinimalSurfaceRegularity
+import MinMax
+import Regularity
 
 /-!
 # AltRegularity.PositiveDensity
@@ -14,7 +14,7 @@ point. This is the content of Section 5.1 of the paper.
 The deduction uses three auxiliary facts (formalized in companion files):
   * `density_lower_bound_rbdy` (`AltRegularity.Integrality.ReducedBoundary`)
   * `FinitePerimeter.trichotomy`   (`AltRegularity.GMT.FinitePerimeter`)
-  * `Sweepout.outside_closure_not_in_spt` (`AltRegularity.Sweepout.MinMaxLimit`)
+  * `MinMax.Sweepout.outside_closure_not_in_spt` (`AltRegularity.Sweepout.MinMaxLimit`)
 
 Given these, the implication
 `SweepoutWideReplacement ⟹ PositiveDensityOnSupport`
@@ -23,7 +23,7 @@ is a finite logical chain that Lean checks formally.
 
 namespace AltRegularity
 
-open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter Regularity Regularity.Varifold MinMax.Sweepout MinMax.Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **Sweepout-wide replacement (statement, open).**
@@ -37,13 +37,13 @@ satisfying:
   (2) $\mathrm{Per}(\Omega^*_t) \le \mathrm{Per}(\Omega_t)$ for every $t$;
   (3) Strict mass decrease in the limit on $B_r(p)$;
 plus admissibility ($\mathcal{F}$-continuity, ONVP-nested), into the single
-predicate `Sweepout.IReplacementExists Φ t₀`. -/
-def SweepoutWideReplacement (Φ : Sweepout M) (t₀ : ℝ) (V : Varifold M) (p : M) : Prop :=
-  Sweepout.NonExcessive Φ → Sweepout.ONVP Φ → Sweepout.Critical Φ t₀ →
-    Sweepout.MinMaxLimit Φ t₀ V →
+predicate `MinMax.Sweepout.IReplacementExists Φ t₀`. -/
+def SweepoutWideReplacement (Φ : MinMax.Sweepout M) (t₀ : ℝ) (V : Varifold M) (p : M) : Prop :=
+  MinMax.Sweepout.NonExcessive Φ → MinMax.Sweepout.ONVP Φ → MinMax.Sweepout.Critical Φ t₀ →
+    MinMax.Sweepout.MinMaxLimit Φ t₀ V →
     p ∈ Varifold.support V → p ∈ (Φ.slice t₀).topInterior →
     Varifold.density V p = 0 →
-    Sweepout.IReplacementExists Φ t₀
+    MinMax.Sweepout.IReplacementExists Φ t₀
 
 /-- **Positive density at every $p \in \mathrm{spt}\|V\|$.**
 The published statement reads "$\|V\|$-a.e. $p$"; the everywhere version
@@ -61,17 +61,17 @@ The proof mirrors the LaTeX argument in Section 5.1 of the paper:
 2. Trichotomy on $p$ relative to the limit slice $\Omega_{t_0}$
    (`FinitePerimeter.trichotomy`):
      * Case 1: $p$ outside $\overline{\Omega_{t_0}}$. Then $p \notin \mathrm{spt}\|V\|$
-       (`Sweepout.outside_closure_not_in_spt`), contradicting the hypothesis.
+       (`MinMax.Sweepout.outside_closure_not_in_spt`), contradicting the hypothesis.
      * Case 2a: $p$ on $\partial^*\Omega_{t_0}$. The lower bound gives
        $\Theta \ge 1$ (`density_lower_bound_rbdy`), contradicting $\Theta = 0$.
      * Case 2b: $p$ in $\mathrm{int}(\Omega_{t_0})$. Apply
        `SweepoutWideReplacement` to obtain an $I$-replacement; this makes
-       $t_0$ excessive (`Sweepout.ireplacement_to_excessive`), contradicting
-       non-excessiveness (`Sweepout.non_excessive_def`). -/
+       $t_0$ excessive (`MinMax.Sweepout.ireplacement_to_excessive`), contradicting
+       non-excessiveness (`MinMax.Sweepout.non_excessive_def`). -/
 theorem positiveDensity_of_sweepoutWideReplacement
-    {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M} {p : M}
-    (hne : Sweepout.NonExcessive Φ) (honvp : Sweepout.ONVP Φ)
-    (hcrit : Sweepout.Critical Φ t₀) (hlim : Sweepout.MinMaxLimit Φ t₀ V)
+    {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M} {p : M}
+    (hne : MinMax.Sweepout.NonExcessive Φ) (honvp : MinMax.Sweepout.ONVP Φ)
+    (hcrit : MinMax.Sweepout.Critical Φ t₀) (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V)
     (hReplacement : SweepoutWideReplacement Φ t₀ V p) :
     PositiveDensityOnSupport V p := by
   intro hp_spt
@@ -82,7 +82,7 @@ theorem positiveDensity_of_sweepoutWideReplacement
     le_antisymm hΘ (Varifold.density_nonneg V p)
   rcases (Φ.slice t₀).trichotomy p with hout | hb | hint
   · -- Case 1: p outside closure(Ω_{t₀}).
-    exact Sweepout.outside_closure_not_in_spt honvp hlim hout hp_spt
+    exact MinMax.Sweepout.outside_closure_not_in_spt honvp hlim hout hp_spt
   · -- Case 2a: p on ∂*Ω_{t₀} ⟹ density ≥ 1, contradiction.
     have h1 : 1 ≤ Varifold.density V p :=
       density_lower_bound_rbdy hp_spt hb hlim
@@ -90,8 +90,8 @@ theorem positiveDensity_of_sweepoutWideReplacement
   · -- Case 2b: p in int(Ω_{t₀}) ⟹ apply the sweepout-wide replacement
     -- to obtain a 2-sided I-replacement at t₀ (paper §5.1 — `Left ∧ Right`),
     -- which contradicts non-excessiveness directly.
-    have hIRep : Sweepout.IReplacementExists Φ t₀ :=
+    have hIRep : MinMax.Sweepout.IReplacementExists Φ t₀ :=
       hReplacement hne honvp hcrit hlim hp_spt hint hΘ0
-    exact Sweepout.non_excessive_def hne t₀ hcrit hIRep
+    exact MinMax.Sweepout.non_excessive_def hne t₀ hcrit hIRep
 
 end AltRegularity

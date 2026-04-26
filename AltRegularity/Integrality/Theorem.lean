@@ -1,10 +1,10 @@
 import AltRegularity.Integrality.ReducedBoundary
 import AltRegularity.Integrality.PerimeterConvergence
-import Sweepout.MassCancellation
-import MinimalSurfaceRegularity.AlphaStructural
+import MinMax.Sweepout.MassCancellation
+import Regularity.AlphaStructural
 import GeometricMeasureTheory
-import Sweepout
-import MinimalSurfaceRegularity
+import MinMax
+import Regularity
 
 /-!
 # AltRegularity.Integrality.Theorem
@@ -27,7 +27,7 @@ and varifold limit $V = \lim |\partial^*\Omega_{t_i}|$:
 
 namespace AltRegularity
 
-open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter Regularity Regularity.Varifold MinMax.Sweepout MinMax.Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **Integrality, no-mass-cancellation case (Theorem 6.1(a)).**
@@ -50,16 +50,16 @@ The 5 lemma applications mirror the 5 paper lines:
   (e) the boundary varifold of any finite-perimeter set is integral.
 -/
 theorem integrality_no_cancellation
-    {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
-    (hlim : Sweepout.MinMaxLimit Φ t₀ V)
-    (hno : Sweepout.NoMassCancellation Φ t₀) :
+    {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V)
+    (hno : MinMax.Sweepout.NoMassCancellation Φ t₀) :
     Varifold.IsIntegral V := by
   -- (a) Flat-continuity of Φ gives L¹ convergence of slice carriers.
-  have hL1 := Sweepout.l1Convergence_of_minmaxLimit hlim
+  have hL1 := MinMax.Sweepout.l1Convergence_of_minmaxLimit hlim
   -- (b) L¹ convergence of indicators gives weak convergence of D χ.
-  have hWeak := Sweepout.dChiWeak_of_l1 hL1
+  have hWeak := MinMax.Sweepout.dChiWeak_of_l1 hL1
   -- (c) No mass cancellation gives perimeter convergence.
-  have hPer := Sweepout.perimeterConvergence_of_noMassCancellation hlim hno
+  have hPer := MinMax.Sweepout.perimeterConvergence_of_noMassCancellation hlim hno
   -- (d) DLT criterion: V is the boundary varifold of the limit slice.
   have hVeq : V = Varifold.ofBoundary (Φ.slice t₀) := dlt_criterion hlim hWeak hPer
   -- (e) The boundary varifold is integral.
@@ -69,9 +69,9 @@ theorem integrality_no_cancellation
 /-- **Integrality, mass-cancellation case (Theorem 6.1(b)), conditional on
 positive density on the support of the cancelled mass.** -/
 theorem integrality_with_cancellation
-    {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
-    (hlim : Sweepout.MinMaxLimit Φ t₀ V)
-    (hcanc : Sweepout.MassCancellation Φ t₀)
+    {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V)
+    (hcanc : MinMax.Sweepout.MassCancellation Φ t₀)
     (hposDensity : ∀ p ∈ Varifold.support V, 0 < Varifold.density V p) :
     Varifold.IsIntegral V := by sorry
 

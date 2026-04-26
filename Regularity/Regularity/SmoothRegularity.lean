@@ -1,4 +1,4 @@
-import MinimalSurfaceRegularity.AlphaStructural
+import Regularity.AlphaStructural
 import GeometricMeasureTheory.Rectifiability
 
 open GeometricMeasureTheory GeometricMeasureTheory.Varifold
@@ -36,7 +36,7 @@ opaque leaf primitive `Varifold.HausdorffSmallSingular`, pending
 Mathlib's Hausdorff-measure-on-manifold infrastructure.
 -/
 
-namespace MinimalSurfaceRegularity
+namespace Regularity
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
@@ -120,4 +120,4 @@ theorem isSmoothMinimalHypersurface_of_inClassSAlpha
 
 end Varifold
 
-end MinimalSurfaceRegularity
+end Regularity

@@ -1,8 +1,9 @@
-import Sweepout.Defs
+import MinMax.Sweepout.Defs
 
 open GeometricMeasureTheory
+open MinMax
 
-namespace Sweepout
+namespace MinMax.Sweepout
 
 /-!
 # AltRegularity.Sweepout.Interpolation
@@ -37,4 +38,4 @@ theorem interpolation_lemma
 
 
 
-end Sweepout
+end MinMax.Sweepout

@@ -1,10 +1,11 @@
-import Sweepout.Defs
-import Sweepout.ONVP
+import MinMax.Sweepout.Defs
+import MinMax.Sweepout.ONVP
 import Mathlib.Topology.Order.LiminfLimsup
 
 open GeometricMeasureTheory
+open MinMax
 
-namespace Sweepout
+namespace MinMax.Sweepout
 
 /-!
 # AltRegularity.Sweepout.NonExcessive
@@ -251,4 +252,4 @@ theorem exists_nonExcessive_ONVP (M : Type*)
 
 
 
-end Sweepout
+end MinMax.Sweepout

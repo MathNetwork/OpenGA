@@ -1,8 +1,9 @@
-import Sweepout.Defs
+import MinMax.Sweepout.Defs
 
 open GeometricMeasureTheory
+open MinMax
 
-namespace Sweepout
+namespace MinMax.Sweepout
 
 /-!
 # AltRegularity.Sweepout.ONVP
@@ -84,4 +85,4 @@ theorem onvp_nested {Φ : Sweepout M} (h : ONVP Φ) {s t : ℝ} (hst : s ≤ t) 
 
 
 
-end Sweepout
+end MinMax.Sweepout

@@ -1,7 +1,7 @@
 import Lake
 open Lake DSL
 
-package «MinimalSurfaceRegularity» where
+package «MinMax» where
   leanOptions := #[
     ⟨`pp.unicode.fun, true⟩,
     ⟨`autoImplicit, false⟩
@@ -13,5 +13,5 @@ require mathlib from git
 require GeometricMeasureTheory from "../GeometricMeasureTheory"
 
 @[default_target]
-lean_lib MinimalSurfaceRegularity where
-  globs := #[.andSubmodules `MinimalSurfaceRegularity]
+lean_lib MinMax where
+  globs := #[.andSubmodules `MinMax]

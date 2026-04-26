@@ -1,7 +1,7 @@
 import AltRegularity.MainTheorem
 import GeometricMeasureTheory
-import Sweepout
-import MinimalSurfaceRegularity
+import MinMax
+import Regularity
 
 /-!
 # AltRegularity.MinMaxExistence
@@ -35,12 +35,12 @@ existence statement.
 
 The corollary `exists_smoothMinimalHypersurface_via_ONVP` chains:
 
-  1. `Sweepout.exists_nonExcessive_ONVP` ([CLS22, Theorem 2.2])
+  1. `MinMax.Sweepout.exists_nonExcessive_ONVP` ([CLS22, Theorem 2.2])
      produces a non-excessive ONVP sweepout $\Phi$.
-  2. `Sweepout.exists_minmaxLimit` (paper Proposition 3.7,
+  2. `MinMax.Sweepout.exists_minmaxLimit` (paper Proposition 3.7,
      [CL03, Proposition 1.4]) produces a critical parameter $t_0$ and
      a varifold limit $V$.
-  3. `Sweepout.mass_cancellation_or_no` (proven dichotomy) splits on
+  3. `MinMax.Sweepout.mass_cancellation_or_no` (proven dichotomy) splits on
      whether $t_0$ exhibits mass cancellation.
        * No-cancellation case: `main_theorem_no_cancellation` gives
          smoothness unconditionally.
@@ -54,7 +54,7 @@ boundary (CLS22 Theorem 2.2, CL03 pull-tight, etc.).
 
 namespace AltRegularity
 
-open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter Regularity Regularity.Varifold MinMax.Sweepout MinMax.Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 /-- **End-to-end existence of a smooth minimal hypersurface (paper Theorem 1.1
@@ -81,26 +81,26 @@ Schoen–Simon. -/
 theorem exists_smoothMinimalHypersurface_via_ONVP
     [CompactSpace M]
     (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6) :
-    ∃ (Φ : Sweepout M) (t₀ : ℝ) (V : Varifold M),
-      Sweepout.NonExcessive Φ ∧ Sweepout.ONVP Φ ∧
-      Sweepout.Critical Φ t₀ ∧ Sweepout.MinMaxLimit Φ t₀ V ∧
-      ((Sweepout.NoMassCancellation Φ t₀ ∧
+    ∃ (Φ : MinMax.Sweepout M) (t₀ : ℝ) (V : Varifold M),
+      MinMax.Sweepout.NonExcessive Φ ∧ MinMax.Sweepout.ONVP Φ ∧
+      MinMax.Sweepout.Critical Φ t₀ ∧ MinMax.Sweepout.MinMaxLimit Φ t₀ V ∧
+      ((MinMax.Sweepout.NoMassCancellation Φ t₀ ∧
           Varifold.IsSmoothMinimalHypersurface V)
        ∨
-       (Sweepout.MassCancellation Φ t₀ ∧
+       (MinMax.Sweepout.MassCancellation Φ t₀ ∧
           ((∀ p, SweepoutWideReplacement Φ t₀ V p) →
             Varifold.IsSmoothMinimalHypersurface V))) := by
   -- (1) CLS22 Theorem 2.2 (paper §3 thm:non-excessive-existence):
   -- get a non-excessive ONVP sweepout, using paper's 2 ≤ n ≤ 6 hypothesis.
   -- The cited theorem returns the paper-faithful `NonExcessiveStrict`;
   -- bridge to the framework's `NonExcessive` via `nonExcessive_of_strict`.
-  obtain ⟨Φ, hneStrict, honvp, hW⟩ := Sweepout.exists_nonExcessive_ONVP M n hn hn6
-  have hne : Sweepout.NonExcessive Φ := Sweepout.nonExcessive_of_strict hneStrict
+  obtain ⟨Φ, hneStrict, honvp, hW⟩ := MinMax.Sweepout.exists_nonExcessive_ONVP M n hn hn6
+  have hne : MinMax.Sweepout.NonExcessive Φ := MinMax.Sweepout.nonExcessive_of_strict hneStrict
   -- (2) Pull-tight: get a critical parameter t₀ and varifold limit V.
-  obtain ⟨t₀, V, hcrit, hlim⟩ := Sweepout.exists_minmaxLimit hne honvp hW
+  obtain ⟨t₀, V, hcrit, hlim⟩ := MinMax.Sweepout.exists_minmaxLimit hne honvp hW
   -- (3) Dichotomy on mass cancellation.
   refine ⟨Φ, t₀, V, hne, honvp, hcrit, hlim, ?_⟩
-  rcases Sweepout.mass_cancellation_or_no Φ t₀ with hcanc | hno
+  rcases MinMax.Sweepout.mass_cancellation_or_no Φ t₀ with hcanc | hno
   · -- Cancellation case: regularity conditional on the sweepout-wide replacement.
     right
     refine ⟨hcanc, ?_⟩

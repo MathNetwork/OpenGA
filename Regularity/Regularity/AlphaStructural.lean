@@ -34,7 +34,7 @@ terms of the leaf primitive `Varifold.HasAlphaJunctionAt`. The
 along with integrality.
 -/
 
-namespace MinimalSurfaceRegularity
+namespace Regularity
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
@@ -101,4 +101,4 @@ structure InClassSAlpha (V : Varifold M) (α : ℝ) : Prop where
 
 end Varifold
 
-end MinimalSurfaceRegularity
+end Regularity

@@ -1,9 +1,10 @@
-import Sweepout.NonExcessive
-import Sweepout.MinMaxLimit
+import MinMax.Sweepout.NonExcessive
+import MinMax.Sweepout.MinMaxLimit
 
 open GeometricMeasureTheory
+open MinMax
 
-namespace Sweepout
+namespace MinMax.Sweepout
 
 /-!
 # AltRegularity.Sweepout.HomotopicMinimization
@@ -184,4 +185,4 @@ theorem hnm_finite_of_nonExcessive
 
 
 
-end Sweepout
+end MinMax.Sweepout

@@ -1,8 +1,9 @@
-import Sweepout.MinMaxLimit
+import MinMax.Sweepout.MinMaxLimit
 
 open GeometricMeasureTheory
+open MinMax
 
-namespace Sweepout
+namespace MinMax.Sweepout
 
 /-!
 # AltRegularity.Sweepout.MassCancellation
@@ -108,4 +109,4 @@ theorem perimeterConvergence_of_noMassCancellation
 
 
 
-end Sweepout
+end MinMax.Sweepout

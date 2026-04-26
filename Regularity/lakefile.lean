@@ -1,7 +1,7 @@
 import Lake
 open Lake DSL
 
-package «Sweepout» where
+package «Regularity» where
   leanOptions := #[
     ⟨`pp.unicode.fun, true⟩,
     ⟨`autoImplicit, false⟩
@@ -13,5 +13,5 @@ require mathlib from git
 require GeometricMeasureTheory from "../GeometricMeasureTheory"
 
 @[default_target]
-lean_lib Sweepout where
-  globs := #[.andSubmodules `Sweepout]
+lean_lib Regularity where
+  globs := #[.andSubmodules `Regularity]

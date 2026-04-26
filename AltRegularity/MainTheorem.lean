@@ -1,12 +1,12 @@
 import AltRegularity.Integrality.Theorem
-import Sweepout.PullTight
-import MinimalSurfaceRegularity.SmoothRegularity
+import MinMax.Sweepout.PullTight
+import Regularity.SmoothRegularity
 import AltRegularity.Regularity.AlphaStructuralVerification
 import AltRegularity.Regularity.StabilityVerification
 import AltRegularity.PositiveDensity
 import GeometricMeasureTheory
-import Sweepout
-import MinimalSurfaceRegularity
+import MinMax
+import Regularity
 
 /-!
 # AltRegularity.MainTheorem
@@ -48,7 +48,7 @@ bridges below.
 
 namespace AltRegularity
 
-open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter Regularity Regularity.Varifold MinMax.Sweepout MinMax.Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 -- Both Section 7 bridges are provided by chain-proof modules:
@@ -72,15 +72,15 @@ stability and $\alpha$-structural (Section 7), then apply the smooth
 regularity theorem for the class $\mathcal{S}_\alpha$ in the
 $2 \le n \le 6$ case. -/
 theorem main_theorem_no_cancellation
-    {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
     (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6)
-    (hne : Sweepout.NonExcessive Φ) (honvp : Sweepout.ONVP Φ)
-    (hcrit : Sweepout.Critical Φ t₀) (hlim : Sweepout.MinMaxLimit Φ t₀ V)
-    (hno : Sweepout.NoMassCancellation Φ t₀) :
+    (hne : MinMax.Sweepout.NonExcessive Φ) (honvp : MinMax.Sweepout.ONVP Φ)
+    (hcrit : MinMax.Sweepout.Critical Φ t₀) (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V)
+    (hno : MinMax.Sweepout.NoMassCancellation Φ t₀) :
     Varifold.IsSmoothMinimalHypersurface V := by
   -- (1) Stationarity from pull-tight (CL03 / Proposition 3.7).
   have hstat : Varifold.IsStationary V :=
-    Sweepout.isStationary_of_minmaxLimit hlim
+    MinMax.Sweepout.isStationary_of_minmaxLimit hlim
   -- (2) Integrality from Theorem 6.1(a) (DLT perimeter-convergence criterion).
   have hint : Varifold.IsIntegral V :=
     integrality_no_cancellation hlim hno
@@ -111,16 +111,16 @@ Proof: identical chain to (a), except that integrality is obtained from
 Theorem 6.1(b) after positive density on the support is supplied
 pointwise by `positiveDensity_of_sweepoutWideReplacement`. -/
 theorem main_theorem_with_cancellation
-    {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
     (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6)
-    (hne : Sweepout.NonExcessive Φ) (honvp : Sweepout.ONVP Φ)
-    (hcrit : Sweepout.Critical Φ t₀) (hlim : Sweepout.MinMaxLimit Φ t₀ V)
-    (hcanc : Sweepout.MassCancellation Φ t₀)
+    (hne : MinMax.Sweepout.NonExcessive Φ) (honvp : MinMax.Sweepout.ONVP Φ)
+    (hcrit : MinMax.Sweepout.Critical Φ t₀) (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V)
+    (hcanc : MinMax.Sweepout.MassCancellation Φ t₀)
     (hReplacement : ∀ p, SweepoutWideReplacement Φ t₀ V p) :
     Varifold.IsSmoothMinimalHypersurface V := by
   -- (1) Stationarity.
   have hstat : Varifold.IsStationary V :=
-    Sweepout.isStationary_of_minmaxLimit hlim
+    MinMax.Sweepout.isStationary_of_minmaxLimit hlim
   -- (2a) Positive density on the support, pointwise from the formal
   -- proof in `AltRegularity.PositiveDensity`.
   have hposDensity : ∀ p ∈ Varifold.support V, 0 < Varifold.density V p :=

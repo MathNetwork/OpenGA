@@ -1,10 +1,11 @@
-import Sweepout.ONVP
-import Sweepout.NonExcessive
+import MinMax.Sweepout.ONVP
+import MinMax.Sweepout.NonExcessive
 import GeometricMeasureTheory.Varifold
 
 open GeometricMeasureTheory
+open MinMax
 
-namespace Sweepout
+namespace MinMax.Sweepout
 
 /-!
 # AltRegularity.Sweepout.MinMaxLimit
@@ -180,4 +181,4 @@ theorem outside_closure_not_in_spt
 
 
 
-end Sweepout
+end MinMax.Sweepout

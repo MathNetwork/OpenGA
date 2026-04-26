@@ -101,19 +101,19 @@ import GeometricMeasureTheory.SecondVariation
 import GeometricMeasureTheory.TangentCone
 import GeometricMeasureTheory.Rectifiability
 
-import Sweepout.Defs
-import Sweepout.ONVP
-import Sweepout.MassCancellation
-import Sweepout.MinMaxLimit
-import Sweepout.PullTight
-import Sweepout.HomotopicMinimization
-import Sweepout.Interpolation
-import Sweepout.NonExcessive
+import MinMax.Sweepout.Defs
+import MinMax.Sweepout.ONVP
+import MinMax.Sweepout.MassCancellation
+import MinMax.Sweepout.MinMaxLimit
+import MinMax.Sweepout.PullTight
+import MinMax.Sweepout.HomotopicMinimization
+import MinMax.Sweepout.Interpolation
+import MinMax.Sweepout.NonExcessive
 
-import MinimalSurfaceRegularity.AlphaStructural
+import Regularity.AlphaStructural
 import AltRegularity.Regularity.AlphaStructuralVerification
 import AltRegularity.Regularity.ChordBeatsArc
-import MinimalSurfaceRegularity.SmoothRegularity
+import Regularity.SmoothRegularity
 import AltRegularity.Regularity.StabilityVerification
 
 import AltRegularity.OneSidedDensity.AlmostMinimizer

@@ -1,11 +1,11 @@
-import Sweepout.NonExcessive
-import Sweepout.MinMaxLimit
-import MinimalSurfaceRegularity.AlphaStructural
-import MinimalSurfaceRegularity.SmoothRegularity
+import MinMax.Sweepout.NonExcessive
+import MinMax.Sweepout.MinMaxLimit
+import Regularity.AlphaStructural
+import Regularity.SmoothRegularity
 import GeometricMeasureTheory.TangentCone
 import GeometricMeasureTheory
-import Sweepout
-import MinimalSurfaceRegularity
+import MinMax
+import Regularity
 
 /-!
 # AltRegularity.Regularity.AlphaStructuralVerification
@@ -32,7 +32,7 @@ The verification is by contradiction, mirroring the structure of
         - \tfrac{\delta(\theta_j)}{2}\,\rho(x)^n$,
     making the interval excessive.
   * **$I$-replacement $\Rightarrow$ excessive $\Rightarrow$ contradiction.**
-    By `Sweepout.ireplacement_to_excessive` and `Sweepout.non_excessive_def`.
+    By `MinMax.Sweepout.ireplacement_to_excessive` and `MinMax.Sweepout.non_excessive_def`.
 
 The two sorry'd inputs (the negation-as-junction equivalence and the
 chord-beats-arc construction) are the substantive Section 7 content. The
@@ -41,7 +41,7 @@ chain itself is fully formalized.
 
 namespace AltRegularity
 
-open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter MinimalSurfaceRegularity MinimalSurfaceRegularity.Varifold Sweepout Sweepout.Varifold
+open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter Regularity Regularity.Varifold MinMax.Sweepout MinMax.Sweepout.Varifold
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
 namespace Varifold
@@ -70,7 +70,7 @@ theorem not_alphaStructural_iff_exists_junction (V : Varifold M) (α : ℝ) :
 
 end Varifold
 
-namespace Sweepout
+namespace MinMax.Sweepout
 
 /-- **Chord-beats-arc: a junction in the min-max varifold limit produces
 an $I$-replacement.**
@@ -92,13 +92,13 @@ The proof in the paper consists of four steps (Step 3a–3d in Section 7):
         - \tfrac{\delta(\theta_j)}{2}\,\rho(x)^n$
     on the open interval, yielding the $I$-replacement. -/
 theorem ireplacement_of_junction
-    {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
     (hne : NonExcessive Φ) (honvp : ONVP Φ) (hcrit : Critical Φ t₀)
     (hlim : MinMaxLimit Φ t₀ V) {Z : M} (hZ : Z ∈ Varifold.sing V)
     (hjunc : Varifold.HasJunction V Z) :
     IReplacementExists Φ t₀ := by sorry
 
-end Sweepout
+end MinMax.Sweepout
 
 /-! ## Main verification: Section 7 chain proof -/
 
@@ -111,14 +111,14 @@ configuration, via the same five-step chain:
      in Section 5.1).
   2. Apply the "Claim" producing an $I$-replacement
      (`ireplacement_of_junction` here; `SweepoutWideReplacement` there).
-  3. Use `Sweepout.ireplacement_to_excessive` to make $t_0$ excessive.
-  4. Use `Sweepout.non_excessive_def` to contradict non-excessiveness.
+  3. Use `MinMax.Sweepout.ireplacement_to_excessive` to make $t_0$ excessive.
+  4. Use `MinMax.Sweepout.non_excessive_def` to contradict non-excessiveness.
 
 The constant $\alpha = 1/4$ is one of many choices in $(0, 1/2)$. -/
 theorem alphaStructural_of_nonExcessive_minmax
-    {Φ : Sweepout M} {t₀ : ℝ} {V : Varifold M}
-    (hne : Sweepout.NonExcessive Φ) (honvp : Sweepout.ONVP Φ)
-    (hcrit : Sweepout.Critical Φ t₀) (hlim : Sweepout.MinMaxLimit Φ t₀ V) :
+    {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
+    (hne : MinMax.Sweepout.NonExcessive Φ) (honvp : MinMax.Sweepout.ONVP Φ)
+    (hcrit : MinMax.Sweepout.Critical Φ t₀) (hlim : MinMax.Sweepout.MinMaxLimit Φ t₀ V) :
     ∃ α : ℝ, 0 < α ∧ α < 1 / 2 ∧ Varifold.AlphaStructural V α := by
   -- Pick α = 1/4 ∈ (0, 1/2). Any value in (0, 1/2) works.
   refine ⟨1 / 4, by norm_num, by norm_num, ?_⟩
@@ -129,11 +129,11 @@ theorem alphaStructural_of_nonExcessive_minmax
   obtain ⟨Z, hZ, hjunc⟩ := h_not
   -- Chord-beats-arc: junction yields a 2-sided $I$-replacement at $t_0$
   -- (paper §6.2 Step 3 — `IReplacementExists` is `Left ∧ Right`).
-  have hIRep : Sweepout.IReplacementExists Φ t₀ :=
-    Sweepout.ireplacement_of_junction hne honvp hcrit hlim hZ hjunc
+  have hIRep : MinMax.Sweepout.IReplacementExists Φ t₀ :=
+    MinMax.Sweepout.ireplacement_of_junction hne honvp hcrit hlim hZ hjunc
   -- The 2-sided $I$-replacement at a critical point contradicts
   -- non-excessiveness directly (`NonExcessive` forbids
   -- `IReplacementExists` at every critical point).
-  exact Sweepout.non_excessive_def hne t₀ hcrit hIRep
+  exact MinMax.Sweepout.non_excessive_def hne t₀ hcrit hIRep
 
 end AltRegularity
