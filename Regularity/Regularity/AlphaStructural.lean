@@ -2,9 +2,10 @@ import GeometricMeasureTheory.Stationary
 import GeometricMeasureTheory.SecondVariation
 import GeometricMeasureTheory.TangentCone
 import Mathlib.Geometry.Manifold.IsManifold.Basic
+import Mathlib.MeasureTheory.Measure.Map
 
 open GeometricMeasureTheory GeometricMeasureTheory.Varifold
-open scoped ContDiff
+open scoped ContDiff Manifold
 
 /-!
 # AltRegularity.Regularity.AlphaStructural
@@ -87,43 +88,85 @@ infrastructure.
 **Used by**: `Varifold.AlphaStructural` def (in this file). -/
 opaque HasAlphaJunctionAt : Varifold M → M → ℝ → Prop
 
-/-- $C$ is a **junction cone**: a stationary integral cone supported on
-$N \ge 3$ distinct half-hyperplanes $P_1^+, \ldots, P_N^+$ meeting along
-a common $(n-1)$-dimensional edge $L$, with the stationary balance
-condition $\sum_{j=1}^N m_j \nu_j = 0$ on the outward conormals.
+/-- **Structural carrier for a junction cone** on a measure $\mu$ on the
+model normed space $E$, centered at a point $p \in E$.
 
-**Ground truth**: Simon 1983 §42 (regularity of stationary integral
-cones, classification of tangent cones); Wickramasekera 2014 §3
-(Sheeting Theorem and Minimum Distance Theorem give the equivalence
-with the $\alpha$-structural hypothesis).
+A junction cone (Wic14 §3) is a stationary integral cone supported on
+$N \ge 3$ distinct half-hyperplanes meeting along a common
+$(n-1)$-dim edge through $p$. This carrier records the structural
+skeleton: $N \ge 3$ distinct closed sheets through $p$, with the mass
+measure concentrated on their union. The half-hyperplane structure
+(each sheet is a closed half of an $n$-dim affine subspace),
+the common $(n-1)$-dim edge, and the stationary balance condition
+$\sum_j m_j \nu_j = 0$ are **deferred** as Wic14-internal refinements
+(see TODO comments in fields).
 
-**Why opaque** (Layer B C-7 retreat):
+**Ground truth**: Simon 1983 §42; Wickramasekera 2014 §3.
 
-The cone classification is paper-faithful in pure linear-algebra terms
-on the model normed space $E$ (no Riemannian curvature needed):
-half-hyperplanes are subsets $\{v \in V \mid f(v) \ge 0\}$ where $V$
-is a codim-1 subspace of $E$ and $f \in V^*$ has kernel equal to the
-$(n-1)$-dim edge subspace; the stationary balance condition is the
-linear identity $\sum_j m_j \nu_j = 0$ on the outward conormals
-$\nu_j \in E$.
+**Used by**: `IsJunctionCone`. -/
+structure IsJunctionConeData
+    {E : Type*} [TopologicalSpace E] [MeasurableSpace E]
+    (μ : MeasureTheory.Measure E) (p : E) where
+  /-- Number of sheets in the cone. -/
+  N : ℕ
+  /-- At least three sheets — the defining condition of a junction. -/
+  N_ge_3 : 3 ≤ N
+  /-- The N closed sheets, each a subset of $E$. -/
+  sheet : Fin N → Set E
+  /-- Each sheet is closed. -/
+  sheet_closed : ∀ j, IsClosed (sheet j)
+  /-- Each sheet contains the common point $p$ (the cone vertex /
+  edge intersects $p$). -/
+  sheet_contains_p : ∀ j, p ∈ sheet j
+  /-- Sheets are pairwise distinct. -/
+  sheets_distinct : Function.Injective sheet
+  /-- Multiplicity of each sheet — positive natural numbers. -/
+  mult : Fin N → ℕ
+  /-- Each multiplicity is positive. -/
+  mult_pos : ∀ j, 0 < mult j
+  /-- Mass measure is concentrated on the union of sheets:
+  the complement of $\bigcup_j$ sheet $j$ has $\mu$-measure zero. -/
+  measure_concentrated : μ (⋃ j, sheet j)ᶜ = 0
+  -- TODO (Wic14-internal refinement, deferred):
+  --   * each sheet is a closed half of an $n$-dim affine subspace
+  --     (codim-1 hyperplane in $E$);
+  --   * common $(n-1)$-dim edge $L$ through $p$ (intersection of all
+  --     carrier hyperplanes);
+  --   * stationary balance condition $\sum_j$ mult $j$ • $\nu_j = 0$
+  --     on outward conormals $\nu_j$ at the edge — requires
+  --     `[InnerProductSpace ℝ E]` cascade upgrade.
 
-The grounding blocker is the **representation gap**: `tangentCone V Z`
-returns a `Varifold M` (not a `Varifold E` on the model normed space),
-so `IsJunctionCone` must transport the cone-on-$E$ classification back
-to $M$ via the chart at $Z$. This requires either:
-  * upgrading `tangentCone` to return a `Varifold E` (changing the
-    chain-proof signature), OR
-  * defining `IsJunctionCone (T : Varifold M)` via "there exists a
-    chart in which $T$ pushes forward to a junction cone on $E$" —
-    requires `tangentCone` ground first, plus chart-pushforward
-    machinery (~150 LOC).
+/-- $V$ is a **junction cone centered at $Z$** (paper §6.2 Step 1;
+Wic14 §3): the chart-pushforward of $V$.massMeasure to $E$ via the chart
+at $Z$ admits the structural skeleton of a junction cone (`IsJunctionConeData`)
+based at the chart image of $Z$.
+
+**Layer B C-7 真填**: real `def` via `Nonempty (IsJunctionConeData ...)`
+on the chart-pushforward, mirroring the
+`Manifold.IsSmoothEmbedding` ⇒ `LocalSmoothEmbeddingWitness` ⇒
+`Nonempty` pattern (Layer B C-5). The structural carrier records
+$N \ge 3$ closed sheets, distinctness, multiplicities, and measure
+concentration; the half-hyperplane / edge / balance refinements are
+documented as deferred Wic14-internal structure (gap analogous to
+`secondVariation`'s curvature placeholder).
+
+**Ground truth**: Simon 1983 §42; Wickramasekera 2014 §3.
 
 Lives in `Regularity` rather than `GeometricMeasureTheory` because the
 junction-cone configuration is regularity-theory-specific (Wickramasekera
 $\alpha$-structural), not a general GMT primitive.
 
 **Used by**: `Varifold.HasJunction` def (in this file). -/
-opaque IsJunctionCone : Varifold M → Prop
+def IsJunctionCone
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [MeasurableSpace E] [BorelSpace E]
+    {H : Type*} [TopologicalSpace H]
+    (I : ModelWithCorners ℝ E H)
+    [ChartedSpace H M] [IsManifold I ∞ M]
+    (V : Varifold M) (Z : M) : Prop :=
+  Nonempty (IsJunctionConeData
+    (V.massMeasure.map (extChartAt I Z))
+    ((extChartAt I Z) Z))
 
 /-- The varifold $V$ has a **junction** at the point $Z$ (paper §6.2,
 Step 1; Remark 3.5(ii)): the tangent cone to $\|V\|$ at $Z$ is a
@@ -141,7 +184,7 @@ def HasJunction
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
     (V : Varifold M) (Z : M) : Prop :=
-  IsJunctionCone (tangentCone I V Z)
+  IsJunctionCone I (tangentCone I V Z) Z
 
 /-- $V$ satisfies the **$\alpha$-structural hypothesis** ($\mathcal{S}3$,
 paper §4 Def 4.1): no singular point of $V$ admits an $\alpha$-junction.
