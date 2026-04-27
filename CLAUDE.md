@@ -15,25 +15,30 @@ Phase 1 (Layer A + Layer B real grounding) is complete: 20 GMT analysis primitiv
 
 ## Architecture
 
-Five packages, layered:
+Single OpenGALib Lean library + AltRegularity sub-project, layered:
 
 ```
-Riemannian                 ← lib (Connection, Curvature, SecondFundamentalForm, Gradient)
-       ↑
-GeometricMeasureTheory     ← lib (Variation/, HasNormal, Stable, Varifold, ...)
-       ↑
-MinMax                     ← lib (min-max theory, Sweepout subnamespace)
-Regularity                 ← lib (regularity theory; Wickramasekera, Allard, Schoen-Simon, etc.)
-       ↑
-AltRegularity              ← app (paper-specific chain proofs)
+OpenGALib (single lean_lib, 4 sub-namespaces)
+├── Riemannian                 ← lib (Connection, Curvature, SecondFundamentalForm, Gradient)
+│         ↑
+├── GeometricMeasureTheory     ← lib (Variation/, HasNormal, Stable, Varifold, ...)
+│         ↑
+├── MinMax                     ← lib (min-max theory, Sweepout subnamespace)
+└── Regularity                 ← lib (regularity theory; Wickramasekera, Allard, Schoen-Simon, etc.)
+            ↑
+AltRegularity (sub-project, requires OpenGALib + paper companion)
 ```
 
-Each package independently buildable. Namespace separation reflects layering.
+OpenGALib is a single Lake package containing 4 sub-namespaces (Riemannian, GeometricMeasureTheory,
+MinMax, Regularity). Namespace separation reflects layering — sub-namespaces are independently
+meaningful and any subset is a future Mathlib-upstream candidate.
 Riemannian is independent of paper-domain concerns and is a future spin-out
 candidate as a standalone Lean library (Mathlib upstream / community use).
 GeometricMeasureTheory must not reference paper-specific or domain-specific concepts.
 MinMax and Regularity must not reference paper-specific concepts.
-AltRegularity is the paper-specific app; future papers are separate apps consuming the same lib stack.
+AltRegularity is the paper-specific sub-project (located at `AltRegularity/`, with
+`AltRegularity/paper/` as the paper companion); future papers are separate sub-projects
+consuming the same OpenGALib lib stack via `require OpenGALib from ".."`.
 
 ## Working Mode
 
