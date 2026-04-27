@@ -180,6 +180,7 @@ noncomputable def koszulFunctional
   - inner ℝ (mlieBracket I Y Z x) (X x)
   - inner ℝ (mlieBracket I X Z x) (Y x)
 
+omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M] in
 /-- **Koszul antisymmetry identity**:
 $$K(X, Y; Z)(x) - K(Y, X; Z)(x) \;=\; 2\,\langle [X, Y], Z\rangle(x).$$
 
@@ -225,6 +226,7 @@ theorem koszul_antisymm
   rw [inner_neg_left]
   ring
 
+omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M] in
 /-- **Koszul metric-compatibility sum identity**:
 $$K(X, Y; Z)(x) + K(X, Z; Y)(x) \;=\; 2\,X\langle Y, Z\rangle(x).$$
 
@@ -309,6 +311,8 @@ Levi-Civita connection is a tensor in $Z$ but not in $X$ (where no
 such cancellation occurs).
 -/
 
+omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M]
+  [RiemannianBundle (fun x : M => TangentSpace I x)] in
 /-- **Helper**: Leibniz product rule for `directionalDeriv` on $\mathbb{R}$-valued
 functions: $X(f \cdot g)(x) = f(x) \cdot X(g)(x) + g(x) \cdot X(f)(x)$.
 
@@ -324,6 +328,8 @@ private lemma directionalDeriv_mul
   rw [heq, (hf.hasMFDerivAt.mul hg.hasMFDerivAt).mfderiv]
   rfl
 
+omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M]
+  [RiemannianBundle (fun x : M => TangentSpace I x)] in
 /-- **Helper**: linearity of `directionalDeriv` in the tangent vector argument:
 $X_{a \cdot v}(f) = a \cdot X_v(f)$.
 
@@ -334,6 +340,7 @@ private lemma directionalDeriv_smul_arg
   unfold directionalDeriv
   exact (mfderiv I 𝓘(ℝ, ℝ) g x).map_smul a v
 
+omit [FiniteDimensional ℝ E] in
 /-- **Koszul $C^\infty(M)$-linearity in $Z$**:
 $$K(X, Y; f \cdot Z)(x) = f(x) \cdot K(X, Y; Z)(x).$$
 
