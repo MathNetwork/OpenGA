@@ -163,12 +163,19 @@ in direction $X(x)$ at $x$, i.e., `mfderiv I 𝓘(ℝ, ℝ) (fun y => inner ℝ 
 
 **Ground truth**: do Carmo 1992 §2 (Koszul formula, equation (3) in
 the proof of Theorem 3.6). -/
+noncomputable def directionalDeriv
+    (f : M → ℝ) (x : M) (v : TangentSpace I x) : ℝ :=
+  mfderiv I 𝓘(ℝ, ℝ) f x v
+
+/-- The **Koszul functional** $K(X, Y; Z) : M \to \mathbb{R}$ as defined
+above. Implementation uses the helper `directionalDeriv` to keep each
+$X\langle Y, Z\rangle$ term typed as `ℝ` (avoiding the `TangentSpace 𝓘(ℝ,ℝ) (f x)`
+basepoint mismatch under `HAdd` synthesis). -/
 noncomputable def koszulFunctional
     (X Y Z : Π x : M, TangentSpace I x) (x : M) : ℝ :=
-  let dXY_Z : ℝ := mfderiv I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y y) (Z y)) x (X x)
-  let dY_ZX : ℝ := mfderiv I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Z y) (X y)) x (Y x)
-  let dZ_XY : ℝ := mfderiv I 𝓘(ℝ, ℝ) (fun y => inner ℝ (X y) (Y y)) x (Z x)
-  dXY_Z + dY_ZX - dZ_XY
+  directionalDeriv (fun y => inner ℝ (Y y) (Z y)) x (X x)
+  + directionalDeriv (fun y => inner ℝ (Z y) (X y)) x (Y x)
+  - directionalDeriv (fun y => inner ℝ (X y) (Y y)) x (Z x)
   + inner ℝ (mlieBracket I X Y x) (Z x)
   - inner ℝ (mlieBracket I Y Z x) (X x)
   - inner ℝ (mlieBracket I X Z x) (Y x)
@@ -195,19 +202,28 @@ Subtracting $K(Y, X; Z)$ from $K(X, Y; Z)$:
 - The other two Lie bracket pairs ($\langle [Y,Z], X\rangle$,
   $\langle [X,Z], Y\rangle$) cancel directly.
 
-**Sorry status**: Phase 4.5.A.2 (proof body deferred to a follow-up
-commit; the def + identity statement are the Phase 4.5.A.1 deliverable).
-The mathematical derivation is straightforward; the Lean tactic-side
-manipulation of `mfderiv` over function-equality + inner-symmetry +
-Lie-bracket-swap is mechanical work scheduled separately.
-
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 proof (lines on
 torsion-free derivation from Koszul). -/
 theorem koszul_antisymm
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
     koszulFunctional X Y Z x - koszulFunctional Y X Z x
       = 2 * inner ℝ (mlieBracket I X Y x) (Z x) := by
-  sorry
+  unfold koszulFunctional
+  -- Inner symmetry as function equalities (so mfderiv values match pairwise).
+  have hZY_YZ :
+      (fun y : M => inner ℝ (Z y) (Y y)) = fun y => inner ℝ (Y y) (Z y) := by
+    funext y; exact real_inner_comm _ _
+  have hXZ_ZX :
+      (fun y : M => inner ℝ (X y) (Z y)) = fun y => inner ℝ (Z y) (X y) := by
+    funext y; exact real_inner_comm _ _
+  have hYX_XY :
+      (fun y : M => inner ℝ (Y y) (X y)) = fun y => inner ℝ (X y) (Y y) := by
+    funext y; exact real_inner_comm _ _
+  rw [hZY_YZ, hXZ_ZX, hYX_XY]
+  -- Lie-bracket swap on the (Y, X) bracket.
+  rw [show mlieBracket I Y X x = -mlieBracket I X Y x from mlieBracket_swap_apply]
+  rw [inner_neg_left]
+  ring
 
 /-- **Koszul metric-compatibility sum identity**:
 $$K(X, Y; Z)(x) + K(X, Z; Y)(x) \;=\; 2\,X\langle Y, Z\rangle(x).$$
@@ -229,18 +245,28 @@ Adding $K(X, Z; Y)$ to $K(X, Y; Z)$:
   cancel via `real_inner_comm` + `mlieBracket_swap_apply` +
   `inner_neg_left`.
 
-**Sorry status**: Phase 4.5.A.2 (proof body deferred, same status
-as `koszul_antisymm`).
-
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 proof (lines on
 metric-compatibility derivation from Koszul). -/
 theorem koszul_metric_compat_sum
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
     koszulFunctional X Y Z x + koszulFunctional X Z Y x
-      = 2 * (let dXY_Z : ℝ :=
-              mfderiv I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y y) (Z y)) x (X x)
-            dXY_Z) := by
-  sorry
+      = 2 * directionalDeriv (fun y => inner ℝ (Y y) (Z y)) x (X x) := by
+  unfold koszulFunctional
+  -- Inner symmetry as function equalities.
+  have hZY_YZ :
+      (fun y : M => inner ℝ (Z y) (Y y)) = fun y => inner ℝ (Y y) (Z y) := by
+    funext y; exact real_inner_comm _ _
+  have hYX_XY :
+      (fun y : M => inner ℝ (Y y) (X y)) = fun y => inner ℝ (X y) (Y y) := by
+    funext y; exact real_inner_comm _ _
+  have hXZ_ZX :
+      (fun y : M => inner ℝ (X y) (Z y)) = fun y => inner ℝ (Z y) (X y) := by
+    funext y; exact real_inner_comm _ _
+  rw [hZY_YZ, hYX_XY, hXZ_ZX]
+  -- Lie-bracket swap on the (Z, Y) bracket inside K(X, Z; Y).
+  rw [show mlieBracket I Z Y x = -mlieBracket I Y Z x from mlieBracket_swap_apply]
+  rw [inner_neg_left]
+  ring
 
 end Riemannian
 
@@ -291,9 +317,7 @@ example
     [RiemannianBundle (fun x : M => TangentSpace I x)]
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
     koszulFunctional X Y Z x + koszulFunctional X Z Y x
-      = 2 * (let dXY_Z : ℝ :=
-              mfderiv I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y y) (Z y)) x (X x)
-            dXY_Z) :=
+      = 2 * directionalDeriv (fun y => inner ℝ (Y y) (Z y)) x (X x) :=
   koszul_metric_compat_sum X Y Z x
 
 end UXTest
