@@ -309,6 +309,31 @@ Levi-Civita connection is a tensor in $Z$ but not in $X$ (where no
 such cancellation occurs).
 -/
 
+/-- **Helper**: Leibniz product rule for `directionalDeriv` on $\mathbb{R}$-valued
+functions: $X(f \cdot g)(x) = f(x) \cdot X(g)(x) + g(x) \cdot X(f)(x)$.
+
+Wraps Mathlib's `HasMFDerivAt.mul` for the framework's `directionalDeriv` helper. -/
+private lemma directionalDeriv_mul
+    (f g : M → ℝ) (x : M) (v : TangentSpace I x)
+    (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
+    (hg : MDifferentiableAt I 𝓘(ℝ, ℝ) g x) :
+    directionalDeriv (fun y => f y * g y) x v
+      = f x * directionalDeriv g x v + g x * directionalDeriv f x v := by
+  unfold directionalDeriv
+  have heq : (fun y : M => f y * g y) = f * g := rfl
+  rw [heq, (hf.hasMFDerivAt.mul hg.hasMFDerivAt).mfderiv]
+  rfl
+
+/-- **Helper**: linearity of `directionalDeriv` in the tangent vector argument:
+$X_{a \cdot v}(f) = a \cdot X_v(f)$.
+
+Wraps `ContinuousLinearMap.map_smul` for `mfderiv` viewed as a linear map. -/
+private lemma directionalDeriv_smul_arg
+    (g : M → ℝ) (x : M) (a : ℝ) (v : TangentSpace I x) :
+    directionalDeriv g x (a • v) = a * directionalDeriv g x v := by
+  unfold directionalDeriv
+  exact (mfderiv I 𝓘(ℝ, ℝ) g x).map_smul a v
+
 /-- **Koszul $C^\infty(M)$-linearity in $Z$**:
 $$K(X, Y; f \cdot Z)(x) = f(x) \cdot K(X, Y; Z)(x).$$
 
@@ -317,47 +342,75 @@ in $Z$ and continuity, this property makes $\tfrac12 K(X, Y; \cdot)(x)$ a bounde
 linear functional on $T_xM$, hence represented by a unique tangent vector
 $\nabla_X Y(x)$ via the inner product.
 
-**Smoothness hypotheses**: we require $X, Y, Z$ and $f$ smooth at $x$ so that
-the Lie-bracket Leibniz rule (`mlieBracket_smul_right`) and the product rule
-(`HasMFDerivAt.mul`) apply.
+**Smoothness hypotheses** (point-local at $x$):
+* `hf`: `f` is smooth at `x`.
+* `hYZ`: $\langle Y, Z\rangle$ is smooth at `x` (real-valued function).
+* `hZX`: $\langle Z, X\rangle$ is smooth at `x` (real-valued function).
+* `hZ`: `Z` is smooth at `x` as a section of `TangentBundle I M`.
+
+The split-out scalar smoothness hypotheses on `⟨Y,Z⟩` and `⟨Z,X⟩` are needed
+for the product rule on `f * inner_func`; they are derivable from vector-field
+smoothness of `Y, Z, X` together with smoothness of the metric (a future
+ergonomics improvement: bundle these into a single `IsSmoothRiemannianMetric`
+hypothesis).
+
+**Algebraic structure** (do Carmo §2 Theorem 3.6 existence proof, Step 2):
+substituting $Z \mapsto f Z$ produces 6 expansion terms; the $X(f)$ and $Y(f)$
+extra terms cancel pairwise by inner-product symmetry, leaving
+$f \cdot K(X, Y; Z)$. This pairwise cancellation by `real_inner_comm` is the
+fundamental tensoriality of Koszul.
 
 **Ground truth**: do Carmo 1992 *Riemannian Geometry*, §2 Theorem 3.6
-existence proof, Step 2 (cancellation calculation).
-
-**Sorry status**: PRE-PAPER (full body deferred). The statement is correct and
-typechecks; the proof requires a 6-term Leibniz expansion that crosses three
-Mathlib API surfaces (`mfderiv_smul` with `fromTangentSpace` equivs,
-`HasMFDerivAt.mul` product rule, `mlieBracket_smul_right`). Repair plan:
-
-1. Unfold `koszulFunctional`; rewrite `(fun y => f y • Z y)` to `f • Z`
-   via `Pi.smul_def'` (or work pointwise throughout).
-2. For terms 1, 2, 4: apply `real_inner_smul_right`/`left` inside the
-   `directionalDeriv`/inner argument, then `HasMFDerivAt.mul.mfderiv` for
-   the product Leibniz on `f * inner_function`.
-3. For term 3: apply `ContinuousLinearMap.map_smul` (mfderiv is linear
-   in the tangent vector argument).
-4. For terms 5, 6: apply `mlieBracket_smul_right` to expand the Lie
-   bracket, then `inner_add_left` + `real_inner_smul_left` to push the
-   scalar out, threading `fromTangentSpace` to extract the scalar value
-   from `mfderiv f x (Y x) : TangentSpace 𝓘(ℝ, ℝ) (f x)`.
-5. Apply `real_inner_comm` to align the $\langle Y, Z\rangle$ vs
-   $\langle Z, Y\rangle$ terms inside the $X(f), Y(f)$ coefficients.
-6. Close with `ring`.
-
-Repair owner: framework self-build (next focused Phase 4.5.B session). -/
+existence proof, Step 2 (cancellation calculation). -/
 theorem koszul_smul_right
     (X Y Z : Π x : M, TangentSpace I x) (f : M → ℝ) (x : M)
     (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
-    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
+    (hYZ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y y) (Z y)) x)
+    (hZX : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Z y) (X y)) x)
     (hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
       (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x) :
     koszulFunctional X Y (fun y => f y • Z y) x = f x * koszulFunctional X Y Z x := by
-  -- 6-term Leibniz expansion + X(f), Y(f) cancellation by inner symmetry.
-  -- Body deferred per docstring repair plan; statement is correct.
-  -- Phase 4.5.C (Riesz extraction) consumes this statement to produce
-  -- the explicit `leviCivitaConnection` real `noncomputable def`.
-  sorry
+  -- Step 1: factor `f` out of the inner products `⟨Y, fZ⟩` and `⟨fZ, X⟩`
+  -- pointwise (these are the function-level rewrites that let the product rule fire).
+  have h_inner_YfZ : (fun y : M => inner ℝ (Y y) (f y • Z y))
+                   = fun y => f y * inner ℝ (Y y) (Z y) := by
+    funext y; exact real_inner_smul_right (Y y) (Z y) (f y)
+  have h_inner_fZX : (fun y : M => inner ℝ (f y • Z y) (X y))
+                   = fun y => f y * inner ℝ (Z y) (X y) := by
+    funext y; exact real_inner_smul_left (Z y) (X y) (f y)
+  -- Step 2: convert pointwise smul back to Pi smul for `mlieBracket_smul_right`.
+  have hPi : (fun y : M => f y • Z y) = (f • Z : Π y : M, TangentSpace I y) := rfl
+  unfold koszulFunctional
+  rw [h_inner_YfZ, h_inner_fZX]
+  -- Step 3: apply Leibniz product rule to T1, T2 (terms with `f * inner_func`).
+  rw [directionalDeriv_mul f (fun y => inner ℝ (Y y) (Z y)) x (X x) hf hYZ]
+  rw [directionalDeriv_mul f (fun y => inner ℝ (Z y) (X y)) x (Y x) hf hZX]
+  -- Step 4: T3 — pull `f x` out of the action vector via mfderiv linearity.
+  -- (Beta-reduction `(fun y => f y • Z y) x = f x • Z x` is automatic.)
+  rw [directionalDeriv_smul_arg (fun y => inner ℝ (X y) (Y y)) x (f x) (Z x)]
+  -- Step 5: T4 — pull `f x` out of `inner _ (f x • Z x)`.
+  rw [real_inner_smul_right (mlieBracket I X Y x) (Z x) (f x)]
+  -- Step 6: T5, T6 — Lie bracket Leibniz; convert pointwise smul to Pi smul first.
+  rw [hPi]
+  rw [mlieBracket_smul_right (I := I) (V := Y) (W := Z) hf hZ]
+  rw [mlieBracket_smul_right (I := I) (V := X) (W := Z) hf hZ]
+  -- Step 7: distribute inner over the Leibniz sum + pull scalars out.
+  -- After mlieBracket_smul_right: [V, f•Z] x = (df V) • Z x + f x • [V, Z] x
+  -- where (df V) = fromTangentSpace (f x) (mfderiv f x (V x)) = directionalDeriv f x (V x)
+  -- (since fromTangentSpace is the identity equiv on ℝ).
+  simp only [inner_add_left, real_inner_smul_left]
+  -- Step 8: align ⟨Z, Y⟩ = ⟨Y, Z⟩ for X(f) cancellation.
+  have hZY : (inner ℝ (Z x) (Y x) : ℝ) = inner ℝ (Y x) (Z x) := (real_inner_comm _ _).symm
+  rw [hZY]
+  -- Step 9: unfold `directionalDeriv` so `fromTangentSpace _ (mfderiv ...) = mfderiv ...`
+  -- (rfl by `fromTangentSpace.toFun v := v`), making X(f)/Y(f) terms align syntactically.
+  unfold directionalDeriv
+  have h_fromTS_X : NormedSpace.fromTangentSpace (f x)
+      ((mfderiv I 𝓘(ℝ, ℝ) f x) (X x)) = (mfderiv I 𝓘(ℝ, ℝ) f x) (X x) := rfl
+  have h_fromTS_Y : NormedSpace.fromTangentSpace (f x)
+      ((mfderiv I 𝓘(ℝ, ℝ) f x) (Y x)) = (mfderiv I 𝓘(ℝ, ℝ) f x) (Y x) := rfl
+  rw [h_fromTS_X, h_fromTS_Y]
+  ring
 
 end Riemannian
 
@@ -421,11 +474,11 @@ example
     [RiemannianBundle (fun x : M => TangentSpace I x)]
     (X Y Z : Π x : M, TangentSpace I x) (f : M → ℝ) (x : M)
     (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
-    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
+    (hYZ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y y) (Z y)) x)
+    (hZX : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Z y) (X y)) x)
     (hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
       (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x) :
     koszulFunctional X Y (fun y => f y • Z y) x = f x * koszulFunctional X Y Z x :=
-  koszul_smul_right X Y Z f x hf hY hZ
+  koszul_smul_right X Y Z f x hf hYZ hZX hZ
 
 end UXTest
