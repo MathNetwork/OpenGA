@@ -268,6 +268,97 @@ theorem koszul_metric_compat_sum
   rw [inner_neg_left]
   ring
 
+/-! ## Phase 4.5.B — Koszul $C^\infty(M)$-linearity in $Z$
+
+The Koszul functional $K(X, Y; Z)(x)$, viewed as a map of $Z$, is
+$C^\infty(M)$-linear:
+$$K(X, Y; f \cdot Z)(x) = f(x) \cdot K(X, Y; Z)(x) \qquad
+  \text{for all } f \in C^\infty(M),\ Z \in \mathfrak{X}(M).$$
+
+This is the key tensorial property enabling Riesz extraction
+(Phase 4.5.C): a $C^\infty(M)$-linear functional on $\mathfrak{X}(M)$
+descends to a fibrewise linear functional on $T_xM$ at each $x$, and
+hence is represented by a unique vector field via the Riemannian metric.
+
+### Algebraic content (do Carmo §2 Theorem 3.6 existence proof, Step 2)
+
+Substituting $Z \mapsto fZ$ into the 6 Koszul terms and applying
+Leibniz rules:
+
+* `directionalDeriv ⟨Y, fZ⟩ X = X(f)·⟨Y, Z⟩ + f · X⟨Y, Z⟩`
+  — by `real_inner_smul_right` then product rule (`HasMFDerivAt.mul`).
+* `directionalDeriv ⟨fZ, X⟩ Y = Y(f)·⟨Z, X⟩ + f · Y⟨Z, X⟩`
+  — likewise (use `real_inner_smul_left`).
+* `directionalDeriv ⟨X, Y⟩ (fZ) = f · directionalDeriv ⟨X, Y⟩ Z`
+  — by linearity of `mfderiv` in the tangent vector
+    (`ContinuousLinearMap.map_smul`).
+* `⟨[X, Y], fZ⟩ = f · ⟨[X, Y], Z⟩` — `real_inner_smul_right`.
+* `⟨[Y, fZ], X⟩ = Y(f)·⟨Z, X⟩ + f · ⟨[Y, Z], X⟩`
+  — by `mlieBracket_smul_right` then `real_inner_smul_left/right`.
+* `⟨[X, fZ], Y⟩ = X(f)·⟨Z, Y⟩ + f · ⟨[X, Z], Y⟩` — likewise.
+
+Summing with the signs of `koszulFunctional`:
+* The $X(f)$ terms: $X(f)\langle Y, Z\rangle - X(f)\langle Z, Y\rangle = 0$
+  (`real_inner_comm`).
+* The $Y(f)$ terms: $Y(f)\langle Z, X\rangle - Y(f)\langle Z, X\rangle = 0$.
+* The $f \cdot (\ldots)$ terms reassemble into $f \cdot K(X, Y; Z)$.
+
+This $X(f)/Y(f)$ pairwise cancellation by inner-product symmetry is
+the **fundamental tensoriality** of Koszul: it is precisely why the
+Levi-Civita connection is a tensor in $Z$ but not in $X$ (where no
+such cancellation occurs).
+-/
+
+/-- **Koszul $C^\infty(M)$-linearity in $Z$**:
+$$K(X, Y; f \cdot Z)(x) = f(x) \cdot K(X, Y; Z)(x).$$
+
+Foundation of Riesz extraction (Phase 4.5.C): together with $\mathbb{R}$-linearity
+in $Z$ and continuity, this property makes $\tfrac12 K(X, Y; \cdot)(x)$ a bounded
+linear functional on $T_xM$, hence represented by a unique tangent vector
+$\nabla_X Y(x)$ via the inner product.
+
+**Smoothness hypotheses**: we require $X, Y, Z$ and $f$ smooth at $x$ so that
+the Lie-bracket Leibniz rule (`mlieBracket_smul_right`) and the product rule
+(`HasMFDerivAt.mul`) apply.
+
+**Ground truth**: do Carmo 1992 *Riemannian Geometry*, §2 Theorem 3.6
+existence proof, Step 2 (cancellation calculation).
+
+**Sorry status**: PRE-PAPER (full body deferred). The statement is correct and
+typechecks; the proof requires a 6-term Leibniz expansion that crosses three
+Mathlib API surfaces (`mfderiv_smul` with `fromTangentSpace` equivs,
+`HasMFDerivAt.mul` product rule, `mlieBracket_smul_right`). Repair plan:
+
+1. Unfold `koszulFunctional`; rewrite `(fun y => f y • Z y)` to `f • Z`
+   via `Pi.smul_def'` (or work pointwise throughout).
+2. For terms 1, 2, 4: apply `real_inner_smul_right`/`left` inside the
+   `directionalDeriv`/inner argument, then `HasMFDerivAt.mul.mfderiv` for
+   the product Leibniz on `f * inner_function`.
+3. For term 3: apply `ContinuousLinearMap.map_smul` (mfderiv is linear
+   in the tangent vector argument).
+4. For terms 5, 6: apply `mlieBracket_smul_right` to expand the Lie
+   bracket, then `inner_add_left` + `real_inner_smul_left` to push the
+   scalar out, threading `fromTangentSpace` to extract the scalar value
+   from `mfderiv f x (Y x) : TangentSpace 𝓘(ℝ, ℝ) (f x)`.
+5. Apply `real_inner_comm` to align the $\langle Y, Z\rangle$ vs
+   $\langle Z, Y\rangle$ terms inside the $X(f), Y(f)$ coefficients.
+6. Close with `ring`.
+
+Repair owner: framework self-build (next focused Phase 4.5.B session). -/
+theorem koszul_smul_right
+    (X Y Z : Π x : M, TangentSpace I x) (f : M → ℝ) (x : M)
+    (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
+    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
+    (hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x) :
+    koszulFunctional X Y (fun y => f y • Z y) x = f x * koszulFunctional X Y Z x := by
+  -- 6-term Leibniz expansion + X(f), Y(f) cancellation by inner symmetry.
+  -- Body deferred per docstring repair plan; statement is correct.
+  -- Phase 4.5.C (Riesz extraction) consumes this statement to produce
+  -- the explicit `leviCivitaConnection` real `noncomputable def`.
+  sorry
+
 end Riemannian
 
 /-! ## UXTest
@@ -319,5 +410,22 @@ example
     koszulFunctional X Y Z x + koszulFunctional X Z Y x
       = 2 * directionalDeriv (fun y => inner ℝ (Y y) (Z y)) x (X x) :=
   koszul_metric_compat_sum X Y Z x
+
+/-! ## Phase 4.5.B self-test: Koszul $C^\infty(M)$-linearity in $Z$ -/
+
+example
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianBundle (fun x : M => TangentSpace I x)]
+    (X Y Z : Π x : M, TangentSpace I x) (f : M → ℝ) (x : M)
+    (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
+    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
+    (hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x) :
+    koszulFunctional X Y (fun y => f y • Z y) x = f x * koszulFunctional X Y Z x :=
+  koszul_smul_right X Y Z f x hf hY hZ
 
 end UXTest
