@@ -57,11 +57,29 @@ The statement is the **full Levi-Civita theorem**: torsion-free
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6.
 
-**Sorry status**: PRE-PAPER (standard theorem, body deferred). Repair plan:
-when Mathlib's `Geometry/Manifold/Riemannian/` adds a constructive
-Levi-Civita instance (or when framework opts to inline the Koszul-formula
-proof, ~100 LOC), replace `Classical.choose` with the explicit
-construction. -/
+**Sorry status**: PRE-PAPER. Phase 4.5 (`koszulFunctional`, 10 algebraic
+identities `koszul_antisymm` / `koszul_metric_compat_sum` / `koszul_smul_right`
+/ `koszul_add_*` / `koszul_smul_*`, `koszulCovDeriv`, `koszulCovDeriv_inner_eq`)
+provides the explicit Koszul construction's mathematical content. Wrapping
+this into a `CovariantDerivative` instance + deriving torsion=0 and
+metric-compat via `koszul_antisymm` + `koszul_metric_compat_sum` + Riesz
+uniqueness is BLOCKED by the lean4#13063 typeclass diamond (documented at
+`koszulLinearFunctional_exists`): the wrap's `toFun` requires X-axis koszul
+identities (`koszul_smul_left`, `koszul_add_left`) which, when applied within
+the `CovariantDerivative.toFun` construction context, hit the same kernel
+def-eq mismatch between RiemannianBundle-derived and direct E-instance
+NormedAddCommGroup paths.
+
+Repair paths (per architectural audit, 总指挥 strategic decision needed):
+1. Mathlib upstream PR fixing instance synthesis order in lean4#13063
+   for the Riemannian setting.
+2. Framework refactor replacing `[RiemannianBundle ...]` with
+   `[InnerProductSpace ℝ E]` in Riemannian/ variable sections.
+3. Custom non-Mathlib chart-frame infrastructure that bypasses
+   `inner_bundle` API.
+
+Phase 4.5 mathematical content is COMPLETE; the residual sorry is a
+documented architectural diamond, not a math gap. -/
 theorem leviCivitaConnection_exists :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       cov.torsion = 0 ∧
