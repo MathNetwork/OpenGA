@@ -1,5 +1,6 @@
 import GeometricMeasureTheory.Isoperimetric.Basic
 import GeometricMeasureTheory.HasNormal
+import Riemannian.Metric
 
 /-!
 # GeometricMeasureTheory.Isoperimetric.ReducedBoundary
@@ -116,23 +117,28 @@ theorem density_at_reducedBoundary_eq_half
 
 section TangentHyperplane
 
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
   [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+  [OpenGALib.RiemannianMetric I M]
 
 /-- **Tangent hyperplane at reduced boundary** (Maggi Theorem 15.5).
 
 At every point $x$ of the reduced boundary, the tangent space to
 $\partial^*\Omega$ is the orthogonal complement of the outer unit
 normal:
-$$T_x(\partial^*\Omega) = \{v \in T_xM : \langle v, \nu_\Omega(x)\rangle = 0\}.$$
+$$T_x(\partial^*\Omega) = \{v \in T_xM : \langle v, \nu_\Omega(x)\rangle_g = 0\}.$$
 
 Stated as the equality of the tangent-hyperplane subspace with the
 orthogonal complement of the line spanned by the BV gradient
-direction. The framework's `instInnerProductSpaceTangentSpace` bridge
-provides `InnerProductSpace ℝ (TangentSpace I x)`, so the orthogonal-
-complement notion is well-defined.
+direction, with the framework-owned `metricInner` (Phase 4.7.2)
+on the LHS. The RHS uses Mathlib's `Submodule.orthogonal` (`ᗮ`),
+which is well-defined via the bridge instance
+`Riemannian.InnerProductBridge.instInnerProductSpaceTangentSpace`.
+The biconditional is mathematically valid when the Mathlib inner and
+the framework `metricInner` agree (which they do under the
+single-canonical-metric design of Phase 4.7).
 
 **Sorry status**: PRE-PAPER existence axiom. Repair plan: framework
 self-build of the tangent-blow-up to a hyperplane in the De Giorgi
@@ -143,7 +149,7 @@ infrastructure.
 theorem tangentHyperplane_at_reducedBoundary_orthogonal
     (Ω : FinitePerimeter M) (x : M)
     (_hx : x ∈ FinitePerimeter.reducedBoundary Ω) (v : TangentSpace I x) :
-    inner (𝕜 := ℝ) v (Varifold.bvGradientDirection I Ω x) = 0 ↔
+    OpenGALib.metricInner x v (Varifold.bvGradientDirection I Ω x) = 0 ↔
       v ∈ (Submodule.span ℝ {Varifold.bvGradientDirection I Ω x})ᗮ := by
   sorry
 
