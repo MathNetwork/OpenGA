@@ -1,6 +1,8 @@
 import Mathlib.Geometry.Manifold.IsManifold.Basic
 import Mathlib.Geometry.Manifold.ContMDiff.Basic
 import Mathlib.Geometry.Manifold.VectorBundle.Tangent
+import Mathlib.Geometry.Manifold.VectorBundle.MDifferentiable
+import Mathlib.Geometry.Manifold.MFDeriv.NormedSpace
 import Mathlib.Analysis.InnerProductSpace.Basic
 
 /-!
@@ -351,14 +353,57 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 the basepoint, given smooth bundle sections.
 
 For smooth tangent-bundle sections $Y, Z$ at $x$, the scalar function
-$y \mapsto \langle Y(y), Z(y)\rangle_g$ is $C^\infty$ at $x$. -/
+$y \mapsto \langle Y(y), Z(y)\rangle_g$ is $C^\infty$ at $x$.
+
+**Phase 4.7.5.C partial closure**: the proof structure is in place
+but the final `congr_of_eventuallyEq` step requires the chart-change
+composition `g.metricTensor y (e.symmL y (Y' y)) (e.symmL y (Z' y))`,
+which equals `g.metricTensor y (Y y) (Z y)` for `y ∈ e.baseSet` via
+`Trivialization.symmL_continuousLinearMapAt`. The smoothness of
+`e.symmL ℝ y` in `y` (Mathlib's `Trivialization.symmL` for tangent
+bundle equals `mfderivWithin (extChartAt I x).symm` — Mathlib lemma
+`TangentBundle.symmL_trivializationAt`, smooth via mfderiv smoothness)
+needs to be plumbed through. ~30-50 LOC of careful chart-machinery
+remains. -/
 theorem MDifferentiableAt.metricInner_smoothAt
     {Y Z : Π y : M, TangentSpace I y} {x : M}
-    (_hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
       (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
-    (_hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+    (hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
       (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x) :
     MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x := by
+  -- Set up the trivialization at x.
+  set e := trivializationAt E (TangentSpace I) x with he_def
+  -- Step 1: Extract chart-pulled-back fiber smoothness from bundle smoothness.
+  rw [mdifferentiableAt_totalSpace] at hY hZ
+  have hY' : MDifferentiableAt I 𝓘(ℝ, E) (fun y => (e ⟨y, Y y⟩).2) x := hY.2
+  have hZ' : MDifferentiableAt I 𝓘(ℝ, E) (fun y => (e ⟨y, Z y⟩).2) x := hZ.2
+  -- Step 2: g.metricTensor smooth as M → CLM.
+  have hg : MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E →L[ℝ] ℝ) g.metricTensor x :=
+    (g.smoothMetric x).mdifferentiableAt (by decide)
+  -- Step 3: Compose g.metricTensor with Y', Z' via clm_apply twice.
+  -- The composed function is `fun y => g.metricTensor y (Y' y) (Z' y)`.
+  have h1 : MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] ℝ)
+      (fun y => g.metricTensor y ((e ⟨y, Y y⟩).2)) x := hg.clm_apply hY'
+  have h2 : MDifferentiableAt I 𝓘(ℝ, ℝ)
+      (fun y => g.metricTensor y ((e ⟨y, Y y⟩).2) ((e ⟨y, Z y⟩).2)) x :=
+    h1.clm_apply hZ'
+  -- Step 4: Bridge to the original `metricInner y (Y y) (Z y)` form.
+  -- The chart-pulled-back values `(e ⟨y, Y y⟩).2 = e.continuousLinearMapAt ℝ y (Y y)`
+  -- differ from `Y y` itself by the chart change. To recover `Y y` from `Y'(y)`, we
+  -- compose with `e.symmL ℝ y` (the inverse chart change), giving the equation
+  -- `Y y = e.symmL ℝ y (Y' y)` for `y ∈ e.baseSet` (via
+  -- `Trivialization.symmL_continuousLinearMapAt`).
+  --
+  -- Smoothness of `e.symmL ℝ y` in `y` follows from
+  -- `TangentBundle.symmL_trivializationAt` + smoothness of `mfderivWithin (extChartAt I x).symm`.
+  -- The chained smoothness of
+  --   `fun y => g.metricTensor y (e.symmL y (Y' y)) (e.symmL y (Z' y))`
+  -- is then via three `clm_apply` applications + the chart-change smoothness, and equals
+  -- the goal pointwise on `e.baseSet`.
+  --
+  -- Implementation deferred — Mathlib's chart-machinery composition is mechanically
+  -- doable (~30-50 LOC) but exceeds atomic-commit scope here.
   sorry
 
 end OpenGALib
