@@ -107,6 +107,104 @@ noncomputable def metricInnerRaw {E : Type*} [NormedAddCommGroup E] [InnerProduc
 
 end RiemannianMetric
 
+/-! ## Phase 4.7.2 — metricInner + algebra lemmas
+
+The `metricInner` operation is the typed-on-tangent-space wrapper around
+`RiemannianMetric.metricTensor`. Algebra lemmas (bilinearity, sub, neg, zero,
+comm) are derived from the metric tensor's continuous-bilinear-form structure
+and the `symm` axiom.
+
+These lemmas replace `inner_add_left/right`, `inner_smul_left/right`,
+`real_inner_comm`, etc. (the Mathlib `inner ℝ`-based API) for use in the
+framework's Phase 4.7.4+ refactor of koszul identities and downstream
+Riemannian/GMT code. -/
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+  {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+  [g : RiemannianMetric I M]
+
+/-- The **metric inner product** at point $x \in M$, treating
+$\text{TangentSpace}\ I\ x = E$ via definitional equality.
+
+This is the framework's primary inner product operation on tangent vectors.
+Replaces `inner ℝ V W` for `V, W : TangentSpace I x` to bypass the
+lean4#13063 typeclass diamond. -/
+noncomputable def metricInner (x : M) (V W : TangentSpace I x) : ℝ :=
+  g.metricTensor x V W
+
+/-- **Symmetry**: $\langle V, W\rangle_g = \langle W, V\rangle_g$.
+
+Direct from `RiemannianMetric.symm` axiom. -/
+theorem metricInner_comm (x : M) (V W : TangentSpace I x) :
+    metricInner x V W = metricInner x W V :=
+  g.symm x V W
+
+/-- **Positive-definite**: $\langle V, V\rangle_g > 0$ for $V \ne 0$.
+
+Direct from `RiemannianMetric.posdef` axiom. -/
+theorem metricInner_self_pos (x : M) (V : TangentSpace I x) (hV : V ≠ 0) :
+    0 < metricInner x V V :=
+  g.posdef x V hV
+
+/-- **Additivity in left argument**:
+$\langle V_1 + V_2, W\rangle_g = \langle V_1, W\rangle_g + \langle V_2, W\rangle_g$.
+
+Proof via `flip` to align outer-CLM bilinear form with `map_add`. -/
+theorem metricInner_add_left (x : M) (V₁ V₂ W : TangentSpace I x) :
+    metricInner x (V₁ + V₂) W = metricInner x V₁ W + metricInner x V₂ W :=
+  ((g.metricTensor x).flip W).map_add V₁ V₂
+
+/-- **Additivity in right argument**:
+$\langle V, W_1 + W_2\rangle_g = \langle V, W_1\rangle_g + \langle V, W_2\rangle_g$. -/
+theorem metricInner_add_right (x : M) (V W₁ W₂ : TangentSpace I x) :
+    metricInner x V (W₁ + W₂) = metricInner x V W₁ + metricInner x V W₂ :=
+  (g.metricTensor x V).map_add W₁ W₂
+
+/-- **Scalar mult in left argument**:
+$\langle c \cdot V, W\rangle_g = c \cdot \langle V, W\rangle_g$. -/
+theorem metricInner_smul_left (x : M) (c : ℝ) (V W : TangentSpace I x) :
+    metricInner x (c • V) W = c * metricInner x V W :=
+  ((g.metricTensor x).flip W).map_smul c V
+
+/-- **Scalar mult in right argument**:
+$\langle V, c \cdot W\rangle_g = c \cdot \langle V, W\rangle_g$. -/
+theorem metricInner_smul_right (x : M) (c : ℝ) (V W : TangentSpace I x) :
+    metricInner x V (c • W) = c * metricInner x V W :=
+  (g.metricTensor x V).map_smul c W
+
+/-- **Zero in left argument**: $\langle 0, W\rangle_g = 0$. -/
+theorem metricInner_zero_left (x : M) (W : TangentSpace I x) :
+    metricInner x 0 W = 0 :=
+  ((g.metricTensor x).flip W).map_zero
+
+/-- **Zero in right argument**: $\langle V, 0\rangle_g = 0$. -/
+theorem metricInner_zero_right (x : M) (V : TangentSpace I x) :
+    metricInner x V 0 = 0 :=
+  (g.metricTensor x V).map_zero
+
+/-- **Negation in left argument**: $\langle -V, W\rangle_g = -\langle V, W\rangle_g$. -/
+theorem metricInner_neg_left (x : M) (V W : TangentSpace I x) :
+    metricInner x (-V) W = -metricInner x V W :=
+  ((g.metricTensor x).flip W).map_neg V
+
+/-- **Negation in right argument**: $\langle V, -W\rangle_g = -\langle V, W\rangle_g$. -/
+theorem metricInner_neg_right (x : M) (V W : TangentSpace I x) :
+    metricInner x V (-W) = -metricInner x V W :=
+  (g.metricTensor x V).map_neg W
+
+/-- **Subtraction in left argument**:
+$\langle V_1 - V_2, W\rangle_g = \langle V_1, W\rangle_g - \langle V_2, W\rangle_g$. -/
+theorem metricInner_sub_left (x : M) (V₁ V₂ W : TangentSpace I x) :
+    metricInner x (V₁ - V₂) W = metricInner x V₁ W - metricInner x V₂ W := by
+  rw [sub_eq_add_neg, metricInner_add_left, metricInner_neg_left, sub_eq_add_neg]
+
+/-- **Subtraction in right argument**:
+$\langle V, W_1 - W_2\rangle_g = \langle V, W_1\rangle_g - \langle V, W_2\rangle_g$. -/
+theorem metricInner_sub_right (x : M) (V W₁ W₂ : TangentSpace I x) :
+    metricInner x V (W₁ - W₂) = metricInner x V W₁ - metricInner x V W₂ := by
+  rw [sub_eq_add_neg, metricInner_add_right, metricInner_neg_right, sub_eq_add_neg]
+
 end OpenGALib
 
 /-! ## Phase 4.7.1 self-test: typeclass synthesizes + accessors resolve -/
@@ -158,5 +256,35 @@ example
     [g : RiemannianMetric I M] :
     ContMDiff I 𝓘(ℝ, E →L[ℝ] E →L[ℝ] ℝ) ∞ g.metricTensor :=
   g.smoothMetric
+
+/-! ## Phase 4.7.2 self-tests: metricInner + algebra lemmas -/
+
+/-- Combined linearity self-test: bilinearity of metricInner. -/
+example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+    [g : RiemannianMetric I M] (x : M) (a b : ℝ) (V₁ V₂ W : TangentSpace I x) :
+    metricInner x (a • V₁ + b • V₂) W = a * metricInner x V₁ W + b * metricInner x V₂ W := by
+  rw [metricInner_add_left, metricInner_smul_left, metricInner_smul_left]
+
+/-- Self-test: combine `metricInner_comm` + `metricInner_add_right`. -/
+example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+    [g : RiemannianMetric I M] (x : M) (V W₁ W₂ : TangentSpace I x) :
+    metricInner x (W₁ + W₂) V = metricInner x W₁ V + metricInner x W₂ V := by
+  rw [metricInner_comm x (W₁ + W₂) V, metricInner_add_right,
+      metricInner_comm x V W₁, metricInner_comm x V W₂]
+
+/-- Self-test: subtraction lemma. -/
+example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+    [g : RiemannianMetric I M] (x : M) (V₁ V₂ W : TangentSpace I x) :
+    metricInner x (V₁ - V₂) W = metricInner x V₁ W - metricInner x V₂ W :=
+  metricInner_sub_left x V₁ V₂ W
 
 end SelfTest
