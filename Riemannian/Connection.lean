@@ -686,6 +686,7 @@ theorem koszulFunctional_local
   rw [hT1.mfderiv_eq, hT2.mfderiv_eq, hZx, hT5, hT6]
   rfl
 
+omit [FiniteDimensional ℝ E] in
 /-- **Tensoriality at $x$ of the half-Koszul functional in the third argument.**
 
 For smooth $X, Y$ at $x$, the operation
@@ -906,9 +907,9 @@ theorem leviCivitaConnection_exists :
       ∀ (X Y Z : Π x : M, TangentSpace I x) (x : M)
         (_hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
           (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
-        (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+        (_hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
           (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
-        (hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+        (_hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
           (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x),
         mfderiv I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x (X x) =
           metricInner x (cov.toFun Y x (X x)) (Z x) +
