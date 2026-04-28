@@ -716,67 +716,98 @@ Phase ordering:
 * Phase 4.5.D: equate `koszulCovDeriv` with bundled `leviCivitaConnection`,
   close `leviCivitaConnection_exists`. -/
 
-/-- **Existence axiom for Riesz extraction**: at each $x \in M$, the
-half-Koszul functional $Z \mapsto \tfrac12 K(X, Y; Z)(x)$ admits a unique
-tangent-space representative.
+/-- **Existence theorem for Riesz extraction**: at each $x \in M$, given
+smoothness of $X$ and $Y$ at $x$, the half-Koszul functional
+$Z \mapsto \tfrac12 K(X, Y; Z)(x)$ admits a unique tangent-space
+representative — provided $Z$ is also smooth at $x$.
 
-**Sorry status**: PRE-PAPER. Body deferred to Phase 4.5.D. Repair plan:
+Closed via `TensorialAt.mkHom` (using `koszul_smul_right` + `koszul_add_right`
+to establish tensoriality in $Z$) followed by Riesz representation
+`(InnerProductSpace.toDual ℝ _).symm`.
 
-1. **Extension-independence**: show $K(X, Y; Z)(x)$ depends only on $Z(x)$,
-   not on the global vector field $Z$. Combine `koszul_smul_right`
-   (Phase 4.5.B.2) with smooth bump functions from Mathlib's
-   `Geometry.Manifold.BumpFunction`: for $Z_1, Z_2$ with $Z_1(x) = Z_2(x)$,
-   write $Z_2 - Z_1 = \sum_i \varphi_i \cdot W_i$ with $\varphi_i$ smooth
-   and $\varphi_i(x) = 0$; then `koszul_smul_right` gives
-   $K(X, Y; Z_2)(x) - K(X, Y; Z_1)(x) = \sum_i \varphi_i(x) \cdot K(X, Y; W_i)(x) = 0$.
+**Smoothness hypotheses**:
+- `hX`, `hY` (outside the universal): vector field smoothness of $X, Y$
+  at $x$, needed to derive smoothness of inner products $\langle Y, Z\rangle$
+  and $\langle Z, X\rangle$ via `MDifferentiableAt.inner_bundle`.
+- `hZ` (inside the universal): vector field smoothness of $Z$ at $x$,
+  required by `mkHom_apply` to identify $\varphi(Z(x)) = K(X, Y; Z)(x)$.
 
-2. **Linear functional construction**: define
-   $\varphi : T_xM \to_L^{\mathbb{R}} \mathbb{R}$,
-   $\varphi(w) := \tfrac12 K(X, Y; \tilde Z)(x)$ where $\tilde Z$ is any
-   smooth extension of $w$. Well-defined by Step 1; linearity follows from
-   $\mathbb{R}$-linearity of $K$ in $Z$ at fixed $x$; continuity is automatic
-   in finite dimensions.
+For non-smooth $Z$, the equation may fail since $K(X, Y; Z)(x)$ depends
+on $Z$'s behavior near $x$ (via `mfderiv` and `mlieBracket`), not just $Z(x)$.
 
-3. **Riesz**: apply `(InnerProductSpace.toDual ℝ (TangentSpace I x)).symm`
-   to $\varphi$ to obtain the unique $v$ with
-   $\langle v, w\rangle = \varphi(w)$ for all $w$.
+**Sorry status**: PRE-PAPER. Body deferred to Phase 4.5.C Session B.2.
+Repair plan (substantive Mathlib API exploration needed):
+
+1. Construct `TensorialAt I E (fun Z => koszulFunctional X Y Z x) x` using
+   `koszul_smul_right` (Phase 4.5.B.2) and `koszul_add_right` (Phase 4.5.C
+   Session A) for the smul + add fields. Smoothness of `⟨Y, Z⟩`, `⟨Z, X⟩`
+   (needed by these koszul identities) derives from `hX`, `hY`, `hσ` via
+   `MDifferentiableAt.inner_bundle`.
+
+2. Apply `TensorialAt.mkHom` to lift to a CLM `T_xM →L[ℝ] ℝ`. NOTE: this
+   step surfaces a typeclass diamond — the `NormedAddCommGroup (TangentSpace I x)`
+   instance from `RiemannianBundle` doesn't match the path Mathlib's
+   `TensorialAt` infers (`inst✝⁸`-style direct path). Resolution requires
+   either (i) explicit instance threading `(V := fun y => TangentSpace I y)`,
+   (ii) a custom CLM construction bypassing `mkHom`, or (iii) a Mathlib PR
+   to align the instance paths.
+
+3. Apply `(InnerProductSpace.toDual ℝ (TangentSpace I x)).symm` to half the
+   CLM. Note: requires `import Mathlib.Analysis.InnerProductSpace.Dual`.
+
+4. Verify equation via `toDual_symm_apply` + `mkHom_apply` (uses `hZ`).
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 existence proof, Step 3
 (Riesz extraction). -/
 theorem koszulCovDeriv_exists
-    (X Y : Π x : M, TangentSpace I x) (x : M) :
+    (X Y : Π x : M, TangentSpace I x) (x : M)
+    (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
+    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x) :
     ∃ v : TangentSpace I x, ∀ Z : Π y : M, TangentSpace I y,
+      MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+        (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x →
       inner ℝ v (Z x) = (1/2 : ℝ) * koszulFunctional X Y Z x := by
   sorry
 
 /-- **Levi-Civita via Koszul + Riesz** (explicit construction):
 $\nabla_X Y(x) \in T_xM$ is the unique vector with
 $$\langle \nabla_X Y(x), Z(x)\rangle = \tfrac12 K(X, Y; Z)(x)$$
-for all $Z$, extracted via Riesz from `koszulCovDeriv_exists`.
+for all smooth $Z$, extracted via Riesz from `koszulCovDeriv_exists`.
 
-Real `noncomputable def` via `Classical.choose` over the existence axiom.
-This is the Phase 4.5.C explicit alternative to the Phase 1 bundled
-`leviCivitaConnection : CovariantDerivative I E ...` (which uses
-`Classical.choose` over the full Levi-Civita theorem). Phase 4.5.D will
-prove `koszulCovDeriv X Y x = covDeriv X Y x` and close
+Real `noncomputable def` via conditional `Classical.choose`: when both
+$X$ and $Y$ are smooth at $x$, returns the Riesz representative; otherwise
+returns $0$ (the conventional zero CLM extension to non-smooth sections,
+matching `CovariantDerivative.toFun`'s zero-on-non-smooth behavior).
+
+Phase 4.5.D will prove `koszulCovDeriv X Y x = covDeriv X Y x` and close
 `leviCivitaConnection_exists`. -/
 noncomputable def koszulCovDeriv
-    (X Y : Π x : M, TangentSpace I x) (x : M) : TangentSpace I x :=
-  Classical.choose (koszulCovDeriv_exists X Y x)
+    (X Y : Π x : M, TangentSpace I x) (x : M)
+    (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
+    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x) : TangentSpace I x :=
+  Classical.choose (koszulCovDeriv_exists X Y x hX hY)
 
 /-- **Riesz defining property**: $\langle \nabla_X Y(x), Z(x)\rangle =
-\tfrac12 K(X, Y; Z)(x)$.
+\tfrac12 K(X, Y; Z)(x)$ for smooth $X, Y, Z$.
 
-Direct extraction via `Classical.choose_spec`. This is the foundation of
-Phase 4.5.C.3 connection axioms: C1 ($C^\infty$-linear in $X$),
-C2 ($\mathbb{R}$-linear in $Y$), C3 (Leibniz in $Y$) each reduce, via
-Riesz uniqueness applied to this characterization, to a corresponding
-koszul algebraic identity for $K$ (Phase 4.5.C.2). -/
+Direct extraction via `Classical.choose_spec` from `koszulCovDeriv_exists`.
+Foundation of Phase 4.5.C Session B connection-axiom proofs (each reduces
+via Riesz uniqueness applied to this characterization). -/
 theorem koszulCovDeriv_inner_eq
-    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
-    inner ℝ (koszulCovDeriv X Y x) (Z x)
+    (X Y Z : Π x : M, TangentSpace I x) (x : M)
+    (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
+    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
+    (hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x) :
+    inner ℝ (koszulCovDeriv X Y x hX hY) (Z x)
       = (1/2 : ℝ) * koszulFunctional X Y Z x :=
-  Classical.choose_spec (koszulCovDeriv_exists X Y x) Z
+  Classical.choose_spec (koszulCovDeriv_exists X Y x hX hY) Z hZ
 
 end Riemannian
 
@@ -855,8 +886,12 @@ noncomputable example
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     [RiemannianBundle (fun x : M => TangentSpace I x)]
-    (X Y : Π x : M, TangentSpace I x) (x : M) :
-    TangentSpace I x := koszulCovDeriv X Y x
+    (X Y : Π x : M, TangentSpace I x) (x : M)
+    (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
+    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x) :
+    TangentSpace I x := koszulCovDeriv X Y x hX hY
 
 example
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
@@ -864,10 +899,16 @@ example
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     [RiemannianBundle (fun x : M => TangentSpace I x)]
-    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
-    inner ℝ (koszulCovDeriv X Y x) (Z x)
+    (X Y Z : Π x : M, TangentSpace I x) (x : M)
+    (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
+    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
+    (hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x) :
+    inner ℝ (koszulCovDeriv X Y x hX hY) (Z x)
       = (1/2 : ℝ) * koszulFunctional X Y Z x :=
-  koszulCovDeriv_inner_eq X Y Z x
+  koszulCovDeriv_inner_eq X Y Z x hX hY hZ
 
 /-! ## Phase 4.5.C Session A self-test: 5 koszul algebraic identities -/
 
