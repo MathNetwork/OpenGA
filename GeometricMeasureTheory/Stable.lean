@@ -59,12 +59,13 @@ Carries the smooth-manifold typeclass cascade
 because `sing I V` requires it and `secondVariationFull` requires the
 HasNormal-Bridge cascade. -/
 def IsStable
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     [CompleteSpace E] [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
     [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+    [OpenGALib.RiemannianMetric I M]
     (V : Varifold M) [Varifold.HasNormal I V] : Prop :=
   ∀ φ : M → ℝ, Function.support φ ⊆ (sing I V)ᶜ →
     0 ≤ Variation.secondVariationFull I V φ
@@ -75,12 +76,13 @@ second variation.
 **Phase 1.7 body migration**: body uses `Variation.secondVariationFull`,
 matching `IsStable`'s migration. -/
 def IsUnstable
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     [CompleteSpace E] [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
     [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+    [OpenGALib.RiemannianMetric I M]
     (V : Varifold M) [Varifold.HasNormal I V] : Prop :=
   ∃ φ : M → ℝ,
     Function.support φ ⊆ (sing I V)ᶜ ∧
@@ -106,11 +108,12 @@ section UXTest
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
   [MeasureTheory.MeasureSpace M]
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [CompleteSpace E] [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
   [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+  [OpenGALib.RiemannianMetric I M]
 
 example (V : Varifold M) [Varifold.HasNormal I V] :
     Prop := Varifold.IsStable I V

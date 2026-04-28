@@ -53,13 +53,14 @@ namespace AltRegularity
 open GeometricMeasureTheory GeometricMeasureTheory.Varifold GeometricMeasureTheory.FinitePerimeter Regularity Regularity.Varifold MinMax.Sweepout MinMax.Sweepout.Varifold
 open scoped ContDiff
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [MeasurableSpace E] [BorelSpace E]
   [CompleteSpace E] [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H]
   (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
   [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+  [OpenGALib.RiemannianMetric I M]
 
 -- Both Section 7 bridges are provided by chain-proof modules:
 --   * `isStable_of_nonExcessive_minmax`

@@ -27,16 +27,17 @@ Mathlib's `CovariantDerivative` + `mlieBracket` + `LocalFrame` provide
 the building blocks.
 -/
 
-open Bundle VectorField
+open Bundle VectorField OpenGALib
 open scoped ContDiff Manifold
 
 namespace Riemannian
 
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
   [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [RiemannianBundle (fun x : M => TangentSpace I x)]
+  [RiemannianMetric I M]
 
 /-- The **Riemann curvature tensor**:
 $R(X, Y)Z := \nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X, Y]} Z$.
@@ -130,28 +131,31 @@ section UXTest
 open Riemannian
 
 noncomputable example
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     [RiemannianBundle (fun x : M => TangentSpace I x)]
+    [OpenGALib.RiemannianMetric I M]
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x := riemannCurvature X Y Z x
 
 noncomputable example
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     [RiemannianBundle (fun x : M => TangentSpace I x)]
+    [OpenGALib.RiemannianMetric I M]
     (X Y : Π x : M, TangentSpace I x) (x : M) : ℝ := ricci X Y x
 
 noncomputable example
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     [RiemannianBundle (fun x : M => TangentSpace I x)]
+    [OpenGALib.RiemannianMetric I M]
     (x : M) : ℝ :=
   scalarCurvature (I := I) x
 

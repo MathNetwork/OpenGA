@@ -30,16 +30,17 @@ deferred to a future Phase.
 Simon 1983 §49 (use in second variation).
 -/
 
-open Bundle
+open Bundle OpenGALib
 open scoped ContDiff Manifold
 
 namespace Riemannian
 
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
   [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [RiemannianBundle (fun x : M => TangentSpace I x)]
+  [RiemannianMetric I M]
 
 /-- The **second fundamental form (codim-1 scalar form)** $A$ at a point:
 $$A(X, Y)(x) := \langle \nabla^M_X Y(x), \nu(x) \rangle.$$

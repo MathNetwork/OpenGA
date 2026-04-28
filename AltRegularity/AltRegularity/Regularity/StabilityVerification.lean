@@ -59,12 +59,13 @@ namespace Varifold
 
 section Smooth
 
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [CompleteSpace E] [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H]
   (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
   [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+  [OpenGALib.RiemannianMetric I M]
 
 /-! ## Local-property definitions -/
 
@@ -159,12 +160,13 @@ paper §7.1's three-line proof:
 
 -/
 theorem isStable_of_nonExcessive_minmax
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     [CompleteSpace E] [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
     [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+    [OpenGALib.RiemannianMetric I M]
     {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
     [Varifold.HasNormal I V]
     (hne : MinMax.Sweepout.NonExcessive Φ) (honvp : MinMax.Sweepout.ONVP Φ)

@@ -198,12 +198,13 @@ $\alpha$-structural hypothesis.
 Carries the smooth-manifold typeclass cascade because `IsStable I V`
 and `AlphaStructural I V α` reference `sing I V`. -/
 structure InClassSAlpha
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     [CompleteSpace E] [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
     [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+    [OpenGALib.RiemannianMetric I M]
     (V : Varifold M) [Varifold.HasNormal I V]
     (α : ℝ) : Prop where
   /-- ($\mathcal{S}1$) The varifold is stationary: $\delta V = 0$. -/

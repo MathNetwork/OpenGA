@@ -48,12 +48,13 @@ namespace Varifold
 
 section Smooth
 
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [CompleteSpace E] [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H]
   (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
   [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
+  [OpenGALib.RiemannianMetric I M]
 
 /-- $V$ is a **smooth, closed, embedded minimal hypersurface** of $M$
 (paper §4 Theorem~\ref{thm:wickramasekera}, "in particular" clause for
