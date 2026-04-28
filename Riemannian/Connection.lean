@@ -2,10 +2,12 @@ import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Basic
 import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Torsion
 import Mathlib.Geometry.Manifold.VectorBundle.Riemannian
 import Mathlib.Geometry.Manifold.VectorBundle.Tangent
+import Mathlib.Geometry.Manifold.VectorBundle.Tensoriality
 import Mathlib.Geometry.Manifold.Riemannian.Basic
 import Mathlib.Geometry.Manifold.MFDeriv.Basic
 import Mathlib.Geometry.Manifold.VectorField.LieBracket
 import Mathlib.Topology.VectorBundle.Riemannian
+import Mathlib.Analysis.InnerProductSpace.Dual
 
 /-!
 # Riemannian.Connection
@@ -735,27 +737,42 @@ to establish tensoriality in $Z$) followed by Riesz representation
 For non-smooth $Z$, the equation may fail since $K(X, Y; Z)(x)$ depends
 on $Z$'s behavior near $x$ (via `mfderiv` and `mlieBracket`), not just $Z(x)$.
 
-**Sorry status**: PRE-PAPER. Body deferred to Phase 4.5.C Session B.2.
-Repair plan (substantive Mathlib API exploration needed):
+**Sorry status**: PRE-PAPER. Body deferred — encountered Mathlib + Lean
+typeclass diamond issue (lean4#13063, KERNEL-level, not synthesis-level):
 
-1. Construct `TensorialAt I E (fun Z => koszulFunctional X Y Z x) x` using
-   `koszul_smul_right` (Phase 4.5.B.2) and `koszul_add_right` (Phase 4.5.C
-   Session A) for the smul + add fields. Smoothness of `⟨Y, Z⟩`, `⟨Z, X⟩`
-   (needed by these koszul identities) derives from `hX`, `hY`, `hσ` via
-   `MDifferentiableAt.inner_bundle`.
+The `[∀ x, NormedAddCommGroup (TangentSpace I x)]` instance has two
+non-defeq paths in Lean's term representation when `RiemannianBundle`
+is in scope:
+- (A) Via the section variable `[NormedAddCommGroup E]`, since
+      `TangentSpace I x = E` definitionally; instance term is
+      `fun b ↦ inst✝⁸` (constant function returning the section variable).
+- (B) Via `Bundle.instNormedAddCommGroupOfRiemannianBundle...`; instance
+      term is `fun x ↦ instNormedAddCommGroupOfRiemannianBundle... x`
+      (function-of-x, threading through the bundle structure).
 
-2. Apply `TensorialAt.mkHom` to lift to a CLM `T_xM →L[ℝ] ℝ`. NOTE: this
-   step surfaces a typeclass diamond — the `NormedAddCommGroup (TangentSpace I x)`
-   instance from `RiemannianBundle` doesn't match the path Mathlib's
-   `TensorialAt` infers (`inst✝⁸`-style direct path). Resolution requires
-   either (i) explicit instance threading `(V := fun y => TangentSpace I y)`,
-   (ii) a custom CLM construction bypassing `mkHom`, or (iii) a Mathlib PR
-   to align the instance paths.
+When `TensorialAt`'s smul/add fields are constructed, Lean's elaborator
+infers (A) from typing rules but typeclass synthesis returns (B). The
+kernel-level definitional-equality check rejects the mismatch even though
+both produce the same `NormedAddCommGroup` structure semantically.
 
-3. Apply `(InnerProductSpace.toDual ℝ (TangentSpace I x)).symm` to half the
-   CLM. Note: requires `import Mathlib.Analysis.InnerProductSpace.Dual`.
+Workarounds attempted (this session):
+1. `(V := TangentSpace I)` explicit — diamond persists at kernel level.
+2. `(V := fun _ : M => E)` — introduces `Trivial M E` complications;
+   inner products break since koszul_smul_right uses RiemannianBundle.
+3. `attribute [-instance] Bundle.instNormedAddCommGroupOfRiemannianBundle...`
+   + provide direct E-path instance — cascades into removing dependent
+   instances (VectorBundle, InnerProductSpace), breaking koszul lemmas.
+4. `set_option synthInstance.checkSynthOrder false` — issue is at kernel
+   def-eq check, not at synthesis.
 
-4. Verify equation via `toDual_symm_apply` + `mkHom_apply` (uses `hZ`).
+Repair plan (research-level work, beyond single-session scope):
+- (a) Mathlib PR aligning `RiemannianBundle`-derived instance with the
+      direct E-instance path (tracked upstream as lean4#13063).
+- (b) Custom CLM construction bypassing `TensorialAt.mkHom`: build
+      `LinearMap (TangentSpace I x) ℝ` directly via `FiberBundle.extend`
+      linearity (~150-200 LOC, replicates TensorialAt.local + .pointwise
+      machinery), then `LinearMap.toContinuousLinearMap` (auto-continuous
+      in finite dim), then Riesz `(InnerProductSpace.toDual ℝ _).symm`.
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 existence proof, Step 3
 (Riesz extraction). -/
