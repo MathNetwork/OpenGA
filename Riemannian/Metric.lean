@@ -205,6 +205,17 @@ theorem metricInner_sub_right (x : M) (V W₁ W₂ : TangentSpace I x) :
     metricInner x V (W₁ - W₂) = metricInner x V W₁ - metricInner x V W₂ := by
   rw [sub_eq_add_neg, metricInner_add_right, metricInner_neg_right, sub_eq_add_neg]
 
+/-- **Non-negativity of self-inner**: $\langle V, V\rangle_g \ge 0$.
+
+Combines `metricInner_self_pos` (for $V \ne 0$) with `metricInner_zero_left`
+(for $V = 0$). Used by downstream squared-norm primitives
+(`manifoldGradientNormSq_nonneg`, `secondFundamentalFormSqNorm_nonneg`). -/
+theorem metricInner_self_nonneg (x : M) (V : TangentSpace I x) :
+    0 ≤ metricInner x V V := by
+  rcases eq_or_ne V 0 with hV | hV
+  · rw [hV, metricInner_zero_left]
+  · exact le_of_lt (metricInner_self_pos x V hV)
+
 end OpenGALib
 
 /-! ## Phase 4.7.3 — Framework-owned Riesz extraction

@@ -45,14 +45,13 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteS
 /-- The **second fundamental form (codim-1 scalar form)** $A$ at a point:
 $$A(X, Y)(x) := \langle \nabla^M_X Y(x), \nu(x) \rangle.$$
 
-Real `noncomputable def` using `covDeriv` (Levi-Civita) + `inner ℝ`
-on `TangentSpace I x` (provided by the bridge instances in
-`Riemannian.InnerProductBridge`).
+Real `noncomputable def` using `covDeriv` (Levi-Civita) + `metricInner`
+on `TangentSpace I x` (framework-owned, `Riemannian.Metric`).
 
 **Ground truth**: do Carmo 1992 §6.2. -/
 noncomputable def secondFundamentalFormScalar
     (ν X Y : Π x : M, TangentSpace I x) (x : M) : ℝ :=
-  inner ℝ (covDeriv X Y x) (ν x)
+  metricInner x (covDeriv X Y x) (ν x)
 
 /-- $|A|^2 : M \to \mathbb{R}$, the squared norm of the second fundamental form,
 defined as $\sum_{i, j} A(e_i, e_j)^2$ over the standard orthonormal
