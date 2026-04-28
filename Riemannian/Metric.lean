@@ -207,6 +207,109 @@ theorem metricInner_sub_right (x : M) (V W₁ W₂ : TangentSpace I x) :
 
 end OpenGALib
 
+/-! ## Phase 4.7.3 — Framework-owned Riesz extraction
+
+Build out the Riesz isomorphism `T_xM ≃ₗ[ℝ] (T_xM →L[ℝ] ℝ)` via the metric
+tensor's positive-definiteness + finite-dim invertibility, providing the
+framework's replacement for Mathlib's `(InnerProductSpace.toDual ℝ _).symm`. -/
+
+namespace OpenGALib
+
+section RieszExtraction
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  [FiniteDimensional ℝ E]
+  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+  {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+  [g : RiemannianMetric I M]
+
+/-- **Forward Riesz**: vector → linear functional via metric. -/
+noncomputable def metricToDual (x : M) :
+    TangentSpace I x →L[ℝ] (TangentSpace I x →L[ℝ] ℝ) :=
+  g.metricTensor x
+
+@[simp]
+theorem metricToDual_apply (x : M) (v w : TangentSpace I x) :
+    metricToDual (g := g) x v w = metricInner x v w :=
+  rfl
+
+/-- **Injectivity of forward Riesz**: from positive-definiteness. -/
+theorem metricToDual_injective (x : M) :
+    Function.Injective (metricToDual (g := g) x) := by
+  intro v₁ v₂ h
+  by_contra hne
+  have hsub : v₁ - v₂ ≠ 0 := sub_ne_zero.mpr hne
+  have hpos : 0 < metricInner x (v₁ - v₂) (v₁ - v₂) :=
+    metricInner_self_pos x _ hsub
+  have key : ∀ w, metricInner x v₁ w = metricInner x v₂ w := by
+    intro w
+    exact congrArg (fun (f : TangentSpace I x →L[ℝ] ℝ) => f w) h
+  have hzero : metricInner x (v₁ - v₂) (v₁ - v₂) = 0 := by
+    rw [metricInner_sub_left, key (v₁ - v₂), sub_self]
+  linarith
+
+/-- finrank of `TangentSpace I x →L[ℝ] ℝ` equals finrank of `TangentSpace I x`. -/
+private theorem finrank_clm_dual_eq (x : M) :
+    Module.finrank ℝ (TangentSpace I x →L[ℝ] ℝ) =
+      Module.finrank ℝ (TangentSpace I x) := by
+  haveI : FiniteDimensional ℝ (TangentSpace I x) :=
+    inferInstanceAs (FiniteDimensional ℝ E)
+  rw [← LinearEquiv.finrank_eq
+    (LinearMap.toContinuousLinearMap : (TangentSpace I x →ₗ[ℝ] ℝ) ≃ₗ[ℝ] _)]
+  exact Subspace.dual_finrank_eq
+
+/-- **Bijectivity of forward Riesz**: injective + same `finrank` ⇒ bijective. -/
+theorem metricToDual_bijective (x : M) :
+    Function.Bijective (metricToDual (g := g) x) := by
+  haveI : FiniteDimensional ℝ (TangentSpace I x) :=
+    inferInstanceAs (FiniteDimensional ℝ E)
+  haveI : FiniteDimensional ℝ (TangentSpace I x →L[ℝ] ℝ) :=
+    Module.Finite.equiv (LinearMap.toContinuousLinearMap :
+      (TangentSpace I x →ₗ[ℝ] ℝ) ≃ₗ[ℝ] (TangentSpace I x →L[ℝ] ℝ))
+  refine ⟨metricToDual_injective x, ?_⟩
+  have h_finrank := finrank_clm_dual_eq (g := g) x
+  have hiff := LinearMap.injective_iff_surjective_of_finrank_eq_finrank
+    (f := (metricToDual (g := g) x).toLinearMap) h_finrank.symm
+  exact hiff.mp (metricToDual_injective (g := g) x)
+
+/-- The Riesz isomorphism as a `LinearEquiv`. -/
+noncomputable def metricToDualEquiv (x : M) :
+    TangentSpace I x ≃ₗ[ℝ] (TangentSpace I x →L[ℝ] ℝ) :=
+  LinearEquiv.ofBijective (metricToDual (g := g) x).toLinearMap
+    (metricToDual_bijective (g := g) x)
+
+/-- **Inverse Riesz**: linear functional → vector via metric. -/
+noncomputable def metricRiesz (x : M) (φ : TangentSpace I x →L[ℝ] ℝ) :
+    TangentSpace I x :=
+  (metricToDualEquiv (g := g) x).symm φ
+
+/-- **Riesz defining property**: $\langle \text{metricRiesz}\,\varphi, V\rangle_g
+= \varphi(V)$. -/
+theorem metricRiesz_inner (x : M) (φ : TangentSpace I x →L[ℝ] ℝ)
+    (V : TangentSpace I x) :
+    metricInner x (metricRiesz (g := g) x φ) V = φ V := by
+  show metricToDual (g := g) x (metricRiesz (g := g) x φ) V = φ V
+  have heq : (metricToDual (g := g) x).toLinearMap
+      ((metricToDualEquiv (g := g) x).symm φ) = φ :=
+    (metricToDualEquiv (g := g) x).apply_symm_apply φ
+  exact congrArg (fun (f : TangentSpace I x →L[ℝ] ℝ) => f V) heq
+
+/-- **Riesz uniqueness**: if `v` represents `φ`, then `v = metricRiesz x φ`. -/
+theorem metricRiesz_unique (x : M) (v : TangentSpace I x)
+    (φ : TangentSpace I x →L[ℝ] ℝ)
+    (h : ∀ w, metricInner x v w = φ w) :
+    v = metricRiesz (g := g) x φ := by
+  apply metricToDual_injective (g := g) x
+  ext w
+  rw [metricToDual_apply, h w]
+  show φ w = metricToDual (g := g) x (metricRiesz (g := g) x φ) w
+  exact congrArg (fun (f : TangentSpace I x →L[ℝ] ℝ) => f w)
+    ((metricToDualEquiv (g := g) x).apply_symm_apply φ).symm
+
+end RieszExtraction
+
+end OpenGALib
+
 /-! ## Phase 4.7.1 self-test: typeclass synthesizes + accessors resolve -/
 
 section SelfTest
@@ -286,5 +389,40 @@ example
     [g : RiemannianMetric I M] (x : M) (V₁ V₂ W : TangentSpace I x) :
     metricInner x (V₁ - V₂) W = metricInner x V₁ W - metricInner x V₂ W :=
   metricInner_sub_left x V₁ V₂ W
+
+/-! ## Phase 4.7.3 self-tests: metricRiesz construction -/
+
+/-- Self-test: `metricToDual` injective. -/
+example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+    [g : RiemannianMetric I M] (x : M) :
+    Function.Injective (metricToDual (g := g) x) :=
+  metricToDual_injective x
+
+/-- Self-test: `metricRiesz` defining property. -/
+example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+    [g : RiemannianMetric I M] (x : M) (φ : TangentSpace I x →L[ℝ] ℝ)
+    (V : TangentSpace I x) :
+    metricInner x (metricRiesz (g := g) x φ) V = φ V :=
+  metricRiesz_inner x φ V
+
+/-- Self-test: `metricRiesz` uniqueness. -/
+example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+    [g : RiemannianMetric I M] (x : M) (v : TangentSpace I x)
+    (φ : TangentSpace I x →L[ℝ] ℝ)
+    (h : ∀ w, metricInner x v w = φ w) :
+    v = metricRiesz (g := g) x φ :=
+  metricRiesz_unique x v φ h
 
 end SelfTest
