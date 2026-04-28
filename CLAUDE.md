@@ -40,6 +40,40 @@ AltRegularity is the paper-specific sub-project (located at `AltRegularity/`, wi
 `AltRegularity/paper/` as the paper companion); future papers are separate sub-projects
 consuming the same OpenGALib lib stack via `require OpenGALib from ".."`.
 
+## Self-build is the default action
+
+When Mathlib lacks a primitive, has a non-firing scoped instance, exposes API in
+a non-directly-applicable form, or hits any other elaboration gap — the **default
+response is framework self-build**. Not retreat. Not escalate. Not wait.
+
+**Self-build covers**:
+- Missing Mathlib lemma → framework-owned analog
+- Non-firing scoped instance → framework explicit instance
+- Typeclass diamond → framework typeclass replacement (Phase 4.7 example)
+- Chart-machinery composition gap → framework-owned helper
+- Bundle-section vs function-form conversion → framework chart-pullback
+- Custom inner product / norm structure → framework typeclass + bridge instances
+- API in wrong namespace / signature → framework adapter
+
+**Self-build is not a workaround**. Self-built primitives are first-class library
+content, equivalent in standing to Mathlib API. Future Mathlib evolution may
+deprecate selective subsets — that is bonus, not motivation.
+
+**No "wait for Mathlib" framing**. Framework does not synchronize to Mathlib's
+PR cycle. If a primitive is needed, framework builds it. Mathlib catch-up
+(if it happens) is a future opportunity for selective deprecation.
+
+**No "this requires expertise we don't have" framing**. Framework navigates
+Mathlib internals via grep + read + iterate. Specialized API surfaces (chart
+machinery, vector bundle internals, typeclass cascades) are audited and
+composed, not deferred to "expertise we don't have". The pattern is: locate
+the API, read the proof structure, adapt or replicate in framework namespace.
+
+**Self-build sub-pattern when Mathlib path requires bundle-section conversion**:
+function-form smoothness via chart trivialization + `Trivialization.symmL` +
+`MDifferentiableAt.clm_apply` chain + `congr_of_eventuallyEq` (or framework
+analog). This is mechanical composition, not specialized expertise.
+
 ## Working Mode
 
 This is software engineering, not paper writing. Long-running atomic tasks (refactors, layer additions, cited theorem alignments) are normal. Mid-task broken state is expected.
@@ -47,6 +81,14 @@ This is software engineering, not paper writing. Long-running atomic tasks (refa
 ### Spike + iterate, do not audit-then-retreat
 
 When an opaque primitive needs grounding, the default is to spike a real definition with chart-pullback / Mathlib API combinations, iterate through 2–5 mechanical fixes, and accept the result. Do **not** default to audit-and-decide-this-is-blocked-by-Mathlib. Empirically (Phase 1), "Mathlib lacks X" framings during planning are over-cautious 4 out of 5 times — `extChartAt` + `mfderiv` + `LinearMap.trace` + `Measure.map` + framework-grounded primitives (`VarifoldConverge`, `ofBoundary`) compose to handle most GMT analysis primitives. Real retreat trigger is **implementation failure after iteration**, not audit-stage estimate.
+
+**Phase 4.7 confirmed self-build pattern**: framework-owned typeclass + algebra
+lemmas + Riesz extraction + bridge instances successfully replaced
+`RiemannianBundle` cascade end-to-end, sidestepping lean4#13063 typeclass
+diamond. The pattern: identify Mathlib structural gap, audit Mathlib internal
+API surface, build framework analog with explicit instances + helpers, drop
+Mathlib dependency from cascade. Self-build is the architectural default,
+not a fallback.
 
 ### Continue, do not retreat
 
@@ -73,22 +115,46 @@ Phase 1.6 canonical example: `InnerProductBridge` (4 explicit instances replicat
 
 ### Failure protocol
 
-**Real retreat triggers** (genuine architectural impossibility):
-- Mathlib API truly missing after audit (specific lemma does not exist anywhere in Mathlib)
-- Lean kernel def-eq check produces an unfixable diamond after 5+ concrete workaround attempts (each documented)
-- Type-level constraint that no spike resolves (e.g., universe inconsistency)
+**Real retreat triggers** (architectural impossibility, all rare):
+- Mathlib lemma genuinely does not exist anywhere in Mathlib AND framework
+  self-build hits Lean kernel impossibility (universe inconsistency,
+  unfixable def-eq diamond after 5+ documented workarounds, type-level
+  constraint that no spike resolves)
+- Self-build helper requires Lean primitive that doesn't exist (e.g., new
+  kernel rule)
 
-**NOT retreat triggers** (reject these framings):
+**NOT retreat triggers** (all rejected as lazy retreat framing):
 - LOC count of the task
 - Number of components / sub-steps required
-- Unfamiliar Mathlib API surface — audit + iterate
+- Unfamiliar Mathlib API surface
+- Specialized chart-machinery / vector bundle / typeclass-cascade composition
+- Bundle-section to function-form conversion gap
+- Mathlib API in wrong namespace / non-directly-applicable signature
 - Estimated cumulative session budget
-- Velocity calibration from previous sessions
+- "Velocity calibration from previous sessions"
 - Number of spike iterations expected
-- "Multi-session work" framing
+- "Multi-session work" framing (no time framing of any unit)
 - "Dedicated focused session needed" framing
+- "Specialized expertise required" framing
+- "Exceeds atomic-commit scope" framing
+- "Hand off to expert session" framing
+- "This requires Mathlib chart-machinery expertise" framing
+- Time-based estimates of any kind (今晚/几小时/几天/几周/几个月/multi-week/multi-day)
+- "Strategic decision territory" framing (closure paths for sorry are
+  self-build mechanical follow-up, not strategic decisions)
 
-Tasks are sized by mathematical content and architectural correctness, not by Lean LOC or session cost. Do not pre-estimate "this is too large for one session" before attempting. Spike + iterate; if hitting a real retreat trigger, document it concretely; otherwise continue.
+**Default action when stuck**:
+1. Audit Mathlib for relevant API (grep + read source)
+2. If found and applicable: use it
+3. If found but not directly applicable: build framework adapter
+4. If not found: framework self-build from first principles
+5. Iterate spike + fix until build verifies
+6. Only after 5+ documented attempts on same specific Lean kernel error:
+   report current state with concrete error, ask for direction
+
+Tasks are sized by mathematical content and architectural correctness.
+Not by time, LOC, session count, or component count. Do not pre-estimate
+"this is too large" before attempting.
 
 ## Refactor Protocol
 
@@ -144,12 +210,29 @@ Framework is an autonomous high-quality math software library, not a Mathlib-pen
 - **Mathlib is upstream, not pacemaker**: framework does not wait on Mathlib's PR review cycle. When Mathlib lacks a primitive, has a non-firing scoped instance, hits a higher-order unification limitation, or any other elaboration gap — framework self-builds. Mathlib catch-up, when it happens, is a deprecation opportunity for selective framework self-build subset — but framework does not plan around it. Catch-up is bonus, not milestone.
 - **PR readiness is bonus, not motivation**: code built to self-imposed Mathlib standard is naturally compatible for upstream PR if/when relevant. Future PR friction is minimal because design didn't compromise to fit Mathlib's current state.
 
-**Lazy retreat framings to reject:**
+**Lazy retreat framings to reject (all)**:
 - "This is a Mathlib infrastructure issue, only fixable via PR"
 - "Blocked by Mathlib upstream catch-up"
 - "Deferred until Mathlib's [X] matures"
+- "Wait for Mathlib chart-machinery to evolve"
+- "Specialized chart-machinery / vector bundle expertise required"
+- "Bundle-section conversion exceeds atomic-commit scope"
+- "This requires focused expertise we don't have"
+- "Hand off to a more experienced session/agent"
+- "Strategic decision needed before proceeding"
+- "Multi-session work needed"
+- "Mathlib API in wrong form, can't directly apply"
+- Any framing that escalates execution to user as strategic decision when
+  the closure is mechanical self-build
 
-These framings outsource framework's pace to Mathlib's PR-review cycle. Real retreat trigger is *implementation impossibility after depth audit + bridge investment evaluation*, not *upstream-availability framing*.
+These framings outsource framework's pace to Mathlib's PR-review cycle or to
+user's strategic bandwidth. Real retreat trigger is *implementation
+impossibility after depth audit + bridge investment evaluation + 5+ spike
+iterations*, not *upstream-availability framing* or *expertise-availability
+framing*.
+
+When Claude Code surfaces any of these framings, the correct response is
+深度 audit Mathlib API + framework self-build, not user escalation.
 
 ## UX Optimization Timing
 
@@ -168,7 +251,21 @@ Premature UX optimization on evolving interfaces wastes work — polish gets dis
 - **Phase 1.6** (done): Riemannian production-grade — 8 of 9 primitives real (Riemann curvature, Ricci, scalar curvature, second fundamental form + sq norm, mean curvature, manifold gradient + sq norm); only `leviCivitaConnection` remains as existence axiom for Levi-Civita Koszul (acceptable per textbook standard). `InnerProductBridge` self-build canonical example.
 - **Phase 2** (next): Round 5 cited theorem strict alignment Items 4–9 (DLT13, `exists_minmaxLimit`, `isStationary_of_minmaxLimit`, `locallyStable_of_oneSidedMinimizing`, `interpolation_lemma`, `isRectifiable_of_isStationary_of_density_pos`).
 - **Phase 3**: Isoperimetric production-grade lib (parallel to Riemannian, framework self-build standard).
-- **Phase 4** / **Phase 4.5** (mathematical content done): Levi-Civita Koszul construction. `koszulFunctional` def + 10 algebraic identities (`koszul_antisymm`, `koszul_metric_compat_sum`, `koszul_smul_right`, `koszul_add_right/left/middle`, `koszul_smul_left/middle`, `koszulFunctional_local`) + `koszulCovDeriv` real def via Riesz extraction (`koszulCovDeriv_inner_eq` defining property closed). 2 residual PRE-PAPER axioms (`leviCivitaConnection_exists`, `koszulLinearFunctional_exists`) blocked by lean4#13063 typeclass diamond at the wrap step (RiemannianBundle-derived `NormedAddCommGroup (TangentSpace I y)` vs direct E-instance path); documented architectural blocker, not math gap. Closure paths are 总指挥 strategic decision territory: Mathlib upstream PR / framework refactor `[RiemannianBundle ...]` → `[InnerProductSpace ℝ E]` / custom non-Mathlib chart-frame infrastructure.
+- **Phase 4** / **Phase 4.5** (mathematical content done): Levi-Civita Koszul
+  construction. `koszulFunctional` def + 10 algebraic identities + `koszulCovDeriv`
+  real def via Riesz extraction.
+- **Phase 4.7** (framework redesign, in progress): framework typeclass-level
+  redesign sidestepping lean4#13063. `OpenGALib.RiemannianMetric` typeclass
+  replacing `RiemannianBundle` as inner product source. `metricInner` operation
+  + algebra lemmas + framework-owned `metricRiesz` extraction. Framework-owned
+  NACG/IPS bridges (`[RiemannianMetric I M] → InnerProductSpace ℝ (TangentSpace I x)`).
+  `RiemannianBundle` dropped from full framework cascade.
+  `InnerProductBridge.lean` retired. Both high-level PRE-PAPER axioms closed:
+  `koszulLinearFunctional_exists` via TensorialAt machinery + framework
+  `metricInner_smoothAt`; `leviCivitaConnection_exists` via narrow structural
+  `koszulLeviCivita_exists` axiom + koszul identities + `metricInner_eq_iff_eq`.
+  Residual sorrys are bounded structural follow-up tasks; closure path is
+  framework self-build (not strategic decision, not Mathlib wait).
 - **Phase 5** (event-triggered): UX optimization on stabilized framework interface — `@[simp]`, `@[ext]`, `@[simps]`, `abbrev`, naming polish, API ergonomics.
 - **Phase 6**: Final pre-release polish — CI, doc-gen4, README, references.bib, optional Mathlib upstream PR for stabilized lib subsets.
 
@@ -184,4 +281,24 @@ Claude Code: executor — runs prompts, mechanical work, build verify.
 
 Roles stable across phases. Strategic decisions (scope, architecture, refactor triggers) belong to Moqian. Translation to executable prompts belongs to Claude (chat). Mechanical execution + build verification belongs to Claude Code. Phase 1 completion validates this division — strategic re-audit at phase boundaries (e.g., current Phase 1 → 1.5 → 1.6 transition) is Moqian + Claude (chat) work; sub-layer execution within phases is Claude Code work.
 
-When Claude Code reports retreat with framings like "Mathlib infrastructure issue", "blocked by Mathlib upstream", "deferred to Mathlib catch-up event", or "single-session push too risky" — treat these as candidate lazy retreats. Push back to verify true architectural impossibility (depth audit + bridge investment evaluation) before accepting. Real retreat trigger is a documented build error after iteration plus an explicit accessor blocker after depth audit, not a framing-level claim.
+When Claude Code reports retreat with framings like "Mathlib infrastructure
+issue", "blocked by Mathlib upstream", "deferred to Mathlib catch-up event",
+"single-session push too risky", "needs dedicated focused session",
+"multi-session work needed", "specialized expertise required", "exceeds
+atomic-commit scope", "hand off to expert session", "strategic decision
+needed", "Mathlib chart-machinery expertise required" — treat these as
+candidate lazy retreats. Default response: depth-audit Mathlib + framework
+self-build. Push back the retreat framing only if a real architectural
+impossibility (5+ documented spike iterations on same specific Lean kernel
+error) is concretely demonstrated.
+
+Tasks are sized by mathematical content and architectural correctness. Not by:
+- LOC count
+- Time framing (no 今晚 / 几小时 / 几天 / 几周 / 几个月 / multi-week / multi-day / "session budget")
+- Number of components / sub-steps / spike iterations expected
+- Mathlib API navigation difficulty
+- "Specialized expertise" of any kind
+
+Self-build is the default action. Spike + iterate. Continue building
+infrastructure until the framework has it. Do not escalate to user unless
+real architectural impossibility documented concretely.
