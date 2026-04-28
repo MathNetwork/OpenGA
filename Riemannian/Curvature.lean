@@ -1,5 +1,4 @@
 import Riemannian.Connection
-import Riemannian.InnerProductBridge
 import Mathlib.LinearAlgebra.Trace
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
@@ -36,7 +35,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteS
   [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-  [RiemannianBundle (fun x : M => TangentSpace I x)]
   [RiemannianMetric I M]
 
 /-- The **Riemann curvature tensor**:
@@ -135,7 +133,6 @@ noncomputable example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-    [RiemannianBundle (fun x : M => TangentSpace I x)]
     [OpenGALib.RiemannianMetric I M]
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x := riemannCurvature X Y Z x
@@ -145,7 +142,6 @@ noncomputable example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-    [RiemannianBundle (fun x : M => TangentSpace I x)]
     [OpenGALib.RiemannianMetric I M]
     (X Y : Π x : M, TangentSpace I x) (x : M) : ℝ := ricci X Y x
 
@@ -154,7 +150,6 @@ noncomputable example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-    [RiemannianBundle (fun x : M => TangentSpace I x)]
     [OpenGALib.RiemannianMetric I M]
     (x : M) : ℝ :=
   scalarCurvature (I := I) x

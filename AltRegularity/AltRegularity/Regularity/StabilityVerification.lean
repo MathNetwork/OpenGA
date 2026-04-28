@@ -64,7 +64,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {H : Type*} [TopologicalSpace H]
   (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
-  [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
   [OpenGALib.RiemannianMetric I M]
 
 /-! ## Local-property definitions -/
@@ -165,7 +164,6 @@ theorem isStable_of_nonExcessive_minmax
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
-    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
     [OpenGALib.RiemannianMetric I M]
     {Φ : MinMax.Sweepout M} {t₀ : ℝ} {V : Varifold M}
     [Varifold.HasNormal I V]

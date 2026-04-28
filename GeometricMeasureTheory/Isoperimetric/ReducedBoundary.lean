@@ -49,7 +49,6 @@ section OuterNormal
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
-  [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
 
 /-- **Outer unit normal blow-up characterization** (Maggi Theorem 15.5).
 
@@ -120,7 +119,6 @@ section TangentHyperplane
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
-  [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
   [OpenGALib.RiemannianMetric I M]
 
 /-- **Tangent hyperplane at reduced boundary** (Maggi Theorem 15.5).
@@ -162,7 +160,6 @@ section ReducedBoundaryTest
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
-  [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
 
 /-- Self-test: the outer-normal unit-norm property is callable on a
 point of the reduced boundary. -/

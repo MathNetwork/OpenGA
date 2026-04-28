@@ -203,7 +203,6 @@ structure InClassSAlpha
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
-    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
     [OpenGALib.RiemannianMetric I M]
     (V : Varifold M) [Varifold.HasNormal I V]
     (α : ℝ) : Prop where

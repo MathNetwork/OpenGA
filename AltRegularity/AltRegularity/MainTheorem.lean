@@ -59,7 +59,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {H : Type*} [TopologicalSpace H]
   (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
-  [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
   [OpenGALib.RiemannianMetric I M]
 
 -- Both Section 7 bridges are provided by chain-proof modules:

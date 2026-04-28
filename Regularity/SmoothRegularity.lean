@@ -53,7 +53,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {H : Type*} [TopologicalSpace H]
   (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
-  [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
   [OpenGALib.RiemannianMetric I M]
 
 /-- $V$ is a **smooth, closed, embedded minimal hypersurface** of $M$

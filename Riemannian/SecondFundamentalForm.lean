@@ -1,5 +1,4 @@
 import Riemannian.Connection
-import Riemannian.InnerProductBridge
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
@@ -39,7 +38,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteS
   [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-  [RiemannianBundle (fun x : M => TangentSpace I x)]
   [RiemannianMetric I M]
 
 /-- The **second fundamental form (codim-1 scalar form)** $A$ at a point:

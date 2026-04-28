@@ -218,6 +218,93 @@ theorem metricInner_self_nonneg (x : M) (V : TangentSpace I x) :
 
 end OpenGALib
 
+/-! ## Phase 4.7.9 — Framework-owned NACG / InnerProductSpace bridges on `TangentSpace`
+
+The framework's analog of Mathlib's bundle-based scoped instances
+(`Topology/VectorBundle/Riemannian.lean` lines ~431, 453), provided
+**directly from the model space `[NormedAddCommGroup E]` /
+`[InnerProductSpace ℝ E]`** rather than going through
+`[Bundle.RiemannianBundle ...]` — sidesteps the lean4#13063 typeclass
+diamond by using only the single canonical direct-`E` path.
+
+After Phase 4.7.9, the entire framework cascade can drop
+`[Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]` — the
+`[OpenGALib.RiemannianMetric I M]` typeclass + these bridges suffice
+for all downstream `Norm (TangentSpace I x)` /
+`InnerProductSpace ℝ (TangentSpace I x)` synthesis.
+
+Mathlib's `TangentSpace` is declared non-reducible (line 1037 of
+`IsManifold/Basic.lean`: "not reducible so that type class inference
+does not pick wrong instances"), so we use
+`set_option backward.isDefEq.respectTransparency false` to make
+typeclass synthesis see through the `TangentSpace I x = E` defeq —
+matching Mathlib's own pattern (e.g.,
+`Topology/VectorBundle/Riemannian.lean` line ~98 for the trivial
+bundle Riemannian instance). -/
+
+namespace OpenGALib
+
+section NACGBridge
+
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+  {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **Framework-owned NACG bridge** on `TangentSpace I x`, directly
+from `[NormedAddCommGroup E]`. Replaces
+`Riemannian.InnerProductBridge.instNormedAddCommGroupTangentSpace`
+(Phase 1.6, RiemannianBundle-based) with a framework-self-built path
+that doesn't require `[Bundle.RiemannianBundle ...]`. -/
+instance instNormedAddCommGroupTangent (x : M) :
+    NormedAddCommGroup (TangentSpace I x) :=
+  inferInstanceAs (NormedAddCommGroup E)
+
+end NACGBridge
+
+section InnerProductBridge
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+  {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **Framework-owned InnerProductSpace bridge** on `TangentSpace I x`,
+directly from `[InnerProductSpace ℝ E]`. Replaces
+`Riemannian.InnerProductBridge.instInnerProductSpaceTangentSpace`
+(Phase 1.6, RiemannianBundle-based). -/
+instance instInnerProductSpaceTangent (x : M) :
+    InnerProductSpace ℝ (TangentSpace I x) :=
+  inferInstanceAs (InnerProductSpace ℝ E)
+
+end InnerProductBridge
+
+section FiniteDimensionalBridge
+
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+  {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **Framework-owned FiniteDimensional bridge** on `TangentSpace I x`,
+directly from `[FiniteDimensional ℝ E]`. Replaces
+`Riemannian.InnerProductBridge.instFiniteDimensionalTangentSpace`. -/
+instance instFiniteDimensionalTangent [FiniteDimensional ℝ E] (x : M) :
+    FiniteDimensional ℝ (TangentSpace I x) :=
+  inferInstanceAs (FiniteDimensional ℝ E)
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **Framework-owned CompleteSpace bridge** on `TangentSpace I x`,
+directly from `[CompleteSpace E]`. Replaces
+`Riemannian.InnerProductBridge.instCompleteSpaceTangentSpace`. -/
+instance instCompleteSpaceTangent [CompleteSpace E] (x : M) :
+    CompleteSpace (TangentSpace I x) :=
+  inferInstanceAs (CompleteSpace E)
+
+end FiniteDimensionalBridge
+
+end OpenGALib
+
 /-! ## Phase 4.7.8.A — `metricInner` smoothness helper (`MDifferentiableAt`)
 
 The framework's analog of Mathlib's `MDifferentiableAt.inner_bundle`

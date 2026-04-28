@@ -87,7 +87,6 @@ theorem exists_smoothMinimalHypersurface_via_ONVP
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
-    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
     [OpenGALib.RiemannianMetric I M]
     [CompactSpace M]
     (n : ℕ) (hn : 2 ≤ n) (hn6 : n ≤ 6) :

@@ -2,8 +2,7 @@ import GeometricMeasureTheory.Varifold
 import GeometricMeasureTheory.TangentCone
 import Mathlib.Geometry.Manifold.IsManifold.Basic
 import Mathlib.Geometry.Manifold.ContMDiff.Basic
-import Mathlib.Topology.VectorBundle.Riemannian
-import Riemannian.InnerProductBridge
+import Riemannian.Metric
 
 /-!
 # AltRegularity.GMT.HasNormal
@@ -121,7 +120,6 @@ theorem ofBoundary_unitNormal_exists
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
-    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
     (Ω : FinitePerimeter M) :
     ∃ ν : (x : M) → TangentSpace I x,
       ∀ x ∈ FinitePerimeter.reducedBoundary Ω, ‖ν x‖ = 1 := by
@@ -144,7 +142,6 @@ noncomputable def bvGradientDirection
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
-    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
     (Ω : FinitePerimeter M) (x : M) : TangentSpace I x :=
   Classical.choose (ofBoundary_unitNormal_exists I Ω) x
 
@@ -157,7 +154,6 @@ theorem bvGradientDirection_unit_on_reducedBoundary
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
-    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
     (Ω : FinitePerimeter M) (x : M)
     (hx : x ∈ FinitePerimeter.reducedBoundary Ω) :
     ‖bvGradientDirection I Ω x‖ = 1 :=
@@ -173,7 +169,6 @@ noncomputable instance instHasNormalOfBoundary
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
-    [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
     (Ω : FinitePerimeter M) :
     HasNormal I (Varifold.ofBoundary Ω) where
   unitNormal := bvGradientDirection I Ω
@@ -225,7 +220,6 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [MeasurableSpace E] [BorelSpace E]
 variable {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
-  [Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]
 
 noncomputable example (Ω : FinitePerimeter M) :
     Varifold.HasNormal I (Varifold.ofBoundary Ω) := inferInstance
