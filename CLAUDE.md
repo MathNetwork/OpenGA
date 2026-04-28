@@ -67,9 +67,28 @@ If genuinely stuck after 5+ attempts on same error: report current state, ask fo
 
 ### Bridge investment for cross-cutting blockers
 
-When a single typeclass gap, scoped-instance non-firing, or API mismatch blocks multiple primitives, the high-leverage move is **bridge investment** — framework self-builds the explicit instance / accessor / typeclass cascade that Mathlib lacks. Bridge cost is typically ~30–100 LOC; cascade unblock is typically 5+ primitives. Refuse to retreat with "this is blocked at infrastructure level" framing without first depth-auditing the bridge cost.
+When a single typeclass gap, scoped-instance non-firing, or API mismatch blocks multiple primitives, the high-leverage move is **bridge investment** — framework self-builds the explicit instance / accessor / typeclass cascade that Mathlib lacks. Refuse to retreat with "this is blocked at infrastructure level" framing without first depth-auditing the bridge.
 
-Phase 1.6 canonical example: `InnerProductBridge` (4 explicit instances replicating Mathlib scoped-instance bodies, ~30 LOC) unblocked `manifoldGradient` + `secondFundamentalFormScalar` real defs, cascading to `scalarCurvature` + `secondFundamentalFormSqNorm` + `meanCurvature` via `stdOrthonormalBasis`. Total Phase 1.6: ~250 LOC, 4 commits, single session.
+Phase 1.6 canonical example: `InnerProductBridge` (4 explicit instances replicating Mathlib scoped-instance bodies) unblocked `manifoldGradient` + `secondFundamentalFormScalar` real defs, cascading to `scalarCurvature` + `secondFundamentalFormSqNorm` + `meanCurvature` via `stdOrthonormalBasis`.
+
+### Failure protocol
+
+**Real retreat triggers** (genuine architectural impossibility):
+- Mathlib API truly missing after audit (specific lemma does not exist anywhere in Mathlib)
+- Lean kernel def-eq check produces an unfixable diamond after 5+ concrete workaround attempts (each documented)
+- Type-level constraint that no spike resolves (e.g., universe inconsistency)
+
+**NOT retreat triggers** (reject these framings):
+- LOC count of the task
+- Number of components / sub-steps required
+- Unfamiliar Mathlib API surface — audit + iterate
+- Estimated cumulative session budget
+- Velocity calibration from previous sessions
+- Number of spike iterations expected
+- "Multi-session work" framing
+- "Dedicated focused session needed" framing
+
+Tasks are sized by mathematical content and architectural correctness, not by Lean LOC or session cost. Do not pre-estimate "this is too large for one session" before attempting. Spike + iterate; if hitting a real retreat trigger, document it concretely; otherwise continue.
 
 ## Refactor Protocol
 
@@ -122,7 +141,7 @@ Framework is an autonomous high-quality math software library, not a Mathlib-pen
 
 - **Self-impose Mathlib standard, do not cater**: framework uses Mathlib naming conventions, docstring requirements, API design (simp normal form, ext lemmas, typeclass conventions) as a self-imposed bar — not because of intent to PR.
 - **Self-build is first-class**: when Mathlib lacks a primitive (Ricci curvature, second fundamental form, isoperimetric inequality, etc.), framework builds it. Self-built primitives are first-class library content, not temporary workarounds.
-- **Mathlib is upstream, not pacemaker**: framework velocity is set by AI-driven formalization, not by Mathlib's PR review cycle. When Mathlib lacks a primitive, has a non-firing scoped instance, hits a higher-order unification limitation, or any other elaboration gap — framework self-builds. Framework does not wait. Mathlib catch-up, when it happens, is a deprecation opportunity for selective framework self-build subset — but framework does not plan around it. Catch-up is bonus, not milestone.
+- **Mathlib is upstream, not pacemaker**: framework does not wait on Mathlib's PR review cycle. When Mathlib lacks a primitive, has a non-firing scoped instance, hits a higher-order unification limitation, or any other elaboration gap — framework self-builds. Mathlib catch-up, when it happens, is a deprecation opportunity for selective framework self-build subset — but framework does not plan around it. Catch-up is bonus, not milestone.
 - **PR readiness is bonus, not motivation**: code built to self-imposed Mathlib standard is naturally compatible for upstream PR if/when relevant. Future PR friction is minimal because design didn't compromise to fit Mathlib's current state.
 
 **Lazy retreat framings to reject:**
@@ -130,7 +149,7 @@ Framework is an autonomous high-quality math software library, not a Mathlib-pen
 - "Blocked by Mathlib upstream catch-up"
 - "Deferred until Mathlib's [X] matures"
 
-These framings substitute Mathlib's PR-cycle velocity (months-to-years) for framework's AI-formalization velocity (sessions). Real retreat trigger is *implementation impossibility after depth audit + bridge cost evaluation*, not *upstream-availability framing*.
+These framings outsource framework's pace to Mathlib's PR-review cycle. Real retreat trigger is *implementation impossibility after depth audit + bridge investment evaluation*, not *upstream-availability framing*.
 
 ## UX Optimization Timing
 
@@ -140,21 +159,6 @@ UX optimizations (`@[simp]` / `@[ext]` / `@[simps]` / `abbrev` / naming polish /
 - Concepts are settled mathematically and no further refactor is planned.
 
 Premature UX optimization on evolving interfaces wastes work — polish gets discarded when refactor changes signatures. Defer to *event-triggered* timing: typically after refactor consolidation or before `v1.0` release. Phase 5 / Phase 6 work, not now.
-
-## Velocity
-
-This framework moves at software engineering speed, not paper writing speed.
-
-- Statement layer lockdown: days, not months.
-- GMT primitive grounding: hours per primitive.
-- Cited theorem strict alignment: minutes per theorem.
-- Refactor (layer separation, namespace cleanup): hours, not weeks.
-
-Empirical calibration (Phase 1 session): **20 GMT primitives grounded in a single session**, including 5 Group C primitives requiring smooth-manifold typeclass cascade propagation. Layer B real grounding takes hours per primitive once the chart-pullback pattern is established. Refactor sessions handle ~500–800 LOC architectural changes with chain-proof 0-sorry preservation.
-
-Empirical calibration (Phase 1.6, single session): **~250 LOC, 4 commits, 8 of 9 Riemannian primitives moved Classical.choose → real**. Bridge build (`InnerProductBridge`, ~30 LOC, ~30 minutes after depth audit) cascade-unblocked 5 downstream primitives via `stdOrthonormalBasis` + `LinearMap.trace` + `InnerProductSpace.toDual`, each ~5–10 minutes after the bridge unlock. This velocity reflects framework's AI-formalization pace, not Mathlib's PR-review pace (where the same contribution-set would be months-to-years wallclock).
-
-Do not estimate task cost using traditional mathematician productivity model. Mathlib + Claude Code + cumulative pattern reuse compounds productivity. Mathlib uses `lake exe cache get` — Mathlib is not built locally; do not estimate Mathlib build time as cost.
 
 ## Phase Plan
 
