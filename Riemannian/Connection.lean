@@ -771,28 +771,72 @@ theorem koszulFunctional_local
   rw [hT1.mfderiv_eq, hT2.mfderiv_eq, hZx, hT5, hT6]
   rfl
 
+/-- **Tensoriality at $x$ of the half-Koszul functional in the third argument.**
+
+For smooth $X, Y$ at $x$, the operation
+$Z \mapsto \tfrac12 K(X, Y; Z)(x)$ on smooth tangent-bundle sections
+is tensorial at $x$: it respects $C^\infty(M)$-scalar multiplication
+(via `koszul_smul_right`) and addition (via `koszul_add_right`).
+
+The scalar smoothness hypotheses of `koszul_smul_right` /
+`koszul_add_right` (`hYZ`, `hZX`, `h_YZ₁/₂`, `h_Z₁/₂X`) are derived
+from the bundle-section smoothness of $X, Y, Z$ via
+`MDifferentiableAt.metricInner_smoothAt` (Phase 4.7.8.A helper in
+`Riemannian.Metric`). -/
+private theorem koszulFunctional_tensorialAt
+    (X Y : Π y : M, TangentSpace I y) (x : M)
+    (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
+    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x) :
+    TensorialAt I E (fun Z : (Π y : M, TangentSpace I y) =>
+      (1/2 : ℝ) * koszulFunctional X Y Z x) x where
+  smul := by
+    intro f σ hf hσ
+    have hYZ := MDifferentiableAt.metricInner_smoothAt hY hσ
+    have hZX := MDifferentiableAt.metricInner_smoothAt hσ hX
+    have heq : (f • σ : Π y : M, TangentSpace I y) = fun y => f y • σ y := rfl
+    show (1/2 : ℝ) * koszulFunctional X Y (f • σ) x
+        = f x • ((1/2 : ℝ) * koszulFunctional X Y σ x)
+    rw [heq, koszul_smul_right X Y σ f x hf hYZ hZX hσ]
+    show (1/2 : ℝ) * (f x * koszulFunctional X Y σ x)
+        = f x * ((1/2 : ℝ) * koszulFunctional X Y σ x)
+    ring
+  add := by
+    intro σ σ' hσ hσ'
+    have h_YZ₁ := MDifferentiableAt.metricInner_smoothAt hY hσ
+    have h_YZ₂ := MDifferentiableAt.metricInner_smoothAt hY hσ'
+    have h_Z₁X := MDifferentiableAt.metricInner_smoothAt hσ hX
+    have h_Z₂X := MDifferentiableAt.metricInner_smoothAt hσ' hX
+    show (1/2 : ℝ) * koszulFunctional X Y (σ + σ') x
+        = (1/2 : ℝ) * koszulFunctional X Y σ x
+        + (1/2 : ℝ) * koszulFunctional X Y σ' x
+    rw [koszul_add_right X Y σ σ' x h_YZ₁ h_YZ₂ h_Z₁X h_Z₂X hσ hσ']
+    ring
+
 /-- **Existence theorem for Riesz extraction**: at each $x \in M$, given
 smoothness of $X$ and $Y$ at $x$, the half-Koszul functional
 $Z \mapsto \tfrac12 K(X, Y; Z)(x)$ admits a unique tangent-space
 representative — provided $Z$ is also smooth at $x$.
 
-Closed via `TensorialAt.mkHom` (using `koszul_smul_right` + `koszul_add_right`
-to establish tensoriality in $Z$) followed by Riesz representation
-via `metricRiesz` (framework-owned, `Riemannian.Metric`).
+**Phase 4.7.8.A closure**: closed via `TensorialAt.mkHom` applied to
+`koszulFunctional_tensorialAt` (which establishes tensoriality from
+`koszul_smul_right` + `koszul_add_right`), followed by
+`TensorialAt.mkHom_apply` (which identifies
+$\varphi(Z(x)) = (1/2) K(X, Y; Z)(x)$ for smooth $Z$). The TensorialAt
+construction's pointwise lemma (Mathlib `TensorialAt.pointwise`) gives
+extension-independence "for free" once tensoriality is established.
 
 **Smoothness hypotheses**:
 - `hX`, `hY` (outside the universal): vector field smoothness of $X, Y$
   at $x$, needed to derive smoothness of inner products $\langle Y, Z\rangle$
-  and $\langle Z, X\rangle$.
+  and $\langle Z, X\rangle$ via `MDifferentiableAt.metricInner_smoothAt`
+  (Phase 4.7.8.A helper).
 - `hZ` (inside the universal): vector field smoothness of $Z$ at $x$,
-  required by `mkHom_apply` to identify $\varphi(Z(x)) = K(X, Y; Z)(x)$.
+  required by `mkHom_apply`.
 
 For non-smooth $Z$, the equation may fail since $K(X, Y; Z)(x)$ depends
 on $Z$'s behavior near $x$ (via `mfderiv` and `mlieBracket`), not just $Z(x)$.
-
-**Sorry status**: PRE-PAPER. Phase 4.7.8 will close via the framework's
-own Koszul construction (no longer blocked by lean4#13063 since we
-sidestepped Mathlib's `Inner ℝ (TangentSpace I y)` synthesis path).
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 existence proof, Step 3
 (Riesz extraction). -/
@@ -807,7 +851,9 @@ private theorem koszulLinearFunctional_exists
         MDifferentiableAt I (I.prod 𝓘(ℝ, E))
           (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x →
         φ (Z x) = (1/2 : ℝ) * koszulFunctional X Y Z x := by
-  sorry
+  refine ⟨TensorialAt.mkHom _ x (koszulFunctional_tensorialAt X Y x hX hY),
+          fun Z hZ => ?_⟩
+  exact TensorialAt.mkHom_apply (koszulFunctional_tensorialAt X Y x hX hY) hZ
 
 theorem koszulCovDeriv_exists
     (X Y : Π x : M, TangentSpace I x) (x : M)

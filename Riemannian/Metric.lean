@@ -218,6 +218,64 @@ theorem metricInner_self_nonneg (x : M) (V : TangentSpace I x) :
 
 end OpenGALib
 
+/-! ## Phase 4.7.8.A — `metricInner` smoothness helper (`MDifferentiableAt`)
+
+The framework's analog of Mathlib's `MDifferentiableAt.inner_bundle`
+(`Mathlib/Geometry/Manifold/VectorBundle/Riemannian.lean`), but using
+the framework-owned `metricInner` (Phase 4.7.2) rather than going
+through `[IsContMDiffRiemannianBundle]` — sidesteps the lean4#13063
+typeclass diamond per the Phase 4.7 redesign.
+
+Used by Phase 4.7.8.A to derive the scalar smoothness hypotheses of
+`koszul_smul_right` and `koszul_add_right` (`Riemannian.Connection`,
+`hYZ`, `hZX`, `h_YZ₁`, `h_YZ₂`, `h_Z₁X`, `h_Z₂X`) from vector-field
+bundle-section smoothness — required for the `TensorialAt` instance on
+`Z ↦ koszulFunctional X Y Z x` that closes the
+`koszulLinearFunctional_exists` body.
+
+**Mathematical content**: $y \mapsto g_y(Y(y), Z(y))$ is $C^\infty$ at
+$x$ when $g$ (the metric tensor) is $C^\infty$ in $y$ (Phase 4.7.1
+axiom `RiemannianMetric.smoothMetric`) and $Y, Z$ are smooth bundle
+sections. The proof goes through Mathlib's
+`MDifferentiableAt.clm_bundle_apply₂` machinery applied with our
+`g.metricTensor` as a smooth `M → (E →L[ℝ] E →L[ℝ] ℝ)` function.
+
+**Sorry status**: PRE-PAPER. Mechanical Mathlib chart-pullback work
+(~50–100 LOC) — the proof structure mirrors Mathlib's
+`MDifferentiableWithinAt.inner_bundle` (lines 174–193 of
+`VectorBundle/Riemannian.lean`), but substitutes
+`g.metricTensor` for the bundle-extracted metric. Repair owner:
+framework self-build (Phase 4.7.5.C or similar follow-up). No new
+mathematical content needed — just bundle-section to fiber-coordinate
+conversion + `clm_bundle_apply₂` application.
+
+**Repair trigger**: when chart-pullback bundle-section smoothness
+helpers are added to the framework, this sorry is mechanically
+discharged. -/
+
+namespace OpenGALib
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+  [g : RiemannianMetric I M]
+
+/-- **Smoothness of the metric inner product** as a scalar function of
+the basepoint, given smooth bundle sections.
+
+For smooth tangent-bundle sections $Y, Z$ at $x$, the scalar function
+$y \mapsto \langle Y(y), Z(y)\rangle_g$ is $C^\infty$ at $x$. -/
+theorem MDifferentiableAt.metricInner_smoothAt
+    {Y Z : Π y : M, TangentSpace I y} {x : M}
+    (_hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
+    (_hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x) :
+    MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x := by
+  sorry
+
+end OpenGALib
+
 /-! ## Phase 4.7.3 — Framework-owned Riesz extraction
 
 Build out the Riesz isomorphism `T_xM ≃ₗ[ℝ] (T_xM →L[ℝ] ℝ)` via the metric
