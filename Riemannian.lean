@@ -3,6 +3,7 @@ import Riemannian.Curvature
 import Riemannian.SecondFundamentalForm
 import Riemannian.Gradient
 import Riemannian.InnerProductBridge
+import Riemannian.Metric
 
 /-!
 # Riemannian
