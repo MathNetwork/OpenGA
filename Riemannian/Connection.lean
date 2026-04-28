@@ -51,91 +51,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteS
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [RiemannianMetric I M]
 
-/-- **Existence axiom for the Levi-Civita connection.**
-
-On a Riemannian manifold, there exists a covariant derivative on the
-tangent bundle that is **torsion-free** and **metric-compatible**. This
-is the Levi-Civita theorem (do Carmo 1992 §2 Theorem 3.6) — existence
-+ uniqueness via the Koszul formula.
-
-The statement is the **full Levi-Civita theorem**: torsion-free
-($\mathrm{torsion}(\nabla) = 0$) AND metric-compatible
-($\nabla_X \langle Y, Z \rangle = \langle \nabla_X Y, Z \rangle +
-\langle Y, \nabla_X Z \rangle$ for vector fields $X, Y, Z$ on $M$).
-The metric is the framework-owned `metricInner` from `Riemannian.Metric`.
-
-**Ground truth**: do Carmo 1992 §2 Theorem 3.6.
-
-**Sorry status**: PRE-PAPER. Phase 4.5 (`koszulFunctional`, 10 algebraic
-identities `koszul_antisymm` / `koszul_metric_compat_sum` / `koszul_smul_right`
-/ `koszul_add_*` / `koszul_smul_*`, `koszulCovDeriv`, `koszulCovDeriv_inner_eq`)
-provides the explicit Koszul construction's mathematical content. Wrapping
-this into a `CovariantDerivative` instance + deriving torsion=0 and
-metric-compat via `koszul_antisymm` + `koszul_metric_compat_sum` + Riesz
-uniqueness is now the focus of Phase 4.7.8 (post-typeclass-redesign). -/
-theorem leviCivitaConnection_exists :
-    ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
-      cov.torsion = 0 ∧
-      ∀ (X Y Z : Π x : M, TangentSpace I x) (x : M),
-        mfderiv I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x (X x) =
-          metricInner x (cov.toFun Y x (X x)) (Z x) +
-          metricInner x (Y x) (cov.toFun Z x (X x)) := by
-  sorry
-
-/-- The **Levi-Civita connection** $\nabla$ on the tangent bundle of a
-Riemannian manifold $M$: the unique torsion-free, metric-compatible
-covariant derivative.
-
-Real `noncomputable def` via `Classical.choose` over
-`leviCivitaConnection_exists`. The chosen value satisfies
-`leviCivitaConnection.torsion = 0` (see
-`leviCivitaConnection_torsion_zero`).
-
-Apply via the bundled `toFun`: for vector fields $X, Y$ on $M$, the
-covariant derivative $\nabla_X Y$ at $x$ is
-`leviCivitaConnection.toFun Y x (X x) : TangentSpace I x`.
-
-**Ground truth**: do Carmo 1992 §2; Koszul formula gives uniqueness.
-
-**Used by**: `Riemannian.Curvature`, `Riemannian.SecondFundamentalForm`,
-`Riemannian.Gradient`. -/
-noncomputable def leviCivitaConnection :
-    CovariantDerivative I E (fun x : M => TangentSpace I x) :=
-  Classical.choose (leviCivitaConnection_exists (I := I) (M := M))
-
-/-- The Levi-Civita connection is torsion-free. -/
-theorem leviCivitaConnection_torsion_zero :
-    (leviCivitaConnection : CovariantDerivative I E
-      (fun x : M => TangentSpace I x)).torsion = 0 :=
-  (Classical.choose_spec leviCivitaConnection_exists).1
-
-/-- The Levi-Civita connection is **metric-compatible**: for vector
-fields $X, Y, Z$ on $M$,
-$$\nabla_X \langle Y, Z \rangle =
-  \langle \nabla_X Y, Z \rangle + \langle Y, \nabla_X Z \rangle.$$
-
-The metric is the framework-owned `metricInner`. This is the second of
-the two defining properties of Levi-Civita (torsion-free +
-metric-compatible), extracted from the existence axiom via
-`Classical.choose_spec`. -/
-theorem leviCivitaConnection_metric_compatible
-    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
-    mfderiv I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x (X x) =
-      metricInner x ((leviCivitaConnection (I := I) (M := M)).toFun Y x (X x)) (Z x) +
-      metricInner x (Y x)
-        ((leviCivitaConnection (I := I) (M := M)).toFun Z x (X x)) :=
-  (Classical.choose_spec leviCivitaConnection_exists).2 X Y Z x
-
-/-- **Covariant derivative of one vector field along another**:
-$(\nabla_X Y)(x) := \nabla\,Y\,x\,(X\,x)$, where $\nabla$ is the
-Levi-Civita connection.
-
-Convenience wrapper that exposes the standard math notation
-$\nabla_X Y$ from Mathlib's bundled `CovariantDerivative.toFun`. -/
-noncomputable def covDeriv (X Y : Π x : M, TangentSpace I x) (x : M) :
-    TangentSpace I x :=
-  ((leviCivitaConnection (I := I) (M := M)).toFun Y x) (X x)
-
 /-! ## Phase 4.5.A — Koszul functional + basic algebraic identities
 
 Toward an explicit Koszul-formula construction of the Levi-Civita
@@ -909,6 +824,186 @@ theorem koszulCovDeriv_inner_eq
     metricInner x (koszulCovDeriv X Y x hX hY) (Z x)
       = (1/2 : ℝ) * koszulFunctional X Y Z x :=
   Classical.choose_spec (koszulCovDeriv_exists X Y x hX hY) Z hZ
+
+/-! ## Phase 4.7.8.B — Levi-Civita closure via Koszul + Riesz
+
+Closes the previously high-level PRE-PAPER axiom
+`leviCivitaConnection_exists` by:
+
+* `koszulLeviCivita_exists` (narrow structural axiom, sorry'd):
+  there exists a `CovariantDerivative` whose `toFun` extends the
+  pointwise Koszul value `koszulCovDeriv` for every smooth
+  $(X, Y, x)$. Pure type-level CLM-construction work — no new
+  mathematical content beyond Phase 4.7.8.A's TensorialAt machinery
+  applied in the X argument.
+
+* `leviCivitaConnection_exists` (closed): combines the narrow axiom
+  with `koszul_antisymm` (→ torsion-free via `metricInner_eq_iff_eq`
+  + `koszulCovDeriv_inner_eq` + Mathlib's `FiberBundle.extend`) and
+  `koszul_metric_compat_sum` (→ metric-compatibility for smooth
+  vector fields).
+
+Sorry decomposition (analogous to Phase 4.7.8.A's
+`koszulLinearFunctional_exists` decomposition): replaces a closure-
+inscrutable end-to-end Levi-Civita axiom with a narrow structural
+axiom about CovariantDerivative wrapping. -/
+
+/-- **Narrow CovariantDerivative wrap axiom for the Koszul construction.**
+
+There exists a `CovariantDerivative` whose `toFun` extends the
+pointwise framework-Koszul value `koszulCovDeriv` for every triple
+$(X, Y, x)$ of smooth vector fields and basepoint.
+
+**Sorry status**: PRE-PAPER structural axiom. Body is a Mathlib
+`TensorialAt.mkHom` in the X argument (analogous to Phase 4.7.8.A's
+TensorialAt closure for `koszulLinearFunctional_exists`, but in the
+opposite koszul axis) plus the `IsCovariantDerivativeOnUniv` `add`
+and `leibniz` fields (derivable from `koszul_add_middle` and
+`koszul_smul_middle` via Riesz). Repair owner: framework self-build,
+~150–250 LOC of structural CLM-construction work. No new mathematical
+content — purely the bundling step into Mathlib's CovariantDerivative
+data type.
+
+**Repair trigger**: when the framework's TensorialAt-mkHom-in-X helper
+is built for the `Φ X := koszulCovDeriv X Y x` family, this sorry is
+mechanically discharged. -/
+private theorem koszulLeviCivita_exists :
+    ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
+      ∀ (X Y : Π x : M, TangentSpace I x) (x : M)
+        (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+          (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
+        (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+          (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x),
+        cov.toFun Y x (X x) = koszulCovDeriv X Y x hX hY := by
+  sorry
+
+/-- **Existence theorem for the Levi-Civita connection.**
+
+On a Riemannian manifold, there exists a covariant derivative on the
+tangent bundle that is **torsion-free** and **metric-compatible** (for
+smooth vector fields). This is the Levi-Civita theorem
+(do Carmo 1992 §2 Theorem 3.6) — existence + uniqueness via the
+Koszul formula.
+
+**Phase 4.7.8.B closure**: the previously closure-inscrutable PRE-PAPER
+axiom is now a real proof, decomposing the mathematical content into:
+* `koszulLeviCivita_exists` — narrow structural axiom (sorry'd) about
+  CovariantDerivative wrapping of the pointwise Koszul construction.
+* `koszul_antisymm` (Phase 4.7.4 refactored) → torsion = 0 via
+  `metricInner_eq_iff_eq` + `koszulCovDeriv_inner_eq` + Mathlib's
+  `FiberBundle.extend`.
+* `koszul_metric_compat_sum` (Phase 4.7.4 refactored) → metric-compat
+  via `koszulCovDeriv_inner_eq` + the narrow axiom's extension property.
+
+**Smoothness hypotheses** on metric-compat: do Carmo 1992 §2 Theorem 3.6
+implicitly assumes smooth $X, Y, Z$; the Phase 4.5 unconditional form
+was an over-statement (Phase 4.7.8.B correction).
+
+**Ground truth**: do Carmo 1992 §2 Theorem 3.6. -/
+theorem leviCivitaConnection_exists :
+    ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
+      cov.torsion = 0 ∧
+      ∀ (X Y Z : Π x : M, TangentSpace I x) (x : M)
+        (_hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+          (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
+        (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+          (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
+        (hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+          (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x),
+        mfderiv I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x (X x) =
+          metricInner x (cov.toFun Y x (X x)) (Z x) +
+          metricInner x (Y x) (cov.toFun Z x (X x)) := by
+  obtain ⟨cov, hcov⟩ := koszulLeviCivita_exists (I := I) (M := M)
+  refine ⟨cov, ?_, ?_⟩
+  · -- Torsion = 0
+    rw [CovariantDerivative.torsion_eq_zero_iff]
+    intro X Y x hX hY
+    rw [hcov X Y x hX hY, hcov Y X x hY hX]
+    apply (metricInner_eq_iff_eq x _ _).mp
+    intro Z₀
+    set Z : Π y : M, TangentSpace I y := FiberBundle.extend E Z₀ with hZ_def
+    have hZx : Z x = Z₀ := FiberBundle.extend_apply_self _ _
+    have hZ_smooth : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+        (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x :=
+      FiberBundle.mdifferentiableAt_extend I E Z₀
+    rw [← hZx]
+    rw [metricInner_sub_left,
+        koszulCovDeriv_inner_eq X Y Z x hX hY hZ_smooth,
+        koszulCovDeriv_inner_eq Y X Z x hY hX hZ_smooth]
+    -- Goal: 1/2 * K X Y Z x - 1/2 * K Y X Z x = metricInner x (mlieBracket I X Y x) (Z x)
+    have h := koszul_antisymm X Y Z x
+    -- h: K X Y Z x - K Y X Z x = 2 * metricInner x (mlieBracket I X Y x) (Z x)
+    linarith
+  · -- Metric-compat for smooth X, Y, Z
+    intro X Y Z x hX hY hZ
+    rw [hcov X Y x hX hY, hcov X Z x hX hZ]
+    rw [show metricInner x (Y x) (koszulCovDeriv X Z x hX hZ) =
+        metricInner x (koszulCovDeriv X Z x hX hZ) (Y x) from
+      metricInner_comm x _ _,
+        koszulCovDeriv_inner_eq X Y Z x hX hY hZ,
+        koszulCovDeriv_inner_eq X Z Y x hX hZ hY]
+    have hsum := koszul_metric_compat_sum X Y Z x
+    -- hsum : K X Y Z + K X Z Y = 2 * directionalDeriv ... x (X x)
+    -- Convert goal to directionalDeriv form (rfl by def of directionalDeriv).
+    show directionalDeriv (fun y => metricInner y (Y y) (Z y)) x (X x) =
+        (1 / 2) * koszulFunctional X Y Z x + (1 / 2) * koszulFunctional X Z Y x
+    linarith
+
+/-- The **Levi-Civita connection** $\nabla$ on the tangent bundle of a
+Riemannian manifold $M$: the unique torsion-free, metric-compatible
+covariant derivative.
+
+Real `noncomputable def` via `Classical.choose` over the now-closed
+`leviCivitaConnection_exists` (Phase 4.7.8.B). The chosen value
+satisfies `leviCivitaConnection.torsion = 0` (see
+`leviCivitaConnection_torsion_zero`).
+
+**Ground truth**: do Carmo 1992 §2; Koszul formula gives uniqueness.
+
+**Used by**: `Riemannian.Curvature`, `Riemannian.SecondFundamentalForm`,
+`Riemannian.Gradient`. -/
+noncomputable def leviCivitaConnection :
+    CovariantDerivative I E (fun x : M => TangentSpace I x) :=
+  Classical.choose (leviCivitaConnection_exists (I := I) (M := M))
+
+/-- The Levi-Civita connection is torsion-free. -/
+theorem leviCivitaConnection_torsion_zero :
+    (leviCivitaConnection : CovariantDerivative I E
+      (fun x : M => TangentSpace I x)).torsion = 0 :=
+  (Classical.choose_spec leviCivitaConnection_exists).1
+
+/-- The Levi-Civita connection is **metric-compatible** for smooth
+vector fields: for $X, Y, Z$ smooth at $x$,
+$$\nabla_X \langle Y, Z \rangle (x) =
+  \langle \nabla_X Y, Z \rangle (x) + \langle Y, \nabla_X Z \rangle (x).$$
+
+The metric is the framework-owned `metricInner`. Smoothness hypotheses
+match do Carmo 1992 §2 Theorem 3.6's textbook setup; the Phase 4.5
+unconditional form was an over-statement (Phase 4.7.8.B correction). -/
+theorem leviCivitaConnection_metric_compatible
+    (X Y Z : Π x : M, TangentSpace I x) (x : M)
+    (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
+    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
+    (hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x) :
+    mfderiv I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x (X x) =
+      metricInner x ((leviCivitaConnection (I := I) (M := M)).toFun Y x (X x)) (Z x) +
+      metricInner x (Y x)
+        ((leviCivitaConnection (I := I) (M := M)).toFun Z x (X x)) :=
+  (Classical.choose_spec leviCivitaConnection_exists).2 X Y Z x hX hY hZ
+
+/-- **Covariant derivative of one vector field along another**:
+$(\nabla_X Y)(x) := \nabla\,Y\,x\,(X\,x)$, where $\nabla$ is the
+Levi-Civita connection.
+
+Convenience wrapper that exposes the standard math notation
+$\nabla_X Y$ from Mathlib's bundled `CovariantDerivative.toFun`. -/
+noncomputable def covDeriv (X Y : Π x : M, TangentSpace I x) (x : M) :
+    TangentSpace I x :=
+  ((leviCivitaConnection (I := I) (M := M)).toFun Y x) (X x)
+
 end Riemannian
 
 /-! ## UXTest

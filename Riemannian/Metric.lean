@@ -317,6 +317,24 @@ theorem metricToDual_injective (x : M) :
     rw [metricInner_sub_left, key (v₁ - v₂), sub_self]
   linarith
 
+/-- **Vector equality via inner-product equality** (non-degeneracy).
+
+Two tangent vectors at $x$ are equal iff their inner products with all
+test vectors agree. Direct corollary of `metricToDual_injective` —
+the injectivity of the forward Riesz map turns "Riesz functionals
+agree" into "vectors agree".
+
+Used by Phase 4.7.8.B to reduce vector identities (e.g., torsion-free,
+metric-compat formulas at the level of Levi-Civita output vectors) to
+inner-product identities (which are then discharged via the koszul
+identities + `koszulCovDeriv_inner_eq`). -/
+theorem metricInner_eq_iff_eq (x : M) (v w : TangentSpace I x) :
+    (∀ Z : TangentSpace I x, metricInner x v Z = metricInner x w Z) ↔ v = w := by
+  refine ⟨fun h => ?_, fun h _ => by rw [h]⟩
+  apply metricToDual_injective x
+  ext Z
+  simpa [metricToDual_apply] using h Z
+
 /-- finrank of `TangentSpace I x →L[ℝ] ℝ` equals finrank of `TangentSpace I x`. -/
 private theorem finrank_clm_dual_eq (x : M) :
     Module.finrank ℝ (TangentSpace I x →L[ℝ] ℝ) =
