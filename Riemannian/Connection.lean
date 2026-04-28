@@ -718,6 +718,37 @@ Phase ordering:
 * Phase 4.5.D: equate `koszulCovDeriv` with bundled `leviCivitaConnection`,
   close `leviCivitaConnection_exists`. -/
 
+omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M] in
+/-- **Locality of the Koszul functional in $Z$**: if two smooth vector
+fields $Z_1, Z_2$ agree on a neighborhood of $x$, then
+$K(X, Y; Z_1)(x) = K(X, Y; Z_2)(x)$.
+
+Foundation lemma for extension-independence: combined with bump function
+decomposition (forthcoming Phase 4.5.C Session B.2.alt.2 followups), this
+gives well-definedness of the linear functional in `koszulLinearFunctional_exists`.
+
+The 6 Koszul terms localize via:
+* `directionalDeriv` terms: `Filter.EventuallyEq.mfderiv_eq` (Mathlib).
+* `inner (mlieBracket _ _ _) _` terms with $Z$ in mlieBracket:
+  `Filter.EventuallyEq.mlieBracket_vectorField_eq` (Mathlib).
+* Pointwise inner-product terms: equality at $x$ from `h.self_of_nhds`. -/
+theorem koszulFunctional_local
+    (X Y Z₁ Z₂ : Π x : M, TangentSpace I x) (x : M)
+    (h : Z₁ =ᶠ[nhds x] Z₂) :
+    koszulFunctional X Y Z₁ x = koszulFunctional X Y Z₂ x := by
+  have hZx : Z₁ x = Z₂ x := h.self_of_nhds
+  unfold koszulFunctional directionalDeriv
+  have hT1 : (fun y => inner ℝ (Y y) (Z₁ y)) =ᶠ[nhds x] fun y => inner ℝ (Y y) (Z₂ y) := by
+    filter_upwards [h] with y hy; rw [hy]
+  have hT2 : (fun y => inner ℝ (Z₁ y) (X y)) =ᶠ[nhds x] fun y => inner ℝ (Z₂ y) (X y) := by
+    filter_upwards [h] with y hy; rw [hy]
+  have hT5 : mlieBracket I Y Z₁ x = mlieBracket I Y Z₂ x :=
+    (Filter.EventuallyEq.refl (nhds x) Y).mlieBracket_vectorField_eq h
+  have hT6 : mlieBracket I X Z₁ x = mlieBracket I X Z₂ x :=
+    (Filter.EventuallyEq.refl (nhds x) X).mlieBracket_vectorField_eq h
+  rw [hT1.mfderiv_eq, hT2.mfderiv_eq, hZx, hT5, hT6]
+  rfl
+
 /-- **Existence theorem for Riesz extraction**: at each $x \in M$, given
 smoothness of $X$ and $Y$ at $x$, the half-Koszul functional
 $Z \mapsto \tfrac12 K(X, Y; Z)(x)$ admits a unique tangent-space
