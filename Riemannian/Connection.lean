@@ -419,6 +419,90 @@ theorem koszul_smul_right
   rw [h_fromTS_X, h_fromTS_Y]
   ring
 
+/-! ## Phase 4.5.C — Riesz extraction: explicit Levi-Civita via Koszul
+
+Phase 4.5.C constructs `∇_X Y(x) ∈ T_xM` directly via Riesz representation
+of the half-Koszul functional $Z \mapsto \tfrac12 K(X, Y; Z)(x)$. Combined
+with Phase 4.5.B.2 (`koszul_smul_right`, $C^\infty(M)$-linearity in $Z$)
+and standard smooth bump function machinery, this characterizes
+$\nabla_X Y(x)$ as the unique vector with
+$$\langle \nabla_X Y(x), Z(x)\rangle = \tfrac12 K(X, Y; Z)(x)$$
+for all extensions $Z$ of any tangent vector at $x$.
+
+Phase ordering:
+* Phase 4.5.C.1 (this section): existence axiom + def + Riesz defining
+  property.
+* Phase 4.5.C.2: supporting koszul algebraic identities (additivity in
+  $X, Y$; $\mathbb{R}$-smul in $Y$; $C^\infty(M)$-linearity in $X$;
+  Leibniz in $Y$).
+* Phase 4.5.C.3: connection axioms C1 ($C^\infty$-linear in $X$),
+  C2 ($\mathbb{R}$-linear in $Y$), C3 (Leibniz in $Y$) derived from the
+  koszul identities + Riesz uniqueness.
+* Phase 4.5.D: equate `koszulCovDeriv` with bundled `leviCivitaConnection`,
+  close `leviCivitaConnection_exists`. -/
+
+/-- **Existence axiom for Riesz extraction**: at each $x \in M$, the
+half-Koszul functional $Z \mapsto \tfrac12 K(X, Y; Z)(x)$ admits a unique
+tangent-space representative.
+
+**Sorry status**: PRE-PAPER. Body deferred to Phase 4.5.D. Repair plan:
+
+1. **Extension-independence**: show $K(X, Y; Z)(x)$ depends only on $Z(x)$,
+   not on the global vector field $Z$. Combine `koszul_smul_right`
+   (Phase 4.5.B.2) with smooth bump functions from Mathlib's
+   `Geometry.Manifold.BumpFunction`: for $Z_1, Z_2$ with $Z_1(x) = Z_2(x)$,
+   write $Z_2 - Z_1 = \sum_i \varphi_i \cdot W_i$ with $\varphi_i$ smooth
+   and $\varphi_i(x) = 0$; then `koszul_smul_right` gives
+   $K(X, Y; Z_2)(x) - K(X, Y; Z_1)(x) = \sum_i \varphi_i(x) \cdot K(X, Y; W_i)(x) = 0$.
+
+2. **Linear functional construction**: define
+   $\varphi : T_xM \to_L^{\mathbb{R}} \mathbb{R}$,
+   $\varphi(w) := \tfrac12 K(X, Y; \tilde Z)(x)$ where $\tilde Z$ is any
+   smooth extension of $w$. Well-defined by Step 1; linearity follows from
+   $\mathbb{R}$-linearity of $K$ in $Z$ at fixed $x$; continuity is automatic
+   in finite dimensions.
+
+3. **Riesz**: apply `(InnerProductSpace.toDual ℝ (TangentSpace I x)).symm`
+   to $\varphi$ to obtain the unique $v$ with
+   $\langle v, w\rangle = \varphi(w)$ for all $w$.
+
+**Ground truth**: do Carmo 1992 §2 Theorem 3.6 existence proof, Step 3
+(Riesz extraction). -/
+theorem koszulCovDeriv_exists
+    (X Y : Π x : M, TangentSpace I x) (x : M) :
+    ∃ v : TangentSpace I x, ∀ Z : Π y : M, TangentSpace I y,
+      inner ℝ v (Z x) = (1/2 : ℝ) * koszulFunctional X Y Z x := by
+  sorry
+
+/-- **Levi-Civita via Koszul + Riesz** (explicit construction):
+$\nabla_X Y(x) \in T_xM$ is the unique vector with
+$$\langle \nabla_X Y(x), Z(x)\rangle = \tfrac12 K(X, Y; Z)(x)$$
+for all $Z$, extracted via Riesz from `koszulCovDeriv_exists`.
+
+Real `noncomputable def` via `Classical.choose` over the existence axiom.
+This is the Phase 4.5.C explicit alternative to the Phase 1 bundled
+`leviCivitaConnection : CovariantDerivative I E ...` (which uses
+`Classical.choose` over the full Levi-Civita theorem). Phase 4.5.D will
+prove `koszulCovDeriv X Y x = covDeriv X Y x` and close
+`leviCivitaConnection_exists`. -/
+noncomputable def koszulCovDeriv
+    (X Y : Π x : M, TangentSpace I x) (x : M) : TangentSpace I x :=
+  Classical.choose (koszulCovDeriv_exists X Y x)
+
+/-- **Riesz defining property**: $\langle \nabla_X Y(x), Z(x)\rangle =
+\tfrac12 K(X, Y; Z)(x)$.
+
+Direct extraction via `Classical.choose_spec`. This is the foundation of
+Phase 4.5.C.3 connection axioms: C1 ($C^\infty$-linear in $X$),
+C2 ($\mathbb{R}$-linear in $Y$), C3 (Leibniz in $Y$) each reduce, via
+Riesz uniqueness applied to this characterization, to a corresponding
+koszul algebraic identity for $K$ (Phase 4.5.C.2). -/
+theorem koszulCovDeriv_inner_eq
+    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
+    inner ℝ (koszulCovDeriv X Y x) (Z x)
+      = (1/2 : ℝ) * koszulFunctional X Y Z x :=
+  Classical.choose_spec (koszulCovDeriv_exists X Y x) Z
+
 end Riemannian
 
 /-! ## UXTest
@@ -487,5 +571,27 @@ example
       (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x) :
     koszulFunctional X Y (fun y => f y • Z y) x = f x * koszulFunctional X Y Z x :=
   koszul_smul_right X Y Z f x hf hYZ hZX hZ
+
+/-! ## Phase 4.5.C.1 self-test: koszulCovDeriv + Riesz defining property -/
+
+noncomputable example
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianBundle (fun x : M => TangentSpace I x)]
+    (X Y : Π x : M, TangentSpace I x) (x : M) :
+    TangentSpace I x := koszulCovDeriv X Y x
+
+example
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianBundle (fun x : M => TangentSpace I x)]
+    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
+    inner ℝ (koszulCovDeriv X Y x) (Z x)
+      = (1/2 : ℝ) * koszulFunctional X Y Z x :=
+  koszulCovDeriv_inner_eq X Y Z x
 
 end UXTest
