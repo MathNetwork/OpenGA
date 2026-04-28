@@ -340,6 +340,36 @@ private lemma directionalDeriv_smul_arg
   unfold directionalDeriv
   exact (mfderiv I 𝓘(ℝ, ℝ) g x).map_smul a v
 
+omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M]
+  [RiemannianBundle (fun x : M => TangentSpace I x)] in
+/-- **Helper**: additivity of `directionalDeriv` in the function argument:
+$X(f + g)(x) = X(f)(x) + X(g)(x)$.
+
+Wraps `mfderiv_add` for the framework's `directionalDeriv` helper. -/
+private lemma directionalDeriv_add_fun
+    (f g : M → ℝ) (x : M) (v : TangentSpace I x)
+    (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
+    (hg : MDifferentiableAt I 𝓘(ℝ, ℝ) g x) :
+    directionalDeriv (fun y => f y + g y) x v
+      = directionalDeriv f x v + directionalDeriv g x v := by
+  unfold directionalDeriv
+  have heq : (fun y : M => f y + g y) = f + g := rfl
+  rw [heq, mfderiv_add hf hg]
+  rfl
+
+omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M]
+  [RiemannianBundle (fun x : M => TangentSpace I x)] in
+/-- **Helper**: additivity of `directionalDeriv` in the tangent vector argument:
+$X_{v_1 + v_2}(f) = X_{v_1}(f) + X_{v_2}(f)$.
+
+Wraps `ContinuousLinearMap.map_add` for `mfderiv` viewed as a linear map. -/
+private lemma directionalDeriv_add_arg
+    (f : M → ℝ) (x : M) (v₁ v₂ : TangentSpace I x) :
+    directionalDeriv f x (v₁ + v₂)
+      = directionalDeriv f x v₁ + directionalDeriv f x v₂ := by
+  unfold directionalDeriv
+  exact (mfderiv I 𝓘(ℝ, ℝ) f x).map_add v₁ v₂
+
 omit [FiniteDimensional ℝ E] in
 /-- **Koszul $C^\infty(M)$-linearity in $Z$**:
 $$K(X, Y; f \cdot Z)(x) = f(x) \cdot K(X, Y; Z)(x).$$
@@ -417,6 +447,251 @@ theorem koszul_smul_right
   have h_fromTS_Y : NormedSpace.fromTangentSpace (f x)
       ((mfderiv I 𝓘(ℝ, ℝ) f x) (Y x)) = (mfderiv I 𝓘(ℝ, ℝ) f x) (Y x) := rfl
   rw [h_fromTS_X, h_fromTS_Y]
+  ring
+
+/-! ## Phase 4.5.C Session A — Additional koszul algebraic identities
+
+Five identities establishing the koszul functional's additivity and
+$C^\infty(M)$-linearity in the X and Y axes (Z-axis already covered by
+`koszul_smul_right`, Phase 4.5.B.2). Each identity reduces, via
+`koszulCovDeriv_inner_eq` + Riesz uniqueness, to a corresponding
+Levi-Civita connection axiom (Phase 4.5.C Session B). -/
+
+omit [FiniteDimensional ℝ E] in
+/-- **Koszul Z-additivity**: $K(X, Y; Z_1 + Z_2) = K(X, Y; Z_1) + K(X, Y; Z_2)$.
+
+Each Koszul term is linear in $Z$ (via `inner_add_right`/`left`,
+`mfderiv_add`, `mlieBracket_add_right`). -/
+theorem koszul_add_right
+    (X Y Z₁ Z₂ : Π x : M, TangentSpace I x) (x : M)
+    (h_YZ₁ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y y) (Z₁ y)) x)
+    (h_YZ₂ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y y) (Z₂ y)) x)
+    (h_Z₁X : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Z₁ y) (X y)) x)
+    (h_Z₂X : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Z₂ y) (X y)) x)
+    (h_Z₁ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Z₁ y⟩ : TangentBundle I M)) x)
+    (h_Z₂ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Z₂ y⟩ : TangentBundle I M)) x) :
+    koszulFunctional X Y (Z₁ + Z₂) x
+      = koszulFunctional X Y Z₁ x + koszulFunctional X Y Z₂ x := by
+  unfold koszulFunctional
+  -- Step 1: split inner products with Z₁+Z₂ argument at function level.
+  have h_YZ : (fun y : M => inner ℝ (Y y) ((Z₁ + Z₂) y))
+      = (fun y => inner ℝ (Y y) (Z₁ y) + inner ℝ (Y y) (Z₂ y)) := by
+    funext y; rw [Pi.add_apply, inner_add_right]
+  have h_ZX : (fun y : M => inner ℝ ((Z₁ + Z₂) y) (X y))
+      = (fun y => inner ℝ (Z₁ y) (X y) + inner ℝ (Z₂ y) (X y)) := by
+    funext y; rw [Pi.add_apply, inner_add_left]
+  rw [h_YZ, h_ZX]
+  -- Step 2: split directionalDeriv over function addition (T1, T2).
+  rw [directionalDeriv_add_fun (fun y => inner ℝ (Y y) (Z₁ y))
+        (fun y => inner ℝ (Y y) (Z₂ y)) x (X x) h_YZ₁ h_YZ₂]
+  rw [directionalDeriv_add_fun (fun y => inner ℝ (Z₁ y) (X y))
+        (fun y => inner ℝ (Z₂ y) (X y)) x (Y x) h_Z₁X h_Z₂X]
+  -- Step 3: split directionalDeriv on the action vector at point (T3).
+  rw [show ((Z₁ + Z₂) x : TangentSpace I x) = Z₁ x + Z₂ x from rfl]
+  rw [directionalDeriv_add_arg]
+  -- Step 4: split inner product at point (T4).
+  rw [inner_add_right]
+  -- Step 5: split mlieBracket on right argument (T5, T6).
+  rw [mlieBracket_add_right (V := Y) h_Z₁ h_Z₂]
+  rw [mlieBracket_add_right (V := X) h_Z₁ h_Z₂]
+  rw [inner_add_left, inner_add_left]
+  ring
+
+omit [FiniteDimensional ℝ E] in
+/-- **Koszul X-additivity**: $K(X_1 + X_2, Y; Z) = K(X_1, Y; Z) + K(X_2, Y; Z)$. -/
+theorem koszul_add_left
+    (X₁ X₂ Y Z : Π x : M, TangentSpace I x) (x : M)
+    (h_ZX₁ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Z y) (X₁ y)) x)
+    (h_ZX₂ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Z y) (X₂ y)) x)
+    (h_X₁Y : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (X₁ y) (Y y)) x)
+    (h_X₂Y : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (X₂ y) (Y y)) x)
+    (h_X₁ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, X₁ y⟩ : TangentBundle I M)) x)
+    (h_X₂ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, X₂ y⟩ : TangentBundle I M)) x) :
+    koszulFunctional (X₁ + X₂) Y Z x
+      = koszulFunctional X₁ Y Z x + koszulFunctional X₂ Y Z x := by
+  unfold koszulFunctional
+  have h_ZX : (fun y : M => inner ℝ (Z y) ((X₁ + X₂) y))
+      = (fun y => inner ℝ (Z y) (X₁ y) + inner ℝ (Z y) (X₂ y)) := by
+    funext y; rw [Pi.add_apply, inner_add_right]
+  have h_XY : (fun y : M => inner ℝ ((X₁ + X₂) y) (Y y))
+      = (fun y => inner ℝ (X₁ y) (Y y) + inner ℝ (X₂ y) (Y y)) := by
+    funext y; rw [Pi.add_apply, inner_add_left]
+  rw [h_ZX, h_XY]
+  -- T1: action vector (X₁+X₂) x at point.
+  rw [show ((X₁ + X₂) x : TangentSpace I x) = X₁ x + X₂ x from rfl]
+  rw [directionalDeriv_add_arg]
+  -- T2: function addition.
+  rw [directionalDeriv_add_fun (fun y => inner ℝ (Z y) (X₁ y))
+        (fun y => inner ℝ (Z y) (X₂ y)) x (Y x) h_ZX₁ h_ZX₂]
+  -- T3: function addition.
+  rw [directionalDeriv_add_fun (fun y => inner ℝ (X₁ y) (Y y))
+        (fun y => inner ℝ (X₂ y) (Y y)) x (Z x) h_X₁Y h_X₂Y]
+  -- T4: mlieBracket on left argument (V axis).
+  rw [mlieBracket_add_left (W := Y) h_X₁ h_X₂]
+  rw [inner_add_left]
+  -- T5: action vector (X₁+X₂) x at point.
+  rw [inner_add_right]
+  -- T6: mlieBracket on left argument.
+  rw [mlieBracket_add_left (W := Z) h_X₁ h_X₂]
+  rw [inner_add_left]
+  ring
+
+omit [FiniteDimensional ℝ E] in
+/-- **Koszul Y-additivity**: $K(X, Y_1 + Y_2; Z) = K(X, Y_1; Z) + K(X, Y_2; Z)$. -/
+theorem koszul_add_middle
+    (X Y₁ Y₂ Z : Π x : M, TangentSpace I x) (x : M)
+    (h_Y₁Z : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y₁ y) (Z y)) x)
+    (h_Y₂Z : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y₂ y) (Z y)) x)
+    (h_XY₁ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (X y) (Y₁ y)) x)
+    (h_XY₂ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (X y) (Y₂ y)) x)
+    (h_Y₁ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y₁ y⟩ : TangentBundle I M)) x)
+    (h_Y₂ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y₂ y⟩ : TangentBundle I M)) x) :
+    koszulFunctional X (Y₁ + Y₂) Z x
+      = koszulFunctional X Y₁ Z x + koszulFunctional X Y₂ Z x := by
+  unfold koszulFunctional
+  have h_YZ : (fun y : M => inner ℝ ((Y₁ + Y₂) y) (Z y))
+      = (fun y => inner ℝ (Y₁ y) (Z y) + inner ℝ (Y₂ y) (Z y)) := by
+    funext y; rw [Pi.add_apply, inner_add_left]
+  have h_XY : (fun y : M => inner ℝ (X y) ((Y₁ + Y₂) y))
+      = (fun y => inner ℝ (X y) (Y₁ y) + inner ℝ (X y) (Y₂ y)) := by
+    funext y; rw [Pi.add_apply, inner_add_right]
+  rw [h_YZ, h_XY]
+  -- T1: function addition.
+  rw [directionalDeriv_add_fun (fun y => inner ℝ (Y₁ y) (Z y))
+        (fun y => inner ℝ (Y₂ y) (Z y)) x (X x) h_Y₁Z h_Y₂Z]
+  -- T2: action vector (Y₁+Y₂) x at point.
+  rw [show ((Y₁ + Y₂) x : TangentSpace I x) = Y₁ x + Y₂ x from rfl]
+  rw [directionalDeriv_add_arg]
+  -- T3: function addition.
+  rw [directionalDeriv_add_fun (fun y => inner ℝ (X y) (Y₁ y))
+        (fun y => inner ℝ (X y) (Y₂ y)) x (Z x) h_XY₁ h_XY₂]
+  -- T4: mlieBracket on right argument (Y axis).
+  rw [mlieBracket_add_right (V := X) h_Y₁ h_Y₂]
+  rw [inner_add_left]
+  -- T5: mlieBracket on left argument (Y axis).
+  rw [mlieBracket_add_left (W := Z) h_Y₁ h_Y₂]
+  rw [inner_add_left]
+  -- T6: action vector at point.
+  rw [inner_add_right]
+  ring
+
+omit [FiniteDimensional ℝ E] in
+/-- **Koszul X-axis $C^\infty(M)$-linearity**:
+$K(f \cdot X, Y; Z)(x) = f(x) \cdot K(X, Y; Z)(x)$.
+
+Mirror of `koszul_smul_right` (Phase 4.5.B.2) on the X axis. Same algebraic
+structure: $Y(f)$ terms cancel via $\langle Z, X\rangle - \langle X, Z\rangle = 0$;
+$Z(f)$ terms cancel via $\langle X, Y\rangle - \langle Y, X\rangle = 0$
+(both by inner symmetry).
+
+**Smoothness hypotheses**: `hf`, `h_ZX` (for T2 product rule), `h_XY` (for T3
+product rule), `h_X` (for T4, T6 mlieBracket Leibniz). -/
+theorem koszul_smul_left
+    (X Y Z : Π x : M, TangentSpace I x) (f : M → ℝ) (x : M)
+    (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
+    (h_ZX : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Z y) (X y)) x)
+    (h_XY : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (X y) (Y y)) x)
+    (h_X : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x) :
+    koszulFunctional (fun y => f y • X y) Y Z x = f x * koszulFunctional X Y Z x := by
+  -- Step 1: factor `f` out of the inner products with `f • X` argument.
+  have h_inner_ZfX : (fun y : M => inner ℝ (Z y) (f y • X y))
+                   = fun y => f y * inner ℝ (Z y) (X y) := by
+    funext y; exact real_inner_smul_right (Z y) (X y) (f y)
+  have h_inner_fXY : (fun y : M => inner ℝ (f y • X y) (Y y))
+                   = fun y => f y * inner ℝ (X y) (Y y) := by
+    funext y; exact real_inner_smul_left (X y) (Y y) (f y)
+  have hPi : (fun y : M => f y • X y) = (f • X : Π y : M, TangentSpace I y) := rfl
+  unfold koszulFunctional
+  rw [h_inner_ZfX, h_inner_fXY]
+  -- Step 2: T1 — pull `f x` out of the action vector.
+  rw [directionalDeriv_smul_arg (fun y => inner ℝ (Y y) (Z y)) x (f x) (X x)]
+  -- Step 3: T2, T3 — apply Leibniz product rule.
+  rw [directionalDeriv_mul f (fun y => inner ℝ (Z y) (X y)) x (Y x) hf h_ZX]
+  rw [directionalDeriv_mul f (fun y => inner ℝ (X y) (Y y)) x (Z x) hf h_XY]
+  -- Step 4: T5 — pull `f x` out of `inner _ (f x • X x)`.
+  rw [real_inner_smul_right (mlieBracket I Y Z x) (X x) (f x)]
+  -- Step 5: T4, T6 — Lie bracket Leibniz on left arg.
+  rw [hPi]
+  rw [mlieBracket_smul_left (I := I) (W := Y) hf h_X]
+  rw [mlieBracket_smul_left (I := I) (W := Z) hf h_X]
+  -- Step 6: distribute inner over the Leibniz sum + pull scalars out.
+  simp only [inner_add_left, real_inner_smul_left]
+  -- Step 7: align inner symmetry for cancellation.
+  have hZX : (inner ℝ (X x) (Z x) : ℝ) = inner ℝ (Z x) (X x) := real_inner_comm (Z x) (X x)
+  have hXY : (inner ℝ (X x) (Y x) : ℝ) = inner ℝ (Y x) (X x) := real_inner_comm (Y x) (X x)
+  rw [hZX, hXY]
+  -- Step 8: unfold so fromTangentSpace identity rfl-aligns the X(f)/Y(f)/Z(f) terms.
+  unfold directionalDeriv
+  have h_fromTS_Y : NormedSpace.fromTangentSpace (f x)
+      ((mfderiv I 𝓘(ℝ, ℝ) f x) (Y x)) = (mfderiv I 𝓘(ℝ, ℝ) f x) (Y x) := rfl
+  have h_fromTS_Z : NormedSpace.fromTangentSpace (f x)
+      ((mfderiv I 𝓘(ℝ, ℝ) f x) (Z x)) = (mfderiv I 𝓘(ℝ, ℝ) f x) (Z x) := rfl
+  rw [h_fromTS_Y, h_fromTS_Z]
+  ring
+
+omit [FiniteDimensional ℝ E] in
+/-- **Koszul Y-axis Leibniz**:
+$K(X, f \cdot Y; Z)(x) = f(x) \cdot K(X, Y; Z)(x) + 2 \cdot X(f)(x) \cdot \langle Y, Z\rangle(x)$.
+
+Different from `koszul_smul_right`/`left`: $X(f)$ terms do NOT cancel — they
+double via T1 (Leibniz on $X\langle f Y, Z\rangle = X(f)\langle Y, Z\rangle + f X\langle Y, Z\rangle$)
+and T4 (Lie bracket Leibniz $[X, fY] = X(f) Y + f [X, Y]$). The $Z(f)$ terms
+still cancel by inner symmetry.
+
+This is the connection-Leibniz pattern that distinguishes Y-axis from X/Z axes:
+$\nabla_X(fY) = X(f) Y + f \nabla_X Y$ (vs C∞-linear in X, Z).
+
+**Smoothness hypotheses**: `hf`, `h_YZ`, `h_ZX`, `h_XY`, `h_Y`. -/
+theorem koszul_smul_middle
+    (X Y Z : Π x : M, TangentSpace I x) (f : M → ℝ) (x : M)
+    (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
+    (h_YZ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y y) (Z y)) x)
+    (h_XY : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (X y) (Y y)) x)
+    (h_Y : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x) :
+    koszulFunctional X (fun y => f y • Y y) Z x
+      = f x * koszulFunctional X Y Z x
+        + 2 * directionalDeriv f x (X x) * inner ℝ (Y x) (Z x) := by
+  -- Step 1: factor `f` out of the inner products with `f • Y` argument.
+  have h_inner_fYZ : (fun y : M => inner ℝ (f y • Y y) (Z y))
+                   = fun y => f y * inner ℝ (Y y) (Z y) := by
+    funext y; exact real_inner_smul_left (Y y) (Z y) (f y)
+  have h_inner_XfY : (fun y : M => inner ℝ (X y) (f y • Y y))
+                   = fun y => f y * inner ℝ (X y) (Y y) := by
+    funext y; exact real_inner_smul_right (X y) (Y y) (f y)
+  have hPi : (fun y : M => f y • Y y) = (f • Y : Π y : M, TangentSpace I y) := rfl
+  unfold koszulFunctional
+  rw [h_inner_fYZ, h_inner_XfY]
+  -- Step 2: T1, T3 — apply Leibniz product rule.
+  rw [directionalDeriv_mul f (fun y => inner ℝ (Y y) (Z y)) x (X x) hf h_YZ]
+  rw [directionalDeriv_mul f (fun y => inner ℝ (X y) (Y y)) x (Z x) hf h_XY]
+  -- Step 3: T2 — pull `f x` out of action vector.
+  rw [directionalDeriv_smul_arg (fun y => inner ℝ (Z y) (X y)) x (f x) (Y x)]
+  -- Step 4: T6 — pull `f x` out of `inner _ (f x • Y x)`.
+  rw [real_inner_smul_right (mlieBracket I X Z x) (Y x) (f x)]
+  -- Step 5: T4 — Lie bracket Leibniz right; T5 — Lie bracket Leibniz left.
+  rw [hPi]
+  rw [mlieBracket_smul_right (I := I) (V := X) (W := Y) hf h_Y]
+  rw [mlieBracket_smul_left (I := I) (W := Z) hf h_Y]
+  -- Step 6: distribute inner over the Leibniz sum + pull scalars out.
+  simp only [inner_add_left, real_inner_smul_left]
+  -- Step 7: align inner symmetry — the Z(f) terms need ⟨Y, X⟩ = ⟨X, Y⟩.
+  have hYX : (inner ℝ (Y x) (X x) : ℝ) = inner ℝ (X x) (Y x) := real_inner_comm (X x) (Y x)
+  rw [hYX]
+  -- Step 8: unfold so fromTangentSpace identity rfl-aligns the X(f)/Z(f) terms.
+  unfold directionalDeriv
+  have h_fromTS_X : NormedSpace.fromTangentSpace (f x)
+      ((mfderiv I 𝓘(ℝ, ℝ) f x) (X x)) = (mfderiv I 𝓘(ℝ, ℝ) f x) (X x) := rfl
+  have h_fromTS_Z : NormedSpace.fromTangentSpace (f x)
+      ((mfderiv I 𝓘(ℝ, ℝ) f x) (Z x)) = (mfderiv I 𝓘(ℝ, ℝ) f x) (Z x) := rfl
+  rw [h_fromTS_X, h_fromTS_Z]
   ring
 
 /-! ## Phase 4.5.C — Riesz extraction: explicit Levi-Civita via Koszul
@@ -593,5 +868,96 @@ example
     inner ℝ (koszulCovDeriv X Y x) (Z x)
       = (1/2 : ℝ) * koszulFunctional X Y Z x :=
   koszulCovDeriv_inner_eq X Y Z x
+
+/-! ## Phase 4.5.C Session A self-test: 5 koszul algebraic identities -/
+
+example
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianBundle (fun x : M => TangentSpace I x)]
+    (X Y Z₁ Z₂ : Π x : M, TangentSpace I x) (x : M)
+    (h_YZ₁ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y y) (Z₁ y)) x)
+    (h_YZ₂ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y y) (Z₂ y)) x)
+    (h_Z₁X : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Z₁ y) (X y)) x)
+    (h_Z₂X : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Z₂ y) (X y)) x)
+    (h_Z₁ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Z₁ y⟩ : TangentBundle I M)) x)
+    (h_Z₂ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Z₂ y⟩ : TangentBundle I M)) x) :
+    koszulFunctional X Y (Z₁ + Z₂) x
+      = koszulFunctional X Y Z₁ x + koszulFunctional X Y Z₂ x :=
+  koszul_add_right X Y Z₁ Z₂ x h_YZ₁ h_YZ₂ h_Z₁X h_Z₂X h_Z₁ h_Z₂
+
+example
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianBundle (fun x : M => TangentSpace I x)]
+    (X₁ X₂ Y Z : Π x : M, TangentSpace I x) (x : M)
+    (h_ZX₁ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Z y) (X₁ y)) x)
+    (h_ZX₂ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Z y) (X₂ y)) x)
+    (h_X₁Y : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (X₁ y) (Y y)) x)
+    (h_X₂Y : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (X₂ y) (Y y)) x)
+    (h_X₁ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, X₁ y⟩ : TangentBundle I M)) x)
+    (h_X₂ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, X₂ y⟩ : TangentBundle I M)) x) :
+    koszulFunctional (X₁ + X₂) Y Z x
+      = koszulFunctional X₁ Y Z x + koszulFunctional X₂ Y Z x :=
+  koszul_add_left X₁ X₂ Y Z x h_ZX₁ h_ZX₂ h_X₁Y h_X₂Y h_X₁ h_X₂
+
+example
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianBundle (fun x : M => TangentSpace I x)]
+    (X Y₁ Y₂ Z : Π x : M, TangentSpace I x) (x : M)
+    (h_Y₁Z : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y₁ y) (Z y)) x)
+    (h_Y₂Z : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y₂ y) (Z y)) x)
+    (h_XY₁ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (X y) (Y₁ y)) x)
+    (h_XY₂ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (X y) (Y₂ y)) x)
+    (h_Y₁ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y₁ y⟩ : TangentBundle I M)) x)
+    (h_Y₂ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y₂ y⟩ : TangentBundle I M)) x) :
+    koszulFunctional X (Y₁ + Y₂) Z x
+      = koszulFunctional X Y₁ Z x + koszulFunctional X Y₂ Z x :=
+  koszul_add_middle X Y₁ Y₂ Z x h_Y₁Z h_Y₂Z h_XY₁ h_XY₂ h_Y₁ h_Y₂
+
+example
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianBundle (fun x : M => TangentSpace I x)]
+    (X Y Z : Π x : M, TangentSpace I x) (f : M → ℝ) (x : M)
+    (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
+    (h_ZX : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Z y) (X y)) x)
+    (h_XY : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (X y) (Y y)) x)
+    (h_X : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x) :
+    koszulFunctional (fun y => f y • X y) Y Z x = f x * koszulFunctional X Y Z x :=
+  koszul_smul_left X Y Z f x hf h_ZX h_XY h_X
+
+example
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianBundle (fun x : M => TangentSpace I x)]
+    (X Y Z : Π x : M, TangentSpace I x) (f : M → ℝ) (x : M)
+    (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
+    (h_YZ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (Y y) (Z y)) x)
+    (h_XY : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => inner ℝ (X y) (Y y)) x)
+    (h_Y : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
+      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x) :
+    koszulFunctional X (fun y => f y • Y y) Z x
+      = f x * koszulFunctional X Y Z x
+        + 2 * directionalDeriv f x (X x) * inner ℝ (Y x) (Z x) :=
+  koszul_smul_middle X Y Z f x hf h_YZ h_XY h_Y
 
 end UXTest
