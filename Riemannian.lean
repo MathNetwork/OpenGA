@@ -37,7 +37,7 @@ AltRegularity                ← consumer
 
   * `Metric.lean` — `OpenGALib.RiemannianMetric` typeclass + `metricInner` /
     `metricRiesz` operations + framework-owned NACG / IPS bridges
-    (Phase 4.7).
+   .
   * `Connection.lean` — Levi-Civita connection via Koszul functional +
     Riesz extraction; covariant derivative `covDeriv`.
   * `Curvature.lean`  — Riemann curvature tensor, Ricci, scalar curvature.
@@ -105,6 +105,6 @@ intermediate identities) are internal and may change without notice.
 Stability tier: pre-`v0.1.0` everything is **experimental**. PRE-PAPER
 sorry'd statements (`ricci_symm`, `ricciTraceMap.map_*`) and structural
 axioms (`tangentBundle_symmL_smoothAt`, `koszulLeviCivita_exists`) are
-tracked in `docs/AXIOM_STATUS.md` (Phase 5.8) with explicit repair
+tracked in `docs/AXIOM_STATUS.md` with explicit repair
 plans.
 -/

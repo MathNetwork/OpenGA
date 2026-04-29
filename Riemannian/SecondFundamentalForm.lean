@@ -14,7 +14,7 @@ $\nu$ is the unit normal to the hypersurface in the ambient $M$.
 
 For the codim-1 setting in our framework, the hypersurface is the
 support of a `Varifold M`, and $\nu$ is supplied by the
-`Varifold.HasNormal` typeclass (Phase 1.5 Commit B).
+`Varifold.HasNormal` typeclass.
 
   * `secondFundamentalFormScalar` — real `noncomputable def` using
     `covDeriv` (Levi-Civita) + `metricInner` on `TangentSpace I x`
@@ -25,7 +25,7 @@ support of a `Varifold M`, and $\nu$ is supplied by the
   * `meanCurvature` — real `noncomputable def` via summation of
     $A(e_i, e_i)$ over the same orthonormal basis.
 
-The framework-owned `OpenGALib.RiemannianMetric` typeclass (Phase 4.7)
+The framework-owned `OpenGALib.RiemannianMetric` typeclass
 provides `metricInner` directly on tangent vectors via
 `TangentSpace I x = E` def-eq, sidestepping the lean4#13063 typeclass
 diamond on `Bundle.RiemannianBundle`.

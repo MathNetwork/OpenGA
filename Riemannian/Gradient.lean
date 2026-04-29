@@ -13,10 +13,8 @@ $\langle \nabla^M f(x), v \rangle = (\mathrm{d}f)_x(v)$ for all
 $v \in T_xM$.
 
 The inner product on `TangentSpace I x` is the framework-owned
-`metricInner` (Phase 4.7); the Riesz isomorphism is `metricRiesz`
-(Phase 4.7.3 in `Riemannian.Metric`), which sidesteps the lean4#13063
-typeclass diamond by using `OpenGALib.RiemannianMetric I M` as the
-single canonical inner-product source on tangent vectors.
+`metricInner`; the Riesz isomorphism is `metricRiesz` (see
+`Riemannian.Metric`).
 
 **Ground truth**: do Carmo 1992 §3 ex. 8 (manifold gradient).
 -/
@@ -38,7 +36,7 @@ via **Riesz duality** on the tangent space.
 Concretely: $\nabla^M f(x)$ is the unique $v \in T_xM$ such that
 $\langle v, w \rangle_g = (\mathrm{d}f)_x(w)$ for all $w \in T_xM$,
 where $\langle \cdot, \cdot \rangle_g$ is the framework-owned
-`metricInner`. Implemented via `metricRiesz` (Phase 4.7.3) applied to
+`metricInner`. Implemented via `metricRiesz` applied to
 the manifold differential `mfderiv I 𝓘(ℝ, ℝ) f x`.
 
 **Ground truth**: do Carmo 1992 §3 ex. 8.
@@ -63,7 +61,7 @@ theorem manifoldGradient_riesz
 
 /-- The **squared gradient norm** $|\nabla^M f|^2 : M \to \mathbb{R}$,
 defined as $\langle \nabla^M f(x), \nabla^M f(x)\rangle_g$ via the
-framework-owned `metricInner` (Phase 4.7).
+framework-owned `metricInner`.
 
 **Ground truth**: standard; used in Jacobi second-variation formula
 (Simon 1983 §49).
@@ -78,7 +76,7 @@ noncomputable def manifoldGradientNormSq
   metricInner x (manifoldGradient (I := I') f x) (manifoldGradient (I := I') f x)
 
 /-- **$|\nabla^M f|^2 \geq 0$**: gradient squared norm is non-negative.
-Direct from `metricInner_self_nonneg` (Phase 4.7.5 extension). -/
+Direct from `metricInner_self_nonneg`. -/
 @[simp]
 theorem manifoldGradientNormSq_nonneg
     (I' : ModelWithCorners ℝ E H)

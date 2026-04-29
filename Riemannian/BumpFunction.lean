@@ -14,7 +14,7 @@ manifold bumps on $M$, and tangent-vector field extension via bump.
 Bump functions are a foundational geometric-topology tool with reuse
 across partition-of-unity constructions, cutoff arguments, smoothing,
 test-section construction, and chart-local extension proofs. Per the
-framework's "build it ourselves" stance (Phase 4.7), we expose the
+framework's "build it ourselves" stance, we expose the
 canonical bump infrastructure under a single namespace
 `OpenGALib.BumpFunction` so downstream Riemannian / GMT / MinMax /
 Regularity work has one stable entry point.
@@ -25,8 +25,8 @@ require the `Bundle.RiemannianBundle` typeclass diamond, so they
 compose cleanly with the framework's `OpenGALib.RiemannianMetric`
 typeclass cascade. Layers 1–3 are thin wrappers; Layer 4
 (`extendVectorField`) is a framework self-build needed for downstream
-Riesz extraction and test-section construction (Phase 4.7.8 use case:
-constructing test sections in `koszulLinearFunctional_exists`).
+Riesz extraction and test-section construction (e.g., constructing
+test sections in `koszulLinearFunctional_exists`).
 
 ## Layering
 
@@ -174,7 +174,7 @@ definitional equality `TangentSpace I x = E` (Mathlib's
 `Geometry.Manifold.IsManifold.Basic` line 1041); the result at $y$ is
 $f(y) \cdot v \in E = \text{TangentSpace}\,I\,y$.
 
-This is the framework primitive used by Phase 4.7.8 to construct
+This is the framework primitive used downstream to construct
 **test sections** in the `koszulLinearFunctional_exists` Riesz
 extraction: for each $v \in T_xM$, lift to a smooth global $Z$ with
 $Z(x) = v$, then evaluate $\frac12 K(X, Y; Z)$ — by

@@ -6,79 +6,33 @@ import Mathlib.Geometry.Manifold.MFDeriv.NormedSpace
 import Mathlib.Analysis.InnerProductSpace.Basic
 
 /-!
-# OpenGALib.RiemannianMetric — Framework-Owned Riemannian Metric Typeclass
+# RiemannianMetric — framework-owned Riemannian metric typeclass
 
-This file provides `OpenGALib.RiemannianMetric I M`, a framework-owned
-typeclass capturing a Riemannian metric on the manifold $M$ with model
-$I : \text{ModelWithCorners}\ \mathbb{R}\ E\ H$.
+A Riemannian metric on a manifold $M$ modeled on $E$, given by a smooth,
+symmetric, positive-definite tensor $g_x : E \times E \to \mathbb{R}$
+acting on tangent vectors via `TangentSpace I x = E` def-eq.
 
-## Why this typeclass exists
+This typeclass provides the metric via an explicit `metricTensor` field
+rather than synthesising `Inner ℝ (TangentSpace I x)`, sidestepping the
+lean4#13063 typeclass diamond between Mathlib's `Bundle.RiemannianBundle`
+and the direct `[InnerProductSpace ℝ E]` path. Downstream operations
+(`metricInner`, `metricRiesz`, algebra lemmas) provide the inner product
+API on tangent vectors.
 
-Phase 4.7's architectural redesign (per `docs/PHASE_4_7_REDESIGN_PLAN.md`)
-introduces this typeclass as the framework's **single canonical path** for
-inner product structure on `TangentSpace I x`, replacing the lean4#13063
-typeclass diamond between Mathlib's `Bundle.RiemannianBundle`-derived
-`InnerProductSpace ℝ (TangentSpace I y)` and the direct
-`[NormedAddCommGroup E]` path via `TangentSpace I x = E` defeq.
-
-Mathlib's own `Topology/VectorBundle/Riemannian.lean:439-440` explicitly
-references lean4#13063, deliberately ordering its instance parameters to
-work around the loop. The framework's redesign sidesteps the Mathlib
-synthesis path entirely by providing the metric via this **explicit
-operation-based typeclass** rather than via `Inner ℝ (TangentSpace I y)`
-synthesis.
-
-## Design
-
-The typeclass holds:
-* `metricTensor : (x : M) → E →L[ℝ] E →L[ℝ] ℝ` — the metric tensor at each
-  point as a continuous bilinear form on the model space $E$. By
-  definitional equality `TangentSpace I x = E`, this acts on tangent vectors.
-* `symm` — the metric is symmetric: $g_x(v, w) = g_x(w, v)$.
-* `posdef` — the metric is positive-definite: $g_x(v, v) > 0$ for $v \ne 0$.
-* `smoothMetric` — the metric tensor is a smooth section of the bundle
-  $\text{Hom}(TM \otimes TM, \mathbb{R})$, viewed as a smooth map
-  $M \to (E \to_L^{\mathbb{R}} E \to_L^{\mathbb{R}} \mathbb{R})$.
-
-Downstream operations (`metricInner`, `metricRiesz`, `metricInner_*`
-algebra lemmas) build on these axioms to provide the framework's complete
-inner product API on tangent spaces, replacing
-`MDifferentiableAt.inner_bundle` and `InnerProductSpace.toDual.symm` with
-framework-owned analogs that use the single canonical path.
-
-## Phase ordering
-
-* **Phase 4.7.1** (this file): typeclass declaration + axioms.
-* **Phase 4.7.2**: `metricInner` operation + algebra properties
-  (symm, posdef, bilinear).
-* **Phase 4.7.3**: `metricRiesz` — framework-owned Riesz isomorphism
-  `(T_xM →L[ℝ] ℝ) → T_xM` using metric tensor's positive-definiteness.
-* **Phase 4.7.4–4.7.7**: refactor `Connection.lean`, downstream Riemannian,
-  GMT, Regularity, AltRegularity to use this typeclass.
-* **Phase 4.7.8**: close `koszulLinearFunctional_exists` +
-  `leviCivitaConnection_exists` axioms.
-* **Phase 4.7.9**: cleanup — sunset `InnerProductBridge.lean`.
-
-**Ground truth**: do Carmo 1992 §1.2 (Riemannian metric definition);
-Lee *Smooth Manifolds* Ch. 13 (Riemannian metrics as smooth bilinear sections).
+**Ground truth**: do Carmo 1992 §1.2; Lee *Smooth Manifolds* Ch. 13.
 -/
 
 open scoped ContDiff Manifold Topology
 
 namespace OpenGALib
 
-/-- **Framework-owned Riemannian metric typeclass.**
+/-- **Riemannian metric typeclass**: a smooth, symmetric,
+positive-definite metric tensor on a manifold $M$ modeled on $E$.
 
-A `RiemannianMetric I M` instance equips the manifold $M$ (with model
-$I : \text{ModelWithCorners}\ \mathbb{R}\ E\ H$) with a smooth, symmetric,
-positive-definite metric tensor.
-
-By design, this typeclass does **not** synthesize
-`InnerProductSpace ℝ (TangentSpace I x)` as a derived instance — the
-metric is accessed via the explicit `metricTensor` field, avoiding the
-lean4#13063 typeclass diamond. The fiber's `NormedAddCommGroup` /
-`InnerProductSpace` structure (when needed downstream) goes through the
-single canonical direct $E$-path via `TangentSpace I x = E` defeq. -/
+The metric is accessed via the explicit `metricTensor` field. The
+fiber's `NormedAddCommGroup` / `InnerProductSpace` structure (when needed
+downstream) goes through the direct $E$-path via `TangentSpace I x = E`
+def-eq. -/
 class RiemannianMetric
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     {H : Type*} [TopologicalSpace H]
@@ -99,12 +53,8 @@ class RiemannianMetric
 namespace RiemannianMetric
 
 /-- Convenience accessor: the metric inner product as a `(x : M) → E → E → ℝ`
-function. The framework's downstream `metricInner` (Phase 4.7.2) provides
-the typed-on-tangent-space wrapper.
-
-**Stability**: experimental. Likely to be `@[deprecated]` in v0.2 in
-favour of `metricInner` (which uses the typed-on-tangent-space form).
-Prefer `metricInner` in new code. -/
+function. Use `metricInner` (typed-on-tangent-space form) in new code;
+this raw form is a `@[deprecated]` candidate for v0.2. -/
 noncomputable def metricInnerRaw {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
@@ -113,17 +63,14 @@ noncomputable def metricInnerRaw {E : Type*} [NormedAddCommGroup E] [InnerProduc
 
 end RiemannianMetric
 
-/-! ## Phase 4.7.2 — metricInner + algebra lemmas
+/-! ## `metricInner` + algebra lemmas
 
 The `metricInner` operation is the typed-on-tangent-space wrapper around
 `RiemannianMetric.metricTensor`. Algebra lemmas (bilinearity, sub, neg, zero,
-comm) are derived from the metric tensor's continuous-bilinear-form structure
-and the `symm` axiom.
-
-These lemmas replace `inner_add_left/right`, `inner_smul_left/right`,
-`real_inner_comm`, etc. (the Mathlib `inner ℝ`-based API) for use in the
-framework's Phase 4.7.4+ refactor of koszul identities and downstream
-Riemannian/GMT code. -/
+comm) are derived from the metric tensor's continuous-bilinear-form
+structure and the `symm` axiom. These lemmas form the framework analog of
+Mathlib's `inner_add_left/right`, `inner_smul_left/right`, `real_inner_comm`
+for use on tangent vectors. -/
 
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
@@ -231,29 +178,17 @@ theorem metricInner_self_nonneg (x : M) (V : TangentSpace I x) :
 
 end OpenGALib
 
-/-! ## Phase 4.7.9 — Framework-owned NACG / InnerProductSpace bridges on `TangentSpace`
+/-! ## NACG / InnerProductSpace bridges on `TangentSpace`
 
-The framework's analog of Mathlib's bundle-based scoped instances
-(`Topology/VectorBundle/Riemannian.lean` lines ~431, 453), provided
-**directly from the model space `[NormedAddCommGroup E]` /
-`[InnerProductSpace ℝ E]`** rather than going through
-`[Bundle.RiemannianBundle ...]` — sidesteps the lean4#13063 typeclass
-diamond by using only the single canonical direct-`E` path.
+Provides `NormedAddCommGroup`, `InnerProductSpace ℝ`,
+`FiniteDimensional ℝ`, and `CompleteSpace` instances on `TangentSpace I x`
+directly from the model space's instances on `E`, via the
+`TangentSpace I x = E` def-eq.
 
-After Phase 4.7.9, the entire framework cascade can drop
-`[Bundle.RiemannianBundle (fun x : M => TangentSpace I x)]` — the
-`[OpenGALib.RiemannianMetric I M]` typeclass + these bridges suffice
-for all downstream `Norm (TangentSpace I x)` /
-`InnerProductSpace ℝ (TangentSpace I x)` synthesis.
-
-Mathlib's `TangentSpace` is declared non-reducible (line 1037 of
-`IsManifold/Basic.lean`: "not reducible so that type class inference
-does not pick wrong instances"), so we use
-`set_option backward.isDefEq.respectTransparency false` to make
-typeclass synthesis see through the `TangentSpace I x = E` defeq —
-matching Mathlib's own pattern (e.g.,
-`Topology/VectorBundle/Riemannian.lean` line ~98 for the trivial
-bundle Riemannian instance). -/
+`set_option backward.isDefEq.respectTransparency false` makes typeclass
+synthesis see through the def-eq (Mathlib's `TangentSpace` is
+non-reducible to prevent wrong-instance selection); this matches
+Mathlib's own pattern in `Topology/VectorBundle/Riemannian.lean`. -/
 
 namespace OpenGALib
 
@@ -264,11 +199,8 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
 
 set_option backward.isDefEq.respectTransparency false in
-/-- **Framework-owned NACG bridge** on `TangentSpace I x`, directly
-from `[NormedAddCommGroup E]`. Replaces
-`Riemannian.InnerProductBridge.instNormedAddCommGroupTangentSpace`
-(Phase 1.6, RiemannianBundle-based) with a framework-self-built path
-that doesn't require `[Bundle.RiemannianBundle ...]`. -/
+/-- `NormedAddCommGroup` on `TangentSpace I x`, directly from
+`[NormedAddCommGroup E]` via `TangentSpace I x = E` def-eq. -/
 instance instNormedAddCommGroupTangent (x : M) :
     NormedAddCommGroup (TangentSpace I x) :=
   inferInstanceAs (NormedAddCommGroup E)
@@ -282,10 +214,8 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
 
 set_option backward.isDefEq.respectTransparency false in
-/-- **Framework-owned InnerProductSpace bridge** on `TangentSpace I x`,
-directly from `[InnerProductSpace ℝ E]`. Replaces
-`Riemannian.InnerProductBridge.instInnerProductSpaceTangentSpace`
-(Phase 1.6, RiemannianBundle-based). -/
+/-- `InnerProductSpace ℝ` on `TangentSpace I x`, directly from
+`[InnerProductSpace ℝ E]` via `TangentSpace I x = E` def-eq. -/
 instance instInnerProductSpaceTangent (x : M) :
     InnerProductSpace ℝ (TangentSpace I x) :=
   inferInstanceAs (InnerProductSpace ℝ E)
@@ -299,17 +229,15 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
 
 set_option backward.isDefEq.respectTransparency false in
-/-- **Framework-owned FiniteDimensional bridge** on `TangentSpace I x`,
-directly from `[FiniteDimensional ℝ E]`. Replaces
-`Riemannian.InnerProductBridge.instFiniteDimensionalTangentSpace`. -/
+/-- `FiniteDimensional ℝ` on `TangentSpace I x`, directly from
+`[FiniteDimensional ℝ E]` via `TangentSpace I x = E` def-eq. -/
 instance instFiniteDimensionalTangent [FiniteDimensional ℝ E] (x : M) :
     FiniteDimensional ℝ (TangentSpace I x) :=
   inferInstanceAs (FiniteDimensional ℝ E)
 
 set_option backward.isDefEq.respectTransparency false in
-/-- **Framework-owned CompleteSpace bridge** on `TangentSpace I x`,
-directly from `[CompleteSpace E]`. Replaces
-`Riemannian.InnerProductBridge.instCompleteSpaceTangentSpace`. -/
+/-- `CompleteSpace` on `TangentSpace I x`, directly from `[CompleteSpace E]`
+via `TangentSpace I x = E` def-eq. -/
 instance instCompleteSpaceTangent [CompleteSpace E] (x : M) :
     CompleteSpace (TangentSpace I x) :=
   inferInstanceAs (CompleteSpace E)
@@ -318,74 +246,20 @@ end FiniteDimensionalBridge
 
 end OpenGALib
 
-/-! ## Phase 4.7.8.A — `metricInner` smoothness helper (`MDifferentiableAt`)
+/-! ## `metricInner` smoothness helper
 
-The framework's analog of Mathlib's `MDifferentiableAt.inner_bundle`
-(`Mathlib/Geometry/Manifold/VectorBundle/Riemannian.lean`), but using
-the framework-owned `metricInner` (Phase 4.7.2) rather than going
-through `[IsContMDiffRiemannianBundle]` — sidesteps the lean4#13063
-typeclass diamond per the Phase 4.7 redesign.
+Framework analog of Mathlib's `MDifferentiableAt.inner_bundle`, using the
+framework-owned `metricInner` instead of `[IsContMDiffRiemannianBundle]`.
+Used by `koszul_smul_right` / `koszul_add_right` to derive scalar
+smoothness of $\langle Y, Z \rangle_g$ from bundle-section smoothness of
+$Y, Z$.
 
-Used by Phase 4.7.8.A to derive the scalar smoothness hypotheses of
-`koszul_smul_right` and `koszul_add_right` (`Riemannian.Connection`,
-`hYZ`, `hZX`, `h_YZ₁`, `h_YZ₂`, `h_Z₁X`, `h_Z₂X`) from vector-field
-bundle-section smoothness — required for the `TensorialAt` instance on
-`Z ↦ koszulFunctional X Y Z x` that closes the
-`koszulLinearFunctional_exists` body.
-
-**Mathematical content**: $y \mapsto g_y(Y(y), Z(y))$ is $C^\infty$ at
-$x$ when $g$ (the metric tensor) is $C^\infty$ in $y$ (Phase 4.7.1
-axiom `RiemannianMetric.smoothMetric`) and $Y, Z$ are smooth bundle
-sections. Proof structure: chart-bridge via the trivialization
-`e := trivializationAt E (TangentSpace I) x`, with the round-trip
-identity `e.symmL ℝ y (e.continuousLinearMapAt ℝ y v) = v` for
-$y \in e.\mathrm{baseSet}$. Steps 1-3 close (mdifferentiableAt_totalSpace
-extracts plain `M → E` smoothness of `(e ⟨y, Y y⟩).2`,
-`g.smoothMetric.mdifferentiableAt` provides metric tensor smoothness).
-
-**Sorry status (Step 4)**: PRE-PAPER, structural blocker. The remaining
-piece is `MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E) (fun y => e.symmL ℝ y) x`,
-i.e., smoothness of the trivialization inverse as a CLM-valued function
-of the basepoint. Mathlib provides:
-* `TangentBundle.symmL_trivializationAt` — `e.symmL ℝ y =
-  mfderiv[range I] (extChartAt I x).symm (extChartAt I x y)` for y in
-  chart source (decorated with `set_option backward.isDefEq.respectTransparency
-  false` to bridge `E →L[ℝ] TangentSpace I y` vs `E →L[ℝ] E`).
-* `ContMDiffVectorBundle.contMDiffOn_coordChangeL` — smoothness of CLM
-  changes between two trivializations (flat codomain `F →L F`).
-* `ContMDiffAt.mfderiv_const` — smoothness of the in-coordinates
-  pullback of `mfderiv f`, again with flat codomain via `inCoordinates`.
-
-The blocker: `e.symmL ℝ y` has dependent codomain `E →L[ℝ] TangentSpace I y`,
-incompatible with the `MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)` model
-(non-dependent codomain `E →L[ℝ] E`). Even with
-`set_option backward.isDefEq.respectTransparency false` in scope, the
-higher-order Pi-vs-flat unification problem `(y : M) → (E →L[ℝ] T y)`
-vs `M → (E →L[ℝ] E)` (where `T y = E` def-eq) is not resolved
-automatically by Lean's elaborator — the `→L[ℝ]` constructor demands
-syntactic equality of the codomain type.
-
-**Repair plan** (Phase 4.8 architectural follow-up):
-1. **Option A** (recommended): change the typeclass field
-   `RiemannianMetric.smoothMetric` from plain `M → CLM(E,E,ℝ)`
-   smoothness to bundle-section smoothness in the Hom-bundle of
-   `TangentSpace I`, matching Mathlib's `ContMDiffRiemannianMetric.contMDiff`.
-   Then `clm_bundle_apply₂` directly closes this lemma. Requires
-   updating users of `g.smoothMetric` (currently used only by this
-   helper).
-2. **Option B**: add a Mathlib-upstream lemma giving non-dependent
-   smoothness of `Trivialization.symmL` for tangent bundles via
-   `inCoordinates` form. This may already exist as
-   `MDifferentiableAt.clm_apply_of_inCoordinates` composition; framework
-   self-build of the helper is ~80 LOC.
-3. **Option C**: change `Y, Z` hypothesis form throughout the framework
-   from bundle-section to plain `M → E` smoothness (via def-eq abuse).
-   Requires propagating refactor through `koszul_*` identities + their
-   callers in `koszulFunctional_tensorialAt` / `koszulLinearFunctional_exists`.
-
-Phase 4.7.5.C (this file) commits the proof structure with Step 4
-extracted as the narrow structural axiom `tangentBundle_symmL_smoothAt`
-below. Closure of the axiom scheduled as Phase 4.8 strategic decision item. -/
+Proof: chart-bridge via the trivialization
+`e := trivializationAt E (TangentSpace I) x`, using the round-trip
+identity `e.symmL ℝ y (e.continuousLinearMapAt ℝ y v) = v` on
+`e.baseSet`. The `e.symmL` smoothness step is extracted as the narrow
+structural axiom `tangentBundle_symmL_smoothAt` (see `AXIOM_STATUS.md`
+for repair plan). -/
 
 namespace OpenGALib
 
@@ -394,41 +268,19 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [g : RiemannianMetric I M]
 
-/-- **Narrow structural axiom**: smoothness of the tangent bundle
-trivialization inverse `Trivialization.symmL`, as a CLM-valued function
-of the basepoint, viewed in non-dependent codomain via the
-`TangentSpace I y = E` def-eq cast.
+/-- **Smoothness of the tangent-bundle trivialization inverse `symmL`**,
+as a CLM-valued function of the basepoint, in non-dependent codomain via
+the `TangentSpace I y = E` def-eq cast.
 
-**Mathematical content**: for the tangent bundle's preferred trivialization
-$e := \mathrm{trivializationAt}\,E\,(TangentSpace\,I)\,x$, the function
+For `e := trivializationAt E (TangentSpace I) x`, the function
 $y \mapsto e.\mathrm{symmL}\,\mathbb{R}\,y$ is $C^\infty$ at $x$ as a map
-$M \to (E \to_L^{\mathbb{R}} E)$. This is mathematically the smoothness
-of the inverse chart-derivative, equivalent (via Mathlib's
-`TangentBundle.symmL_trivializationAt`) to smoothness of
-$y \mapsto \mathrm{mfderivWithin}\,(\mathrm{range}\,I)\,(\mathrm{extChartAt}\,I\,x).\mathrm{symm}\,(\mathrm{extChartAt}\,I\,x\,y)$.
+$M \to (E \to_L^{\mathbb{R}} E)$. Mathematically this is the smoothness
+of the inverse chart-derivative, standard for tangent bundles.
 
-**Why an axiom**: the dependent codomain `E →L[ℝ] TangentSpace I y` of
-`e.symmL ℝ y` is incompatible with the non-dependent
-`MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)` model expected. Even with
-`set_option backward.isDefEq.respectTransparency false`, Lean's
-elaborator cannot resolve the higher-order Pi-vs-flat unification
-problem. The proof requires either:
-* Mathlib upstream addition of `Trivialization.symmL` smoothness in
-  non-dependent flat-CLM form (`F →L F` via the trivialization's own
-  baseSet), OR
-* Framework typeclass redesign making `RiemannianMetric.smoothMetric`
-  use bundle-section smoothness in the Hom-bundle (then
-  `clm_bundle_apply₂` handles the chart-bridge internally).
-
-**Repair plan**: Phase 4.8 architectural follow-up. The axiom will be
-discharged either as a Mathlib upstream PR or via the framework's
-typeclass redesign (the latter requires cascade of topology-instance
-synthesis fixes for the Hom-bundle's TotalSpace, which is out of
-Phase 4.7 scope).
-
-**Ground truth**: standard for tangent bundles — chart-derivatives
-and their inverses are smooth as part of the smooth-manifold structure.
-The non-dependent CLM-valued formulation is the only barrier. -/
+This is an axiom because Mathlib's `Trivialization.symmL` has the
+dependent codomain `E →L[ℝ] TangentSpace I y`, incompatible with
+`MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)`'s non-dependent codomain. See
+`AXIOM_STATUS.md` for the repair plan. -/
 axiom tangentBundle_symmL_smoothAt
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
@@ -473,8 +325,7 @@ theorem MDifferentiableAt.metricInner_smoothAt
   set_option backward.isDefEq.respectTransparency false in
   have h_TS_E_eq : ∀ y : M, (E →L[ℝ] TangentSpace I y) = (E →L[ℝ] E) :=
     fun _ => rfl
-  -- Step 3 closure via narrow structural axiom `tangentBundle_symmL_smoothAt`
-  -- (file-level, with detailed Phase 4.8 repair plan in its docstring).
+  -- Step 3 closure via narrow structural axiom `tangentBundle_symmL_smoothAt`.
   set_option backward.isDefEq.respectTransparency false in
   have h_symmL : MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)
       (fun y : M => cast (h_TS_E_eq y) (e.symmL ℝ y)) x :=
@@ -531,7 +382,7 @@ theorem MDifferentiableAt.metricInner_smoothAt
 
 end OpenGALib
 
-/-! ## Phase 4.7.3 — Framework-owned Riesz extraction
+/-! ## Framework-owned Riesz extraction
 
 Build out the Riesz isomorphism `T_xM ≃ₗ[ℝ] (T_xM →L[ℝ] ℝ)` via the metric
 tensor's positive-definiteness + finite-dim invertibility, providing the
@@ -578,14 +429,7 @@ omit [FiniteDimensional ℝ E] in
 /-- **Vector equality via inner-product equality** (non-degeneracy).
 
 Two tangent vectors at $x$ are equal iff their inner products with all
-test vectors agree. Direct corollary of `metricToDual_injective` —
-the injectivity of the forward Riesz map turns "Riesz functionals
-agree" into "vectors agree".
-
-Used by Phase 4.7.8.B to reduce vector identities (e.g., torsion-free,
-metric-compat formulas at the level of Levi-Civita output vectors) to
-inner-product identities (which are then discharged via the koszul
-identities + `koszulCovDeriv_inner_eq`). -/
+test vectors agree. Direct corollary of `metricToDual_injective`. -/
 theorem metricInner_eq_iff_eq (x : M) (v w : TangentSpace I x) :
     (∀ Z : TangentSpace I x, metricInner x v Z = metricInner x w Z) ↔ v = w := by
   refine ⟨fun h => ?_, fun h _ => by rw [h]⟩
@@ -656,7 +500,7 @@ end RieszExtraction
 
 end OpenGALib
 
-/-! ## Phase 4.7.1 self-test: typeclass synthesizes + accessors resolve -/
+/-! ## Self-test: typeclass synthesises + accessors resolve -/
 
 section SelfTest
 
@@ -706,7 +550,7 @@ example
     ContMDiff I 𝓘(ℝ, E →L[ℝ] E →L[ℝ] ℝ) ∞ g.metricTensor :=
   g.smoothMetric
 
-/-! ## Phase 4.7.2 self-tests: metricInner + algebra lemmas -/
+/-! ## Self-tests: metricInner + algebra lemmas -/
 
 /-- Combined linearity self-test: bilinearity of metricInner. -/
 example
@@ -736,7 +580,7 @@ example
     metricInner x (V₁ - V₂) W = metricInner x V₁ W - metricInner x V₂ W :=
   metricInner_sub_left x V₁ V₂ W
 
-/-! ## Phase 4.7.3 self-tests: metricRiesz construction -/
+/-! ## Self-tests: metricRiesz construction -/
 
 /-- Self-test: `metricToDual` injective. -/
 example

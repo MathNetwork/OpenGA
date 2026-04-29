@@ -18,7 +18,7 @@ Riemann curvature tensor, Ricci curvature, scalar curvature.
     applied to `ricciTraceMap`. Finite-dimensional trace operator from
     Mathlib (`LinearMap.trace`); the `[FiniteDimensional ℝ E]` cascade
     propagates through the framework-owned NACG / IPS bridges
-    (`Riemannian.Metric` Phase 4.7.9).
+    (`Riemannian.Metric`).
   * `scalarCurvature` — real `noncomputable def` via summation of
     $\mathrm{Ric}(e_i, e_i)$ over Mathlib's `stdOrthonormalBasis ℝ
     (TangentSpace I x)`. Basis-independent because the sum equals
@@ -30,7 +30,7 @@ Riemann curvature tensor, Ricci curvature, scalar curvature.
     `C^\infty(M)`-linearity of the curvature endomorphism in its first
     argument (when extended via constants from $T_xM$) requires the
     Levi-Civita-on-`covDeriv` linearity lemmas. Repair: derive from
-    `koszulCovDeriv`'s linearity in $X$ once Phase 4.7.8.C is closed.
+    `koszulCovDeriv`'s linearity in $X$ when its linearity proofs land.
   * `ricci_symm` — PRE-PAPER. Symmetry of Ricci requires the algebraic
     Bianchi identity on the Riemann tensor. Repair: framework self-build
     of Bianchi from torsion-freeness + curvature definition.
@@ -78,7 +78,7 @@ makes the formula well-defined regardless of the linearity proofs.
 **Stability**: experimental (PRE-PAPER). `map_add'` and `map_smul'`
 sorry'd; downstream code consuming `ricciTraceMap` should rely only on
 its application to specific vectors, not on its `LinearMap` properties,
-until Phase 4.7.8.C closes the linearity proofs. -/
+until linearity proofs land. -/
 noncomputable def ricciTraceMap
     (X Y : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x →ₗ[ℝ] TangentSpace I x where

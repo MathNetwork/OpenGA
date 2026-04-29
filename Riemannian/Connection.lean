@@ -11,33 +11,29 @@ import Riemannian.Metric
 # Riemannian.Connection
 
 The **Levi-Civita connection** on a Riemannian manifold $M$: the unique
-torsion-free, metric-compatible covariant derivative on the tangent bundle
-$TM$.
+torsion-free, metric-compatible covariant derivative on the tangent
+bundle $TM$.
 
-## Form
+## Construction
 
-`leviCivitaConnection` is grounded as a real `noncomputable def` via
-`Classical.choose` over an existence axiom (`leviCivitaConnection_exists`).
-The existence axiom is a standard theorem (Koszul formula / do Carmo §2);
-its inline proof is deferred to a future Phase that may replace this
-construction with Mathlib's eventual constructive Levi-Civita instance.
+`leviCivitaConnection` is built explicitly via the Koszul functional +
+Riesz extraction:
 
-This pattern matches the framework's `tangentCone` (commit `ad54a8e`)
-which uses `Classical.choice` over a real predicate for the same reason.
+  * `koszulFunctional X Y Z x` — the Koszul scalar $K(X, Y; Z)(x)$.
+  * Algebraic identities (`koszul_antisymm`, `koszul_metric_compat_sum`,
+    `koszul_smul_*`, `koszul_add_*`) establish the tensorial properties
+    needed for Riesz extraction.
+  * `koszulCovDeriv` extracts the Levi-Civita connection vector via
+    Riesz representation of $Z \mapsto \tfrac12 K(X, Y; Z)(x)$.
+  * `leviCivitaConnection` packages this into Mathlib's
+    `CovariantDerivative` structure.
 
-## Phase 4.7 redesign
-
-Phase 4.7's architectural redesign (per `docs/PHASE_4_7_REDESIGN_PLAN.md`)
-replaces the lean4#13063-blocked `Bundle.RiemannianBundle`-derived inner
-product path on tangent vectors with the framework-owned typeclass
-`OpenGALib.RiemannianMetric I M` (see `Riemannian/Metric.lean`). All
-inner products on tangent vectors in this file go through `metricInner`
-+ `metricRiesz` (framework-owned), avoiding Mathlib's
-`Inner ℝ (TangentSpace I x)` synthesis path entirely.
+Inner products on tangent vectors go through `metricInner` /
+`metricRiesz` (framework-owned, see `Riemannian.Metric`) rather than
+Mathlib's `Inner ℝ (TangentSpace I x)` synthesis.
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 (Levi-Civita theorem,
-existence + uniqueness); Mathlib's `CovariantDerivative.torsion` provides
-the torsion-vanishing condition; metric-compatibility lemma deferred.
+existence + uniqueness via the Koszul formula).
 -/
 
 open Bundle VectorField OpenGALib
@@ -51,27 +47,15 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteS
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [RiemannianMetric I M]
 
-/-! ## Phase 4.5.A — Koszul functional + basic algebraic identities
+/-! ## Koszul functional + basic algebraic identities
 
-Toward an explicit Koszul-formula construction of the Levi-Civita
-connection, replacing the `Classical.choose` over the existence axiom
-`leviCivitaConnection_exists`. This is the first of four sub-phases:
+The Koszul functional $K(X, Y; Z)$ encodes the Levi-Civita connection:
+$\nabla_X Y$ is the unique vector with $\langle \nabla_X Y, Z \rangle =
+\tfrac12 K(X, Y; Z)$ for all $Z$. Below we define `koszulFunctional`
+and prove the foundational identities (anti-symmetry, metric
+compatibility) used downstream for Riesz extraction.
 
-  * Phase 4.5.A (this section): `koszulFunctional` def + algebraic
-    identities `koszul_antisymm` (toward LC1 torsion-free) +
-    `koszul_metric_compat_sum` (toward LC2 metric-compatible).
-  * Phase 4.5.B: $C^\infty(M)$-linearity in $Z$ (extension-independence).
-  * Phase 4.5.C: Riesz extraction → explicit `leviCivitaConnection`
-    real `noncomputable def`, plus `IsCovariantDerivativeOn` axioms
-    (additivity + Leibniz).
-  * Phase 4.5.D: derive torsion-free + metric-compat from the Koszul
-    construction; replace the `leviCivitaConnection_exists` axiom.
-
-Each sub-phase keeps the existing `leviCivitaConnection_exists` axiom
-intact until 4.5.D, so the chain proof stays 0-sorry throughout.
-
-**Ground truth**: do Carmo 1992 *Riemannian Geometry*, §2 Theorem 3.6
-(Levi-Civita theorem, existence + uniqueness via the Koszul formula).
+**Ground truth**: do Carmo 1992 §2 Theorem 3.6.
 -/
 
 /-- The **Koszul functional** $K(X, Y; Z) : M \to \mathbb{R}$.
@@ -84,7 +68,7 @@ $$K(X, Y; Z)(x) \;=\; X\langle Y, Z\rangle\,(x) + Y\langle Z, X\rangle\,(x)
 The Levi-Civita connection $\nabla_X Y$ is determined by Riesz
 representation of the linear functional
 $Z \mapsto \tfrac12 K(X, Y; Z)(x)$ via the inner product on
-$T_xM$ (Phase 4.5.C).
+$T_xM$.
 
 **Notation note**: $X\langle Y, Z\rangle$ denotes the directional
 derivative of the real-valued function $y \mapsto \langle Y(y), Z(y)\rangle$
@@ -201,17 +185,17 @@ theorem koszul_metric_compat_sum
   rw [metricInner_neg_left]
   ring
 
-/-! ## Phase 4.5.B — Koszul $C^\infty(M)$-linearity in $Z$
+/-! ## Koszul $C^\infty(M)$-linearity in $Z$
 
 The Koszul functional $K(X, Y; Z)(x)$, viewed as a map of $Z$, is
 $C^\infty(M)$-linear:
 $$K(X, Y; f \cdot Z)(x) = f(x) \cdot K(X, Y; Z)(x) \qquad
   \text{for all } f \in C^\infty(M),\ Z \in \mathfrak{X}(M).$$
 
-This is the key tensorial property enabling Riesz extraction
-(Phase 4.5.C): a $C^\infty(M)$-linear functional on $\mathfrak{X}(M)$
-descends to a fibrewise linear functional on $T_xM$ at each $x$, and
-hence is represented by a unique vector field via the Riemannian metric.
+This is the key tensorial property enabling Riesz extraction: a
+$C^\infty(M)$-linear functional on $\mathfrak{X}(M)$ descends to a
+fibrewise linear functional on $T_xM$ at each $x$, and hence is
+represented by a unique vector field via the Riemannian metric.
 
 ### Algebraic content (do Carmo §2 Theorem 3.6 existence proof, Step 2)
 
@@ -305,7 +289,7 @@ omit [FiniteDimensional ℝ E] in
 /-- **Koszul $C^\infty(M)$-linearity in $Z$**:
 $$K(X, Y; f \cdot Z)(x) = f(x) \cdot K(X, Y; Z)(x).$$
 
-Foundation of Riesz extraction (Phase 4.5.C): together with $\mathbb{R}$-linearity
+Foundation of Riesz extraction: together with $\mathbb{R}$-linearity
 in $Z$ and continuity, this property makes $\tfrac12 K(X, Y; \cdot)(x)$ a bounded
 linear functional on $T_xM$, hence represented by a unique tangent vector
 $\nabla_X Y(x)$ via the inner product.
@@ -380,13 +364,13 @@ theorem koszul_smul_right
   rw [h_fromTS_X, h_fromTS_Y]
   ring
 
-/-! ## Phase 4.5.C Session A — Additional koszul algebraic identities
+/-! ## Additional koszul algebraic identities
 
 Five identities establishing the koszul functional's additivity and
 $C^\infty(M)$-linearity in the X and Y axes (Z-axis already covered by
-`koszul_smul_right`, Phase 4.5.B.2). Each identity reduces, via
+`koszul_smul_right`). Each identity reduces, via
 `koszulCovDeriv_inner_eq` + Riesz uniqueness, to a corresponding
-Levi-Civita connection axiom (Phase 4.5.C Session B). -/
+Levi-Civita connection axiom. -/
 
 omit [FiniteDimensional ℝ E] in
 /-- **Koszul Z-additivity**: $K(X, Y; Z_1 + Z_2) = K(X, Y; Z_1) + K(X, Y; Z_2)$.
@@ -516,7 +500,7 @@ omit [FiniteDimensional ℝ E] in
 /-- **Koszul X-axis $C^\infty(M)$-linearity**:
 $K(f \cdot X, Y; Z)(x) = f(x) \cdot K(X, Y; Z)(x)$.
 
-Mirror of `koszul_smul_right` (Phase 4.5.B.2) on the X axis. Same algebraic
+Mirror of `koszul_smul_right` on the X axis. Same algebraic
 structure: $Y(f)$ terms cancel via $\langle Z, X\rangle - \langle X, Z\rangle = 0$;
 $Z(f)$ terms cancel via $\langle X, Y\rangle - \langle Y, X\rangle = 0$
 (both by inner symmetry).
@@ -628,30 +612,14 @@ theorem koszul_smul_middle
   rw [h_fromTS_X, h_fromTS_Z]
   ring
 
-/-! ## Phase 4.5.C — Riesz extraction: explicit Levi-Civita via Koszul
+/-! ## Riesz extraction: explicit Levi-Civita via Koszul
 
-Phase 4.5.C constructs `∇_X Y(x) ∈ T_xM` directly via Riesz representation
-of the half-Koszul functional $Z \mapsto \tfrac12 K(X, Y; Z)(x)$. Combined
-with Phase 4.5.B.2 (`koszul_smul_right`, $C^\infty(M)$-linearity in $Z$)
-and standard smooth bump function machinery, this characterizes
-$\nabla_X Y(x)$ as the unique vector with
+Constructs $\nabla_X Y(x) \in T_xM$ directly via Riesz representation of
+the half-Koszul functional $Z \mapsto \tfrac12 K(X, Y; Z)(x)$. Combined
+with $C^\infty(M)$-linearity in $Z$ (`koszul_smul_right`), this
+characterises $\nabla_X Y(x)$ as the unique vector with
 $$\langle \nabla_X Y(x), Z(x)\rangle = \tfrac12 K(X, Y; Z)(x)$$
-for all extensions $Z$ of any tangent vector at $x$.
-
-After Phase 4.7 redesign: Riesz uses framework-owned `metricRiesz`
-(`Riemannian.Metric`) instead of `(InnerProductSpace.toDual ℝ _).symm`.
-
-Phase ordering:
-* Phase 4.5.C.1 (this section): existence axiom + def + Riesz defining
-  property.
-* Phase 4.5.C.2: supporting koszul algebraic identities (additivity in
-  $X, Y$; $\mathbb{R}$-smul in $Y$; $C^\infty(M)$-linearity in $X$;
-  Leibniz in $Y$).
-* Phase 4.5.C.3: connection axioms C1 ($C^\infty$-linear in $X$),
-  C2 ($\mathbb{R}$-linear in $Y$), C3 (Leibniz in $Y$) derived from the
-  koszul identities + Riesz uniqueness.
-* Phase 4.5.D: equate `koszulCovDeriv` with bundled `leviCivitaConnection`,
-  close `leviCivitaConnection_exists`. -/
+for all smooth $Z$. Riesz uses the framework-owned `metricRiesz`. -/
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M] in
 /-- **Locality of the Koszul functional in $Z$**: if two smooth vector
@@ -659,8 +627,8 @@ fields $Z_1, Z_2$ agree on a neighborhood of $x$, then
 $K(X, Y; Z_1)(x) = K(X, Y; Z_2)(x)$.
 
 Foundation lemma for extension-independence: combined with bump function
-decomposition (forthcoming Phase 4.5.C Session B.2.alt.2 followups), this
-gives well-definedness of the linear functional in `koszulLinearFunctional_exists`.
+decomposition, this gives well-definedness of the linear functional in
+`koszulLinearFunctional_exists`.
 
 The 6 Koszul terms localize via:
 * `directionalDeriv` terms: `Filter.EventuallyEq.mfderiv_eq` (Mathlib).
@@ -697,8 +665,7 @@ is tensorial at $x$: it respects $C^\infty(M)$-scalar multiplication
 The scalar smoothness hypotheses of `koszul_smul_right` /
 `koszul_add_right` (`hYZ`, `hZX`, `h_YZ₁/₂`, `h_Z₁/₂X`) are derived
 from the bundle-section smoothness of $X, Y, Z$ via
-`MDifferentiableAt.metricInner_smoothAt` (Phase 4.7.8.A helper in
-`Riemannian.Metric`). -/
+`MDifferentiableAt.metricInner_smoothAt`. -/
 private theorem koszulFunctional_tensorialAt
     (X Y : Π y : M, TangentSpace I y) (x : M)
     (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
@@ -730,32 +697,19 @@ private theorem koszulFunctional_tensorialAt
     rw [koszul_add_right X Y σ σ' x h_YZ₁ h_YZ₂ h_Z₁X h_Z₂X hσ hσ']
     ring
 
-/-- **Existence theorem for Riesz extraction**: at each $x \in M$, given
-smoothness of $X$ and $Y$ at $x$, the half-Koszul functional
-$Z \mapsto \tfrac12 K(X, Y; Z)(x)$ admits a unique tangent-space
-representative — provided $Z$ is also smooth at $x$.
+/-- **Existence theorem for Riesz extraction**: given smoothness of $X$
+and $Y$ at $x$, the half-Koszul functional $Z \mapsto \tfrac12 K(X, Y; Z)(x)$
+admits a unique tangent-space representative for smooth $Z$.
 
-**Phase 4.7.8.A closure**: closed via `TensorialAt.mkHom` applied to
-`koszulFunctional_tensorialAt` (which establishes tensoriality from
-`koszul_smul_right` + `koszul_add_right`), followed by
-`TensorialAt.mkHom_apply` (which identifies
-$\varphi(Z(x)) = (1/2) K(X, Y; Z)(x)$ for smooth $Z$). The TensorialAt
-construction's pointwise lemma (Mathlib `TensorialAt.pointwise`) gives
-extension-independence "for free" once tensoriality is established.
+Proof: `TensorialAt.mkHom` applied to `koszulFunctional_tensorialAt`
+(tensoriality from `koszul_smul_right` + `koszul_add_right`) +
+`TensorialAt.mkHom_apply` for the defining identity. Smoothness of $X, Y$
+is needed to derive scalar smoothness of $\langle Y, Z \rangle$ and
+$\langle Z, X \rangle$ via `metricInner_smoothAt`; smoothness of $Z$ is
+required because $K(X, Y; Z)(x)$ depends on $Z$'s behaviour near $x$
+via `mfderiv` and `mlieBracket`.
 
-**Smoothness hypotheses**:
-- `hX`, `hY` (outside the universal): vector field smoothness of $X, Y$
-  at $x$, needed to derive smoothness of inner products $\langle Y, Z\rangle$
-  and $\langle Z, X\rangle$ via `MDifferentiableAt.metricInner_smoothAt`
-  (Phase 4.7.8.A helper).
-- `hZ` (inside the universal): vector field smoothness of $Z$ at $x$,
-  required by `mkHom_apply`.
-
-For non-smooth $Z$, the equation may fail since $K(X, Y; Z)(x)$ depends
-on $Z$'s behavior near $x$ (via `mfderiv` and `mlieBracket`), not just $Z(x)$.
-
-**Ground truth**: do Carmo 1992 §2 Theorem 3.6 existence proof, Step 3
-(Riesz extraction). -/
+**Ground truth**: do Carmo 1992 §2 Theorem 3.6 existence proof, Step 3. -/
 private theorem koszulLinearFunctional_exists
     (X Y : Π x : M, TangentSpace I x) (x : M)
     (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
@@ -792,13 +746,8 @@ $$\langle \nabla_X Y(x), Z(x)\rangle = \tfrac12 K(X, Y; Z)(x)$$
 for all smooth $Z$, extracted via Riesz from `koszulCovDeriv_exists`.
 The metric is the framework-owned `metricInner`.
 
-Real `noncomputable def` via conditional `Classical.choose`: when both
-$X$ and $Y$ are smooth at $x$, returns the Riesz representative; otherwise
-returns $0$ (the conventional zero CLM extension to non-smooth sections,
-matching `CovariantDerivative.toFun`'s zero-on-non-smooth behavior).
-
-Phase 4.5.D will prove `koszulCovDeriv X Y x = covDeriv X Y x` and close
-`leviCivitaConnection_exists`. -/
+When both $X$ and $Y$ are smooth at $x$, returns the Riesz representative
+via `Classical.choose` over `koszulCovDeriv_exists`. -/
 noncomputable def koszulCovDeriv
     (X Y : Π x : M, TangentSpace I x) (x : M)
     (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
@@ -811,9 +760,7 @@ noncomputable def koszulCovDeriv
 \tfrac12 K(X, Y; Z)(x)$ for smooth $X, Y, Z$, with `metricInner` as the
 framework-owned inner product.
 
-Direct extraction via `Classical.choose_spec` from `koszulCovDeriv_exists`.
-Foundation of Phase 4.5.C Session B connection-axiom proofs (each reduces
-via Riesz uniqueness applied to this characterization). -/
+Direct extraction via `Classical.choose_spec` from `koszulCovDeriv_exists`. -/
 theorem koszulCovDeriv_inner_eq
     (X Y Z : Π x : M, TangentSpace I x) (x : M)
     (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
@@ -826,48 +773,26 @@ theorem koszulCovDeriv_inner_eq
       = (1/2 : ℝ) * koszulFunctional X Y Z x :=
   Classical.choose_spec (koszulCovDeriv_exists X Y x hX hY) Z hZ
 
-/-! ## Phase 4.7.8.B — Levi-Civita closure via Koszul + Riesz
+/-! ## Levi-Civita closure via Koszul + Riesz
 
-Closes the previously high-level PRE-PAPER axiom
-`leviCivitaConnection_exists` by:
+`leviCivitaConnection_exists` is closed by combining:
 
-* `koszulLeviCivita_exists` (narrow structural axiom, sorry'd):
-  there exists a `CovariantDerivative` whose `toFun` extends the
-  pointwise Koszul value `koszulCovDeriv` for every smooth
-  $(X, Y, x)$. Pure type-level CLM-construction work — no new
-  mathematical content beyond Phase 4.7.8.A's TensorialAt machinery
-  applied in the X argument.
-
-* `leviCivitaConnection_exists` (closed): combines the narrow axiom
-  with `koszul_antisymm` (→ torsion-free via `metricInner_eq_iff_eq`
-  + `koszulCovDeriv_inner_eq` + Mathlib's `FiberBundle.extend`) and
-  `koszul_metric_compat_sum` (→ metric-compatibility for smooth
-  vector fields).
-
-Sorry decomposition (analogous to Phase 4.7.8.A's
-`koszulLinearFunctional_exists` decomposition): replaces a closure-
-inscrutable end-to-end Levi-Civita axiom with a narrow structural
-axiom about CovariantDerivative wrapping. -/
+* `koszulLeviCivita_exists` — narrow structural axiom (sorry'd): a
+  `CovariantDerivative` whose `toFun` extends the pointwise Koszul
+  value for smooth inputs. Type-level CLM-construction work, no new
+  mathematical content. See `SORRY_CATALOG.md`.
+* `koszul_antisymm` → torsion-free via `metricInner_eq_iff_eq` +
+  `koszulCovDeriv_inner_eq` + Mathlib's `FiberBundle.extend`.
+* `koszul_metric_compat_sum` → metric-compatibility for smooth vector
+  fields. -/
 
 /-- **Narrow CovariantDerivative wrap axiom for the Koszul construction.**
 
-There exists a `CovariantDerivative` whose `toFun` extends the
-pointwise framework-Koszul value `koszulCovDeriv` for every triple
-$(X, Y, x)$ of smooth vector fields and basepoint.
-
-**Sorry status**: PRE-PAPER structural axiom. Body is a Mathlib
-`TensorialAt.mkHom` in the X argument (analogous to Phase 4.7.8.A's
-TensorialAt closure for `koszulLinearFunctional_exists`, but in the
-opposite koszul axis) plus the `IsCovariantDerivativeOnUniv` `add`
-and `leibniz` fields (derivable from `koszul_add_middle` and
-`koszul_smul_middle` via Riesz). Repair owner: framework self-build,
-~150–250 LOC of structural CLM-construction work. No new mathematical
-content — purely the bundling step into Mathlib's CovariantDerivative
-data type.
-
-**Repair trigger**: when the framework's TensorialAt-mkHom-in-X helper
-is built for the `Φ X := koszulCovDeriv X Y x` family, this sorry is
-mechanically discharged. -/
+A `CovariantDerivative` whose `toFun` extends the pointwise
+`koszulCovDeriv` value for smooth $(X, Y)$. The body is a TensorialAt
+mkHom in the X argument plus the `IsCovariantDerivativeOnUniv` add /
+leibniz fields (derivable from `koszul_add_middle` /
+`koszul_smul_middle` via Riesz); see `SORRY_CATALOG.md`. -/
 private theorem koszulLeviCivita_exists :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       ∀ (X Y : Π x : M, TangentSpace I x) (x : M)
@@ -881,26 +806,14 @@ private theorem koszulLeviCivita_exists :
 /-- **Existence theorem for the Levi-Civita connection.**
 
 On a Riemannian manifold, there exists a covariant derivative on the
-tangent bundle that is **torsion-free** and **metric-compatible** (for
-smooth vector fields). This is the Levi-Civita theorem
-(do Carmo 1992 §2 Theorem 3.6) — existence + uniqueness via the
-Koszul formula.
+tangent bundle that is torsion-free and metric-compatible (for smooth
+vector fields).
 
-**Phase 4.7.8.B closure**: the previously closure-inscrutable PRE-PAPER
-axiom is now a real proof, decomposing the mathematical content into:
-* `koszulLeviCivita_exists` — narrow structural axiom (sorry'd) about
-  CovariantDerivative wrapping of the pointwise Koszul construction.
-* `koszul_antisymm` (Phase 4.7.4 refactored) → torsion = 0 via
-  `metricInner_eq_iff_eq` + `koszulCovDeriv_inner_eq` + Mathlib's
-  `FiberBundle.extend`.
-* `koszul_metric_compat_sum` (Phase 4.7.4 refactored) → metric-compat
-  via `koszulCovDeriv_inner_eq` + the narrow axiom's extension property.
+The metric-compat statement assumes smooth $X, Y, Z$ — matching do Carmo's
+textbook setup; an unconditional form would be an over-statement.
 
-**Smoothness hypotheses** on metric-compat: do Carmo 1992 §2 Theorem 3.6
-implicitly assumes smooth $X, Y, Z$; the Phase 4.5 unconditional form
-was an over-statement (Phase 4.7.8.B correction).
-
-**Ground truth**: do Carmo 1992 §2 Theorem 3.6. -/
+**Ground truth**: do Carmo 1992 §2 Theorem 3.6 (existence + uniqueness via
+the Koszul formula). -/
 theorem leviCivitaConnection_exists :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       cov.torsion = 0 ∧
@@ -955,7 +868,7 @@ Riemannian manifold $M$: the unique torsion-free, metric-compatible
 covariant derivative.
 
 Real `noncomputable def` via `Classical.choose` over the now-closed
-`leviCivitaConnection_exists` (Phase 4.7.8.B). The chosen value
+`leviCivitaConnection_exists`. The chosen value
 satisfies `leviCivitaConnection.torsion = 0` (see
 `leviCivitaConnection_torsion_zero`).
 
@@ -979,8 +892,7 @@ $$\nabla_X \langle Y, Z \rangle (x) =
   \langle \nabla_X Y, Z \rangle (x) + \langle Y, \nabla_X Z \rangle (x).$$
 
 The metric is the framework-owned `metricInner`. Smoothness hypotheses
-match do Carmo 1992 §2 Theorem 3.6's textbook setup; the Phase 4.5
-unconditional form was an over-statement (Phase 4.7.8.B correction). -/
+on $X, Y, Z$ match do Carmo 1992 §2 Theorem 3.6's textbook setup. -/
 theorem leviCivitaConnection_metric_compatible
     (X Y Z : Π x : M, TangentSpace I x) (x : M)
     (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
@@ -1038,7 +950,7 @@ noncomputable example
     (X Y : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x := covDeriv X Y x
 
-/-! ## Phase 4.5.A self-test: Koszul functional typeclass + identities -/
+/-! ## Self-test: Koszul functional typeclass + identities -/
 
 noncomputable example
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
@@ -1071,7 +983,7 @@ example
       = 2 * directionalDeriv (fun y => metricInner y (Y y) (Z y)) x (X x) :=
   koszul_metric_compat_sum X Y Z x
 
-/-! ## Phase 4.5.B self-test: Koszul $C^\infty(M)$-linearity in $Z$ -/
+/-! ## Self-test: Koszul $C^\infty(M)$-linearity in $Z$ -/
 
 example
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
@@ -1088,7 +1000,7 @@ example
     koszulFunctional X Y (fun y => f y • Z y) x = f x * koszulFunctional X Y Z x :=
   koszul_smul_right X Y Z f x hf hYZ hZX hZ
 
-/-! ## Phase 4.5.C.1 self-test: koszulCovDeriv + Riesz defining property -/
+/-! ## Self-test: koszulCovDeriv + Riesz defining property -/
 
 noncomputable example
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
@@ -1120,7 +1032,7 @@ example
       = (1/2 : ℝ) * koszulFunctional X Y Z x :=
   koszulCovDeriv_inner_eq X Y Z x hX hY hZ
 
-/-! ## Phase 4.5.C Session A self-test: 5 koszul algebraic identities -/
+/-! ## Self-test: 5 koszul algebraic identities -/
 
 example
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
