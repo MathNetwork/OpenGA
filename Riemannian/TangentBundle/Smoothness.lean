@@ -143,18 +143,33 @@ private theorem mfderivWithinFlat_mdifferentiableWithinAt
           (extChartAt I x x))
         (Set.range I) (extChartAt I x x) :=
     h_smooth_inv.mfderivWithin_const (m := 1) h2 h_mem h_unique
-  -- Step 3: Bridge inCoordinates ↔ flat form via the inverse-mfderiv identity.
-  -- Idea: `mfderivWithin (extChartAt I x).symm (range I) e₀
-  --        = (mfderiv (extChartAt I x) ((extChartAt I x).symm e₀)).inverse`
-  -- (from `mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm'`).
-  -- Smoothness of `e₀ ↦ mfderiv (extChartAt I x) (.symm e₀)`:
-  --   - `e₀ ↦ (extChartAt I x).symm e₀` smooth (chart inverse on target)
-  --   - `y ↦ mfderiv (extChartAt I x) y` smooth via Mathlib's
-  --     `ContMDiffAt.mfderiv_const` (inCoordinates form)
-  --   - At y = x, `mfderiv (extChartAt I x) x = id`, so chart correction at
-  --     basepoint is identity. Use Helper 2 pattern for eventually-equal
-  --     identification with raw form.
-  -- Smoothness of `CLM ↦ inverse(CLM)` via `IsInvertible.contDiffAt_map_inverse`.
+  -- Step 3: convert ContMDiffWithinAt → MDifferentiableWithinAt.
+  have h_inCoordsW :
+      MDifferentiableWithinAt 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E)
+        (inTangentCoordinates 𝓘(ℝ, E) I id (extChartAt I x).symm
+          (mfderivWithin 𝓘(ℝ, E) I (extChartAt I x).symm (Set.range I))
+          (extChartAt I x x))
+        (Set.range I) (extChartAt I x x) :=
+    h_inCoords.mdifferentiableWithinAt one_ne_zero
+  -- Step 4: Bridge `inCoordinates` ↔ raw form on a neighbourhood within
+  -- `range I` of `extChartAt I x x`. By `mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm`,
+  -- the inCoords value of `mfderivWithin (.symm) (range I)` is constant `id`
+  -- on the chart target — but this means `inCoords ≠ raw form` (the latter
+  -- being the actual non-trivial chart-inverse-mfderiv). The proof technique
+  -- of `Mathlib/VectorField/Pullback.lean` requires composing with
+  -- `ContinuousLinearMap.inverse` to recover raw form smoothness from inCoords
+  -- smoothness of the FORWARD chart's mfderiv (not the backward chart we have).
+  --
+  -- TODO closure path (full proof):
+  -- (a) Apply mfderivWithin_const to `extChartAt I x : M → E` (forward chart),
+  --     get inCoords smoothness of `y ↦ mfderiv (extChartAt I x) y` as
+  --     function `M → (E →L E)` near `x`.
+  -- (b) Compose with `ContinuousLinearMap.inverse` (smooth at invertible CLMs;
+  --     forward chart's mfderiv is invertible by `isInvertible_mfderiv_extChartAt`).
+  -- (c) Compose with `(extChartAt I x).symm : E → M` smooth on `range I`.
+  -- (d) The result `e₀ ↦ inverse(mfderiv (extChartAt I x) ((.symm) e₀))` equals
+  --     `mfderivWithin (.symm) (range I) e₀ = mfderivWithinFlat x e₀` by
+  --     `mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm` + `IsInvertible.of_inverse`.
   sorry
 
 /-! ## Helper 2 — eventually-equal rewrite (closed)
