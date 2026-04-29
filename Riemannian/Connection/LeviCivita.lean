@@ -100,10 +100,7 @@ from the bundle-section smoothness of $X, Y, Z$ via
 `MDifferentiableAt.metricInner_smoothAt`. -/
 private theorem koszulFunctional_tensorialAt
     (X Y : Π y : M, TangentSpace I y) (x : M)
-    (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
-    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x) :
+    (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x) :
     TensorialAt I E (fun Z : (Π y : M, TangentSpace I y) =>
       (1/2 : ℝ) * koszulFunctional X Y Z x) x where
   smul := by
@@ -144,14 +141,10 @@ via `mfderiv` and `mlieBracket`.
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 existence proof, Step 3. -/
 private theorem koszulLinearFunctional_exists
     (X Y : Π x : M, TangentSpace I x) (x : M)
-    (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
-    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x) :
+    (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x) :
     ∃ φ : (TangentSpace I x) →L[ℝ] ℝ,
       ∀ Z : Π y : M, TangentSpace I y,
-        MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-          (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x →
+        TangentSmoothAt Z x →
         φ (Z x) = (1/2 : ℝ) * koszulFunctional X Y Z x := by
   refine ⟨TensorialAt.mkHom _ x (koszulFunctional_tensorialAt X Y x hX hY),
           fun Z hZ => ?_⟩
@@ -159,13 +152,9 @@ private theorem koszulLinearFunctional_exists
 
 theorem koszulCovDeriv_exists
     (X Y : Π x : M, TangentSpace I x) (x : M)
-    (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
-    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x) :
+    (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x) :
     ∃ v : TangentSpace I x, ∀ Z : Π y : M, TangentSpace I y,
-      MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-        (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x →
+      TangentSmoothAt Z x →
       metricInner x v (Z x) = (1/2 : ℝ) * koszulFunctional X Y Z x := by
   obtain ⟨φ, hφ⟩ := koszulLinearFunctional_exists X Y x hX hY
   refine ⟨metricRiesz x φ, fun Z hZ => ?_⟩
@@ -182,10 +171,7 @@ When both $X$ and $Y$ are smooth at $x$, returns the Riesz representative
 via `Classical.choose` over `koszulCovDeriv_exists`. -/
 noncomputable def koszulCovDeriv
     (X Y : Π x : M, TangentSpace I x) (x : M)
-    (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
-    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x) : TangentSpace I x :=
+    (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x) : TangentSpace I x :=
   Classical.choose (koszulCovDeriv_exists X Y x hX hY)
 
 /-- **Riesz defining property**: $\langle \nabla_X Y(x), Z(x)\rangle =
@@ -195,12 +181,8 @@ framework-owned inner product.
 Direct extraction via `Classical.choose_spec` from `koszulCovDeriv_exists`. -/
 theorem koszulCovDeriv_inner_eq
     (X Y Z : Π x : M, TangentSpace I x) (x : M)
-    (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
-    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
-    (hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x) :
+    (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x)
+    (hZ : TangentSmoothAt Z x) :
     metricInner x (koszulCovDeriv X Y x hX hY) (Z x)
       = (1/2 : ℝ) * koszulFunctional X Y Z x :=
   Classical.choose_spec (koszulCovDeriv_exists X Y x hX hY) Z hZ
@@ -228,10 +210,7 @@ leibniz fields (derivable from `koszul_add_middle` /
 private theorem koszulLeviCivita_exists :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       ∀ (X Y : Π x : M, TangentSpace I x) (x : M)
-        (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-          (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
-        (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-          (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x),
+        (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x),
         cov.toFun Y x (X x) = koszulCovDeriv X Y x hX hY := by
   sorry
 
@@ -250,12 +229,8 @@ theorem leviCivitaConnection_exists :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       cov.torsion = 0 ∧
       ∀ (X Y Z : Π x : M, TangentSpace I x) (x : M)
-        (_hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-          (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
-        (_hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-          (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
-        (_hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-          (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x),
+        (_hX : TangentSmoothAt X x) (_hY : TangentSmoothAt Y x)
+        (_hZ : TangentSmoothAt Z x),
         mfderiv I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x (X x) =
           metricInner x (cov.toFun Y x (X x)) (Z x) +
           metricInner x (Y x) (cov.toFun Z x (X x)) := by
@@ -269,8 +244,7 @@ theorem leviCivitaConnection_exists :
     intro Z₀
     set Z : Π y : M, TangentSpace I y := FiberBundle.extend E Z₀ with hZ_def
     have hZx : Z x = Z₀ := FiberBundle.extend_apply_self _ _
-    have hZ_smooth : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-        (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x :=
+    have hZ_smooth : TangentSmoothAt Z x :=
       FiberBundle.mdifferentiableAt_extend I E Z₀
     rw [← hZx]
     rw [metricInner_sub_left,
@@ -327,12 +301,8 @@ The metric is the framework-owned `metricInner`. Smoothness hypotheses
 on $X, Y, Z$ match do Carmo 1992 §2 Theorem 3.6's textbook setup. -/
 theorem leviCivitaConnection_metric_compatible
     (X Y Z : Π x : M, TangentSpace I x) (x : M)
-    (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x)
-    (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x)
-    (hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x) :
+    (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x)
+    (hZ : TangentSmoothAt Z x) :
     mfderiv I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x (X x) =
       metricInner x ((leviCivitaConnection (I := I) (M := M)).toFun Y x (X x)) (Z x) +
       metricInner x (Y x)

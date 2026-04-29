@@ -23,6 +23,7 @@ existence + uniqueness via the Koszul formula).
 
 open Bundle VectorField OpenGALib
 open scoped ContDiff Manifold
+open OpenGALib
 
 namespace Riemannian
 
@@ -304,8 +305,7 @@ theorem koszul_smul_right
     (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
     (hYZ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x)
     (hZX : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Z y) (X y)) x)
-    (hZ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Z y⟩ : TangentBundle I M)) x) :
+    (hZ : TangentSmoothAt Z x) :
     koszulFunctional X Y (fun y => f y • Z y) x = f x * koszulFunctional X Y Z x := by
   -- Step 1: factor `f` out of the inner products `⟨Y, fZ⟩` and `⟨fZ, X⟩`
   -- pointwise (these are the function-level rewrites that let the product rule fire).
@@ -368,10 +368,8 @@ theorem koszul_add_right
     (h_YZ₂ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z₂ y)) x)
     (h_Z₁X : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Z₁ y) (X y)) x)
     (h_Z₂X : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Z₂ y) (X y)) x)
-    (h_Z₁ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Z₁ y⟩ : TangentBundle I M)) x)
-    (h_Z₂ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Z₂ y⟩ : TangentBundle I M)) x) :
+    (h_Z₁ : TangentSmoothAt Z₁ x)
+    (h_Z₂ : TangentSmoothAt Z₂ x) :
     koszulFunctional X Y (Z₁ + Z₂) x
       = koszulFunctional X Y Z₁ x + koszulFunctional X Y Z₂ x := by
   unfold koszulFunctional
@@ -407,10 +405,8 @@ theorem koszul_add_left
     (h_ZX₂ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Z y) (X₂ y)) x)
     (h_X₁Y : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (X₁ y) (Y y)) x)
     (h_X₂Y : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (X₂ y) (Y y)) x)
-    (h_X₁ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, X₁ y⟩ : TangentBundle I M)) x)
-    (h_X₂ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, X₂ y⟩ : TangentBundle I M)) x) :
+    (h_X₁ : TangentSmoothAt X₁ x)
+    (h_X₂ : TangentSmoothAt X₂ x) :
     koszulFunctional (X₁ + X₂) Y Z x
       = koszulFunctional X₁ Y Z x + koszulFunctional X₂ Y Z x := by
   unfold koszulFunctional
@@ -448,10 +444,8 @@ theorem koszul_add_middle
     (h_Y₂Z : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y₂ y) (Z y)) x)
     (h_XY₁ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (X y) (Y₁ y)) x)
     (h_XY₂ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (X y) (Y₂ y)) x)
-    (h_Y₁ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Y₁ y⟩ : TangentBundle I M)) x)
-    (h_Y₂ : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Y₂ y⟩ : TangentBundle I M)) x) :
+    (h_Y₁ : TangentSmoothAt Y₁ x)
+    (h_Y₂ : TangentSmoothAt Y₂ x) :
     koszulFunctional X (Y₁ + Y₂) Z x
       = koszulFunctional X Y₁ Z x + koszulFunctional X Y₂ Z x := by
   unfold koszulFunctional
@@ -497,8 +491,7 @@ theorem koszul_smul_left
     (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
     (h_ZX : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Z y) (X y)) x)
     (h_XY : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (X y) (Y y)) x)
-    (h_X : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, X y⟩ : TangentBundle I M)) x) :
+    (h_X : TangentSmoothAt X x) :
     koszulFunctional (fun y => f y • X y) Y Z x = f x * koszulFunctional X Y Z x := by
   -- Step 1: factor `f` out of the inner products with `f • X` argument.
   have h_inner_ZfX : (fun y : M => metricInner y (Z y) (f y • X y))
@@ -556,8 +549,7 @@ theorem koszul_smul_middle
     (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
     (h_YZ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x)
     (h_XY : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (X y) (Y y)) x)
-    (h_Y : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, Y y⟩ : TangentBundle I M)) x) :
+    (h_Y : TangentSmoothAt Y x) :
     koszulFunctional X (fun y => f y • Y y) Z x
       = f x * koszulFunctional X Y Z x
         + 2 * directionalDeriv f x (X x) * metricInner x (Y x) (Z x) := by

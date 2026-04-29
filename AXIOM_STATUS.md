@@ -18,11 +18,15 @@ require updating this file.
 
 **Total**: **0** axioms.
 
-The previous `tangentBundle_symmL_smoothAt` axiom (Phase 4.7.5.C, in
-`Riemannian/Metric/Smooth.lean`) has been converted to a `theorem`
-declaration in Phase 5 (C'2); the body is currently `sorry`'d (tracked
-in `SORRY_CATALOG.md`) with a detailed Mathlib-`Pullback.lean`-based
-proof outline. The closure of this sorry remains a Phase 4.8 follow-up.
+The previous `tangentBundle_symmL_smoothAt` axiom (Phase 4.7.5.C) has
+been converted to a `theorem` declaration in Phase 5 (C'2) and then
+factored further: the public-facing
+`TangentBundle.symmLFlat_mdifferentiableAt` (in
+`Riemannian/TangentBundle/Smoothness.lean`) is closed modulo a single
+private helper `mfderivWithinFlat_mdifferentiableAt`, whose body is
+currently `sorry`'d (tracked in `SORRY_CATALOG.md`) with a detailed
+Mathlib-`Pullback.lean`-based proof outline. Helper closure remains a
+Phase 4.8 follow-up.
 
 ## Notes
 

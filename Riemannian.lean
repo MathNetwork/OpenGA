@@ -7,6 +7,7 @@ import Riemannian.Gradient
 import Riemannian.Metric
 import Riemannian.SecondFundamentalForm
 import Riemannian.TangentBundle.Smoothness
+import Riemannian.TangentBundle.SmoothSection
 import Riemannian.Instances.EuclideanSpace
 
 /-!
