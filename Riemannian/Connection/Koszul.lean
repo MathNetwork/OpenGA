@@ -355,7 +355,7 @@ Five identities establishing the koszul functional's additivity and
 $C^\infty(M)$-linearity in the X and Y axes (Z-axis already covered by
 `koszul_smul_right`). Each identity reduces, via
 `koszulCovDeriv_inner_eq` + Riesz uniqueness, to a corresponding
-Levi-Civita connection axiom. -/
+Levi-Civita connection structural property (additivity, Leibniz). -/
 
 omit [FiniteDimensional ℝ E] in
 /-- **Koszul Z-additivity**: $K(X, Y; Z_1 + Z_2) = K(X, Y; Z_1) + K(X, Y; Z_2)$.

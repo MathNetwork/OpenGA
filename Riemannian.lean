@@ -106,6 +106,14 @@ intermediate identities) are internal and may change without notice.
   * `OpenGALib.BumpFunction.manifoldBump`
   * `OpenGALib.BumpFunction.extendVectorField`
 
+**Smoothness infrastructure** (`TangentBundle/`, `Metric/Smooth.lean`):
+  * `OpenGALib.TangentSmoothAt` — bundle-section smoothness predicate
+  * `OpenGALib.TangentSmoothAt.{mk, zero, add, neg, sub, smul,
+    coordSmoothAt, iff_coord, toBundleSection}`
+  * `TangentBundle.symmLFlat`,
+    `TangentBundle.symmLFlat_mdifferentiableAt`
+  * `OpenGALib.MDifferentiableAt.metricInner_smoothAt`
+
 **Foundations** (`Foundations/`):
   * `Foundations/Notation.lean` — textbook notation: `⟪V, W⟫_g`,
     `‖V‖²_g`, `∇[X] Y`, `Riem(X, Y) Z` (scoped to `OpenGALib` /
@@ -114,11 +122,14 @@ intermediate identities) are internal and may change without notice.
   * `Foundations/Tactic.lean` — user-facing entry point for tactic
     infrastructure.
 
-Stability tier: pre-`v0.1.0` everything is **experimental**. PRE-PAPER
-sorry'd statements (`ricci_symm`, `ricciTraceMap.map_*`) and structural
-axioms (`tangentBundle_symmL_smoothAt`, `koszulLeviCivita_exists`) are
-tracked in `docs/AXIOM_STATUS.md` with explicit repair
-plans.
+Stability tier: pre-`v0.1.0` everything is **experimental**. The
+Riemannian package carries **zero existence axioms**: all 9 primitives
+(Riemann curvature, Ricci, scalar curvature, second fundamental form
++ sq norm, mean curvature, manifold gradient + sq norm, Levi-Civita
+connection) are real Lean definitions. Remaining PRE-PAPER sorry'd
+property-level statements (`ricci_symm`, `ricciTraceMap.map_add'/_smul'`,
+`tangentBundle_symmL_smoothAt`) are tracked in `docs/AXIOM_STATUS.md`
+with explicit repair plans.
 -/
 
 /-! ## UXTest — Foundations layer

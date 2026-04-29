@@ -72,7 +72,7 @@ via the bridge `RiemannianMetric.toBilinForm` below. Algebra lemmas
 (bilinearity, sub, neg, zero, comm) are inherited 1-line wrappers
 around the algebraic core's `BilinearForm.inner_*` lemmas. The
 Riemannian-specific content — symmetry, positive-definiteness — comes
-from the typeclass axioms `g.symm`, `g.posdef`. -/
+from the typeclass fields `g.symm`, `g.posdef`. -/
 
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}

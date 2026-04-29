@@ -12,7 +12,9 @@ Re-exports the three sub-modules:
 - `Metric/Riesz.lean` — `metricToDual`, `metricRiesz`,
   `metricInner_eq_iff_eq`, Riesz uniqueness.
 - `Metric/Smooth.lean` — `metricInner_smoothAt` smoothness helper +
-  `tangentBundle_symmL_smoothAt` narrow structural axiom.
+  `tangentBundle_symmL_smoothAt` (PRE-PAPER sorry'd: chart-level
+  smoothness of `Trivialization.symmL`; tracked in
+  `docs/AXIOM_STATUS.md`).
 
 **Ground truth**: do Carmo 1992 §1.2; Lee *Smooth Manifolds* Ch. 13.
 -/
@@ -31,7 +33,7 @@ noncomputable example
     [g : RiemannianMetric I M] (x : M) (v : E) :
     ℝ := g.metricTensor x v v
 
-/-- `symm` axiom usable. -/
+/-- `symm` typeclass field usable. -/
 example
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
@@ -40,7 +42,7 @@ example
     g.metricTensor x v w = g.metricTensor x w v :=
   g.symm x v w
 
-/-- `posdef` axiom usable. -/
+/-- `posdef` typeclass field usable. -/
 example
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}

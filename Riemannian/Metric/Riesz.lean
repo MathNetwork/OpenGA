@@ -40,7 +40,7 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [g : RiemannianMetric I M]
 
 /-- The bridge form `toBilinForm x` is positive-definite, derived
-from the typeclass `posdef` axiom. -/
+from the typeclass `posdef` field. -/
 theorem RiemannianMetric.toBilinForm_isPosDef (x : M) :
     BilinearForm.IsPosDef (RiemannianMetric.toBilinForm (g := g) x) := by
   intro v hv

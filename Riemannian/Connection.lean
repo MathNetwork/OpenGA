@@ -11,9 +11,10 @@ connection on a Riemannian manifold $M$:
   the 8 algebraic identities (`koszul_antisymm`, `koszul_metric_compat_sum`,
   `koszul_smul_*`, `koszul_add_*`), and `koszulFunctional_local`.
 - `Connection/LeviCivita.lean` — Riesz extraction (`koszulCovDeriv`),
-  narrow `koszulLeviCivita_exists` axiom, `leviCivitaConnection_exists`
-  closure, the `leviCivitaConnection` def, torsion / metric-compat
-  properties, and the `covDeriv` public-API wrapper.
+  `koszulLeviCivita_exists` (closed via `TensorialAt.mkHom` + Riesz
+  uniqueness), `leviCivitaConnection_exists`, the `leviCivitaConnection`
+  def, torsion / metric-compat properties, and the `covDeriv` public-API
+  wrapper.
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 (Levi-Civita theorem,
 existence + uniqueness via the Koszul formula).

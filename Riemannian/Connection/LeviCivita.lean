@@ -16,10 +16,13 @@ metric-compatibility.
 
 `leviCivitaConnection_exists` is closed by combining:
 
-* `koszulLeviCivita_exists` — narrow structural axiom (sorry'd): a
-  `CovariantDerivative` whose `toFun` extends the pointwise Koszul
-  value for smooth inputs. Type-level CLM-construction work; see
-  `SORRY_CATALOG.md`.
+* `koszulLeviCivita_exists` — `TensorialAt.mkHom` packaging of
+  `koszulCovDeriv` into a `CovariantDerivative`. Tensoriality in $X$
+  comes from `koszulCovDerivAux_tensorialAt` (Riesz uniqueness against
+  `metricInner_eq_iff_eq` + `koszul_add_left` / `koszul_smul_left`);
+  `IsCovariantDerivativeOn.add` / `.leibniz` from `koszul_add_middle` /
+  `koszul_smul_middle` via the same uniqueness pattern. Real proof,
+  no `sorry`.
 * `koszul_antisymm` → torsion-free via `metricInner_eq_iff_eq` +
   `koszulCovDeriv_inner_eq` + Mathlib's `FiberBundle.extend`.
 * `koszul_metric_compat_sum` → metric-compatibility for smooth vector
@@ -150,7 +153,7 @@ private theorem koszulLinearFunctional_exists
           fun Z hZ => ?_⟩
   exact TensorialAt.mkHom_apply (koszulFunctional_tensorialAt X Y x hX hY) hZ
 
-theorem koszulCovDeriv_exists
+private theorem koszulCovDeriv_exists
     (X Y : Π x : M, TangentSpace I x) (x : M)
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x) :
     ∃ v : TangentSpace I x, ∀ Z : Π y : M, TangentSpace I y,
@@ -191,10 +194,11 @@ theorem koszulCovDeriv_inner_eq
 
 `leviCivitaConnection_exists` is closed by combining:
 
-* `koszulLeviCivita_exists` — narrow structural axiom (sorry'd): a
-  `CovariantDerivative` whose `toFun` extends the pointwise Koszul
-  value for smooth inputs. Type-level CLM-construction work, no new
-  mathematical content. See `SORRY_CATALOG.md`.
+* `koszulLeviCivita_exists` — real `CovariantDerivative` whose `toFun`
+  extends the pointwise Koszul value for smooth inputs. Construction:
+  `TensorialAt.mkHom` over `koszulCovDerivAux` (smoothness-erased
+  variant), with tensoriality via Riesz uniqueness against
+  `metricInner_eq_iff_eq`. Real proof, no `sorry`.
 * `koszul_antisymm` → torsion-free via `metricInner_eq_iff_eq` +
   `koszulCovDeriv_inner_eq` + Mathlib's `FiberBundle.extend`.
 * `koszul_metric_compat_sum` → metric-compatibility for smooth vector
