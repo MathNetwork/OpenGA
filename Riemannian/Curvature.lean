@@ -140,6 +140,30 @@ noncomputable def scalarCurvature (x : M) : ℝ :=
     (fun (_ : M) => (e i : TangentSpace I x))
     (fun (_ : M) => (e i : TangentSpace I x)) x
 
+/-- **Riemann tensor antisymmetry in the first two arguments**:
+$R(X, Y) Z = -R(Y, X) Z$ pointwise.
+
+Direct from the antisymmetry of the Lie bracket
+(`VectorField.mlieBracket_swap_apply`) plus ℝ-linearity of
+`leviCivitaConnection.toFun Z z` (it is a CLM).
+
+**Ground truth**: do Carmo 1992 §4 Proposition 2.5 (i). -/
+theorem riemannCurvature_antisymm
+    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
+    riemannCurvature X Y Z x = -riemannCurvature Y X Z x := by
+  show covDeriv X (fun y => covDeriv Y Z y) x
+        - covDeriv Y (fun y => covDeriv X Z y) x
+        - covDeriv (fun y => mlieBracket I X Y y) Z x
+      = -(covDeriv Y (fun y => covDeriv X Z y) x
+            - covDeriv X (fun y => covDeriv Y Z y) x
+            - covDeriv (fun y => mlieBracket I Y X y) Z x)
+  have h_swap : mlieBracket I Y X x = -mlieBracket I X Y x :=
+    VectorField.mlieBracket_swap_apply
+  unfold covDeriv
+  rw [show (fun y => mlieBracket I Y X y) x = -mlieBracket I X Y x from h_swap,
+      (leviCivitaConnection.toFun Z x).map_neg]
+  abel
+
 end Riemannian
 
 /-! ## UXTest
@@ -158,6 +182,17 @@ noncomputable example
     [OpenGALib.RiemannianMetric I M]
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x := riemannCurvature X Y Z x
+
+/-- Antisymmetry corollary `riemannCurvature_antisymm` is invocable. -/
+example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [OpenGALib.RiemannianMetric I M]
+    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
+    riemannCurvature X Y Z x = -riemannCurvature Y X Z x :=
+  riemannCurvature_antisymm X Y Z x
 
 noncomputable example
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]

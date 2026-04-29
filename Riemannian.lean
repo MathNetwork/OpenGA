@@ -86,6 +86,7 @@ intermediate identities) are internal and may change without notice.
 
 **Curvature** (`Curvature.lean`):
   * `Riemannian.riemannCurvature`
+  * `Riemannian.riemannCurvature_antisymm`
   * `Riemannian.ricci`
   * `Riemannian.scalarCurvature`
 
