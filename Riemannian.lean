@@ -6,6 +6,7 @@ import Riemannian.Foundations.Tactic
 import Riemannian.Gradient
 import Riemannian.Metric
 import Riemannian.SecondFundamentalForm
+import Riemannian.TangentBundle.Smoothness
 import Riemannian.Instances.EuclideanSpace
 
 /-!
