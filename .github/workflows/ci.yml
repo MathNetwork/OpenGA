@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  count-checks:
+    name: Sorry / axiom count
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Count sorries against SORRY_CATALOG.md
+        run: |
+          ACTUAL=$(grep -rn "^\s*sorry\|by sorry\|:= sorry" \
+            --include="*.lean" \
+            Riemannian GeometricMeasureTheory MinMax Regularity \
+            2>/dev/null | wc -l | tr -d ' ')
+          EXPECTED=34
+          if [ "$ACTUAL" -ne "$EXPECTED" ]; then
+            echo "::error::Sorry count drift: expected $EXPECTED, found $ACTUAL"
+            echo "If the change is intentional, update SORRY_CATALOG.md (and the EXPECTED constant in this workflow)."
+            echo "If unintentional, close the new sorry or revert the regression."
+            exit 1
+          fi
+          echo "Sorry count: $ACTUAL (matches SORRY_CATALOG.md)"
+
+      - name: Count axioms against AXIOM_STATUS.md
+        run: |
+          # Match only true axiom declarations: `axiom <ident>` at start of line,
+          # nothing trailing. Excludes docstring text where 'axiom' may begin a
+          # wrapped sentence (e.g., `axiom about CovariantDerivative wrapping`).
+          ACTUAL=$(grep -rnE "^axiom[[:space:]]+[a-zA-Z_][a-zA-Z0-9_']*[[:space:]]*$" \
+            --include="*.lean" \
+            Riemannian GeometricMeasureTheory MinMax Regularity \
+            2>/dev/null | wc -l | tr -d ' ')
+          EXPECTED=1
+          if [ "$ACTUAL" -ne "$EXPECTED" ]; then
+            echo "::error::Axiom count drift: expected $EXPECTED, found $ACTUAL"
+            echo "If the change is intentional, update AXIOM_STATUS.md (and the EXPECTED constant in this workflow)."
+            echo "If unintentional, close the new axiom or revert the regression."
+            exit 1
+          fi
+          echo "Axiom count: $ACTUAL (matches AXIOM_STATUS.md)"
+
+  build:
+    name: Lake build
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install elan (Lean toolchain manager)
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Print Lean version
+        run: lean --version
+
+      - name: Cache .lake build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            .lake/build
+            .lake/packages
+          key: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}
+          restore-keys: |
+            lake-${{ runner.os }}-
+
+      - name: Get Mathlib build cache
+        run: lake exe cache get
+        continue-on-error: true
+
+      - name: Build OpenGALib
+        run: lake build
