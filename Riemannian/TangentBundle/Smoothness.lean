@@ -180,11 +180,14 @@ private theorem mfderivWithinFlat_mdifferentiableWithinAt
   have h_inv_at_pt :
       (inTangentCoordinates I 𝓘(ℝ, E) id (extChartAt I x)
         (mfderiv I 𝓘(ℝ, E) (extChartAt I x)) x x).IsInvertible := by
-    -- `inCoords A x x ϕ = T₂ ∘L ϕ ∘L T₁⁻¹` where T₁, T₂ are trivialization
-    -- corrections at the basepoint. Since both source and target trivializations
-    -- evaluated AT THE BASEPOINT give identity, this reduces to `mfderiv f x`
-    -- which is invertible by `isInvertible_mfderiv_extChartAt`.
-    sorry
+    unfold inTangentCoordinates
+    simp only [id]
+    rw [ContinuousLinearMap.inCoordinates_eq
+      (FiberBundle.mem_baseSet_trivializationAt' x)
+      (FiberBundle.mem_baseSet_trivializationAt' (extChartAt I x x))]
+    rw [ContinuousLinearMap.isInvertible_equiv_comp,
+        ContinuousLinearMap.isInvertible_comp_equiv]
+    exact isInvertible_mfderiv_extChartAt (mem_extChartAt_source x)
   have h_invComp : MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)
       (fun y : M => ContinuousLinearMap.inverse
         (inTangentCoordinates I 𝓘(ℝ, E) id (extChartAt I x)
@@ -234,9 +237,8 @@ private theorem mfderivWithinFlat_mdifferentiableWithinAt
   have h_fwd_inv :
       ContinuousLinearMap.inverse
         (mfderiv I 𝓘(ℝ, E) (extChartAt I x) ((extChartAt I x).symm e₀)) =
-      mfderivWithin 𝓘(ℝ, E) I (extChartAt I x).symm (Set.range I) e₀ := by
-    -- From h_chain + h_chain': the two CLMs are inverses, so backward = inverse(forward).
-    sorry
+      mfderivWithin 𝓘(ℝ, E) I (extChartAt I x).symm (Set.range I) e₀ :=
+    ContinuousLinearMap.inverse_eq h_chain h_chain'
   -- Now reduce inCoords to raw forward-mfderiv via trivialization identities.
   -- For `(.symm) e₀ ∈ chart source`, the inCoords corrections are: source-side
   -- (model space E) is identity; target-side trivialization at x evaluated at
@@ -249,11 +251,25 @@ private theorem mfderivWithinFlat_mdifferentiableWithinAt
       inTangentCoordinates I 𝓘(ℝ, E) id (extChartAt I x)
         (mfderiv I 𝓘(ℝ, E) (extChartAt I x)) x ((extChartAt I x).symm e₀)
       = mfderiv I 𝓘(ℝ, E) (extChartAt I x) ((extChartAt I x).symm e₀) := by
-    -- Source side: `id` on M, basepoints `x` and `(.symm) e₀` both in chart source.
-    -- Target side: `extChartAt I x` to model space E, target trivialization is
-    -- trivial (model space). For y in chart source the source-side coordChange
-    -- factor is non-trivial in general; need to verify it equals identity at
-    -- basepoint or that the cancellation works through the chain identity.
+    -- **Open obstacle**: this equation is FALSE in general.
+    -- By `inTangentCoordinates_eq_mfderiv_comp` + chain identity:
+    --   inCoords value = `mfderiv (extChartAt I x) ((.symm) e₀) ∘L
+    --                     mfderivWithin (.symm) (range I) e₀` = `id`
+    -- (constant on chart target, by chain identity).
+    -- So `inverse(inCoords) = id` constant; cannot bridge to raw form.
+    --
+    -- The Pullback.lean inverse-trick pattern **degenerates for chart maps**:
+    -- the inCoords trivializations at basepoint cancel `mfderiv` exactly,
+    -- producing `id` — losing all information about the raw form.
+    --
+    -- The honest path forward: build framework infrastructure
+    --   `TangentBundle.contMDiffOn_continuousLinearMapAt_trivializationAt`
+    -- giving model-fiber-valued smoothness of the trivialization's linear
+    -- part, then compose with `(extChartAt I x).symm` smoothness, then
+    -- compose with `inverse` (smooth at invertible CLMs).
+    -- Mathlib has the bundle-section smoothness via `Trivialization.contMDiffOn`
+    -- but no direct model-fiber-valued lemma. ~50 lines of finite-dim
+    -- component-extraction work.
     sorry
   rw [h_inCoords_eq]
   exact h_fwd_inv.symm
