@@ -6,7 +6,7 @@ Built on [Mathlib](https://github.com/leanprover-community/mathlib4), layered in
 
 - **`Riemannian`** — `RiemannianMetric` typeclass, Levi-Civita connection, Riemann / Ricci / scalar curvature, codim-1 second fundamental form, manifold gradient, bump functions.
 - **`GeometricMeasureTheory`** — finite-perimeter sets, varifolds, stationary varifolds, tangent cones, rectifiability, isoperimetric tools (BV / coarea / Sobolev–Poincaré / Federer–Fleming), first / second variation operators.
-- **`MinMax`** — sweepout-based min-max theory (CLS22-style).
+- **`MinMax`** — sweepout-based min-max theory.
 - **`Regularity`** — Wickramasekera 𝒮_α regularity class + smooth regularity theorem.
 
 ## Build
