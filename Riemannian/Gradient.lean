@@ -1,5 +1,4 @@
 import Riemannian.Connection
-import Riemannian.Metric
 
 /-!
 # Riemannian.Gradient
@@ -90,3 +89,43 @@ theorem manifoldGradientNormSq_nonneg
   metricInner_self_nonneg x _
 
 end Riemannian
+
+/-! ## UXTest
+
+Self-tests verifying that the manifold gradient + gradient-norm-squared
+primitives resolve their typeclass cascade. Regression guard against
+signature drift in `RiemannianMetric` / `metricRiesz`. -/
+
+section UXTest
+
+open Riemannian OpenGALib
+open scoped ContDiff Manifold
+
+noncomputable example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianMetric I M]
+    (f : M → ℝ) (x : M) :
+    TangentSpace I x := manifoldGradient f x
+
+example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianMetric I M]
+    (f : M → ℝ) (x : M) (v : TangentSpace I x) :
+    metricInner x (manifoldGradient f x) v = (mfderiv I 𝓘(ℝ, ℝ) f x) v :=
+  manifoldGradient_riesz f x v
+
+noncomputable example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianMetric I M]
+    (f : M → ℝ) (x : M) : ℝ := manifoldGradientNormSq I f x
+
+end UXTest

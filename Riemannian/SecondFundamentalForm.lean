@@ -16,14 +16,19 @@ For the codim-1 setting in our framework, the hypersurface is the
 support of a `Varifold M`, and $\nu$ is supplied by the
 `Varifold.HasNormal` typeclass (Phase 1.5 Commit B).
 
-## Sorry status
+  * `secondFundamentalFormScalar` — real `noncomputable def` using
+    `covDeriv` (Levi-Civita) + `metricInner` on `TangentSpace I x`
+    (framework-owned, `Riemannian.Metric`).
+  * `secondFundamentalFormSqNorm` — real `noncomputable def` via summation
+    over Mathlib's `stdOrthonormalBasis ℝ (TangentSpace I x)` of
+    $A(e_i, e_j)^2$ (Frobenius squared norm).
+  * `meanCurvature` — real `noncomputable def` via summation of
+    $A(e_i, e_i)$ over the same orthonormal basis.
 
-The defs use `Classical.choose` over existence axioms (`PRE-PAPER`).
-Repair: inner-product computation of $\langle \nabla^M_X Y, \nu \rangle$
-requires an inner-product structure on `TangentSpace I x` (provided by
-`RiemannianBundle (fun x ↦ TangentSpace I x)`); local-frame trace for
-$|A|^2$ and mean curvature requires local-frame plumbing — both
-deferred to a future Phase.
+The framework-owned `OpenGALib.RiemannianMetric` typeclass (Phase 4.7)
+provides `metricInner` directly on tangent vectors via
+`TangentSpace I x = E` def-eq, sidestepping the lean4#13063 typeclass
+diamond on `Bundle.RiemannianBundle`.
 
 **Ground truth**: do Carmo 1992 §6.2 (codim-1 case);
 Simon 1983 §49 (use in second variation).
@@ -97,3 +102,53 @@ noncomputable def meanCurvature
     (fun (_ : M) => (e i : TangentSpace I x)) x
 
 end Riemannian
+
+/-! ## UXTest
+
+Self-tests verifying that the second-fundamental-form primitives resolve
+their typeclass cascade. Regression guard against signature drift in
+`RiemannianMetric` / `covDeriv`. -/
+
+section UXTest
+
+open Riemannian OpenGALib
+open scoped ContDiff Manifold
+
+noncomputable example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianMetric I M]
+    (ν X Y : Π x : M, TangentSpace I x) (x : M) :
+    ℝ := secondFundamentalFormScalar ν X Y x
+
+noncomputable example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianMetric I M]
+    (ν : Π x : M, TangentSpace I x) (x : M) :
+    ℝ := secondFundamentalFormSqNorm ν x
+
+noncomputable example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianMetric I M]
+    (ν : Π x : M, TangentSpace I x) (x : M) :
+    ℝ := meanCurvature ν x
+
+example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [RiemannianMetric I M]
+    (ν : Π x : M, TangentSpace I x) (x : M) :
+    0 ≤ secondFundamentalFormSqNorm ν x :=
+  secondFundamentalFormSqNorm_nonneg ν x
+
+end UXTest

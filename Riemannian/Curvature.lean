@@ -9,21 +9,33 @@ Riemann curvature tensor, Ricci curvature, scalar curvature.
 
 ## Form
 
-`riemannCurvature` is a real `noncomputable def` built directly from
-`leviCivitaConnection` and `mlieBracket` via the standard formula
-$R(X, Y)Z = \nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X, Y]} Z$.
+  * `riemannCurvature` — real `noncomputable def` built directly from
+    `covDeriv` (Levi-Civita) and `mlieBracket` via the standard formula
+    $R(X, Y)Z = \nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X, Y]} Z$.
+  * `ricciTraceMap` — the linear map $z \mapsto R(z, X)Y(x)$ on $T_xM$,
+    bundling the curvature endomorphism for the trace.
+  * `ricci` — real `noncomputable def` via `LinearMap.trace ℝ (TangentSpace I x)`
+    applied to `ricciTraceMap`. Finite-dimensional trace operator from
+    Mathlib (`LinearMap.trace`); the `[FiniteDimensional ℝ E]` cascade
+    propagates through the framework-owned NACG / IPS bridges
+    (`Riemannian.Metric` Phase 4.7.9).
+  * `scalarCurvature` — real `noncomputable def` via summation of
+    $\mathrm{Ric}(e_i, e_i)$ over Mathlib's `stdOrthonormalBasis ℝ
+    (TangentSpace I x)`. Basis-independent because the sum equals
+    $\mathrm{tr}_g \mathrm{Ric}$ for any orthonormal frame.
 
-`ricci` and `scalarCurvature` use `Classical.choice` over existence
-predicates; the existence predicates capture the trace operation on
-the curvature endomorphism, which requires a finite-dimensional local
-frame on `TangentSpace I x`. The actual trace can be computed from
-Mathlib's `LocalFrame.toBasisAt` once we have the typeclass plumbing in
-place — deferred to a future Phase that wires the local-frame
-computation through.
+## Sorry status
 
-**Ground truth**: do Carmo 1992 §4 (Riemann curvature, sectional, Ricci);
-Mathlib's `CovariantDerivative` + `mlieBracket` + `LocalFrame` provide
-the building blocks.
+  * `ricciTraceMap.map_add'` and `map_smul'` — PRE-PAPER. The
+    `C^\infty(M)`-linearity of the curvature endomorphism in its first
+    argument (when extended via constants from $T_xM$) requires the
+    Levi-Civita-on-`covDeriv` linearity lemmas. Repair: derive from
+    `koszulCovDeriv`'s linearity in $X$ once Phase 4.7.8.C is closed.
+  * `ricci_symm` — PRE-PAPER. Symmetry of Ricci requires the algebraic
+    Bianchi identity on the Riemann tensor. Repair: framework self-build
+    of Bianchi from torsion-freeness + curvature definition.
+
+**Ground truth**: do Carmo 1992 §4 (Riemann curvature, sectional, Ricci).
 -/
 
 open Bundle VectorField OpenGALib

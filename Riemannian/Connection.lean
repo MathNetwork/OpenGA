@@ -997,10 +997,24 @@ theorem leviCivitaConnection_metric_compatible
 
 /-- **Covariant derivative of one vector field along another**:
 $(\nabla_X Y)(x) := \nabla\,Y\,x\,(X\,x)$, where $\nabla$ is the
-Levi-Civita connection.
+Levi-Civita connection (`leviCivitaConnection`).
 
 Convenience wrapper that exposes the standard math notation
-$\nabla_X Y$ from Mathlib's bundled `CovariantDerivative.toFun`. -/
+$\nabla_X Y$ from Mathlib's bundled `CovariantDerivative.toFun`,
+specialised to the framework's Levi-Civita instance.
+
+By construction, `covDeriv` is torsion-free and metric-compatible (with
+respect to the framework-owned `metricInner`); see
+`leviCivitaConnection_torsion_zero` and
+`leviCivitaConnection_metric_compatible` for the precise statements.
+
+**Public API**: consumed by `Riemannian.Curvature` (Riemann curvature
+tensor formula), `Riemannian.SecondFundamentalForm` (codim-1 second
+fundamental form), and `GeometricMeasureTheory.Variation.FirstVariation`
+(codim-1 normal correction term).
+
+**Ground truth**: do Carmo 1992 §2 Definition 2.1 (covariant derivative
+along a vector field). -/
 noncomputable def covDeriv (X Y : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x :=
   ((leviCivitaConnection (I := I) (M := M)).toFun Y x) (X x)
