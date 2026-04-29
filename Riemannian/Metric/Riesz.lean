@@ -77,38 +77,38 @@ theorem metricInner_eq_iff_eq (x : M) (v w : TangentSpace I x) :
     (∀ Z : TangentSpace I x, metricInner x v Z = metricInner x w Z) ↔ v = w :=
   BilinearForm.inner_eq_iff_eq (RiemannianMetric.toBilinForm_isPosDef (g := g) x) v w
 
-omit g in
-/-- finrank of `TangentSpace I x →L[ℝ] ℝ` equals finrank of `TangentSpace I x`. -/
-private theorem finrank_clm_dual_eq (x : M) :
-    Module.finrank ℝ (TangentSpace I x →L[ℝ] ℝ) =
-      Module.finrank ℝ (TangentSpace I x) := by
-  haveI : FiniteDimensional ℝ (TangentSpace I x) :=
-    inferInstanceAs (FiniteDimensional ℝ E)
-  rw [← LinearEquiv.finrank_eq
-    (LinearMap.toContinuousLinearMap : (TangentSpace I x →ₗ[ℝ] ℝ) ≃ₗ[ℝ] _)]
-  exact Subspace.dual_finrank_eq
+/-- The CLM↔LinearMap dual equivalence on a finite-dim normed space:
+every linear functional is automatically continuous in finite dim. -/
+private noncomputable def clmDualEquiv (V : Type*)
+    [NormedAddCommGroup V] [InnerProductSpace ℝ V] [FiniteDimensional ℝ V] :
+    (V →ₗ[ℝ] ℝ) ≃ₗ[ℝ] (V →L[ℝ] ℝ) :=
+  LinearMap.toContinuousLinearMap
 
-/-- **Bijectivity of forward Riesz**: injective + same `finrank` ⇒ bijective. -/
-theorem metricToDual_bijective (x : M) :
-    Function.Bijective (metricToDual (g := g) x) := by
-  haveI : FiniteDimensional ℝ (TangentSpace I x) :=
-    inferInstanceAs (FiniteDimensional ℝ E)
-  haveI : FiniteDimensional ℝ (TangentSpace I x →L[ℝ] ℝ) :=
-    Module.Finite.equiv (LinearMap.toContinuousLinearMap :
-      (TangentSpace I x →ₗ[ℝ] ℝ) ≃ₗ[ℝ] (TangentSpace I x →L[ℝ] ℝ))
-  refine ⟨metricToDual_injective x, ?_⟩
-  have h_finrank := finrank_clm_dual_eq (I := I) (M := M) x
-  have hiff := LinearMap.injective_iff_surjective_of_finrank_eq_finrank
-    (f := (metricToDual (g := g) x).toLinearMap) h_finrank.symm
-  exact hiff.mp (metricToDual_injective (g := g) x)
-
-/-- The Riesz isomorphism as a `LinearEquiv`. -/
+/-- The Riesz isomorphism as a `LinearEquiv`, built by composing the
+algebraic-core `BilinearForm.toDualEquiv` with the CLM↔LinearMap dual
+equivalence on the codomain side. -/
 noncomputable def metricToDualEquiv (x : M) :
     TangentSpace I x ≃ₗ[ℝ] (TangentSpace I x →L[ℝ] ℝ) :=
-  LinearEquiv.ofBijective (metricToDual (g := g) x).toLinearMap
-    (metricToDual_bijective (g := g) x)
+  haveI : FiniteDimensional ℝ (TangentSpace I x) :=
+    inferInstanceAs (FiniteDimensional ℝ E)
+  (BilinearForm.toDualEquiv
+    (RiemannianMetric.toBilinForm_isPosDef (g := g) x)).trans
+    (clmDualEquiv (TangentSpace I x))
 
-/-- **Inverse Riesz**: linear functional → vector via metric. -/
+/-- **Bijectivity of forward Riesz**: now an immediate consequence of
+`metricToDualEquiv` being a `LinearEquiv`. -/
+theorem metricToDual_bijective (x : M) :
+    Function.Bijective (metricToDual (g := g) x) := by
+  refine ⟨metricToDual_injective x, ?_⟩
+  intro φ
+  refine ⟨(metricToDualEquiv (g := g) x).symm φ, ?_⟩
+  ext v
+  show g.metricTensor x ((metricToDualEquiv (g := g) x).symm φ) v = φ v
+  have := (metricToDualEquiv (g := g) x).apply_symm_apply φ
+  exact congrArg (fun (f : TangentSpace I x →L[ℝ] ℝ) => f v) this
+
+/-- **Inverse Riesz**: linear functional → vector via metric. Now a thin
+wrapper around `BilinearForm.riesz` composed with the CLM-dual bridge. -/
 noncomputable def metricRiesz (x : M) (φ : TangentSpace I x →L[ℝ] ℝ) :
     TangentSpace I x :=
   (metricToDualEquiv (g := g) x).symm φ
@@ -119,11 +119,9 @@ theorem metricRiesz_inner (x : M) (φ : TangentSpace I x →L[ℝ] ℝ)
     (V : TangentSpace I x) :
     metricInner x (metricRiesz (g := g) x φ) V = φ V := by
   rw [metricInner_apply]
-  show metricToDual (g := g) x (metricRiesz (g := g) x φ) V = φ V
-  have heq : (metricToDual (g := g) x).toLinearMap
-      ((metricToDualEquiv (g := g) x).symm φ) = φ :=
-    (metricToDualEquiv (g := g) x).apply_symm_apply φ
-  exact congrArg (fun (f : TangentSpace I x →L[ℝ] ℝ) => f V) heq
+  show g.metricTensor x ((metricToDualEquiv (g := g) x).symm φ) V = φ V
+  have := (metricToDualEquiv (g := g) x).apply_symm_apply φ
+  exact congrArg (fun (f : TangentSpace I x →L[ℝ] ℝ) => f V) this
 
 /-- **Riesz uniqueness**: if `v` represents `φ`, then `v = metricRiesz x φ`. -/
 theorem metricRiesz_unique (x : M) (v : TangentSpace I x)
@@ -133,9 +131,9 @@ theorem metricRiesz_unique (x : M) (v : TangentSpace I x)
   apply metricToDual_injective (g := g) x
   ext w
   rw [metricToDual_apply, h w]
-  show φ w = metricToDual (g := g) x (metricRiesz (g := g) x φ) w
-  exact congrArg (fun (f : TangentSpace I x →L[ℝ] ℝ) => f w)
-    ((metricToDualEquiv (g := g) x).apply_symm_apply φ).symm
+  show φ w = g.metricTensor x ((metricToDualEquiv (g := g) x).symm φ) w
+  have := (metricToDualEquiv (g := g) x).apply_symm_apply φ
+  exact congrArg (fun (f : TangentSpace I x →L[ℝ] ℝ) => f w) this.symm
 
 end RieszExtraction
 
