@@ -170,18 +170,83 @@ theorem contMDiffOn_mfderivWithinFlat
     (x : M) :
     ContMDiffOn 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E) ∞
       (mfderivWithinFlat (I := I) (M := M) x) (extChartAt I x).target := by
-  -- Derived from `contMDiffOn_continuousLinearMapAtFlat` via inverse + chain.
-  -- TODO closure (mechanical, ~30 lines):
-  -- (1) compose `e₀ ↦ (extChartAt I x).symm e₀ : E → M` smooth on target
-  --     with `contMDiffOn_continuousLinearMapAtFlat` to get smoothness of
-  --     `e₀ ↦ continuousLinearMapAtFlat x ((extChartAt I x).symm e₀)`
-  --     on chart target.
-  -- (2) compose with `ContinuousLinearMap.inverse` (smooth at invertible).
-  -- (3) congr-of-eq with `mfderivWithinFlat x e₀` via chain identity
-  --     `mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm` +
-  --     `TangentBundle.continuousLinearMapAt_trivializationAt` +
-  --     `ContinuousLinearMap.inverse_eq`.
-  sorry
+  -- Step 1: forward chart smooth on chart source (baseSet of trivAt x).
+  have h_fwd : ContMDiffOn I 𝓘(ℝ, E →L[ℝ] E) ∞
+      (continuousLinearMapAtFlat (I := I) (M := M) x)
+      (trivializationAt E (TangentSpace I) x).baseSet :=
+    contMDiffOn_continuousLinearMapAtFlat x
+  -- Step 2: chart inverse smooth on chart target into chart source.
+  have h_symm : ContMDiffOn 𝓘(ℝ, E) I ∞
+      (extChartAt I x).symm (extChartAt I x).target :=
+    contMDiffOn_extChartAt_symm x
+  have h_maps_to : Set.MapsTo (extChartAt I x).symm
+      (extChartAt I x).target
+      (trivializationAt E (TangentSpace I) x).baseSet := by
+    intro e₀ he₀
+    -- (.symm) e₀ ∈ chart source ⊆ baseSet
+    have h_src : (extChartAt I x).symm e₀ ∈ (extChartAt I x).source :=
+      PartialEquiv.map_target _ he₀
+    rwa [extChartAt_source] at h_src
+  -- Step 3: composition gives smoothness of `e₀ ↦ continuousLinearMapAtFlat x ((.symm) e₀)`
+  -- on chart target.
+  have h_compose : ContMDiffOn 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E) ∞
+      (fun e₀ => continuousLinearMapAtFlat (I := I) (M := M) x
+        ((extChartAt I x).symm e₀))
+      (extChartAt I x).target :=
+    h_fwd.comp h_symm h_maps_to
+  -- Step 4: each value `continuousLinearMapAtFlat x ((.symm) e₀)` is invertible
+  -- on chart target (forward chart is local diffeomorphism).
+  have h_invertible : ∀ e₀ ∈ (extChartAt I x).target,
+      (continuousLinearMapAtFlat (I := I) (M := M) x
+        ((extChartAt I x).symm e₀)).IsInvertible := by
+    intro e₀ he₀
+    have h_src : (extChartAt I x).symm e₀ ∈ (extChartAt I x).source :=
+      PartialEquiv.map_target _ he₀
+    -- continuousLinearMapAtFlat x y = mfderiv (extChartAt I x) y for y in chart source
+    have h_chart_src : (extChartAt I x).symm e₀ ∈ (chartAt H x).source := by
+      rwa [extChartAt_source] at h_src
+    -- Convert via TangentBundle.continuousLinearMapAt_trivializationAt
+    show ((trivializationAt E (TangentSpace I) x).continuousLinearMapAt ℝ
+      ((extChartAt I x).symm e₀)).IsInvertible
+    rw [TangentBundle.continuousLinearMapAt_trivializationAt h_chart_src]
+    exact isInvertible_mfderiv_extChartAt h_src
+  -- Step 5: compose with `ContinuousLinearMap.inverse` (smooth at invertible).
+  have h_inverse_comp : ContMDiffOn 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E) ∞
+      (fun e₀ => ContinuousLinearMap.inverse
+        (continuousLinearMapAtFlat (I := I) (M := M) x
+          ((extChartAt I x).symm e₀)))
+      (extChartAt I x).target := by
+    intro e₀ he₀
+    have h_inv_at : (continuousLinearMapAtFlat (I := I) (M := M) x
+        ((extChartAt I x).symm e₀)).IsInvertible :=
+      h_invertible e₀ he₀
+    have h_cd : ContDiffAt ℝ ∞ ContinuousLinearMap.inverse
+        (continuousLinearMapAtFlat x ((extChartAt I x).symm e₀)) :=
+      ContinuousLinearMap.IsInvertible.contDiffAt_map_inverse h_inv_at
+    exact h_cd.contMDiffAt.contMDiffWithinAt.comp e₀ (h_compose e₀ he₀) (Set.mapsTo_univ _ _)
+  -- Step 6: identify `mfderivWithinFlat x e₀` with the inverse via chain identity.
+  apply h_inverse_comp.congr
+  intro e₀ he₀
+  -- Goal: `mfderivWithinFlat x e₀ = inverse(continuousLinearMapAtFlat x ((.symm) e₀))`
+  show mfderivWithin 𝓘(ℝ, E) I (extChartAt I x).symm (Set.range I) e₀
+    = ContinuousLinearMap.inverse
+        (continuousLinearMapAtFlat (I := I) (M := M) x ((extChartAt I x).symm e₀))
+  have h_chart_src : (extChartAt I x).symm e₀ ∈ (chartAt H x).source := by
+    rw [← extChartAt_source (I := I)]
+    exact PartialEquiv.map_target _ he₀
+  -- Convert continuousLinearMapAtFlat to mfderiv (forward chart) via Mathlib lemma.
+  have h_eq_mfderiv :
+      continuousLinearMapAtFlat (I := I) (M := M) x ((extChartAt I x).symm e₀)
+        = mfderiv I 𝓘(ℝ, E) (extChartAt I x) ((extChartAt I x).symm e₀) := by
+    show (trivializationAt E (TangentSpace I) x).continuousLinearMapAt ℝ
+        ((extChartAt I x).symm e₀)
+      = mfderiv I 𝓘(ℝ, E) (extChartAt I x) ((extChartAt I x).symm e₀)
+    exact TangentBundle.continuousLinearMapAt_trivializationAt h_chart_src
+  rw [h_eq_mfderiv]
+  -- Chain identities give: inverse(forward-mfderiv) = backward-mfderivWithin
+  have h_chain := mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm (I := I) (x := x) he₀
+  have h_chain' := mfderivWithin_extChartAt_symm_comp_mfderiv_extChartAt (I := I) (x := x) he₀
+  exact (ContinuousLinearMap.inverse_eq h_chain h_chain').symm
 
 /-! ## Helper 1 — single-point version (corollary of `contMDiffOn_mfderivWithinFlat`)
 
