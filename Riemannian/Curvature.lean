@@ -73,7 +73,12 @@ $z\text{-extended}$ is the constant section with value $z$.
 For Levi-Civita's $C^\infty$-linearity in arguments, the result depends
 only on $z \in T_xM$ (not the extension); the linearity proofs below
 are PRE-PAPER (deferred). The constant extension is a clean choice that
-makes the formula well-defined regardless of the linearity proofs. -/
+makes the formula well-defined regardless of the linearity proofs.
+
+**Stability**: experimental (PRE-PAPER). `map_add'` and `map_smul'`
+sorry'd; downstream code consuming `ricciTraceMap` should rely only on
+its application to specific vectors, not on its `LinearMap` properties,
+until Phase 4.7.8.C closes the linearity proofs. -/
 noncomputable def ricciTraceMap
     (X Y : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x →ₗ[ℝ] TangentSpace I x where
@@ -106,8 +111,12 @@ noncomputable def ricci
 This is one of the standard tensorial properties (do Carmo 1992 §4
 ex. 1). The proof requires the algebraic Bianchi identity on the
 Riemann tensor (which yields the symmetry of the trace under
-swapping X and Y). PRE-PAPER, repair via constructive proof. -/
-@[simp]
+swapping X and Y). PRE-PAPER, repair via constructive proof.
+
+**Stability**: experimental (PRE-PAPER). `@[simp]` deferred until the
+proof is closed: marking a sorry'd theorem `@[simp]` violates Mathlib
+soundness convention (would let `simp` apply unproven rewrites). When
+the Bianchi-identity proof lands, restore `@[simp]`. -/
 theorem ricci_symm (X Y : Π x : M, TangentSpace I x) (x : M) :
     ricci X Y x = ricci Y X x := by sorry
 

@@ -100,7 +100,11 @@ namespace RiemannianMetric
 
 /-- Convenience accessor: the metric inner product as a `(x : M) → E → E → ℝ`
 function. The framework's downstream `metricInner` (Phase 4.7.2) provides
-the typed-on-tangent-space wrapper. -/
+the typed-on-tangent-space wrapper.
+
+**Stability**: experimental. Likely to be `@[deprecated]` in v0.2 in
+favour of `metricInner` (which uses the typed-on-tangent-space form).
+Prefer `metricInner` in new code. -/
 noncomputable def metricInnerRaw {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
@@ -176,33 +180,39 @@ theorem metricInner_smul_right (x : M) (c : ℝ) (V W : TangentSpace I x) :
   (g.metricTensor x V).map_smul c W
 
 /-- **Zero in left argument**: $\langle 0, W\rangle_g = 0$. -/
+@[simp]
 theorem metricInner_zero_left (x : M) (W : TangentSpace I x) :
     metricInner x 0 W = 0 :=
   ((g.metricTensor x).flip W).map_zero
 
 /-- **Zero in right argument**: $\langle V, 0\rangle_g = 0$. -/
+@[simp]
 theorem metricInner_zero_right (x : M) (V : TangentSpace I x) :
     metricInner x V 0 = 0 :=
   (g.metricTensor x V).map_zero
 
 /-- **Negation in left argument**: $\langle -V, W\rangle_g = -\langle V, W\rangle_g$. -/
+@[simp]
 theorem metricInner_neg_left (x : M) (V W : TangentSpace I x) :
     metricInner x (-V) W = -metricInner x V W :=
   ((g.metricTensor x).flip W).map_neg V
 
 /-- **Negation in right argument**: $\langle V, -W\rangle_g = -\langle V, W\rangle_g$. -/
+@[simp]
 theorem metricInner_neg_right (x : M) (V W : TangentSpace I x) :
     metricInner x V (-W) = -metricInner x V W :=
   (g.metricTensor x V).map_neg W
 
 /-- **Subtraction in left argument**:
 $\langle V_1 - V_2, W\rangle_g = \langle V_1, W\rangle_g - \langle V_2, W\rangle_g$. -/
+@[simp]
 theorem metricInner_sub_left (x : M) (V₁ V₂ W : TangentSpace I x) :
     metricInner x (V₁ - V₂) W = metricInner x V₁ W - metricInner x V₂ W := by
   rw [sub_eq_add_neg, metricInner_add_left, metricInner_neg_left, sub_eq_add_neg]
 
 /-- **Subtraction in right argument**:
 $\langle V, W_1 - W_2\rangle_g = \langle V, W_1\rangle_g - \langle V, W_2\rangle_g$. -/
+@[simp]
 theorem metricInner_sub_right (x : M) (V W₁ W₂ : TangentSpace I x) :
     metricInner x V (W₁ - W₂) = metricInner x V W₁ - metricInner x V W₂ := by
   rw [sub_eq_add_neg, metricInner_add_right, metricInner_neg_right, sub_eq_add_neg]
@@ -212,6 +222,7 @@ theorem metricInner_sub_right (x : M) (V W₁ W₂ : TangentSpace I x) :
 Combines `metricInner_self_pos` (for $V \ne 0$) with `metricInner_zero_left`
 (for $V = 0$). Used by downstream squared-norm primitives
 (`manifoldGradientNormSq_nonneg`, `secondFundamentalFormSqNorm_nonneg`). -/
+@[simp]
 theorem metricInner_self_nonneg (x : M) (V : TangentSpace I x) :
     0 ≤ metricInner x V V := by
   rcases eq_or_ne V 0 with hV | hV
