@@ -2,6 +2,8 @@ import Mathlib.Geometry.Manifold.IsManifold.Basic
 import Mathlib.Geometry.Manifold.ContMDiff.Basic
 import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.LinearAlgebra.BilinearMap
+import Algebraic.BilinearForm.Basic
 import Riemannian.Foundations.Attributes
 
 /-!
@@ -64,104 +66,118 @@ end RiemannianMetric
 
 /-! ## `metricInner` + algebra lemmas
 
-The `metricInner` operation is the typed-on-tangent-space wrapper around
-`RiemannianMetric.metricTensor`. Algebra lemmas (bilinearity, sub, neg, zero,
-comm) are derived from the metric tensor's continuous-bilinear-form
-structure and the `symm` axiom. These lemmas form the framework analog of
-Mathlib's `inner_add_left/right`, `inner_smul_left/right`, `real_inner_comm`
-for use on tangent vectors. -/
+The `metricInner` operation delegates to the field-generic algebraic
+core `OpenGALib.BilinearForm.inner` (`Algebraic/BilinearForm/Basic.lean`)
+via the bridge `RiemannianMetric.toBilinForm` below. Algebra lemmas
+(bilinearity, sub, neg, zero, comm) are inherited 1-line wrappers
+around the algebraic core's `BilinearForm.inner_*` lemmas. The
+Riemannian-specific content — symmetry, positive-definiteness — comes
+from the typeclass axioms `g.symm`, `g.posdef`. -/
 
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
   [g : RiemannianMetric I M]
 
+/-- Bridge from the Riemannian metric tensor (continuous bilinear form
+on `E`) to the algebraic-core `BilinearForm.Form ℝ E` (linear bilinear
+form, no continuity requirement). Forgets the continuity structure;
+since `E` is finite-dim normed, all linear maps are automatically
+continuous, so no information is lost in practice. -/
+noncomputable def RiemannianMetric.toBilinForm (x : M) : BilinearForm.Form ℝ E :=
+  LinearMap.mk₂ ℝ
+    (fun v w => g.metricTensor x v w)
+    (fun v₁ v₂ w => by
+      show g.metricTensor x (v₁ + v₂) w = g.metricTensor x v₁ w + g.metricTensor x v₂ w
+      rw [(g.metricTensor x).map_add]; rfl)
+    (fun c v w => by
+      show g.metricTensor x (c • v) w = c • g.metricTensor x v w
+      rw [(g.metricTensor x).map_smul]; rfl)
+    (fun v w₁ w₂ => (g.metricTensor x v).map_add w₁ w₂)
+    (fun c v w => (g.metricTensor x v).map_smul c w)
+
 /-- The **metric inner product** at point $x \in M$, treating
 $\text{TangentSpace}\ I\ x = E$ via definitional equality.
 
-This is the framework's primary inner product operation on tangent vectors.
-Replaces `inner ℝ V W` for `V, W : TangentSpace I x` to bypass the
-lean4#13063 typeclass diamond. -/
+Defined as `BilinearForm.inner` applied to the bridge form
+`toBilinForm x`. End-user behaviour identical to direct
+`g.metricTensor x V W` (proven `rfl`-equivalent in `metricInner_apply`
+below). -/
 noncomputable def metricInner (x : M) (V W : TangentSpace I x) : ℝ :=
-  g.metricTensor x V W
+  BilinearForm.inner (RiemannianMetric.toBilinForm (g := g) x) V W
 
-/-- **Symmetry**: $\langle V, W\rangle_g = \langle W, V\rangle_g$.
+/-- `metricInner` reduces to direct metric tensor application. Not
+`@[simp]` — would short-circuit the `metric_simp` algebra lemmas. -/
+theorem metricInner_apply (x : M) (V W : TangentSpace I x) :
+    metricInner x V W = g.metricTensor x V W := by
+  show LinearMap.mk₂ ℝ _ _ _ _ _ V W = g.metricTensor x V W
+  rfl
 
-Direct from `RiemannianMetric.symm` axiom. -/
+/-- **Symmetry**: $\langle V, W\rangle_g = \langle W, V\rangle_g$. -/
 theorem metricInner_comm (x : M) (V W : TangentSpace I x) :
-    metricInner x V W = metricInner x W V :=
-  g.symm x V W
+    metricInner x V W = metricInner x W V := by
+  rw [metricInner_apply, metricInner_apply]; exact g.symm x V W
 
-/-- **Positive-definite**: $\langle V, V\rangle_g > 0$ for $V \ne 0$.
-
-Direct from `RiemannianMetric.posdef` axiom. -/
+/-- **Positive-definite**: $\langle V, V\rangle_g > 0$ for $V \ne 0$. -/
 theorem metricInner_self_pos (x : M) (V : TangentSpace I x) (hV : V ≠ 0) :
-    0 < metricInner x V V :=
-  g.posdef x V hV
+    0 < metricInner x V V := by
+  rw [metricInner_apply]; exact g.posdef x V hV
 
-/-- **Additivity in left argument**:
-$\langle V_1 + V_2, W\rangle_g = \langle V_1, W\rangle_g + \langle V_2, W\rangle_g$.
-
-Proof via `flip` to align outer-CLM bilinear form with `map_add`. -/
+/-- **Additivity in left argument**: inherited from `BilinearForm.inner_add_left`. -/
 theorem metricInner_add_left (x : M) (V₁ V₂ W : TangentSpace I x) :
     metricInner x (V₁ + V₂) W = metricInner x V₁ W + metricInner x V₂ W :=
-  ((g.metricTensor x).flip W).map_add V₁ V₂
+  BilinearForm.inner_add_left _ V₁ V₂ W
 
-/-- **Additivity in right argument**:
-$\langle V, W_1 + W_2\rangle_g = \langle V, W_1\rangle_g + \langle V, W_2\rangle_g$. -/
+/-- **Additivity in right argument**: inherited from `BilinearForm.inner_add_right`. -/
 theorem metricInner_add_right (x : M) (V W₁ W₂ : TangentSpace I x) :
     metricInner x V (W₁ + W₂) = metricInner x V W₁ + metricInner x V W₂ :=
-  (g.metricTensor x V).map_add W₁ W₂
+  BilinearForm.inner_add_right _ V W₁ W₂
 
-/-- **Scalar mult in left argument**:
-$\langle c \cdot V, W\rangle_g = c \cdot \langle V, W\rangle_g$. -/
+/-- **Scalar mult in left argument**: inherited from `BilinearForm.inner_smul_left`. -/
 theorem metricInner_smul_left (x : M) (c : ℝ) (V W : TangentSpace I x) :
     metricInner x (c • V) W = c * metricInner x V W :=
-  ((g.metricTensor x).flip W).map_smul c V
+  BilinearForm.inner_smul_left _ c V W
 
-/-- **Scalar mult in right argument**:
-$\langle V, c \cdot W\rangle_g = c \cdot \langle V, W\rangle_g$. -/
+/-- **Scalar mult in right argument**: inherited from `BilinearForm.inner_smul_right`. -/
 theorem metricInner_smul_right (x : M) (c : ℝ) (V W : TangentSpace I x) :
     metricInner x V (c • W) = c * metricInner x V W :=
-  (g.metricTensor x V).map_smul c W
+  BilinearForm.inner_smul_right _ c V W
 
-/-- **Zero in left argument**: $\langle 0, W\rangle_g = 0$. -/
+/-- **Zero in left argument**: inherited from `BilinearForm.inner_zero_left`. -/
 @[simp, metric_simp]
 theorem metricInner_zero_left (x : M) (W : TangentSpace I x) :
     metricInner x 0 W = 0 :=
-  ((g.metricTensor x).flip W).map_zero
+  BilinearForm.inner_zero_left _ W
 
-/-- **Zero in right argument**: $\langle V, 0\rangle_g = 0$. -/
+/-- **Zero in right argument**: inherited from `BilinearForm.inner_zero_right`. -/
 @[simp, metric_simp]
 theorem metricInner_zero_right (x : M) (V : TangentSpace I x) :
     metricInner x V 0 = 0 :=
-  (g.metricTensor x V).map_zero
+  BilinearForm.inner_zero_right _ V
 
-/-- **Negation in left argument**: $\langle -V, W\rangle_g = -\langle V, W\rangle_g$. -/
+/-- **Negation in left argument**: inherited from `BilinearForm.inner_neg_left`. -/
 @[simp, metric_simp]
 theorem metricInner_neg_left (x : M) (V W : TangentSpace I x) :
     metricInner x (-V) W = -metricInner x V W :=
-  ((g.metricTensor x).flip W).map_neg V
+  BilinearForm.inner_neg_left _ V W
 
-/-- **Negation in right argument**: $\langle V, -W\rangle_g = -\langle V, W\rangle_g$. -/
+/-- **Negation in right argument**: inherited from `BilinearForm.inner_neg_right`. -/
 @[simp, metric_simp]
 theorem metricInner_neg_right (x : M) (V W : TangentSpace I x) :
     metricInner x V (-W) = -metricInner x V W :=
-  (g.metricTensor x V).map_neg W
+  BilinearForm.inner_neg_right _ V W
 
-/-- **Subtraction in left argument**:
-$\langle V_1 - V_2, W\rangle_g = \langle V_1, W\rangle_g - \langle V_2, W\rangle_g$. -/
+/-- **Subtraction in left argument**: inherited from `BilinearForm.inner_sub_left`. -/
 @[simp, metric_simp]
 theorem metricInner_sub_left (x : M) (V₁ V₂ W : TangentSpace I x) :
-    metricInner x (V₁ - V₂) W = metricInner x V₁ W - metricInner x V₂ W := by
-  rw [sub_eq_add_neg, metricInner_add_left, metricInner_neg_left, sub_eq_add_neg]
+    metricInner x (V₁ - V₂) W = metricInner x V₁ W - metricInner x V₂ W :=
+  BilinearForm.inner_sub_left _ V₁ V₂ W
 
-/-- **Subtraction in right argument**:
-$\langle V, W_1 - W_2\rangle_g = \langle V, W_1\rangle_g - \langle V, W_2\rangle_g$. -/
+/-- **Subtraction in right argument**: inherited from `BilinearForm.inner_sub_right`. -/
 @[simp, metric_simp]
 theorem metricInner_sub_right (x : M) (V W₁ W₂ : TangentSpace I x) :
-    metricInner x V (W₁ - W₂) = metricInner x V W₁ - metricInner x V W₂ := by
-  rw [sub_eq_add_neg, metricInner_add_right, metricInner_neg_right, sub_eq_add_neg]
+    metricInner x V (W₁ - W₂) = metricInner x V W₁ - metricInner x V W₂ :=
+  BilinearForm.inner_sub_right _ V W₁ W₂
 
 /-- **Non-negativity of self-inner**: $\langle V, V\rangle_g \ge 0$.
 
