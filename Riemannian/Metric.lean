@@ -63,7 +63,7 @@ framework-owned analogs that use the single canonical path.
 Lee *Smooth Manifolds* Ch. 13 (Riemannian metrics as smooth bilinear sections).
 -/
 
-open scoped ContDiff Manifold
+open scoped ContDiff Manifold Topology
 
 namespace OpenGALib
 
@@ -325,22 +325,56 @@ bundle-section smoothness — required for the `TensorialAt` instance on
 **Mathematical content**: $y \mapsto g_y(Y(y), Z(y))$ is $C^\infty$ at
 $x$ when $g$ (the metric tensor) is $C^\infty$ in $y$ (Phase 4.7.1
 axiom `RiemannianMetric.smoothMetric`) and $Y, Z$ are smooth bundle
-sections. The proof goes through Mathlib's
-`MDifferentiableAt.clm_bundle_apply₂` machinery applied with our
-`g.metricTensor` as a smooth `M → (E →L[ℝ] E →L[ℝ] ℝ)` function.
+sections. Proof structure: chart-bridge via the trivialization
+`e := trivializationAt E (TangentSpace I) x`, with the round-trip
+identity `e.symmL ℝ y (e.continuousLinearMapAt ℝ y v) = v` for
+$y \in e.\mathrm{baseSet}$. Steps 1-3 close (mdifferentiableAt_totalSpace
+extracts plain `M → E` smoothness of `(e ⟨y, Y y⟩).2`,
+`g.smoothMetric.mdifferentiableAt` provides metric tensor smoothness).
 
-**Sorry status**: PRE-PAPER. Mechanical Mathlib chart-pullback work
-(~50–100 LOC) — the proof structure mirrors Mathlib's
-`MDifferentiableWithinAt.inner_bundle` (lines 174–193 of
-`VectorBundle/Riemannian.lean`), but substitutes
-`g.metricTensor` for the bundle-extracted metric. Repair owner:
-framework self-build (Phase 4.7.5.C or similar follow-up). No new
-mathematical content needed — just bundle-section to fiber-coordinate
-conversion + `clm_bundle_apply₂` application.
+**Sorry status (Step 4)**: PRE-PAPER, structural blocker. The remaining
+piece is `MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E) (fun y => e.symmL ℝ y) x`,
+i.e., smoothness of the trivialization inverse as a CLM-valued function
+of the basepoint. Mathlib provides:
+* `TangentBundle.symmL_trivializationAt` — `e.symmL ℝ y =
+  mfderiv[range I] (extChartAt I x).symm (extChartAt I x y)` for y in
+  chart source (decorated with `set_option backward.isDefEq.respectTransparency
+  false` to bridge `E →L[ℝ] TangentSpace I y` vs `E →L[ℝ] E`).
+* `ContMDiffVectorBundle.contMDiffOn_coordChangeL` — smoothness of CLM
+  changes between two trivializations (flat codomain `F →L F`).
+* `ContMDiffAt.mfderiv_const` — smoothness of the in-coordinates
+  pullback of `mfderiv f`, again with flat codomain via `inCoordinates`.
 
-**Repair trigger**: when chart-pullback bundle-section smoothness
-helpers are added to the framework, this sorry is mechanically
-discharged. -/
+The blocker: `e.symmL ℝ y` has dependent codomain `E →L[ℝ] TangentSpace I y`,
+incompatible with the `MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)` model
+(non-dependent codomain `E →L[ℝ] E`). Even with
+`set_option backward.isDefEq.respectTransparency false` in scope, the
+higher-order Pi-vs-flat unification problem `(y : M) → (E →L[ℝ] T y)`
+vs `M → (E →L[ℝ] E)` (where `T y = E` def-eq) is not resolved
+automatically by Lean's elaborator — the `→L[ℝ]` constructor demands
+syntactic equality of the codomain type.
+
+**Repair plan** (Phase 4.8 architectural follow-up):
+1. **Option A** (recommended): change the typeclass field
+   `RiemannianMetric.smoothMetric` from plain `M → CLM(E,E,ℝ)`
+   smoothness to bundle-section smoothness in the Hom-bundle of
+   `TangentSpace I`, matching Mathlib's `ContMDiffRiemannianMetric.contMDiff`.
+   Then `clm_bundle_apply₂` directly closes this lemma. Requires
+   updating users of `g.smoothMetric` (currently used only by this
+   helper).
+2. **Option B**: add a Mathlib-upstream lemma giving non-dependent
+   smoothness of `Trivialization.symmL` for tangent bundles via
+   `inCoordinates` form. This may already exist as
+   `MDifferentiableAt.clm_apply_of_inCoordinates` composition; framework
+   self-build of the helper is ~80 LOC.
+3. **Option C**: change `Y, Z` hypothesis form throughout the framework
+   from bundle-section to plain `M → E` smoothness (via def-eq abuse).
+   Requires propagating refactor through `koszul_*` identities + their
+   callers in `koszulFunctional_tensorialAt` / `koszulLinearFunctional_exists`.
+
+Phase 4.7.5.C (this file) commits the proof structure with Step 4
+extracted as the narrow structural axiom `tangentBundle_symmL_smoothAt`
+below. Closure of the axiom scheduled as Phase 4.8 strategic decision item. -/
 
 namespace OpenGALib
 
@@ -349,22 +383,55 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [g : RiemannianMetric I M]
 
+/-- **Narrow structural axiom**: smoothness of the tangent bundle
+trivialization inverse `Trivialization.symmL`, as a CLM-valued function
+of the basepoint, viewed in non-dependent codomain via the
+`TangentSpace I y = E` def-eq cast.
+
+**Mathematical content**: for the tangent bundle's preferred trivialization
+$e := \mathrm{trivializationAt}\,E\,(TangentSpace\,I)\,x$, the function
+$y \mapsto e.\mathrm{symmL}\,\mathbb{R}\,y$ is $C^\infty$ at $x$ as a map
+$M \to (E \to_L^{\mathbb{R}} E)$. This is mathematically the smoothness
+of the inverse chart-derivative, equivalent (via Mathlib's
+`TangentBundle.symmL_trivializationAt`) to smoothness of
+$y \mapsto \mathrm{mfderivWithin}\,(\mathrm{range}\,I)\,(\mathrm{extChartAt}\,I\,x).\mathrm{symm}\,(\mathrm{extChartAt}\,I\,x\,y)$.
+
+**Why an axiom**: the dependent codomain `E →L[ℝ] TangentSpace I y` of
+`e.symmL ℝ y` is incompatible with the non-dependent
+`MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)` model expected. Even with
+`set_option backward.isDefEq.respectTransparency false`, Lean's
+elaborator cannot resolve the higher-order Pi-vs-flat unification
+problem. The proof requires either:
+* Mathlib upstream addition of `Trivialization.symmL` smoothness in
+  non-dependent flat-CLM form (`F →L F` via the trivialization's own
+  baseSet), OR
+* Framework typeclass redesign making `RiemannianMetric.smoothMetric`
+  use bundle-section smoothness in the Hom-bundle (then
+  `clm_bundle_apply₂` handles the chart-bridge internally).
+
+**Repair plan**: Phase 4.8 architectural follow-up. The axiom will be
+discharged either as a Mathlib upstream PR or via the framework's
+typeclass redesign (the latter requires cascade of topology-instance
+synthesis fixes for the Hom-bundle's TotalSpace, which is out of
+Phase 4.7 scope).
+
+**Ground truth**: standard for tangent bundles — chart-derivatives
+and their inverses are smooth as part of the smooth-manifold structure.
+The non-dependent CLM-valued formulation is the only barrier. -/
+axiom tangentBundle_symmL_smoothAt
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    (x : M) (h_TS_E_eq : ∀ y : M, (E →L[ℝ] TangentSpace I y) = (E →L[ℝ] E)) :
+    MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)
+      (fun y : M => cast (h_TS_E_eq y)
+        ((trivializationAt E (TangentSpace I) x).symmL ℝ y)) x
+
 /-- **Smoothness of the metric inner product** as a scalar function of
 the basepoint, given smooth bundle sections.
 
 For smooth tangent-bundle sections $Y, Z$ at $x$, the scalar function
-$y \mapsto \langle Y(y), Z(y)\rangle_g$ is $C^\infty$ at $x$.
-
-**Phase 4.7.5.C partial closure**: the proof structure is in place
-but the final `congr_of_eventuallyEq` step requires the chart-change
-composition `g.metricTensor y (e.symmL y (Y' y)) (e.symmL y (Z' y))`,
-which equals `g.metricTensor y (Y y) (Z y)` for `y ∈ e.baseSet` via
-`Trivialization.symmL_continuousLinearMapAt`. The smoothness of
-`e.symmL ℝ y` in `y` (Mathlib's `Trivialization.symmL` for tangent
-bundle equals `mfderivWithin (extChartAt I x).symm` — Mathlib lemma
-`TangentBundle.symmL_trivializationAt`, smooth via mfderiv smoothness)
-needs to be plumbed through. ~30-50 LOC of careful chart-machinery
-remains. -/
+$y \mapsto \langle Y(y), Z(y)\rangle_g$ is $C^\infty$ at $x$. -/
 theorem MDifferentiableAt.metricInner_smoothAt
     {Y Z : Π y : M, TangentSpace I y} {x : M}
     (hY : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
@@ -381,30 +448,75 @@ theorem MDifferentiableAt.metricInner_smoothAt
   -- Step 2: g.metricTensor smooth as M → CLM.
   have hg : MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E →L[ℝ] ℝ) g.metricTensor x :=
     (g.smoothMetric x).mdifferentiableAt (by decide)
-  -- Step 3: Compose g.metricTensor with Y', Z' via clm_apply twice.
-  -- The composed function is `fun y => g.metricTensor y (Y' y) (Z' y)`.
-  have h1 : MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] ℝ)
-      (fun y => g.metricTensor y ((e ⟨y, Y y⟩).2)) x := hg.clm_apply hY'
-  have h2 : MDifferentiableAt I 𝓘(ℝ, ℝ)
-      (fun y => g.metricTensor y ((e ⟨y, Y y⟩).2) ((e ⟨y, Z y⟩).2)) x :=
-    h1.clm_apply hZ'
-  -- Step 4: Bridge to the original `metricInner y (Y y) (Z y)` form.
-  -- The chart-pulled-back values `(e ⟨y, Y y⟩).2 = e.continuousLinearMapAt ℝ y (Y y)`
-  -- differ from `Y y` itself by the chart change. To recover `Y y` from `Y'(y)`, we
-  -- compose with `e.symmL ℝ y` (the inverse chart change), giving the equation
-  -- `Y y = e.symmL ℝ y (Y' y)` for `y ∈ e.baseSet` (via
-  -- `Trivialization.symmL_continuousLinearMapAt`).
-  --
-  -- Smoothness of `e.symmL ℝ y` in `y` follows from
-  -- `TangentBundle.symmL_trivializationAt` + smoothness of `mfderivWithin (extChartAt I x).symm`.
-  -- The chained smoothness of
-  --   `fun y => g.metricTensor y (e.symmL y (Y' y)) (e.symmL y (Z' y))`
-  -- is then via three `clm_apply` applications + the chart-change smoothness, and equals
-  -- the goal pointwise on `e.baseSet`.
-  --
-  -- Implementation deferred — Mathlib's chart-machinery composition is mechanically
-  -- doable (~30-50 LOC) but exceeds atomic-commit scope here.
-  sorry
+  -- Step 3: e.symmL smoothness as a CLM-valued function of y.
+  -- For tangent bundle, `e.symmL ℝ y = mfderivWithin (range I) (extChartAt I x).symm (extChartAt I x y)`
+  -- via `TangentBundle.symmL_trivializationAt`. The mfderiv of a smooth chart inverse is smooth.
+  have hx_chart : x ∈ (chartAt H x).source := mem_chart_source H x
+  have h_baseSet : (chartAt H x).source ∈ 𝓝 x :=
+    (chartAt H x).open_source.mem_nhds hx_chart
+  -- e.symmL is smooth M → (E →L[ℝ] E) (= E →L[ℝ] TangentSpace I _ via def-eq).
+  -- Use set_option to make def-eq transparent.
+  -- For tangent bundle: e.symmL ℝ y = mfderivWithin (range I) (extChartAt I x).symm
+  -- (extChartAt I x y), the mfderiv of the smooth chart inverse — smooth in y.
+  -- Cast via type-equality (provable as rfl under transparency).
+  set_option backward.isDefEq.respectTransparency false in
+  have h_TS_E_eq : ∀ y : M, (E →L[ℝ] TangentSpace I y) = (E →L[ℝ] E) :=
+    fun _ => rfl
+  -- Step 3 closure via narrow structural axiom `tangentBundle_symmL_smoothAt`
+  -- (file-level, with detailed Phase 4.8 repair plan in its docstring).
+  set_option backward.isDefEq.respectTransparency false in
+  have h_symmL : MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)
+      (fun y : M => cast (h_TS_E_eq y) (e.symmL ℝ y)) x :=
+    tangentBundle_symmL_smoothAt x h_TS_E_eq
+  -- Step 4: Build the composed smooth function.
+  set_option backward.isDefEq.respectTransparency false in
+  have h_compY : MDifferentiableAt I 𝓘(ℝ, E)
+      (fun y => (e.symmL ℝ y : E →L[ℝ] E) ((e ⟨y, Y y⟩).2)) x :=
+    h_symmL.clm_apply hY'
+  set_option backward.isDefEq.respectTransparency false in
+  have h_compZ : MDifferentiableAt I 𝓘(ℝ, E)
+      (fun y => (e.symmL ℝ y : E →L[ℝ] E) ((e ⟨y, Z y⟩).2)) x :=
+    h_symmL.clm_apply hZ'
+  set_option backward.isDefEq.respectTransparency false in
+  have h_smooth : MDifferentiableAt I 𝓘(ℝ, ℝ)
+      (fun y => g.metricTensor y
+        ((e.symmL ℝ y : E →L[ℝ] E) ((e ⟨y, Y y⟩).2))
+        ((e.symmL ℝ y : E →L[ℝ] E) ((e ⟨y, Z y⟩).2))) x :=
+    (hg.clm_apply h_compY).clm_apply h_compZ
+  -- Step 5: Bridge to goal via eventuallyEq on e.baseSet.
+  apply h_smooth.congr_of_eventuallyEq
+  have h_baseSet_e : e.baseSet ∈ 𝓝 x :=
+    e.open_baseSet.mem_nhds (FiberBundle.mem_baseSet_trivializationAt' x)
+  filter_upwards [h_baseSet_e] with y hy
+  set_option backward.isDefEq.respectTransparency false in
+  have hY_inv : (e.symmL ℝ y : E →L[ℝ] E) ((e ⟨y, Y y⟩).2) = (Y y : E) := by
+    have h_round := Bundle.Trivialization.symmL_continuousLinearMapAt
+      (R := ℝ) (e := e) hy (Y y)
+    -- (e ⟨y, Y y⟩).2 = e.continuousLinearMapAt ℝ y (Y y) for y ∈ baseSet.
+    have h_eq : (e ⟨y, Y y⟩).2 = e.continuousLinearMapAt ℝ y (Y y) := by
+      have := Bundle.Trivialization.coe_linearMapAt_of_mem (R := ℝ) e hy
+      exact (congrFun this (Y y)).symm
+    rw [h_eq]
+    exact h_round
+  set_option backward.isDefEq.respectTransparency false in
+  have hZ_inv : (e.symmL ℝ y : E →L[ℝ] E) ((e ⟨y, Z y⟩).2) = (Z y : E) := by
+    have h_round := Bundle.Trivialization.symmL_continuousLinearMapAt
+      (R := ℝ) (e := e) hy (Z y)
+    have h_eq : (e ⟨y, Z y⟩).2 = e.continuousLinearMapAt ℝ y (Z y) := by
+      have := Bundle.Trivialization.coe_linearMapAt_of_mem (R := ℝ) e hy
+      exact (congrFun this (Z y)).symm
+    rw [h_eq]
+    exact h_round
+  -- Goal: metricInner y (Y y) (Z y) = g.metricTensor y (symmL_y Y') (symmL_y Z')
+  -- After rewrite via .symm direction: replaces (Y y) with (symmL_y Y'), (Z y) with (symmL_y Z')
+  -- in metricInner = g.metricTensor (def-eq), then rfl.
+  set_option backward.isDefEq.respectTransparency false in
+  show metricInner y (Y y) (Z y) =
+      g.metricTensor y
+        ((e.symmL ℝ y : E →L[ℝ] E) ((e ⟨y, Y y⟩).2))
+        ((e.symmL ℝ y : E →L[ℝ] E) ((e ⟨y, Z y⟩).2))
+  rw [hY_inv, hZ_inv]
+  rfl
 
 end OpenGALib
 
@@ -429,11 +541,13 @@ noncomputable def metricToDual (x : M) :
     TangentSpace I x →L[ℝ] (TangentSpace I x →L[ℝ] ℝ) :=
   g.metricTensor x
 
+omit [FiniteDimensional ℝ E] in
 @[simp]
 theorem metricToDual_apply (x : M) (v w : TangentSpace I x) :
     metricToDual (g := g) x v w = metricInner x v w :=
   rfl
 
+omit [FiniteDimensional ℝ E] in
 /-- **Injectivity of forward Riesz**: from positive-definiteness. -/
 theorem metricToDual_injective (x : M) :
     Function.Injective (metricToDual (g := g) x) := by
@@ -449,6 +563,7 @@ theorem metricToDual_injective (x : M) :
     rw [metricInner_sub_left, key (v₁ - v₂), sub_self]
   linarith
 
+omit [FiniteDimensional ℝ E] in
 /-- **Vector equality via inner-product equality** (non-degeneracy).
 
 Two tangent vectors at $x$ are equal iff their inner products with all
@@ -467,6 +582,7 @@ theorem metricInner_eq_iff_eq (x : M) (v w : TangentSpace I x) :
   ext Z
   simpa [metricToDual_apply] using h Z
 
+omit g in
 /-- finrank of `TangentSpace I x →L[ℝ] ℝ` equals finrank of `TangentSpace I x`. -/
 private theorem finrank_clm_dual_eq (x : M) :
     Module.finrank ℝ (TangentSpace I x →L[ℝ] ℝ) =
@@ -486,7 +602,7 @@ theorem metricToDual_bijective (x : M) :
     Module.Finite.equiv (LinearMap.toContinuousLinearMap :
       (TangentSpace I x →ₗ[ℝ] ℝ) ≃ₗ[ℝ] (TangentSpace I x →L[ℝ] ℝ))
   refine ⟨metricToDual_injective x, ?_⟩
-  have h_finrank := finrank_clm_dual_eq (g := g) x
+  have h_finrank := finrank_clm_dual_eq (I := I) (M := M) x
   have hiff := LinearMap.injective_iff_surjective_of_finrank_eq_finrank
     (f := (metricToDual (g := g) x).toLinearMap) h_finrank.symm
   exact hiff.mp (metricToDual_injective (g := g) x)
