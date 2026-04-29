@@ -11,7 +11,7 @@ Two parallel deliverables:
 
 Both deliverables are first-class. Architectural decisions favor long-term software value over short-term paper expedience.
 
-Phase 1 (Layer A + Layer B real grounding) is complete: 20 GMT analysis primitives carry real Lean definitions. Phase 1.5 + 1.6 added a 5th independent Riemannian package: 8 of 9 Riemannian primitives (Riemann curvature, Ricci, scalar curvature, second fundamental form + squared norm, mean curvature, manifold gradient + squared norm) are real definitions; only `leviCivitaConnection` remains as an existence axiom (Levi-Civita Koszul, acceptable per textbook standard).
+Phase 1 (Layer A + Layer B real grounding) is complete: 20 GMT analysis primitives carry real Lean definitions. Phase 1.5 + 1.6 added a 5th independent Riemannian package: 9 of 9 Riemannian primitives (Riemann curvature, Ricci, scalar curvature, second fundamental form + squared norm, mean curvature, manifold gradient + squared norm, Levi-Civita connection) are real definitions; the Levi-Civita existence (`koszulLeviCivita_exists`) is closed via `TensorialAt.mkHom` + Riesz uniqueness. **Zero existence axioms** in the Riemannian package.
 
 ## Architecture
 
@@ -248,7 +248,7 @@ Premature UX optimization on evolving interfaces wastes work — polish gets dis
 - **Phase 0** (done): Architecture lock — monorepo, CLAUDE.md, naming convention.
 - **Phase 1** (done): Layer A + Layer B real grounding. 21 → 1 opaque. GMT analysis primitive lib real-grounded.
 - **Phase 1.5** (done): Refactor — Riemannian package (5th independent lib), Variation/ sub-namespace, HasNormal typeclass, Stable.lean GMT-level.
-- **Phase 1.6** (done): Riemannian production-grade — 8 of 9 primitives real (Riemann curvature, Ricci, scalar curvature, second fundamental form + sq norm, mean curvature, manifold gradient + sq norm); only `leviCivitaConnection` remains as existence axiom for Levi-Civita Koszul (acceptable per textbook standard). `InnerProductBridge` self-build canonical example.
+- **Phase 1.6** (done): Riemannian production-grade — **9 of 9 primitives real**, zero existence axioms. Riemann curvature, Ricci, scalar curvature, second fundamental form + sq norm, mean curvature, manifold gradient + sq norm, plus Levi-Civita connection (closed via `koszulLeviCivita_exists` = TensorialAt.mkHom + Riesz uniqueness over closed Koszul algebraic identities). `InnerProductBridge` self-build canonical example.
 - **Phase 2** (next): Round 5 cited theorem strict alignment Items 4–9 (DLT13, `exists_minmaxLimit`, `isStationary_of_minmaxLimit`, `locallyStable_of_oneSidedMinimizing`, `interpolation_lemma`, `isRectifiable_of_isStationary_of_density_pos`).
 - **Phase 3**: Isoperimetric production-grade lib (parallel to Riemannian, framework self-build standard).
 - **Phase 4** / **Phase 4.5** (mathematical content done): Levi-Civita Koszul

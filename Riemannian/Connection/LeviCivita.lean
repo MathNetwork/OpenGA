@@ -200,19 +200,230 @@ theorem koszulCovDeriv_inner_eq
 * `koszul_metric_compat_sum` → metric-compatibility for smooth vector
   fields. -/
 
-/-- **Narrow CovariantDerivative wrap axiom for the Koszul construction.**
+/-! ### Construction of the Levi-Civita `CovariantDerivative`
+
+Build the `CovariantDerivative` via:
+
+1. `koszulCovDerivAux Y x hY` — smoothness-erased function `(X) ↦ ∇_X Y(x)`,
+   defined as `koszulCovDeriv X Y x hX hY` for smooth `X` and `0` otherwise.
+2. `koszulCovDerivAux_tensorialAt` — tensorality in `X` (the
+   `C^∞`-linearity of $\nabla_\cdot Y$ at $x$), via `koszul_smul_left` /
+   `koszul_add_left` + Riesz uniqueness.
+3. `TensorialAt.mkHom` to obtain the CLM `T_xM →L[ℝ] T_xM`.
+4. `IsCovariantDerivativeOn` add / leibniz from `koszul_add_middle` /
+   `koszul_smul_middle` via Riesz uniqueness.
+-/
+
+/-- Smoothness-erased version of `koszulCovDeriv` in the `X` argument:
+returns `koszulCovDeriv X Y x hX hY` for smooth `X`, `0` otherwise.
+Needed because Mathlib's `TensorialAt` requires `Φ` to be defined on
+**all** sections, not just smooth ones. -/
+private noncomputable def koszulCovDerivAux
+    (Y : Π y : M, TangentSpace I y) (x : M) (hY : TangentSmoothAt Y x)
+    (X : Π y : M, TangentSpace I y) : TangentSpace I x := by
+  classical
+  exact if hX : TangentSmoothAt X x then koszulCovDeriv X Y x hX hY else 0
+
+/-- Tensorality of `koszulCovDerivAux Y x hY` in the `X` argument: for
+smooth `X`, `f`, `koszulCovDerivAux` respects scalar multiplication and
+addition. Uses `koszul_smul_left` / `koszul_add_left` together with
+Riesz uniqueness (`metricInner_eq_iff_eq` against an arbitrary
+extended test vector). -/
+private theorem koszulCovDerivAux_tensorialAt
+    (Y : Π y : M, TangentSpace I y) (x : M) (hY : TangentSmoothAt Y x) :
+    TensorialAt I E (koszulCovDerivAux Y x hY) x where
+  smul := by
+    intro f X hf hX_raw
+    classical
+    -- Cast hX_raw (which has type def-equal to TangentSmoothAt X x) into the
+    -- canonical TangentSmoothAt form, so that `dif_pos` rewrites fire.
+    have hX : TangentSmoothAt X x := hX_raw
+    have h_fX : TangentSmoothAt (f • X) x := TangentSmoothAt.smul hf hX
+    show koszulCovDerivAux Y x hY (f • X) = f x • koszulCovDerivAux Y x hY X
+    simp only [koszulCovDerivAux, dif_pos hX, dif_pos h_fX]
+    apply (metricInner_eq_iff_eq x _ _).mp
+    intro Z₀
+    set Z : Π y : M, TangentSpace I y := FiberBundle.extend E Z₀
+    have hZ_smooth : TangentSmoothAt Z x :=
+      FiberBundle.mdifferentiableAt_extend I E Z₀
+    have hZx : Z x = Z₀ := FiberBundle.extend_apply_self _ _
+    have h_ZX := MDifferentiableAt.metricInner_smoothAt hZ_smooth hX
+    have h_XY := MDifferentiableAt.metricInner_smoothAt hX hY
+    -- Convert the Pi-smul `f • X` form on the LHS to `fun y => f y • X y` so
+    -- that `koszul_smul_left` (stated in the latter form) rewrites.
+    have h_smul_left :
+        koszulFunctional (f • X) Y Z x = f x * koszulFunctional X Y Z x :=
+      koszul_smul_left X Y Z f x hf h_ZX h_XY hX
+    rw [← hZx,
+        koszulCovDeriv_inner_eq _ _ _ x h_fX hY hZ_smooth,
+        h_smul_left,
+        metricInner_smul_left,
+        koszulCovDeriv_inner_eq X Y Z x hX hY hZ_smooth]
+    ring
+  add := by
+    intro X X' hX_raw hX'_raw
+    classical
+    have hX : TangentSmoothAt X x := hX_raw
+    have hX' : TangentSmoothAt X' x := hX'_raw
+    have h_sum : TangentSmoothAt (X + X') x := TangentSmoothAt.add hX hX'
+    show koszulCovDerivAux Y x hY (X + X')
+        = koszulCovDerivAux Y x hY X + koszulCovDerivAux Y x hY X'
+    simp only [koszulCovDerivAux, dif_pos hX, dif_pos hX', dif_pos h_sum]
+    apply (metricInner_eq_iff_eq x _ _).mp
+    intro Z₀
+    set Z : Π y : M, TangentSpace I y := FiberBundle.extend E Z₀
+    have hZ_smooth : TangentSmoothAt Z x :=
+      FiberBundle.mdifferentiableAt_extend I E Z₀
+    have hZx : Z x = Z₀ := FiberBundle.extend_apply_self _ _
+    have h_ZX₁ := MDifferentiableAt.metricInner_smoothAt hZ_smooth hX
+    have h_ZX₂ := MDifferentiableAt.metricInner_smoothAt hZ_smooth hX'
+    have h_X₁Y := MDifferentiableAt.metricInner_smoothAt hX hY
+    have h_X₂Y := MDifferentiableAt.metricInner_smoothAt hX' hY
+    have h_add_left :
+        koszulFunctional (X + X') Y Z x
+          = koszulFunctional X Y Z x + koszulFunctional X' Y Z x :=
+      koszul_add_left X X' Y Z x h_ZX₁ h_ZX₂ h_X₁Y h_X₂Y hX hX'
+    rw [← hZx,
+        koszulCovDeriv_inner_eq _ _ _ x h_sum hY hZ_smooth,
+        h_add_left,
+        metricInner_add_left,
+        koszulCovDeriv_inner_eq X Y Z x hX hY hZ_smooth,
+        koszulCovDeriv_inner_eq X' Y Z x hX' hY hZ_smooth]
+    ring
+
+/-- **Levi-Civita `CovariantDerivative` existence.**
 
 A `CovariantDerivative` whose `toFun` extends the pointwise
-`koszulCovDeriv` value for smooth $(X, Y)$. The body is a TensorialAt
-mkHom in the X argument plus the `IsCovariantDerivativeOnUniv` add /
-leibniz fields (derivable from `koszul_add_middle` /
-`koszul_smul_middle` via Riesz); see `SORRY_CATALOG.md`. -/
+`koszulCovDeriv` value for smooth $(X, Y)$. Construction:
+
+* `toFun Y x` is `TensorialAt.mkHom (koszulCovDerivAux Y x hY) x ...`
+  for smooth `Y`, `0` otherwise.
+* `IsCovariantDerivativeOn.add` follows from `koszul_add_middle` +
+  Riesz uniqueness.
+* `IsCovariantDerivativeOn.leibniz` follows from `koszul_smul_middle` +
+  Riesz uniqueness; the extra `2 * X(g) * ⟨Y, Z⟩` term in
+  `koszul_smul_middle` is exactly the `(extDerivFun g x).smulRight (Y x)`
+  term in the Leibniz field after the `1/2` factor cancels. -/
 private theorem koszulLeviCivita_exists :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       ∀ (X Y : Π x : M, TangentSpace I x) (x : M)
         (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x),
         cov.toFun Y x (X x) = koszulCovDeriv X Y x hX hY := by
-  sorry
+  classical
+  -- Step 1: build cov.toFun Y x as the mkHom CLM for smooth Y, else 0.
+  let toFun : (Π y : M, TangentSpace I y) →
+      (Π y : M, TangentSpace I y →L[ℝ] TangentSpace I y) :=
+    fun Y x =>
+      if hY : TangentSmoothAt Y x then
+        TensorialAt.mkHom (koszulCovDerivAux Y x hY) x
+          (koszulCovDerivAux_tensorialAt Y x hY)
+      else 0
+  -- Step 2: prove IsCovariantDerivativeOn for `toFun`.
+  refine ⟨⟨toFun, ?_⟩, ?_⟩
+  · refine ⟨?add, ?leibniz⟩
+    case add =>
+      -- toFun (Y₁ + Y₂) x = toFun Y₁ x + toFun Y₂ x for smooth Y₁, Y₂.
+      intro Y₁ Y₂ x hY₁ hY₂ _
+      have hY₁' : TangentSmoothAt Y₁ x := hY₁
+      have hY₂' : TangentSmoothAt Y₂ x := hY₂
+      have h_sum : TangentSmoothAt (Y₁ + Y₂) x := TangentSmoothAt.add hY₁' hY₂'
+      simp only [toFun, dif_pos hY₁', dif_pos hY₂', dif_pos h_sum]
+      ext v
+      -- It suffices to show (mkHom_sum) v = (mkHom_Y₁) v + (mkHom_Y₂) v.
+      set V : Π y : M, TangentSpace I y := FiberBundle.extend E v
+      have hV_smooth : TangentSmoothAt V x :=
+        FiberBundle.mdifferentiableAt_extend I E v
+      have hVx : V x = v := FiberBundle.extend_apply_self _ _
+      rw [ContinuousLinearMap.add_apply]
+      rw [← hVx]
+      rw [TensorialAt.mkHom_apply _ hV_smooth,
+          TensorialAt.mkHom_apply _ hV_smooth,
+          TensorialAt.mkHom_apply _ hV_smooth]
+      -- Goal: koszulCovDerivAux (Y₁+Y₂) x h_sum V
+      --     = koszulCovDerivAux Y₁ x hY₁ V + koszulCovDerivAux Y₂ x hY₂ V
+      simp only [koszulCovDerivAux, dif_pos hV_smooth]
+      -- Goal: koszulCovDeriv V (Y₁+Y₂) x ... = koszulCovDeriv V Y₁ x ... + koszulCovDeriv V Y₂ x ...
+      apply (metricInner_eq_iff_eq x _ _).mp
+      intro Z₀
+      set Z : Π y : M, TangentSpace I y := FiberBundle.extend E Z₀
+      have hZ_smooth : TangentSmoothAt Z x :=
+        FiberBundle.mdifferentiableAt_extend I E Z₀
+      have hZx : Z x = Z₀ := FiberBundle.extend_apply_self _ _
+      have h_Y₁Z := MDifferentiableAt.metricInner_smoothAt hY₁ hZ_smooth
+      have h_Y₂Z := MDifferentiableAt.metricInner_smoothAt hY₂ hZ_smooth
+      have h_VY₁ := MDifferentiableAt.metricInner_smoothAt hV_smooth hY₁
+      have h_VY₂ := MDifferentiableAt.metricInner_smoothAt hV_smooth hY₂
+      rw [← hZx,
+          koszulCovDeriv_inner_eq _ _ _ x hV_smooth h_sum hZ_smooth,
+          koszul_add_middle V Y₁ Y₂ Z x h_Y₁Z h_Y₂Z h_VY₁ h_VY₂ hY₁ hY₂,
+          metricInner_add_left,
+          koszulCovDeriv_inner_eq V Y₁ Z x hV_smooth hY₁ hZ_smooth,
+          koszulCovDeriv_inner_eq V Y₂ Z x hV_smooth hY₂ hZ_smooth]
+      ring
+    case leibniz =>
+      -- toFun (g • Y) x = g x • toFun Y x + (extDerivFun g x).smulRight (Y x)
+      intro Y g x hY hg _
+      have hY' : TangentSmoothAt Y x := hY
+      have h_gY_lambda : TangentSmoothAt (fun y => g y • Y y) x :=
+        TangentSmoothAt.smul hg hY'
+      -- Note: g • Y = fun y => g y • Y y (Pi-smul, definitionally)
+      have h_gY' : TangentSmoothAt (g • Y) x := h_gY_lambda
+      simp only [toFun, dif_pos hY', dif_pos h_gY']
+      ext v
+      set V : Π y : M, TangentSpace I y := FiberBundle.extend E v
+      have hV_smooth : TangentSmoothAt V x :=
+        FiberBundle.mdifferentiableAt_extend I E v
+      have hVx : V x = v := FiberBundle.extend_apply_self _ _
+      rw [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply]
+      rw [← hVx]
+      rw [TensorialAt.mkHom_apply _ hV_smooth,
+          TensorialAt.mkHom_apply _ hV_smooth]
+      simp only [koszulCovDerivAux, dif_pos hV_smooth]
+      -- Goal: koszulCovDeriv V (g•Y) x ... = g x • koszulCovDeriv V Y x ... +
+      --       (extDerivFun g x).smulRight (Y x) v
+      apply (metricInner_eq_iff_eq x _ _).mp
+      intro Z₀
+      set Z : Π y : M, TangentSpace I y := FiberBundle.extend E Z₀
+      have hZ_smooth : TangentSmoothAt Z x :=
+        FiberBundle.mdifferentiableAt_extend I E Z₀
+      have hZx : Z x = Z₀ := FiberBundle.extend_apply_self _ _
+      have h_YZ := MDifferentiableAt.metricInner_smoothAt hY hZ_smooth
+      have h_VY := MDifferentiableAt.metricInner_smoothAt hV_smooth hY
+      rw [← hZx,
+          koszulCovDeriv_inner_eq _ _ _ x hV_smooth h_gY' hZ_smooth]
+      -- LHS = (1/2) * koszulFunctional V (g • Y) Z x
+      -- by koszul_smul_middle:
+      --     = (1/2) * (g x * K V Y Z x + 2 * directionalDeriv g x (V x) * ⟨Y x, Z x⟩)
+      rw [show (g • Y : Π y : M, TangentSpace I y) = fun y => g y • Y y from rfl]
+      rw [koszul_smul_middle V Y Z g x hg h_YZ h_VY hY]
+      -- RHS expands via koszulCovDeriv_inner_eq V Y Z and metricInner_add/smul.
+      rw [metricInner_add_left, metricInner_smul_left,
+          koszulCovDeriv_inner_eq V Y Z x hV_smooth hY hZ_smooth]
+      -- Remaining goal (modulo extDerivFun = directionalDeriv):
+      -- (1/2) * (g x * K V Y Z + 2 * dDeriv g x (V x) * ⟨Y x, Z x⟩)
+      --   = g x * (1/2) * K V Y Z + (extDerivFun g x).smulRight (Y x) v • Z x
+      show (1 / 2 : ℝ) *
+          (g x * koszulFunctional V Y Z x
+            + 2 * directionalDeriv g x (V x) * metricInner x (Y x) (Z x))
+          = g x *
+              ((1 / 2 : ℝ) * koszulFunctional V Y Z x)
+            + metricInner x ((extDerivFun g x).smulRight (Y x) (V x)) (Z x)
+      -- Unfold extDerivFun and smulRight at (V x).
+      have h_smulRight :
+          ((extDerivFun (I := I) g x).smulRight (Y x) (V x) : TangentSpace I x)
+            = directionalDeriv g x (V x) • Y x := by
+        show (extDerivFun (I := I) g x (V x)) • Y x
+            = directionalDeriv g x (V x) • Y x
+        rfl
+      rw [h_smulRight, metricInner_smul_left]
+      ring
+  -- Step 3: prove the main equation cov.toFun Y x (X x) = koszulCovDeriv X Y x hX hY.
+  · intro X Y x hX hY
+    show toFun Y x (X x) = koszulCovDeriv X Y x hX hY
+    simp only [toFun, dif_pos hY]
+    rw [TensorialAt.mkHom_apply _ hX]
+    -- Goal: koszulCovDerivAux Y x hY X = koszulCovDeriv X Y x hX hY
+    simp only [koszulCovDerivAux, dif_pos hX]
 
 /-- **Existence theorem for the Levi-Civita connection.**
 
