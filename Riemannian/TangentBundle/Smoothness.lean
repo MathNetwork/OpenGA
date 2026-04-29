@@ -289,13 +289,21 @@ theorem contMDiffOn_continuousLinearMapAt_apply
     ContMDiffOn I 𝓘(ℝ, E) ∞
       (fun b : M => (trivializationAt E (TangentSpace I) x₀).continuousLinearMapAt ℝ b v)
       (trivializationAt E (TangentSpace I) x₀).baseSet := by
-  -- Closure path: from Layer 1 (`contMDiff_constSection_TangentSpace`)
-  -- via `Bundle.Trivialization.contMDiffOn_iff` (FIXED trivialization at x₀)
-  -- + `Bundle.Trivialization.continuousLinearMapAt_apply_of_mem` to bridge
-  -- `(e ⟨b, v⟩).2 = e.cLMA R b v`. Multi-commit framework work; the
-  -- Mathlib typeclass synth for `ContMDiffVectorBundle ∞` instance via
-  -- `TangentBundle.contMDiffVectorBundle` is the current sticking point.
-  sorry
+  -- Mathlib provides `ContMDiffVectorBundle ∞ E (TangentSpace I) I` as an
+  -- instance when `[IsManifold I ∞ M]` (Tangent.lean line 330). Should
+  -- synthesize automatically.
+  have h_const := contMDiff_constSection_TangentSpace (I := I) (M := M) v
+  set e : Bundle.Trivialization E (Bundle.TotalSpace.proj (E := TangentSpace I (M := M))) :=
+    trivializationAt E (TangentSpace I) x₀ with he_def
+  have h_maps : Set.MapsTo (fun b : M => (⟨b, v⟩ : TangentBundle I M)) e.baseSet e.source :=
+    fun b hb => e.mem_source.mpr hb
+  have h_iff := e.contMDiffOn_iff (IB := I) (IM := I) (n := ∞)
+    (f := fun b : M => (⟨b, v⟩ : TangentBundle I M)) h_maps
+  have h_snd : ContMDiffOn I 𝓘(ℝ, E) ∞
+      (fun b => (e ⟨b, v⟩).2) e.baseSet := (h_iff.mp h_const.contMDiffOn).2
+  apply h_snd.congr
+  intro b hb
+  exact Bundle.Trivialization.continuousLinearMapAt_apply_of_mem (R := ℝ) e hb v
 
 /-! ### Layer 4 — main result `contMDiffOn_continuousLinearMapAtFlat` -/
 
