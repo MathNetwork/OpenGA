@@ -101,6 +101,7 @@ The scalar smoothness hypotheses of `koszul_smul_right` /
 from the bundle-section smoothness of $X, Y, Z$ via
 `MDifferentiableAt.metricInner_smoothAt`. -/
 private theorem koszulFunctional_tensorialAt
+    [FiniteDimensional ℝ E] [CompleteSpace E]
     (X Y : Π y : M, TangentSpace I y) (x : M)
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x) :
     TensorialAt I E (fun Z : (Π y : M, TangentSpace I y) =>

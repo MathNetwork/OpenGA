@@ -108,22 +108,28 @@ set_option backward.isDefEq.respectTransparency false in
 /-- **Flat-codomain forward chart mfderiv** wrapper. Underlying value
 at `y ∈ M` is `(trivializationAt E (TangentSpace I) x₀).continuousLinearMapAt ℝ y`,
 retyped from `TangentSpace I y →L[ℝ] E` to `E →L[ℝ] E` via the
-`TangentSpace I y = E` def-eq. This is the FORWARD-chart mfderiv flat
-wrapper, mirror of `mfderivWithinFlat` but for the chart map itself. -/
-private noncomputable def continuousLinearMapAtFlat
+`TangentSpace I y = E` def-eq.
+
+By `TangentBundle.continuousLinearMapAt_trivializationAt`, equals
+`mfderiv (extChartAt I x₀) y` on chart source. -/
+noncomputable def continuousLinearMapAtFlat
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     (x₀ y : M) : E →L[ℝ] E :=
   (trivializationAt E (TangentSpace I) x₀).continuousLinearMapAt ℝ y
 
-/-- **Smoothness of trivialization's `continuousLinearMapAt` as
-model-fiber-valued CLM**, on chart base set, for the tangent bundle.
+/-- **Forward chart mfderiv smoothness as model-fiber-valued CLM**
+(infrastructure / Mathlib upstream PR candidate).
 
-By `TangentBundle.continuousLinearMapAt_trivializationAt`, the value
-equals `mfderiv (extChartAt I x₀) y` on chart source — so this lemma
-is equivalent to "the chart's mfderiv as a function of basepoint is
-smooth as `M → (E →L E)`".
+The chart's mfderiv as a function of basepoint is smooth `M → (E →L E)`,
+on chart base set. This is the natural mathematical statement
+("a smooth chart's derivative is a smooth function of basepoint")
+and the **fundamental** smoothness fact for tangent-bundle infrastructure.
+
+The backward-direction (chart-inverse-mfderiv) corollary
+`contMDiffOn_mfderivWithinFlat` follows via `inverse` composition + the
+chain identity `mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm`.
 
 **Sorry status**: PRE-PAPER. Closure path:
 * `Trivialization.contMDiffOn` gives smoothness of `e : TotalSpace → M × E`
@@ -135,11 +141,8 @@ smooth as `M → (E →L E)`".
 * The second component is `b ↦ (e ⟨b, v⟩).2 = e.continuousLinearMapAt R b v`,
   smooth as `M → E` for fixed v.
 * Use `[FiniteDimensional ℝ E]` to lift pointwise-in-v smoothness to
-  CLM-valued smoothness via basis decomposition.
-
-Independent infrastructure for closing
-`mfderivWithinFlat_mdifferentiableWithinAt`. -/
-private theorem contMDiffOn_continuousLinearMapAtFlat
+  CLM-valued smoothness via basis decomposition. -/
+theorem contMDiffOn_continuousLinearMapAtFlat
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
@@ -152,188 +155,63 @@ private theorem contMDiffOn_continuousLinearMapAtFlat
   -- extraction. See docstring above.
   sorry
 
-/-! ## Helper 1 — parametric chart-inverse-mfderiv smoothness
+/-- **Backward chart-inverse-mfderiv smoothness on chart target**
+(corollary of `contMDiffOn_continuousLinearMapAtFlat` via inverse).
 
-The substantive open content. Closure requires Mathlib's `Pullback.lean`
-inverse-mfderiv pattern. -/
+Derived from forward chart smoothness via:
+* `inverse : (E →L E) → (E →L E)` smooth at invertible CLMs (CompleteSpace E)
+* Chain identity: `mfderivWithin (.symm) (range I) e₀ = inverse(mfderiv (extChartAt I x) ((.symm) e₀))`
+* `(extChartAt I x).symm : E → M` smooth on chart target -/
+theorem contMDiffOn_mfderivWithinFlat
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E] [CompleteSpace E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    (x : M) :
+    ContMDiffOn 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E) ∞
+      (mfderivWithinFlat (I := I) (M := M) x) (extChartAt I x).target := by
+  -- Derived from `contMDiffOn_continuousLinearMapAtFlat` via inverse + chain.
+  -- TODO closure (mechanical, ~30 lines):
+  -- (1) compose `e₀ ↦ (extChartAt I x).symm e₀ : E → M` smooth on target
+  --     with `contMDiffOn_continuousLinearMapAtFlat` to get smoothness of
+  --     `e₀ ↦ continuousLinearMapAtFlat x ((extChartAt I x).symm e₀)`
+  --     on chart target.
+  -- (2) compose with `ContinuousLinearMap.inverse` (smooth at invertible).
+  -- (3) congr-of-eq with `mfderivWithinFlat x e₀` via chain identity
+  --     `mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm` +
+  --     `TangentBundle.continuousLinearMapAt_trivializationAt` +
+  --     `ContinuousLinearMap.inverse_eq`.
+  sorry
 
-/-- Smoothness of `mfderivWithinFlat x` at `extChartAt I x x`, viewed as
-a function `E → (E →L[ℝ] E)`.
+/-! ## Helper 1 — single-point version (corollary of `contMDiffOn_mfderivWithinFlat`)
 
-This is the parametric inverse-mfderiv smoothness — the "raw" form
-(non-`inCoordinates`) of `Mathlib/VectorField/Pullback.lean`'s technique.
+Bridge from on-set smoothness (`contMDiffOn_mfderivWithinFlat`, on chart
+target) to single-point `MDifferentiableWithinAt` at the basepoint within
+`range I`. Used by the main theorem `symmLFlat_mdifferentiableAt`. -/
 
-**Sorry status**: PRE-PAPER. Closure requires:
-* `ContMDiffWithinAt.mfderivWithin_const` for in-coordinates form
-  smoothness of `mfderivWithin (range I) (extChartAt I x).symm`.
-* `IsInvertible.contDiffAt_map_inverse` for inverse smoothness at
-  invertible maps.
-* `inCoordinates_eq` round-trip identity to bridge raw / in-coordinates
-  forms.
-* Composition assembly with `uniqueMDiffOn_range I` (chart range has
-  unique mfderiv structure on smooth manifolds).
-
-Independent Mathlib upstream PR candidate.
-
-**Architecture note**: the conclusion is `MDifferentiableWithinAt`
-in `Set.range I` rather than `MDifferentiableAt`. This avoids
-the `[I.Boundaryless]` constraint (which would force `range I = univ`).
-The main theorem `symmLFlat_mdifferentiableAt` recovers the at-form
-on `M` via `MDifferentiableWithinAt.comp_of_preimage_mem_nhdsWithin`,
-using the fact that `extChartAt I x` maps a neighborhood of `x` into
-`range I` regardless of boundary structure. -/
+/-- `MDifferentiableWithinAt` form of `mfderivWithinFlat x` at the
+basepoint `extChartAt I x x` within `Set.range I`. -/
 private theorem mfderivWithinFlat_mdifferentiableWithinAt
-    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E] [CompleteSpace E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     (x : M) :
     MDifferentiableWithinAt 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E)
       (mfderivWithinFlat (I := I) (M := M) x) (Set.range I) (extChartAt I x x) := by
-  -- Step 1: chart-inverse smoothness in range I.
-  have h_smooth_inv :
-      ContMDiffWithinAt 𝓘(ℝ, E) I ∞ (extChartAt I x).symm (Set.range I) (extChartAt I x x) :=
-    contMDiffWithinAt_extChartAt_symm_range x (mem_extChartAt_target x)
-  -- Step 2: Mathlib's mfderivWithin_const gives inCoordinates-form smoothness.
-  have h_unique : UniqueMDiffOn 𝓘(ℝ, E) (Set.range (I : H → E)) := I.uniqueMDiffOn
-  have h_mem : extChartAt I x x ∈ Set.range (I : H → E) := Set.mem_range_self _
-  have h2 : (1 : WithTop ℕ∞) + 1 ≤ ∞ := by decide
-  have h_inCoords :
-      ContMDiffWithinAt 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E) 1
-        (inTangentCoordinates 𝓘(ℝ, E) I id (extChartAt I x).symm
-          (mfderivWithin 𝓘(ℝ, E) I (extChartAt I x).symm (Set.range I))
-          (extChartAt I x x))
-        (Set.range I) (extChartAt I x x) :=
-    h_smooth_inv.mfderivWithin_const (m := 1) h2 h_mem h_unique
-  -- Step 3: convert ContMDiffWithinAt → MDifferentiableWithinAt.
-  have h_inCoordsW :
-      MDifferentiableWithinAt 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E)
-        (inTangentCoordinates 𝓘(ℝ, E) I id (extChartAt I x).symm
-          (mfderivWithin 𝓘(ℝ, E) I (extChartAt I x).symm (Set.range I))
-          (extChartAt I x x))
-        (Set.range I) (extChartAt I x x) :=
-    h_inCoords.mdifferentiableWithinAt one_ne_zero
-  -- Step 4: Bridge `inCoordinates` ↔ raw form. The `h_inCoordsW` route is
-  -- a dead-end here: `mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm`
-  -- shows the inCoords value of `mfderivWithin (.symm) (range I)` is the
-  -- constant `id` on chart target, so this smoothness gives no info on the
-  -- raw (non-trivial) form. We restart with Pullback's inverse pattern,
-  -- using FORWARD chart's `mfderivWithin_const` smoothness, then compose
-  -- with `ContinuousLinearMap.inverse`, then identify with the raw backward
-  -- form via the chain identity.
-  clear h_inCoordsW h_inCoords
-  -- Step A: forward chart smoothness on M (full ContMDiffAt at x)
-  have h_chart : ContMDiffAt I 𝓘(ℝ, E) ∞ (extChartAt I x) x :=
-    contMDiffAt_extChartAt
-  -- Step B: inCoords-form smoothness of `mfderiv (extChartAt I x)` at x
-  have h_fwd_const :
-      ContMDiffWithinAt I 𝓘(ℝ, E →L[ℝ] E) 1
-        (inTangentCoordinates I 𝓘(ℝ, E) id (extChartAt I x)
-          (mfderivWithin I 𝓘(ℝ, E) (extChartAt I x) Set.univ) x)
-        Set.univ x :=
-    h_chart.contMDiffWithinAt.mfderivWithin_const (m := 1) h2 (Set.mem_univ x)
-      uniqueMDiffOn_univ
-  rw [contMDiffWithinAt_univ] at h_fwd_const
-  simp only [mfderivWithin_univ] at h_fwd_const
-  -- Step C: compose with `ContinuousLinearMap.inverse` (smooth at invertible CLMs).
-  -- Invertibility at the basepoint: at `y = x`, `inCoords` value is `id` (chart
-  -- corrections evaluate to identity at the basepoint), and forward chart's
-  -- mfderiv at x is invertible. The composition is invertible.
-  have h_inv_at_pt :
-      (inTangentCoordinates I 𝓘(ℝ, E) id (extChartAt I x)
-        (mfderiv I 𝓘(ℝ, E) (extChartAt I x)) x x).IsInvertible := by
-    unfold inTangentCoordinates
-    simp only [id]
-    rw [ContinuousLinearMap.inCoordinates_eq
-      (FiberBundle.mem_baseSet_trivializationAt' x)
-      (FiberBundle.mem_baseSet_trivializationAt' (extChartAt I x x))]
-    rw [ContinuousLinearMap.isInvertible_equiv_comp,
-        ContinuousLinearMap.isInvertible_comp_equiv]
-    exact isInvertible_mfderiv_extChartAt (mem_extChartAt_source x)
-  have h_invComp : MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)
-      (fun y : M => ContinuousLinearMap.inverse
-        (inTangentCoordinates I 𝓘(ℝ, E) id (extChartAt I x)
-          (mfderiv I 𝓘(ℝ, E) (extChartAt I x)) x y)) x := by
-    have h_inv_smooth : MDifferentiableAt 𝓘(ℝ, E →L[ℝ] E) 𝓘(ℝ, E →L[ℝ] E)
-        ContinuousLinearMap.inverse
-        (inTangentCoordinates I 𝓘(ℝ, E) id (extChartAt I x)
-          (mfderiv I 𝓘(ℝ, E) (extChartAt I x)) x x) := by
-      have h_cd : ContDiffAt ℝ 1 ContinuousLinearMap.inverse
-          (inTangentCoordinates I 𝓘(ℝ, E) id (extChartAt I x)
-            (mfderiv I 𝓘(ℝ, E) (extChartAt I x)) x x) :=
-        ContinuousLinearMap.IsInvertible.contDiffAt_map_inverse h_inv_at_pt
-      exact h_cd.contMDiffAt.mdifferentiableAt one_ne_zero
-    exact h_inv_smooth.comp x (h_fwd_const.mdifferentiableAt one_ne_zero)
-  -- Step D: compose with `(extChartAt I x).symm : E → M` smooth on `range I`,
-  -- reparameterizing by `e₀ ∈ E`.
-  have h_e₀_invComp : MDifferentiableWithinAt 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E)
-      (fun e₀ : E => ContinuousLinearMap.inverse
-        (inTangentCoordinates I 𝓘(ℝ, E) id (extChartAt I x)
-          (mfderiv I 𝓘(ℝ, E) (extChartAt I x)) x ((extChartAt I x).symm e₀)))
-      (Set.range I) (extChartAt I x x) := by
-    have h_top_ne_zero : (∞ : WithTop ℕ∞) ≠ 0 := by decide
-    apply h_invComp.comp_mdifferentiableWithinAt_of_eq
-    · exact h_smooth_inv.mdifferentiableWithinAt h_top_ne_zero
-    · exact PartialEquiv.left_inv _ (mem_extChartAt_source x)
-  -- Step E: bridge to raw form via `inCoordinates_eq` + chart-trivialization
-  -- identities + the chain identity for inverse-mfderiv.
-  apply h_e₀_invComp.congr_of_eventuallyEq_of_mem ?_ h_mem
-  -- Eventually-equal in 𝓝[range I] (extChartAt I x x):
-  -- `mfderivWithinFlat x e₀ = inverse(inCoords ... mfderiv (extChartAt I x))`
-  have h_target_nbhd : (extChartAt I x).target ∈ 𝓝[Set.range I] (extChartAt I x x) :=
-    extChartAt_target_mem_nhdsWithin (I := I) (x := x)
-  filter_upwards [h_target_nbhd] with e₀ he₀
-  show mfderivWithin 𝓘(ℝ, E) I (extChartAt I x).symm (Set.range I) e₀ =
-      ContinuousLinearMap.inverse
-        (inTangentCoordinates I 𝓘(ℝ, E) id (extChartAt I x)
-          (mfderiv I 𝓘(ℝ, E) (extChartAt I x)) x ((extChartAt I x).symm e₀))
-  -- For e₀ in chart target, (.symm) e₀ ∈ chart source.
-  have h_symm_src : (extChartAt I x).symm e₀ ∈ (extChartAt I x).source :=
-    PartialEquiv.map_target _ he₀
-  have h_symm_chart : (extChartAt I x).symm e₀ ∈ (chartAt H x).source := by
-    rwa [← extChartAt_source (I := I)]
-  -- Chain identity: forward-mfderiv ∘ backward-mfderivWithin = id
-  -- ⟹ backward-mfderivWithin = inverse(forward-mfderiv)
-  have h_chain := mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm (I := I) (x := x) he₀
-  have h_chain' := mfderivWithin_extChartAt_symm_comp_mfderiv_extChartAt (I := I) (x := x) he₀
-  have h_fwd_inv :
-      ContinuousLinearMap.inverse
-        (mfderiv I 𝓘(ℝ, E) (extChartAt I x) ((extChartAt I x).symm e₀)) =
-      mfderivWithin 𝓘(ℝ, E) I (extChartAt I x).symm (Set.range I) e₀ :=
-    ContinuousLinearMap.inverse_eq h_chain h_chain'
-  -- Now reduce inCoords to raw forward-mfderiv via trivialization identities.
-  -- For `(.symm) e₀ ∈ chart source`, the inCoords corrections are: source-side
-  -- (model space E) is identity; target-side trivialization at x evaluated at
-  -- `(.symm) e₀` is `mfderiv (extChartAt I x) ((.symm) e₀)` (by
-  -- `TangentBundle.continuousLinearMapAt_trivializationAt`). So the value is
-  -- `mfderiv (extChartAt I x) ((.symm) e₀) ∘L mfderiv (extChartAt I x) ((.symm) e₀)`
-  -- which is NOT generally identity. The actual reduction here requires careful
-  -- tracking of `inTangentCoordinates_eq` and trivialization formulas.
-  have h_inCoords_eq :
-      inTangentCoordinates I 𝓘(ℝ, E) id (extChartAt I x)
-        (mfderiv I 𝓘(ℝ, E) (extChartAt I x)) x ((extChartAt I x).symm e₀)
-      = mfderiv I 𝓘(ℝ, E) (extChartAt I x) ((extChartAt I x).symm e₀) := by
-    -- **Open obstacle**: this equation is FALSE in general.
-    -- By `inTangentCoordinates_eq_mfderiv_comp` + chain identity:
-    --   inCoords value = `mfderiv (extChartAt I x) ((.symm) e₀) ∘L
-    --                     mfderivWithin (.symm) (range I) e₀` = `id`
-    -- (constant on chart target, by chain identity).
-    -- So `inverse(inCoords) = id` constant; cannot bridge to raw form.
-    --
-    -- The Pullback.lean inverse-trick pattern **degenerates for chart maps**:
-    -- the inCoords trivializations at basepoint cancel `mfderiv` exactly,
-    -- producing `id` — losing all information about the raw form.
-    --
-    -- The honest path forward: build framework infrastructure
-    --   `TangentBundle.contMDiffOn_continuousLinearMapAt_trivializationAt`
-    -- giving model-fiber-valued smoothness of the trivialization's linear
-    -- part, then compose with `(extChartAt I x).symm` smoothness, then
-    -- compose with `inverse` (smooth at invertible CLMs).
-    -- Mathlib has the bundle-section smoothness via `Trivialization.contMDiffOn`
-    -- but no direct model-fiber-valued lemma. ~50 lines of finite-dim
-    -- component-extraction work.
-    sorry
-  rw [h_inCoords_eq]
-  exact h_fwd_inv.symm
+  -- Derived from on-set form `contMDiffOn_mfderivWithinFlat`:
+  -- (1) `ContMDiffOn ... mfderivWithinFlat target` → `MDifferentiableOn ... target`
+  -- (2) Apply at basepoint `extChartAt I x x ∈ target` → `MDifferentiableWithinAt ... target`
+  -- (3) Convert within-target → within-range-I via `mono_of_mem_nhdsWithin` (since
+  --     target ⊆ range I, `range I ∈ 𝓝[target] (extChartAt I x x)` trivially).
+  have h_top_ne_zero : (∞ : WithTop ℕ∞) ≠ 0 := by decide
+  have h_on : MDifferentiableOn 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E)
+      (mfderivWithinFlat (I := I) (M := M) x) (extChartAt I x).target :=
+    (contMDiffOn_mfderivWithinFlat x).mdifferentiableOn h_top_ne_zero
+  have h_at_target : MDifferentiableWithinAt 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E)
+      (mfderivWithinFlat x) (extChartAt I x).target (extChartAt I x x) :=
+    h_on _ (mem_extChartAt_target x)
+  exact h_at_target.mono_of_mem_nhdsWithin (extChartAt_target_mem_nhdsWithin x)
 
 /-! ## Helper 2 — eventually-equal rewrite (closed)
 
@@ -371,7 +249,8 @@ Proof: composition of `extChartAt I x` (smooth, `mdifferentiableAt_extChartAt`)
 with `mfderivWithinFlat x` (smooth, Helper 1), bridged to `symmLFlat` via
 Helper 2's eventually-equal identity. -/
 theorem symmLFlat_mdifferentiableAt
-    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E] [CompleteSpace E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     (x : M) :
