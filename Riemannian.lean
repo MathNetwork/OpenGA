@@ -131,6 +131,15 @@ connection) are real Lean definitions. Remaining PRE-PAPER sorry'd
 property-level statements (`ricci_symm`, `ricciTraceMap.map_add'/_smul'`,
 `tangentBundle_symmL_smoothAt`) are tracked in `docs/AXIOM_STATUS.md`
 with explicit repair plans.
+
+Performance: heavy framework proofs (`koszulLeviCivita_exists`,
+`leviCivitaConnection_exists`, `koszul_*_middle`) profile at 200–400ms
+typeclass-inference + 50–80ms elaboration per theorem. The strategic
+`set_option backward.isDefEq.respectTransparency false` overrides on
+the `TangentSpace`-fiber instance bridges (`Metric/Basic.lean`) and
+chart trivialization helpers (`TangentBundle/Smoothness.lean`) keep the
+typeclass diamond resolved without deep unfolding. No proof is on a
+heartbeat-limit hot edge; future expansion has comfortable headroom.
 -/
 
 /-! ## UXTest — Foundations layer
