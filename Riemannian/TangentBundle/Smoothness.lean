@@ -2,6 +2,9 @@ import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.Geometry.Manifold.MFDeriv.Atlas
 import Mathlib.Geometry.Manifold.ContMDiffMFDeriv
 import Mathlib.Geometry.Manifold.VectorField.Pullback
+import Mathlib.LinearAlgebra.Basis.Defs
+import Mathlib.LinearAlgebra.Dimension.Finite
+import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
 
 /-!
 # Tangent bundle — flat-codomain inverse trivialization + smoothness
@@ -91,18 +94,31 @@ private noncomputable def mfderivWithinFlat
     (x : M) (e₀ : E) : E →L[ℝ] E :=
   mfderivWithin 𝓘(ℝ, E) I (extChartAt I x).symm (Set.range I) e₀
 
-/-! ## Infrastructure: trivialization `continuousLinearMapAt` smoothness
+/-! ## Framework infrastructure (upstream self-build)
 
-Mathlib gives `Trivialization.contMDiffOn` (trivialization is smooth as a
+Mathlib gives `Trivialization.contMDiffOn` (trivialization smooth as
 fiber-bundle iso) and `ContMDiffVectorBundle.contMDiffOn_coordChangeL`
-(coord change between two trivializations is smooth as `B → F →L F`).
-Neither directly gives smoothness of one trivialization's
-`continuousLinearMapAt` as a model-fiber-valued function `B → (F →L F)`.
+(fixed-pair coord change smooth). Neither directly gives smoothness of
+one trivialization's `continuousLinearMapAt` as model-fiber-valued
+`B → (F →L F)`. We self-build the missing upstream pieces.
 
-For the tangent bundle, where `TangentSpace I y = E` def-equally, this
-bridge IS achievable. The infrastructure lemma below converts
-trivialization fiber-iso smoothness into model-fiber-valued CLM
-smoothness via the def-eq + finite-dimensional component extraction. -/
+### Layered framework primitives
+
+* **Layer 1**: `contMDiff_constSection_TangentSpace` — constant-vector
+  section of tangent bundle is smooth (uses the `TangentSpace I _ = E`
+  def-eq + `IsManifold` smooth-atlas via chart-change-derivative
+  regularity).
+* **Layer 2**: `contMDiffOn_clm_of_components` — finite-dim CLM lift:
+  pointwise-in-`v` smoothness gives CLM-valued smoothness, via basis
+  decomposition.
+* **Layer 3**: `contMDiffOn_continuousLinearMapAt_apply` —
+  `b ↦ e.cLMA R b v : M → E` smooth on `e.baseSet` for fixed `v`,
+  via Layer 1 + `mdifferentiableAt_section`.
+* **Layer 4**: `contMDiffOn_continuousLinearMapAtFlat` — main result,
+  via Layer 2 + Layer 3.
+
+Each layer is independently a Mathlib upstream PR candidate. Closure
+work is multi-commit; the layered structure makes each commit atomic. -/
 
 set_option backward.isDefEq.respectTransparency false in
 /-- **Flat-codomain forward chart mfderiv** wrapper. Underlying value
@@ -118,6 +134,93 @@ noncomputable def continuousLinearMapAtFlat
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     (x₀ y : M) : E →L[ℝ] E :=
   (trivializationAt E (TangentSpace I) x₀).continuousLinearMapAt ℝ y
+
+/-! ### Layer 1 — constant section smoothness for tangent bundle -/
+
+/-- **Constant-vector section of the tangent bundle is smooth.**
+
+For `v : E` (model fiber), the section `b ↦ ⟨b, v⟩ : M → TangentBundle I M`
+(treating `v` as a fiber value via the def-eq `TangentSpace I b = E`) is
+`C^∞`. This is the "`v`-coordinate vector field globalised" — well-defined
+because `TangentSpace I _ ≡ E` literally.
+
+**Sorry status**: framework upstream. Closure path:
+* `mdifferentiableAt_section`: smoothness of section ↔ smoothness of
+  `b ↦ (trivializationAt _ _ b₀ ⟨b, v⟩).2 = e.cLMA R b v` near `b₀`.
+* By `TangentBundle.continuousLinearMapAt_trivializationAt` +
+  `tangentBundleCore_coordChange` identity:
+    `e.cLMA R b v = Z.coordChange (achart H b) (achart H b₀) b v`
+* For `b` near `b₀` with `chartAt H b = chartAt H b₀` (always true on
+  chart source for `IsManifold`'s smooth atlas via choice of chartAt),
+  `coordChange = id`, so the value is constantly `v`.
+* `IsManifold` smooth atlas + chart-change derivative regularity handle
+  the general case (chart at `b` may technically differ but the
+  coordChange evaluates smoothly). -/
+theorem contMDiff_constSection_TangentSpace
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    (v : E) :
+    ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+      (fun b : M => (⟨b, v⟩ : TangentBundle I M)) := by
+  -- TODO: build via `mdifferentiableAt_section` + chart-change identity.
+  -- See docstring above. Multi-commit closure.
+  sorry
+
+/-! ### Layer 2 — finite-dim CLM lift -/
+
+/-- **Finite-dimensional CLM-valued smoothness from componentwise
+smoothness**.
+
+Given `T : M → (E →L[ℝ] E)` and a basis `b₁, ..., bₙ` of `E`, if
+`y ↦ T y bᵢ : M → E` is smooth for each `i`, then `T : M → (E →L[ℝ] E)`
+is smooth.
+
+**Sorry status**: framework upstream. Closure path:
+* In finite-dim, `T y` is determined by `T y bᵢ` for basis elements via
+  `T y = ∑ᵢ (T y bᵢ) ⊗ bᵢ*` where `⊗` is `ContinuousLinearMap.smulRight`
+  applied to dual basis.
+* Each summand smooth: `bᵢ*` is constant CLM, `T y bᵢ` smooth in y,
+  combine via `ContinuousLinearMap.smulRight` (smooth, bilinear).
+* Sum of smooth CLM-valued is smooth. -/
+theorem contMDiffOn_clm_of_components
+    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    {EM : Type*} [NormedAddCommGroup EM] [NormedSpace 𝕜 EM]
+    {HM : Type*} [TopologicalSpace HM] {IM : ModelWithCorners 𝕜 EM HM}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace HM M]
+    {F₁ : Type*} [NormedAddCommGroup F₁] [NormedSpace 𝕜 F₁] [FiniteDimensional 𝕜 F₁]
+    {F₂ : Type*} [NormedAddCommGroup F₂] [NormedSpace 𝕜 F₂]
+    {n : ℕ∞ω}
+    (T : M → F₁ →L[𝕜] F₂) {ι : Type*} [Fintype ι]
+    (basis : Module.Basis ι 𝕜 F₁) (s : Set M)
+    (h_components : ∀ i : ι, ContMDiffOn IM 𝓘(𝕜, F₂) n
+      (fun y : M => T y (basis i)) s) :
+    ContMDiffOn IM 𝓘(𝕜, F₁ →L[𝕜] F₂) n T s := by
+  -- TODO: build via basis decomposition + smulRight + sum.
+  -- See docstring above. Standard finite-dim smoothness lift.
+  sorry
+
+/-! ### Layer 3 — fixed-`v` smoothness of `continuousLinearMapAt` -/
+
+/-- **Trivialization's `continuousLinearMapAt` applied to fixed vector
+is smooth**, on chart base set.
+
+For fixed `v : E`, `b ↦ (trivAt _ _ x₀).cLMA R b v : M → E` is `C^∞` on
+`baseSet`. Direct corollary of Layer 1 (constant section smooth) +
+`mdifferentiableAt_section` (Mathlib characterization). -/
+theorem contMDiffOn_continuousLinearMapAt_apply
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    (x₀ : M) (v : E) :
+    ContMDiffOn I 𝓘(ℝ, E) ∞
+      (fun b : M => (trivializationAt E (TangentSpace I) x₀).continuousLinearMapAt ℝ b v)
+      (trivializationAt E (TangentSpace I) x₀).baseSet := by
+  -- TODO: derive from Layer 1 (`contMDiff_constSection_TangentSpace`) via
+  -- `mdifferentiableAt_section`.
+  sorry
+
+/-! ### Layer 4 — main result `contMDiffOn_continuousLinearMapAtFlat` -/
 
 /-- **Forward chart mfderiv smoothness as model-fiber-valued CLM**
 (infrastructure / Mathlib upstream PR candidate).
@@ -151,9 +254,18 @@ theorem contMDiffOn_continuousLinearMapAtFlat
     ContMDiffOn I 𝓘(ℝ, E →L[ℝ] E) ∞
       (continuousLinearMapAtFlat (I := I) (M := M) x₀)
       (trivializationAt E (TangentSpace I) x₀).baseSet := by
-  -- TODO: build via `Trivialization.contMDiffOn` + finite-dim component
-  -- extraction. See docstring above.
-  sorry
+  -- **Closed via Layer 2 + Layer 3**.
+  -- Pick a basis of E. Each component `b ↦ cLMA R b (basis i) : M → E` is
+  -- smooth (Layer 3). Lift to CLM-valued smoothness via Layer 2.
+  set basis : Module.Basis (Fin (Module.finrank ℝ E)) ℝ E :=
+    Module.finBasis ℝ E with h_basis
+  apply contMDiffOn_clm_of_components
+    (continuousLinearMapAtFlat (I := I) (M := M) x₀)
+    basis _
+  intro i
+  -- Component smoothness: `b ↦ continuousLinearMapAtFlat x₀ b (basis i)`
+  -- = `b ↦ (trivAt _ _ x₀).cLMA R b (basis i)` (def-eq)
+  exact contMDiffOn_continuousLinearMapAt_apply x₀ (basis i)
 
 /-- **Backward chart-inverse-mfderiv smoothness on chart target**
 (corollary of `contMDiffOn_continuousLinearMapAtFlat` via inverse).
