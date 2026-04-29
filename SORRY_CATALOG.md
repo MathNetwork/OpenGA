@@ -18,20 +18,21 @@ require updating this file.
 
 | Module | PRE-PAPER | CITED-BLACK-BOX | PAPER-INTERNAL | CONJECTURAL | Total |
 |--------|-----------|------------------|----------------|-------------|-------|
-| Riemannian | 4 | 0 | 0 | 0 | 4 |
+| Riemannian | 5 | 0 | 0 | 0 | 5 |
 | GeometricMeasureTheory | 5 | 9 | 0 | 0 | 14 |
 | MinMax | 3 | 9 | 0 | 0 | 12 |
 | Regularity | 0 | 2 | 0 | 0 | 2 |
-| **Total** | **12** | **20** | **0** | **0** | **34** |
+| **Total** | **13** | **20** | **0** | **0** | **35** |
 
-## Riemannian (4)
+## Riemannian (5)
 
 | File:line | Identifier | Classification | Repair plan |
 |-----------|-----------|---------------|-------------|
 | `Curvature.lean:81` | `ricciTraceMap.map_add'` | PRE-PAPER | C^∞-linearity of Ricci trace map in first argument. Derive from `koszulCovDeriv` linearity in `X` once Phase 4.7.8.C closes `koszulLeviCivita_exists`. |
 | `Curvature.lean:82` | `ricciTraceMap.map_smul'` | PRE-PAPER | Same as above. |
 | `Curvature.lean:112` | `ricci_symm` | PRE-PAPER | Symmetry of Ricci, requires algebraic Bianchi identity on Riemann tensor. Framework self-build of Bianchi from torsion-freeness + curvature definition. |
-| `Connection.lean:879` | `koszulLeviCivita_exists` | PRE-PAPER | Narrow structural axiom: existence of `CovariantDerivative` wrapping `koszulCovDeriv`. Body is `TensorialAt.mkHom` in X argument applied to koszul tensorality lemmas (analogous to Phase 4.7.8.A's `koszulLinearFunctional_exists` decomposition). Phase 4.7.8.C. |
+| `Connection/LeviCivita.lean:236` | `koszulLeviCivita_exists` | PRE-PAPER | Narrow structural axiom: existence of `CovariantDerivative` wrapping `koszulCovDeriv`. Body is `TensorialAt.mkHom` in X argument applied to koszul tensorality lemmas (analogous to Phase 4.7.8.A's `koszulLinearFunctional_exists` decomposition). Phase 4.7.8.C. |
+| `Metric/Smooth.lean:83` | `tangentBundle_symmL_smoothAt` | PRE-PAPER | Smoothness of `Trivialization.symmL` for tangent bundle, in non-dependent flat-CLM codomain via the `TangentSpace I y = E` def-eq cast. Body uses Mathlib `VectorField/Pullback.lean`'s parametric inverse-mfderiv smoothness pattern (`ContMDiffWithinAt.mfderivWithin_const` + `IsInvertible.contDiffAt_map_inverse` + `inCoordinates_eq` round-trip). Converted from `axiom` to `theorem` with sorry'd body (Phase 5 C'2); the proof outline is documented in the file but the multi-step `inCoordinates` calculation is not closed. Phase 4.8. |
 
 ## GeometricMeasureTheory (14)
 

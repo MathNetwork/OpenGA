@@ -1,5 +1,7 @@
 import Mathlib.Geometry.Manifold.VectorBundle.MDifferentiable
 import Mathlib.Geometry.Manifold.MFDeriv.NormedSpace
+import Mathlib.Geometry.Manifold.MFDeriv.Atlas
+import Mathlib.Geometry.Manifold.ContMDiffMFDeriv
 import Riemannian.Metric.Basic
 
 /-!
@@ -27,6 +29,7 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [g : RiemannianMetric I M]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Smoothness of the tangent-bundle trivialization inverse `symmL`**,
 as a CLM-valued function of the basepoint, in non-dependent codomain via
 the `TangentSpace I y = E` def-eq cast.
@@ -36,18 +39,48 @@ $y \mapsto e.\mathrm{symmL}\,\mathbb{R}\,y$ is $C^\infty$ at $x$ as a map
 $M \to (E \to_L^{\mathbb{R}} E)$. Mathematically this is the smoothness
 of the inverse chart-derivative, standard for tangent bundles.
 
-This is an axiom because Mathlib's `Trivialization.symmL` has the
-dependent codomain `E →L[ℝ] TangentSpace I y`, incompatible with
-`MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)`'s non-dependent codomain. See
-`AXIOM_STATUS.md` for the repair plan. -/
-axiom tangentBundle_symmL_smoothAt
+Proof: rewrite via `TangentBundle.symmL_trivializationAt` (which gives
+`e.symmL ℝ y = mfderiv[range I] (extChartAt I x).symm (extChartAt I x y)`
+on chart source), then use the parametric inverse-mfderiv smoothness
+pattern from `Mathlib/VectorBundle/Pullback.lean`:
+`ContMDiffWithinAt.mfderivWithin_const` for the in-coordinates form +
+`IsInvertible.contDiffAt_map_inverse` to bridge inverse + raw forms via
+`inCoordinates_eq` round-trip identities. -/
+theorem tangentBundle_symmL_smoothAt
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     (x : M) (h_TS_E_eq : ∀ y : M, (E →L[ℝ] TangentSpace I y) = (E →L[ℝ] E)) :
     MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)
       (fun y : M => cast (h_TS_E_eq y)
-        ((trivializationAt E (TangentSpace I) x).symmL ℝ y)) x
+        ((trivializationAt E (TangentSpace I) x).symmL ℝ y)) x := by
+  -- Step 1: Rewrite via `TangentBundle.symmL_trivializationAt` to express
+  -- `e.symmL ℝ y` as `mfderivWithin (range I) (extChartAt I x).symm (extChartAt I x y)`
+  -- on chart source. This eliminates the dependent-codomain issue: both sides
+  -- have type `E →L[ℝ] E` once we set `respectTransparency false`.
+  set e := trivializationAt E (TangentSpace I) x with he_def
+  -- The base-set neighborhood of x.
+  have hx_chart : x ∈ (chartAt H x).source := mem_chart_source H x
+  have h_chart_nhds : (chartAt H x).source ∈ 𝓝 x :=
+    (chartAt H x).open_source.mem_nhds hx_chart
+  -- Step 2: Smoothness of `extChartAt I x` at x as `M → E`.
+  have h_chart_smooth : MDifferentiableAt I 𝓘(ℝ, E) (extChartAt I x) x :=
+    mdifferentiableAt_extChartAt hx_chart
+  -- Step 3: For y in chart source, e.symmL ℝ y equals
+  --   mfderivWithin (range I) (extChartAt I x).symm (extChartAt I x y).
+  -- This is `TangentBundle.symmL_trivializationAt`. The full smoothness proof
+  -- of the RHS requires Mathlib's parametric inverse-mfderiv pattern from
+  -- `VectorField/Pullback.lean` lines 280-322:
+  --   * `ContMDiffWithinAt.mfderivWithin_const` for in-coordinates smoothness
+  --     of `mfderivWithin (range I) (extChartAt I x).symm`.
+  --   * `IsInvertible.contDiffAt_map_inverse` to bridge inverse-of-mfderiv
+  --     to the raw form via `inCoordinates_eq` round-trip identities.
+  --   * Compose with `extChartAt I x` smoothness for the final result.
+  -- The `inCoordinates_eq` calculation is intricate (multi-step rewrite chain)
+  -- and requires unique-mdiff-on hypotheses + finite-dim cascades.
+  -- Spike status: structural framework laid out (steps 1–3 above); the
+  -- inverse-mfderiv smoothness composition is not closed in this commit.
+  sorry
 
 /-- **Smoothness of the metric inner product** as a scalar function of
 the basepoint, given smooth bundle sections.

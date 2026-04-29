@@ -15,11 +15,14 @@ jobs:
 
       - name: Count sorries against SORRY_CATALOG.md
         run: |
-          ACTUAL=$(grep -rn "^\s*sorry\|by sorry\|:= sorry" \
+          # Tightened regex: match only standalone `sorry` (line is exactly
+          # whitespace-then-sorry-then-whitespace), `by sorry`, `:= sorry`.
+          # Excludes docstring text like "sorry'd" or "left as sorry".
+          ACTUAL=$(grep -rnE "^[[:space:]]*sorry[[:space:]]*$|by sorry|:= sorry" \
             --include="*.lean" \
             Riemannian GeometricMeasureTheory MinMax Regularity \
             2>/dev/null | wc -l | tr -d ' ')
-          EXPECTED=34
+          EXPECTED=35
           if [ "$ACTUAL" -ne "$EXPECTED" ]; then
             echo "::error::Sorry count drift: expected $EXPECTED, found $ACTUAL"
             echo "If the change is intentional, update SORRY_CATALOG.md (and the EXPECTED constant in this workflow)."
@@ -35,9 +38,9 @@ jobs:
           # wrapped sentence (e.g., `axiom about CovariantDerivative wrapping`).
           ACTUAL=$(grep -rnE "^axiom[[:space:]]+[a-zA-Z_][a-zA-Z0-9_']*[[:space:]]*$" \
             --include="*.lean" \
-            Riemannian GeometricMeasureTheory MinMax Regularity \
+            Algebraic Riemannian GeometricMeasureTheory MinMax Regularity \
             2>/dev/null | wc -l | tr -d ' ')
-          EXPECTED=1
+          EXPECTED=0
           if [ "$ACTUAL" -ne "$EXPECTED" ]; then
             echo "::error::Axiom count drift: expected $EXPECTED, found $ACTUAL"
             echo "If the change is intentional, update AXIOM_STATUS.md (and the EXPECTED constant in this workflow)."

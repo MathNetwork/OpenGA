@@ -76,9 +76,9 @@ are PRE-PAPER (deferred). The constant extension is a clean choice that
 makes the formula well-defined regardless of the linearity proofs.
 
 **Stability**: experimental (PRE-PAPER). `map_add'` and `map_smul'`
-sorry'd; downstream code consuming `ricciTraceMap` should rely only on
-its application to specific vectors, not on its `LinearMap` properties,
-until linearity proofs land. -/
+left unproven; downstream code consuming `ricciTraceMap` should rely
+only on its application to specific vectors, not on its `LinearMap`
+properties, until linearity proofs land. -/
 noncomputable def ricciTraceMap
     (X Y : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x →ₗ[ℝ] TangentSpace I x where

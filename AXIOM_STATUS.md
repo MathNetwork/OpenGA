@@ -16,19 +16,22 @@ require updating this file.
 
 ## Current axioms
 
-| # | File | Identifier | Classification | Repair plan |
-|---|------|-----------|---------------|-------------|
-| 1 | `Riemannian/Metric.lean:421` | `tangentBundle_symmL_smoothAt` | PRE-PAPER | Mathlib lacks a non-dependent flat-CLM smoothness lemma for `Trivialization.symmL` on the tangent bundle (`E →L[ℝ] TangentSpace I y` has dependent codomain incompatible with `MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)`). Closure path: (a) Mathlib upstream PR adding non-dependent form, OR (b) framework redesign of `RiemannianMetric.smoothMetric` to bundle-section form, then `clm_bundle_apply₂` resolves the chart-bridge internally. Tracked as Phase 4.8 architectural follow-up. |
+**Total**: **0** axioms.
 
-**Total**: 1 axiom (Riemannian: 1, GMT: 0, MinMax: 0, Regularity: 0).
+The previous `tangentBundle_symmL_smoothAt` axiom (Phase 4.7.5.C, in
+`Riemannian/Metric/Smooth.lean`) has been converted to a `theorem`
+declaration in Phase 5 (C'2); the body is currently `sorry`'d (tracked
+in `SORRY_CATALOG.md`) with a detailed Mathlib-`Pullback.lean`-based
+proof outline. The closure of this sorry remains a Phase 4.8 follow-up.
 
 ## Notes
 
 * This catalog tracks **public-facing** axioms (those in OpenGA's
-  Riemannian / GeometricMeasureTheory / MinMax / Regularity packages).
-  Application papers (e.g., AltRegularity) maintain their own catalogs.
+  Algebraic / Riemannian / GeometricMeasureTheory / MinMax / Regularity
+  packages). Application papers (e.g., AltRegularity) maintain their own
+  catalogs.
 * `private theorem ... := by sorry` declarations are **not** axioms (they
   are unfinished proofs, tracked in `SORRY_CATALOG.md`).
-* Updating this file: when adding a new `axiom`, add a row with
+* Updating this file: when adding a new `axiom`, add an entry with
   classification + repair plan. When closing an axiom (replacing with a
-  real proof), remove its row + record in `CHANGELOG.md` (Phase 6).
+  real proof), remove its entry + record in `CHANGELOG.md` (Phase 6).
