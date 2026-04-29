@@ -1,6 +1,8 @@
 import Riemannian.BumpFunction
 import Riemannian.Connection
 import Riemannian.Curvature
+import Riemannian.Foundations.Notation
+import Riemannian.Foundations.Tactic
 import Riemannian.Gradient
 import Riemannian.Metric
 import Riemannian.SecondFundamentalForm
@@ -102,9 +104,69 @@ intermediate identities) are internal and may change without notice.
   * `OpenGALib.BumpFunction.manifoldBump`
   * `OpenGALib.BumpFunction.extendVectorField`
 
+**Foundations** (`Foundations/`):
+  * `Foundations/Notation.lean` — textbook notation: `⟪V, W⟫_g`,
+    `‖V‖²_g`, `∇[X] Y`, `Riem(X, Y) Z` (scoped to `OpenGALib` /
+    `Riemannian` scopes; `open scoped` to enable).
+  * `Foundations/Attributes.lean` — `metric_simp` simp set declaration.
+  * `Foundations/Tactic.lean` — user-facing entry point for tactic
+    infrastructure.
+
 Stability tier: pre-`v0.1.0` everything is **experimental**. PRE-PAPER
 sorry'd statements (`ricci_symm`, `ricciTraceMap.map_*`) and structural
 axioms (`tangentBundle_symmL_smoothAt`, `koszulLeviCivita_exists`) are
 tracked in `docs/AXIOM_STATUS.md` with explicit repair
 plans.
 -/
+
+/-! ## UXTest — Foundations layer
+
+Verifies that the notation + `metric_simp` tactic infrastructure resolve
+end-to-end. Regression guard against signature drift in the notation
+elaboration. -/
+
+section UXTestFoundations
+
+open OpenGALib
+open scoped OpenGALib Riemannian
+
+/-- The `⟪V, W⟫_g` notation elaborates to `metricInner _ V W` with the
+basepoint inferred from the type of `V`, `W`. -/
+example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+    [g : RiemannianMetric I M] (x : M) (V W : TangentSpace I x) :
+    ⟪V, W⟫_g = metricInner x V W :=
+  rfl
+
+/-- The `‖V‖²_g` notation gives the squared norm. -/
+example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+    [g : RiemannianMetric I M] (x : M) (V : TangentSpace I x) :
+    ‖V‖²_g = metricInner x V V :=
+  rfl
+
+/-- The `metric_simp` simp set discharges routine inner-product
+algebra in one line. -/
+example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+    [g : RiemannianMetric I M] (x : M) (W : TangentSpace I x) :
+    ⟪0, W⟫_g = 0 := by
+  simp only [metric_simp]
+
+/-- The `metric_simp` simp set composes with general `simp` to close
+nontrivial algebraic goals. -/
+example
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+    [g : RiemannianMetric I M] (x : M) (V W : TangentSpace I x) :
+    ⟪V - 0, -W + W⟫_g = 0 := by
+  simp [metric_simp]
+
+end UXTestFoundations
