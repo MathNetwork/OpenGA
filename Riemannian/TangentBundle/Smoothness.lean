@@ -112,14 +112,49 @@ This is the parametric inverse-mfderiv smoothness — the "raw" form
 * Composition assembly with `uniqueMDiffOn_range I` (chart range has
   unique mfderiv structure on smooth manifolds).
 
-Independent Mathlib upstream PR candidate. -/
-private theorem mfderivWithinFlat_mdifferentiableAt
+Independent Mathlib upstream PR candidate.
+
+**Architecture note**: the conclusion is `MDifferentiableWithinAt`
+in `Set.range I` rather than `MDifferentiableAt`. This avoids
+the `[I.Boundaryless]` constraint (which would force `range I = univ`).
+The main theorem `symmLFlat_mdifferentiableAt` recovers the at-form
+on `M` via `MDifferentiableWithinAt.comp_of_preimage_mem_nhdsWithin`,
+using the fact that `extChartAt I x` maps a neighborhood of `x` into
+`range I` regardless of boundary structure. -/
+private theorem mfderivWithinFlat_mdifferentiableWithinAt
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     (x : M) :
-    MDifferentiableAt 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E)
-      (mfderivWithinFlat (I := I) (M := M) x) (extChartAt I x x) := by
+    MDifferentiableWithinAt 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E)
+      (mfderivWithinFlat (I := I) (M := M) x) (Set.range I) (extChartAt I x x) := by
+  -- Step 1: chart-inverse smoothness in range I.
+  have h_smooth_inv :
+      ContMDiffWithinAt 𝓘(ℝ, E) I ∞ (extChartAt I x).symm (Set.range I) (extChartAt I x x) :=
+    contMDiffWithinAt_extChartAt_symm_range x (mem_extChartAt_target x)
+  -- Step 2: Mathlib's mfderivWithin_const gives inCoordinates-form smoothness.
+  have h_unique : UniqueMDiffOn 𝓘(ℝ, E) (Set.range (I : H → E)) := I.uniqueMDiffOn
+  have h_mem : extChartAt I x x ∈ Set.range (I : H → E) := Set.mem_range_self _
+  have h2 : (1 : WithTop ℕ∞) + 1 ≤ ∞ := by decide
+  have h_inCoords :
+      ContMDiffWithinAt 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E) 1
+        (inTangentCoordinates 𝓘(ℝ, E) I id (extChartAt I x).symm
+          (mfderivWithin 𝓘(ℝ, E) I (extChartAt I x).symm (Set.range I))
+          (extChartAt I x x))
+        (Set.range I) (extChartAt I x x) :=
+    h_smooth_inv.mfderivWithin_const (m := 1) h2 h_mem h_unique
+  -- Step 3: Bridge inCoordinates ↔ flat form via the inverse-mfderiv identity.
+  -- Idea: `mfderivWithin (extChartAt I x).symm (range I) e₀
+  --        = (mfderiv (extChartAt I x) ((extChartAt I x).symm e₀)).inverse`
+  -- (from `mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm'`).
+  -- Smoothness of `e₀ ↦ mfderiv (extChartAt I x) (.symm e₀)`:
+  --   - `e₀ ↦ (extChartAt I x).symm e₀` smooth (chart inverse on target)
+  --   - `y ↦ mfderiv (extChartAt I x) y` smooth via Mathlib's
+  --     `ContMDiffAt.mfderiv_const` (inCoordinates form)
+  --   - At y = x, `mfderiv (extChartAt I x) x = id`, so chart correction at
+  --     basepoint is identity. Use Helper 2 pattern for eventually-equal
+  --     identification with raw form.
+  -- Smoothness of `CLM ↦ inverse(CLM)` via `IsInvertible.contDiffAt_map_inverse`.
   sorry
 
 /-! ## Helper 2 — eventually-equal rewrite (closed)
@@ -166,10 +201,27 @@ theorem symmLFlat_mdifferentiableAt
       (fun y : M => symmLFlat (I := I) (M := M) x y) x := by
   have h_chart : MDifferentiableAt I 𝓘(ℝ, E) (extChartAt I x) x :=
     mdifferentiableAt_extChartAt (mem_chart_source H x)
-  have h_inv := mfderivWithinFlat_mdifferentiableAt (I := I) (M := M) x
+  have h_inv := mfderivWithinFlat_mdifferentiableWithinAt (I := I) (M := M) x
+  -- Compose: `mfderivWithinFlat x ∘ extChartAt I x` is at-form smooth on M.
+  -- The chart `extChartAt I x` maps a neighborhood of `x` into `range I` (no
+  -- boundary assumption needed): on `(chartAt H x).source`, `extChartAt I x y
+  -- = I (chartAt H x y) ∈ range I`.
+  have h_chart_within : MDifferentiableWithinAt I 𝓘(ℝ, E) (extChartAt I x) Set.univ x :=
+    h_chart.mdifferentiableWithinAt
+  have h_preimage : (extChartAt I x) ⁻¹' Set.range I ∈ 𝓝[Set.univ] x := by
+    rw [nhdsWithin_univ]
+    refine Filter.mem_of_superset
+      ((chartAt H x).open_source.mem_nhds (mem_chart_source H x)) ?_
+    intro y _hy
+    rw [Set.mem_preimage, extChartAt_coe]
+    exact Set.mem_range_self _
+  have h_within : MDifferentiableWithinAt I 𝓘(ℝ, E →L[ℝ] E)
+      (fun y : M => mfderivWithinFlat (I := I) (M := M) x (extChartAt I x y))
+      Set.univ x :=
+    h_inv.comp_of_preimage_mem_nhdsWithin _ h_chart_within h_preimage
   have h_comp : MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)
       (fun y : M => mfderivWithinFlat (I := I) (M := M) x (extChartAt I x y)) x :=
-    h_inv.comp x h_chart
+    mdifferentiableWithinAt_univ.mp h_within
   exact h_comp.congr_of_eventuallyEq
     (symmLFlat_eventuallyEq_mfderivWithinFlat (I := I) (M := M) x)
 

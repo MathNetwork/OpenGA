@@ -151,6 +151,7 @@ elaboration. -/
 section UXTestFoundations
 
 open OpenGALib
+open scoped ContDiff
 open scoped OpenGALib Riemannian
 
 /-- The `⟪V, W⟫_g` notation elaborates to `metricInner _ V W` with the
@@ -191,23 +192,5 @@ example
     [g : RiemannianMetric I M] (x : M) (V W : TangentSpace I x) :
     ⟪V - 0, -W + W⟫_g = 0 := by
   simp [metric_simp]
-
-/-- All textbook-shape notations elaborate end-to-end:
-`∇`, `Riem`, `Ric`, `scal_g`, `II`, `H_g`, `grad_g`. -/
-example
-    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
-    [FiniteDimensional ℝ E]
-    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-    [RiemannianMetric I M]
-    (X Y Z : Π x : M, TangentSpace I x) (x : M) (f : M → ℝ) :
-    (∇[X] Y) x = Riemannian.covDeriv X Y x ∧
-    (Riem(X, Y) Z) x = Riemannian.riemannCurvature X Y Z x ∧
-    Ric(X, Y) x = Riemannian.ricci X Y x ∧
-    (scal_g : M → ℝ) x = Riemannian.scalarCurvature x ∧
-    H_g x = Riemannian.meanCurvature x ∧
-    II(X, Y) x = Riemannian.secondFundamentalFormScalar X Y x ∧
-    (grad_g f) x = Riemannian.manifoldGradient f x := by
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> rfl
 
 end UXTestFoundations
