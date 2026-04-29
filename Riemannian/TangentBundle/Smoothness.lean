@@ -184,7 +184,7 @@ is smooth.
   combine via `ContinuousLinearMap.smulRight` (smooth, bilinear).
 * Sum of smooth CLM-valued is smooth. -/
 theorem contMDiffOn_clm_of_components
-    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    {𝕜 : Type*} [NontriviallyNormedField 𝕜] [CompleteSpace 𝕜]
     {EM : Type*} [NormedAddCommGroup EM] [NormedSpace 𝕜 EM]
     {HM : Type*} [TopologicalSpace HM] {IM : ModelWithCorners 𝕜 EM HM}
     {M : Type*} [TopologicalSpace M] [ChartedSpace HM M]
@@ -196,8 +196,28 @@ theorem contMDiffOn_clm_of_components
     (h_components : ∀ i : ι, ContMDiffOn IM 𝓘(𝕜, F₂) n
       (fun y : M => T y (basis i)) s) :
     ContMDiffOn IM 𝓘(𝕜, F₁ →L[𝕜] F₂) n T s := by
-  -- TODO: build via basis decomposition + smulRight + sum.
-  -- See docstring above. Standard finite-dim smoothness lift.
+  -- Strategy: T y = ∑ᵢ smulRight (basis.coord i) (T y (basisᵢ))
+  -- Each summand smooth via smulRight (CLM in F₂); sum smooth via finset sum.
+  -- Step 1: rewrite T as the basis-decomposition sum.
+  have decomp : T = fun y =>
+      ∑ i, (basis.coord i).toContinuousLinearMap.smulRight (T y (basis i)) := by
+    funext y
+    ext v
+    rw [ContinuousLinearMap.sum_apply]
+    have hv : v = ∑ i, basis.repr v i • basis i := by
+      simpa using (basis.linearCombination_repr v).symm
+    conv_lhs => rw [hv]
+    rw [map_sum]
+    refine Finset.sum_congr rfl ?_
+    intro i _
+    simp [ContinuousLinearMap.smulRight_apply,
+      LinearMap.coe_toContinuousLinearMap', Module.Basis.coord_apply,
+      (T y).map_smul]
+  rw [decomp]
+  -- Step 2: closure of finset sum + smulRight smoothness.
+  -- TODO: requires (a) ContMDiffOn.finset_sum lemma for normed-space-valued
+  -- and (b) smulRight's smoothness as `F₂ → (F₁ →L F₂)` (a CLM-valued
+  -- linear function). Both are routine framework / Mathlib upstream pieces.
   sorry
 
 /-! ### Layer 3 — fixed-`v` smoothness of `continuousLinearMapAt` -/
