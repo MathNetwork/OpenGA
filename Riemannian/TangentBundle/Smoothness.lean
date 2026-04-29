@@ -236,8 +236,12 @@ theorem contMDiffOn_continuousLinearMapAt_apply
     ContMDiffOn I 𝓘(ℝ, E) ∞
       (fun b : M => (trivializationAt E (TangentSpace I) x₀).continuousLinearMapAt ℝ b v)
       (trivializationAt E (TangentSpace I) x₀).baseSet := by
-  -- TODO: derive from Layer 1 (`contMDiff_constSection_TangentSpace`) via
-  -- `mdifferentiableAt_section`.
+  -- Closure path: from Layer 1 (`contMDiff_constSection_TangentSpace`)
+  -- via `Bundle.Trivialization.contMDiffOn_iff` (FIXED trivialization at x₀)
+  -- + `Bundle.Trivialization.continuousLinearMapAt_apply_of_mem` to bridge
+  -- `(e ⟨b, v⟩).2 = e.cLMA R b v`. Multi-commit framework work; the
+  -- Mathlib typeclass synth for `ContMDiffVectorBundle ∞` instance via
+  -- `TangentBundle.contMDiffVectorBundle` is the current sticking point.
   sorry
 
 /-! ### Layer 4 — main result `contMDiffOn_continuousLinearMapAtFlat` -/
