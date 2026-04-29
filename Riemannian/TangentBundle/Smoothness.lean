@@ -167,6 +167,49 @@ theorem contMDiff_constSection_TangentSpace
   -- See docstring above. Multi-commit closure.
   sorry
 
+/-! ### Helper: `ContMDiffOn.add` for normed-target
+
+Mathlib has `ContDiff.add`/`ContDiff_add` for normed source+target, and
+`ContMDiffOn.add_section` for bundle sections. For functions `M → F`
+(M manifold, F normed) — i.e., the trivial-bundle case in normed-target
+flat form — there's no direct lemma. Self-built via `contDiff_add`
+(addition is `C^∞`) + `ContMDiffOn.prodMk_space` + composition. -/
+
+theorem _root_.ContMDiffOn.add_normed
+    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    {EM : Type*} [NormedAddCommGroup EM] [NormedSpace 𝕜 EM]
+    {HM : Type*} [TopologicalSpace HM] {IM : ModelWithCorners 𝕜 EM HM}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace HM M]
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace 𝕜 F]
+    {n : ℕ∞ω} {f g : M → F} {s : Set M}
+    (hf : ContMDiffOn IM 𝓘(𝕜, F) n f s) (hg : ContMDiffOn IM 𝓘(𝕜, F) n g s) :
+    ContMDiffOn IM 𝓘(𝕜, F) n (fun x => f x + g x) s := by
+  have h_prod : ContMDiffOn IM 𝓘(𝕜, F × F) n (fun x => (f x, g x)) s :=
+    hf.prodMk_space hg
+  have h_add : ContMDiff 𝓘(𝕜, F × F) 𝓘(𝕜, F) n (fun p : F × F => p.1 + p.2) :=
+    contDiff_add.contMDiff
+  exact h_add.comp_contMDiffOn h_prod
+
+/-- Finite-sum version derived by induction. -/
+theorem _root_.ContMDiffOn.finset_sum_normed
+    {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+    {EM : Type*} [NormedAddCommGroup EM] [NormedSpace 𝕜 EM]
+    {HM : Type*} [TopologicalSpace HM] {IM : ModelWithCorners 𝕜 EM HM}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace HM M]
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace 𝕜 F]
+    {n : ℕ∞ω} {ι : Type*} (t : Finset ι) {f : ι → M → F} {s : Set M}
+    (h : ∀ i ∈ t, ContMDiffOn IM 𝓘(𝕜, F) n (f i) s) :
+    ContMDiffOn IM 𝓘(𝕜, F) n (fun x => ∑ i ∈ t, f i x) s := by
+  classical
+  induction t using Finset.induction_on with
+  | empty =>
+    simp only [Finset.sum_empty]
+    exact contMDiffOn_const
+  | insert i t' hi IH =>
+    simp_rw [Finset.sum_insert hi]
+    refine (h i (Finset.mem_insert_self _ _)).add_normed
+      (IH (fun j hj => h j (Finset.mem_insert_of_mem hj)))
+
 /-! ### Layer 2 — finite-dim CLM lift -/
 
 /-- **Finite-dimensional CLM-valued smoothness from componentwise
@@ -215,10 +258,20 @@ theorem contMDiffOn_clm_of_components
       (T y).map_smul]
   rw [decomp]
   -- Step 2: closure of finset sum + smulRight smoothness.
-  -- TODO: requires (a) ContMDiffOn.finset_sum lemma for normed-space-valued
-  -- and (b) smulRight's smoothness as `F₂ → (F₁ →L F₂)` (a CLM-valued
-  -- linear function). Both are routine framework / Mathlib upstream pieces.
-  sorry
+  apply ContMDiffOn.finset_sum_normed
+  intro i _
+  -- Goal: ContMDiffOn IM 𝓘(𝕜, F₁ →L F₂) n
+  --   (fun y => (basis.coord i).toCLM.smulRight (T y (basis i))) s
+  have h_smulRight : ContMDiff 𝓘(𝕜, F₂) 𝓘(𝕜, F₁ →L[𝕜] F₂) n
+      (fun w : F₂ => (basis.coord i).toContinuousLinearMap.smulRight w) := by
+    -- The map `w ↦ φ.smulRight w` is `smulRightL 𝕜 F₁ F₂ φ`, a CLM, hence smooth.
+    have h_eq : (fun w : F₂ => (basis.coord i).toContinuousLinearMap.smulRight w)
+        = ContinuousLinearMap.smulRightL 𝕜 F₁ F₂ (basis.coord i).toContinuousLinearMap := by
+      funext w; rfl
+    rw [h_eq]
+    exact (ContinuousLinearMap.smulRightL 𝕜 F₁ F₂
+      (basis.coord i).toContinuousLinearMap).contMDiff
+  exact h_smulRight.comp_contMDiffOn (h_components i)
 
 /-! ### Layer 3 — fixed-`v` smoothness of `continuousLinearMapAt` -/
 
