@@ -20,7 +20,11 @@ identity `e.symmL ℝ y (e.continuousLinearMapAt ℝ y v) = v` on
 `TangentBundle.symmLFlat_mdifferentiableAt`
 (`Riemannian/TangentBundle/Smoothness.lean`), which exposes a flat-typed
 `M → (E →L[ℝ] E)` API hiding the `TangentSpace I y = E` def-eq bridge
-internally — no `cast` or `h_TS_E_eq` parameter surfaces in this file. -/
+internally — no `cast` or `h_TS_E_eq` parameter surfaces in this file.
+
+**Ground truth**: Lee, *Smooth Manifolds*, Prop. 13.21 (smooth
+Riemannian metric is `C^∞` as a function of the basepoint; pairing
+two `C^∞` sections yields a `C^∞` scalar). -/
 
 open scoped ContDiff Manifold Topology
 

@@ -99,9 +99,10 @@ finite-dimensional modules (Mathlib `LinearMap.trace`); since
 $E$ is `[FiniteDimensional ℝ E]` in our cascade, the trace returns
 a meaningful scalar.
 
-The C^∞-linearity proofs inside `ricciTraceMap` are sorry'd
-(PRE-PAPER, repair via Mathlib's `CovariantDerivative` linearity
-lemmas applied through `riemannCurvature`'s defining formula). -/
+The ℝ-linearity proofs inside `ricciTraceMap` (`map_add'`,
+`map_smul'` in the trace argument $z$) are sorry'd (PRE-PAPER,
+repair via Mathlib's `CovariantDerivative` linearity lemmas
+applied through `riemannCurvature`'s defining formula). -/
 noncomputable def ricci
     (X Y : Π x : M, TangentSpace I x) (x : M) : ℝ :=
   LinearMap.trace ℝ (TangentSpace I x) (ricciTraceMap X Y x)

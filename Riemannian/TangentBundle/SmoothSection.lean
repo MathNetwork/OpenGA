@@ -52,6 +52,9 @@ elaboration needs nudging.
   * **Algebra closure** (Phase A.1): `.zero`, `.add`, `.sub`, `.neg`,
     `.smul` — closure of `TangentSmoothAt` under the standard
     operations on smooth vector fields.
+
+**Ground truth**: Lee, *Smooth Manifolds*, Ch. 8 (smooth vector fields
+form a `C^∞(M)`-module under pointwise addition and scalar multiplication).
 -/
 
 open scoped ContDiff Manifold Topology

@@ -25,6 +25,10 @@ when the field is). This file is the Riemannian-specific wrapper:
 
 Public API (`metricToDual`, `metricRiesz`, `metricRiesz_inner`,
 `metricRiesz_unique`, `metricInner_eq_iff_eq`) is unchanged.
+
+**Ground truth**: Riesz representation theorem for finite-dim inner
+product spaces (Lee, *Smooth Manifolds*, Prop. 13.3); fiberwise applied
+to each `T_xM` via `RiemannianMetric.toBilinForm` + positive-definiteness.
 -/
 
 open scoped ContDiff Manifold Topology
