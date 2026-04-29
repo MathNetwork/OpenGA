@@ -91,6 +91,67 @@ private noncomputable def mfderivWithinFlat
     (x : M) (e₀ : E) : E →L[ℝ] E :=
   mfderivWithin 𝓘(ℝ, E) I (extChartAt I x).symm (Set.range I) e₀
 
+/-! ## Infrastructure: trivialization `continuousLinearMapAt` smoothness
+
+Mathlib gives `Trivialization.contMDiffOn` (trivialization is smooth as a
+fiber-bundle iso) and `ContMDiffVectorBundle.contMDiffOn_coordChangeL`
+(coord change between two trivializations is smooth as `B → F →L F`).
+Neither directly gives smoothness of one trivialization's
+`continuousLinearMapAt` as a model-fiber-valued function `B → (F →L F)`.
+
+For the tangent bundle, where `TangentSpace I y = E` def-equally, this
+bridge IS achievable. The infrastructure lemma below converts
+trivialization fiber-iso smoothness into model-fiber-valued CLM
+smoothness via the def-eq + finite-dimensional component extraction. -/
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **Flat-codomain forward chart mfderiv** wrapper. Underlying value
+at `y ∈ M` is `(trivializationAt E (TangentSpace I) x₀).continuousLinearMapAt ℝ y`,
+retyped from `TangentSpace I y →L[ℝ] E` to `E →L[ℝ] E` via the
+`TangentSpace I y = E` def-eq. This is the FORWARD-chart mfderiv flat
+wrapper, mirror of `mfderivWithinFlat` but for the chart map itself. -/
+private noncomputable def continuousLinearMapAtFlat
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    (x₀ y : M) : E →L[ℝ] E :=
+  (trivializationAt E (TangentSpace I) x₀).continuousLinearMapAt ℝ y
+
+/-- **Smoothness of trivialization's `continuousLinearMapAt` as
+model-fiber-valued CLM**, on chart base set, for the tangent bundle.
+
+By `TangentBundle.continuousLinearMapAt_trivializationAt`, the value
+equals `mfderiv (extChartAt I x₀) y` on chart source — so this lemma
+is equivalent to "the chart's mfderiv as a function of basepoint is
+smooth as `M → (E →L E)`".
+
+**Sorry status**: PRE-PAPER. Closure path:
+* `Trivialization.contMDiffOn` gives smoothness of `e : TotalSpace → M × E`
+  on its source.
+* For each `v : E`, the constant section `b ↦ ⟨b, v⟩` (treating v as
+  fiber via `TangentSpace I b = E` def-eq) is smooth bundle-section.
+* Apply trivialization to the constant section: `b ↦ e ⟨b, v⟩`. By bundle
+  iso smoothness, this is smooth.
+* The second component is `b ↦ (e ⟨b, v⟩).2 = e.continuousLinearMapAt R b v`,
+  smooth as `M → E` for fixed v.
+* Use `[FiniteDimensional ℝ E]` to lift pointwise-in-v smoothness to
+  CLM-valued smoothness via basis decomposition.
+
+Independent infrastructure for closing
+`mfderivWithinFlat_mdifferentiableWithinAt`. -/
+private theorem contMDiffOn_continuousLinearMapAtFlat
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    (x₀ : M) :
+    ContMDiffOn I 𝓘(ℝ, E →L[ℝ] E) ∞
+      (continuousLinearMapAtFlat (I := I) (M := M) x₀)
+      (trivializationAt E (TangentSpace I) x₀).baseSet := by
+  -- TODO: build via `Trivialization.contMDiffOn` + finite-dim component
+  -- extraction. See docstring above.
+  sorry
+
 /-! ## Helper 1 — parametric chart-inverse-mfderiv smoothness
 
 The substantive open content. Closure requires Mathlib's `Pullback.lean`
