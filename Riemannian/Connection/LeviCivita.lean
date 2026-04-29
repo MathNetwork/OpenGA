@@ -3,7 +3,6 @@ import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Torsion
 import Mathlib.Geometry.Manifold.VectorBundle.Tensoriality
 import Riemannian.Connection.Koszul
 import Riemannian.Metric.Riesz
-import Riemannian.Metric.Smooth
 
 /-!
 # Levi-Civita connection via Koszul + Riesz

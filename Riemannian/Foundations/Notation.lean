@@ -1,5 +1,3 @@
-import Riemannian.Metric.Basic
-import Riemannian.Connection.LeviCivita
 import Riemannian.Curvature
 
 /-!

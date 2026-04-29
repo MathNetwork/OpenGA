@@ -1,4 +1,3 @@
-import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 import Mathlib.Geometry.Manifold.MFDeriv.Basic
 import Mathlib.Geometry.Manifold.VectorField.LieBracket
 import Riemannian.Metric.Basic
