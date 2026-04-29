@@ -34,6 +34,7 @@ The metric is accessed via the explicit `metricTensor` field. The
 fiber's `NormedAddCommGroup` / `InnerProductSpace` structure (when needed
 downstream) goes through the direct $E$-path via `TangentSpace I x = E`
 def-eq. -/
+@[ext]
 class RiemannianMetric
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     {H : Type*} [TopologicalSpace H]
@@ -124,21 +125,25 @@ theorem metricInner_self_pos (x : M) (V : TangentSpace I x) (hV : V ≠ 0) :
   rw [metricInner_apply]; exact g.posdef x V hV
 
 /-- **Additivity in left argument**: inherited from `BilinearForm.inner_add_left`. -/
+@[metric_simp]
 theorem metricInner_add_left (x : M) (V₁ V₂ W : TangentSpace I x) :
     metricInner x (V₁ + V₂) W = metricInner x V₁ W + metricInner x V₂ W :=
   BilinearForm.inner_add_left _ V₁ V₂ W
 
 /-- **Additivity in right argument**: inherited from `BilinearForm.inner_add_right`. -/
+@[metric_simp]
 theorem metricInner_add_right (x : M) (V W₁ W₂ : TangentSpace I x) :
     metricInner x V (W₁ + W₂) = metricInner x V W₁ + metricInner x V W₂ :=
   BilinearForm.inner_add_right _ V W₁ W₂
 
 /-- **Scalar mult in left argument**: inherited from `BilinearForm.inner_smul_left`. -/
+@[metric_simp]
 theorem metricInner_smul_left (x : M) (c : ℝ) (V W : TangentSpace I x) :
     metricInner x (c • V) W = c * metricInner x V W :=
   BilinearForm.inner_smul_left _ c V W
 
 /-- **Scalar mult in right argument**: inherited from `BilinearForm.inner_smul_right`. -/
+@[metric_simp]
 theorem metricInner_smul_right (x : M) (c : ℝ) (V W : TangentSpace I x) :
     metricInner x V (c • W) = c * metricInner x V W :=
   BilinearForm.inner_smul_right _ c V W

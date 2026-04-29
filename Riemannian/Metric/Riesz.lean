@@ -119,6 +119,7 @@ noncomputable def metricRiesz (x : M) (φ : TangentSpace I x →L[ℝ] ℝ) :
 
 /-- **Riesz defining property**: $\langle \text{metricRiesz}\,\varphi, V\rangle_g
 = \varphi(V)$. -/
+@[simp]
 theorem metricRiesz_inner (x : M) (φ : TangentSpace I x →L[ℝ] ℝ)
     (V : TangentSpace I x) :
     metricInner x (metricRiesz (g := g) x φ) V = φ V := by

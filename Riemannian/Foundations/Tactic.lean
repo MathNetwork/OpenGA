@@ -17,7 +17,8 @@ metric algebra lemmas tagged with them.
 
   * `metric_simp` — `metricInner` algebra normalisation. Tagged
     lemmas: `metricInner_zero_left/right`, `metricInner_neg_left/right`,
-    `metricInner_sub_left/right`, `metricInner_self_nonneg`.
+    `metricInner_sub_left/right`, `metricInner_add_left/right`,
+    `metricInner_smul_left/right`, `metricInner_self_nonneg`.
 
 ## Usage
 
