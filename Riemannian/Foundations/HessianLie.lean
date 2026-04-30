@@ -304,24 +304,73 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
   -- Local pullback vector fields (flat).
   set V_loc : E_M → E_M := fun e => V (phi.symm e) with hV_loc_def
   set W_loc : E_M → E_M := fun e => W (phi.symm e) with hW_loc_def
-  -- Step 3 (outer chart-pullback): each outer mfderiv reduces to a flat
-  -- `fderivWithin g s (phi x)` form via `MDifferentiableAt.mfderiv` +
-  -- `writtenInExtChartAt` unfolding (target = vector space):
-  --   mfderiv h x v = fderivWithin (h ∘ phi.symm) s (phi x) v
-  -- And `(h ∘ phi.symm) e = fderivWithin f_loc s e (W_loc e)` for e in chart target.
+  -- Outer function (chart form): match LHS to `fderivWithin g_chart s (phi x) (...)`.
+  -- The function `g_W(y) := fderivWithin f_loc s (phi y) (W y)` agrees with
+  -- `(fun e => fderivWithin f_loc s e (W_loc e)) ∘ phi` near x (since phi.symm ∘ phi = id
+  -- on chart source).
+  -- Define the chart-form outer functions:
+  set g_chart_W : E_M → F := fun e => fderivWithin ℝ f_loc s e (W_loc e) with hg_chart_W_def
+  set g_chart_V : E_M → F := fun e => fderivWithin ℝ f_loc s e (V_loc e) with hg_chart_V_def
+  -- For y in chart-coherent + chart-source nbhd:
+  --   fderivWithin f_loc s (phi y) (W y) = g_chart_W (phi y)
+  -- (since W y = W (phi.symm (phi y)) = W_loc (phi y) for y in chart source).
+  have h_outer_W : (fun y => fderivWithin ℝ f_loc s (phi y) (W y))
+      =ᶠ[𝓝 x] (fun y => g_chart_W (phi y)) := by
+    have h_chart_src : (chartAt H x).source ∈ 𝓝 x :=
+      (chartAt H x).open_source.mem_nhds (mem_chart_source H x)
+    filter_upwards [h_chart_src] with y hy_src
+    show fderivWithin ℝ f_loc s (phi y) (W y) = g_chart_W (phi y)
+    show fderivWithin ℝ f_loc s (phi y) (W y)
+      = fderivWithin ℝ f_loc s (phi y) (W_loc (phi y))
+    have : W_loc (phi y) = W y := by
+      show W (phi.symm (phi y)) = W y
+      have : phi.symm (phi y) = y := by
+        show (extChartAt I x).symm (extChartAt I x y) = y
+        exact (extChartAt I x).left_inv (by rwa [extChartAt_source])
+      rw [this]
+    rw [this]
+  have h_outer_V : (fun y => fderivWithin ℝ f_loc s (phi y) (V y))
+      =ᶠ[𝓝 x] (fun y => g_chart_V (phi y)) := by
+    have h_chart_src : (chartAt H x).source ∈ 𝓝 x :=
+      (chartAt H x).open_source.mem_nhds (mem_chart_source H x)
+    filter_upwards [h_chart_src] with y hy_src
+    show fderivWithin ℝ f_loc s (phi y) (V y) = g_chart_V (phi y)
+    show fderivWithin ℝ f_loc s (phi y) (V y)
+      = fderivWithin ℝ f_loc s (phi y) (V_loc (phi y))
+    have : V_loc (phi y) = V y := by
+      show V (phi.symm (phi y)) = V y
+      have : phi.symm (phi y) = y := by
+        show (extChartAt I x).symm (extChartAt I x y) = y
+        exact (extChartAt I x).left_inv (by rwa [extChartAt_source])
+      rw [this]
+    rw [this]
+  rw [Filter.EventuallyEq.mfderiv_eq h_outer_W,
+      Filter.EventuallyEq.mfderiv_eq h_outer_V]
+  -- Goal:
+  --   mfderiv I 𝓘(ℝ, F) (fun y => g_chart_W (phi y)) x (V x)
+  --   - mfderiv I 𝓘(ℝ, F) (fun y => g_chart_V (phi y)) x (W x)
+  --   = mfderiv I 𝓘(ℝ, F) f x (mlieBracket I V W x)
   --
-  -- Step 4: this matches the LHS of `flat_hessianLieWithin_apply` with
-  -- (f_loc, V_loc, W_loc, s, phi x).
+  -- Both LHS terms are now `mfderiv (g_chart ∘ phi) x v`, where g_chart : E_M → F
+  -- and phi := extChartAt I x is the chart map. By chain rule:
+  --   mfderiv (g_chart ∘ phi) x = fderivWithin g_chart s (phi x) ∘L mfderiv phi x
+  -- With Helper #1 (mfderiv phi x = id), this simplifies to:
+  --   mfderiv (g_chart ∘ phi) x v = fderivWithin g_chart s (phi x) v
   --
-  -- Step 5 (RHS chart-pullback):
-  --   mfderiv f x = fderivWithin f_loc s (phi x)            [target=vector-space mfderiv unfold]
+  -- Then LHS = fderivWithin g_chart_W s (phi x) (V x) - fderivWithin g_chart_V s (phi x) (W x)
+  --         = fderivWithin (fun e => fderivWithin f_loc s e (W_loc e)) s (phi x) (V x)
+  --           - fderivWithin (fun e => fderivWithin f_loc s e (V_loc e)) s (phi x) (W x)
+  --
+  -- Note V x = V_loc (phi x) and W x = W_loc (phi x) by phi.symm ∘ phi = id at x.
+  -- So LHS matches the LHS of `flat_hessianLieWithin_apply` with
+  --   (f_loc, V_loc, W_loc, s, phi x).
+  --
+  -- RHS unfolds via `mlieBracketWithin_apply` + Helper #1:
   --   mlieBracket I V W x = lieBracketWithin V_loc W_loc s (phi x)
-  --                                                          [`mlieBracketWithin_apply` + mfderiv_extChartAt_self = id]
+  -- and mfderiv f x = fderivWithin f_loc s (phi x).
   --
-  -- The full term-mode build requires writing each `MDifferentiableAt.mfderiv`
-  -- + `writtenInExtChartAt` simplification + `mlieBracketWithin_apply` unfolding +
-  -- `mfderiv_extChartAt_self`-as-id substitution explicitly. PRE-PAPER: ~60-80
-  -- additional lines on top of the closed inner-locality bridges above.
+  -- Substantive remaining work: chain rule for mfderiv-of-(g_chart ∘ phi) and
+  -- the RHS chart-bridge via mlieBracketWithin_apply.
   sorry
 
 end Riemannian
