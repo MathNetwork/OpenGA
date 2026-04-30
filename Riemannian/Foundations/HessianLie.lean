@@ -241,6 +241,7 @@ theorem mfderivWithin_extChartAt_symm_eq_id_at_base
   -- h_comp : id ∘L mfderivWithin ... = id
   simpa using h_comp
 
+omit [IsLocallyConstantChartedSpace H M] in
 /-- **Helper #3 extended**: chart-inverse mfderivWithin = id eventually within `range I`. -/
 theorem mfderivWithin_extChartAt_symm_eq_id_eventually
     [IsManifold I 1 M] [IsLocallyConstantChartedSpace H M] (x : M) :
@@ -686,7 +687,7 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
     rw [h_id]
     rw [show (ContinuousLinearMap.id ℝ E_M).inverse = ContinuousLinearMap.id ℝ E_M
         from ContinuousLinearMap.inverse_id]
-    simp only [Set.preimage_univ, Set.univ_inter, id_eq]
+    simp only [Set.preimage_univ, Set.univ_inter]
     -- Goal: lieBracketWithin V_loc W_loc s (phi x)
     --     = lieBracketWithin (mpullbackWithin V) (mpullbackWithin W) (range I) (phi x)
     -- Use eventually-equal of mpullbackWithin V with V_loc + lieBracketWithin congruence.
