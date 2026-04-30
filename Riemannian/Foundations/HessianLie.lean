@@ -186,6 +186,33 @@ variable {H : Type*} [TopologicalSpace H]
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
   [_root_.IsLocallyConstantChartedSpace H M]
 
+/-! ### Helper #1: chart's mfderiv at base point is identity (eventually)
+
+In a chart-coherent neighbourhood of `x` (provided by
+`IsLocallyConstantChartedSpace H M`), the mfderiv of `extChartAt I x` is
+the identity CLM. The proof reduces to `tangentBundleCore.coordChange_self`
+once chart selection is shown to be constant. -/
+
+/-- **Chart's mfderiv at base-point-in-coherent-nbhd is identity.** -/
+theorem mfderiv_extChartAt_eq_id_eventually
+    [IsManifold I 1 M] (x : M) :
+    ∀ᶠ y in 𝓝 x, mfderiv I 𝓘(ℝ, E_M) (extChartAt I x) y
+                = ContinuousLinearMap.id ℝ E_M := by
+  have h_chart_eq : ∀ᶠ y in 𝓝 x, chartAt H y = chartAt H x :=
+    chartAt_eventually_eq_of_locallyConstant x
+  have h_chart_src : (chartAt H x).source ∈ 𝓝 x :=
+    (chartAt H x).open_source.mem_nhds (mem_chart_source H x)
+  filter_upwards [h_chart_eq, h_chart_src] with y hy_eq hy_src
+  -- Use `continuousLinearMapAt_trivializationAt` to convert mfderiv to coordChange,
+  -- then `coordChange_self` at the chart-coherent point.
+  rw [← TangentBundle.continuousLinearMapAt_trivializationAt hy_src]
+  rw [TangentBundle.continuousLinearMapAt_trivializationAt_eq_core hy_src]
+  have h_achart_eq : achart H y = achart H x := Subtype.ext hy_eq
+  rw [h_achart_eq]
+  ext v
+  exact (tangentBundleCore I M).coordChange_self (achart H x) y
+    (by simpa [tangentBundleCore_baseSet] using hy_src) v
+
 /-- Helper: directional derivative of a scalar/vector-valued function as
 an `F`-typed value (avoids `TangentSpace 𝓘(ℝ, F) (f x)` basepoint
 indirection in iterated forms). Definitionally equal to
@@ -223,30 +250,59 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
     - mDirDeriv (fun y => mDirDeriv f y (V y)) x (W x)
     = mDirDeriv f x (mlieBracket I V W x) := by
   unfold mDirDeriv
-  -- PRE-PAPER. Closure path (chart-pullback skeleton):
-  --
-  -- 1. Set `phi := extChartAt I x`, `s := range I`.
-  --    Define `f_loc := f ∘ phi.symm : E_M → F`,
-  --    `V_loc, W_loc : E_M → E_M` via `· ∘ phi.symm`.
-  --
-  -- 2. By `IsLocallyConstantChartedSpace`, in nbhd of x: `extChartAt I y = phi`,
-  --    so `mfderiv f y (W y) = fderivWithin f_loc s (phi y) (W y)` near x.
-  --    Lift to `EventuallyEq` filter form on both `(fun y => mfderiv f y (W y))`
-  --    and `(fun y => mfderiv f y (V y))`.
-  --
-  -- 3. Outer mfderiv via chart-pullback:
-  --    `mfderiv (fun y => fderivWithin f_loc s (phi y) (W y)) x v
-  --      = fderivWithin (fun e => fderivWithin f_loc s e (W_loc e)) s (phi x) v`
-  --    using chain rule + `mfderiv_extChartAt_self = id`.
-  --
-  -- 4. Apply `flat_hessianLieWithin_apply` to f_loc, V_loc, W_loc on s at phi x.
-  --
-  -- 5. RHS: by `mlieBracketWithin_apply` definition + `mfderiv_extChartAt_self = id`,
-  --    `mlieBracket I V W x = lieBracketWithin V_loc W_loc s (phi x)`.
-  --    `mfderiv f x v = fderivWithin f_loc s (phi x) v`.
-  --    Together → manifold RHS = flat RHS.
-  --
-  -- Each step expands to ~10-25 lines of careful term-mode Lean.
+  -- Chart-pullback abbreviations.
+  set phi := extChartAt I x with hphi_def
+  set s : Set E_M := Set.range I with hs_def
+  set f_loc : E_M → F := f ∘ phi.symm with hf_loc_def
+  -- Smoothness-open: f is C² in a nbhd of x.
+  have hf_nbhd : ∀ᶠ y in 𝓝 x, ContMDiffAt I 𝓘(ℝ, F) 2 f y :=
+    (contMDiffAt_iff_contMDiffAt_nhds (by decide : (2 : ℕ∞ω) ≠ ∞)).mp hf
+  -- Chart-coherence: chartAt H y = chartAt H x near x.
+  have h_chart_eq : ∀ᶠ y in 𝓝 x, chartAt H y = chartAt H x :=
+    chartAt_eventually_eq_of_locallyConstant x
+  -- Combined: extChartAt I y = phi near x.
+  have h_ext_eq : ∀ᶠ y in 𝓝 x, extChartAt I y = phi := by
+    filter_upwards [h_chart_eq] with y hy
+    show extChartAt I y = extChartAt I x
+    rw [extChartAt, extChartAt, hy]
+  -- Step 2 (inner locality): for y near x, `mfderiv f y (W y)` equals
+  -- `fderivWithin f_loc s (phi y) (W y)`.
+  have h_inner_W : (fun y => mfderiv I 𝓘(ℝ, F) f y (W y))
+      =ᶠ[𝓝 x] (fun y => fderivWithin ℝ f_loc s (phi y) (W y)) := by
+    filter_upwards [hf_nbhd, h_ext_eq] with y hy_smooth hy_ext
+    have hy_diff : MDifferentiableAt I 𝓘(ℝ, F) f y :=
+      hy_smooth.mdifferentiableAt (by norm_num : (2 : ℕ∞ω) ≠ 0)
+    have h_mfd := hy_diff.mfderiv
+    -- writtenInExtChartAt I 𝓘(ℝ, F) y f = f ∘ (extChartAt I y).symm = f ∘ phi.symm = f_loc
+    have h_written : writtenInExtChartAt I 𝓘(ℝ, F) y f = f_loc := by
+      ext e
+      show (extChartAt 𝓘(ℝ, F) (f y)) (f ((extChartAt I y).symm e)) = f_loc e
+      rw [hy_ext]
+      simp [extChartAt, hf_loc_def]
+    rw [h_mfd, h_written]
+    show fderivWithin ℝ f_loc s ((extChartAt I y) y) (W y)
+      = fderivWithin ℝ f_loc s (phi y) (W y)
+    rw [hy_ext]
+  have h_inner_V : (fun y => mfderiv I 𝓘(ℝ, F) f y (V y))
+      =ᶠ[𝓝 x] (fun y => fderivWithin ℝ f_loc s (phi y) (V y)) := by
+    filter_upwards [hf_nbhd, h_ext_eq] with y hy_smooth hy_ext
+    have hy_diff : MDifferentiableAt I 𝓘(ℝ, F) f y :=
+      hy_smooth.mdifferentiableAt (by norm_num : (2 : ℕ∞ω) ≠ 0)
+    have h_mfd := hy_diff.mfderiv
+    have h_written : writtenInExtChartAt I 𝓘(ℝ, F) y f = f_loc := by
+      ext e
+      show (extChartAt 𝓘(ℝ, F) (f y)) (f ((extChartAt I y).symm e)) = f_loc e
+      rw [hy_ext]
+      simp [extChartAt, hf_loc_def]
+    rw [h_mfd, h_written]
+    show fderivWithin ℝ f_loc s ((extChartAt I y) y) (V y)
+      = fderivWithin ℝ f_loc s (phi y) (V y)
+    rw [hy_ext]
+  -- Rewrite the outer-mfderiv via inner locality.
+  rw [Filter.EventuallyEq.mfderiv_eq h_inner_W,
+      Filter.EventuallyEq.mfderiv_eq h_inner_V]
+  -- Steps 3-5: outer mfderiv chart-pullback + flat lemma + RHS chart-pullback.
+  -- Remaining substantive work — bounded structural follow-up.
   sorry
 
 end Riemannian
