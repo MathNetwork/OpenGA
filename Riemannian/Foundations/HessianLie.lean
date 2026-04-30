@@ -428,29 +428,11 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
       show (extChartAt I x).symm (extChartAt I x x) = x
       exact (extChartAt I x).left_inv (mem_extChartAt_source x)
     rw [this]
-  -- Architectural skeleton (with documented smoothness sub-premises and RHS bridge):
-  -- 1. Establish DifferentiableWithinAt of `g_chart_W`, `g_chart_V` at `phi x`
-  --    within `s = range I` (from f C² + W, V C¹ via chain).
-  -- 2. Apply `mfderiv_chart_compose_apply` (Helper #2) to both LHS terms:
-  --      `mfderiv (fun y => g_chart_W (phi y)) x v = fderivWithin g_chart_W s (phi x) v`.
-  -- 3. Substitute `V x = V_loc (phi x)`, `W x = W_loc (phi x)` (closed above).
-  -- 4. Unfold `g_chart_W e := fderivWithin f_loc s e (W_loc e)`.
-  -- 5. Apply `flat_hessianLieWithin_apply` (closed) with hypotheses:
-  --    - `f_loc` is `ContDiffWithinAt 2 s (phi x)` (from f being C²)
-  --    - `V_loc, W_loc` are `DifferentiableWithinAt s (phi x)` (from V, W being C¹)
-  --    - `UniqueDiffOn s` (= `I.uniqueDiffOn`)
-  --    - `h_interior` (theorem premise)
-  -- 6. RHS: unfold `mfderiv f x v = fderivWithin f_loc s (phi x) v`
-  --    (Helper #2 with g = f_loc, v = mlieBracket I V W x).
-  -- 7. RHS continued: `mlieBracket I V W x = lieBracketWithin V_loc W_loc s (phi x)`
-  --    via `mlieBracketWithin_apply` definition unfold + Helper #1
-  --    (`mfderiv (extChartAt I x) x = id` cancels the inverse pullback factor).
-  --
-  -- Each remaining sub-step is bounded and follows from already-closed helpers
-  -- (Helper #1, Helper #2, flat_hessianLieWithin_apply) + standard smoothness
-  -- propagation. Implementation requires careful term-mode bookkeeping; the
-  -- `set phi := ...` abbreviation interacts with `rw` requiring `unfold phi` or
-  -- explicit substitution via `show`.
+  -- Closure path documented; `change` to inline-extChartAt fails due to
+  -- `TangentSpace 𝓘(ℝ,F) (g_chart_W (...))` basepoint def-eq issue under HSub.
+  -- Workaround requires either explicit `@HSub.hSub` ascription or careful
+  -- intermediate `show` to re-fold mDirDeriv form. ~30-40 lines of careful
+  -- term-mode Lean remaining.
   sorry
 
 end Riemannian
