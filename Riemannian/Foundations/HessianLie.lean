@@ -527,10 +527,19 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
     show DifferentiableWithinAt ℝ W_loc (Set.range I) (extChartAt I x x)
     convert h using 2
     simp [Set.preimage_univ, Set.univ_inter]
+  have h_s_unique : UniqueDiffOn ℝ s := I.uniqueDiffOn
+  have h_phi_x_in_s : phi x ∈ s :=
+    extChartAt_target_subset_range x (mem_extChartAt_target x)
   -- g_chart_W e := fderivWithin f_loc s e (W_loc e). Bilinear in (fderivWithin f_loc s e, W_loc e).
-  -- DifferentiableWithinAt s (phi x) from f_loc C^2 (so fderivWithin f_loc s is C^1) + W_loc C^1.
-  have h_g_chart_W_diff : DifferentiableWithinAt ℝ g_chart_W s (extChartAt I x x) := by sorry
-  have h_g_chart_V_diff : DifferentiableWithinAt ℝ g_chart_V s (extChartAt I x x) := by sorry
+  have h_fderiv_f_loc_C1 : ContDiffWithinAt ℝ 1 (fderivWithin ℝ f_loc s) s (extChartAt I x x) :=
+    h_f_loc_C2.fderivWithin_right h_s_unique (by norm_num : ((1 : ℕ∞ω)) + 1 ≤ 2) h_phi_x_in_s
+  have h_fderiv_f_loc_diff : DifferentiableWithinAt ℝ (fderivWithin ℝ f_loc s) s
+      (extChartAt I x x) :=
+    h_fderiv_f_loc_C1.differentiableWithinAt (by norm_num : (1 : ℕ∞ω) ≠ 0)
+  have h_g_chart_W_diff : DifferentiableWithinAt ℝ g_chart_W s (extChartAt I x x) :=
+    h_fderiv_f_loc_diff.clm_apply h_W_loc_diff
+  have h_g_chart_V_diff : DifferentiableWithinAt ℝ g_chart_V s (extChartAt I x x) :=
+    h_fderiv_f_loc_diff.clm_apply h_V_loc_diff
   have h_f_diff : MDifferentiableAt I 𝓘(ℝ, F) f x :=
     hf.mdifferentiableAt (by norm_num : (2 : ℕ∞ω) ≠ 0)
   have h_f_loc_diff_W : DifferentiableWithinAt ℝ f_loc s (extChartAt I x x) :=
