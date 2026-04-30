@@ -290,6 +290,19 @@ indirection in iterated forms). Definitionally equal to
     (f : M → F) (x : M) (v : TangentSpace I x) : F :=
   mfderiv I 𝓘(ℝ, F) f x v
 
+omit [IsLocallyConstantChartedSpace H M] in
+/-- **`mDirDeriv`-form chart-compose** = Helper #2 in F-typed wrapper.
+The F-typed return value avoids `TangentSpace 𝓘(ℝ,F) (f x)` basepoint
+issues under iterated forms / HSub elaboration. -/
+theorem mDirDeriv_chart_compose_apply
+    [IsManifold I 1 M] (x : M)
+    (g : E_M → F)
+    (hg : DifferentiableWithinAt ℝ g (Set.range I) (extChartAt I x x))
+    (v : TangentSpace I x) :
+    mDirDeriv (fun y => g (extChartAt I x y)) x v
+    = fderivWithin ℝ g (Set.range I) (extChartAt I x x) v :=
+  mfderiv_chart_compose_apply x g hg v
+
 set_option backward.isDefEq.respectTransparency false in
 /-- **Manifold scalar Hessian–Lie identity.** For a $C^2$ scalar function
 `f : M → F` on a manifold and $C^1$ smooth vector fields `V, W`,
@@ -428,24 +441,107 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
       show (extChartAt I x).symm (extChartAt I x x) = x
       exact (extChartAt I x).left_inv (mem_extChartAt_source x)
     rw [this]
-  -- Substantive remaining work (architectural skeleton documented above):
-  -- 1. Smoothness of `g_chart_W, g_chart_V, f_loc, V_loc, W_loc` within `s = range I` at `phi x`.
-  --    All derivable from `hf : ContMDiffAt I 𝓘(ℝ,F) 2 f x` + `hV, hW` via Mathlib chain rules
-  --    (writtenInExtChartAt + bundle-section-pullback to chart). ~30 lines.
-  -- 2. Apply `mfderiv_chart_compose_apply` (Helper #2) to LHS via `convert`-style
-  --    unification (direct `rw` blocked by `set phi := extChartAt I x` abbreviation
-  --    interfering with pattern match — Lean elaboration artifact).
-  -- 3. Substitute `V x = V_loc (phi x)`, `W x = W_loc (phi x)` (closed: `h_V_at_x`, `h_W_at_x`).
-  -- 4. Apply `flat_hessianLieWithin_apply` (closed) with the smoothness premises.
-  -- 5. RHS bridge: `mfderiv f x = fderivWithin f_loc s (phi x)` (Helper #2 specialized) +
-  --    `mlieBracket I V W x = lieBracketWithin V_loc W_loc s (phi x)`
-  --    (`mlieBracketWithin_apply` definition unfold + Helper #1).
-  --
-  -- The architectural path is now fully in place: Helper #1 (chart mfderiv = id),
-  -- Helper #2 (chart-compose mfderiv → fderivWithin), inner+outer locality bridges,
-  -- base-point V/W identities are all closed (~150 lines real proof). The ~30-50 lines
-  -- of remaining term-mode bookkeeping is a discrete follow-up best done in dedicated
-  -- worktree session (Lean elaboration with `set` abbreviations needs care).
-  sorry
+  -- Re-fold to mDirDeriv form (F-typed; HSub on F trivial; sidesteps basepoint issue).
+  show mDirDeriv (fun y => g_chart_W (phi y)) x (V x)
+       - mDirDeriv (fun y => g_chart_V (phi y)) x (W x)
+       = mDirDeriv f x (mlieBracket I V W x)
+  -- Smoothness premises (sorry'd; bounded follow-up via f C² + V, W C¹).
+  have h_g_chart_W_diff : DifferentiableWithinAt ℝ g_chart_W s (extChartAt I x x) := by sorry
+  have h_g_chart_V_diff : DifferentiableWithinAt ℝ g_chart_V s (extChartAt I x x) := by sorry
+  have h_f_loc_C2 : ContDiffWithinAt ℝ 2 f_loc s (extChartAt I x x) := by sorry
+  have h_V_loc_diff : DifferentiableWithinAt ℝ V_loc s (extChartAt I x x) := by sorry
+  have h_W_loc_diff : DifferentiableWithinAt ℝ W_loc s (extChartAt I x x) := by sorry
+  have h_f_diff : MDifferentiableAt I 𝓘(ℝ, F) f x :=
+    hf.mdifferentiableAt (by norm_num : (2 : ℕ∞ω) ≠ 0)
+  have h_f_loc_diff_W : DifferentiableWithinAt ℝ f_loc s (extChartAt I x x) :=
+    (h_f_loc_C2.of_le (by norm_num : (1 : ℕ∞ω) ≤ 2)).differentiableWithinAt
+      (by norm_num : (1 : ℕ∞ω) ≠ 0)
+  -- Apply mDirDeriv-form Helper #2 to LHS terms (works on F-typed mDirDeriv).
+  rw [mDirDeriv_chart_compose_apply x g_chart_W h_g_chart_W_diff (V x),
+      mDirDeriv_chart_compose_apply x g_chart_V h_g_chart_V_diff (W x)]
+  -- Substitute V x = V_loc (phi x), W x = W_loc (phi x).
+  rw [h_V_at_x, h_W_at_x]
+  -- Goal: fderivWithin g_chart_W s (phi x) (V_loc (phi x))
+  --     - fderivWithin g_chart_V s (phi x) (W_loc (phi x))
+  --     = mDirDeriv f x (mlieBracket I V W x)
+  -- Unfold g_chart_W, g_chart_V (via @[reducible] / defn) and apply flat lemma.
+  have h_s_unique : UniqueDiffOn ℝ s := I.uniqueDiffOn
+  have h_phi_x_in_s : phi x ∈ s :=
+    extChartAt_target_subset_range x (mem_extChartAt_target x)
+  show fderivWithin ℝ (fun e => fderivWithin ℝ f_loc s e (W_loc e)) s
+        (extChartAt I x x) (V_loc (extChartAt I x x))
+       - fderivWithin ℝ (fun e => fderivWithin ℝ f_loc s e (V_loc e)) s
+        (extChartAt I x x) (W_loc (extChartAt I x x))
+       = mDirDeriv f x (mlieBracket I V W x)
+  rw [flat_hessianLieWithin_apply h_s_unique h_phi_x_in_s h_interior
+        h_f_loc_C2 h_V_loc_diff h_W_loc_diff]
+  -- Goal: fderivWithin f_loc s (phi x) (lieBracketWithin V_loc W_loc s (phi x))
+  --     = mDirDeriv f x (mlieBracket I V W x)
+  -- RHS bridge: apply mDirDeriv-form Helper #2 to mDirDeriv f x.
+  -- `f` is not yet of the form `g ∘ extChartAt I x`, but
+  -- `f = (f ∘ phi.symm) ∘ phi = f_loc ∘ phi` by `phi.symm ∘ phi = id` on chart source
+  -- — same trick as h_outer_W. Use eventually-equal then mfderiv_eq.
+  -- Combined with Helper #1 → mfderiv (extChartAt I x) x = id, this gives
+  -- mDirDeriv f x v = fderivWithin f_loc s (phi x) v.
+  -- Apply via Helper #2 on f_loc:
+  have h_f_outer : (fun y : M => f y) =ᶠ[𝓝 x] (fun y => f_loc (phi y)) := by
+    have h_chart_src : (chartAt H x).source ∈ 𝓝 x :=
+      (chartAt H x).open_source.mem_nhds (mem_chart_source H x)
+    filter_upwards [h_chart_src] with y hy_src
+    show f y = f (phi.symm (phi y))
+    have : phi.symm (phi y) = y := by
+      show (extChartAt I x).symm (extChartAt I x y) = y
+      exact (extChartAt I x).left_inv (by rwa [extChartAt_source])
+    rw [this]
+  have h_mfderiv_eq : mfderiv I 𝓘(ℝ, F) f x
+                    = mfderiv I 𝓘(ℝ, F) (fun y => f_loc (phi y)) x :=
+    Filter.EventuallyEq.mfderiv_eq h_f_outer
+  rw [show mDirDeriv f x (mlieBracket I V W x)
+        = mfderiv I 𝓘(ℝ, F) f x (mlieBracket I V W x) from rfl,
+      h_mfderiv_eq]
+  -- Apply Helper #2 to RHS to get `fderivWithin f_loc s (phi x) (mlieBracket I V W x)`.
+  have h_helper2_f : mfderiv I 𝓘(ℝ, F) (fun y => f_loc (phi y)) x (mlieBracket I V W x)
+                  = fderivWithin ℝ f_loc s (extChartAt I x x) (mlieBracket I V W x) :=
+    mfderiv_chart_compose_apply x f_loc h_f_loc_diff_W (mlieBracket I V W x)
+  -- Now goal: fderivWithin f_loc s (phi x) (lieBracketWithin V_loc W_loc s (phi x))
+  --         = mfderiv ... f_loc∘phi ... x (mlieBracket I V W x)
+  -- Bridge mlieBracket via mlieBracketWithin_apply + Helper #1.
+  have h_lieBr_eq : lieBracketWithin ℝ V_loc W_loc s (phi x) = mlieBracket I V W x := by
+    -- mlieBracket I V W x = mpullback (extChartAt I x) (lieBracketWithin V_loc W_loc s (phi x))
+    -- mpullback I 𝓘(ℝ, E_M) phi z = (mfderiv phi x).inverse (z (phi x))
+    -- With Helper #1 → mfderiv phi x = id, .inverse = id, so = lieBracketWithin V_loc W_loc s (phi x).
+    rw [show mlieBracket I V W x = mlieBracketWithin I V W Set.univ x from rfl]
+    rw [VectorField.mlieBracketWithin_apply]
+    have h_id : mfderiv I 𝓘(ℝ, E_M) (extChartAt I x) x = ContinuousLinearMap.id ℝ E_M :=
+      (mfderiv_extChartAt_eq_id_eventually (I := I) (M := M) x).self_of_nhds
+    simp only [h_id, ContinuousLinearMap.inverse_id, ContinuousLinearMap.coe_id,
+      Set.preimage_univ, Set.univ_inter, id_eq]
+  rw [h_lieBr_eq]
+  exact h_helper2_f.symm
+  -- Goal: fderivWithin f_loc s (phi x) (lieBracketWithin V_loc W_loc s (phi x))
+  --     = fderivWithin f_loc s (extChartAt I x x) (mlieBracket I V W x)
+  -- Need: lieBracketWithin V_loc W_loc s (phi x) = mlieBracket I V W x
+  -- via mlieBracketWithin_apply + Helper #1 (mfderiv phi x = id cancels inverse).
+  congr 1
+  -- Goal: lieBracketWithin V_loc W_loc s (phi x) = mlieBracket I V W x
+  -- mlieBracket I V W x = mlieBracketWithin I V W univ x
+  --   = mpullback I 𝓘(ℝ, E_M) phi (lieBracketWithin V_loc W_loc s (phi x))
+  --   = (mfderiv phi x).inverse (lieBracketWithin V_loc W_loc s (phi x))
+  -- With mfderiv phi x = id, .inverse is also id, giving equality.
+  rw [show mlieBracket I V W x = mlieBracketWithin I V W Set.univ x from rfl]
+  rw [VectorField.mlieBracketWithin_apply]
+  simp only [Set.preimage_univ, Set.univ_inter]
+  -- Goal involves: (mfderiv (extChartAt I x) x).inverse applied to lieBracketWithin
+  -- With Helper #1 (specialized at y = x): mfderiv (extChartAt I x) x = id.
+  have h_id : mfderiv I 𝓘(ℝ, E_M) (extChartAt I x) x = ContinuousLinearMap.id ℝ E_M := by
+    have h_evt := mfderiv_extChartAt_eq_id_eventually (I := I) (M := M) x
+    exact h_evt.self_of_nhds
+  rw [h_id]
+  -- Goal: lieBracketWithin V_loc W_loc s (phi x)
+  --     = (ContinuousLinearMap.id ℝ E_M).inverse (lieBracketWithin V_loc W_loc s (phi x))
+  -- ContinuousLinearMap.id.inverse = id (or compose-id).
+  show lieBracketWithin ℝ V_loc W_loc s (phi x)
+      = (ContinuousLinearMap.id ℝ E_M).inverse (lieBracketWithin ℝ V_loc W_loc s (phi x))
+  simp [ContinuousLinearMap.inverse_id]
 
 end Riemannian
