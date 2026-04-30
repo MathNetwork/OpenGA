@@ -301,8 +301,29 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
   -- Rewrite the outer-mfderiv via inner locality.
   rw [Filter.EventuallyEq.mfderiv_eq h_inner_W,
       Filter.EventuallyEq.mfderiv_eq h_inner_V]
-  -- Steps 3-5: outer mfderiv chart-pullback + flat lemma + RHS chart-pullback.
-  -- Remaining substantive work — bounded structural follow-up.
+  -- Goal:
+  --   mfderiv I 𝓘(ℝ, F) (fun y => fderivWithin ℝ f_loc s (phi y) (W y)) x (V x)
+  --   - mfderiv I 𝓘(ℝ, F) (fun y => fderivWithin ℝ f_loc s (phi y) (V y)) x (W x)
+  --   = mfderiv I 𝓘(ℝ, F) f x (mlieBracket I V W x)
+  --
+  -- Step 3 (outer chart-pullback): each outer mfderiv reduces to a flat
+  -- `fderivWithin g s (phi x)` form via `MDifferentiableAt.mfderiv` +
+  -- `writtenInExtChartAt` unfolding (target = vector space):
+  --   mfderiv h x v = fderivWithin (h ∘ phi.symm) s (phi x) v
+  -- And `(h ∘ phi.symm) e = fderivWithin f_loc s e (W_loc e)` for e in chart target.
+  --
+  -- Step 4: this matches the LHS of `flat_hessianLieWithin_apply` with
+  -- (f_loc, V_loc, W_loc, s, phi x).
+  --
+  -- Step 5 (RHS chart-pullback):
+  --   mfderiv f x = fderivWithin f_loc s (phi x)            [target=vector-space mfderiv unfold]
+  --   mlieBracket I V W x = lieBracketWithin V_loc W_loc s (phi x)
+  --                                                          [`mlieBracketWithin_apply` + mfderiv_extChartAt_self = id]
+  --
+  -- The full term-mode build requires writing each `MDifferentiableAt.mfderiv`
+  -- + `writtenInExtChartAt` simplification + `mlieBracketWithin_apply` unfolding +
+  -- `mfderiv_extChartAt_self`-as-id substitution explicitly. PRE-PAPER: ~60-80
+  -- additional lines on top of the closed inner-locality bridges above.
   sorry
 
 end Riemannian
