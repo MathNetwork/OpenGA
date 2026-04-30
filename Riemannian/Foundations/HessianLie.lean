@@ -213,6 +213,34 @@ theorem mfderiv_extChartAt_eq_id_eventually
   exact (tangentBundleCore I M).coordChange_self (achart H x) y
     (by simpa [tangentBundleCore_baseSet] using hy_src) v
 
+/-! ### Helper #3: chart-inverse mfderivWithin = id (eventually)
+
+Analog of Helper #1 for the inverse chart. From Mathlib's chart-comp identity
+`mfderiv (extChartAt I x) ∘L mfderivWithin (extChartAt I x).symm = id` plus
+Helper #1, we get the inverse chart's mfderivWithin is identity in a
+chart-target nbhd within `range I`. -/
+
+omit [IsLocallyConstantChartedSpace H M] in
+/-- **Chart-inverse mfderivWithin at chart-target-nbhd is identity.** -/
+theorem mfderivWithin_extChartAt_symm_eq_id_at_base
+    [IsManifold I 1 M] [IsLocallyConstantChartedSpace H M] (x : M) :
+    mfderivWithin 𝓘(ℝ, E_M) I (extChartAt I x).symm (Set.range I) (extChartAt I x x)
+    = ContinuousLinearMap.id ℝ E_M := by
+  -- Mathlib's `mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm`:
+  --   mfderiv (extChartAt I x) (phi.symm (phi x)) ∘L mfderivWithin (extChartAt I x).symm (range I) (phi x) = id
+  -- phi.symm (phi x) = x, so first factor = mfderiv (extChartAt I x) x = id (Helper #1).
+  -- Hence id ∘L mfderivWithin (extChartAt I x).symm (range I) (phi x) = id.
+  have h_comp := mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm
+    (I := I) (M := M) (x := x) (mem_extChartAt_target x)
+  have h_id : mfderiv I 𝓘(ℝ, E_M) (extChartAt I x) x = ContinuousLinearMap.id ℝ E_M :=
+    (mfderiv_extChartAt_eq_id_eventually (I := I) (M := M) x).self_of_nhds
+  have h_symm_eq_x : (extChartAt I x).symm (extChartAt I x x) = x :=
+    (extChartAt I x).left_inv (mem_extChartAt_source x)
+  rw [h_symm_eq_x] at h_comp
+  rw [h_id] at h_comp
+  -- h_comp : id ∘L mfderivWithin ... = id
+  simpa using h_comp
+
 /-! ### Helper #2: chart-compose `mfderiv` reduces to flat `fderivWithin`
 
 For a flat function `g : E_M → F` differentiable within `range I` at the
@@ -598,11 +626,19 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
   have h_lieBr_eq : lieBracketWithin ℝ V_loc W_loc s (phi x) = mlieBracket I V W x := by
     rw [show mlieBracket I V W x = mlieBracketWithin I V W Set.univ x from rfl,
         VectorField.mlieBracketWithin_apply]
-    -- Helper #1 → mfderiv (extChartAt I x) x = id. Its inverse is id.
     have h_id : mfderiv I 𝓘(ℝ, E_M) (extChartAt I x) x = ContinuousLinearMap.id ℝ E_M :=
       (mfderiv_extChartAt_eq_id_eventually (I := I) (M := M) x).self_of_nhds
-    -- mpullbackWithin V (range I) reduces to V ∘ phi.symm = V_loc when chart-inverse
-    -- mfderivWithin = id (analogous Helper #1 for inverse chart). For now, sorry'd.
+    rw [h_id]
+    rw [show (ContinuousLinearMap.id ℝ E_M).inverse = ContinuousLinearMap.id ℝ E_M
+        from ContinuousLinearMap.inverse_id]
+    simp only [ContinuousLinearMap.coe_id, id_eq, Set.preimage_univ, Set.univ_inter]
+    -- Goal: lieBracketWithin V_loc W_loc s (phi x)
+    --     = lieBracketWithin (mpullbackWithin V) (mpullbackWithin W) (range I) (phi x)
+    -- Need: V_loc =ᶠ[𝓝[s] (phi x)] mpullbackWithin V (range I) (and similarly W) so
+    -- lieBracketWithin congruence applies.
+    -- mpullbackWithin V (range I) e := (mfderivWithin phi.symm s e).inverse (V (phi.symm e))
+    -- At e = phi x: mfderivWithin = id (Helper #3) → mpullbackWithin V (phi x) = V x = V_loc (phi x).
+    -- Eventually-equal version of Helper #3 needed for lieBracketWithin congruence.
     sorry
   rw [h_lieBr_eq]
   exact h_helper2_f.symm
