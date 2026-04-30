@@ -346,31 +346,36 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
     rw [this]
   rw [Filter.EventuallyEq.mfderiv_eq h_outer_W,
       Filter.EventuallyEq.mfderiv_eq h_outer_V]
-  -- Goal:
-  --   mfderiv I 𝓘(ℝ, F) (fun y => g_chart_W (phi y)) x (V x)
-  --   - mfderiv I 𝓘(ℝ, F) (fun y => g_chart_V (phi y)) x (W x)
-  --   = mfderiv I 𝓘(ℝ, F) f x (mlieBracket I V W x)
+  -- Auxiliary equality: V x = V_loc (phi x) and W x = W_loc (phi x).
+  have h_V_at_x : V x = V_loc (phi x) := by
+    show V x = V (phi.symm (phi x))
+    have : phi.symm (phi x) = x := by
+      show (extChartAt I x).symm (extChartAt I x x) = x
+      exact (extChartAt I x).left_inv (mem_extChartAt_source x)
+    rw [this]
+  have h_W_at_x : W x = W_loc (phi x) := by
+    show W x = W (phi.symm (phi x))
+    have : phi.symm (phi x) = x := by
+      show (extChartAt I x).symm (extChartAt I x x) = x
+      exact (extChartAt I x).left_inv (mem_extChartAt_source x)
+    rw [this]
+  -- Chain rule + Helper #1 collapse:
+  -- mfderiv (g_chart ∘ phi) x v = fderivWithin g_chart s (phi x) v
+  -- where g_chart : E_M → F is differentiable WithinAt s at phi x.
+  -- The remaining lemma: for any chart-form `g_chart : E_M → F` differentiable
+  -- WithinAt `s = range I` at `phi x`, the manifold derivative of
+  -- `(fun y => g_chart (phi y)) : M → F` at x equals the flat fderivWithin.
   --
-  -- Both LHS terms are now `mfderiv (g_chart ∘ phi) x v`, where g_chart : E_M → F
-  -- and phi := extChartAt I x is the chart map. By chain rule:
-  --   mfderiv (g_chart ∘ phi) x = fderivWithin g_chart s (phi x) ∘L mfderiv phi x
-  -- With Helper #1 (mfderiv phi x = id), this simplifies to:
-  --   mfderiv (g_chart ∘ phi) x v = fderivWithin g_chart s (phi x) v
+  -- This is the **chain-rule + chart-base-identity bridge** — derivable from:
+  --  * `MDifferentiableAt.mfderiv`: manifold mfderiv unfolds to flat fderivWithin
+  --    of `writtenInExtChartAt` on `range I`.
+  --  * On phi.target ⊂ range I, `writtenInExtChartAt I 𝓘(ℝ, F) x (g_chart ∘ phi)`
+  --    = `g_chart ∘ phi ∘ phi.symm` = `g_chart` (since `phi ∘ phi.symm = id` on phi.target).
+  --  * `fderivWithin` is congruent on `EventuallyEq within s` (via phi.target ∈ 𝓝[s] phi x).
   --
-  -- Then LHS = fderivWithin g_chart_W s (phi x) (V x) - fderivWithin g_chart_V s (phi x) (W x)
-  --         = fderivWithin (fun e => fderivWithin f_loc s e (W_loc e)) s (phi x) (V x)
-  --           - fderivWithin (fun e => fderivWithin f_loc s e (V_loc e)) s (phi x) (W x)
-  --
-  -- Note V x = V_loc (phi x) and W x = W_loc (phi x) by phi.symm ∘ phi = id at x.
-  -- So LHS matches the LHS of `flat_hessianLieWithin_apply` with
-  --   (f_loc, V_loc, W_loc, s, phi x).
-  --
-  -- RHS unfolds via `mlieBracketWithin_apply` + Helper #1:
-  --   mlieBracket I V W x = lieBracketWithin V_loc W_loc s (phi x)
-  -- and mfderiv f x = fderivWithin f_loc s (phi x).
-  --
-  -- Substantive remaining work: chain rule for mfderiv-of-(g_chart ∘ phi) and
-  -- the RHS chart-bridge via mlieBracketWithin_apply.
+  -- Implementation requires establishing MDifferentiableAt of the composition
+  -- (via DifferentiableWithinAt.comp-style lemma for chart compositions) and
+  -- the writtenInExtChartAt-to-g_chart simplification.
   sorry
 
 end Riemannian
