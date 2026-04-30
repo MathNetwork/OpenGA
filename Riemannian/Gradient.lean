@@ -49,6 +49,7 @@ noncomputable def manifoldGradient
     (f : M → ℝ) (x : M) : TangentSpace I x :=
   metricRiesz x (mfderiv I 𝓘(ℝ, ℝ) f x)
 
+omit [CompleteSpace E] [IsManifold I ∞ M] in
 /-- **Riesz duality for the manifold gradient**:
 $\langle \nabla^M f(x), v \rangle_g = (\mathrm{d}f)_x(v)$.
 
@@ -75,6 +76,7 @@ noncomputable def manifoldGradientNormSq
     (f : M → ℝ) (x : M) : ℝ :=
   metricInner x (manifoldGradient (I := I') f x) (manifoldGradient (I := I') f x)
 
+omit [CompleteSpace E] [ChartedSpace H M] in
 /-- **$|\nabla^M f|^2 \geq 0$**: gradient squared norm is non-negative.
 Direct from `metricInner_self_nonneg`. -/
 @[simp]

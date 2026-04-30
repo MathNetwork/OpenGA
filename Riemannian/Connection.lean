@@ -1,5 +1,6 @@
 import Riemannian.Connection.Koszul
 import Riemannian.Connection.LeviCivita
+import Riemannian.Connection.Bianchi
 
 /-!
 # Riemannian.Connection — facade
@@ -37,6 +38,7 @@ noncomputable example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [RiemannianMetric I M]
     (X Y : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x := covDeriv X Y x
@@ -98,6 +100,7 @@ noncomputable example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [RiemannianMetric I M]
     (X Y : Π x : M, TangentSpace I x) (x : M)
     (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
@@ -111,6 +114,7 @@ example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [RiemannianMetric I M]
     (X Y Z : Π x : M, TangentSpace I x) (x : M)
     (hX : MDifferentiableAt I (I.prod 𝓘(ℝ, E))

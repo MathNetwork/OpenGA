@@ -53,6 +53,7 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {H : Type*} [TopologicalSpace H]
   (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
+  [IsLocallyConstantChartedSpace H M]
   [OpenGALib.RiemannianMetric I M]
 
 /-- $V$ is a **smooth, closed, embedded minimal hypersurface** of $M$

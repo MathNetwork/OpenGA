@@ -67,6 +67,7 @@ noncomputable def normalCorrection
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [RiemannianMetric I M]
     (X : TestVectorField I M)
     (ν : (x : M) → TangentSpace I x) (x : M) : ℝ :=
@@ -92,6 +93,7 @@ noncomputable def firstVariationFull
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [RiemannianMetric I M]
     (V : Varifold M) [hN : Varifold.HasNormal I V]
     (X : TestVectorField I M) : ℝ :=

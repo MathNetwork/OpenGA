@@ -170,6 +170,7 @@ def IsStationary (V : Varifold M) : Prop :=
     {H : Type} [TopologicalSpace H]
     {I : ModelWithCorners ℝ E H}
     [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [OpenGALib.RiemannianMetric I M]
     [Varifold.HasNormal I V]
     (X : TestVectorField I M), Variation.firstVariationFull I V X = 0

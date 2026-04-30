@@ -72,6 +72,7 @@ noncomputable def secondVariationFull
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [OpenGALib.RiemannianMetric I M]
     (V : Varifold M) [hN : Varifold.HasNormal I V]
     (φ : M → ℝ) : ℝ :=

@@ -1,7 +1,6 @@
 import Mathlib.LinearAlgebra.BilinearForm.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Order.Ring.Defs
-import Mathlib.Algebra.Order.Field.Defs
 
 /-!
 # Bilinear forms — algebraic core (field-generic)
@@ -84,12 +83,12 @@ theorem inner_add_right (B : Form 𝕜 V) (v w₁ w₂ : V) :
 /-- **Scalar mult in left argument**. -/
 theorem inner_smul_left (B : Form 𝕜 V) (c : 𝕜) (v w : V) :
     inner B (c • v) w = c * inner B v w := by
-  simp [inner_def, LinearMap.map_smul, LinearMap.smul_apply, smul_eq_mul]
+  simp [inner_def, LinearMap.smul_apply, smul_eq_mul]
 
 /-- **Scalar mult in right argument**. -/
 theorem inner_smul_right (B : Form 𝕜 V) (c : 𝕜) (v w : V) :
     inner B v (c • w) = c * inner B v w := by
-  simp [inner_def, LinearMap.map_smul, smul_eq_mul]
+  simp [inner_def, smul_eq_mul]
 
 /-- **Zero in left argument**. -/
 @[simp]
@@ -138,11 +137,13 @@ variable {𝕜 : Type*} [Field 𝕜] [LinearOrder 𝕜] [IsStrictOrderedRing �
 def IsPosDef (B : Form 𝕜 V) : Prop :=
   ∀ v ≠ 0, 0 < B v v
 
+omit [IsStrictOrderedRing 𝕜] in
 /-- **Positive-definite** (when the form is positive-definite). -/
 theorem inner_self_pos {B : Form 𝕜 V} (hB : IsPosDef B) (v : V) (hv : v ≠ 0) :
     0 < inner B v v :=
   hB v hv
 
+omit [IsStrictOrderedRing 𝕜] in
 /-- **Self-inner non-negativity** (when positive-definite). -/
 theorem inner_self_nonneg {B : Form 𝕜 V} (hB : IsPosDef B) (v : V) :
     0 ≤ inner B v v := by

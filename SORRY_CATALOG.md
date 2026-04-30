@@ -28,10 +28,10 @@ require updating this file.
 
 | File:line | Identifier | Classification | Repair plan |
 |-----------|-----------|---------------|-------------|
-| `Curvature.lean:81` | `ricciTraceMap.map_add'` | PRE-PAPER | C^∞-linearity of Ricci trace map in first argument. Derive from `koszulCovDeriv` linearity in `X` (now that `koszulLeviCivita_exists` is closed, the route via `leviCivitaConnection`'s tensoriality is unblocked). |
-| `Curvature.lean:82` | `ricciTraceMap.map_smul'` | PRE-PAPER | Same as above. |
-| `Curvature.lean:112` | `ricci_symm` | PRE-PAPER | Symmetry of Ricci, requires algebraic Bianchi identity on Riemann tensor. Framework self-build of Bianchi from torsion-freeness + curvature definition. |
-| `TangentBundle/Smoothness.lean:124` | `TangentBundle.mfderivWithinFlat_mdifferentiableWithinAt` | PRE-PAPER | Parametric smoothness of the chart-inverse mfderiv `mfderivWithin (range I) (extChartAt I x).symm` as a function `E → (E →L[ℝ] E)` at `extChartAt I x x`, in `MDifferentiableWithinAt` form on `Set.range I` (no `[I.Boundaryless]` constraint). **Designed to be Mathlib upstream PR candidate** with full generality. Steps 1-2 done (chart inverse smoothness + `mfderivWithin_const` to inCoordinates form); Step 3 (inCoords ↔ flat bridge) is the remaining open content. Closure requires `IsInvertible.contDiffAt_map_inverse` + chart-correction-at-basepoint identification. Public-facing main theorem `TangentBundle.symmLFlat_mdifferentiableAt` recovers the at-form on `M` via `MDifferentiableWithinAt.comp_of_preimage_mem_nhdsWithin`. Phase 4.8. |
+| `Foundations/HessianLie.lean:211` | `mfderiv_iterate_sub_eq_mlieBracket_apply` | PRE-PAPER | Manifold scalar Hessian-Lie identity: `X(Y(f))(x) - Y(X(f))(x) = [X,Y](f)(x)` for `f : M → F` smooth + `X, Y` smooth vector fields. Closure path: chart-pullback via `MDifferentiableAt.mfderiv` + `mlieBracketWithin_apply` definition expansion to `flat_hessianLieWithin_apply` (already 0-sorry in this file) on `s = range I`. ~80-120 lines mechanical Lean. Mathlib upstream PR candidate (`Mathlib.Geometry.Manifold.VectorField.LieBracket`). |
+| `Curvature.lean:76` | `ricciTraceMap.map_add'` | PRE-PAPER | C^∞-linearity of Ricci trace map in first argument. Derive from `koszulCovDeriv` linearity in `X` (now that `koszulLeviCivita_exists` is closed, the route via `leviCivitaConnection`'s tensoriality is unblocked). |
+| `Curvature.lean:77` | `ricciTraceMap.map_smul'` | PRE-PAPER | Same as above. |
+| `Curvature.lean:112` | `ricci_symm` | PRE-PAPER | Symmetry of Ricci. Closure path: `riemannCurvature_inner_diagonal_zero` (skew-symm of R as endomorphism) via metric-compat applied 2×, scalar Hessian-Lie (above), → trace = 0; combined with Bianchi I + first-arg antisymmetry to derive `ricci(X,Y) - ricci(Y,X) = -tr(R(X,Y) endo) = 0`. Blocked by `mfderiv_iterate_sub_eq_mlieBracket_apply`. |
 
 ## GeometricMeasureTheory (14)
 

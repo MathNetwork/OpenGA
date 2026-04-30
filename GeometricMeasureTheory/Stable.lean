@@ -64,6 +64,7 @@ def IsStable
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [OpenGALib.RiemannianMetric I M]
     (V : Varifold M) [Varifold.HasNormal I V] : Prop :=
   ∀ φ : M → ℝ, Function.support φ ⊆ (sing I V)ᶜ →
@@ -80,6 +81,7 @@ def IsUnstable
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [OpenGALib.RiemannianMetric I M]
     (V : Varifold M) [Varifold.HasNormal I V] : Prop :=
   ∃ φ : M → ℝ,
@@ -110,6 +112,7 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [CompleteSpace E] [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
+  [IsLocallyConstantChartedSpace H M]
   [OpenGALib.RiemannianMetric I M]
 
 example (V : Varifold M) [Varifold.HasNormal I V] :

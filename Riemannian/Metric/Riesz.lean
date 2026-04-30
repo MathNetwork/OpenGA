@@ -43,6 +43,7 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
   [g : RiemannianMetric I M]
 
+omit [FiniteDimensional ℝ E] in
 /-- The bridge form `toBilinForm x` is positive-definite, derived
 from the typeclass `posdef` field. -/
 theorem RiemannianMetric.toBilinForm_isPosDef (x : M) :
@@ -57,11 +58,13 @@ noncomputable def metricToDual (x : M) :
     TangentSpace I x →L[ℝ] (TangentSpace I x →L[ℝ] ℝ) :=
   g.metricTensor x
 
+omit [FiniteDimensional ℝ E] in
 @[simp]
 theorem metricToDual_apply (x : M) (v w : TangentSpace I x) :
     metricToDual (g := g) x v w = metricInner x v w := by
   rw [metricInner_apply]; rfl
 
+omit [FiniteDimensional ℝ E] in
 /-- **Injectivity of forward Riesz**: from positive-definiteness.
 Inherited via the algebraic core. -/
 theorem metricToDual_injective (x : M) :
@@ -74,6 +77,7 @@ theorem metricToDual_injective (x : M) :
   show g.metricTensor x v₁ w = g.metricTensor x v₂ w
   exact congrArg (fun (f : TangentSpace I x →L[ℝ] ℝ) => f w) h
 
+omit [FiniteDimensional ℝ E] in
 /-- **Vector equality via inner-product equality** (non-degeneracy).
 
 Inherited from `BilinearForm.inner_eq_iff_eq`. -/

@@ -43,6 +43,7 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteS
   [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+  [IsLocallyConstantChartedSpace H M]
   [RiemannianMetric I M]
 
 /-- The **second fundamental form (codim-1 scalar form)** $A$ at a point:
@@ -119,6 +120,7 @@ noncomputable example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [RiemannianMetric I M]
     (ν X Y : Π x : M, TangentSpace I x) (x : M) :
     ℝ := secondFundamentalFormScalar ν X Y x
@@ -128,6 +130,7 @@ noncomputable example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [RiemannianMetric I M]
     (ν : Π x : M, TangentSpace I x) (x : M) :
     ℝ := secondFundamentalFormSqNorm ν x
@@ -137,6 +140,7 @@ noncomputable example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [RiemannianMetric I M]
     (ν : Π x : M, TangentSpace I x) (x : M) :
     ℝ := meanCurvature ν x
@@ -146,6 +150,7 @@ example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [RiemannianMetric I M]
     (ν : Π x : M, TangentSpace I x) (x : M) :
     0 ≤ secondFundamentalFormSqNorm ν x :=

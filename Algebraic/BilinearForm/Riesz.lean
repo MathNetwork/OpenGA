@@ -40,6 +40,7 @@ variable {𝕜 : Type*} [Field 𝕜] [LinearOrder 𝕜] [IsStrictOrderedRing �
 By definition just the bilinear form itself, viewed as `V →ₗ[𝕜] (V →ₗ[𝕜] 𝕜)`. -/
 def toDual (B : Form 𝕜 V) : V →ₗ[𝕜] (V →ₗ[𝕜] 𝕜) := B
 
+omit [LinearOrder 𝕜] [IsStrictOrderedRing 𝕜] in
 @[simp]
 theorem toDual_apply (B : Form 𝕜 V) (v w : V) :
     toDual B v w = inner B v w := rfl

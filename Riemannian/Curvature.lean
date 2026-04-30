@@ -47,24 +47,14 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteS
   [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+  [IsLocallyConstantChartedSpace H M]
   [RiemannianMetric I M]
 
-/-- The **Riemann curvature tensor**:
-$R(X, Y)Z := \nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X, Y]} Z$.
-
-For tangent-bundle vector fields $X, Y, Z$ on $M$, returns the value of
-the curvature endomorphism applied to $Z$ at the point $x$.
-
-**Ground truth**: do Carmo 1992 §4 Definition 2.1.
-
-Real `noncomputable def` composing `Riemannian.covDeriv` (Levi-Civita)
-with `mlieBracket`. -/
-noncomputable def riemannCurvature
-    (X Y Z : Π x : M, TangentSpace I x) (x : M) : TangentSpace I x :=
-  let nablaYZ : Π x : M, TangentSpace I x := fun x => covDeriv Y Z x
-  let nablaXZ : Π x : M, TangentSpace I x := fun x => covDeriv X Z x
-  let bracketXY : Π x : M, TangentSpace I x := fun x => mlieBracket I X Y x
-  covDeriv X nablaYZ x - covDeriv Y nablaXZ x - covDeriv bracketXY Z x
+/-! `riemannCurvature` and `riemannCurvature_antisymm` are connection-level
+content (depend only on `covDeriv` and `mlieBracket`, not metric). They
+live in `Riemannian.Connection.Bianchi` (re-exported via
+`Riemannian.Connection`) so that `bianchi_first` can reference them
+without circular dependency. -/
 
 /-- **Ricci-trace linear map** at a point: the linear map
 $z \mapsto R(z\text{-extended}, X) Y(x)$ on $T_xM$, where
@@ -140,30 +130,6 @@ noncomputable def scalarCurvature (x : M) : ℝ :=
     (fun (_ : M) => (e i : TangentSpace I x))
     (fun (_ : M) => (e i : TangentSpace I x)) x
 
-/-- **Riemann tensor antisymmetry in the first two arguments**:
-$R(X, Y) Z = -R(Y, X) Z$ pointwise.
-
-Direct from the antisymmetry of the Lie bracket
-(`VectorField.mlieBracket_swap_apply`) plus ℝ-linearity of
-`leviCivitaConnection.toFun Z z` (it is a CLM).
-
-**Ground truth**: do Carmo 1992 §4 Proposition 2.5 (i). -/
-theorem riemannCurvature_antisymm
-    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
-    riemannCurvature X Y Z x = -riemannCurvature Y X Z x := by
-  show covDeriv X (fun y => covDeriv Y Z y) x
-        - covDeriv Y (fun y => covDeriv X Z y) x
-        - covDeriv (fun y => mlieBracket I X Y y) Z x
-      = -(covDeriv Y (fun y => covDeriv X Z y) x
-            - covDeriv X (fun y => covDeriv Y Z y) x
-            - covDeriv (fun y => mlieBracket I Y X y) Z x)
-  have h_swap : mlieBracket I Y X x = -mlieBracket I X Y x :=
-    VectorField.mlieBracket_swap_apply
-  unfold covDeriv
-  rw [show (fun y => mlieBracket I Y X y) x = -mlieBracket I X Y x from h_swap,
-      (leviCivitaConnection.toFun Z x).map_neg]
-  abel
-
 end Riemannian
 
 /-! ## UXTest
@@ -179,6 +145,7 @@ noncomputable example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [OpenGALib.RiemannianMetric I M]
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x := riemannCurvature X Y Z x
@@ -189,6 +156,7 @@ example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [OpenGALib.RiemannianMetric I M]
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
     riemannCurvature X Y Z x = -riemannCurvature Y X Z x :=
@@ -199,6 +167,7 @@ noncomputable example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [OpenGALib.RiemannianMetric I M]
     (X Y : Π x : M, TangentSpace I x) (x : M) : ℝ := ricci X Y x
 
@@ -207,6 +176,7 @@ noncomputable example
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [OpenGALib.RiemannianMetric I M]
     (x : M) : ℝ :=
   scalarCurvature (I := I) x

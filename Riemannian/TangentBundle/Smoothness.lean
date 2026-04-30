@@ -65,6 +65,62 @@ smooth, hence so are their inverses.
 
 open scoped ContDiff Manifold Topology
 
+/-! ## Chart-selection coherence typeclass
+
+The Mathlib `ChartedSpace H M` API exposes a chart-selection function
+`chartAt H : M → PartialHomeomorph M H`. This function picks a chart
+containing each point, but is **not generally locally constant**: in
+arbitrary `ChartedSpace H M` instances, `chartAt H b` may differ from
+`chartAt H b₀` for `b ∈ (chartAt H b₀).source`.
+
+The `IsManifold I ∞ M` typeclass requires only smoothness of chart
+**transitions** (atlas compatibility), not local constancy of chart
+selection. Consequently, `Mathlib.Geometry.Manifold.VectorBundle.Tangent`
+provides `ContMDiffVectorBundle ∞` for the tangent bundle as **fixed-pair**
+`coordChangeL` smoothness — between any two trivializations
+`e, e' : Trivialization E (TangentSpace I)` in atlas, on
+`e.baseSet ∩ e'.baseSet`.
+
+The key gap: a **single trivialization's** `continuousLinearMapAt` as a
+function of basepoint, `b ↦ (trivAt b₀).cLMA R b`, is **not generally
+smooth** under just `IsManifold I ∞ M`. The formula
+`(trivAt b₀).cLMA R b = coordChange (achart H b) (achart H b₀) b`
+has the **first index** `achart H b` varying with `b`. Without local
+constancy of `chartAt H`, this can be discontinuous.
+
+### Typeclass `IsLocallyConstantChartedSpace`
+
+This typeclass captures the precise additional structure: in a
+neighborhood of every basepoint, `chartAt H` is constant. With this,
+parametric chart-mfderiv smoothness becomes provable.
+
+Standard Mathlib examples (Euclidean spaces, Lie groups, manifolds with
+explicit single-chart-per-region atlases) satisfy this typeclass; we
+provide instances where appropriate. -/
+
+class IsLocallyConstantChartedSpace
+    (H : Type*) [TopologicalSpace H]
+    (M : Type*) [TopologicalSpace M] [ChartedSpace H M] : Prop where
+  /-- Chart selection is locally constant: in every neighborhood of `b₀`,
+  `chartAt H b = chartAt H b₀` eventually. -/
+  chartAt_eventually_eq : ∀ b₀ : M, ∀ᶠ b in 𝓝 b₀, chartAt H b = chartAt H b₀
+
+/-- Convenience accessor: chart-selection coherence as a filter assertion. -/
+theorem chartAt_eventually_eq_of_locallyConstant
+    {H : Type*} [TopologicalSpace H]
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+    [IsLocallyConstantChartedSpace H M] (b₀ : M) :
+    ∀ᶠ b in 𝓝 b₀, chartAt H b = chartAt H b₀ :=
+  IsLocallyConstantChartedSpace.chartAt_eventually_eq b₀
+
+/-- The model space `H` over itself (`chartedSpaceSelf`) is locally-constant-charted:
+`chartAt H _ = PartialHomeomorph.refl H` globally, so the local-constancy assertion is
+trivially true (in fact constant on all of `H`). -/
+instance instIsLocallyConstantChartedSpace_self
+    (H : Type*) [TopologicalSpace H] :
+    IsLocallyConstantChartedSpace H H where
+  chartAt_eventually_eq _ := Filter.Eventually.of_forall (fun _ => rfl)
+
 namespace TangentBundle
 
 set_option backward.isDefEq.respectTransparency false in
@@ -137,6 +193,74 @@ noncomputable def continuousLinearMapAtFlat
 
 /-! ### Layer 1 — constant section smoothness for tangent bundle -/
 
+/-- **Core unified infrastructure**: forward chart mfderiv as
+**CLM-valued function** of basepoint, smooth at b₀.
+
+Requires `[IsLocallyConstantChartedSpace H M]` — chart-selection
+coherence at b₀. Without this typeclass, the statement is **false in
+general**: `(trivAt b₀).cLMA R b = coordChange (achart H b) (achart H b₀) b`
+has the first index varying with `b`, and Mathlib's
+`tangentBundleCore.IsContMDiff` only gives fixed-pair smoothness.
+
+With the typeclass: in a nbhd of `b₀`, `chartAt H b = chartAt H b₀`,
+so `achart H b = achart H b₀`, hence `coordChange (achart H b) (achart H b₀) b
+= coordChange (achart H b₀) (achart H b₀) b = id` (`coordChange_self`).
+The function is locally identity — trivially smooth. -/
+theorem continuousLinearMapAtFlat_contMDiffAt
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
+    (b₀ : M) :
+    ContMDiffAt I 𝓘(ℝ, E →L[ℝ] E) ∞
+      (continuousLinearMapAtFlat (I := I) (M := M) b₀) b₀ := by
+  -- In nbhd of b₀, the function equals the identity CLM.
+  refine (contMDiffAt_const (c := ContinuousLinearMap.id ℝ E)).congr_of_eventuallyEq ?_
+  have h_chart_eq : ∀ᶠ b in 𝓝 b₀, chartAt H b = chartAt H b₀ :=
+    chartAt_eventually_eq_of_locallyConstant b₀
+  have h_chart_src : (chartAt H b₀).source ∈ 𝓝 b₀ :=
+    (chartAt H b₀).open_source.mem_nhds (mem_chart_source H b₀)
+  filter_upwards [h_chart_eq, h_chart_src] with b hb_eq hb_src
+  -- continuousLinearMapAtFlat b₀ b = (trivAt b₀).cLMA R b
+  -- = coordChange (achart H b) (achart H b₀) b
+  -- = coordChange (achart H b₀) (achart H b₀) b = id (by coordChange_self)
+  show continuousLinearMapAtFlat (I := I) (M := M) b₀ b = ContinuousLinearMap.id ℝ E
+  show (trivializationAt E (TangentSpace I) b₀).continuousLinearMapAt ℝ b
+    = ContinuousLinearMap.id ℝ E
+  rw [TangentBundle.continuousLinearMapAt_trivializationAt_eq_core hb_src]
+  have h_achart_eq : achart H b = achart H b₀ := Subtype.ext hb_eq
+  rw [h_achart_eq]
+  ext v
+  exact (tangentBundleCore I M).coordChange_self (achart H b₀) b
+    (by simpa [tangentBundleCore_baseSet] using hb_src) v
+
+/-- **Layer 1 helper**: applied-to-vector form, derived from
+`continuousLinearMapAtFlat_contMDiffAt` via `clm_apply`. -/
+private theorem mfderiv_extChartAt_apply_smoothAt
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
+    (b₀ : M) (v : E) :
+    ContMDiffAt I 𝓘(ℝ, E) ∞
+      (fun b : M => mfderiv I 𝓘(ℝ, E) (extChartAt I b₀) b v) b₀ := by
+  -- continuousLinearMapAtFlat b₀ b = mfderiv (extChartAt I b₀) b on chart source.
+  have h_cLMA := continuousLinearMapAtFlat_contMDiffAt (I := I) (M := M) b₀
+  have h_apply : ContMDiffAt I 𝓘(ℝ, E) ∞
+      (fun b : M => continuousLinearMapAtFlat (I := I) (M := M) b₀ b v) b₀ :=
+    h_cLMA.clm_apply contMDiffAt_const
+  -- Bridge via `continuousLinearMapAt_trivializationAt` on chart-source nbhd.
+  have h_base : (chartAt H b₀).source ∈ 𝓝 b₀ :=
+    (chartAt H b₀).open_source.mem_nhds (mem_chart_source H b₀)
+  have h_eq : (fun b : M => continuousLinearMapAtFlat (I := I) (M := M) b₀ b v)
+      =ᶠ[𝓝 b₀] (fun b : M => mfderiv I 𝓘(ℝ, E) (extChartAt I b₀) b v) := by
+    filter_upwards [h_base] with b hb
+    show (trivializationAt E (TangentSpace I) b₀).continuousLinearMapAt ℝ b v
+      = mfderiv I 𝓘(ℝ, E) (extChartAt I b₀) b v
+    rw [TangentBundle.continuousLinearMapAt_trivializationAt hb]
+    rfl
+  exact h_apply.congr_of_eventuallyEq h_eq.symm
+
 /-- **Constant-vector section of the tangent bundle is smooth.**
 
 For `v : E` (model fiber), the section `b ↦ ⟨b, v⟩ : M → TangentBundle I M`
@@ -144,28 +268,49 @@ For `v : E` (model fiber), the section `b ↦ ⟨b, v⟩ : M → TangentBundle I
 `C^∞`. This is the "`v`-coordinate vector field globalised" — well-defined
 because `TangentSpace I _ ≡ E` literally.
 
-**Sorry status**: framework upstream. Closure path:
-* `mdifferentiableAt_section`: smoothness of section ↔ smoothness of
-  `b ↦ (trivializationAt _ _ b₀ ⟨b, v⟩).2 = e.cLMA R b v` near `b₀`.
-* By `TangentBundle.continuousLinearMapAt_trivializationAt` +
-  `tangentBundleCore_coordChange` identity:
-    `e.cLMA R b v = Z.coordChange (achart H b) (achart H b₀) b v`
-* For `b` near `b₀` with `chartAt H b = chartAt H b₀` (always true on
-  chart source for `IsManifold`'s smooth atlas via choice of chartAt),
-  `coordChange = id`, so the value is constantly `v`.
-* `IsManifold` smooth atlas + chart-change derivative regularity handle
-  the general case (chart at `b` may technically differ but the
-  coordChange evaluates smoothly). -/
+Closure structure:
+* `Bundle.Trivialization.contMDiffAt_iff` reduces section smoothness to
+  smoothness of `b ↦ (trivAt _ _ b₀ ⟨b, v⟩).2` at `b₀`.
+* `TangentBundle.continuousLinearMapAt_trivializationAt` rewrites this
+  to `b ↦ mfderiv (extChartAt I b₀) b v` on chart source.
+* Helper `mfderiv_extChartAt_apply_smoothAt` (PRE-PAPER sorry'd) supplies
+  the parametric chart-forward mfderiv smoothness. -/
 theorem contMDiff_constSection_TangentSpace
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     (v : E) :
     ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
       (fun b : M => (⟨b, v⟩ : TangentBundle I M)) := by
-  -- TODO: build via `mdifferentiableAt_section` + chart-change identity.
-  -- See docstring above. Multi-commit closure.
-  sorry
+  intro b₀
+  -- Use `Bundle.Trivialization.contMDiffAt_iff` with `e := trivAt b₀`.
+  set e := trivializationAt E (TangentSpace I) b₀ with he_def
+  have h_he : (Bundle.TotalSpace.mk b₀ v : TangentBundle I M) ∈ e.source := by
+    rw [Bundle.Trivialization.mem_source]
+    exact FiberBundle.mem_baseSet_trivializationAt' (F := E) b₀
+  refine (Bundle.Trivialization.contMDiffAt_iff (IM := I) (IB := I) (e := e)
+    (f := fun b : M => (Bundle.TotalSpace.mk b v : TangentBundle I M)) (n := ∞) h_he).mpr ?_
+  refine ⟨contMDiffAt_id, ?_⟩
+  -- Goal: ContMDiffAt I 𝓘(ℝ, E) ∞ (fun b => (e ⟨b, v⟩).2) b₀.
+  -- Rewrite to applied-mfderiv form via `continuousLinearMapAt_trivializationAt`
+  -- (a Mathlib pointwise identity on chart source).
+  have h_base : e.baseSet ∈ 𝓝 b₀ :=
+    e.open_baseSet.mem_nhds (FiberBundle.mem_baseSet_trivializationAt' b₀)
+  have h_eqOn : (fun b : M => (e ⟨b, v⟩).2)
+      =ᶠ[𝓝 b₀] (fun b : M => mfderiv I 𝓘(ℝ, E) (extChartAt I b₀) b v) := by
+    filter_upwards [h_base] with b hb
+    have hb' : b ∈ (chartAt H b₀).source := by
+      rwa [TangentBundle.trivializationAt_baseSet] at hb
+    show (e ⟨b, v⟩).2 = mfderiv I 𝓘(ℝ, E) (extChartAt I b₀) b v
+    rw [(Bundle.Trivialization.continuousLinearMapAt_apply_of_mem (R := ℝ) e hb v).symm,
+        TangentBundle.continuousLinearMapAt_trivializationAt hb']
+    rfl
+  -- Goal: ContMDiffAt I 𝓘(ℝ, E) ∞ (fun b => (e ⟨b, v⟩).2) b₀.
+  -- Bridge to applied-mfderiv form via h_eqOn, then invoke the framework
+  -- helper `mfderiv_extChartAt_apply_smoothAt`.
+  exact (mfderiv_extChartAt_apply_smoothAt (I := I) (M := M) b₀ v).congr_of_eventuallyEq
+    h_eqOn
 
 /-! ### Helper: `ContMDiffOn.add` for normed-target
 
@@ -248,7 +393,7 @@ theorem contMDiffOn_clm_of_components
     ext v
     rw [ContinuousLinearMap.sum_apply]
     have hv : v = ∑ i, basis.repr v i • basis i := by
-      simpa using (basis.linearCombination_repr v).symm
+      simp
     conv_lhs => rw [hv]
     rw [map_sum]
     refine Finset.sum_congr rfl ?_
@@ -285,6 +430,7 @@ theorem contMDiffOn_continuousLinearMapAt_apply
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     (x₀ : M) (v : E) :
     ContMDiffOn I 𝓘(ℝ, E) ∞
       (fun b : M => (trivializationAt E (TangentSpace I) x₀).continuousLinearMapAt ℝ b v)
@@ -335,6 +481,7 @@ theorem contMDiffOn_continuousLinearMapAtFlat
     [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     (x₀ : M) :
     ContMDiffOn I 𝓘(ℝ, E →L[ℝ] E) ∞
       (continuousLinearMapAtFlat (I := I) (M := M) x₀)
@@ -364,6 +511,7 @@ theorem contMDiffOn_mfderivWithinFlat
     [FiniteDimensional ℝ E] [CompleteSpace E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     (x : M) :
     ContMDiffOn 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E) ∞
       (mfderivWithinFlat (I := I) (M := M) x) (extChartAt I x).target := by
@@ -458,6 +606,7 @@ private theorem mfderivWithinFlat_mdifferentiableWithinAt
     [FiniteDimensional ℝ E] [CompleteSpace E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     (x : M) :
     MDifferentiableWithinAt 𝓘(ℝ, E) 𝓘(ℝ, E →L[ℝ] E)
       (mfderivWithinFlat (I := I) (M := M) x) (Set.range I) (extChartAt I x x) := by
@@ -515,6 +664,7 @@ theorem symmLFlat_mdifferentiableAt
     [FiniteDimensional ℝ E] [CompleteSpace E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     (x : M) :
     MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)
       (fun y : M => symmLFlat (I := I) (M := M) x y) x := by

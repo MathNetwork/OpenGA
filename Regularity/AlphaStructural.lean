@@ -203,6 +203,7 @@ structure InClassSAlpha
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
+    [IsLocallyConstantChartedSpace H M]
     [OpenGALib.RiemannianMetric I M]
     (V : Varifold M) [Varifold.HasNormal I V]
     (α : ℝ) : Prop where

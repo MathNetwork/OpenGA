@@ -45,7 +45,7 @@ $y \mapsto \langle Y(y), Z(y)\rangle_g$ is $C^\infty$ at $x$.
 Hypotheses are taken as `TangentSmoothAt` predicates (Phase A.0
 abstraction layer for Riemannian smoothness). -/
 theorem MDifferentiableAt.metricInner_smoothAt
-    [FiniteDimensional ℝ E] [CompleteSpace E]
+    [IsLocallyConstantChartedSpace H M]
     {Y Z : Π y : M, TangentSpace I y} {x : M}
     (hY : TangentSmoothAt Y x) (hZ : TangentSmoothAt Z x) :
     MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x := by

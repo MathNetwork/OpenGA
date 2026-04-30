@@ -128,15 +128,11 @@ omit [MeasureTheory.MeasureSpace M] in
 theorem perimOn_univ (Ω : FinitePerimeter M) :
     perimOn Ω Set.univ = (Ω.perim : ℝ) := rfl
 
-/-- The reduced boundary is a subset of the topological closure. -/
-theorem rbdy_subset_topClosure (Ω : FinitePerimeter M) :
-    rbdy Ω ⊆ Ω.topClosure := by sorry
-
 /-- Every point of $M$ stands in exactly one of three relations to a
 finite-perimeter set $\Omega$: outside the closure, on the reduced
 boundary, or in the topological interior. -/
 theorem trichotomy (Ω : FinitePerimeter M) (p : M) :
-    p ∉ Ω.topClosure ∨ p ∈ rbdy Ω ∨ p ∈ Ω.topInterior := by sorry
+    p ∉ Ω.topClosure ∨ p ∈ reducedBoundary Ω ∨ p ∈ Ω.topInterior := by sorry
 
 end FinitePerimeter
 

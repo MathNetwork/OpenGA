@@ -173,6 +173,7 @@ noncomputable instance instHasNormalOfBoundary
     HasNormal I (Varifold.ofBoundary Ω) where
   unitNormal := bvGradientDirection I Ω
 
+omit [MeasureTheory.MeasureSpace M] in
 /-- **Existence axiom for the tangent-cone unit normal direction.**
 
 For any varifold $V$ at a point $Z \in M$, there exists a section
@@ -188,7 +189,7 @@ theorem tangentCone_unitNormal_exists
     {H : Type*} [TopologicalSpace H]
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
-    (V : Varifold M) (Z : M) :
+    (_V : Varifold M) (_Z : M) :
     ∃ _ν : (x : M) → TangentSpace I x, True :=
   ⟨fun _ => 0, trivial⟩
 
