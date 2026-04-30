@@ -223,9 +223,30 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
     - mDirDeriv (fun y => mDirDeriv f y (V y)) x (W x)
     = mDirDeriv f x (mlieBracket I V W x) := by
   unfold mDirDeriv
-  -- Goal: mfderiv I 𝓘(ℝ, F) (fun y => mfderiv I 𝓘(ℝ, F) f y (W y)) x (V x)
-  --     - mfderiv I 𝓘(ℝ, F) (fun y => mfderiv I 𝓘(ℝ, F) f y (V y)) x (W x)
-  --     = mfderiv I 𝓘(ℝ, F) f x (mlieBracket I V W x)
+  -- PRE-PAPER. Closure path (chart-pullback skeleton):
+  --
+  -- 1. Set `phi := extChartAt I x`, `s := range I`.
+  --    Define `f_loc := f ∘ phi.symm : E_M → F`,
+  --    `V_loc, W_loc : E_M → E_M` via `· ∘ phi.symm`.
+  --
+  -- 2. By `IsLocallyConstantChartedSpace`, in nbhd of x: `extChartAt I y = phi`,
+  --    so `mfderiv f y (W y) = fderivWithin f_loc s (phi y) (W y)` near x.
+  --    Lift to `EventuallyEq` filter form on both `(fun y => mfderiv f y (W y))`
+  --    and `(fun y => mfderiv f y (V y))`.
+  --
+  -- 3. Outer mfderiv via chart-pullback:
+  --    `mfderiv (fun y => fderivWithin f_loc s (phi y) (W y)) x v
+  --      = fderivWithin (fun e => fderivWithin f_loc s e (W_loc e)) s (phi x) v`
+  --    using chain rule + `mfderiv_extChartAt_self = id`.
+  --
+  -- 4. Apply `flat_hessianLieWithin_apply` to f_loc, V_loc, W_loc on s at phi x.
+  --
+  -- 5. RHS: by `mlieBracketWithin_apply` definition + `mfderiv_extChartAt_self = id`,
+  --    `mlieBracket I V W x = lieBracketWithin V_loc W_loc s (phi x)`.
+  --    `mfderiv f x v = fderivWithin f_loc s (phi x) v`.
+  --    Together → manifold RHS = flat RHS.
+  --
+  -- Each step expands to ~10-25 lines of careful term-mode Lean.
   sorry
 
 end Riemannian
