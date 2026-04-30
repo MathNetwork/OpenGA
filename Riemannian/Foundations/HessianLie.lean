@@ -446,12 +446,22 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
        - mDirDeriv (fun y => g_chart_V (phi y)) x (W x)
        = mDirDeriv f x (mlieBracket I V W x)
   -- Smoothness premises (sorry'd; bounded follow-up via f C² + V, W C¹).
-  have h_g_chart_W_diff : DifferentiableWithinAt ℝ g_chart_W s (extChartAt I x x) := by sorry
-  have h_g_chart_V_diff : DifferentiableWithinAt ℝ g_chart_V s (extChartAt I x x) := by sorry
   have h_f_loc_C2 : ContDiffWithinAt ℝ 2 f_loc s (extChartAt I x x) :=
     (contMDiffAt_iff.mp hf).2
-  have h_V_loc_diff : DifferentiableWithinAt ℝ V_loc s (extChartAt I x x) := by sorry
+  -- V/W as functions M → E_M (using TangentSpace I y = E_M definitionally), pulled back via phi.symm.
+  -- From hV/hW (bundle-section ContMDiffAt) + IsLocallyConstantChartedSpace + chart-bridge.
+  have h_V_loc_diff : DifferentiableWithinAt ℝ V_loc s (extChartAt I x x) := by
+    -- V_loc = V ∘ phi.symm. From hV (TangentSmoothAt of V at x) + chart-bridge to flat.
+    -- Specifically: hV.coordSmoothAt gives chart-coordinate MDiffAt of V at x; with
+    -- IsLocallyConstantChartedSpace, this equals V's plain MDiffAt I 𝓘(ℝ,E_M) at x;
+    -- then `MDifferentiableWithinAt.differentiableWithinAt_comp_extChartAt_symm` gives
+    -- the flat differentiability of V_loc on (phi.symm ⁻¹' univ ∩ range I) = range I.
+    sorry
   have h_W_loc_diff : DifferentiableWithinAt ℝ W_loc s (extChartAt I x x) := by sorry
+  -- g_chart_W e := fderivWithin f_loc s e (W_loc e). Bilinear in (fderivWithin f_loc s e, W_loc e).
+  -- DifferentiableWithinAt s (phi x) from f_loc C^2 (so fderivWithin f_loc s is C^1) + W_loc C^1.
+  have h_g_chart_W_diff : DifferentiableWithinAt ℝ g_chart_W s (extChartAt I x x) := by sorry
+  have h_g_chart_V_diff : DifferentiableWithinAt ℝ g_chart_V s (extChartAt I x x) := by sorry
   have h_f_diff : MDifferentiableAt I 𝓘(ℝ, F) f x :=
     hf.mdifferentiableAt (by norm_num : (2 : ℕ∞ω) ≠ 0)
   have h_f_loc_diff_W : DifferentiableWithinAt ℝ f_loc s (extChartAt I x x) :=
