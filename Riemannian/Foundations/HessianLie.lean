@@ -428,11 +428,24 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
       show (extChartAt I x).symm (extChartAt I x x) = x
       exact (extChartAt I x).left_inv (mem_extChartAt_source x)
     rw [this]
-  -- Closure path documented; `change` to inline-extChartAt fails due to
-  -- `TangentSpace 𝓘(ℝ,F) (g_chart_W (...))` basepoint def-eq issue under HSub.
-  -- Workaround requires either explicit `@HSub.hSub` ascription or careful
-  -- intermediate `show` to re-fold mDirDeriv form. ~30-40 lines of careful
-  -- term-mode Lean remaining.
+  -- Substantive remaining work (architectural skeleton documented above):
+  -- 1. Smoothness of `g_chart_W, g_chart_V, f_loc, V_loc, W_loc` within `s = range I` at `phi x`.
+  --    All derivable from `hf : ContMDiffAt I 𝓘(ℝ,F) 2 f x` + `hV, hW` via Mathlib chain rules
+  --    (writtenInExtChartAt + bundle-section-pullback to chart). ~30 lines.
+  -- 2. Apply `mfderiv_chart_compose_apply` (Helper #2) to LHS via `convert`-style
+  --    unification (direct `rw` blocked by `set phi := extChartAt I x` abbreviation
+  --    interfering with pattern match — Lean elaboration artifact).
+  -- 3. Substitute `V x = V_loc (phi x)`, `W x = W_loc (phi x)` (closed: `h_V_at_x`, `h_W_at_x`).
+  -- 4. Apply `flat_hessianLieWithin_apply` (closed) with the smoothness premises.
+  -- 5. RHS bridge: `mfderiv f x = fderivWithin f_loc s (phi x)` (Helper #2 specialized) +
+  --    `mlieBracket I V W x = lieBracketWithin V_loc W_loc s (phi x)`
+  --    (`mlieBracketWithin_apply` definition unfold + Helper #1).
+  --
+  -- The architectural path is now fully in place: Helper #1 (chart mfderiv = id),
+  -- Helper #2 (chart-compose mfderiv → fderivWithin), inner+outer locality bridges,
+  -- base-point V/W identities are all closed (~150 lines real proof). The ~30-50 lines
+  -- of remaining term-mode bookkeeping is a discrete follow-up best done in dedicated
+  -- worktree session (Lean elaboration with `set` abbreviations needs care).
   sorry
 
 end Riemannian
