@@ -213,6 +213,31 @@ theorem mfderiv_extChartAt_eq_id_eventually
   exact (tangentBundleCore I M).coordChange_self (achart H x) y
     (by simpa [tangentBundleCore_baseSet] using hy_src) v
 
+/-! ### Helper #2: chart-compose `mfderiv` reduces to flat `fderivWithin`
+
+For a flat function `g : E_M → F` differentiable within `range I` at the
+chart's image `extChartAt I x x`, the manifold derivative of the composition
+`g ∘ extChartAt I x` at `x` equals the flat `fderivWithin g (range I) (...)`.
+
+The proof combines:
+* `MDifferentiableAt.mfderiv`: unfold manifold mfderiv to `fderivWithin
+  (writtenInExtChartAt) (range I) (phi x)`.
+* `writtenInExtChartAt I 𝓘(ℝ,F) x (g ∘ phi) = g ∘ phi ∘ phi.symm = g` on
+  `phi.target` (since `phi ∘ phi.symm = id` there).
+* `fderivWithin` congruence on `EventuallyEq within s`.
+
+PRE-PAPER. Closure: bounded structural follow-up via
+`DifferentiableWithinAt.comp_mdifferentiableAt` + chart-source identification.
+~30-40 lines. -/
+theorem mfderiv_chart_compose_apply
+    [IsManifold I 1 M] (x : M)
+    (g : E_M → F)
+    (hg : DifferentiableWithinAt ℝ g (Set.range I) (extChartAt I x x))
+    (v : TangentSpace I x) :
+    mfderiv I 𝓘(ℝ, F) (fun y => g (extChartAt I x y)) x v
+    = fderivWithin ℝ g (Set.range I) (extChartAt I x x) v := by
+  sorry
+
 /-- Helper: directional derivative of a scalar/vector-valued function as
 an `F`-typed value (avoids `TangentSpace 𝓘(ℝ, F) (f x)` basepoint
 indirection in iterated forms). Definitionally equal to
