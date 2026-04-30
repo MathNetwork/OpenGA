@@ -301,11 +301,9 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
   -- Rewrite the outer-mfderiv via inner locality.
   rw [Filter.EventuallyEq.mfderiv_eq h_inner_W,
       Filter.EventuallyEq.mfderiv_eq h_inner_V]
-  -- Goal:
-  --   mfderiv I 𝓘(ℝ, F) (fun y => fderivWithin ℝ f_loc s (phi y) (W y)) x (V x)
-  --   - mfderiv I 𝓘(ℝ, F) (fun y => fderivWithin ℝ f_loc s (phi y) (V y)) x (W x)
-  --   = mfderiv I 𝓘(ℝ, F) f x (mlieBracket I V W x)
-  --
+  -- Local pullback vector fields (flat).
+  set V_loc : E_M → E_M := fun e => V (phi.symm e) with hV_loc_def
+  set W_loc : E_M → E_M := fun e => W (phi.symm e) with hW_loc_def
   -- Step 3 (outer chart-pullback): each outer mfderiv reduces to a flat
   -- `fderivWithin g s (phi x)` form via `MDifferentiableAt.mfderiv` +
   -- `writtenInExtChartAt` unfolding (target = vector space):
