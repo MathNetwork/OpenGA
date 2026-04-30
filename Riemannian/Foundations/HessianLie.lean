@@ -428,23 +428,29 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
       show (extChartAt I x).symm (extChartAt I x x) = x
       exact (extChartAt I x).left_inv (mem_extChartAt_source x)
     rw [this]
-  -- Chain rule + Helper #1 collapse:
-  -- mfderiv (g_chart ∘ phi) x v = fderivWithin g_chart s (phi x) v
-  -- where g_chart : E_M → F is differentiable WithinAt s at phi x.
-  -- The remaining lemma: for any chart-form `g_chart : E_M → F` differentiable
-  -- WithinAt `s = range I` at `phi x`, the manifold derivative of
-  -- `(fun y => g_chart (phi y)) : M → F` at x equals the flat fderivWithin.
+  -- Architectural skeleton (with documented smoothness sub-premises and RHS bridge):
+  -- 1. Establish DifferentiableWithinAt of `g_chart_W`, `g_chart_V` at `phi x`
+  --    within `s = range I` (from f C² + W, V C¹ via chain).
+  -- 2. Apply `mfderiv_chart_compose_apply` (Helper #2) to both LHS terms:
+  --      `mfderiv (fun y => g_chart_W (phi y)) x v = fderivWithin g_chart_W s (phi x) v`.
+  -- 3. Substitute `V x = V_loc (phi x)`, `W x = W_loc (phi x)` (closed above).
+  -- 4. Unfold `g_chart_W e := fderivWithin f_loc s e (W_loc e)`.
+  -- 5. Apply `flat_hessianLieWithin_apply` (closed) with hypotheses:
+  --    - `f_loc` is `ContDiffWithinAt 2 s (phi x)` (from f being C²)
+  --    - `V_loc, W_loc` are `DifferentiableWithinAt s (phi x)` (from V, W being C¹)
+  --    - `UniqueDiffOn s` (= `I.uniqueDiffOn`)
+  --    - `h_interior` (theorem premise)
+  -- 6. RHS: unfold `mfderiv f x v = fderivWithin f_loc s (phi x) v`
+  --    (Helper #2 with g = f_loc, v = mlieBracket I V W x).
+  -- 7. RHS continued: `mlieBracket I V W x = lieBracketWithin V_loc W_loc s (phi x)`
+  --    via `mlieBracketWithin_apply` definition unfold + Helper #1
+  --    (`mfderiv (extChartAt I x) x = id` cancels the inverse pullback factor).
   --
-  -- This is the **chain-rule + chart-base-identity bridge** — derivable from:
-  --  * `MDifferentiableAt.mfderiv`: manifold mfderiv unfolds to flat fderivWithin
-  --    of `writtenInExtChartAt` on `range I`.
-  --  * On phi.target ⊂ range I, `writtenInExtChartAt I 𝓘(ℝ, F) x (g_chart ∘ phi)`
-  --    = `g_chart ∘ phi ∘ phi.symm` = `g_chart` (since `phi ∘ phi.symm = id` on phi.target).
-  --  * `fderivWithin` is congruent on `EventuallyEq within s` (via phi.target ∈ 𝓝[s] phi x).
-  --
-  -- Implementation requires establishing MDifferentiableAt of the composition
-  -- (via DifferentiableWithinAt.comp-style lemma for chart compositions) and
-  -- the writtenInExtChartAt-to-g_chart simplification.
+  -- Each remaining sub-step is bounded and follows from already-closed helpers
+  -- (Helper #1, Helper #2, flat_hessianLieWithin_apply) + standard smoothness
+  -- propagation. Implementation requires careful term-mode bookkeeping; the
+  -- `set phi := ...` abbreviation interacts with `rw` requiring `unfold phi` or
+  -- explicit substitution via `show`.
   sorry
 
 end Riemannian
