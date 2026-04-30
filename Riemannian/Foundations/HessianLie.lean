@@ -222,27 +222,10 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
     mDirDeriv (fun y => mDirDeriv f y (W y)) x (V x)
     - mDirDeriv (fun y => mDirDeriv f y (V y)) x (W x)
     = mDirDeriv f x (mlieBracket I V W x) := by
-  -- Chart-pullback proof. The key bridges:
-  -- * `MDifferentiableAt.mfderiv` to unfold each `mfderiv` to `fderivWithin`
-  --   on `range I`.
-  -- * `mlieBracketWithin_apply` to unfold `mlieBracket` to chart pullback.
-  -- * `flat_hessianLieWithin_apply` to close the flat identity on `range I`.
-  --
-  -- The overall structure:
-  -- LHS at manifold level
-  --   = LHS in chart coords  (by MDifferentiableAt.mfderiv applied twice)
-  --   = RHS in chart coords  (by flat_hessianLieWithin_apply)
-  --   = RHS at manifold level  (by MDifferentiableAt.mfderiv + mlieBracketWithin_apply)
-  --
-  -- Each step requires precise basepoint matching (`extChartAt I x x`),
-  -- subset matching (`(extChartAt I x).symm ⁻¹' univ ∩ range I = range I`),
-  -- and chain-rule manipulation around `mfderiv phi x` and its inverse.
-  --
-  -- Status: the chart-pullback proof is bounded structural follow-up work.
-  -- Each individual step is mechanical via the cited Mathlib bridges, but
-  -- the term-mode bookkeeping (composition of CLM inverses, `range I` set
-  -- matching, basepoint metavariable instantiation) is verbose. Estimated
-  -- ~60–100 lines.
+  unfold mDirDeriv
+  -- Goal: mfderiv I 𝓘(ℝ, F) (fun y => mfderiv I 𝓘(ℝ, F) f y (W y)) x (V x)
+  --     - mfderiv I 𝓘(ℝ, F) (fun y => mfderiv I 𝓘(ℝ, F) f y (V y)) x (W x)
+  --     = mfderiv I 𝓘(ℝ, F) f x (mlieBracket I V W x)
   sorry
 
 end Riemannian
