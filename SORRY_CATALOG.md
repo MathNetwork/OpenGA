@@ -18,17 +18,13 @@ require updating this file.
 
 | Module | PRE-PAPER | CITED-BLACK-BOX | PAPER-INTERNAL | CONJECTURAL | Total |
 |--------|-----------|------------------|----------------|-------------|-------|
-| Riemannian | 4 | 0 | 0 | 0 | 4 |
+| Riemannian | 3 | 0 | 0 | 0 | 3 |
 | GeometricMeasureTheory | 5 | 9 | 0 | 0 | 14 |
 | MinMax | 3 | 9 | 0 | 0 | 12 |
 | Regularity | 0 | 2 | 0 | 0 | 2 |
-| **Total** | **12** | **20** | **0** | **0** | **34** |
+| **Total** | **11** | **20** | **0** | **0** | **33** |
 
-## Riemannian (4)
-
-| File:line | Identifier | Classification | Repair plan |
-|-----------|-----------|---------------|-------------|
-| `Foundations/HessianLie.lean:597` | `mfderiv_iterate_sub_eq_mlieBracket_apply` (h_lieBr_eq sub-step) | PRE-PAPER | Final remaining sub-sorry: `lieBracketWithin V_loc W_loc s (phi x) = id.inverse (lieBracketWithin (mpullbackWithin V) (mpullbackWithin W) (range I) (phi x))`. Closure: chart-inverse mfderivWithin = id eventually (Helper #3, analog of Helper #1 for inverse chart) + `id.inverse = id` simplification + `mpullbackWithin V = V_loc` identification. ~30 lines. All other smoothness premises + structure closed; this is the last bridge. |
+## Riemannian (3)
 | `Curvature.lean:76` | `ricciTraceMap.map_add'` | PRE-PAPER | C^∞-linearity of Ricci trace map in first argument. Derive from `koszulCovDeriv` linearity in `X` (now that `koszulLeviCivita_exists` is closed, the route via `leviCivitaConnection`'s tensoriality is unblocked). |
 | `Curvature.lean:77` | `ricciTraceMap.map_smul'` | PRE-PAPER | Same as above. |
 | `Curvature.lean:112` | `ricci_symm` | PRE-PAPER | Symmetry of Ricci. Closure path: `riemannCurvature_inner_diagonal_zero` (skew-symm of R as endomorphism) via metric-compat applied 2×, scalar Hessian-Lie (above), → trace = 0; combined with Bianchi I + first-arg antisymmetry to derive `ricci(X,Y) - ricci(Y,X) = -tr(R(X,Y) endo) = 0`. Blocked by `mfderiv_iterate_sub_eq_mlieBracket_apply`. |

@@ -241,6 +241,61 @@ theorem mfderivWithin_extChartAt_symm_eq_id_at_base
   -- h_comp : id ∘L mfderivWithin ... = id
   simpa using h_comp
 
+/-- **Helper #3 extended**: chart-inverse mfderivWithin = id eventually within `range I`. -/
+theorem mfderivWithin_extChartAt_symm_eq_id_eventually
+    [IsManifold I 1 M] [IsLocallyConstantChartedSpace H M] (x : M) :
+    ∀ᶠ e in 𝓝[Set.range I] (extChartAt I x x),
+      mfderivWithin 𝓘(ℝ, E_M) I (extChartAt I x).symm (Set.range I) e
+      = ContinuousLinearMap.id ℝ E_M := by
+  -- Filter upwards conditions:
+  -- (A) e ∈ chart target (so phi.symm e is well-defined and in chart source)
+  -- (B) `chartAt H (phi.symm e) = chartAt H x`, derived via:
+  --     IsLocallyConstantChartedSpace.chartAt_eventually_eq nbhd of x, pulled back via phi.symm.
+  have h_target : (extChartAt I x).target ∈ 𝓝[Set.range I] (extChartAt I x x) :=
+    extChartAt_target_mem_nhdsWithin x
+  -- (B): pull back chart-coherent nbhd via continuity of phi.symm at phi x within range I.
+  have h_chart_eq_orig : ∀ᶠ y in 𝓝 x, chartAt H y = chartAt H x :=
+    chartAt_eventually_eq_of_locallyConstant x
+  have h_symm_tendsto : Filter.Tendsto (extChartAt I x).symm
+      (𝓝[Set.range I] (extChartAt I x x)) (𝓝 x) := by
+    have h_cont : ContinuousWithinAt (extChartAt I x).symm
+        (extChartAt I x).target (extChartAt I x x) :=
+      (continuousOn_extChartAt_symm x) _ (mem_extChartAt_target x)
+    have h_symm_at_x : (extChartAt I x).symm (extChartAt I x x) = x :=
+      (extChartAt I x).left_inv (mem_extChartAt_source x)
+    have h_tendsto : Filter.Tendsto (extChartAt I x).symm
+        (𝓝[(extChartAt I x).target] (extChartAt I x x)) (𝓝 x) := by
+      have := h_cont.tendsto
+      rwa [h_symm_at_x] at this
+    -- `this : Tendsto (extChartAt I x).symm (𝓝[chart.target] (phi x)) (𝓝 x)`
+    -- Need `Tendsto (extChartAt I x).symm (𝓝[range I] (phi x)) (𝓝 x)` — restrict 𝓝[range I] to chart.target nbhd.
+    refine Filter.Tendsto.mono_left h_tendsto ?_
+    rw [nhdsWithin]
+    exact le_inf inf_le_left (Filter.le_principal_iff.mpr h_target)
+  have h_chart_eq_e : ∀ᶠ e in 𝓝[Set.range I] (extChartAt I x x),
+      chartAt H ((extChartAt I x).symm e) = chartAt H x :=
+    h_symm_tendsto h_chart_eq_orig
+  -- Combine with chart-target containment.
+  filter_upwards [h_target, h_chart_eq_e] with e he_target hy_eq
+  have h_symm_e_src : (extChartAt I x).symm e ∈ (chartAt H x).source := by
+    have := (extChartAt I x).map_target he_target
+    rwa [extChartAt_source] at this
+  -- Now Helper #1 logic at point phi.symm e (which has chart equal to chart at x):
+  have h_comp := mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm
+    (I := I) (M := M) (x := x) he_target
+  -- mfderiv (extChartAt I x) (phi.symm e) = id (using chart-coherence at phi.symm e)
+  have h_id_at_symm : mfderiv I 𝓘(ℝ, E_M) (extChartAt I x) ((extChartAt I x).symm e)
+                    = ContinuousLinearMap.id ℝ E_M := by
+    rw [← TangentBundle.continuousLinearMapAt_trivializationAt h_symm_e_src,
+        TangentBundle.continuousLinearMapAt_trivializationAt_eq_core h_symm_e_src]
+    have h_achart_eq : achart H ((extChartAt I x).symm e) = achart H x := Subtype.ext hy_eq
+    rw [h_achart_eq]
+    ext v
+    exact (tangentBundleCore I M).coordChange_self (achart H x) ((extChartAt I x).symm e)
+      (by simpa [tangentBundleCore_baseSet] using h_symm_e_src) v
+  rw [h_id_at_symm] at h_comp
+  simpa using h_comp
+
 /-! ### Helper #2: chart-compose `mfderiv` reduces to flat `fderivWithin`
 
 For a flat function `g : E_M → F` differentiable within `range I` at the
@@ -473,7 +528,7 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
   show mDirDeriv (fun y => g_chart_W (phi y)) x (V x)
        - mDirDeriv (fun y => g_chart_V (phi y)) x (W x)
        = mDirDeriv f x (mlieBracket I V W x)
-  -- Smoothness premises (sorry'd; bounded follow-up via f C² + V, W C¹).
+  -- Smoothness premises (closed via chain rules + chart bridges).
   have h_f_loc_C2 : ContDiffWithinAt ℝ 2 f_loc s (extChartAt I x x) :=
     (contMDiffAt_iff.mp hf).2
   -- V/W as functions M → E_M (using TangentSpace I y = E_M definitionally), pulled back via phi.symm.
@@ -631,15 +686,39 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
     rw [h_id]
     rw [show (ContinuousLinearMap.id ℝ E_M).inverse = ContinuousLinearMap.id ℝ E_M
         from ContinuousLinearMap.inverse_id]
-    simp only [ContinuousLinearMap.coe_id, id_eq, Set.preimage_univ, Set.univ_inter]
+    simp only [Set.preimage_univ, Set.univ_inter, id_eq]
     -- Goal: lieBracketWithin V_loc W_loc s (phi x)
     --     = lieBracketWithin (mpullbackWithin V) (mpullbackWithin W) (range I) (phi x)
-    -- Need: V_loc =ᶠ[𝓝[s] (phi x)] mpullbackWithin V (range I) (and similarly W) so
-    -- lieBracketWithin congruence applies.
-    -- mpullbackWithin V (range I) e := (mfderivWithin phi.symm s e).inverse (V (phi.symm e))
-    -- At e = phi x: mfderivWithin = id (Helper #3) → mpullbackWithin V (phi x) = V x = V_loc (phi x).
-    -- Eventually-equal version of Helper #3 needed for lieBracketWithin congruence.
-    sorry
+    -- Use eventually-equal of mpullbackWithin V with V_loc + lieBracketWithin congruence.
+    have h_mfderivWithin_id := mfderivWithin_extChartAt_symm_eq_id_eventually
+      (I := I) (M := M) x
+    have h_mpullback_V_eq : mpullbackWithin 𝓘(ℝ, E_M) I (extChartAt I x).symm V (Set.range I)
+        =ᶠ[𝓝[Set.range I] (extChartAt I x x)] V_loc := by
+      filter_upwards [h_mfderivWithin_id] with e h_id_e
+      show mpullbackWithin 𝓘(ℝ, E_M) I (extChartAt I x).symm V (Set.range I) e
+        = V_loc e
+      show (mfderivWithin 𝓘(ℝ, E_M) I (extChartAt I x).symm (Set.range I) e).inverse
+            (V ((extChartAt I x).symm e))
+        = V_loc e
+      rw [h_id_e, show (ContinuousLinearMap.id ℝ E_M).inverse = ContinuousLinearMap.id ℝ E_M
+          from ContinuousLinearMap.inverse_id]
+      rfl
+    have h_mpullback_W_eq : mpullbackWithin 𝓘(ℝ, E_M) I (extChartAt I x).symm W (Set.range I)
+        =ᶠ[𝓝[Set.range I] (extChartAt I x x)] W_loc := by
+      filter_upwards [h_mfderivWithin_id] with e h_id_e
+      show mpullbackWithin 𝓘(ℝ, E_M) I (extChartAt I x).symm W (Set.range I) e
+        = W_loc e
+      show (mfderivWithin 𝓘(ℝ, E_M) I (extChartAt I x).symm (Set.range I) e).inverse
+            (W ((extChartAt I x).symm e))
+        = W_loc e
+      rw [h_id_e, show (ContinuousLinearMap.id ℝ E_M).inverse = ContinuousLinearMap.id ℝ E_M
+          from ContinuousLinearMap.inverse_id]
+      rfl
+    have h_phi_x_in_range : (extChartAt I x x : E_M) ∈ Set.range I :=
+      extChartAt_target_subset_range x (mem_extChartAt_target x)
+    -- Apply Filter.EventuallyEq.lieBracketWithin_vectorField_eq_of_mem (symm direction).
+    exact (Filter.EventuallyEq.lieBracketWithin_vectorField_eq_of_mem h_mpullback_V_eq
+      h_mpullback_W_eq h_phi_x_in_range).symm
   rw [h_lieBr_eq]
   exact h_helper2_f.symm
 
