@@ -450,14 +450,83 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
     (contMDiffAt_iff.mp hf).2
   -- V/W as functions M → E_M (using TangentSpace I y = E_M definitionally), pulled back via phi.symm.
   -- From hV/hW (bundle-section ContMDiffAt) + IsLocallyConstantChartedSpace + chart-bridge.
+  -- Helper: V (treated as M → E_M via TangentSpace I y = E_M defeq) is MDifferentiableAt at x.
+  have hV_pt : MDifferentiableAt I (I.prod 𝓘(ℝ, E_M))
+      (fun y => (⟨y, V y⟩ : Bundle.TotalSpace E_M (TangentSpace I))) x :=
+    hV.mdifferentiableAt (by norm_num : (1 : ℕ∞ω) ≠ 0)
+  have hW_pt : MDifferentiableAt I (I.prod 𝓘(ℝ, E_M))
+      (fun y => (⟨y, W y⟩ : Bundle.TotalSpace E_M (TangentSpace I))) x :=
+    hW.mdifferentiableAt (by norm_num : (1 : ℕ∞ω) ≠ 0)
+  -- Chart-form of V/W at x: applying (trivAt x).cLMA — by Helper #1 logic (chart-coherent
+  -- nbhd ⇒ cLMA = id), this equals V/W.
+  have hV_chart : MDifferentiableAt I 𝓘(ℝ, E_M)
+      (fun y => ((trivializationAt E_M (TangentSpace I) x) ⟨y, V y⟩).2) x := by
+    have h := hV_pt
+    rw [mdifferentiableAt_totalSpace] at h
+    exact h.2
+  have hW_chart : MDifferentiableAt I 𝓘(ℝ, E_M)
+      (fun y => ((trivializationAt E_M (TangentSpace I) x) ⟨y, W y⟩).2) x := by
+    have h := hW_pt
+    rw [mdifferentiableAt_totalSpace] at h
+    exact h.2
+  have h_chart_eq_at : ∀ᶠ y in 𝓝 x, chartAt H y = chartAt H x :=
+    chartAt_eventually_eq_of_locallyConstant x
+  have h_trivAt_eqV : (fun y => ((trivializationAt E_M (TangentSpace I) x) ⟨y, V y⟩).2)
+                     =ᶠ[𝓝 x] V := by
+    have h_base : (trivializationAt E_M (TangentSpace I) x).baseSet ∈ 𝓝 x :=
+      (trivializationAt E_M (TangentSpace I) x).open_baseSet.mem_nhds
+        (FiberBundle.mem_baseSet_trivializationAt' x)
+    have h_chart_src : (chartAt H x).source ∈ 𝓝 x :=
+      (chartAt H x).open_source.mem_nhds (mem_chart_source H x)
+    filter_upwards [h_base, h_chart_src, h_chart_eq_at] with y hy_base hy_src hy_eq
+    show ((trivializationAt E_M (TangentSpace I) x) ⟨y, V y⟩).2 = V y
+    rw [← Bundle.Trivialization.continuousLinearMapAt_apply_of_mem (R := ℝ) _ hy_base]
+    -- (trivAt x).cLMA y = id (Helper #1 via continuousLinearMapAt_trivializationAt + chart eq).
+    have h_id : (trivializationAt E_M (TangentSpace I) x).continuousLinearMapAt ℝ y
+              = ContinuousLinearMap.id ℝ E_M := by
+      rw [TangentBundle.continuousLinearMapAt_trivializationAt_eq_core hy_src]
+      have h_achart_eq : achart H y = achart H x := Subtype.ext hy_eq
+      rw [h_achart_eq]
+      ext v
+      exact (tangentBundleCore I M).coordChange_self (achart H x) y
+        (by simpa [tangentBundleCore_baseSet] using hy_src) v
+    rw [h_id]; rfl
+  have h_trivAt_eqW : (fun y => ((trivializationAt E_M (TangentSpace I) x) ⟨y, W y⟩).2)
+                     =ᶠ[𝓝 x] W := by
+    have h_base : (trivializationAt E_M (TangentSpace I) x).baseSet ∈ 𝓝 x :=
+      (trivializationAt E_M (TangentSpace I) x).open_baseSet.mem_nhds
+        (FiberBundle.mem_baseSet_trivializationAt' x)
+    have h_chart_src : (chartAt H x).source ∈ 𝓝 x :=
+      (chartAt H x).open_source.mem_nhds (mem_chart_source H x)
+    filter_upwards [h_base, h_chart_src, h_chart_eq_at] with y hy_base hy_src hy_eq
+    show ((trivializationAt E_M (TangentSpace I) x) ⟨y, W y⟩).2 = W y
+    rw [← Bundle.Trivialization.continuousLinearMapAt_apply_of_mem (R := ℝ) _ hy_base]
+    have h_id : (trivializationAt E_M (TangentSpace I) x).continuousLinearMapAt ℝ y
+              = ContinuousLinearMap.id ℝ E_M := by
+      rw [TangentBundle.continuousLinearMapAt_trivializationAt_eq_core hy_src]
+      have h_achart_eq : achart H y = achart H x := Subtype.ext hy_eq
+      rw [h_achart_eq]
+      ext v
+      exact (tangentBundleCore I M).coordChange_self (achart H x) y
+        (by simpa [tangentBundleCore_baseSet] using hy_src) v
+    rw [h_id]; rfl
+  have hV_plain : MDifferentiableAt I 𝓘(ℝ, E_M) V x :=
+    hV_chart.congr_of_eventuallyEq h_trivAt_eqV.symm
+  have hW_plain : MDifferentiableAt I 𝓘(ℝ, E_M) W x :=
+    hW_chart.congr_of_eventuallyEq h_trivAt_eqW.symm
+  -- Compose with chart-inverse: V_loc = V ∘ phi.symm = MDiff-pulled-back-flat.
   have h_V_loc_diff : DifferentiableWithinAt ℝ V_loc s (extChartAt I x x) := by
-    -- V_loc = V ∘ phi.symm. From hV (TangentSmoothAt of V at x) + chart-bridge to flat.
-    -- Specifically: hV.coordSmoothAt gives chart-coordinate MDiffAt of V at x; with
-    -- IsLocallyConstantChartedSpace, this equals V's plain MDiffAt I 𝓘(ℝ,E_M) at x;
-    -- then `MDifferentiableWithinAt.differentiableWithinAt_comp_extChartAt_symm` gives
-    -- the flat differentiability of V_loc on (phi.symm ⁻¹' univ ∩ range I) = range I.
-    sorry
-  have h_W_loc_diff : DifferentiableWithinAt ℝ W_loc s (extChartAt I x x) := by sorry
+    have h := MDifferentiableWithinAt.differentiableWithinAt_comp_extChartAt_symm
+      (s := Set.univ) hV_plain.mdifferentiableWithinAt
+    show DifferentiableWithinAt ℝ V_loc (Set.range I) (extChartAt I x x)
+    convert h using 2
+    simp [Set.preimage_univ, Set.univ_inter]
+  have h_W_loc_diff : DifferentiableWithinAt ℝ W_loc s (extChartAt I x x) := by
+    have h := MDifferentiableWithinAt.differentiableWithinAt_comp_extChartAt_symm
+      (s := Set.univ) hW_plain.mdifferentiableWithinAt
+    show DifferentiableWithinAt ℝ W_loc (Set.range I) (extChartAt I x x)
+    convert h using 2
+    simp [Set.preimage_univ, Set.univ_inter]
   -- g_chart_W e := fderivWithin f_loc s e (W_loc e). Bilinear in (fderivWithin f_loc s e, W_loc e).
   -- DifferentiableWithinAt s (phi x) from f_loc C^2 (so fderivWithin f_loc s is C^1) + W_loc C^1.
   have h_g_chart_W_diff : DifferentiableWithinAt ℝ g_chart_W s (extChartAt I x x) := by sorry
