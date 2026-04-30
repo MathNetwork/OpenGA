@@ -229,6 +229,7 @@ The proof combines:
 PRE-PAPER. Closure: bounded structural follow-up via
 `DifferentiableWithinAt.comp_mdifferentiableAt` + chart-source identification.
 ~30-40 lines. -/
+omit [IsLocallyConstantChartedSpace H M] in
 theorem mfderiv_chart_compose_apply
     [IsManifold I 1 M] (x : M)
     (g : E_M → F)
@@ -236,7 +237,50 @@ theorem mfderiv_chart_compose_apply
     (v : TangentSpace I x) :
     mfderiv I 𝓘(ℝ, F) (fun y => g (extChartAt I x y)) x v
     = fderivWithin ℝ g (Set.range I) (extChartAt I x x) v := by
-  sorry
+  -- Step 1: extChartAt I x is MDifferentiable at x (chart smoothness).
+  have h_phi : MDifferentiableAt I 𝓘(ℝ, E_M) (extChartAt I x) x :=
+    mdifferentiableAt_extChartAt (mem_chart_source H x)
+  -- Step 2: composition is MDifferentiableAt at x (within chart source).
+  have h_phi_within : MDifferentiableWithinAt I 𝓘(ℝ, E_M)
+      (extChartAt I x) (chartAt H x).source x := h_phi.mdifferentiableWithinAt
+  have h_maps : Set.MapsTo (extChartAt I x) (chartAt H x).source (Set.range I) := by
+    intro y hy
+    rw [extChartAt_coe]
+    exact Set.mem_range_self _
+  have h_comp_within : MDifferentiableWithinAt I 𝓘(ℝ, F)
+      (fun y => g (extChartAt I x y)) (chartAt H x).source x :=
+    hg.comp_mdifferentiableWithinAt h_phi_within h_maps
+  have h_chart_src_nhds : (chartAt H x).source ∈ 𝓝 x :=
+    (chartAt H x).open_source.mem_nhds (mem_chart_source H x)
+  have h_comp : MDifferentiableAt I 𝓘(ℝ, F)
+      (fun y => g (extChartAt I x y)) x :=
+    h_comp_within.mdifferentiableAt h_chart_src_nhds
+  -- Step 3: apply MDifferentiableAt.mfderiv.
+  rw [h_comp.mfderiv]
+  -- Goal: fderivWithin (writtenInExtChartAt _) (range I) (phi x) v
+  --     = fderivWithin g (range I) (phi x) v
+  -- Step 4: writtenInExtChartAt simplification: it equals g on (extChartAt I x).target.
+  have h_eqOn : (extChartAt I x).target.EqOn
+      (writtenInExtChartAt I 𝓘(ℝ, F) x (fun y => g (extChartAt I x y))) g := by
+    intro e he
+    show (extChartAt 𝓘(ℝ, F) (g (extChartAt I x x)))
+         (g (extChartAt I x ((extChartAt I x).symm e))) = g e
+    rw [(extChartAt I x).right_inv he]
+    rfl
+  -- (extChartAt I x).target ∈ 𝓝[range I] (phi x), so the functions are EventuallyEq within range I.
+  have h_target_nhdsW : (extChartAt I x).target ∈ 𝓝[Set.range I] (extChartAt I x x) :=
+    extChartAt_target_mem_nhdsWithin x
+  have h_eventually : (writtenInExtChartAt I 𝓘(ℝ, F) x (fun y => g (extChartAt I x y)))
+                      =ᶠ[𝓝[Set.range I] (extChartAt I x x)] g := by
+    filter_upwards [h_target_nhdsW] with e he
+    exact h_eqOn he
+  have h_fd_eq : fderivWithin ℝ
+      (writtenInExtChartAt I 𝓘(ℝ, F) x (fun y => g (extChartAt I x y)))
+      (Set.range I) (extChartAt I x x)
+      = fderivWithin ℝ g (Set.range I) (extChartAt I x x) :=
+    h_eventually.fderivWithin_eq (h_eqOn (mem_extChartAt_target x))
+  rw [h_fd_eq]
+  rfl
 
 /-- Helper: directional derivative of a scalar/vector-valued function as
 an `F`-typed value (avoids `TangentSpace 𝓘(ℝ, F) (f x)` basepoint

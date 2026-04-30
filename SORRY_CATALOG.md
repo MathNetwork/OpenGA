@@ -18,18 +18,17 @@ require updating this file.
 
 | Module | PRE-PAPER | CITED-BLACK-BOX | PAPER-INTERNAL | CONJECTURAL | Total |
 |--------|-----------|------------------|----------------|-------------|-------|
-| Riemannian | 5 | 0 | 0 | 0 | 5 |
+| Riemannian | 4 | 0 | 0 | 0 | 4 |
 | GeometricMeasureTheory | 5 | 9 | 0 | 0 | 14 |
 | MinMax | 3 | 9 | 0 | 0 | 12 |
 | Regularity | 0 | 2 | 0 | 0 | 2 |
-| **Total** | **13** | **20** | **0** | **0** | **35** |
+| **Total** | **12** | **20** | **0** | **0** | **34** |
 
-## Riemannian (5)
+## Riemannian (4)
 
 | File:line | Identifier | Classification | Repair plan |
 |-----------|-----------|---------------|-------------|
-| `Foundations/HessianLie.lean:233` | `mfderiv_chart_compose_apply` | PRE-PAPER | Chart-pullback chain rule: for `g : E_M → F` DifferentiableWithinAt `range I` at `extChartAt I x x`, manifold mfderiv of `g ∘ extChartAt I x` at x equals flat `fderivWithin g (range I) (...)`. Closure: `MDifferentiableAt.mfderiv` + `writtenInExtChartAt` simplification on `phi.target` + `fderivWithin` congruence. ~30-40 lines. Used by `mfderiv_iterate_sub_eq_mlieBracket_apply` to chain-pullback the outer mfderiv. |
-| `Foundations/HessianLie.lean:269` | `mfderiv_iterate_sub_eq_mlieBracket_apply` | PRE-PAPER | Manifold scalar Hessian-Lie identity. Inner & outer locality bridges + base-point identities all closed in proof body. Remaining: invoke `mfderiv_chart_compose_apply` (Helper #2 above) on outer mfderivs + `mlieBracketWithin_apply` for RHS. ~30-50 additional lines once Helper #2 lands. |
+| `Foundations/HessianLie.lean:309` | `mfderiv_iterate_sub_eq_mlieBracket_apply` | PRE-PAPER | Manifold scalar Hessian-Lie identity. Helpers #1 (`mfderiv_extChartAt_eq_id_eventually`) + #2 (`mfderiv_chart_compose_apply`) closed. Inner & outer locality bridges + base-point identities closed inline. Remaining: invoke Helper #2 on outer mfderivs + apply `flat_hessianLieWithin_apply` + `mlieBracketWithin_apply` for RHS bridge. ~30-50 additional lines. |
 | `Curvature.lean:76` | `ricciTraceMap.map_add'` | PRE-PAPER | C^∞-linearity of Ricci trace map in first argument. Derive from `koszulCovDeriv` linearity in `X` (now that `koszulLeviCivita_exists` is closed, the route via `leviCivitaConnection`'s tensoriality is unblocked). |
 | `Curvature.lean:77` | `ricciTraceMap.map_smul'` | PRE-PAPER | Same as above. |
 | `Curvature.lean:112` | `ricci_symm` | PRE-PAPER | Symmetry of Ricci. Closure path: `riemannCurvature_inner_diagonal_zero` (skew-symm of R as endomorphism) via metric-compat applied 2×, scalar Hessian-Lie (above), → trace = 0; combined with Bianchi I + first-arg antisymmetry to derive `ricci(X,Y) - ricci(Y,X) = -tr(R(X,Y) endo) = 0`. Blocked by `mfderiv_iterate_sub_eq_mlieBracket_apply`. |
