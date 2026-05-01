@@ -1,4 +1,5 @@
 import Riemannian.Connection
+import Riemannian.TangentBundle.SmoothVectorField
 import Mathlib.LinearAlgebra.Trace
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
@@ -60,20 +61,24 @@ without circular dependency. -/
 $z \mapsto R(z\text{-extended}, X) Y(x)$ on $T_xM$, where
 $z\text{-extended}$ is the constant section with value $z$.
 
-For Levi-Civita's $C^\infty$-linearity in arguments, the result depends
-only on $z \in T_xM$ (not the extension); the linearity proofs below
-are PRE-PAPER (deferred). The constant extension is a clean choice that
-makes the formula well-defined regardless of the linearity proofs.
-
-**Stability**: experimental (PRE-PAPER). `map_add'` and `map_smul'`
-left unproven; downstream code consuming `ricciTraceMap` should rely
-only on its application to specific vectors, not on its `LinearMap`
-properties, until linearity proofs land. -/
+`X, Y` are bundled `SmoothVectorField`s, providing the global smoothness
+witnesses needed for the underlying covariant-derivative additivity
+(via `IsCovariantDerivativeOn.add`) and Lie-bracket linearity
+(`mlieBracket_add_left`, `mlieBracket_const_smul_left`). -/
 noncomputable def ricciTraceMap
-    (X Y : Π x : M, TangentSpace I x) (x : M) :
+    (X Y : SmoothVectorField I M) (x : M) :
     TangentSpace I x →ₗ[ℝ] TangentSpace I x where
   toFun z := riemannCurvature (fun _ => z) X Y x
-  map_add' z₁ z₂ := by sorry
+  map_add' z₁ z₂ := by
+    show riemannCurvature (fun _ => z₁ + z₂) X Y x
+       = riemannCurvature (fun _ => z₁) X Y x + riemannCurvature (fun _ => z₂) X Y x
+    -- Three terms in `riemannCurvature`; each is ℝ-linear in the first
+    -- argument (a constant section of value `z`). Linearity in `z` flows from:
+    --   * `lev.toFun ... x` is a CLM (linear in input vector)
+    --   * `covDeriv` is additive in the differentiated section (smoothness witnessed by `Y`)
+    --   * `mlieBracket` of constant section + X is the directional derivative of X,
+    --     itself ℝ-linear in `z`.
+    sorry
   map_smul' c z := by sorry
 
 /-- The **Ricci curvature** $\mathrm{Ric}(X, Y) \in \mathbb{R}$ at a point
@@ -94,7 +99,7 @@ The ℝ-linearity proofs inside `ricciTraceMap` (`map_add'`,
 repair via Mathlib's `CovariantDerivative` linearity lemmas
 applied through `riemannCurvature`'s defining formula). -/
 noncomputable def ricci
-    (X Y : Π x : M, TangentSpace I x) (x : M) : ℝ :=
+    (X Y : SmoothVectorField I M) (x : M) : ℝ :=
   LinearMap.trace ℝ (TangentSpace I x) (ricciTraceMap X Y x)
 
 /-- **Ricci curvature is symmetric**: $\mathrm{Ric}(X, Y) = \mathrm{Ric}(Y, X)$.
@@ -108,7 +113,7 @@ swapping X and Y). PRE-PAPER, repair via constructive proof.
 proof is closed: marking a sorry'd theorem `@[simp]` violates Mathlib
 soundness convention (would let `simp` apply unproven rewrites). When
 the Bianchi-identity proof lands, restore `@[simp]`. -/
-theorem ricci_symm (X Y : Π x : M, TangentSpace I x) (x : M) :
+theorem ricci_symm (X Y : SmoothVectorField I M) (x : M) :
     ricci X Y x = ricci Y X x := by sorry
 
 /-- The **scalar curvature** $\mathrm{scal}(x) := \mathrm{tr}_g \mathrm{Ric}(x)$.
@@ -127,8 +132,8 @@ noncomputable def scalarCurvature (x : M) : ℝ :=
   let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
     stdOrthonormalBasis ℝ (TangentSpace I x)
   ∑ i, ricci (I := I) (M := M)
-    (fun (_ : M) => (e i : TangentSpace I x))
-    (fun (_ : M) => (e i : TangentSpace I x)) x
+    (SmoothVectorField.const (I := I) (e i : E))
+    (SmoothVectorField.const (I := I) (e i : E)) x
 
 end Riemannian
 
@@ -169,7 +174,7 @@ noncomputable example
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
     [OpenGALib.RiemannianMetric I M]
-    (X Y : Π x : M, TangentSpace I x) (x : M) : ℝ := ricci X Y x
+    (X Y : SmoothVectorField I M) (x : M) : ℝ := ricci X Y x
 
 noncomputable example
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
