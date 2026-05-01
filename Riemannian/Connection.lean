@@ -5,8 +5,8 @@ import Riemannian.Connection.Bianchi
 /-!
 # Riemannian.Connection — facade
 
-Re-exports the two sub-modules that together construct the Levi-Civita
-connection on a Riemannian manifold $M$:
+Re-exports the three sub-modules that together construct the Levi-Civita
+connection and the algebraic Bianchi identity on a Riemannian manifold $M$:
 
 - `Connection/Koszul.lean` — `directionalDeriv`, `koszulFunctional`,
   the 8 algebraic identities (`koszul_antisymm`, `koszul_metric_compat_sum`,
@@ -14,11 +14,19 @@ connection on a Riemannian manifold $M$:
 - `Connection/LeviCivita.lean` — Riesz extraction (`koszulCovDeriv`),
   `koszulLeviCivita_exists` (closed via `TensorialAt.mkHom` + Riesz
   uniqueness), `leviCivitaConnection_exists`, the `leviCivitaConnection`
-  def, torsion / metric-compat properties, and the `covDeriv` public-API
-  wrapper.
+  def, torsion / metric-compat properties, the `covDeriv` public-API
+  wrapper, plus `covDeriv_inner_eq_half_koszul`,
+  `koszulFunctional_eventuallyEq_middle`, and
+  `covDeriv_congr_eventuallyEq_middle` (locality of `covDeriv` in the
+  differentiated argument via Riesz uniqueness).
+- `Connection/Bianchi.lean` — `riemannCurvature` def,
+  `riemannCurvature_antisymm`, `covDeriv_*_field` (Lie-bracket-style
+  linearity in the differentiated section), `bianchi_first` (algebraic
+  Bianchi I, closed via the Jacobi identity).
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 (Levi-Civita theorem,
-existence + uniqueness via the Koszul formula).
+existence + uniqueness via the Koszul formula); do Carmo 1992 §4 (Riemann
+tensor + Bianchi I).
 -/
 
 open Bundle VectorField OpenGALib

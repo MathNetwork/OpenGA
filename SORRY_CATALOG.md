@@ -22,12 +22,12 @@ require updating this file.
 | GeometricMeasureTheory | 5 | 9 | 0 | 0 | 14 |
 | MinMax | 3 | 9 | 0 | 0 | 12 |
 | Regularity | 0 | 2 | 0 | 0 | 2 |
-| **Total** | **11** | **20** | **0** | **0** | **33** |
+| **Total** | **11** | **20** | **0** | **0** | **31** |
 
 ## Riemannian (3)
 | `Curvature.lean:76` | `ricciTraceMap.map_add'` | PRE-PAPER | C^∞-linearity of Ricci trace map in first argument. Derive from `koszulCovDeriv` linearity in `X` (now that `koszulLeviCivita_exists` is closed, the route via `leviCivitaConnection`'s tensoriality is unblocked). |
 | `Curvature.lean:77` | `ricciTraceMap.map_smul'` | PRE-PAPER | Same as above. |
-| `Curvature.lean:112` | `ricci_symm` | PRE-PAPER | Symmetry of Ricci. Closure path: `riemannCurvature_inner_diagonal_zero` (skew-symm of R as endomorphism) via metric-compat applied 2×, scalar Hessian-Lie (above), → trace = 0; combined with Bianchi I + first-arg antisymmetry to derive `ricci(X,Y) - ricci(Y,X) = -tr(R(X,Y) endo) = 0`. Blocked by `mfderiv_iterate_sub_eq_mlieBracket_apply`. |
+| `Curvature.lean:111` | `ricci_symm` | PRE-PAPER | Symmetry of Ricci. Closure path: `riemannCurvature_inner_diagonal_zero` (skew-symm of R as endomorphism) via metric-compat applied 2× + scalar Hessian-Lie (`mfderiv_iterate_sub_eq_mlieBracket_apply`, **now closed**) → endo trace = 0; combined with Bianchi I (closed) + first-arg antisymmetry (closed) to derive `ricci(X,Y) - ricci(Y,X) = -tr(R(X,Y) endo) = 0`. **Unblocked**: all dependencies closed. |
 
 ## GeometricMeasureTheory (14)
 
