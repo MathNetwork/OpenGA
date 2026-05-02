@@ -76,9 +76,16 @@ noncomputable def secondVariationFull
     [OpenGALib.RiemannianMetric I M]
     (V : Varifold M) [hN : Varifold.HasNormal I V]
     (φ : M → ℝ) : ℝ :=
+  -- PRE-PAPER: `ricci` was refactored to take `SmoothVectorField` (commit
+  -- 473cdb3). `Varifold.HasNormal.unitNormal` is currently raw
+  -- `(x : M) → TangentSpace I x` without smoothness witness. Wrap with
+  -- `sorry` for the smoothness fields until `HasNormal` is upgraded
+  -- (Phase 1.7 GMT-side refactor: add `unitNormal_smooth` field).
+  let νSmooth : SmoothVectorField I M :=
+    ⟨hN.unitNormal, sorry⟩
   ∫ x, (manifoldGradientNormSq I φ x -
         (secondFundamentalFormSqNorm hN.unitNormal x +
-         ricci hN.unitNormal hN.unitNormal x) * φ x ^ 2)
+         ricci νSmooth νSmooth x) * φ x ^ 2)
       ∂V.massMeasure
 
 end GeometricMeasureTheory.Variation

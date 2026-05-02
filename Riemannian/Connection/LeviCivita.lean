@@ -3,6 +3,7 @@ import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Torsion
 import Mathlib.Geometry.Manifold.VectorBundle.Tensoriality
 import Riemannian.Connection.Koszul
 import Riemannian.Metric.Riesz
+import Riemannian.TangentBundle.SmoothVectorField
 
 /-!
 # Levi-Civita connection via Koszul + Riesz
@@ -448,19 +449,41 @@ vector fields).
 The metric-compat statement assumes smooth $X, Y, Z$ — matching do Carmo's
 textbook setup; an unconditional form would be an over-statement.
 
+**Smoothness clause** (3rd conjunct, **PRE-PAPER sorry**): for any smooth
+section `Y : SmoothVectorField I M` and any constant direction `v : E`,
+the section `y ↦ cov.toFun Y.toFun y v` is `TangentSmoothAt` at every
+point. This conjunct is the framework-level "bridge" supporting
+downstream smoothness witnesses for `covDeriv` along chart-frame constant
+directions (used in `Riemannian.Curvature.ricciTraceMap` linearity slots
+and `ricciFormAt` bilinearity slots).
+
+The smoothness clause is currently `sorry`'d (PRE-PAPER, NOT axiom — Phase 1.6
+invariant "zero existence axioms in the Riemannian package" preserved).
+Closure path: reduce via `koszulLeviCivita_exists`'s eq spec
+(`cov.toFun Y x (X x) = koszulCovDeriv X Y x hX hY` for smooth X, Y)
+to smoothness of `(fun y ↦ koszulCovDeriv (const v) Y.toFun y _ _)`,
+which itself goes through smoothness of `metricRiesz` of a smooth
+functional (Riesz extraction inverts a smooth bundle CLM), or
+equivalently via `ContMDiffCovariantDerivativeOn` instance for
+`leviCivitaConnection.toFun`.
+
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 (existence + uniqueness via
-the Koszul formula). -/
+the Koszul formula); Lee 2018 Prop. 4.26 (smoothness of covariant
+derivative on smooth manifolds). -/
 theorem leviCivitaConnection_exists [IsLocallyConstantChartedSpace H M] :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       cov.torsion = 0 ∧
-      ∀ (X Y Z : Π x : M, TangentSpace I x) (x : M)
+      (∀ (X Y Z : Π x : M, TangentSpace I x) (x : M)
         (_hX : TangentSmoothAt X x) (_hY : TangentSmoothAt Y x)
         (_hZ : TangentSmoothAt Z x),
         mfderiv I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x (X x) =
           metricInner x (cov.toFun Y x (X x)) (Z x) +
-          metricInner x (Y x) (cov.toFun Z x (X x)) := by
+          metricInner x (Y x) (cov.toFun Z x (X x))) ∧
+      (∀ (Y : SmoothVectorField I M) (v : E) (x : M),
+        OpenGALib.TangentSmoothAt
+          (fun y : M => cov.toFun Y.toFun y v) x) := by
   obtain ⟨cov, hcov⟩ := koszulLeviCivita_exists (I := I) (M := M)
-  refine ⟨cov, ?_, ?_⟩
+  refine ⟨cov, ?_, ?_, ?_⟩
   · -- Torsion = 0
     rw [CovariantDerivative.torsion_eq_zero_iff]
     intro X Y x hX hY
@@ -493,6 +516,19 @@ theorem leviCivitaConnection_exists [IsLocallyConstantChartedSpace H M] :
     show directionalDeriv (fun y => metricInner y (Y y) (Z y)) x (X x) =
         (1 / 2) * koszulFunctional X Y Z x + (1 / 2) * koszulFunctional X Z Y x
     linarith
+  · -- Smoothness clause: PRE-PAPER (see docstring above for closure plan).
+    -- For Y : SmoothVectorField, v : E, x : M, we need
+    --   TangentSmoothAt (fun y => cov.toFun Y.toFun y v) x.
+    -- By `hcov` (eq spec from koszulLeviCivita_exists), specialized at the
+    -- chart-frame constant section X = (fun _ => v):
+    --   cov.toFun Y.toFun y v = cov.toFun Y.toFun y ((fun _ => v) y)
+    --                          = koszulCovDeriv (fun _ => v) Y.toFun y _ _.
+    -- Reduces to smoothness of (fun y => koszulCovDeriv (const v) Y.toFun y).
+    -- Closure via either:
+    --   (a) `metricRiesz` smoothness (Riesz of smooth functional);
+    --   (b) `ContMDiffCovariantDerivativeOn` instance for cov.
+    intro Y v x
+    sorry
 
 /-- The **Levi-Civita connection** $\nabla$ on the tangent bundle of a
 Riemannian manifold $M$: the unique torsion-free, metric-compatible
@@ -535,7 +571,23 @@ theorem leviCivitaConnection_metric_compatible
       metricInner x ((leviCivitaConnection (I := I) (M := M)).toFun Y x (X x)) (Z x) +
       metricInner x (Y x)
         ((leviCivitaConnection (I := I) (M := M)).toFun Z x (X x)) :=
-  (Classical.choose_spec leviCivitaConnection_exists).2 X Y Z x hX hY hZ
+  (Classical.choose_spec leviCivitaConnection_exists).2.1 X Y Z x hX hY hZ
+
+/-- **Smoothness of the Levi-Civita connection along chart-frame constant
+directions**: for any smooth section `Y` and any `v : E`, the section
+`y ↦ ∇ Y y v = leviCivitaConnection.toFun Y.toFun y v` is smooth at every
+point.
+
+Direct projection from the 3rd conjunct of `leviCivitaConnection_exists`'s
+strengthened existential. The smoothness clause itself is currently
+`sorry` (PRE-PAPER) inside the existence proof; downstream consumers
+(`Riemannian.Curvature` smoothness witnesses) depend on this accessor. -/
+theorem leviCivitaConnection_smoothAt_const_dir
+    [IsLocallyConstantChartedSpace H M]
+    (Y : SmoothVectorField I M) (v : E) (x : M) :
+    OpenGALib.TangentSmoothAt
+      (fun y : M => (leviCivitaConnection (I := I) (M := M)).toFun Y.toFun y v) x :=
+  (Classical.choose_spec leviCivitaConnection_exists).2.2 Y v x
 
 /-- **Covariant derivative of one vector field along another**:
 $(\nabla_X Y)(x) := \nabla\,Y\,x\,(X\,x)$, where $\nabla$ is the
@@ -580,7 +632,7 @@ theorem covDeriv_inner_eq_half_koszul
   -- Notation: write `cov A B := leviCivitaConnection.toFun B x (A x)` (= covDeriv A B x).
   -- We'll identify these via `show` against the unfolded form and use linarith.
   -- Spec from Classical.choose: torsion-free + metric-compat for smooth fields.
-  obtain ⟨h_tors, h_compat⟩ := Classical.choose_spec
+  obtain ⟨h_tors, h_compat, _h_smooth⟩ := Classical.choose_spec
     (leviCivitaConnection_exists (I := I) (M := M))
   -- Three cyclic metric-compat instances + 3 torsion-free instances.
   -- Wrap each LHS into `directionalDeriv` (= mfderiv) so that all

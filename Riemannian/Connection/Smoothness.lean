@@ -93,11 +93,12 @@ theorem covDeriv_const_smoothVF_smoothAt
     (v : E) (Y : SmoothVectorField I M) (x : M) :
     OpenGALib.TangentSmoothAt
       (fun y : M => covDeriv (fun _ : M => v) Y.toFun y) x := by
-  -- PRE-PAPER. Repair plan documented in module docstring above. Closure
-  -- requires `ContMDiffCovariantDerivativeOn ∞ leviCivitaConnection.toFun`
-  -- instance, which requires upgrading `leviCivitaConnection` from
-  -- `Classical.choose` over an existence statement to a `Subtype` carrying
-  -- smoothness alongside torsion-free / metric-compat.
-  sorry
+  -- `covDeriv X Y y = leviCivitaConnection.toFun Y y (X y)` by def. With
+  -- X = (fun _ => v), this reduces to leviCivitaConnection.toFun Y.toFun y v.
+  -- Smoothness comes from the strengthened `leviCivitaConnection_exists`
+  -- existential's 3rd conjunct (PRE-PAPER sorry at the connection-existence
+  -- level — see `LeviCivita.lean`), exposed as
+  -- `leviCivitaConnection_smoothAt_const_dir`.
+  exact Riemannian.leviCivitaConnection_smoothAt_const_dir Y v x
 
 end Riemannian
