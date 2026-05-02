@@ -1,6 +1,9 @@
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Analysis.Calculus.ContDiff.Operations
 import Riemannian.Metric.Riesz
+import Riemannian.Metric.Smooth
+import Riemannian.TangentBundle.SmoothSection
+import Riemannian.TangentBundle.Smoothness
 
 /-!
 # Metric Riesz inversion: smoothness bridge
@@ -99,5 +102,101 @@ theorem metricRiesz_eq_inverse (x : M) (φ : TangentSpace I x →L[ℝ] ℝ) :
       ← hCLE]
   rw [ContinuousLinearMap.inverse_equiv CLE]
   exact (CLE.apply_symm_apply φ)
+
+/-! ## Smoothness of Riesz section
+
+Compose `g.smoothMetric` with `ContinuousLinearMap.IsInvertible.contDiffAt_map_inverse`
+to obtain smoothness of the inverse-metric section, then apply at a smooth
+cotangent functional, and translate to `TangentSmoothAt` via chart pullback.
+
+The cotangent smoothness predicate is taken in **flat-codomain form** —
+`MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] ℝ) (fun y => (φ y : E →L[ℝ] ℝ)) x` —
+exploiting the `TangentSpace I y = E` def-eq. This avoids the dependent-codomain
+`Π y, T_yM →L[ℝ] ℝ` form which is awkward to phrase smoothness for. -/
+
+section RieszSectionSmooth
+
+variable [CompleteSpace E]
+  [IsManifold I ∞ M] [IsLocallyConstantChartedSpace H M]
+
+omit [IsManifold I ∞ M] [IsLocallyConstantChartedSpace H M] in
+set_option backward.isDefEq.respectTransparency false in
+/-- **Smoothness of the metric inverse as a CLM section**: `y ↦ inverse (g.metricTensor y)`
+is `MDifferentiableAt` at every `x`, viewed as `M → ((E →L[ℝ] ℝ) →L[ℝ] E)`.
+
+Composition of `g.smoothMetric` (smooth metric tensor) with Mathlib's
+`ContinuousLinearMap.IsInvertible.contDiffAt_map_inverse` (inverse smooth at
+invertible CLMs). -/
+theorem metricInverse_mdifferentiableAt (x : M) :
+    MDifferentiableAt I 𝓘(ℝ, (E →L[ℝ] ℝ) →L[ℝ] E)
+      (fun y : M => ContinuousLinearMap.inverse
+        (g.metricTensor y : E →L[ℝ] E →L[ℝ] ℝ)) x := by
+  -- (a) g.metricTensor smooth as M → (E →L E →L ℝ).
+  have h_metric : MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E →L[ℝ] ℝ) g.metricTensor x :=
+    (g.smoothMetric x).mdifferentiableAt (by decide)
+  -- (b) ContinuousLinearMap.inverse is C^∞ at the invertible point g.metricTensor x.
+  have h_inv_at : ContDiffAt ℝ ∞ ContinuousLinearMap.inverse (g.metricTensor x) :=
+    (metricToDual_isInvertible (g := g) x).contDiffAt_map_inverse
+  -- (c) Compose: ContDiffAt → ContMDiffAt → MDifferentiableAt; then `.comp`.
+  have h_inv_at' : MDifferentiableAt 𝓘(ℝ, E →L[ℝ] E →L[ℝ] ℝ) 𝓘(ℝ, (E →L[ℝ] ℝ) →L[ℝ] E)
+      ContinuousLinearMap.inverse (g.metricTensor x) :=
+    h_inv_at.contMDiffAt.mdifferentiableAt (by decide)
+  exact h_inv_at'.comp x h_metric
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **Smoothness of the Riesz section**: given a smooth cotangent functional
+section `φ : M → (E →L[ℝ] ℝ)` (in flat-codomain form, exploiting
+`TangentSpace I y = E` def-eq via `set_option backward.isDefEq.respectTransparency false`
+at the call site), the Riesz-extracted tangent section
+`y ↦ metricRiesz y (φ y) ∈ T_yM` is `TangentSmoothAt` at every `x`.
+
+Architecture:
+1. By `metricRiesz_eq_inverse`: `metricRiesz y (φ y) = inverse (g.metricTensor y) (φ y)`
+   (an element of `T_yM ≡ E`).
+2. By `metricInverse_mdifferentiableAt`: `y ↦ inverse (g.metricTensor y)` smooth as
+   `M → ((E →L[ℝ] ℝ) →L[ℝ] E)`.
+3. `clm_apply` with smooth `φ`: smooth `M → E`.
+4. Translate to `TangentSmoothAt` via `iff_coord` + chart pullback through
+   `continuousLinearMapAtFlat` (smooth on chart base set). -/
+theorem metricRiesz_section_smoothAt
+    {φ : M → (E →L[ℝ] ℝ)} {x : M}
+    (hφ : MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] ℝ) φ x) :
+    TangentSmoothAt (fun y : M => metricRiesz (g := g) y (φ y)) x := by
+  -- Step 1: smoothness of `y ↦ metricRiesz y (φ y) : M → E` (using metricRiesz_eq_inverse).
+  have h_inverse_at := metricInverse_mdifferentiableAt (g := g) x
+  have h_apply_E : MDifferentiableAt I 𝓘(ℝ, E)
+      (fun y : M => ContinuousLinearMap.inverse (g.metricTensor y) (φ y)) x :=
+    h_inverse_at.clm_apply hφ
+  have h_eq : (fun y : M => ContinuousLinearMap.inverse (g.metricTensor y) (φ y))
+      = (fun y : M => (metricRiesz (g := g) y (φ y) : E)) := by
+    funext y
+    exact (metricRiesz_eq_inverse y (φ y)).symm
+  rw [h_eq] at h_apply_E
+  -- Step 2: translate `M → E` smoothness to `TangentSmoothAt` via chart pullback.
+  rw [TangentSmoothAt.iff_coord]
+  set e := trivializationAt E (TangentSpace I) x with he_def
+  -- `(e ⟨y, V y⟩).2` equals `e.continuousLinearMapAt R y (V y)` on `e.baseSet`,
+  -- which equals `continuousLinearMapAtFlat x y (V y)` (def-eq).
+  -- continuousLinearMapAtFlat smooth in y; clm_apply with smooth V y gives smooth.
+  have h_clma_smooth : MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] E)
+      (fun y : M => TangentBundle.continuousLinearMapAtFlat (I := I) (M := M) x y) x :=
+    (TangentBundle.continuousLinearMapAtFlat_contMDiffAt
+      (I := I) (M := M) x).mdifferentiableAt (by decide)
+  have h_clma_apply : MDifferentiableAt I 𝓘(ℝ, E)
+      (fun y : M => TangentBundle.continuousLinearMapAtFlat (I := I) (M := M) x y
+        (metricRiesz (g := g) y (φ y))) x :=
+    h_clma_smooth.clm_apply h_apply_E
+  apply h_clma_apply.congr_of_eventuallyEq
+  have h_baseSet : e.baseSet ∈ 𝓝 x :=
+    e.open_baseSet.mem_nhds (FiberBundle.mem_baseSet_trivializationAt' x)
+  filter_upwards [h_baseSet] with y hy
+  show (e ⟨y, metricRiesz (g := g) y (φ y)⟩).2
+    = TangentBundle.continuousLinearMapAtFlat (I := I) (M := M) x y
+        (metricRiesz (g := g) y (φ y))
+  show (e ⟨y, metricRiesz (g := g) y (φ y)⟩).2
+    = e.continuousLinearMapAt ℝ y (metricRiesz (g := g) y (φ y))
+  exact (Bundle.Trivialization.continuousLinearMapAt_apply_of_mem (R := ℝ) e hy _).symm
+
+end RieszSectionSmooth
 
 end OpenGALib

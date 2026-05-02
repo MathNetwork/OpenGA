@@ -2,7 +2,9 @@ import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Basic
 import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Torsion
 import Mathlib.Geometry.Manifold.VectorBundle.Tensoriality
 import Riemannian.Connection.Koszul
+import Riemannian.Connection.KoszulCotangent
 import Riemannian.Metric.Riesz
+import Riemannian.Metric.RieszSmooth
 import Riemannian.TangentBundle.SmoothVectorField
 
 /-!
@@ -473,6 +475,7 @@ Each closure step is mechanical framework self-build — no Mathlib gap, no
 strategic decisions.
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 + Lee 2018 Prop. 4.26. -/
+set_option backward.isDefEq.respectTransparency false in
 private theorem koszulCovDeriv_const_smoothAt
     [IsLocallyConstantChartedSpace H M]
     (v : E) (Y : SmoothVectorField I M) (x : M) :
@@ -480,13 +483,44 @@ private theorem koszulCovDeriv_const_smoothAt
       (fun y : M => koszulCovDeriv (fun _ : M => v) Y.toFun y
         ((SmoothVectorField.const (I := I) (M := M) v).smoothAt y)
         (Y.smoothAt y)) x := by
-  -- Single PRE-PAPER bridge sorry. Closure plan: see docstring above.
-  -- Concretely: build `α y := metricRiesz y φ_y` for the koszul cotangent
-  -- functional `φ_y`, prove `α y = koszulCovDeriv (const v) Y.toFun y _ _`
-  -- via Riesz uniqueness + `koszulCovDeriv_inner_eq`, then conclude
-  -- `TangentSmoothAt α x` via `metricRiesz_eq_inverse` + Mathlib
-  -- `IsInvertible.contDiffAt_map_inverse`.
-  sorry
+  -- Strategy: build the smooth section `α y := metricRiesz y (koszulCotangentCLM v Y y)`,
+  -- prove `α y = koszulCovDeriv (const v) Y.toFun y _ _` via Riesz uniqueness, then
+  -- conclude smoothness from `metricRiesz_section_smoothAt` + `koszulCotangentCLM_smoothAt`.
+  -- Step 1: smoothness of α via Riesz inversion.
+  have h_α_smooth : OpenGALib.TangentSmoothAt
+      (fun y : M => metricRiesz y (koszulCotangentCLM v Y y)) x :=
+    metricRiesz_section_smoothAt (koszulCotangentCLM_smoothAt v Y x)
+  -- Step 2: pointwise α y = koszulCovDeriv (const v) Y.toFun y _ _.
+  have h_eq : (fun y : M => metricRiesz y (koszulCotangentCLM v Y y))
+      = (fun y : M => koszulCovDeriv (fun _ : M => v) Y.toFun y
+          ((SmoothVectorField.const (I := I) (M := M) v).smoothAt y) (Y.smoothAt y)) := by
+    funext y
+    -- Riesz uniqueness: equal inner products against arbitrary test ⇒ equal vectors.
+    apply (metricInner_eq_iff_eq y _ _).mp
+    intro w
+    -- LHS: metricInner y (metricRiesz y (koszulCotangentCLM v Y y)) w = koszulCotangentCLM v Y y w
+    --    = koszulCotangentScalar v Y w y = (1/2) * koszulFunctional (const v) Y.toFun (const w) y.
+    rw [metricRiesz_inner]
+    show koszulCotangentCLM v Y y w
+      = metricInner y (koszulCovDeriv (fun _ : M => v) Y.toFun y _ _) w
+    rw [koszulCotangentCLM_apply]
+    -- RHS: by koszulCovDeriv_inner_eq with Z := const w (smooth).
+    have h_const_w : OpenGALib.TangentSmoothAt (fun _ : M => w) y :=
+      (SmoothVectorField.const (I := I) (M := M) w).smoothAt y
+    have h_riesz := koszulCovDeriv_inner_eq (fun _ : M => v) Y.toFun (fun _ : M => w) y
+      ((SmoothVectorField.const (I := I) (M := M) v).smoothAt y)
+      (Y.smoothAt y) h_const_w
+    -- h_riesz : metricInner y (koszulCovDeriv ...) ((fun _ => w) y)
+    --           = (1/2) * koszulFunctional (const v) Y.toFun (const w) y
+    -- LHS = (1/2) * koszulFunctional ... = h_riesz.symm.
+    show koszulCotangentScalar v Y w y
+      = metricInner y (koszulCovDeriv (fun _ : M => v) Y.toFun y _ _) w
+    unfold koszulCotangentScalar
+    show (1/2 : ℝ) * koszulFunctional (fun _ : M => v) Y.toFun (fun _ : M => w) y
+      = metricInner y (koszulCovDeriv (fun _ : M => v) Y.toFun y _ _) w
+    exact h_riesz.symm
+  rw [← h_eq]
+  exact h_α_smooth
 
 /-- **Existence theorem for the Levi-Civita connection.**
 
