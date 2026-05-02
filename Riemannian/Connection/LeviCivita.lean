@@ -442,40 +442,16 @@ private theorem koszulLeviCivita_exists [IsLocallyConstantChartedSpace H M] :
     -- Goal: koszulCovDerivAux Y x hY X = koszulCovDeriv X Y x hX hY
     simp only [koszulCovDerivAux, dif_pos hX]
 
-/-! ### Bridge: smoothness of `koszulCovDeriv (const v) Y.toFun y` at x
+/-! ### Bridge: smoothness of `koszulCovDeriv (const v) Y.toFun y` at `x` -/
 
-For `v : E` (chart-frame constant tangent direction) and `Y : SmoothVectorField I M`,
-the section `y ↦ koszulCovDeriv (fun _ => v) Y.toFun y _ _` is `TangentSmoothAt`
-at every point.
-
-This is the framework "bridge" supporting the smoothness clause of
-`leviCivitaConnection_exists`. **Single PRE-PAPER sorry**, NOT axiom.
-Closure path:
-
-1. **Identify Riesz extraction with `ContinuousLinearMap.inverse`**:
-   `metricRiesz x φ = ContinuousLinearMap.inverse (g.metricTensor x) φ`. Real
-   proof in `Riemannian/Metric/RieszSmooth.lean` (`metricRiesz_eq_inverse` +
-   `metricToDual_isInvertible`).
-2. **`metricRiesz` section smoothness**: given a smooth cotangent section
-   `φ : Π y, T_yM →L[ℝ] ℝ`, the section `y ↦ metricRiesz y (φ y)` is
-   `TangentSmoothAt` at `x`. Path: `g.smoothMetric` (smooth bundle CLM
-   section) + `ContinuousLinearMap.IsInvertible.contDiffAt_map_inverse`
-   (Mathlib: inverse smooth at invertible) + `metricRiesz_eq_inverse`.
-3. **Koszul cotangent section smoothness**: package the koszul functional
-   `Z ↦ (1/2) * koszulFunctional (const v) Y.toFun Z y` as a smooth cotangent
-   section. Each of the 6 Koszul terms (3 directional derivatives + 3
-   metric-pairings of mlieBrackets) is smooth in `y` via existing framework
-   smoothness API (`metricInner_smoothAt`, mfderiv smoothness, mlieBracket
-   smoothness).
-4. **Riesz uniqueness bridge**: by `koszulCovDeriv_inner_eq`,
-   `koszulCovDeriv (const v) Y y _ _` is exactly the `metricRiesz` of the
-   koszul cotangent functional. Compose (1)+(2)+(3) to conclude.
-
-Each closure step is mechanical framework self-build — no Mathlib gap, no
-strategic decisions.
-
-**Ground truth**: do Carmo 1992 §2 Theorem 3.6 + Lee 2018 Prop. 4.26. -/
 set_option backward.isDefEq.respectTransparency false in
+/-- For `v : E` and `Y : SmoothVectorField I M`, the section
+`y ↦ koszulCovDeriv (const v) Y.toFun y` is `TangentSmoothAt` at every `x`.
+
+Riesz uniqueness bridge: `α y := metricRiesz y (koszulCotangentCLM v Y y)` is
+smooth (via `metricRiesz_section_smoothAt` + `koszulCotangentCLM_smoothAt`),
+and equals `koszulCovDeriv (const v) Y y _ _` by `koszulCovDeriv_inner_eq`
+applied at chart-frame constant test sections. -/
 private theorem koszulCovDeriv_const_smoothAt
     [IsLocallyConstantChartedSpace H M]
     (v : E) (Y : SmoothVectorField I M) (x : M) :
@@ -531,20 +507,15 @@ vector fields).
 The metric-compat statement assumes smooth $X, Y, Z$ — matching do Carmo's
 textbook setup; an unconditional form would be an over-statement.
 
-**Smoothness clause** (3rd conjunct): for any smooth section
-`Y : SmoothVectorField I M` and any constant direction `v : E`, the
-section `y ↦ cov.toFun Y.toFun y v` is `TangentSmoothAt` at every point.
-This conjunct is the framework-level "bridge" supporting downstream
-smoothness witnesses for `covDeriv` along chart-frame constant directions
-(used in `Riemannian.Curvature.ricciTraceMap` linearity slots and
-`ricciFormAt` bilinearity slots).
+**Smoothness clause** (3rd conjunct): for any `Y : SmoothVectorField I M` and
+`v : E`, `y ↦ cov.toFun Y.toFun y v` is `TangentSmoothAt` at every point.
+Supports downstream smoothness witnesses in `Riemannian.Curvature` (used in
+`ricciTraceMap` and `ricciFormAt` linearity/bilinearity slots).
 
-Closed via `hcov` eq spec at `X = (fun _ => v)`, which converts the
-smoothness statement to smoothness of
-`(fun y ↦ koszulCovDeriv (const v) Y.toFun y _ _)`, then forwarded to
-the framework helper `koszulCovDeriv_const_smoothAt` (currently
-sorry'd — single PRE-PAPER bridge sorry, NOT axiom). The Phase 1.6
-invariant "zero existence axioms in the Riemannian package" is preserved.
+Closed via `hcov` eq spec at `X = (fun _ => v)` + `koszulCovDeriv_const_smoothAt`
+(itself closed via Riesz uniqueness through `koszulCotangentCLM_smoothAt` —
+the **single remaining PRE-PAPER sub-sorry** in the chain). Phase 1.6
+invariant "zero existence axioms in the Riemannian package" preserved.
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 (existence + uniqueness via
 the Koszul formula); Lee 2018 Prop. 4.26 (smoothness of covariant

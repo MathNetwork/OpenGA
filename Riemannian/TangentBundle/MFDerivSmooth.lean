@@ -34,23 +34,11 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 
 omit [FiniteDimensional ℝ E] [CompleteSpace E] in
 set_option backward.isDefEq.respectTransparency false in
-/-- **Smoothness of `mfderiv` applied to a chart-frame-constant direction**.
+/-- **Smoothness of `mfderiv f y v` in `y`** for chart-frame-constant `v : E`
+(viewed as tangent direction via `TangentSpace I y = E` def-eq).
 
-For a globally smooth scalar function $f : M \to \mathbb{R}$ and any $v : E$
-(treated as a chart-frame-constant tangent direction via
-`TangentSpace I y = E` def-eq), the function $y \mapsto df_y(v)$ is smooth
-at every $x$.
-
-Boundaryless model assumption: needed so that `chart.target ∈ 𝓝 (chart x)`
-(via `extChartAt_target_mem_nhds`), letting us derive `ContDiffAt` of
-`f ∘ chart.symm` at `chart x`.
-
-Strategy: chart pullback. Define `f̂ := f ∘ (extChartAt I x).symm : E → ℝ`,
-smooth on a nhd of `chart x`. By the chain rule on chart source,
-$df_y(v) = d\hat{f}_{\text{chart}(y)}\big(d\text{chart}_y(v)\big)$. Smoothness
-in $y$ follows from `ContDiffAt.fderiv_right` (smoothness of `fderiv`) +
-`mfderiv_extChartAt_apply_smoothAt` (framework: chart mfderiv smooth in
-basepoint) via `clm_apply`. -/
+`[I.Boundaryless]` is needed for `chart.target ∈ 𝓝 (chart x)`, which gives
+`ContDiffAt` of `f ∘ chart.symm` at `chart x` (rather than `ContDiffWithinAt`). -/
 theorem mfderiv_const_dir_smoothAt
     {f : M → ℝ} (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) (v : E) :
     MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y : M => mfderiv I 𝓘(ℝ, ℝ) f y v) x := by
@@ -163,17 +151,10 @@ theorem mfderiv_const_dir_smoothAt
 
 omit [FiniteDimensional ℝ E] [CompleteSpace E] in
 set_option backward.isDefEq.respectTransparency false in
-/-- **Smoothness of `mfderiv` applied to a smooth direction**.
-
-Generalization of `mfderiv_const_dir_smoothAt` to varying directions: for a
-globally smooth scalar function $f : M \to \mathbb{R}$ and a section
-$V : M \to E$ smooth at $x$ (treated as a tangent direction via
-`TangentSpace I y = E` def-eq), the function $y \mapsto df_y(V_y)$ is smooth
-at $x$.
-
-Same chart-pullback strategy as `mfderiv_const_dir_smoothAt`, but the
-direction term is `mfderiv chart y (V y)` (smooth in y via `clm_apply`)
-instead of `mfderiv chart y v` (smooth in y for fixed v). -/
+/-- **Smoothness of `mfderiv f y (V y)` in `y`** for smoothly varying direction
+`V : M → E`. Generalization of `mfderiv_const_dir_smoothAt`: same chart-pullback
+strategy, with `mfderiv chart y (V y)` smooth via `clm_apply` of smooth chart
+mfderiv with smooth `V`. -/
 theorem mfderiv_smoothDir_smoothAt
     {f : M → ℝ} (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) {x : M}
     {V : M → E} (hV : ContMDiffAt I 𝓘(ℝ, E) ∞ V x) :

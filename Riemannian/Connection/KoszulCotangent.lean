@@ -8,31 +8,7 @@ import Riemannian.TangentBundle.SmoothVectorField
 
 For `v : E` (chart-frame constant tangent direction) and `Y : SmoothVectorField I M`,
 this file builds the **half-Koszul cotangent functional** as a smooth bundle CLM
-section:
-$$K(v, Y) : M \to (E \to_L \mathbb{R}), \quad K(v, Y)(y)(w) = \tfrac12\,K(v, Y; w_{\text{ext}})(y)$$
-where $w_{\text{ext}}$ is the chart-frame constant extension of $w \in E$ to a
-section of the tangent bundle.
-
-This `K(v, Y)` is the cotangent functional whose Riesz extraction gives
-$\nabla_v Y$ (the Levi-Civita connection along $v$).
-
-## Architecture
-
-* `koszulCotangentScalar v Y w y : ℝ` — half-Koszul scalar value at y, applied
-  to chart-frame-constant test vector w. Real `def`.
-* `koszulCotangentCLM v Y y : E →L[ℝ] ℝ` — the linear functional `w ↦ koszulCotangentScalar v Y w y`,
-  packaged as a CLM via `LinearMap.toContinuousLinearMap` (continuity automatic
-  in finite dim). Linearity in `w` proven via `koszul_smul_right` +
-  `koszul_add_right`. Real `def` + linearity proofs.
-* `koszulCotangentCLM_apply` — `koszulCotangentCLM v Y y w = koszulCotangentScalar v Y w y`.
-* `koszulCotangentScalar_smoothAt` — scalar smoothness of `Q` in `y` at every `x`,
-  for chart-frame constants. **Sub-sorry**, with closure plan: 6 koszul terms
-  (3 mfderiv + 3 mlieBracket-inner), each individually smooth via
-  `mfderiv_const_dir_smoothAt`, `mfderiv_smoothDir_smoothAt`,
-  `metricInner_smoothAt`, and `ContMDiffAt.mlieBracket_vectorField`.
-* `koszulCotangentCLM_smoothAt` — smoothness of the CLM-valued section,
-  derived from componentwise scalar smoothness via
-  `contMDiffOn_clm_of_components`.
+section. Its Riesz extraction gives $\nabla_v Y$ (Levi-Civita along $v$).
 
 **Used by**: `koszulCovDeriv_const_smoothAt` in `Riemannian/Connection/LeviCivita.lean`. -/
 
@@ -48,21 +24,13 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteS
   [IsLocallyConstantChartedSpace H M]
   [RiemannianMetric I M]
 
-/-- **Half-Koszul scalar value** at `y` applied to the chart-frame-constant
-test vector `w : E`:
-$$\tfrac12\,K\big(v_{\text{const}},\,Y,\,w_{\text{const}}\big)(y).$$
-Pure scalar, no CLM packaging yet. -/
+/-- **Half-Koszul scalar value** $\tfrac12\,K(v_{\text{const}}, Y, w_{\text{const}})(y)$. -/
 noncomputable def koszulCotangentScalar
     (v : E) (Y : SmoothVectorField I M) (w : E) (y : M) : ℝ :=
   (1/2 : ℝ) * koszulFunctional (fun _ : M => v) Y.toFun (fun _ : M => w) y
 
-/-- **Half-Koszul cotangent CLM** at `y`: the linear functional
-`w ↦ koszulCotangentScalar v Y w y`, packaged as `E →L[ℝ] ℝ` via
-`LinearMap.toContinuousLinearMap` (continuity automatic in finite dim).
-
-Linearity in `w` follows from `koszul_smul_right` + `koszul_add_right` applied
-to chart-frame-constant test sections (using metric-inner smoothness from
-`metricInner_smoothAt` to discharge the smoothness premises of those lemmas). -/
+/-- **Half-Koszul cotangent CLM** $w \mapsto \tfrac12\,K(v, Y; w)(y)$ as
+`E →L[ℝ] ℝ`. Linearity in `w` via `koszul_smul_right` + `koszul_add_right`. -/
 noncomputable def koszulCotangentCLM
     (v : E) (Y : SmoothVectorField I M) (y : M) : E →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap
