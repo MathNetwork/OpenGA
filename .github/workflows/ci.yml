@@ -22,7 +22,7 @@ jobs:
             --include="*.lean" \
             Riemannian GeometricMeasureTheory MinMax Regularity \
             2>/dev/null | wc -l | tr -d ' ')
-          EXPECTED=35
+          EXPECTED=32
           if [ "$ACTUAL" -ne "$EXPECTED" ]; then
             echo "::error::Sorry count drift: expected $EXPECTED, found $ACTUAL"
             echo "If the change is intentional, update SORRY_CATALOG.md (and the EXPECTED constant in this workflow)."

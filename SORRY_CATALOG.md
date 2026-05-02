@@ -18,11 +18,16 @@ require updating this file.
 
 | Module | PRE-PAPER | CITED-BLACK-BOX | PAPER-INTERNAL | CONJECTURAL | Total |
 |--------|-----------|------------------|----------------|-------------|-------|
-| Riemannian | 9 | 0 | 0 | 0 | 9 |
+| Riemannian | 4 | 0 | 0 | 0 | 4 |
 | GeometricMeasureTheory | 5 | 9 | 0 | 0 | 14 |
 | MinMax | 3 | 9 | 0 | 0 | 12 |
 | Regularity | 0 | 2 | 0 | 0 | 2 |
-| **Total** | **17** | **20** | **0** | **0** | **37** |
+| **Total** | **12** | **20** | **0** | **0** | **32** |
+
+(Bridge investment closure: Riemannian 9 → 4. The 5 closed sorrys: LeviCivita
+`leviCivitaConnection_exists` smoothness clause + `koszulCovDeriv_const_smoothAt`
++ associated Curvature `ricciTraceMap` / `ricciFormAt` smoothness witnesses.
+Sub-sorry moved into KoszulCotangent.lean `koszulCotangentCLM_smoothAt`.)
 
 ## Riemannian (9)
 
