@@ -18,16 +18,25 @@ require updating this file.
 
 | Module | PRE-PAPER | CITED-BLACK-BOX | PAPER-INTERNAL | CONJECTURAL | Total |
 |--------|-----------|------------------|----------------|-------------|-------|
-| Riemannian | 3 | 0 | 0 | 0 | 3 |
+| Riemannian | 9 | 0 | 0 | 0 | 9 |
 | GeometricMeasureTheory | 5 | 9 | 0 | 0 | 14 |
 | MinMax | 3 | 9 | 0 | 0 | 12 |
 | Regularity | 0 | 2 | 0 | 0 | 2 |
-| **Total** | **11** | **20** | **0** | **0** | **31** |
+| **Total** | **17** | **20** | **0** | **0** | **37** |
 
-## Riemannian (3)
-| `Curvature.lean:76` | `ricciTraceMap.map_add'` | PRE-PAPER | C^∞-linearity of Ricci trace map in first argument. Derive from `koszulCovDeriv` linearity in `X` (now that `koszulLeviCivita_exists` is closed, the route via `leviCivitaConnection`'s tensoriality is unblocked). |
-| `Curvature.lean:77` | `ricciTraceMap.map_smul'` | PRE-PAPER | Same as above. |
-| `Curvature.lean:111` | `ricci_symm` | PRE-PAPER | Symmetry of Ricci. Closure path: `riemannCurvature_inner_diagonal_zero` (skew-symm of R as endomorphism) via metric-compat applied 2× + scalar Hessian-Lie (`mfderiv_iterate_sub_eq_mlieBracket_apply`, **now closed**) → endo trace = 0; combined with Bianchi I (closed) + first-arg antisymmetry (closed) to derive `ricci(X,Y) - ricci(Y,X) = -tr(R(X,Y) endo) = 0`. **Unblocked**: all dependencies closed. |
+## Riemannian (9)
+
+| File:line | Identifier | Classification | Repair plan |
+|-----------|-----------|---------------|-------------|
+| `Curvature.lean:~138` | `ricciTraceMap.map_add'` smoothness witness 1 | PRE-PAPER | `TangentSmoothAt (fun y ↦ covDeriv (const z₁) Y y) x`. Repair: framework `ContMDiffCovariantDerivativeOn` instance for `leviCivitaConnection` (lifts smoothness of input sections to smoothness of `covDeriv` output as a tangent vector field). Linearity proof skeleton is closed; only smoothness witness remains. |
+| `Curvature.lean:~143` | `ricciTraceMap.map_add'` smoothness witness 2 | PRE-PAPER | Same as above (z₂ branch). |
+| `Curvature.lean:~205` | `ricciTraceMap.map_smul'` smoothness witness | PRE-PAPER | Same as above (single-branch smul case). |
+| `Curvature.lean:~256` | `riemannCurvature_inner_diagonal_zero` | PRE-PAPER | Skew-symmetry of $R(X,Y)$ as endomorphism, $\langle R(X,Y) Z, Z\rangle_g = 0$. Closure path via metric-compat 4× + manifold scalar Hessian-Lie (`mfderiv_iterate_sub_eq_mlieBracket_apply`, **now closed**). Outline laid out in proof body. |
+| `Curvature.lean:~287` | `ricci_symm` | PRE-PAPER | Symmetry of Ricci. Closure path: trace-via-OnB + Bianchi I (closed) + first-arg antisymm (closed) + diagonal-zero (above). Requires a $g$-orthonormal basis (framework self-build, see `metricOrthonormalBasis` repair plan). |
+| `Curvature.lean:~318` | `ricciFormAt.toFun.map_add'` | PRE-PAPER | Linearity of $\mathrm{Ric}(V, \cdot)$ in 2nd tangent vector. Repair: pointwise on $z$, additivity of `riemannCurvature` in 3rd-arg-section follows from `covDeriv_add_field` (already proven) applied to each of 3 covariant-derivative terms; trace inherits linearity. **No new infra needed.** |
+| `Curvature.lean:~322` | `ricciFormAt.toFun.map_smul'` | PRE-PAPER | Same path via `covDeriv_smul_const_field` (already proven). |
+| `Curvature.lean:~325` | `ricciFormAt.map_add'` | PRE-PAPER | Linearity of $\mathrm{Ric}(\cdot, W)$ in 1st tangent vector. Repair: additivity of `riemannCurvature` in 2nd-arg-section via `covDeriv_add_field` + `VectorField.mlieBracket_add_right` (Mathlib). |
+| `Curvature.lean:~327` | `ricciFormAt.map_smul'` | PRE-PAPER | Same path via `covDeriv_smul_const_field` + `VectorField.mlieBracket_const_smul_right` (Mathlib). |
 
 ## GeometricMeasureTheory (14)
 
