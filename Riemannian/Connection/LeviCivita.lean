@@ -440,6 +440,54 @@ private theorem koszulLeviCivita_exists [IsLocallyConstantChartedSpace H M] :
     -- Goal: koszulCovDerivAux Y x hY X = koszulCovDeriv X Y x hX hY
     simp only [koszulCovDerivAux, dif_pos hX]
 
+/-! ### Bridge: smoothness of `koszulCovDeriv (const v) Y.toFun y` at x
+
+For `v : E` (chart-frame constant tangent direction) and `Y : SmoothVectorField I M`,
+the section `y ↦ koszulCovDeriv (fun _ => v) Y.toFun y _ _` is `TangentSmoothAt`
+at every point.
+
+This is the framework "bridge" supporting the smoothness clause of
+`leviCivitaConnection_exists`. **Single PRE-PAPER sorry**, NOT axiom.
+Closure path:
+
+1. **Identify Riesz extraction with `ContinuousLinearMap.inverse`**:
+   `metricRiesz x φ = ContinuousLinearMap.inverse (g.metricTensor x) φ`. Real
+   proof in `Riemannian/Metric/RieszSmooth.lean` (`metricRiesz_eq_inverse` +
+   `metricToDual_isInvertible`).
+2. **`metricRiesz` section smoothness**: given a smooth cotangent section
+   `φ : Π y, T_yM →L[ℝ] ℝ`, the section `y ↦ metricRiesz y (φ y)` is
+   `TangentSmoothAt` at `x`. Path: `g.smoothMetric` (smooth bundle CLM
+   section) + `ContinuousLinearMap.IsInvertible.contDiffAt_map_inverse`
+   (Mathlib: inverse smooth at invertible) + `metricRiesz_eq_inverse`.
+3. **Koszul cotangent section smoothness**: package the koszul functional
+   `Z ↦ (1/2) * koszulFunctional (const v) Y.toFun Z y` as a smooth cotangent
+   section. Each of the 6 Koszul terms (3 directional derivatives + 3
+   metric-pairings of mlieBrackets) is smooth in `y` via existing framework
+   smoothness API (`metricInner_smoothAt`, mfderiv smoothness, mlieBracket
+   smoothness).
+4. **Riesz uniqueness bridge**: by `koszulCovDeriv_inner_eq`,
+   `koszulCovDeriv (const v) Y y _ _` is exactly the `metricRiesz` of the
+   koszul cotangent functional. Compose (1)+(2)+(3) to conclude.
+
+Each closure step is mechanical framework self-build — no Mathlib gap, no
+strategic decisions.
+
+**Ground truth**: do Carmo 1992 §2 Theorem 3.6 + Lee 2018 Prop. 4.26. -/
+private theorem koszulCovDeriv_const_smoothAt
+    [IsLocallyConstantChartedSpace H M]
+    (v : E) (Y : SmoothVectorField I M) (x : M) :
+    OpenGALib.TangentSmoothAt
+      (fun y : M => koszulCovDeriv (fun _ : M => v) Y.toFun y
+        ((SmoothVectorField.const (I := I) (M := M) v).smoothAt y)
+        (Y.smoothAt y)) x := by
+  -- Single PRE-PAPER bridge sorry. Closure plan: see docstring above.
+  -- Concretely: build `α y := metricRiesz y φ_y` for the koszul cotangent
+  -- functional `φ_y`, prove `α y = koszulCovDeriv (const v) Y.toFun y _ _`
+  -- via Riesz uniqueness + `koszulCovDeriv_inner_eq`, then conclude
+  -- `TangentSmoothAt α x` via `metricRiesz_eq_inverse` + Mathlib
+  -- `IsInvertible.contDiffAt_map_inverse`.
+  sorry
+
 /-- **Existence theorem for the Levi-Civita connection.**
 
 On a Riemannian manifold, there exists a covariant derivative on the
@@ -449,23 +497,20 @@ vector fields).
 The metric-compat statement assumes smooth $X, Y, Z$ — matching do Carmo's
 textbook setup; an unconditional form would be an over-statement.
 
-**Smoothness clause** (3rd conjunct, **PRE-PAPER sorry**): for any smooth
-section `Y : SmoothVectorField I M` and any constant direction `v : E`,
-the section `y ↦ cov.toFun Y.toFun y v` is `TangentSmoothAt` at every
-point. This conjunct is the framework-level "bridge" supporting
-downstream smoothness witnesses for `covDeriv` along chart-frame constant
-directions (used in `Riemannian.Curvature.ricciTraceMap` linearity slots
-and `ricciFormAt` bilinearity slots).
+**Smoothness clause** (3rd conjunct): for any smooth section
+`Y : SmoothVectorField I M` and any constant direction `v : E`, the
+section `y ↦ cov.toFun Y.toFun y v` is `TangentSmoothAt` at every point.
+This conjunct is the framework-level "bridge" supporting downstream
+smoothness witnesses for `covDeriv` along chart-frame constant directions
+(used in `Riemannian.Curvature.ricciTraceMap` linearity slots and
+`ricciFormAt` bilinearity slots).
 
-The smoothness clause is currently `sorry`'d (PRE-PAPER, NOT axiom — Phase 1.6
-invariant "zero existence axioms in the Riemannian package" preserved).
-Closure path: reduce via `koszulLeviCivita_exists`'s eq spec
-(`cov.toFun Y x (X x) = koszulCovDeriv X Y x hX hY` for smooth X, Y)
-to smoothness of `(fun y ↦ koszulCovDeriv (const v) Y.toFun y _ _)`,
-which itself goes through smoothness of `metricRiesz` of a smooth
-functional (Riesz extraction inverts a smooth bundle CLM), or
-equivalently via `ContMDiffCovariantDerivativeOn` instance for
-`leviCivitaConnection.toFun`.
+Closed via `hcov` eq spec at `X = (fun _ => v)`, which converts the
+smoothness statement to smoothness of
+`(fun y ↦ koszulCovDeriv (const v) Y.toFun y _ _)`, then forwarded to
+the framework helper `koszulCovDeriv_const_smoothAt` (currently
+sorry'd — single PRE-PAPER bridge sorry, NOT axiom). The Phase 1.6
+invariant "zero existence axioms in the Riemannian package" is preserved.
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 (existence + uniqueness via
 the Koszul formula); Lee 2018 Prop. 4.26 (smoothness of covariant
@@ -516,19 +561,22 @@ theorem leviCivitaConnection_exists [IsLocallyConstantChartedSpace H M] :
     show directionalDeriv (fun y => metricInner y (Y y) (Z y)) x (X x) =
         (1 / 2) * koszulFunctional X Y Z x + (1 / 2) * koszulFunctional X Z Y x
     linarith
-  · -- Smoothness clause: PRE-PAPER (see docstring above for closure plan).
-    -- For Y : SmoothVectorField, v : E, x : M, we need
-    --   TangentSmoothAt (fun y => cov.toFun Y.toFun y v) x.
-    -- By `hcov` (eq spec from koszulLeviCivita_exists), specialized at the
-    -- chart-frame constant section X = (fun _ => v):
-    --   cov.toFun Y.toFun y v = cov.toFun Y.toFun y ((fun _ => v) y)
-    --                          = koszulCovDeriv (fun _ => v) Y.toFun y _ _.
-    -- Reduces to smoothness of (fun y => koszulCovDeriv (const v) Y.toFun y).
-    -- Closure via either:
-    --   (a) `metricRiesz` smoothness (Riesz of smooth functional);
-    --   (b) `ContMDiffCovariantDerivativeOn` instance for cov.
+  · -- Smoothness clause: reduce via `hcov` eq spec at X = (fun _ => v) to
+    -- smoothness of `(fun y => koszulCovDeriv (const v) Y.toFun y _ _)`,
+    -- then forward to the framework helper `koszulCovDeriv_const_smoothAt`.
     intro Y v x
-    sorry
+    -- Pointwise eq: `cov.toFun Y.toFun y v = koszulCovDeriv (const v) Y.toFun y _ _`
+    -- for every y, because both arguments are smooth at every y.
+    have h_eq : (fun y : M => cov.toFun Y.toFun y v)
+        = (fun y : M => koszulCovDeriv (fun _ : M => v) Y.toFun y
+            ((SmoothVectorField.const (I := I) (M := M) v).smoothAt y)
+            (Y.smoothAt y)) := by
+      funext y
+      exact hcov (fun _ => v) Y.toFun y
+        ((SmoothVectorField.const (I := I) (M := M) v).smoothAt y)
+        (Y.smoothAt y)
+    rw [h_eq]
+    exact koszulCovDeriv_const_smoothAt v Y x
 
 /-- The **Levi-Civita connection** $\nabla$ on the tangent bundle of a
 Riemannian manifold $M$: the unique torsion-free, metric-compatible
