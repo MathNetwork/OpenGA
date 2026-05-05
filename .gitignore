@@ -1,0 +1,30 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.blg
+*.bbl
+*.fdb_latexmk
+*.fls
+*.out
+*.toc
+*.synctex.gz
+*.pdf
+
+# OS files
+.DS_Store
+
+# IDE
+.vscode/
+
+# Overleaf copy
+Thesis_Overleaf/
+
+# Backup files
+**/backup/
+
+# Reference papers
+resources/
+
+# Lean build artifacts (Mathlib oleans, ~7G)
+.lake/
+lake-packages/

@@ -1,0 +1,7 @@
+# Patterns to exclude from sorry catalog drift detection.
+# One path prefix per line. Anything matching is skipped.
+# Lines starting with `#` are comments.
+
+# AltRegularity is a sub-project (paper companion) with its own
+# SORRY_CATALOG.md per CLAUDE.md. Exclude from main catalog count.
+AltRegularity/
