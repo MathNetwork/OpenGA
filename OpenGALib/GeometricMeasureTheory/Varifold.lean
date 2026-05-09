@@ -40,14 +40,29 @@ structure Varifold (M : Type*)
   /-- The mass measure has finite total mass. -/
   isFiniteMeasure : MeasureTheory.IsFiniteMeasure massMeasure
 
+/-- The zero varifold: zero-dimensional with zero mass measure. -/
+instance Varifold.instZero : Zero (Varifold M) where
+  zero :=
+    { dim := 0
+      massMeasure := 0
+      isFiniteMeasure := ⟨by simp⟩ }
+
 /-- The type of $n$-varifolds in $M$ is non-empty: the zero varifold
 (at dimension $0$) provides a concrete witness. -/
 instance Varifold.instNonempty : Nonempty (Varifold M) :=
-  ⟨{ dim := 0
-     massMeasure := 0
-     isFiniteMeasure := ⟨by simp⟩ }⟩
+  ⟨0⟩
+
+/-- The default varifold is the zero varifold. -/
+instance Varifold.instInhabited : Inhabited (Varifold M) :=
+  ⟨0⟩
 
 namespace Varifold
+
+/-- The zero varifold has dimension zero. -/
+@[simp] theorem zero_dim : (0 : Varifold M).dim = 0 := rfl
+
+/-- The zero varifold has zero mass measure. -/
+@[simp] theorem zero_massMeasure : (0 : Varifold M).massMeasure = 0 := rfl
 
 /-- Total mass $\|V\|(M)$. -/
 def mass (V : Varifold M) : ℝ := (V.massMeasure Set.univ).toReal
@@ -59,6 +74,24 @@ def massOn (V : Varifold M) (U : Set M) : ℝ := (V.massMeasure U).toReal
 neighborhood has positive mass. -/
 def support (V : Varifold M) : Set M :=
   {p | ∀ U ∈ nhds p, V.massMeasure U ≠ 0}
+
+/-- The zero varifold has zero total mass. -/
+@[simp] theorem mass_zero : mass (0 : Varifold M) = 0 := by
+  simp [mass]
+
+/-- The zero varifold has zero localized mass on every set. -/
+@[simp] theorem massOn_zero (U : Set M) : massOn (0 : Varifold M) U = 0 := by
+  simp [massOn]
+
+/-- The zero varifold has empty support. -/
+@[simp] theorem support_zero : support (0 : Varifold M) = ∅ := by
+  ext p
+  constructor
+  · intro hp
+    have h_univ : Set.univ ∈ nhds p := by simp
+    exact False.elim ((hp Set.univ h_univ) (by simp))
+  · intro hp
+    cases hp
 
 /-- Pointwise density $\Theta(\|V\|, p) := \lim_{r \to 0} \|V\|(B_r(p))/(\omega_n r^n)$
 where $n = V.\mathrm{dim}$.
