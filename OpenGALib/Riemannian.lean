@@ -33,9 +33,7 @@ Riemannian                   ← THIS package
        ↑
 GeometricMeasureTheory       ← consumer (Variation/, Stable.lean)
        ↑
-MinMax / Regularity          ← consumers
-       ↑
-AltRegularity                ← consumer
+Regularity                   ← consumer
 ```
 
 ## Files

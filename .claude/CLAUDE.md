@@ -4,7 +4,7 @@
 
 This framework is a Lean 4 mathematical software project, not a one-shot paper formalization.
 
-**Reusable Lean 4 mathematical software libraries**: Riemannian, GeometricMeasureTheory, MinMax theory, Regularity theory — Mathlib upstream candidates.
+**Reusable Lean 4 mathematical software libraries**: Riemannian, GeometricMeasureTheory, Regularity theory — Mathlib upstream candidates.
 
 Architectural decisions favor long-term software value. Paper-specific
 formalization sub-projects live in separate repos and consume this lib stack
@@ -14,27 +14,28 @@ Phase 1 (Layer A + Layer B real grounding) is complete: 20 GMT analysis primitiv
 
 ## Architecture
 
-Single OpenGALib Lean library, layered:
+Single OpenGALib Lean library, layered under `OpenGALib/`:
 
 ```
 OpenGALib (single lean_lib, 4 sub-namespaces)
+├── Algebraic                  ← lib (BilinearForm, Riesz, concrete instances)
+│         ↑
 ├── Riemannian                 ← lib (Connection, Curvature, SecondFundamentalForm, Gradient)
 │         ↑
 ├── GeometricMeasureTheory     ← lib (Variation/, HasNormal, Stable, Varifold, ...)
 │         ↑
-├── MinMax                     ← lib (min-max theory, Sweepout subnamespace)
 └── Regularity                 ← lib (regularity theory; Wickramasekera, Allard, Schoen-Simon, etc.)
 ```
 
-OpenGALib is a single Lake package containing 4 sub-namespaces (Riemannian, GeometricMeasureTheory,
-MinMax, Regularity). Namespace separation reflects layering — sub-namespaces are independently
-meaningful and any subset is a future Mathlib-upstream candidate.
+OpenGALib is a single Lake package containing 4 sub-namespaces (Algebraic, Riemannian,
+GeometricMeasureTheory, Regularity). Namespace separation reflects layering — sub-namespaces
+are independently meaningful and any subset is a future Mathlib-upstream candidate.
 Riemannian is independent of paper-domain concerns and is a future spin-out
 candidate as a standalone Lean library (Mathlib upstream / community use).
 GeometricMeasureTheory must not reference paper-specific or domain-specific concepts.
-MinMax and Regularity must not reference paper-specific concepts.
-Paper-specific sub-projects live outside this repo and consume the OpenGALib lib
-stack via `require OpenGALib from ".."`.
+Regularity must not reference paper-specific concepts.
+Paper-specific sub-projects (including min-max / sweepout machinery) live outside this
+repo and consume the OpenGALib lib stack via `require OpenGALib from ".."`.
 
 ## Self-build is the default action
 

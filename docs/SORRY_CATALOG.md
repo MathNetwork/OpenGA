@@ -20,9 +20,8 @@ require updating this file.
 |--------|-----------|------------------|----------------|-------------|-------|
 | Riemannian | 4 | 0 | 0 | 0 | 4 |
 | GeometricMeasureTheory | 5 | 9 | 0 | 0 | 14 |
-| MinMax | 3 | 9 | 0 | 0 | 12 |
 | Regularity | 0 | 2 | 0 | 0 | 2 |
-| **Total** | **12** | **20** | **0** | **0** | **32** |
+| **Total** | **9** | **11** | **0** | **0** | **20** |
 
 (Bridge investment final closure: Riemannian 9 → 3. The 6 closed sorrys: full
 `leviCivitaConnection_exists` smoothness clause + `koszulCovDeriv_const_smoothAt`
@@ -68,23 +67,6 @@ via PRE-PAPER sorry.)
 | `Isoperimetric/Coarea.lean:117` | (variant) | CITED-BLACK-BOX | Same source. |
 | `Isoperimetric/Relative.lean:87` | relative isoperimetric | CITED-BLACK-BOX | Maggi 2012 §16. |
 
-## MinMax (12)
-
-| File:line | Identifier | Classification | Repair plan |
-|-----------|-----------|---------------|-------------|
-| `Sweepout/PullTight.lean:56` | `isStationary_of_minmaxLimit` | CITED-BLACK-BOX | Pull-tight lemma; Colding–De Lellis 2003 / Pitts 1981. |
-| `Sweepout/MassCancellation.lean:56` | `perim_slice_le_width` | PRE-PAPER | Definitional inequality from `width` definition. |
-| `Sweepout/Interpolation.lean:62` | interpolation lemma | CITED-BLACK-BOX | Standard min-max interpolation. |
-| `Sweepout/MinMaxLimit.lean:144` | slices L¹ convergence | CITED-BLACK-BOX | Min-max limit characterization. |
-| `Sweepout/MinMaxLimit.lean:151` | DChi weak convergence | CITED-BLACK-BOX | Same source. |
-| `Sweepout/MinMaxLimit.lean:184` | (existence variant) | CITED-BLACK-BOX | Min-max sequence existence. |
-| `Sweepout/MinMaxLimit.lean:197` | support characterization | CITED-BLACK-BOX | Standard support-from-limit. |
-| `Sweepout/HomotopicMinimization.lean:122` | inner homotopic minimizer | CITED-BLACK-BOX | DLT 2013. |
-| `Sweepout/HomotopicMinimization.lean:127` | outer homotopic minimizer | CITED-BLACK-BOX | DLT 2013. |
-| `Sweepout/HomotopicMinimization.lean:184` | finiteness | CITED-BLACK-BOX | DLT 2013. |
-| `Sweepout/NonExcessive.lean:83` | critical iff left/right critical | PRE-PAPER | Definitional, mechanical. |
-| `Sweepout/NonExcessive.lean:251` | non-excessive ONVP existence | PRE-PAPER | Construction over generic compact manifold. |
-
 ## Regularity (2)
 
 | File:line | Identifier | Classification | Repair plan |
@@ -95,8 +77,8 @@ via PRE-PAPER sorry.)
 ## Notes
 
 * This catalog tracks **public-facing** sorries (Riemannian /
-  GeometricMeasureTheory / MinMax / Regularity packages). Application
-  papers maintain their own catalogs.
+  GeometricMeasureTheory / Regularity packages). Application papers
+  maintain their own catalogs.
 * PRE-PAPER classification is **not permanent technical debt**: every
   PRE-PAPER entry has a concrete repair trigger (Mathlib API maturation
   or framework self-build follow-up).

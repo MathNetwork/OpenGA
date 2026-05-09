@@ -128,9 +128,7 @@ applications (which only use mass measure / support information).
 
 **Ground truth**: Simon 1983 §38 (varifold convergence as weak-*
 convergence of Radon measures on the Grassmann bundle, paired against
-compactly supported continuous test functions); Allard 1972 §3.
-
-**Used by**: `Sweepout.MinMaxLimit` def (`Sweepout/MinMaxLimit.lean`). -/
+compactly supported continuous test functions); Allard 1972 §3. -/
 def VarifoldConverge (Vᵢ : ℕ → Varifold M) (V : Varifold M) : Prop :=
   ∀ φ : M → ℝ, Continuous φ → HasCompactSupport φ →
     Filter.Tendsto
@@ -245,8 +243,7 @@ exact value of `(ofBoundary Ω).dim`.
 structure theorem (Maggi 2012, Ch. 15) for the reduced boundary as a
 rectifiable set.
 
-**Used by**: `Sweepout.MinMaxLimit` def (`OpenGALib/MinMax/Sweepout/MinMaxLimit.lean`),
-`dlt_criterion` (`AltRegularity/Integrality/PerimeterConvergence.lean`). -/
+-/
 noncomputable def ofBoundary (Ω : FinitePerimeter M) : Varifold M where
   dim := 0
   massMeasure := Ω.perimMeasure

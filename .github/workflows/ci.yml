@@ -22,7 +22,7 @@ jobs:
             --include="*.lean" \
             OpenGALib \
             2>/dev/null | wc -l | tr -d ' ')
-          EXPECTED=32
+          EXPECTED=20
           if [ "$ACTUAL" -ne "$EXPECTED" ]; then
             echo "::error::Sorry count drift: expected $EXPECTED, found $ACTUAL"
             echo "If the change is intentional, update docs/SORRY_CATALOG.md (and the EXPECTED constant in this workflow)."

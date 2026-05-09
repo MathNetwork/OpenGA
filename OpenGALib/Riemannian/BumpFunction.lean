@@ -16,8 +16,8 @@ across partition-of-unity constructions, cutoff arguments, smoothing,
 test-section construction, and chart-local extension proofs. Per the
 framework's "build it ourselves" stance, we expose the
 canonical bump infrastructure under a single namespace
-`OpenGALib.BumpFunction` so downstream Riemannian / GMT / MinMax /
-Regularity work has one stable entry point.
+`OpenGALib.BumpFunction` so downstream Riemannian / GMT / Regularity
+work has one stable entry point.
 
 Mathlib provides the underlying primitives (`Real.expNegInvGlue`,
 `Real.smoothTransition`, `ContDiffBump`, `SmoothBumpFunction`); none

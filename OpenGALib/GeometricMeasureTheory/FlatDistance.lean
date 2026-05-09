@@ -31,9 +31,7 @@ Specialization of the flat norm on integral $n$-currents to indicator
 functions of Caccioppoli sets, where boundary-minimization in the
 general flat norm collapses to the symmetric-difference volume.
 
-**Ground truth**: Simon 1983 §31; specialization Maggi 2012 §15.
-
-**Used by**: `Sweepout.FContinuous` def (`Sweepout/Defs.lean`). -/
+**Ground truth**: Simon 1983 §31; specialization Maggi 2012 §15. -/
 noncomputable def flatDist (Ω₁ Ω₂ : FinitePerimeter M) : ℝ :=
   (MeasureTheory.volume (symmDiff Ω₁.carrier Ω₂.carrier)).toReal
 
