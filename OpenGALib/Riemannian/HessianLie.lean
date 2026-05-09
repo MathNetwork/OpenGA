@@ -1,6 +1,6 @@
-import OpenGALib.Riemannian.Foundations.HessianLie.Flat
-import OpenGALib.Riemannian.Foundations.HessianLie.ChartHelpers
-import OpenGALib.Riemannian.Foundations.HessianLie.Manifold
+import OpenGALib.Riemannian.HessianLie.Flat
+import OpenGALib.Riemannian.HessianLie.ChartHelpers
+import OpenGALib.Riemannian.HessianLie.Manifold
 
 /-!
 # Scalar Hessian–Lie identity (facade)

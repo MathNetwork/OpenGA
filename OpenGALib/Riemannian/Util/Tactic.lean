@@ -1,14 +1,14 @@
-import OpenGALib.Riemannian.Foundations.Attributes
+import OpenGALib.Riemannian.Util.Attributes
 import OpenGALib.Riemannian.Metric.Basic
 
 /-!
 # Riemannian tactic infrastructure
 
 User-facing entry point for the framework's domain-specific simp
-attributes. Re-exports `Foundations/Attributes.lean` so downstream
+attributes. Re-exports `Util/Attributes.lean` so downstream
 code can simply
 ```
-import OpenGALib.Riemannian.Foundations.Tactic
+import OpenGALib.Riemannian.Util.Tactic
 ```
 to obtain both the attribute declarations and (transitively) the
 metric algebra lemmas tagged with them.

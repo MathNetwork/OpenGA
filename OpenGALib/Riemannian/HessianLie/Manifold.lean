@@ -1,7 +1,7 @@
 import Mathlib.Geometry.Manifold.VectorField.LieBracket
 import Mathlib.Geometry.Manifold.VectorField.Pullback
-import OpenGALib.Riemannian.Foundations.HessianLie.Flat
-import OpenGALib.Riemannian.Foundations.HessianLie.ChartHelpers
+import OpenGALib.Riemannian.HessianLie.Flat
+import OpenGALib.Riemannian.HessianLie.ChartHelpers
 
 /-!
 # Scalar Hessian–Lie identity — manifold version

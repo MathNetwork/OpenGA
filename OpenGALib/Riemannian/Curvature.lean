@@ -1,7 +1,7 @@
 import OpenGALib.Riemannian.Connection
 import OpenGALib.Riemannian.Connection.Smoothness
 import OpenGALib.Riemannian.TangentBundle.SmoothVectorField
-import OpenGALib.Riemannian.Foundations.HessianLie
+import OpenGALib.Riemannian.HessianLie
 import Mathlib.LinearAlgebra.Trace
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
