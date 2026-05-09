@@ -20,7 +20,7 @@ The inner product on `TangentSpace I x` is the framework-owned
 -/
 
 open Bundle OpenGALib
-open scoped ContDiff Manifold Bundle
+open scoped ContDiff Manifold Bundle Riemannian
 
 namespace Riemannian
 

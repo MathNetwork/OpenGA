@@ -13,7 +13,7 @@ section. Its Riesz extraction gives $\nabla_v Y$ (Levi-Civita along $v$).
 **Used by**: `koszulCovDeriv_const_smoothAt` in `OpenGALib/Riemannian/Connection/LeviCivita.lean`. -/
 
 open Bundle VectorField OpenGALib
-open scoped ContDiff Manifold Topology
+open scoped ContDiff Manifold Topology Riemannian
 
 namespace Riemannian
 

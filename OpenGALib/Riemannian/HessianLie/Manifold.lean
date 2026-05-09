@@ -44,7 +44,7 @@ algebraic content.
 Manifolds* Proposition 8.30. -/
 
 open Bundle VectorField
-open scoped ContDiff Manifold Topology
+open scoped ContDiff Manifold Topology Riemannian
 
 namespace Riemannian
 

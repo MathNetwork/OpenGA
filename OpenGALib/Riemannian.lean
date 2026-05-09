@@ -1,8 +1,8 @@
 import OpenGALib.Riemannian.BumpFunction
 import OpenGALib.Riemannian.Connection
 import OpenGALib.Riemannian.Curvature
-import OpenGALib.Riemannian.Util.Notation
-import OpenGALib.Riemannian.Util.Tactic
+import OpenGALib.Util.Notation
+import OpenGALib.Util.Tactic
 import OpenGALib.Riemannian.Gradient
 import OpenGALib.Riemannian.LoopSpace
 import OpenGALib.Riemannian.Metric

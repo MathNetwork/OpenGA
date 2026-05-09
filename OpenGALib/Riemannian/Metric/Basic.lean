@@ -4,7 +4,7 @@ import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.LinearAlgebra.BilinearMap
 import OpenGALib.Algebraic.BilinearForm.Basic
-import OpenGALib.Riemannian.Util.Attributes
+import OpenGALib.Util.Attributes
 
 /-!
 # RiemannianMetric — typeclass + inner product API + tangent-space bridges

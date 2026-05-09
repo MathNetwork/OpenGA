@@ -2,6 +2,7 @@ import OpenGALib.Riemannian.Connection
 import OpenGALib.Riemannian.Connection.Smoothness
 import OpenGALib.Riemannian.TangentBundle.SmoothVectorField
 import OpenGALib.Riemannian.HessianLie
+import OpenGALib.Util.Notation.Riemann
 import Mathlib.LinearAlgebra.Trace
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
@@ -50,7 +51,7 @@ Riemann curvature tensor, Ricci curvature, scalar curvature.
 -/
 
 open Bundle VectorField OpenGALib
-open scoped ContDiff Manifold
+open scoped ContDiff Manifold Riemannian
 
 namespace Riemannian
 
@@ -61,11 +62,30 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
   [IsLocallyConstantChartedSpace H M]
   [RiemannianMetric I M]
 
-/-! `riemannCurvature` and `riemannCurvature_antisymm` are connection-level
-content (depend only on `covDeriv` and `mlieBracket`, not metric). They
-live in `Riemannian.Connection.Bianchi` (re-exported via
-`Riemannian.Connection`) so that `bianchi_first` can reference them
-without circular dependency. -/
+/-! `riemannCurvature`, `riemannCurvature_def`, and the helper
+`covDeriv_mlieBracket_swap_apply` are connection-level content (depend
+only on `covDeriv` and `mlieBracket`, not metric). They live in
+`Riemannian.Connection.Bianchi`. The `riemannCurvature_antisymm`
+theorem below uses `Riem(X, Y) Z` notation (declared in
+`Util/Notation/Curvature.lean`, post-Bianchi tier) so it must live
+here, not in Bianchi. -/
+
+/-- **Riemann tensor antisymmetry in the first two arguments**:
+$R(X, Y) Z = -R(Y, X) Z$ pointwise.
+
+Math: Lie bracket is antisymmetric and the connection is linear in its
+direction argument. `simp only [riem_simp]` unfolds `R` to its
+$\nabla \nabla - \nabla \nabla - \nabla_{[\cdot,\cdot]}$ form;
+`covDeriv_mlieBracket_swap_apply` pulls the bracket-swap negation
+through `covDeriv`; `abel` finishes.
+
+**Ground truth**: do Carmo 1992 §4 Proposition 2.5 (i). -/
+theorem riemannCurvature_antisymm
+    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
+    Riem(X, Y) Z x = -Riem(Y, X) Z x := by
+  simp only [riem_simp]
+  rw [covDeriv_mlieBracket_swap_apply]
+  abel
 
 /-- **Ricci-trace linear map** at a point: the linear map
 $z \mapsto R(z\text{-extended}, X) Y(x)$ on $T_xM$, where

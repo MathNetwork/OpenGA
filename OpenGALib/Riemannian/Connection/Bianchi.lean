@@ -1,5 +1,7 @@
+
 import OpenGALib.Riemannian.Connection.LeviCivita
-import OpenGALib.Riemannian.Util.Attributes
+import OpenGALib.Util.Attributes
+import OpenGALib.Util.Notation.Connection
 
 /-!
 # Riemannian.Connection.Bianchi
@@ -161,26 +163,10 @@ noncomputable def riemannCurvature
   covDeriv X (covDeriv Y Z) x - covDeriv Y (covDeriv X Z) x
     - covDeriv (mlieBracket I X Y) Z x
 
-/-! ### Notation
-
-Mathematical notation for the connection-level primitives. All scoped to
-`Riemannian` (`open scoped Riemannian` activates them). Defined here so
-the `riem_simp` lemmas + theorems below can use them; later notation for
-metric-dependent quantities (`Ric`, `scal_g`, ...) lives in
-`Util/Notation.lean`. -/
-
-/-- The covariant derivative $\nabla_X Y$ as a section:
-$∇[X] Y$ has type `M → TangentSpace I _`; pointwise value
-$(∇[X] Y)(x) = (\nabla_X Y)(x) = $ `covDeriv X Y x`. -/
-scoped notation:max "∇[" X "] " Y:max => covDeriv X Y
-
-/-- The manifold Lie bracket $[X, Y]$ as a section. Model `I` inferred
-from types. Pointwise: $(⟦X, Y⟧)(x) = $ `mlieBracket _ X Y x`. -/
-scoped notation:max "⟦" X ", " Y "⟧" => VectorField.mlieBracket _ X Y
-
-/-- The Riemann curvature $R(X, Y) Z$ as a section:
-$(Riem(X, Y) Z)(x) = R(X, Y) Z(x) = $ `riemannCurvature X Y Z x`. -/
-scoped notation:max "Riem(" X ", " Y ") " Z:max => riemannCurvature X Y Z
+-- Connection-tier notation (∇[X] Y, ⟦X, Y⟧) is imported from
+-- Util/Notation/Connection.lean above. Curvature-tier notation
+-- (Riem(X, Y) Z) lives in Util/Notation/Curvature.lean (post-Bianchi)
+-- and is used by riemannCurvature_antisymm in Curvature.lean.
 
 /-! ### `riem_simp` lemmas
 
@@ -189,14 +175,19 @@ Riemann curvature operator built from the framework's `covDeriv`. Together
 with `abel` they discharge the algebraic identities of `riemannCurvature`
 without exposing the underlying connection plumbing. -/
 
-/-- **Definitional unfold** of $R(X, Y) Z$ to its
+/-- **Definitional unfold** of `riemannCurvature` to its
 $\nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X, Y]} Z$ form.
-Pure rewrite — no smoothness hypotheses. -/
+Pure rewrite — no smoothness hypotheses.
+
+LHS uses `riemannCurvature` literal: this lemma lives in Bianchi, where
+the post-Bianchi `Riem(X, Y) Z` notation (in `Util/Notation/Curvature`)
+is not yet declared. RHS uses `∇[X] Y` and `⟦X, Y⟧` (pre-Bianchi tier,
+imported from `Util/Notation/Connection`). -/
 @[riem_simp]
-theorem riemannCurvature_unfold
+theorem riemannCurvature_def
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
-    Riem(X, Y) Z x = (∇[X] (∇[Y] Z)) x - (∇[Y] (∇[X] Z)) x - (∇[⟦X, Y⟧] Z) x :=
-  rfl
+    riemannCurvature X Y Z x
+      = (∇[X] (∇[Y] Z)) x - (∇[Y] (∇[X] Z)) x - (∇[⟦X, Y⟧] Z) x := rfl
 
 /-- **Lie-bracket antisymmetry pulled through the connection's direction
 argument**: $\nabla_{[Y,X]} Z = -\nabla_{[X,Y]} Z$ pointwise. Combines
@@ -206,7 +197,7 @@ Pure rewrite — no smoothness hypotheses.
 
 Used as an explicit `rw` step (not in `riem_simp`): the rewrite is
 symmetric in `X ↔ Y`, so adding it to a simp set causes loop. -/
-theorem covDeriv_lambda_mlieBracket_swap
+theorem covDeriv_mlieBracket_swap_apply
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
     covDeriv ⟦Y, X⟧ Z x = -covDeriv ⟦X, Y⟧ Z x := by
   unfold covDeriv
@@ -214,22 +205,9 @@ theorem covDeriv_lambda_mlieBracket_swap
         VectorField.mlieBracket_swap_apply,
       (leviCivitaConnection.toFun Z x).map_neg]
 
-/-- **Riemann tensor antisymmetry in the first two arguments**:
-$R(X, Y) Z = -R(Y, X) Z$ pointwise.
-
-Math: Lie bracket is antisymmetric and the connection is linear in its
-direction argument. `simp only [riem_simp]` unfolds `R` to its
-$\nabla \nabla - \nabla \nabla - \nabla_{[\cdot,\cdot]}$ form;
-`covDeriv_lambda_mlieBracket_swap` pulls the bracket-swap negation
-through `covDeriv`; `abel` finishes.
-
-**Ground truth**: do Carmo 1992 §4 Proposition 2.5 (i). -/
-theorem riemannCurvature_antisymm
-    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
-    Riem(X, Y) Z x = -Riem(Y, X) Z x := by
-  simp only [riem_simp]
-  rw [covDeriv_lambda_mlieBracket_swap]
-  abel
+-- riemannCurvature_antisymm lives in Curvature.lean: its statement
+-- uses the post-Bianchi `Riem(X, Y) Z` notation, so it must be in a
+-- file that imports `Util/Notation/Curvature`.
 
 /-! ## Algebraic Bianchi I
 

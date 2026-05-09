@@ -1,4 +1,4 @@
-import OpenGALib.Riemannian.Util.Attributes
+import OpenGALib.Util.Attributes
 import OpenGALib.Riemannian.Metric.Basic
 
 /-!
@@ -8,7 +8,7 @@ User-facing entry point for the framework's domain-specific simp
 attributes. Re-exports `Util/Attributes.lean` so downstream
 code can simply
 ```
-import OpenGALib.Riemannian.Util.Tactic
+import OpenGALib.Util.Tactic
 ```
 to obtain both the attribute declarations and (transitively) the
 metric algebra lemmas tagged with them.
@@ -21,10 +21,10 @@ metric algebra lemmas tagged with them.
     `metricInner_smul_left/right`, `metricInner_self_nonneg`.
 
   * `riem_simp` — `riemannCurvature` algebra normalisation. Currently
-    populated by `riemannCurvature_unfold` (definitional expansion to
+    populated by `riemannCurvature_def` (definitional expansion to
     `∇∇ - ∇∇ - ∇_{[·,·]}` form, no smoothness hypotheses). Use with
     explicit `rw` of the bracket-swap helper
-    `covDeriv_lambda_mlieBracket_swap` (kept out of the simp set to
+    `covDeriv_mlieBracket_swap_apply` (kept out of the simp set to
     avoid `X ↔ Y` rewrite loops) and `abel` to close Riemann-tensor
     algebraic identities.
 
@@ -44,7 +44,7 @@ example {g : RiemannianMetric I M} (x : M) (V : TangentSpace I x) :
 example (X Y Z : Π x : M, TangentSpace I x) (x : M) :
     riemannCurvature X Y Z x = -riemannCurvature Y X Z x := by
   riem_normalize
-  rw [covDeriv_lambda_mlieBracket_swap]
+  rw [covDeriv_mlieBracket_swap_apply]
   abel
 ```
 
