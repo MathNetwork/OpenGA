@@ -71,7 +71,7 @@ requires `IsHRectifiable` infrastructure not in scope here; deferred to
 Phase 4 framework long-term work via a strengthened existence axiom.
 
 **Sorry status**: PRE-PAPER. Repair plan: when framework's
-`IsHRectifiable` matures and connects to `BVFunction`-style derivative
+`IsHRectifiable` matures and connects to `BoundedVariationFunction`-style derivative
 infrastructure, replace with a constructive De Giorgi blow-up
 construction. Alternatively, when Mathlib upstream gains finite-perimeter
 + De Giorgi, deprecate.

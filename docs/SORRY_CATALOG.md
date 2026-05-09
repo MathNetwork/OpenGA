@@ -62,7 +62,7 @@ via PRE-PAPER sorry.)
 | `Isoperimetric/Euclidean.lean:135` | (variant) | CITED-BLACK-BOX | Same source. |
 | `Isoperimetric/ReducedBoundary.lean:113` | reduced boundary structure | CITED-BLACK-BOX | De Giorgi structure theorem; Maggi 2012 §15. |
 | `Isoperimetric/ReducedBoundary.lean:152` | (variant) | CITED-BLACK-BOX | Same source. |
-| `Isoperimetric/BVFunction.lean:114` | BV property | CITED-BLACK-BOX | Maggi 2012 §10. |
+| `Isoperimetric/BoundedVariationFunction.lean:114` | BV property | CITED-BLACK-BOX | Maggi 2012 §10. |
 | `Isoperimetric/Coarea.lean:73` | coarea formula | CITED-BLACK-BOX | Maggi 2012 §18. |
 | `Isoperimetric/Coarea.lean:117` | (variant) | CITED-BLACK-BOX | Same source. |
 | `Isoperimetric/Relative.lean:87` | relative isoperimetric | CITED-BLACK-BOX | Maggi 2012 §16. |

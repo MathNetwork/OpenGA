@@ -17,7 +17,7 @@ $$c_n^{\mathrm{SP}} \;=\; \bigl(c_n^{\mathrm{iso}}\bigr)^{-1}.$$
 ## Form
 
 This file is the **Phase 3 capstone**: it composes the Phase 3.4
-`BVFunction.totalVariation` primitive, the Phase 3.5 `coarea_formula`
+`BoundedVariationFunction.totalVariation` primitive, the Phase 3.5 `coarea_formula`
 bridge, and Mathlib's `MeasureTheory.eLpNorm` into a paper-faithful,
 **non-vacuous** Sobolev–Poincaré statement. The Sobolev exponent and
 the Sobolev–Poincaré constant are real `noncomputable def`s with
@@ -111,14 +111,14 @@ a BV function $u$, defined via Mathlib's `MeasureTheory.eLpNorm`
 against the ambient `MeasureTheory.volume` measure.
 
 The `MeasureSpace E` instance provides both the `MeasurableSpace E`
-required by `BVFunction` and the canonical `volume : Measure E`
+required by `BoundedVariationFunction` and the canonical `volume : Measure E`
 required by `eLpNorm`, so a single typeclass closes both
 dependencies. -/
-noncomputable def lpNorm (u : BVFunction E) (p : ENNReal) : ENNReal :=
+noncomputable def lpNorm (u : BoundedVariationFunction E) (p : ENNReal) : ENNReal :=
   MeasureTheory.eLpNorm u.toFun p MeasureTheory.volume
 
 /-- The L^p norm is non-negative (trivial via `ENNReal`). -/
-theorem lpNorm_nonneg (u : BVFunction E) (p : ENNReal) :
+theorem lpNorm_nonneg (u : BoundedVariationFunction E) (p : ENNReal) :
     0 ≤ lpNorm u p := zero_le _
 
 end LpNorm
@@ -149,7 +149,7 @@ self-build via the truncation argument over `coarea_formula`
 Sobolev 1938. -/
 theorem sobolev_poincare_inequality
     {n : ℕ} (_hn : 1 < n)
-    (u : BVFunction E)
+    (u : BoundedVariationFunction E)
     (_hzero : ∫ x, u x ∂(MeasureTheory.volume : MeasureTheory.Measure E) = 0) :
     lpNorm u (ENNReal.ofReal (sobolevExponent n)) ≤
       ENNReal.ofReal (sobolevPoincareConstant n) * totalVariation u := by
@@ -198,7 +198,7 @@ example (n : ℕ) :
 
 /-- Self-test: lpNorm non-negativity. -/
 example {E : Type*} [MeasureTheory.MeasureSpace E]
-    (u : BVFunction E) (p : ENNReal) : 0 ≤ lpNorm u p :=
+    (u : BoundedVariationFunction E) (p : ENNReal) : 0 ≤ lpNorm u p :=
   lpNorm_nonneg u p
 
 end SobolevPoincareTest

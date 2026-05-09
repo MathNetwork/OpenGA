@@ -21,6 +21,6 @@ import OpenGALib.GeometricMeasureTheory.Isoperimetric.Basic
 import OpenGALib.GeometricMeasureTheory.Isoperimetric.Euclidean
 import OpenGALib.GeometricMeasureTheory.Isoperimetric.ReducedBoundary
 import OpenGALib.GeometricMeasureTheory.Isoperimetric.Relative
-import OpenGALib.GeometricMeasureTheory.Isoperimetric.BVFunction
+import OpenGALib.GeometricMeasureTheory.Isoperimetric.BoundedVariationFunction
 import OpenGALib.GeometricMeasureTheory.Isoperimetric.Coarea
 import OpenGALib.GeometricMeasureTheory.Isoperimetric.SobolevPoincare
