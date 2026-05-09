@@ -1,4 +1,5 @@
 import OpenGALib.Riemannian.Connection.LeviCivita
+import OpenGALib.Riemannian.Util.Attributes
 
 /-!
 # Riemannian.Connection.Bianchi
@@ -162,28 +163,56 @@ noncomputable def riemannCurvature
   let bracketXY : Π x : M, TangentSpace I x := fun x => mlieBracket I X Y x
   covDeriv X nablaYZ x - covDeriv Y nablaXZ x - covDeriv bracketXY Z x
 
+/-! ### `riem_simp` lemmas
+
+Two rewrites that drive the `riem_simp` simp set, populated for the
+Riemann curvature operator built from the framework's `covDeriv`. Together
+with `abel` they discharge the algebraic identities of `riemannCurvature`
+without exposing the underlying connection plumbing. -/
+
+/-- **Definitional unfold** of `riemannCurvature` to the
+$\nabla \nabla - \nabla \nabla - \nabla_{[\cdot,\cdot]}$ form.
+Pure rewrite — no smoothness hypotheses. -/
+@[riem_simp]
+theorem riemannCurvature_unfold
+    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
+    riemannCurvature X Y Z x
+      = covDeriv X (fun y => covDeriv Y Z y) x
+        - covDeriv Y (fun y => covDeriv X Z y) x
+        - covDeriv (fun y => mlieBracket I X Y y) Z x := rfl
+
+/-- **Lie-bracket antisymmetry pulled through the connection's direction
+argument**: $\nabla_{[Y,X]} Z = -\nabla_{[X,Y]} Z$ pointwise. Combines
+`VectorField.mlieBracket_swap_apply` with the ℝ-linearity of
+`leviCivitaConnection.toFun Z x` (a CLM, so it commutes with negation).
+Pure rewrite — no smoothness hypotheses.
+
+Used as an explicit `rw` step (not in `riem_simp`): the rewrite is
+symmetric in `X ↔ Y`, so adding it to a simp set causes loop. -/
+theorem covDeriv_lambda_mlieBracket_swap
+    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
+    covDeriv (fun y => mlieBracket I Y X y) Z x
+      = -covDeriv (fun y => mlieBracket I X Y y) Z x := by
+  unfold covDeriv
+  rw [show (fun y => mlieBracket I Y X y) x = -mlieBracket I X Y x from
+        VectorField.mlieBracket_swap_apply,
+      (leviCivitaConnection.toFun Z x).map_neg]
+
 /-- **Riemann tensor antisymmetry in the first two arguments**:
 $R(X, Y) Z = -R(Y, X) Z$ pointwise.
 
-Direct from antisymmetry of the Lie bracket
-(`VectorField.mlieBracket_swap_apply`) plus ℝ-linearity of
-`leviCivitaConnection.toFun Z z` (it is a CLM).
+Math: Lie bracket is antisymmetric and the connection is linear in its
+direction argument. `simp only [riem_simp]` unfolds `R` to its
+$\nabla \nabla - \nabla \nabla - \nabla_{[\cdot,\cdot]}$ form;
+`covDeriv_lambda_mlieBracket_swap` pulls the bracket-swap negation
+through `covDeriv`; `abel` finishes.
 
 **Ground truth**: do Carmo 1992 §4 Proposition 2.5 (i). -/
 theorem riemannCurvature_antisymm
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
     riemannCurvature X Y Z x = -riemannCurvature Y X Z x := by
-  show covDeriv X (fun y => covDeriv Y Z y) x
-        - covDeriv Y (fun y => covDeriv X Z y) x
-        - covDeriv (fun y => mlieBracket I X Y y) Z x
-      = -(covDeriv Y (fun y => covDeriv X Z y) x
-            - covDeriv X (fun y => covDeriv Y Z y) x
-            - covDeriv (fun y => mlieBracket I Y X y) Z x)
-  have h_swap : mlieBracket I Y X x = -mlieBracket I X Y x :=
-    VectorField.mlieBracket_swap_apply
-  unfold covDeriv
-  rw [show (fun y => mlieBracket I Y X y) x = -mlieBracket I X Y x from h_swap,
-      (leviCivitaConnection.toFun Z x).map_neg]
+  simp only [riem_simp]
+  rw [covDeriv_lambda_mlieBracket_swap]
   abel
 
 /-! ## Algebraic Bianchi I
