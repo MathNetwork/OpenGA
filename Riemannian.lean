@@ -103,12 +103,6 @@ intermediate identities) are internal and may change without notice.
   * `Riemannian.manifoldGradientNormSq`
   * `Riemannian.manifoldGradient_riesz`
 
-**Loop space** (`LoopSpace.lean`):
-  * `Riemannian.LoopInterval`
-  * `Riemannian.BasedLoop`, `Riemannian.LoopSpace`
-  * `Riemannian.FreeLoop`, `Riemannian.FreeLoopSpace`
-  * `Riemannian.BasedLoop.const`, `Riemannian.FreeLoop.const`
-
 **Bump functions** (`BumpFunction.lean`):
   * `OpenGALib.BumpFunction.expDamping`
   * `OpenGALib.BumpFunction.smoothStep`
