@@ -1,8 +1,8 @@
-import Algebraic
-import Riemannian
-import GeometricMeasureTheory
-import MinMax
-import Regularity
+import OpenGALib.Algebraic
+import OpenGALib.Riemannian
+import OpenGALib.GeometricMeasureTheory
+import OpenGALib.MinMax
+import OpenGALib.Regularity
 
 /-!
 # OpenGALib — Open Geometric Analysis Library

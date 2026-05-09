@@ -14,10 +14,4 @@ require mathlib from git
 @[default_target]
 lean_lib OpenGALib where
   roots := #[`OpenGALib]
-  globs := #[
-    .andSubmodules `Algebraic,
-    .andSubmodules `Riemannian,
-    .andSubmodules `GeometricMeasureTheory,
-    .andSubmodules `MinMax,
-    .andSubmodules `Regularity
-  ]
+  globs := #[.andSubmodules `OpenGALib]

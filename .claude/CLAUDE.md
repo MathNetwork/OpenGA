@@ -170,7 +170,6 @@ When refactor is triggered:
 
 GMT primitive real definitions must align with Pitts 1981 / Simon 1983 / Allard 1972. Cite source in docstring (`**Ground truth**: ...`).
 
-Cited theorem statements (Wic14, CLS22, DLT, CL03, Pitts, Allard) must be strict-aligned with paper §X verbatim. Three-way alignment table maintained in `references/cite_verification.md`.
 
 ### Sorry / opaque / placeholder discipline
 
