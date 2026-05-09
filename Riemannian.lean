@@ -132,7 +132,7 @@ Riemannian package carries **zero existence axioms**: all 9 primitives
 + sq norm, mean curvature, manifold gradient + sq norm, Levi-Civita
 connection) are real Lean definitions. Remaining PRE-PAPER sorry'd
 property-level statements (`ricci_symm`, `ricciTraceMap.map_add'/_smul'`,
-`tangentBundle_symmL_smoothAt`) are tracked in `docs/AXIOM_STATUS.md`
+`tangentBundle_symmL_smoothAt`) are tracked in `docs/SORRY_CATALOG.md`
 with explicit repair plans.
 
 Performance: heavy framework proofs (`koszulLeviCivita_exists`,

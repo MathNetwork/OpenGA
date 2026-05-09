@@ -14,7 +14,7 @@ Re-exports the three sub-modules:
 - `Metric/Smooth.lean` — `metricInner_smoothAt` smoothness helper +
   `tangentBundle_symmL_smoothAt` (PRE-PAPER sorry'd: chart-level
   smoothness of `Trivialization.symmL`; tracked in
-  `docs/AXIOM_STATUS.md`).
+  `docs/SORRY_CATALOG.md`).
 
 **Ground truth**: do Carmo 1992 §1.2; Lee *Smooth Manifolds* Ch. 13.
 -/

@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Count sorries against SORRY_CATALOG.md
+      - name: Count sorries against docs/SORRY_CATALOG.md
         run: |
           # Tightened regex: match only standalone `sorry` (line is exactly
           # whitespace-then-sorry-then-whitespace), `by sorry`, `:= sorry`.
@@ -25,13 +25,13 @@ jobs:
           EXPECTED=32
           if [ "$ACTUAL" -ne "$EXPECTED" ]; then
             echo "::error::Sorry count drift: expected $EXPECTED, found $ACTUAL"
-            echo "If the change is intentional, update SORRY_CATALOG.md (and the EXPECTED constant in this workflow)."
+            echo "If the change is intentional, update docs/SORRY_CATALOG.md (and the EXPECTED constant in this workflow)."
             echo "If unintentional, close the new sorry or revert the regression."
             exit 1
           fi
-          echo "Sorry count: $ACTUAL (matches SORRY_CATALOG.md)"
+          echo "Sorry count: $ACTUAL (matches docs/SORRY_CATALOG.md)"
 
-      - name: Count axioms against AXIOM_STATUS.md
+      - name: Count axioms (expect zero)
         run: |
           # Match only true axiom declarations: `axiom <ident>` at start of line,
           # nothing trailing. Excludes docstring text where 'axiom' may begin a
@@ -43,11 +43,11 @@ jobs:
           EXPECTED=0
           if [ "$ACTUAL" -ne "$EXPECTED" ]; then
             echo "::error::Axiom count drift: expected $EXPECTED, found $ACTUAL"
-            echo "If the change is intentional, update AXIOM_STATUS.md (and the EXPECTED constant in this workflow)."
+            echo "If the change is intentional, document the axiom in module docstrings (and update the EXPECTED constant in this workflow)."
             echo "If unintentional, close the new axiom or revert the regression."
             exit 1
           fi
-          echo "Axiom count: $ACTUAL (matches AXIOM_STATUS.md)"
+          echo "Axiom count: $ACTUAL"
 
   build:
     name: Lake build
