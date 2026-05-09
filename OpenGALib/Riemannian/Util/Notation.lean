@@ -12,10 +12,10 @@ open it via `open scoped Riemannian` to use them.
   * `⟪V, W⟫_g` — `metricInner _ V W` (basepoint inferred from
     `V W : TangentSpace I x` types)
   * `‖V‖²_g` — `metricInner _ V V` (squared norm via the metric)
-  * `∇[X] Y` — `covDeriv X Y` as a function `M → TangentSpace I _`,
-    so `(∇[X] Y) x = covDeriv X Y x` is $(\nabla_X Y)(x)$.
-  * `Riem(X, Y) Z` — `riemannCurvature X Y Z` as a function, so
-    `(Riem(X, Y) Z) x = riemannCurvature X Y Z x` is $R(X, Y) Z (x)$.
+  * `∇[X] Y`, `⟦X, Y⟧`, `Riem(X, Y) Z` — defined alongside their
+    underlying primitives in `Connection/Bianchi.lean` (covariant
+    derivative, Lie bracket section, Riemann curvature). All scoped
+    to `Riemannian`.
   * `Ric(X, Y)` — `ricci X Y` as a function $M \to \mathbb{R}$.
   * `scal_g` — `scalarCurvature` as a function $M \to \mathbb{R}$.
   * `grad_g f` — `manifoldGradient f` as a section
@@ -45,14 +45,9 @@ end OpenGALib
 
 namespace Riemannian
 
-/-- The covariant derivative $\nabla_X Y$ as a section: applied to $x$,
-gives $(\nabla_X Y)(x) = $ `covDeriv X Y x`. -/
-scoped notation:max "∇[" X "] " Y => fun x => covDeriv X Y x
-
-/-- The Riemann curvature $R(X, Y) Z$ as a section: applied to $x$,
-gives $(R(X, Y) Z)(x) = $ `riemannCurvature X Y Z x`. -/
-scoped notation:max "Riem(" X ", " Y ") " Z =>
-  fun x => riemannCurvature X Y Z x
+-- ∇[X] Y, ⟦X, Y⟧, Riem(X, Y) Z are defined in Connection/Bianchi.lean
+-- alongside their underlying primitives (covDeriv, mlieBracket,
+-- riemannCurvature) to avoid circular import.
 
 /-- The Ricci curvature $\mathrm{Ric}(X, Y)$ as a scalar function on
 the manifold: applied to $x$, gives $\mathrm{Ric}(X, Y)(x) = $

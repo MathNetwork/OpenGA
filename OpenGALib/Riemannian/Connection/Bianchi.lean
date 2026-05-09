@@ -53,7 +53,7 @@ the last by the Jacobi identity for `mlieBracket`
 -/
 
 open Bundle VectorField OpenGALib
-open scoped ContDiff Manifold Topology
+open scoped ContDiff Manifold Topology Riemannian
 
 namespace Riemannian
 
@@ -158,10 +158,29 @@ sectional curvature) belong in `Riemannian.Curvature`.
 **Ground truth**: do Carmo 1992 §4 Definition 2.1. -/
 noncomputable def riemannCurvature
     (X Y Z : Π x : M, TangentSpace I x) (x : M) : TangentSpace I x :=
-  let nablaYZ : Π x : M, TangentSpace I x := fun x => covDeriv Y Z x
-  let nablaXZ : Π x : M, TangentSpace I x := fun x => covDeriv X Z x
-  let bracketXY : Π x : M, TangentSpace I x := fun x => mlieBracket I X Y x
-  covDeriv X nablaYZ x - covDeriv Y nablaXZ x - covDeriv bracketXY Z x
+  covDeriv X (covDeriv Y Z) x - covDeriv Y (covDeriv X Z) x
+    - covDeriv (mlieBracket I X Y) Z x
+
+/-! ### Notation
+
+Mathematical notation for the connection-level primitives. All scoped to
+`Riemannian` (`open scoped Riemannian` activates them). Defined here so
+the `riem_simp` lemmas + theorems below can use them; later notation for
+metric-dependent quantities (`Ric`, `scal_g`, ...) lives in
+`Util/Notation.lean`. -/
+
+/-- The covariant derivative $\nabla_X Y$ as a section:
+$∇[X] Y$ has type `M → TangentSpace I _`; pointwise value
+$(∇[X] Y)(x) = (\nabla_X Y)(x) = $ `covDeriv X Y x`. -/
+scoped notation:max "∇[" X "] " Y:max => covDeriv X Y
+
+/-- The manifold Lie bracket $[X, Y]$ as a section. Model `I` inferred
+from types. Pointwise: $(⟦X, Y⟧)(x) = $ `mlieBracket _ X Y x`. -/
+scoped notation:max "⟦" X ", " Y "⟧" => VectorField.mlieBracket _ X Y
+
+/-- The Riemann curvature $R(X, Y) Z$ as a section:
+$(Riem(X, Y) Z)(x) = R(X, Y) Z(x) = $ `riemannCurvature X Y Z x`. -/
+scoped notation:max "Riem(" X ", " Y ") " Z:max => riemannCurvature X Y Z
 
 /-! ### `riem_simp` lemmas
 
@@ -170,16 +189,14 @@ Riemann curvature operator built from the framework's `covDeriv`. Together
 with `abel` they discharge the algebraic identities of `riemannCurvature`
 without exposing the underlying connection plumbing. -/
 
-/-- **Definitional unfold** of `riemannCurvature` to the
-$\nabla \nabla - \nabla \nabla - \nabla_{[\cdot,\cdot]}$ form.
+/-- **Definitional unfold** of $R(X, Y) Z$ to its
+$\nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X, Y]} Z$ form.
 Pure rewrite — no smoothness hypotheses. -/
 @[riem_simp]
 theorem riemannCurvature_unfold
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
-    riemannCurvature X Y Z x
-      = covDeriv X (fun y => covDeriv Y Z y) x
-        - covDeriv Y (fun y => covDeriv X Z y) x
-        - covDeriv (fun y => mlieBracket I X Y y) Z x := rfl
+    Riem(X, Y) Z x = (∇[X] (∇[Y] Z)) x - (∇[Y] (∇[X] Z)) x - (∇[⟦X, Y⟧] Z) x :=
+  rfl
 
 /-- **Lie-bracket antisymmetry pulled through the connection's direction
 argument**: $\nabla_{[Y,X]} Z = -\nabla_{[X,Y]} Z$ pointwise. Combines
@@ -191,10 +208,9 @@ Used as an explicit `rw` step (not in `riem_simp`): the rewrite is
 symmetric in `X ↔ Y`, so adding it to a simp set causes loop. -/
 theorem covDeriv_lambda_mlieBracket_swap
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
-    covDeriv (fun y => mlieBracket I Y X y) Z x
-      = -covDeriv (fun y => mlieBracket I X Y y) Z x := by
+    covDeriv ⟦Y, X⟧ Z x = -covDeriv ⟦X, Y⟧ Z x := by
   unfold covDeriv
-  rw [show (fun y => mlieBracket I Y X y) x = -mlieBracket I X Y x from
+  rw [show mlieBracket I Y X x = -mlieBracket I X Y x from
         VectorField.mlieBracket_swap_apply,
       (leviCivitaConnection.toFun Z x).map_neg]
 
@@ -210,7 +226,7 @@ through `covDeriv`; `abel` finishes.
 **Ground truth**: do Carmo 1992 §4 Proposition 2.5 (i). -/
 theorem riemannCurvature_antisymm
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
-    riemannCurvature X Y Z x = -riemannCurvature Y X Z x := by
+    Riem(X, Y) Z x = -Riem(Y, X) Z x := by
   simp only [riem_simp]
   rw [covDeriv_lambda_mlieBracket_swap]
   abel
