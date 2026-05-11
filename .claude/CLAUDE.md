@@ -14,28 +14,47 @@ Phase 1 (Layer A + Layer B real grounding) is complete: 20 GMT analysis primitiv
 
 ## Architecture
 
-Single OpenGALib Lean library, layered under `OpenGALib/`:
+Single Lake package `OpenGALib`, organised under directory tree
+`OpenGALib/`:
 
 ```
-OpenGALib (single lean_lib, 4 sub-namespaces)
-├── Algebraic                  ← lib (BilinearForm, Riesz, concrete instances)
+OpenGALib/ (directory tree, also the Lake package name)
+├── Algebraic/                 ← BilinearForm, Riesz, concrete instances (RatVector)
 │         ↑
-├── Riemannian                 ← lib (Connection, Curvature, SecondFundamentalForm, Gradient)
+├── Tensor/                    ← DifferentialForm, MultilinearSection, Alternating, ...
 │         ↑
-├── GeometricMeasureTheory     ← lib (Variation/, HasNormal, Stable, Varifold, ...)
+├── Riemannian/                ← Connection, Curvature, Metric, SecondFundamentalForm, ...
 │         ↑
-└── Regularity                 ← lib (regularity theory; Wickramasekera, Allard, Schoen-Simon, etc.)
+├── GeometricMeasureTheory/    ← Variation/, HasNormal, Stable, Varifold, ...
+│         ↑
+└── Regularity/                ← regularity theory (gitignored: paper-specific consumer)
 ```
 
-OpenGALib is a single Lake package containing 4 sub-namespaces (Algebraic, Riemannian,
-GeometricMeasureTheory, Regularity). Namespace separation reflects layering — sub-namespaces
-are independently meaningful and any subset is a future Mathlib-upstream candidate.
-Riemannian is independent of paper-domain concerns and is a future spin-out
-candidate as a standalone Lean library (Mathlib upstream / community use).
-GeometricMeasureTheory must not reference paper-specific or domain-specific concepts.
-Regularity must not reference paper-specific concepts.
-Paper-specific sub-projects (including min-max / sweepout machinery) live outside this
-repo and consume the OpenGALib lib stack via `require OpenGALib from ".."`.
+Lake package name `OpenGALib` appears **only** in:
+- `lakefile.lean` package declaration
+- `import OpenGALib.X.Y` paths
+- Documentation/README
+
+It is **never** a namespace prefix. Content lives in concept-level
+namespaces matching Mathlib idiom:
+
+- Framework-owned types/typeclasses go in their concept namespace
+  (`namespace Riemannian` for `RiemannianMetric`, `HasMetric`,
+  `TangentSmoothAt`, `metricInner`, …; `namespace BilinearForm` for the
+  algebraic core; `namespace DifferentialForm` for differential forms; etc.)
+- Mathlib-extension lemmas live in the Mathlib namespace they extend
+  (`namespace ContinuousLinearMap`, `namespace Fin`, `namespace
+  Pretrivialization`, …) so dot-notation works seamlessly.
+- Inside its own namespace, code uses bare relative names. The brand
+  prefix never appears in proof bodies.
+
+Namespace separation reflects mathematical layering; any subset is a
+candidate for spin-out (Riemannian is independent of paper-domain
+concerns and could become a standalone Lean library). GMT must not
+reference paper-specific concepts; Regularity must not reference
+paper-specific concepts. Paper-specific sub-projects (min-max /
+sweepout machinery) live outside this repo and consume the lib stack
+via `require OpenGALib from ".."`.
 
 ## Self-build is the default action
 
