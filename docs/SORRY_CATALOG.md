@@ -1,88 +1,101 @@
 # Sorry Catalog
 
-Central registry of `sorry` occurrences in OpenGA. Every sorry carries a
-classification + repair plan. CI snapshots the count; new sorry additions
-require updating this file.
+Central registry of `sorry` occurrences in OpenGALib. Every sorry carries a
+classification and (for PRE-PAPER) a closure path. CI snapshots the total
+count; new sorry additions require updating this file.
+
+## Scope
+
+This catalog covers the **public library content**: `Algebraic`, `Tensor`,
+`Riemannian`, `GeometricMeasureTheory`. `Regularity/` is gitignored
+(paper-specific consumer) and tracked locally; its sorrys are not in the
+public count.
 
 ## Classification
 
-* **PRE-PAPER** — gap in Mathlib API or framework primitive; closure path
-  is framework self-build or Mathlib upstream.
+* **PRE-PAPER** — gap in Mathlib API or framework primitive; closure path is
+  framework self-build or Mathlib upstream.
 * **CITED-BLACK-BOX** — theorem quoted from a paper, body never proven in
-  the framework.
-* **PAPER-INTERNAL** — proof obligation owned by an application paper, not
-  the library.
-* **CONJECTURAL** — open mathematics.
+  the framework. The named theorem is the value; the proof is delegated to
+  the citation.
 
 ## Total counts
 
-| Module | PRE-PAPER | CITED-BLACK-BOX | PAPER-INTERNAL | CONJECTURAL | Total |
-|--------|-----------|------------------|----------------|-------------|-------|
-| Riemannian | 4 | 0 | 0 | 0 | 4 |
-| GeometricMeasureTheory | 5 | 9 | 0 | 0 | 14 |
-| Regularity | 0 | 2 | 0 | 0 | 2 |
-| **Total** | **9** | **11** | **0** | **0** | **20** |
+| Module | PRE-PAPER | CITED-BLACK-BOX | Total |
+|--------|-----------|------------------|-------|
+| Algebraic | 5 | 0 | 5 |
+| Tensor | 9 | 0 | 9 |
+| Riemannian | 3 | 1 | 4 |
+| GeometricMeasureTheory | 5 | 10 | 15 |
+| **Total** | **22** | **11** | **33** |
 
-(Bridge investment final closure: Riemannian 9 → 3. The 6 closed sorrys: full
-`leviCivitaConnection_exists` smoothness clause + `koszulCovDeriv_const_smoothAt`
-+ `koszulCotangentCLM_smoothAt` + 3 associated Curvature smoothness witnesses.
-Zero `sorryAx` in `leviCivitaConnection_exists` axiom dependency chain. Phase
-1.6 invariant "zero existence axioms in Riemannian package" preserved with
-strengthened guarantee: smoothness clause is now real-proven, not bypassed
-via PRE-PAPER sorry.)
+CI workflow `.github/workflows/ci.yml` asserts the total equals 33 (`EXPECTED=33`).
 
-## Riemannian (10)
+## Algebraic (5)
 
-| File:line | Identifier | Classification | Repair plan |
-|-----------|-----------|---------------|-------------|
-| `Curvature.lean:~138` | `ricciTraceMap.map_add'` smoothness witness 1 | PRE-PAPER | `TangentSmoothAt (fun y ↦ covDeriv (const z₁) Y y) x`. Repair: framework `ContMDiffCovariantDerivativeOn` instance for `leviCivitaConnection` (lifts smoothness of input sections to smoothness of `covDeriv` output as a tangent vector field). Linearity proof skeleton is closed; only smoothness witness remains. |
-| `Curvature.lean:~143` | `ricciTraceMap.map_add'` smoothness witness 2 | PRE-PAPER | Same as above (z₂ branch). |
-| `Curvature.lean:~205` | `ricciTraceMap.map_smul'` smoothness witness | PRE-PAPER | Same as above (single-branch smul case). |
-| `Curvature.lean:~256` | `riemannCurvature_inner_diagonal_zero` | PRE-PAPER | Skew-symmetry of $R(X,Y)$ as endomorphism, $\langle R(X,Y) Z, Z\rangle_g = 0$. Closure path via metric-compat 4× + manifold scalar Hessian-Lie (`mfderiv_iterate_sub_eq_mlieBracket_apply`, **now closed**). Outline laid out in proof body. |
-| `Curvature.lean:~287` | `ricci_symm` | PRE-PAPER | Symmetry of Ricci. Closure path: trace-via-OnB + Bianchi I (closed) + first-arg antisymm (closed) + diagonal-zero (above). Requires a $g$-orthonormal basis (framework self-build, see `metricOrthonormalBasis` repair plan). |
-| `Curvature.lean:~318` | `ricciFormAt.toFun.map_add'` | PRE-PAPER | Linearity of $\mathrm{Ric}(V, \cdot)$ in 2nd tangent vector. Repair: pointwise on $z$, additivity of `riemannCurvature` in 3rd-arg-section follows from `covDeriv_add_field` (already proven) applied to each of 3 covariant-derivative terms; trace inherits linearity. **No new infra needed.** |
-| `Curvature.lean:~322` | `ricciFormAt.toFun.map_smul'` | PRE-PAPER | Same path via `covDeriv_smul_const_field` (already proven). |
-| `Curvature.lean:~325` | `ricciFormAt.map_add'` | PRE-PAPER | Linearity of $\mathrm{Ric}(\cdot, W)$ in 1st tangent vector. Repair: additivity of `riemannCurvature` in 2nd-arg-section via `covDeriv_add_field` + `VectorField.mlieBracket_add_right` (Mathlib). |
-| `Curvature.lean:~327` | `ricciFormAt.map_smul'` | PRE-PAPER | Same path via `covDeriv_smul_const_field` + `VectorField.mlieBracket_const_smul_right` (Mathlib). |
-| `Metric/MathlibBridge.lean:~contMDiff` | `RiemannianMetric.toBundleContMDiffRiemannianMetric.contMDiff` | PRE-PAPER | Bundle CLM-section smoothness for the hom-bundle of TangentSpace twice. Phase 1C spike narrowed the goal to: `(T_dual x).linearMapAt y ((g.metricTensor y) ((T_tan x).symm y v)) w = (g.metricTensor y v) w`, which holds because the dual and tangent trivializations cancel on a chart's base set. Closure path: framework helper composing `Trivialization.symmL` + dual-trivialization-cancellation lemma. Not blocking framework usage — the bridge is symbolic; the framework's IPS is `OpenGALib.metricInner`, not Mathlib's bundle IPS (see `Metric/MathlibBridge.lean` "Phase 1C architectural lesson — the irreducible NACG diamond"). |
+| File:line | Identifier | Classification | Notes |
+|-----------|-----------|---------------|-------|
+| `Auxiliary/Fin.lean:86` | `addCases_succAbove_castAdd` | PRE-PAPER | Mathlib gap on `Fin.addCases` ∘ `Fin.succAbove` interaction. Mechanical case split. |
+| `Auxiliary/Fin.lean:98` | `addCases_succAbove_natAdd` | PRE-PAPER | Sister lemma to above. Same shape. |
+| `Auxiliary/ShuffleDeriv.lean:284` | `derivShuffleEquivLeft` injectivity branch | PRE-PAPER | Internal case in shuffle-derivative bijection. Inherited from external lib port. |
+| `Auxiliary/ShuffleDeriv.lean:300` | `derivShuffleEquivLeft` surjectivity (cardinality) | PRE-PAPER | Cardinality balance `(m+n+1)·C(m+n,m) = C(m+n+1,m+1)·(m+1)`. Inherited from external lib. |
+| `Auxiliary/ShuffleDeriv.lean:312` | `derivShuffleEquivLeft_sign` | PRE-PAPER | Sign of canonical `Quotient.out'` representatives. Inherited from external lib. |
 
-## GeometricMeasureTheory (14)
+## Tensor (9)
 
-| File:line | Identifier | Classification | Repair plan |
-|-----------|-----------|---------------|-------------|
-| `Rectifiability.lean:85` | rectifiability of stationary varifolds | CITED-BLACK-BOX | Allard 1972 / Pitts 1981 rectifiability theorem; depends on `density > 0` assumption. |
-| `HasNormal.lean:126` | `tangentCone_unitNormal_exists` body | PRE-PAPER | Currently uses `Classical.choose` over the trivial existence `⟨fun _ => 0, trivial⟩`. Real repair: extract cone normal from chart-rescale weak limit. |
-| `FinitePerimeter.lean:83` | (perimeter measurability) | PRE-PAPER | Mathlib BV-on-charted-manifold gap. |
-| `FinitePerimeter.lean:133` | `rbdy ⊆ topClosure` | PRE-PAPER | Reduced boundary topological inclusion; standard but mechanical. |
-| `FinitePerimeter.lean:139` | reduced-boundary trichotomy | PRE-PAPER | Density-based trichotomy (interior / boundary / exterior). |
-| `Varifold.lean:86` | `density_nonneg` | PRE-PAPER | Direct from definition of density via mass; Mathlib measure-theory lemmas. |
-| `Varifold.lean:113` | support characterization | PRE-PAPER | Standard support-via-positive-mass-on-balls; Mathlib `MeasureTheory.Measure.support` adaptation. |
+| File:line | Identifier | Classification | Notes |
+|-----------|-----------|---------------|-------|
+| `Alternating/Wedge.lean:378` | `uncurryFin_wedge_productL_precompL` | PRE-PAPER | Algebraic identity matching LHS/RHS via `derivShuffleEquivLeft`. Closure path documented in proof body. |
+| `Alternating/Wedge.lean:387` | `uncurryFin_wedge_productL_precompR` | PRE-PAPER | Sister identity with sign `(-1)^m`. |
+| `Alternating/Wedge.lean:715` | `domDomCongr_finAddFlip_wedge_self` | PRE-PAPER | Depends on removed Mathlib lemma `Equiv.Perm.finAddFlip_equiv_eqFin`. Currently unused; revisit if needed. |
+| `DifferentialForm/Basic.lean:194` | `ederiv_basis_expansion` | PRE-PAPER | Basis expansion of exterior derivative. Mechanical from `fderiv_basis`. |
+| `DifferentialForm/Basic.lean:286` | `iprod_wedge` algebra | PRE-PAPER | Interior product / wedge product interaction; algebraic. |
+| `DifferentialForm/Basic.lean:293` | `pullback.smooth` | PRE-PAPER | Smoothness of `ω ∘ fderiv f` composition. |
+| `DifferentialForm/Basic.lean:323` | `pullback_ederiv` (differentiability gap) | PRE-PAPER | Inner gap in pullback-commutes-with-ederiv proof. |
+| `DifferentialForm/Basic.lean:326` | `pullback_ederiv` (outer) | PRE-PAPER | Outer goal of same proof. |
+| `Product/Pretrivialization.lean:281` | `tensorProductCoordChange_contMDiffOn` | PRE-PAPER | Bundle pretrivialization plumbing; Mathlib gap on tensor-product bundle smoothness. |
+
+## Riemannian (4)
+
+| File:line | Identifier | Classification | Notes |
+|-----------|-----------|---------------|-------|
+| `Curvature.lean:241` | `riemannCurvature_inner_self_zero` | PRE-PAPER | Skew-symmetry of $R(X,Y)$. Closure path: metric-compat 4× + Hessian-Lie identity (`mfderiv_iterate_sub_eq_mlieBracket_apply`). Proof body sketches it. |
+| `Curvature.lean:256` | `ricci_symm` | PRE-PAPER | Symmetry of Ricci. Closure path: trace-via-orthonormal-basis + Bianchi I (closed) + diagonal-zero (above). |
+| `Connection.lean:1387` | `koszulCovDeriv_const_smoothAt` | PRE-PAPER | Path-B cascade leftover. Closure: write `metricRiesz_section_smoothAt` against `Bundle.ContMDiffRiemannianMetric` API via chart-pullback unwrapping of the Riesz isomorphism. Self-build follow-up. |
+| `Operators/Bochner.lean:49` | `bochner_weitzenboeck` | CITED-BLACK-BOX | Bochner–Weitzenböck identity. Reference: Petersen, *Riemannian Geometry*, §9. Body not provided; framework has all sub-primitives (Hessian, Laplacian, Ricci, gradient) but the identity itself is delegated to the citation. |
+
+## GeometricMeasureTheory (15)
+
+| File:line | Identifier | Classification | Notes |
+|-----------|-----------|---------------|-------|
+| `Rectifiability.lean:85` | `isRectifiable_of_stationary_density_pos` | CITED-BLACK-BOX | Allard 1972 / Pitts 1981 rectifiability theorem. |
+| `HasNormal.lean:128` | `tangentCone_unitNormal_exists` body | PRE-PAPER | Currently `Classical.choose` over trivial existence. Real repair: extract cone normal from chart-rescale weak limit. |
+| `FinitePerimeter.lean:83` | perimeter measurability | PRE-PAPER | Mathlib BV-on-charted-manifold gap. |
+| `FinitePerimeter.lean:135` | reduced-boundary trichotomy | PRE-PAPER | Density-based trichotomy (interior / boundary / exterior). |
+| `Varifold.lean:114` | `density_nonneg` | PRE-PAPER | Direct from definition of density via mass. |
+| `Varifold.lean:141` | support characterization | PRE-PAPER | Standard support-via-positive-mass-on-balls. |
 | `Isoperimetric/SobolevPoincare.lean:156` | Sobolev–Poincaré inequality | CITED-BLACK-BOX | Maggi 2012 §13. |
-| `Isoperimetric/Euclidean.lean:111` | Euclidean isoperimetric | CITED-BLACK-BOX | Maggi 2012 §14. |
-| `Isoperimetric/Euclidean.lean:135` | (variant) | CITED-BLACK-BOX | Same source. |
+| `Isoperimetric/Euclidean.lean:111` | Euclidean isoperimetric (eq form) | CITED-BLACK-BOX | Maggi 2012 §14. |
+| `Isoperimetric/Euclidean.lean:135` | Euclidean isoperimetric (sharp constant) | CITED-BLACK-BOX | Maggi 2012 §14. |
 | `Isoperimetric/ReducedBoundary.lean:113` | reduced boundary structure | CITED-BLACK-BOX | De Giorgi structure theorem; Maggi 2012 §15. |
-| `Isoperimetric/ReducedBoundary.lean:152` | (variant) | CITED-BLACK-BOX | Same source. |
-| `Isoperimetric/BVFunction.lean:114` | BV property | CITED-BLACK-BOX | Maggi 2012 §10. |
+| `Isoperimetric/ReducedBoundary.lean:152` | reduced boundary (variant) | CITED-BLACK-BOX | Maggi 2012 §15. |
+| `Isoperimetric/BVFunction.lean:114` | BV approximation | CITED-BLACK-BOX | Maggi 2012 §10. |
 | `Isoperimetric/Coarea.lean:73` | coarea formula | CITED-BLACK-BOX | Maggi 2012 §18. |
-| `Isoperimetric/Coarea.lean:117` | (variant) | CITED-BLACK-BOX | Same source. |
+| `Isoperimetric/Coarea.lean:117` | coarea (variant) | CITED-BLACK-BOX | Maggi 2012 §18. |
 | `Isoperimetric/Relative.lean:87` | relative isoperimetric | CITED-BLACK-BOX | Maggi 2012 §16. |
-
-## Regularity (2)
-
-| File:line | Identifier | Classification | Repair plan |
-|-----------|-----------|---------------|-------------|
-| `SmoothRegularity.lean:124` | Hausdorff small singular set | CITED-BLACK-BOX | Wickramasekera 2014 main theorem. |
-| `SmoothRegularity.lean:140` | smooth minimal hypersurface | CITED-BLACK-BOX | Wickramasekera 2014 + 2 ≤ n ≤ 6 specialization. |
 
 ## Notes
 
-* This catalog tracks **public-facing** sorries (Riemannian /
-  GeometricMeasureTheory / Regularity packages). Application papers
-  maintain their own catalogs.
-* PRE-PAPER classification is **not permanent technical debt**: every
-  PRE-PAPER entry has a concrete repair trigger (Mathlib API maturation
-  or framework self-build follow-up).
-* Updating this file: when adding a new `sorry`, add a row +
-  classification + repair plan. When closing a sorry (replacing with a
-  real proof), remove its row. CI checks total count matches §"Total
-  counts" table.
+* PRE-PAPER is **not permanent technical debt**: every PRE-PAPER entry has a
+  concrete closure path (either Mathlib API to extend, or framework
+  self-build to perform). The classification distinguishes "ready to close
+  with focused work" from "deliberately delegated to a citation".
+* CITED-BLACK-BOX entries are **stable by design**: the framework states a
+  named theorem from the literature and uses it without re-proving the body.
+  These are the seven Maggi 2012 / Allard 1972 references plus the Bochner
+  identity.
+* Updating this file: when adding a new `sorry`, append a row with
+  classification + notes, and bump `EXPECTED` in `.github/workflows/ci.yml`.
+  When closing a sorry (replacing with a real proof), remove its row and
+  decrement `EXPECTED`. The per-module sub-table count must equal the
+  summary table count.
