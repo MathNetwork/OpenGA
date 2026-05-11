@@ -46,6 +46,36 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
+/-- The **second covariant derivative** of a tangent vector field $Z$ at
+$x$, evaluated on a pair of directions $v, w \in T_x M$:
+$$(\nabla^2 Z)(v, w)_x \;=\; \nabla_v(\nabla_w Z)|_x \;-\; \nabla_{(\nabla_v w)} Z|_x.$$
+The convention follows Lee §4 and do Carmo §2: $v$ is the **outer**
+differentiation direction, $w$ the inner one. Both directions are extended
+as constant chart-frame sections (under `[IsLocallyConstantChartedSpace H M]`,
+$T_y M = E$ definitionally on all of $M$), and the formula's "Christoffel
+correction" $\nabla_{(\nabla_v w)} Z$ uses the chart-frame extension of $w$.
+
+The expression depends only on $v, w$ at $x$ (tensoriality), but the proof
+of tensoriality requires smoothness propagation of $Z$ and is deferred.
+
+The connection Laplacian is the metric trace of this tensor:
+$\Delta_\nabla Z = \sum_i (\nabla^2 Z)(\varepsilon_i, \varepsilon_i)$ —
+see `connectionLaplacian_eq_sum_secondCovDerivAt` below. -/
+noncomputable def secondCovDerivAt
+    (Z : Π x : M, TangentSpace I x) (x : M)
+    (v w : TangentSpace I x) : TangentSpace I x :=
+  covDerivAt (fun y : M => covDerivAt Z y (w : TangentSpace I x)) x v
+    - covDerivAt Z x (covDerivAt (fun _ : M => (w : TangentSpace I x)) x v)
+
+@[simp] lemma secondCovDerivAt_def
+    (Z : Π x : M, TangentSpace I x) (x : M)
+    (v w : TangentSpace I x) :
+    secondCovDerivAt (I := I) (M := M) Z x v w =
+      covDerivAt (fun y : M => covDerivAt Z y (w : TangentSpace I x)) x v
+        - covDerivAt Z x
+            (covDerivAt (fun _ : M => (w : TangentSpace I x)) x v) :=
+  rfl
+
 set_option backward.isDefEq.respectTransparency false in
 /-- The **connection Laplacian** $\Delta_\nabla Z$ on a tangent vector
 field $Z : \Pi x : M, T_x M$, computed against the $g$-orthonormal frame
@@ -148,6 +178,24 @@ $\Delta_\nabla 0 = 0$. -/
     show ((leviCivitaConnection (I := I) (M := M)).toFun 0 x) _ = 0
     rw [CovariantDerivative.zero]; rfl
   rw [h_lhs, h_rhs, sub_zero]
+
+/-- **Connection Laplacian as the trace of the second covariant derivative**:
+$$\Delta_\nabla Z \;=\; \sum_i (\nabla^2 Z)(\varepsilon_i, \varepsilon_i),$$
+where $\{\varepsilon_i\} = \mathrm{stdOrthonormalBasis}\,\mathbb{R}\,(T_xM)$.
+
+This is the textbook identification $\Delta_\nabla = \mathrm{tr}_g(\nabla^2)$.
+The two definitions unfold to the same expression — `rfl` holds modulo the
+definitional unfolding of both sides. -/
+theorem connectionLaplacian_eq_sum_secondCovDerivAt
+    (Z : Π x : M, TangentSpace I x) (x : M) :
+    connectionLaplacian (I := I) (M := M) Z x =
+      ∑ i, secondCovDerivAt (I := I) (M := M) Z x
+        ((stdOrthonormalBasis ℝ (TangentSpace I x)) i : TangentSpace I x)
+        ((stdOrthonormalBasis ℝ (TangentSpace I x)) i : TangentSpace I x) := by
+  rw [connectionLaplacian_def]
+  refine Finset.sum_congr rfl ?_
+  intro i _
+  rfl
 
 end Operators
 end Riemannian
