@@ -4,7 +4,7 @@ import Mathlib.Geometry.Manifold.IsManifold.Basic
 import Mathlib.Geometry.Manifold.ContMDiff.Basic
 import OpenGALib.Riemannian.Metric
 
-open OpenGALib (HasMetric)
+open Riemannian (HasMetric)
 
 /-!
 # GMT.HasNormal

@@ -32,7 +32,7 @@ Reference: Lee, *Smooth Manifolds*, §2.
 
 open scoped ContDiff Manifold
 
-namespace OpenGALib
+namespace Riemannian
 namespace BumpFunction
 
 /-! ## Scalar bumps on $\mathbb{R}$ -/
@@ -127,4 +127,4 @@ theorem extendVectorField_zero_outside_support
   rw [image_eq_zero_of_notMem_tsupport h, zero_smul]
 
 end BumpFunction
-end OpenGALib
+end Riemannian

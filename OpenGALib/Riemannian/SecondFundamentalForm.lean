@@ -28,7 +28,7 @@ Reference: do Carmo, *Riemannian Geometry*, §6.2; Simon, *Geometric
 Measure Theory*, §49.
 -/
 
-open Bundle OpenGALib
+open Bundle
 open scoped ContDiff Manifold Bundle
 
 namespace Riemannian

@@ -15,7 +15,7 @@ abbreviates (Mathlib convention). Consumers should:
 
 ```
 import OpenGALib.Util.Notation
-open scoped Riemannian OpenGALib
+open scoped Riemannian
 ```
 
 and then write theorems in math-first form.

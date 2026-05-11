@@ -45,10 +45,7 @@ Reference: do Carmo, *Riemannian Geometry*, §2 Theorem 3.6;
 §4 Proposition 2.5 (Bianchi I).
 -/
 
-open Bundle VectorField OpenGALib
-open OpenGALib
-open scoped ContDiff Manifold
-open scoped ContDiff Manifold Topology
+open Bundle VectorField
 open scoped ContDiff Manifold Topology Riemannian
 
 namespace Riemannian
@@ -678,7 +675,7 @@ private theorem SmoothVectorField.contMDiff_E (Y : SmoothVectorField I M) :
   rfl
 
 -- Smoothness of `metricInner` on bundle sections lives in `Manifold.lean`
--- as the public `OpenGALib.metricInner_contMDiff` (parametric over `n`).
+-- as the public `Riemannian.metricInner_contMDiff` (parametric over `n`).
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M]
   [IsLocallyConstantChartedSpace H M] [hm : HasMetric I M] in
@@ -747,7 +744,7 @@ private theorem mlieBracket_tangentSmoothAt
     {U V : (y : M) → TangentSpace I y} {x : M}
     (hU : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞ (fun y => (⟨y, U y⟩ : TangentBundle I M)))
     (hV : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞ (fun y => (⟨y, V y⟩ : TangentBundle I M))) :
-    OpenGALib.TangentSmoothAt (mlieBracket I U V) x := by
+    TangentSmoothAt (mlieBracket I U V) x := by
   -- IsManifold I a M auto-inferred from IsManifold I ∞ M + LEInfty a (Mathlib instance).
   haveI : IsManifold I (3 : ℕ∞ω) M := inferInstance
   haveI : IsManifold I (2 : ℕ∞ω) M := inferInstance
@@ -785,10 +782,10 @@ noncomputable def koszulCotangentCLM
       map_add' := by
         intro w₁ w₂
         unfold koszulCotangentScalar
-        have hY_y : OpenGALib.TangentSmoothAt Y.toFun y := Y.smoothAt y
-        have h_const_w₁ : OpenGALib.TangentSmoothAt (fun _ : M => w₁) y :=
+        have hY_y : TangentSmoothAt Y.toFun y := Y.smoothAt y
+        have h_const_w₁ : TangentSmoothAt (fun _ : M => w₁) y :=
           (SmoothVectorField.const (I := I) (M := M) w₁).smoothAt y
-        have h_const_w₂ : OpenGALib.TangentSmoothAt (fun _ : M => w₂) y :=
+        have h_const_w₂ : TangentSmoothAt (fun _ : M => w₂) y :=
           (SmoothVectorField.const (I := I) (M := M) w₂).smoothAt y
         have h_YZ₁ : MDifferentiableAt I 𝓘(ℝ, ℝ)
             (fun y' : M => metricInner y' (Y.toFun y') ((fun _ : M => w₁) y')) y :=
@@ -824,10 +821,10 @@ noncomputable def koszulCotangentCLM
         intro c w
         unfold koszulCotangentScalar
         -- Use koszul_smul_right with f = (const c).
-        have hY_y : OpenGALib.TangentSmoothAt Y.toFun y := Y.smoothAt y
-        have h_const_w : OpenGALib.TangentSmoothAt (fun _ : M => w) y :=
+        have hY_y : TangentSmoothAt Y.toFun y := Y.smoothAt y
+        have h_const_w : TangentSmoothAt (fun _ : M => w) y :=
           (SmoothVectorField.const (I := I) (M := M) w).smoothAt y
-        have h_const_v : OpenGALib.TangentSmoothAt (fun _ : M => v) y :=
+        have h_const_v : TangentSmoothAt (fun _ : M => v) y :=
           (SmoothVectorField.const (I := I) (M := M) v).smoothAt y
         have hf : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun _ : M => c) y :=
           mdifferentiableAt_const
@@ -894,21 +891,21 @@ private theorem koszulCotangentScalar_mdifferentiableAt
       (fun y' : M => hm.metric.metricInner y' v (Y.toFun y')) :=
     metricInner_contMDiff h_const_v_bundle hY_bundle
   -- TangentSmoothAt for the 3 const + Y bundle sections.
-  have hY_y : OpenGALib.TangentSmoothAt Y.toFun x := Y.smoothAt x
-  have h_const_v_y : OpenGALib.TangentSmoothAt (fun _ : M => v) x :=
+  have hY_y : TangentSmoothAt Y.toFun x := Y.smoothAt x
+  have h_const_v_y : TangentSmoothAt (fun _ : M => v) x :=
     (SmoothVectorField.const (I := I) (M := M) v).smoothAt x
-  have h_const_w_y : OpenGALib.TangentSmoothAt (fun _ : M => w) x :=
+  have h_const_w_y : TangentSmoothAt (fun _ : M => w) x :=
     (SmoothVectorField.const (I := I) (M := M) w).smoothAt x
   -- TangentSmoothAt of mlieBracket sections (T4, T5, T6).
-  have h_mlb_vY : OpenGALib.TangentSmoothAt
+  have h_mlb_vY : TangentSmoothAt
       (mlieBracket I (fun _ : M => v) Y.toFun) x :=
     mlieBracket_tangentSmoothAt
       (SmoothVectorField.const (I := I) (M := M) v).smooth Y.smooth
-  have h_mlb_Yw : OpenGALib.TangentSmoothAt
+  have h_mlb_Yw : TangentSmoothAt
       (mlieBracket I Y.toFun (fun _ : M => w)) x :=
     mlieBracket_tangentSmoothAt Y.smooth
       (SmoothVectorField.const (I := I) (M := M) w).smooth
-  have h_mlb_vw : OpenGALib.TangentSmoothAt
+  have h_mlb_vw : TangentSmoothAt
       (mlieBracket I (fun _ : M => v) (fun _ : M => w)) x :=
     mlieBracket_tangentSmoothAt
       (SmoothVectorField.const (I := I) (M := M) v).smooth
@@ -1383,7 +1380,7 @@ original Riesz-uniqueness proof. Self-build follow-up. -/
 private theorem koszulCovDeriv_const_smoothAt
     [IsLocallyConstantChartedSpace H M]
     (v : E) (Y : SmoothVectorField I M) (x : M) :
-    OpenGALib.TangentSmoothAt
+    TangentSmoothAt
       (fun y : M => koszulCovDeriv (fun _ : M => v) Y.toFun y
         ((SmoothVectorField.const (I := I) (M := M) v).smoothAt y)
         (Y.smoothAt y)) x :=
@@ -1421,7 +1418,7 @@ theorem leviCivitaConnection_exists [IsLocallyConstantChartedSpace H M] :
           metricInner x (cov.toFun Y x (X x)) (Z x) +
           metricInner x (Y x) (cov.toFun Z x (X x))) ∧
       (∀ (Y : SmoothVectorField I M) (v : E) (x : M),
-        OpenGALib.TangentSmoothAt
+        TangentSmoothAt
           (fun y : M => cov.toFun Y.toFun y v) x) := by
   obtain ⟨cov, hcov⟩ := koszulLeviCivita_exists (I := I) (M := M)
   refine ⟨cov, ?_, ?_, ?_⟩
@@ -1529,7 +1526,7 @@ strengthened existential. The smoothness clause itself is currently
 theorem leviCivitaConnection_smoothAt_const_dir
     [IsLocallyConstantChartedSpace H M]
     (Y : SmoothVectorField I M) (v : E) (x : M) :
-    OpenGALib.TangentSmoothAt
+    TangentSmoothAt
       (fun y : M => (leviCivitaConnection (I := I) (M := M)).toFun Y.toFun y v) x :=
   (Classical.choose_spec leviCivitaConnection_exists).2.2 Y v x
 
@@ -2078,7 +2075,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
 `SmoothVectorField Y` and any chart-frame constant direction $v$. -/
 theorem covDeriv_const_smoothVF_smoothAt
     (v : E) (Y : SmoothVectorField I M) (x : M) :
-    OpenGALib.TangentSmoothAt
+    TangentSmoothAt
       (fun y : M => covDeriv (fun _ : M => v) Y.toFun y) x :=
   Riemannian.leviCivitaConnection_smoothAt_const_dir Y v x
 

@@ -22,7 +22,7 @@ Mathlib upstream: `Mathlib.Geometry.Manifold.Riemannian.Basic`
 (`riemannianMetricVectorSpace`).
 -/
 
-namespace OpenGALib
+namespace Riemannian
 
 open Bundle Bornology
 open scoped ContDiff Manifold InnerProductSpace
@@ -64,4 +64,4 @@ theorem metricInner_euclidean
     (euclideanRiemannianMetric E).metricInner x v w = ⟪v, w⟫_ℝ :=
   rfl
 
-end OpenGALib
+end Riemannian

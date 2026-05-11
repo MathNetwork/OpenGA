@@ -49,7 +49,7 @@ noncomputable section
 
 set_option linter.unusedSectionVars false
 
-open Bundle OpenGALib
+open Bundle
 open scoped ContDiff Manifold Bundle Riemannian
 
 namespace Riemannian
@@ -219,7 +219,7 @@ theorem trace_sq_div_dim_le_frobeniusSq
 end Operators
 end Riemannian
 
-namespace OpenGALib
+namespace Riemannian
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
@@ -232,4 +232,4 @@ noncomputable instance instMetricNormSqBilin :
     MetricNormSq (Riemannian.Operators.Bilin (M := M) I) (M → ℝ) where
   normSqG B := fun x => Riemannian.Operators.frobeniusSq (I := I) (M := M) B x
 
-end OpenGALib
+end Riemannian

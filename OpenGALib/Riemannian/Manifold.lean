@@ -57,7 +57,7 @@ manifolds and Riemannian metrics"). Lee, *Smooth Manifolds*, Ch. 1, 13.
 open Bundle
 open scoped ContDiff Manifold Bundle
 
-namespace OpenGALib
+namespace Riemannian
 
 /-- A **smooth manifold** as a single bundled typeclass. Packages
 `(E, H, modelI)` plus the complete typeclass cascade needed by
@@ -416,7 +416,7 @@ wrapper that converts the framework's `TangentSmoothAt` predicate to
 the underlying `MDifferentiableAt` bundle-section form. -/
 theorem metricInner_mdifferentiableAt_of_tangentSmoothAt
     {Y Z : ∀ y : M, TangentSpace I y} {x : M}
-    (hY : OpenGALib.TangentSmoothAt Y x) (hZ : OpenGALib.TangentSmoothAt Z x) :
+    (hY : TangentSmoothAt Y x) (hZ : TangentSmoothAt Z x) :
     MDifferentiableAt I 𝓘(ℝ, ℝ)
       (fun y => metricInner y (Y y) (Z y)) x :=
   metricInner_mdifferentiableAt hY.toBundleSection hZ.toBundleSection
@@ -484,4 +484,4 @@ scoped notation:max "⟪" V ", " W "⟫_g" => MetricInnerHom.innerG V W
 on a section → `M → ℝ`. -/
 scoped notation:max "‖" V "‖²_g" => MetricNormSq.normSqG V
 
-end OpenGALib
+end Riemannian

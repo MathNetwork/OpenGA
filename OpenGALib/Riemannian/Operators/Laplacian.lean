@@ -31,7 +31,7 @@ noncomputable section
 
 set_option linter.unusedSectionVars false
 
-open Bundle OpenGALib
+open Bundle
 open scoped ContDiff Manifold Bundle Riemannian
 
 namespace Riemannian

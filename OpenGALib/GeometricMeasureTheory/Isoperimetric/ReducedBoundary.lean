@@ -48,7 +48,7 @@ section OuterNormal
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
-  [ChartedSpace H M] [IsManifold I ∞ M] [OpenGALib.HasMetric I M]
+  [ChartedSpace H M] [IsManifold I ∞ M] [Riemannian.HasMetric I M]
 
 /-- **Outer unit normal blow-up characterization** (Maggi Theorem 15.5).
 
@@ -119,7 +119,7 @@ section TangentHyperplane
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M]
-  [OpenGALib.HasMetric I M]
+  [Riemannian.HasMetric I M]
 
 /-- **Tangent hyperplane at reduced boundary** (Maggi Theorem 15.5).
 
@@ -147,7 +147,7 @@ infrastructure.
 theorem tangentHyperplane_at_reducedBoundary_orthogonal
     (Ω : FinitePerimeter M) (x : M)
     (_hx : x ∈ FinitePerimeter.reducedBoundary Ω) (v : TangentSpace I x) :
-    OpenGALib.metricInner x v (Varifold.bvGradientDirection I Ω x) = 0 ↔
+    Riemannian.metricInner x v (Varifold.bvGradientDirection I Ω x) = 0 ↔
       v ∈ (Submodule.span ℝ {Varifold.bvGradientDirection I Ω x})ᗮ := by
   sorry
 

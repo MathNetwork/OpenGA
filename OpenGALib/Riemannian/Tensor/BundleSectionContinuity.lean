@@ -66,7 +66,7 @@ set_option maxHeartbeats 800000
 open Bundle Set IsManifold ContinuousLinearMap
 open scoped Manifold Topology Bundle ContDiff
 
-namespace OpenGALib
+namespace Riemannian
 namespace Tensor
 namespace BundleSectionContinuity
 
@@ -154,6 +154,6 @@ private lemma triv_alpha_clmAt_at_symmL_beta_eq_coordChangeL
 
 end BundleSectionContinuity
 end Tensor
-end OpenGALib
+end Riemannian
 
 end

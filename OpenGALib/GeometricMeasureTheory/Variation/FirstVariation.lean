@@ -18,7 +18,7 @@ $$\delta V(X) = \int (\mathrm{div}_M X - \langle \nu, \nabla_\nu X \rangle)\, d\
 The correction term $\langle \nu, \nabla_\nu X \rangle$ uses the
 Levi-Civita connection on $M$ (`Riemannian.covDeriv`) and the
 framework-owned inner product on `TangentSpace I x` (`metricInner`,
-provided by `OpenGALib.RiemannianMetric I M`).
+provided by `Riemannian.RiemannianMetric I M`).
 
 The mass-only `Varifold` does not carry tangent-plane data; the unit
 normal is supplied by `Varifold.HasNormal` typeclass.
@@ -31,7 +31,7 @@ specialization with the correction term, requires `[HasNormal V]`.
 -/
 
 open scoped ContDiff Manifold
-open Riemannian OpenGALib
+open Riemannian
 
 namespace GeometricMeasureTheory.Variation
 
@@ -70,7 +70,7 @@ $$\delta V(X) = \int (\mathrm{div}_M X - \langle \nu, \nabla_\nu X \rangle_g)\, 
 Requires:
   * `[CompleteSpace E]`, `[FiniteDimensional ℝ E]` for the underlying
     `divergenceM` and Levi-Civita connection;
-  * `[OpenGALib.HasMetric I M]` providing the framework metric
+  * `[Riemannian.HasMetric I M]` providing the framework metric
     (Phase 4.7);
   * `[Varifold.HasNormal I V]` providing the unit normal field.
 

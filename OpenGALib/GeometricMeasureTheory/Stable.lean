@@ -56,7 +56,7 @@ def IsStable
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
-    [OpenGALib.HasMetric I M]
+    [Riemannian.HasMetric I M]
     (V : Varifold M) [Varifold.HasNormal I V] : Prop :=
   ∀ φ : M → ℝ, Function.support φ ⊆ (sing I V)ᶜ →
     0 ≤ Variation.secondVariationFull I V φ
@@ -73,7 +73,7 @@ def IsUnstable
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
-    [OpenGALib.HasMetric I M]
+    [Riemannian.HasMetric I M]
     (V : Varifold M) [Varifold.HasNormal I V] : Prop :=
   ∃ φ : M → ℝ,
     Function.support φ ⊆ (sing I V)ᶜ ∧

@@ -99,7 +99,7 @@ for tangent sections, equivalent to the bundle-form
 opaque to elaborator unfolding for tactic-search performance.
 -/
 
-namespace OpenGALib
+namespace Riemannian
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
@@ -229,7 +229,7 @@ macro_rules
         | apply TangentSmoothAt.neg
         | apply TangentSmoothAt.smul)
 
-end OpenGALib
+end Riemannian
 
 /-! ## Chart-frame infrastructure
 
@@ -658,8 +658,8 @@ instance : CoeFun (SmoothVectorField I M) fun _ => Π y : M, TangentSpace I y :=
 @[simp] lemma coe_mk (f : Π y : M, TangentSpace I y) (h) :
     ⇑(⟨f, h⟩ : SmoothVectorField I M) = f := rfl
 
-theorem smoothAt (X : SmoothVectorField I M) (x : M) : OpenGALib.TangentSmoothAt X x :=
-  OpenGALib.TangentSmoothAt.mk ((X.smooth x).mdifferentiableAt (by simp : (∞ : ℕ∞ω) ≠ 0))
+theorem smoothAt (X : SmoothVectorField I M) (x : M) : TangentSmoothAt X x :=
+  TangentSmoothAt.mk ((X.smooth x).mdifferentiableAt (by simp : (∞ : ℕ∞ω) ≠ 0))
 
 noncomputable def zero : SmoothVectorField I M where
   toFun := fun _ => 0
@@ -743,7 +743,7 @@ neighborhood of `x`) lifts $C^\infty$ regularity from the chart side
 to the manifold side via `comp_of_preimage_mem_nhdsWithin`.
 -/
 
-namespace OpenGALib
+namespace Riemannian
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [FiniteDimensional ℝ E] [CompleteSpace E]
@@ -910,4 +910,4 @@ theorem mfderiv_smoothDir_smoothAt
   rw [h_written, h_extChart_eq]
   rfl
 
-end OpenGALib
+end Riemannian

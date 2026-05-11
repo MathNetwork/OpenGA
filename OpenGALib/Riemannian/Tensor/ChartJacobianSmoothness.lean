@@ -67,7 +67,7 @@ set_option backward.isDefEq.respectTransparency false
 open Bundle Set IsManifold ContinuousLinearMap
 open scoped Manifold Topology Bundle ContDiff
 
-namespace OpenGALib
+namespace Riemannian
 namespace Tensor
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
@@ -302,6 +302,6 @@ theorem chartJMatrix_entry_wrapped_at_centre
   rfl
 
 end Tensor
-end OpenGALib
+end Riemannian
 
 end

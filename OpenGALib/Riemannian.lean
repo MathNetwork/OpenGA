@@ -42,7 +42,7 @@ Regularity                   ← consumer
 
 ## Files
 
-  * `Metric.lean` — `OpenGALib.RiemannianMetric` typeclass + `metricInner` /
+  * `Metric.lean` — `Riemannian.RiemannianMetric` typeclass + `metricInner` /
     `metricRiesz` operations + framework-owned NACG / IPS bridges
    .
   * `Connection.lean` — Levi-Civita connection via Koszul functional +
@@ -53,7 +53,7 @@ Regularity                   ← consumer
   * `Gradient.lean`   — manifold gradient via Riesz duality, gradient norm
     squared.
   * `BumpFunction.lean` — scalar / radial / manifold bumps + tangent
-    vector field extension (`OpenGALib.BumpFunction`).
+    vector field extension (`Riemannian.BumpFunction`).
   * `Operators/` — second-order differential operators: `Hessian` (vector-field
     bilinear form via `covDeriv` + `manifoldGradient` + `metricInner`,
     plus Frobenius / trace Cauchy-Schwarz inequality), `Laplacian` (trace of
@@ -79,14 +79,14 @@ Identifiers not listed here (e.g., private helpers, `koszulFunctional_*`
 intermediate identities) are internal and may change without notice.
 
 **Metric / inner product** (`Metric.lean`):
-  * `OpenGALib.RiemannianMetric` (typeclass)
-  * `OpenGALib.metricInner`, `OpenGALib.metricRiesz`
-  * `OpenGALib.metricInner_comm`, `metricInner_self_pos`,
+  * `Riemannian.RiemannianMetric` (typeclass)
+  * `Riemannian.metricInner`, `Riemannian.metricRiesz`
+  * `Riemannian.metricInner_comm`, `metricInner_self_pos`,
     `metricInner_self_nonneg`, `metricInner_add_left/right`,
     `metricInner_smul_left/right`, `metricInner_neg_left/right`,
     `metricInner_sub_left/right`, `metricInner_zero_left/right`
-  * `OpenGALib.metricRiesz_inner`, `metricRiesz_unique`
-  * `OpenGALib.metricInner_eq_iff_eq`
+  * `Riemannian.metricRiesz_inner`, `metricRiesz_unique`
+  * `Riemannian.metricInner_eq_iff_eq`
 
 **Connection** (`Connection.lean`):
   * `Riemannian.leviCivitaConnection` — torsion-free, metric-compatible
@@ -113,19 +113,19 @@ intermediate identities) are internal and may change without notice.
   * `Riemannian.manifoldGradient_inner_eq`
 
 **Bump functions** (`BumpFunction.lean`):
-  * `OpenGALib.BumpFunction.expDamping`
-  * `OpenGALib.BumpFunction.smoothStep`
-  * `OpenGALib.BumpFunction.radialBump`
-  * `OpenGALib.BumpFunction.manifoldBump`
-  * `OpenGALib.BumpFunction.extendVectorField`
+  * `Riemannian.BumpFunction.expDamping`
+  * `Riemannian.BumpFunction.smoothStep`
+  * `Riemannian.BumpFunction.radialBump`
+  * `Riemannian.BumpFunction.manifoldBump`
+  * `Riemannian.BumpFunction.extendVectorField`
 
 **Smoothness infrastructure** (`TangentBundle/`, `Metric.lean`):
-  * `OpenGALib.TangentSmoothAt` — bundle-section smoothness predicate
-  * `OpenGALib.TangentSmoothAt.{mk, zero, add, neg, sub, smul,
+  * `Riemannian.TangentSmoothAt` — bundle-section smoothness predicate
+  * `Riemannian.TangentSmoothAt.{mk, zero, add, neg, sub, smul,
     coordSmoothAt, iff_coord, toBundleSection}`
   * `TangentBundle.symmLFlat`,
     `TangentBundle.symmLFlat_mdifferentiableAt`
-  * `OpenGALib.MDifferentiableAt.metricInner_smoothAt`
+  * `Riemannian.MDifferentiableAt.metricInner_smoothAt`
 
 **Util — engineering layer** (`Util/`, no mathematical content):
   * `Util/Notation.lean` — textbook notation: `⟪V, W⟫_g`,

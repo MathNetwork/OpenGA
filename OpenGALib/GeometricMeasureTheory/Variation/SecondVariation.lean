@@ -41,7 +41,7 @@ are replaced with constructive defs (Phase 4 repair trigger).
 §1 (stable hypersurfaces); Wickramasekera 2014 §2.
 -/
 
-open scoped ContDiff Manifold Riemannian OpenGALib
+open scoped ContDiff Manifold Riemannian
 open Riemannian
 
 namespace GeometricMeasureTheory.Variation
@@ -74,7 +74,7 @@ noncomputable def secondVariationFull
     (I : ModelWithCorners ℝ E H)
     [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
-    [OpenGALib.HasMetric I M]
+    [Riemannian.HasMetric I M]
     (V : Varifold M) [hN : Varifold.HasNormal I V]
     (φ : M → ℝ) : ℝ :=
   -- PRE-PAPER: `ricci` was refactored to take `SmoothVectorField` (commit

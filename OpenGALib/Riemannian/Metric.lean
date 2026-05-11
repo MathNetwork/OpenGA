@@ -48,7 +48,7 @@ Mathlib upstream: `Mathlib.Geometry.Manifold.VectorBundle.Riemannian`.
 open Bundle
 open scoped ContDiff Manifold Topology Bundle
 
-namespace OpenGALib
+namespace Riemannian
 
 /-! ## The metric type -/
 
@@ -100,9 +100,9 @@ noncomputable instance instRiemannianBundleOfHasMetric
     Bundle.RiemannianBundle (TangentSpace I : M → Type _) :=
   ⟨hm.metric.toRiemannianMetric⟩
 
-end OpenGALib
+end Riemannian
 
-namespace OpenGALib.RiemannianMetric
+namespace Riemannian.RiemannianMetric
 
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
@@ -208,7 +208,7 @@ theorem metricInner_self_nonneg (g : RiemannianMetric I M)
   · rw [hV, g.metricInner_zero_left]
   · exact le_of_lt (g.metricInner_self_pos x V hV)
 
-end OpenGALib.RiemannianMetric
+end Riemannian.RiemannianMetric
 
 /-! ## TangentSpace fibre instances
 
@@ -225,7 +225,7 @@ The non-metric fibre instances `FiniteDimensional` and `CompleteSpace`
 are orthogonal to the NACG/IPS chain and are transported here via the
 `TangentSpace I x = E` def-eq. -/
 
-namespace OpenGALib
+namespace Riemannian
 
 section TangentSpaceInstances
 
@@ -240,14 +240,14 @@ instance instFiniteDimensionalTangent [FiniteDimensional ℝ E] (x : M) :
 
 end TangentSpaceInstances
 
-end OpenGALib
+end Riemannian
 
 /-! ## Riesz duality
 
 In a finite-dim inner product space $V$, every continuous linear functional
 $\varphi : V \to \mathbb{R}$ is uniquely represented as $\langle V_\varphi, \cdot\rangle_g$. -/
 
-namespace OpenGALib.RiemannianMetric
+namespace Riemannian.RiemannianMetric
 
 
 section Riesz
@@ -350,7 +350,7 @@ noncomputable def metricToDualEquiv (g : RiemannianMetric I M) (x : M) :
 
 end Riesz
 
-end OpenGALib.RiemannianMetric
+end Riemannian.RiemannianMetric
 
 /-! ## Smoothness of the metric inner product
 
@@ -370,7 +370,7 @@ sections may live over a general parameter space. All variants reduce
 to Mathlib's `inner_bundle` after locally injecting a
 `Bundle.RiemannianBundle (TangentSpace I)` from `g.toRiemannianMetric`. -/
 
-namespace OpenGALib.RiemannianMetric
+namespace Riemannian.RiemannianMetric
 
 section Smoothness
 
@@ -484,4 +484,4 @@ theorem metricInner_mdifferentiable
 
 end Smoothness
 
-end OpenGALib.RiemannianMetric
+end Riemannian.RiemannianMetric

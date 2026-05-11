@@ -42,7 +42,7 @@ and the metric-dependent Ricci / scalar-curvature constructions.
 Reference: do Carmo 1992 §4.
 -/
 
-open Bundle VectorField OpenGALib
+open Bundle VectorField
 open scoped ContDiff Manifold Riemannian
 
 namespace Riemannian
@@ -115,10 +115,10 @@ noncomputable def curvatureEndo
     -- Smoothness of each summand: `(fun y => covDeriv (fun _ => z) Y y) =
     -- (fun y => lev.toFun Y y z)` is smooth via `leviCivitaConnection`'s
     -- isCovariantDerivativeOnUniv applied at the constant section.
-    have h_const_z₁_smooth : ∀ y, OpenGALib.TangentSmoothAt
+    have h_const_z₁_smooth : ∀ y, TangentSmoothAt
         (fun _ : M => z₁) y :=
       fun y => (cF[z₁]).smoothAt y
-    have h_const_z₂_smooth : ∀ y, OpenGALib.TangentSmoothAt
+    have h_const_z₂_smooth : ∀ y, TangentSmoothAt
         (fun _ : M => z₂) y :=
       fun y => (cF[z₂]).smoothAt y
     have hY_smooth := Y.smoothAt
@@ -169,7 +169,7 @@ noncomputable def curvatureEndo
             - covDeriv (fun y => mlieBracket I (fun _ => z) X.toFun y) Y.toFun x)
     have h_const_smul : ((fun _ : M => c • z) : (y : M) → TangentSpace I y)
         = c • (fun _ => z) := by funext y; rfl
-    have h_const_z_smooth : ∀ y, OpenGALib.TangentSmoothAt (fun _ : M => z) y :=
+    have h_const_z_smooth : ∀ y, TangentSmoothAt (fun _ : M => z) y :=
       fun y => (cF[z]).smoothAt y
     have hY_smooth := Y.smoothAt
     -- Term 1: CLM map_smul.
@@ -294,16 +294,16 @@ noncomputable def ricciTensor (x : M) :
         -- Π-equality: const(W₁+W₂) = const W₁ + const W₂.
         have h_const_add : ((fun _ : M => W₁ + W₂) : (y : M) → TangentSpace I y)
             = (fun _ => W₁) + (fun _ => W₂) := by funext y; rfl
-        have h_const_W₁_smooth : ∀ y, OpenGALib.TangentSmoothAt
+        have h_const_W₁_smooth : ∀ y, TangentSmoothAt
             (fun _ : M => W₁) y :=
           fun y => (cF[W₁]).smoothAt y
-        have h_const_W₂_smooth : ∀ y, OpenGALib.TangentSmoothAt
+        have h_const_W₂_smooth : ∀ y, TangentSmoothAt
             (fun _ : M => W₂) y :=
           fun y => (cF[W₂]).smoothAt y
-        have h_const_z_smooth : ∀ y, OpenGALib.TangentSmoothAt
+        have h_const_z_smooth : ∀ y, TangentSmoothAt
             (fun _ : M => z) y :=
           fun y => (cF[z]).smoothAt y
-        have h_const_V_smooth : ∀ y, OpenGALib.TangentSmoothAt
+        have h_const_V_smooth : ∀ y, TangentSmoothAt
             (fun _ : M => V) y :=
           fun y => (cF[V]).smoothAt y
         show covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => V)
@@ -426,7 +426,7 @@ noncomputable def ricciTensor (x : M) :
                 (cF[W]).toFun x
         have h_const_smul : ((fun _ : M => c • W) : (y : M) → TangentSpace I y)
             = c • (fun _ => W) := by funext y; rfl
-        have h_const_W_smooth : ∀ y, OpenGALib.TangentSmoothAt
+        have h_const_W_smooth : ∀ y, TangentSmoothAt
             (fun _ : M => W) y :=
           fun y => (cF[W]).smoothAt y
         show covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => V)
@@ -528,10 +528,10 @@ noncomputable def ricciTensor (x : M) :
             (cF[W]).toFun x
     have h_const_add : ((fun _ : M => V₁ + V₂) : (y : M) → TangentSpace I y)
         = (fun _ => V₁) + (fun _ => V₂) := by funext y; rfl
-    have h_const_V₁_smooth : ∀ y, OpenGALib.TangentSmoothAt
+    have h_const_V₁_smooth : ∀ y, TangentSmoothAt
         (fun _ : M => V₁) y :=
       fun y => (cF[V₁]).smoothAt y
-    have h_const_V₂_smooth : ∀ y, OpenGALib.TangentSmoothAt
+    have h_const_V₂_smooth : ∀ y, TangentSmoothAt
         (fun _ : M => V₂) y :=
       fun y => (cF[V₂]).smoothAt y
     show covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => V₁ + V₂)
@@ -644,7 +644,7 @@ noncomputable def ricciTensor (x : M) :
             (cF[W]).toFun x
     have h_const_smul : ((fun _ : M => c • V) : (y : M) → TangentSpace I y)
         = c • (fun _ => V) := by funext y; rfl
-    have h_const_V_smooth : ∀ y, OpenGALib.TangentSmoothAt
+    have h_const_V_smooth : ∀ y, TangentSmoothAt
         (fun _ : M => V) y :=
       fun y => (cF[V]).smoothAt y
     show covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => c • V)

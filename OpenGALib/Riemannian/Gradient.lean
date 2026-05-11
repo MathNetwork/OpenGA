@@ -14,7 +14,7 @@ $$\langle \nabla^M f(x), v \rangle_g = (\mathrm{d}f)_x(v) \quad \forall v \in T_
 
 For the squared gradient norm $|\nabla^M f|^2$ as a scalar function on
 $M$, use the polymorphic `‖grad_g[I] f‖²_g` (the section-level instance
-of `OpenGALib.MetricNormSq`).
+of `Riemannian.MetricNormSq`).
 
 ## Main results
 
@@ -23,7 +23,7 @@ of `OpenGALib.MetricNormSq`).
 Reference: do Carmo §3 ex. 8.
 -/
 
-open Bundle OpenGALib
+open Bundle
 open scoped ContDiff Manifold Bundle Riemannian
 
 namespace Riemannian
