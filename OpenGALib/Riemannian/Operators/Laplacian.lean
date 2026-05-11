@@ -112,5 +112,19 @@ noncomputable def scalarLaplacian (f : M → ℝ) (x : M) : ℝ :=
 scoped[Riemannian] notation:max "Δ_g[" I "] " f:max =>
   Operators.scalarLaplacian (I := I) f
 
+/-- **Bridge**: the function-form scalar Laplacian equals the `Bilin`-form
+trace of the Hessian section. Both unfold to
+$\sum_i \langle \nabla_{\varepsilon_i} \nabla f, \varepsilon_i\rangle_g$ in the
+same $g$-orthonormal frame `stdOrthonormalBasis`; the only definitional gap is
+`covDeriv (fun _ => v) (∇f) x` vs `covDerivAt (∇f) x v`, closed by
+`covDeriv_const_eq_covDerivAt` (Levi-Civita is tensorial in its first slot). -/
+theorem scalarLaplacian_eq_laplacian_hessianBilin
+    (f : M → ℝ) (x : M) :
+    scalarLaplacian (I := I) f x =
+      laplacian (I := I) (M := M) (hessianBilin (I := I) f) x := by
+  unfold scalarLaplacian
+  simp only [laplacian, trace_def, hessian, hessianBilin, LinearMap.mk₂_apply,
+             covDeriv_const_eq_covDerivAt]
+
 end Operators
 end Riemannian
