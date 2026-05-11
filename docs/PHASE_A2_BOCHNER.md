@@ -43,17 +43,36 @@ Each step is an atomic commit. Build-verified at every step. No half-finished
 state crosses commit boundaries. Steps later in the list depend on earlier
 ones; intermediate steps yield independently useful lemmas.
 
-### A.4 — `manifoldGradient_contMDiffAt`
+### A.4 — `manifoldGradient_TangentSmoothAt`
 
-Foundational smoothness helper: for `f ∈ C^{n+1}` near `x`, `∇f` is `C^n`
-near `x` as a bundle section.
+Foundational smoothness helper: for `f ∈ C²` near `x`, `∇f` is `MDifferentiableAt`
+near `x` as a tangent bundle section.
 
 **Why first:** consumed by every subsequent step (C, D, G all differentiate
-`∇f` twice and need the propagation).
+`∇f` and need the propagation).
 
-**Closure path:** `manifoldGradient = metricRiesz ∘ mfderiv f`. `mfderiv f`
-is smooth one degree less than f (Mathlib `ContMDiff.mfderiv`). `metricRiesz`
-is smooth (from `Metric.lean` Riesz section smoothness). Compose.
+**Scope discovery (post-audit):** `manifoldGradient = metricRiesz ∘ mfderiv f`.
+`mfderiv f` is smooth via Mathlib `ContMDiff.mfderiv`, but `metricRiesz`
+section smoothness is the **Phase 4.7 PRE-PAPER gap** (Connection.lean:1372,
+referenced as `metricRiesz_section_smoothAt`'s repair plan). Mathlib's
+`Bundle.ContMDiffRiemannianMetric` exposes `inner_bundle` smoothness (lower-the-index
+direction) but does **not** expose raise-the-index / Riesz inverse smoothness.
+
+**Closure path:** chart-Gram matrix machinery (the inverse metric matrix is
+smooth via the adjugate / Cramer formula).
+
+**Sub-steps:**
+- A.4.0 — `chartGramMatrix` def + entrywise smoothness (~100 lines)
+- A.4.1 — `chartGramMatrix` determinant positive + invertible (~50 lines)
+- A.4.2 — `chartInvGramMatrix` via adjugate / det + entrywise smoothness (~150 lines)
+- A.4.3 — `gradChartLocal` def + smoothness on chart source (~100 lines)
+- A.4.4 — `gradChartLocal_eq_manifoldGradient` via Riesz uniqueness (~80 lines)
+- A.4.5 — `manifoldGradient_TangentSmoothAt` (final composition, ~30 lines)
+- A.4.6 — bonus: close `koszulCovDeriv_const_smoothAt` (Connection.lean:1387
+  sorry) via the same chartGramMatrix path
+
+External analog: `Geometry/Gradient.lean` ~830 LOC. Estimated for our framework:
+~400-600 LOC across 6-7 atomic sub-commits.
 
 ### A.5 — `hessianBilin_contMDiffAt`
 
