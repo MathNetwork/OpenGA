@@ -1,4 +1,5 @@
 import OpenGALib.Riemannian.Operators.Hessian
+import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # Laplace–Beltrami operator
@@ -59,12 +60,10 @@ theorem laplacian_add
     (B C : Bilin (M := M) I) (x : M) :
     laplacian (I := I) (M := M) (B + C) x =
       laplacian (I := I) (M := M) B x + laplacian (I := I) (M := M) C x := by
-  simp only [laplacian, trace]
+  simp only [laplacian, trace_def]
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
-  show (B x + C x) ((Module.finBasis ℝ E) i) ((Module.finBasis ℝ E) i) =
-    B x ((Module.finBasis ℝ E) i) ((Module.finBasis ℝ E) i) +
-      C x ((Module.finBasis ℝ E) i) ((Module.finBasis ℝ E) i)
+  show (B x + C x) _ _ = B x _ _ + C x _ _
   rfl
 
 /-- $\Delta_g (c \cdot B) = c \cdot \Delta_g B$. -/
@@ -72,11 +71,10 @@ theorem laplacian_smul
     (c : ℝ) (B : Bilin (M := M) I) (x : M) :
     laplacian (I := I) (M := M) (c • B) x =
       c * laplacian (I := I) (M := M) B x := by
-  simp only [laplacian, trace]
+  simp only [laplacian, trace_def]
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  show (c • B x) ((Module.finBasis ℝ E) i) ((Module.finBasis ℝ E) i) =
-    c * B x ((Module.finBasis ℝ E) i) ((Module.finBasis ℝ E) i)
+  show (c • B x) _ _ = c * B x _ _
   simp [LinearMap.smul_apply]
 
 /-- $(\Delta_g B(x))^2 \le n \cdot \operatorname{frobeniusSq} B(x)$, the
@@ -94,15 +92,20 @@ as the trace of the Hessian. Used in the Bochner identity. -/
 
 variable [IsLocallyConstantChartedSpace H M]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The **scalar Laplacian** $\Delta_g f(x)$ of a smooth function
-$f : M \to \mathbb{R}$ at $x$: the trace of the Hessian over the
-canonical basis of $E$. -/
+$f : M \to \mathbb{R}$ at $x$: the **geometric trace** of the Hessian,
+$\Delta_g f(x) = \sum_i \operatorname{Hess} f(x)(\varepsilon_i, \varepsilon_i)$,
+where $\{\varepsilon_i\}$ is the $g$-orthonormal frame `stdOrthonormalBasis`
+on $T_x M$. Basis-independent (any $g$-orthonormal frame gives the same
+trace), and required for the Bochner–Weitzenböck identity. -/
 noncomputable def scalarLaplacian (f : M → ℝ) (x : M) : ℝ :=
-  ∑ i : Fin (Module.finrank ℝ E),
-    hessian (I := I) (M := M) f
-      (fun (_ : M) => ((Module.finBasis ℝ E) i : TangentSpace I x))
-      (fun (_ : M) => ((Module.finBasis ℝ E) i : TangentSpace I x))
-      x
+  let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
+    stdOrthonormalBasis ℝ (TangentSpace I x)
+  ∑ i, hessian (I := I) (M := M) f
+    (fun (_ : M) => (e i : TangentSpace I x))
+    (fun (_ : M) => (e i : TangentSpace I x))
+    x
 
 /-- The scalar Laplacian `Δ_g[I] f : M → ℝ` ($= \mathrm{tr}_g(\mathrm{Hess}\,f)$).
 `I` is bracketed because `f : M → ℝ` does not expose the model with corners. -/

@@ -3,6 +3,7 @@ import OpenGALib.Riemannian.Gradient
 import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.LinearAlgebra.Dimension.Free
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # Hessian on a Riemannian manifold
@@ -31,7 +32,7 @@ of the $(0,2)$-bundle live with the chart machinery and are out of scope here.
 * `hessian f X Y x` — the Hessian on vector fields.
 * `Bilin I M` — pointwise bilinear-form carrier on $TM$.
 * `IsPointwiseSymm B` — pointwise symmetry predicate.
-* `frobeniusSq B x` — the Frobenius norm squared of `B` against the canonical basis.
+* `frobeniusSq B x` — the Frobenius norm squared of `B` against a $g$-orthonormal frame.
 * `trace B x` — the trace of `B` against the canonical basis.
 
 ## Main results
@@ -82,40 +83,49 @@ abbrev Bilin :=
 def IsPointwiseSymm (B : Bilin (M := M) I) : Prop :=
   ∀ x : M, ∀ v w : TangentSpace I x, B x v w = B x w v
 
-/-! ## Frobenius and trace, in the canonical basis
+/-! ## Frobenius and trace, in a $g$-orthonormal frame
 
-`TangentSpace I x = E` definitionally, so the canonical `Module.finBasis ℝ E`
-is automatically a basis at every point. Computing Frobenius and trace against
-this basis gives scalar functions on $M$. They are not basis-independent in
-general (would require a $g$-orthonormal frame); the Cauchy-Schwarz inequality
-below holds regardless. -/
+`TangentSpace I x = E` definitionally; with `[HasMetric I M]` activating the
+`RiemannianBundle` scoped `InnerProductSpace ℝ (TangentSpace I x)` instance,
+`stdOrthonormalBasis ℝ (TangentSpace I x)` is a genuine $g$-orthonormal frame
+on $T_x M$. Frobenius and trace against this frame are the **geometric**
+Hilbert-Schmidt norm and trace of $B$ at $x$ (basis-independent among
+$g$-orthonormal frames). -/
 
-/-- Frobenius norm squared $\sum_{i,j} B(x)(e_i, e_j)^2$. -/
+set_option backward.isDefEq.respectTransparency false in
+/-- Frobenius squared norm $\sum_{i,j} B(x)(\varepsilon_i, \varepsilon_j)^2$ in
+the $g$-orthonormal frame `stdOrthonormalBasis ℝ (TangentSpace I x)`. -/
 def frobeniusSq (B : Bilin (M := M) I) (x : M) : ℝ :=
-  ∑ i : Fin (Module.finrank ℝ E),
-    ∑ j : Fin (Module.finrank ℝ E),
-      (B x ((Module.finBasis ℝ E) i) ((Module.finBasis ℝ E) j))^2
+  let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
+    stdOrthonormalBasis ℝ (TangentSpace I x)
+  ∑ i, ∑ j, (B x (e i : TangentSpace I x) (e j : TangentSpace I x))^2
 
 @[simp] lemma frobeniusSq_def (B : Bilin (M := M) I) (x : M) :
     frobeniusSq (I := I) (M := M) B x =
-      ∑ i : Fin (Module.finrank ℝ E),
-        ∑ j : Fin (Module.finrank ℝ E),
-          (B x ((Module.finBasis ℝ E) i) ((Module.finBasis ℝ E) j))^2 := rfl
+      ∑ i, ∑ j,
+        (B x ((stdOrthonormalBasis ℝ (TangentSpace I x)) i : TangentSpace I x)
+             ((stdOrthonormalBasis ℝ (TangentSpace I x)) j : TangentSpace I x))^2 :=
+  rfl
 
-/-- Trace $\sum_i B(x)(e_i, e_i)$. -/
+set_option backward.isDefEq.respectTransparency false in
+/-- Trace $\sum_i B(x)(\varepsilon_i, \varepsilon_i)$ in the $g$-orthonormal
+frame `stdOrthonormalBasis ℝ (TangentSpace I x)`. -/
 def trace (B : Bilin (M := M) I) (x : M) : ℝ :=
-  ∑ i : Fin (Module.finrank ℝ E),
-    B x ((Module.finBasis ℝ E) i) ((Module.finBasis ℝ E) i)
+  let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
+    stdOrthonormalBasis ℝ (TangentSpace I x)
+  ∑ i, B x (e i : TangentSpace I x) (e i : TangentSpace I x)
 
 @[simp] lemma trace_def (B : Bilin (M := M) I) (x : M) :
     trace (I := I) (M := M) B x =
-      ∑ i : Fin (Module.finrank ℝ E),
-        B x ((Module.finBasis ℝ E) i) ((Module.finBasis ℝ E) i) := rfl
+      ∑ i,
+        B x ((stdOrthonormalBasis ℝ (TangentSpace I x)) i : TangentSpace I x)
+            ((stdOrthonormalBasis ℝ (TangentSpace I x)) i : TangentSpace I x) :=
+  rfl
 
 lemma frobeniusSq_nonneg (B : Bilin (M := M) I) (x : M) :
-    0 ≤ frobeniusSq (I := I) (M := M) B x :=
-  Finset.sum_nonneg
-    (fun _ _ => Finset.sum_nonneg (fun _ _ => sq_nonneg _))
+    0 ≤ frobeniusSq (I := I) (M := M) B x := by
+  unfold frobeniusSq
+  positivity
 
 /-! ## Trace–Frobenius Cauchy-Schwarz -/
 
@@ -159,15 +169,17 @@ theorem bilinForm_trace_sq_le_dim_mul_frobenius_sq
     (ι := Fin (Module.finrank ℝ V)) B (fun i => b i)
   simpa [Fintype.card_fin] using h
 
-/-- $(\operatorname{trace} B(x))^2 \le n \cdot \operatorname{frobeniusSq} B(x)$, where
-$n = \dim_\mathbb{R} E$. The Bochner-style bound (orthonormality not needed). -/
+/-- $(\operatorname{trace}_g B(x))^2 \le n \cdot \operatorname{frobeniusSq}_g B(x)$,
+where $n = \dim_\mathbb{R} E$. Pure linear-algebra Cauchy-Schwarz; specialised
+to the $g$-orthonormal frame `stdOrthonormalBasis`. -/
 theorem trace_sq_le_dim_mul_frobeniusSq
     (B : Bilin (M := M) I) (x : M) :
     (trace (I := I) (M := M) B x)^2 ≤
       (Module.finrank ℝ E : ℝ) * frobeniusSq (I := I) (M := M) B x := by
   have h := bilinForm_trace_sq_le_dim_mul_frobenius_sq
-    (V := TangentSpace I x) (B := B x) (b := Module.finBasis ℝ E)
-  simp only [trace_def, frobeniusSq_def]
+    (V := TangentSpace I x) (B := B x)
+    (b := (stdOrthonormalBasis ℝ (TangentSpace I x)).toBasis)
+  simp only [OrthonormalBasis.coe_toBasis] at h
   exact h
 
 /-- The **Hessian as a `Bilin` section**: at each point $x$,
@@ -221,13 +233,15 @@ end Riemannian
 
 namespace Riemannian
 
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
+  [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-  {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
+  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+  [HasMetric I M]
 
-/-- Frobenius squared norm on `(0,2)`-tensor sections. Closes the
-polymorphic squared-norm story: `‖B‖²_g x = ∑_{ij} B(x)(eᵢ, eⱼ)²`. -/
+/-- Frobenius squared norm on `(0,2)`-tensor sections, w.r.t. a $g$-orthonormal
+frame: `‖B‖²_g x = ∑_{ij} B(x)(εᵢ, εⱼ)²` where $\{\varepsilon_i\}$ is the
+`stdOrthonormalBasis` of $T_x M$ (geometric Hilbert-Schmidt norm). -/
 noncomputable instance instMetricNormSqBilin :
     MetricNormSq (Riemannian.Operators.Bilin (M := M) I) (M → ℝ) where
   normSqG B := fun x => Riemannian.Operators.frobeniusSq (I := I) (M := M) B x
