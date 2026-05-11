@@ -29,7 +29,7 @@ vector space, a positive-definite bilinear form gives a vector-space
 isomorphism with the dual space.
 -/
 
-namespace OpenGALib.BilinearForm
+namespace BilinearForm
 
 section Riesz
 
@@ -112,4 +112,4 @@ theorem riesz_unique {B : Form 𝕜 V} (hB : IsPosDef B) (v : V)
 
 end Riesz
 
-end OpenGALib.BilinearForm
+end BilinearForm

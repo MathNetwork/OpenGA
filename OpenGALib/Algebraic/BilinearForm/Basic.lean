@@ -34,7 +34,7 @@ The bilinear-form algebra layer is reusable across:
 **Ground truth**: standard linear algebra of bilinear forms.
 -/
 
-namespace OpenGALib.BilinearForm
+namespace BilinearForm
 
 /-- A bilinear form on `V` over field `𝕜`: a linear map
 `V →ₗ[𝕜] V →ₗ[𝕜] 𝕜`. -/
@@ -153,4 +153,4 @@ theorem inner_self_nonneg {B : Form 𝕜 V} (hB : IsPosDef B) (v : V) :
 
 end Order
 
-end OpenGALib.BilinearForm
+end BilinearForm

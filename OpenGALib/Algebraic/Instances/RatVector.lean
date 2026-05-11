@@ -8,7 +8,7 @@ import Mathlib.LinearAlgebra.Matrix.DotProduct
 # Concrete instance: rational vectors
 
 A concrete, fully `#eval`-able instance of the algebraic core
-`OpenGALib.BilinearForm` on `Fin n → ℚ`. Demonstrates that the
+`BilinearForm` on `Fin n → ℚ`. Demonstrates that the
 field-generic algebraic core, once instantiated to `ℚ`, produces
 genuine numerical computation: `#eval` outputs actual rational numbers.
 
@@ -38,9 +38,9 @@ overshadowed by the analytic apparatus.
 $\langle v, w \rangle = \sum_i v_i w_i$.
 -/
 
-namespace OpenGALib.Algebraic.RatVector
+namespace RatVector
 
-open OpenGALib.BilinearForm
+open BilinearForm
 
 /-- The standard symmetric bilinear form on $\mathrm{Fin}\,n \to \mathbb{Q}$:
 $B(v, w) = \sum_i v_i w_i$. As a `LinearMap.BilinForm`-style
@@ -71,7 +71,7 @@ theorem inner_stdForm (n : ℕ) (v w : Fin n → ℚ) :
     inner (stdForm n) v w = ∑ i, v i * w i :=
   rfl
 
-end OpenGALib.Algebraic.RatVector
+end RatVector
 
 /-! ## `#eval` demonstrations — math runs
 
@@ -86,7 +86,7 @@ inner (stdForm 3) ![1, 0, 0] ![1, 0, 0]   =  1
 ```
 -/
 
-open OpenGALib.BilinearForm OpenGALib.Algebraic.RatVector
+open BilinearForm RatVector
 
 #eval inner (stdForm 3) ![1, 2, 3] ![4, 5, 6]    -- 32
 
