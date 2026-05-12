@@ -1,3 +1,4 @@
+import OpenGALib.Riemannian.Operators.ConnectionLaplacian
 import OpenGALib.Riemannian.Operators.Hessian
 import OpenGALib.Riemannian.Operators.Laplacian
 import OpenGALib.Riemannian.Curvature
@@ -63,21 +64,118 @@ theorem ricciTensor_eq_sum_inner_orthonormal
   unfold ricci
   exact LinearMap.trace_eq_sum_inner _ (stdOrthonormalBasis ℝ (TangentSpace I x))
 
+/-! ## Two intermediates (E, G) for the Bochner identity -/
+
+/-- **E — Leibniz trace reduction**: the scalar Laplacian of $|\nabla f|_g^2$
+decomposes into a connection-Laplacian term and a Hessian Frobenius² term:
+$$\tfrac{1}{2}\,\Delta_g \, |\nabla f|_g^2 \;=\;
+   \langle \Delta_\nabla \nabla f,\, \nabla f \rangle_g
+   + |\nabla^2 f|_g^2.$$
+
+This is the trace form of the Leibniz product rule applied twice to
+$\langle \nabla f, \nabla f\rangle_g$ in the $g$-orthonormal frame
+`stdOrthonormalBasis ℝ (TangentSpace I x)`.
+
+**Sorry: PRE-PAPER**. Closure path:
+1. apply `leviCivitaConnection_metric_compatible` to $(\nabla f, \nabla f, \varepsilon_i)$
+   to get $\nabla_{\varepsilon_i} \langle \nabla f, \nabla f\rangle_g
+       = 2 \langle \nabla_{\varepsilon_i} \nabla f, \nabla f\rangle_g$;
+2. apply metric-compat again to differentiate $\langle \nabla_{\varepsilon_i} \nabla f, \nabla f\rangle_g$
+   in the $\varepsilon_i$-direction, yielding
+   $\langle \nabla_{\varepsilon_i} \nabla_{\varepsilon_i} \nabla f, \nabla f\rangle_g
+     + \langle \nabla_{\varepsilon_i} \nabla f, \nabla_{\varepsilon_i} \nabla f\rangle_g$;
+3. sum over $i$, identify the second sum with $|\nabla^2 f|_g^2$ via
+   `frobeniusSq` in the $g$-orthonormal frame;
+4. reduce the iterated chart-coord trace
+   $\sum_i \mathrm{mfderiv}^2 \,(|\nabla f|^2_g)\,\varepsilon_i\,\varepsilon_i$
+   to $\Delta_g(|\nabla f|^2_g)\,(x)$ via `scalarLaplacian` definition + the
+   Christoffel-correction matching of `secondCovDerivAt` against
+   `connectionLaplacian` (`connectionLaplacian_eq_sum_secondCovDerivAt`).
+
+Used in `bochner_weitzenboeck` (assembly step H) along with G. -/
+theorem leibniz_trace_reduction
+    [IsManifold I 2 M]
+    (f : M → ℝ) (x : M)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
+    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (h_grad : ∀ y : M, TangentSmoothAt (manifoldGradient (I := I) f) y) :
+    (1 / 2 : ℝ) * (Δ_g[I] ‖grad_g[I] f‖²_g) x
+      = ⟪connectionLaplacian (grad_g[I] f) x, (grad_g[I] f) x⟫_g
+        + ‖hess_g[I] f‖²_g x := by
+  sorry
+
+/-- **G — heart-of-Bochner reduction**: the connection Laplacian on $\nabla f$
+contracted with $\nabla f$ equals the inner product of $\nabla f$ with the
+gradient of the scalar Laplacian, plus the Ricci correction:
+$$\langle \Delta_\nabla \nabla f,\, \nabla f\rangle_g
+   \;=\; \langle \nabla f,\, \nabla\,\Delta_g f\rangle_g
+       + \mathrm{Ric}(\nabla f,\, \nabla f).$$
+
+This is the trace form of the Ricci identity (D) applied to $Z = \nabla f$,
+with one slot contracted via the $g$-orthonormal frame, using Hessian
+symmetry (B) to swap $\nabla^2 f(\varepsilon_i, \varepsilon_j)
+\leftrightarrow \nabla^2 f(\varepsilon_j, \varepsilon_i)$.
+
+**Sorry: PRE-PAPER**. Closure path:
+1. expand `connectionLaplacian (∇f) x` via
+   `connectionLaplacian_eq_sum_secondCovDerivAt` into
+   $\sum_i \nabla^2 (\nabla f)(\varepsilon_i, \varepsilon_i)\,(x)$;
+2. apply `secondCovDerivAt_sub_swap_eq_riemannCurvature` (D.2) summed over $i$,
+   in conjunction with `hessianBilin_symm` (B) to swap the inner indices
+   in $\langle \nabla_{\varepsilon_i}\nabla_{\varepsilon_i}\nabla f,
+      \nabla f\rangle_g$ via the Hessian's $(0,2)$ symmetry;
+3. recognise the sum-of-trace term $\sum_i \langle R(\varepsilon_i, \nabla f) \nabla f,
+   \varepsilon_i\rangle_g$ as $\mathrm{Ric}_g(\nabla f, \nabla f)\,(x)$ via
+   `ricciTensor_eq_sum_inner_orthonormal` (F);
+4. recognise the remaining trace as $\langle \nabla f, \nabla(\Delta_g f)\rangle_g$
+   via gradient duality `manifoldGradient_inner_eq` and the trace
+   identification `scalarLaplacian_eq_laplacian_hessianBilin`.
+
+Used in `bochner_weitzenboeck` (assembly step H) along with E. -/
+theorem connectionLaplacian_grad_eq_grad_laplacian_add_ricci
+    [IsManifold I 2 M]
+    (f : M → ℝ) (x : M)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
+    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (h_grad : ∀ y : M, TangentSmoothAt (manifoldGradient (I := I) f) y) :
+    ⟪connectionLaplacian (grad_g[I] f) x, (grad_g[I] f) x⟫_g
+      = ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
+        + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
+  sorry
+
 /-! ## Bochner–Weitzenböck identity -/
 
 /-- **Bochner–Weitzenböck identity**:
 $$\tfrac{1}{2}\,\Delta_g\,|\nabla f|_g^2
   = |\nabla^2 f|_g^2
     + \langle \nabla f, \nabla\,\Delta_g f\rangle_g
-    + \mathrm{Ric}(\nabla f, \nabla f).$$ -/
-theorem bochner_weitzenboeck (f : M → ℝ) (x : M) :
+    + \mathrm{Ric}(\nabla f, \nabla f).$$
+
+Proved by combining `leibniz_trace_reduction` (E) and
+`connectionLaplacian_grad_eq_grad_laplacian_add_ricci` (G):
+$$\tfrac{1}{2} \Delta_g |\nabla f|_g^2
+  \;\overset{E}{=}\; \langle \Delta_\nabla \nabla f, \nabla f\rangle_g + |\nabla^2 f|_g^2
+  \;\overset{G}{=}\; \langle \nabla f, \nabla(\Delta_g f)\rangle_g
+                     + \mathrm{Ric}(\nabla f, \nabla f) + |\nabla^2 f|_g^2.$$
+
+Reference: Petersen, *Riemannian Geometry*, Ch. 7 §1 Proposition 33;
+do Carmo §6 (curvature commutators); Schoen-Simon 1981 §1 (variational
+application). -/
+theorem bochner_weitzenboeck
+    [IsManifold I 2 M]
+    (f : M → ℝ) (x : M)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
+    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (h_grad : ∀ y : M, TangentSmoothAt (manifoldGradient (I := I) f) y) :
     (1 / 2 : ℝ) * (Δ_g[I] ‖grad_g[I] f‖²_g) x
     = ‖hess_g[I] f‖²_g x
       + ⟪(grad_g[I] f) x,
          (grad_g[I] (Δ_g[I] f)) x⟫_g
       + Ric_g((grad_g[I] f) x,
               (grad_g[I] f) x) x := by
-  sorry
+  rw [leibniz_trace_reduction f x h_interior hf h_grad,
+      connectionLaplacian_grad_eq_grad_laplacian_add_ricci f x h_interior hf h_grad]
+  abel
 
 end Operators
 end Riemannian
