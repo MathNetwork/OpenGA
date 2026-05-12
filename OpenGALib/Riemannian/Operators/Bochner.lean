@@ -26,7 +26,7 @@ noncomputable section
 set_option linter.unusedSectionVars false
 
 open Bundle
-open scoped ContDiff Manifold Bundle Riemannian InnerProductSpace
+open scoped ContDiff Manifold Bundle Riemannian InnerProductSpace Topology
 
 namespace Riemannian
 namespace Operators
@@ -385,6 +385,142 @@ Two conditional reductions, ported from `external/differential-geometry`'s
 as input the relevant algebraic identity and producing the form the
 downstream consumer needs. These conditionals do not close any sorry by
 themselves — they package the assumptions cleanly. -/
+
+/-- **Step 1 helper — Hess-sym swap for $\nabla^2 \nabla f$**: for
+constant lifts of $v, w, z$ at $x$,
+$$\langle (\nabla^2 \nabla f)(v, w),\, z\rangle_g(x)
+  = \langle (\nabla^2 \nabla f)(v, z),\, w\rangle_g(x).$$
+
+The proof routes through metric-compatibility at $x$ on
+$(V, \partial_W \nabla f, Z)$ (and similarly with $W \leftrightarrow Z$),
+which converts each $\langle (\nabla^2 \nabla f)(v, \cdot),\, \cdot\rangle_g$
+expression into an `mfderiv` of `hessianBilin f y \cdot \cdot` at $x$ in
+direction $v$, plus Christoffel-correction `hessianBilin` terms at $x$.
+
+The (w ↔ z) swap then closes via two ingredients:
+* `h_eventual_sym`: the nbhd-Hessian-symmetry hypothesis equating
+  $y \mapsto \mathrm{hessianBilin}\,f\,y\,w\,z$ and the (w ↔ z) swap on a
+  nbhd of $x$. Its V-derivative bridge is `EventuallyEq.mfderiv_eq`.
+* `hessianBilin_symm` at $x$ for the Christoffel-correction cross terms,
+  applied to arbitrary tangent-space arguments (Γvw, z) and (Γvz, w).
+
+The `h_eventual_sym` hypothesis is discharged in the downstream assembly
+by combining pointwise `hessianBilin_symm` at each $y$ in a nbhd of $x$
+with nbhd-`h_interior` propagation (available under
+`IsLocallyConstantChartedSpace H M` and strict-interior `h_interior` at
+$x$). Ported from do Carmo §6 / Petersen Ch 7 §1 Prop 33's Step 1. -/
+theorem step1_secondCovDerivAt_grad_swap_at
+    [IsManifold I 2 M]
+    (f : M → ℝ) (x : M) (v w z : TangentSpace I x)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
+    (hf_2 : ContMDiffAt I 𝓘(ℝ, ℝ) 2 f x)
+    (h_grad : TangentSmoothAt (manifoldGradient (I := I) f) x)
+    (h_grad_const_w : TangentSmoothAt
+        (fun y : M => covDerivAt (manifoldGradient (I := I) f) y w) x)
+    (h_grad_const_z : TangentSmoothAt
+        (fun y : M => covDerivAt (manifoldGradient (I := I) f) y z) x)
+    (h_eventual_sym : (fun y : M => hessianBilin (I := I) f y w z)
+        =ᶠ[𝓝 x] (fun y : M => hessianBilin (I := I) f y z w)) :
+    metricInner x (secondCovDerivAt (I := I) (M := M)
+        (manifoldGradient (I := I) f) x v w) z =
+      metricInner x (secondCovDerivAt (I := I) (M := M)
+        (manifoldGradient (I := I) f) x v z) w := by
+  classical
+  -- Constant lifts of v, w, z at x.
+  set V : Π y : M, TangentSpace I y := fun _ => (v : TangentSpace I x) with hV_def
+  set W : Π y : M, TangentSpace I y := fun _ => (w : TangentSpace I x) with hW_def
+  set Z : Π y : M, TangentSpace I y := fun _ => (z : TangentSpace I x) with hZ_def
+  have hVsm : TangentSmoothAt V x :=
+    (SmoothVectorField.const (I := I) (M := M) (v : E)).smoothAt x
+  have hWsm : TangentSmoothAt W x :=
+    (SmoothVectorField.const (I := I) (M := M) (w : E)).smoothAt x
+  have hZsm : TangentSmoothAt Z x :=
+    (SmoothVectorField.const (I := I) (M := M) (z : E)).smoothAt x
+  -- V-derivative bridge via EventuallyEq.mfderiv_eq (applied at v).
+  have h_eq_mfderiv :
+      mfderiv I 𝓘(ℝ, ℝ) (fun y : M => hessianBilin (I := I) f y w z) x
+      = mfderiv I 𝓘(ℝ, ℝ) (fun y : M => hessianBilin (I := I) f y z w) x :=
+    Filter.EventuallyEq.mfderiv_eq h_eventual_sym
+  have h_eq_at_v :
+      mfderiv I 𝓘(ℝ, ℝ) (fun y : M => hessianBilin (I := I) f y w z) x v
+      = mfderiv I 𝓘(ℝ, ℝ) (fun y : M => hessianBilin (I := I) f y z w) x v :=
+    congrArg (· v) h_eq_mfderiv
+  -- Metric-compatibility at x with (V, ∂_W ∇f, Z) and the swap.
+  have h_compat_W := leviCivitaConnection_metric_compatible
+    V (fun y => covDerivAt (manifoldGradient (I := I) f) y w) Z x
+    hVsm h_grad_const_w hZsm
+  have h_compat_Z := leviCivitaConnection_metric_compatible
+    V (fun y => covDerivAt (manifoldGradient (I := I) f) y z) W x
+    hVsm h_grad_const_z hWsm
+  -- Rewrite metric-compat LHS into `hessianBilin f y w z` / `f y z w` form.
+  have h_hess_W :
+      (fun y : M => metricInner y (covDerivAt (manifoldGradient (I := I) f) y w) (Z y))
+        = (fun y : M => hessianBilin (I := I) f y w z) := by
+    funext y; show metricInner y _ z = hessianBilin (I := I) f y w z; rfl
+  have h_hess_Z :
+      (fun y : M => metricInner y (covDerivAt (manifoldGradient (I := I) f) y z) (W y))
+        = (fun y : M => hessianBilin (I := I) f y z w) := by
+    funext y; show metricInner y _ w = hessianBilin (I := I) f y z w; rfl
+  rw [h_hess_W] at h_compat_W
+  rw [h_hess_Z] at h_compat_Z
+  -- V x = v, W x = w, Z x = z (all rfl, constant lifts).
+  have hVx : V x = v := rfl
+  have hWx : W x = w := rfl
+  have hZx : Z x = z := rfl
+  rw [hVx] at h_compat_W h_compat_Z
+  rw [hWx] at h_compat_Z
+  rw [hZx] at h_compat_W
+  -- General point-Hess-sym at x (any pair of tangent-space args).
+  have h_hess_sym : ∀ a b : TangentSpace I x,
+      hessianBilin (I := I) f x a b = hessianBilin (I := I) f x b a :=
+    fun a b => hessianBilin_symm (I := I) f x h_interior hf_2 h_grad a b
+  -- Christoffel corrections as tangent-space elements at x.
+  set Γvw : TangentSpace I x :=
+    (leviCivitaConnection (I := I) (M := M)).toFun W x v with hΓvw_def
+  set Γvz : TangentSpace I x :=
+    (leviCivitaConnection (I := I) (M := M)).toFun Z x v with hΓvz_def
+  -- Identify the second metric-compat term as hessianBilin (cross terms).
+  -- ⟨covDerivAt ∇f x w, Γvz⟩ = hessianBilin f x w Γvz (by def).
+  have h_id_W : metricInner x (covDerivAt (manifoldGradient (I := I) f) x w)
+        ((leviCivitaConnection (I := I) (M := M)).toFun Z x v)
+      = hessianBilin (I := I) f x w Γvz := rfl
+  have h_id_Z : metricInner x (covDerivAt (manifoldGradient (I := I) f) x z)
+        ((leviCivitaConnection (I := I) (M := M)).toFun W x v)
+      = hessianBilin (I := I) f x z Γvw := rfl
+  rw [h_id_W] at h_compat_W
+  rw [h_id_Z] at h_compat_Z
+  -- Now unfold secondCovDerivAt and metric-inner-sub.
+  show metricInner x
+      (covDerivAt (fun y : M => covDerivAt (manifoldGradient (I := I) f) y w) x v
+        - covDerivAt (manifoldGradient (I := I) f) x
+            (covDerivAt (Y := fun _ : M => (w : TangentSpace I x)) x v)) z
+    = metricInner x
+      (covDerivAt (fun y : M => covDerivAt (manifoldGradient (I := I) f) y z) x v
+        - covDerivAt (manifoldGradient (I := I) f) x
+            (covDerivAt (Y := fun _ : M => (z : TangentSpace I x)) x v)) w
+  rw [metricInner_sub_left, metricInner_sub_left]
+  -- Identify outer terms: ⟨covDerivAt (∂_W ∇f) x v, z⟩ = ⟨lcc.(∂_W ∇f) x v, z⟩ (rfl).
+  -- Identify Christoffel terms: ⟨covDerivAt ∇f x Γvw, z⟩ = hessianBilin f x Γvw z (rfl).
+  show metricInner x ((leviCivitaConnection (I := I) (M := M)).toFun
+        (fun y : M => covDerivAt (manifoldGradient (I := I) f) y w) x v) z
+      - hessianBilin (I := I) f x Γvw z
+    = metricInner x ((leviCivitaConnection (I := I) (M := M)).toFun
+        (fun y : M => covDerivAt (manifoldGradient (I := I) f) y z) x v) w
+      - hessianBilin (I := I) f x Γvz w
+  -- Cross-term Hess-sym: hessianBilin f x z Γvw = hessianBilin f x Γvw z, etc.
+  have h_sym_zΓvw : hessianBilin (I := I) f x z Γvw
+      = hessianBilin (I := I) f x Γvw z := h_hess_sym z Γvw
+  have h_sym_wΓvz : hessianBilin (I := I) f x w Γvz
+      = hessianBilin (I := I) f x Γvz w := h_hess_sym w Γvz
+  -- Combine via linear_combination on h_compat_W, h_compat_Z, h_eq_at_v, h_sym_*.
+  -- A - hA = B - hB  where
+  --   h_compat_W: P = A + hB'  (where hB' = h_sym_wΓvz ↦ hB)
+  --   h_compat_Z: Q = B + hA'  (where hA' = h_sym_zΓvw ↦ hA)
+  --   h_eq_at_v:  P = Q
+  --   h_sym_wΓvz: hB' = hB
+  --   h_sym_zΓvw: hA' = hA
+  -- ⇒ A - hA = (P - hB') - hA = (Q - hB) - hA' = (B + hA' - hB) - hA' = B - hB ✓
+  linear_combination -h_compat_W + h_compat_Z + h_eq_at_v + h_sym_zΓvw - h_sym_wΓvz
 
 /-- **Step 3 helper — curvature term metric-skew packaging.** Given the
 metric-skew identity of the Riemann curvature in the last pair of
