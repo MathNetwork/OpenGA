@@ -522,6 +522,41 @@ theorem step1_secondCovDerivAt_grad_swap_at
   -- ⇒ A - hA = (P - hB') - hA = (Q - hB) - hA' = (B + hA' - hB) - hA' = B - hB ✓
   linear_combination -h_compat_W + h_compat_Z + h_eq_at_v + h_sym_zΓvw - h_sym_wΓvz
 
+/-- **Step 2 helper — D.2 swap of `secondCovDerivAt`'s outer pair**:
+for $v, w, z \in T_xM$,
+$$\langle (\nabla^2 \nabla f)(v, w),\, z\rangle_g(x)
+  = \langle (\nabla^2 \nabla f)(w, v),\, z\rangle_g(x)
+    + \langle R(\mathrm{const}\,v,\,\mathrm{const}\,w)\,\nabla f,\, z\rangle_g(x).$$
+
+Direct corollary of `secondCovDerivAt_sub_swap_eq_riemannCurvature` (D.2)
+applied to $Z = \nabla f$, paired with $z$ via the bilinearity of
+`metricInner`. The third slot of `riemannCurvature` is the section
+$\nabla f$ (not a constant lift); closing the Ric identification (Step 3)
+requires `riemannCurvature` tensoriality in the 3rd slot plus
+`ricci_symm` (both currently PRE-PAPER sorrys in `Curvature.lean`). -/
+theorem step2_secondCovDerivAt_grad_swap_curvature_at
+    (f : M → ℝ) (x : M) (v w z : TangentSpace I x) :
+    metricInner x (secondCovDerivAt (I := I) (M := M)
+        (manifoldGradient (I := I) f) x v w) z
+      = metricInner x (secondCovDerivAt (I := I) (M := M)
+          (manifoldGradient (I := I) f) x w v) z
+        + metricInner x
+            (riemannCurvature (fun _ : M => (v : TangentSpace I x))
+              (fun _ : M => (w : TangentSpace I x))
+              (manifoldGradient (I := I) f) x) z := by
+  have h := secondCovDerivAt_sub_swap_eq_riemannCurvature
+    (I := I) (M := M) (manifoldGradient (I := I) f) x v w
+  -- h : secondCovDerivAt ∇f x v w - secondCovDerivAt ∇f x w v
+  --       = riemannCurvature (const v) (const w) ∇f x
+  -- Restate: secondCovDerivAt ∇f x v w = secondCovDerivAt ∇f x w v + R(const v, const w) ∇f x
+  have h' : secondCovDerivAt (I := I) (M := M) (manifoldGradient (I := I) f) x v w
+      = secondCovDerivAt (I := I) (M := M) (manifoldGradient (I := I) f) x w v
+        + riemannCurvature (fun _ : M => (v : TangentSpace I x))
+            (fun _ : M => (w : TangentSpace I x))
+            (manifoldGradient (I := I) f) x := by
+    rw [← h]; abel
+  rw [h', metricInner_add_left]
+
 /-- **Step 3 helper — curvature term metric-skew packaging.** Given the
 metric-skew identity of the Riemann curvature in the last pair of
 arguments (the standard $g(R(X,Y)Z, W) = -g(R(X,Y)W, Z)$, applied to
