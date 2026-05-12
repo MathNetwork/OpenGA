@@ -598,8 +598,10 @@ Direct corollary of `secondCovDerivAt_sub_swap_eq_riemannCurvature` (D.2)
 applied to $Z = \nabla f$, paired with $z$ via the bilinearity of
 `metricInner`. The third slot of `riemannCurvature` is the section
 $\nabla f$ (not a constant lift); closing the Ric identification
-requires `riemannCurvature` tensoriality in the 3rd slot plus
-`ricci_symm` (both currently PRE-PAPER sorrys in `Curvature.lean`). -/
+requires the full 3-slot tensoriality of `riemannCurvature` (Z-slot
+Leibniz `riemannCurvature_smul_third_scalar_field` already landed in
+`Curvature/Tensoriality.lean`; Z-slot vanishing + X/Y-slot mirrors
+outstanding) plus `ricci_symm` (now closed in `Curvature.lean`). -/
 theorem metricInner_secondCovDerivAt_grad_eq_swap_add_curvature
     (f : M → ℝ) (x : M) (v w z : TangentSpace I x) :
     metricInner x (secondCovDerivAt (I := I) (M := M)
@@ -631,10 +633,9 @@ heart-of-Bochner trace summand reduces to
 $- \langle \nabla f, R(B, w) B\rangle_g$ at $x$.
 
 The metric-skew hypothesis is derivable from
-`riemannCurvature_inner_self_zero` (existing PRE-PAPER sorry in
-`Curvature.lean`) by polarization, or directly from twice-applied
-metric-compat — both are independent infrastructure tasks. Ported from
-external's `heart_of_bochner_curvature_term`. -/
+`riemannCurvature_inner_self_zero` (now closed in `Curvature.lean`) by
+polarisation — see `riemannCurvature_metric_skew`. Ported from external's
+`heart_of_bochner_curvature_term`. -/
 theorem heart_of_bochner_curvature_term
     (f : M → ℝ)
     {B w : Π b : M, TangentSpace I b} {x : M}
@@ -722,23 +723,32 @@ By Stage 7 basis invariance
 both are diagonal sums of the same bilinear map indexed over an
 orthonormal basis of $T_xM$, and the diagonal sum is basis-invariant.
 
-The `smoothOrthoFrame`-form is the natural target for the 4-step
-algebraic chain (Step 1 Hess-sym swap, Step 2 D.3
-`secondCovDerivSection_sub_swap_eq_riemannCurvature`, Step 3 Ric
-identification via tensoriality, Step 4 smooth-trace identification).
-Step 4 is *mechanical* on `smoothOrthoFrame` because each component
-`smoothOrthoFrame g x i` is a $C^\infty$ tangent-bundle section
-(`Tensor.smoothOrthoFrame_smooth`, Stage 6), and on the bump
-neighbourhood `smoothOrthoFrameNbhd x` the frame is $g$-orthonormal
-pointwise (Stage 5). Therefore the smooth trace function
-$T(y) := \sum_i \mathrm{Hess}\,f(y)(e_i(y), e_i(y))$ equals
-$\Delta_g f(y)$ on the bump neighbourhood, so $\nabla T(x) =
-\nabla \Delta_g f(x)$ by metric compatibility.
+The `smoothOrthoFrame`-form is the natural target for the per-summand +
+outer-assembly chain. **Per-summand layer landed** (`Bochner/PerSummand.lean`):
 
-**Repair plan**: prove the 4-step algebraic chain on
-`smoothOrthoFrame`. Estimated scope ~400 LOC. References: Petersen
-Ch 7 §1 Proposition 33; do Carmo §6; external
-`heart_of_bochner_smoothOrthoFrame_of_inner_form`. -/
+* `bochner_per_summand_swap` (step d) — Hess-sym swap form;
+* `bochner_per_summand_riemann_form` (step e) — torsion-free curvature
+  expansion;
+* `bochner_per_summand_assembled` (step f) — combined per-summand identity
+  $g(\nabla_B \nabla_B \nabla f, W) - g(\nabla_{\nabla_B B} \nabla f, W)
+  = g(R(B, W)\,\nabla f, B) + \mathrm{d}(b \mapsto \mathrm{Hess}\,f(B, B))(x)\cdot W
+  - 2\,\mathrm{Hess}\,f(B, \nabla_W B)(x)$.
+
+**Outer-assembly layer outstanding** (~400 LOC):
+1. Full 3-slot tensoriality of `riemannCurvature` (Z-slot Leibniz
+   `riemannCurvature_smul_third_scalar_field` landed; Z-slot vanishing
+   via chart frame + bump, X/Y-slot mirrors, pointwise-eq bundling all TODO).
+2. `heart_curvature_orthonormal_sum_eq_ricci` analog:
+   $\sum_i g(R(B_i, W) \nabla f, B_i) = \mathrm{Ric}(\nabla f, W)$.
+3. `sum_hessianBilin_smoothOrthoFrame_eventuallyEq_laplacian`:
+   $\sum_i \mathrm{Hess}\,f(B_i, B_i) =^\mathrm{nbhd} \Delta_g f$ via Stage 5+7.
+4. `sum_hessianBilin_smoothOrthoFrame_cov_eq_zero`:
+   $\sum_i \mathrm{Hess}\,f(B_i, \nabla_W B_i) = 0$ via antisymm-symm cancel.
+5. mfderiv distributes over `Finset.sum`.
+6. Final assembly into this narrowed sorry.
+
+References: Petersen Ch 7 §1 Prop 33; do Carmo §6; external
+`hInner_discharge` (`Bochner.lean:3257`). -/
 private theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (x : M)
