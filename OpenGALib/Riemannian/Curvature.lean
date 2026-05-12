@@ -606,7 +606,7 @@ as a global section (`mlieBracket_const_const_apply_zero`), so the connection
 evaluates `leviCivitaConnection.toFun Z x` at the zero vector. -/
 
 /-- **No-bracket form of `riemannCurvature` for constant directions**. -/
-theorem riemannCurvature_const_const_eq_iterate
+theorem riemannCurvature_const_const_eq_commutator
     (v w : E) (Z : Π y : M, TangentSpace I y) (x : M) :
     riemannCurvature (fun _ : M => v) (fun _ : M => w) Z x
       = covDeriv (fun _ : M => v)

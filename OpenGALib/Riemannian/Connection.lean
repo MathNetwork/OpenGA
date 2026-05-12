@@ -1866,7 +1866,7 @@ Directly lifted from Mathlib's `IsCovariantDerivativeOn.leibniz` applied to
 direction `X(x)`. The `extDerivFun g x v = mfderiv g x v` reduction is
 definitional via `NormedSpace.fromTangentSpace` (the identity bridge on the
 scalar tangent space `TangentSpace 𝓘(ℝ, ℝ) (g x) ≃L ℝ`). -/
-theorem covDeriv_smul_field
+theorem covDeriv_smul_scalar_field
     (X : Π y : M, TangentSpace I y)
     (g : M → ℝ) (Y : Π y : M, TangentSpace I y) (x : M)
     (hg : MDifferentiableAt I 𝓘(ℝ, ℝ) g x)

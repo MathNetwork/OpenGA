@@ -55,7 +55,7 @@ $$R(X, Y)(f \cdot Z)(x) = f(x) \cdot R(X, Y)\,Z(x).$$
 
 External reference: `riemannSec_smul_third` in
 `differential-geometry/.../Curvature.lean:521`. -/
-theorem riemannCurvature_smul_third_field
+theorem riemannCurvature_smul_third_scalar_field
     [IsManifold I 2 M]
     (f : M → ℝ) (X Y Z : SmoothVectorField I M) (x : M)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
@@ -99,12 +99,12 @@ theorem riemannCurvature_smul_third_field
       covDeriv Y.toFun (f • Z.toFun)
         = (fun y : M => f y • covDeriv Y.toFun Z.toFun y + Yf y • Z.toFun y) := by
     funext y
-    exact covDeriv_smul_field Y.toFun f Z.toFun y (hf_at y) (Z.smoothAt y)
+    exact covDeriv_smul_scalar_field Y.toFun f Z.toFun y (hf_at y) (Z.smoothAt y)
   have h_inner_X :
       covDeriv X.toFun (f • Z.toFun)
         = (fun y : M => f y • covDeriv X.toFun Z.toFun y + Xf y • Z.toFun y) := by
     funext y
-    exact covDeriv_smul_field X.toFun f Z.toFun y (hf_at y) (Z.smoothAt y)
+    exact covDeriv_smul_scalar_field X.toFun f Z.toFun y (hf_at y) (Z.smoothAt y)
   -- Riemann curvature unfold via def.
   rw [riemannCurvature_def, riemannCurvature_def, h_inner_Y, h_inner_X]
   -- Pointwise sums need to be split into Π-add form for `covDeriv_add_field`.
@@ -144,28 +144,28 @@ theorem riemannCurvature_smul_third_field
       = f x • covDeriv X.toFun (fun y => covDeriv Y.toFun Z.toFun y) x
         + (show ℝ from mfderiv I 𝓘(ℝ, ℝ) f x (X.toFun x))
             • covDeriv Y.toFun Z.toFun x :=
-    covDeriv_smul_field X.toFun f
+    covDeriv_smul_scalar_field X.toFun f
       (fun y => covDeriv Y.toFun Z.toFun y) x (hf_at x) h_dY_Z_smooth
   have hT1_g2Y : covDeriv X.toFun g2Y x
       = Yf x • covDeriv X.toFun Z.toFun x
         + (show ℝ from mfderiv I 𝓘(ℝ, ℝ) Yf x (X.toFun x)) • Z.toFun x :=
-    covDeriv_smul_field X.toFun Yf Z.toFun x hYf_at (Z.smoothAt x)
+    covDeriv_smul_scalar_field X.toFun Yf Z.toFun x hYf_at (Z.smoothAt x)
   have hT2_g1X : covDeriv Y.toFun g1X x
       = f x • covDeriv Y.toFun (fun y => covDeriv X.toFun Z.toFun y) x
         + (show ℝ from mfderiv I 𝓘(ℝ, ℝ) f x (Y.toFun x))
             • covDeriv X.toFun Z.toFun x :=
-    covDeriv_smul_field Y.toFun f
+    covDeriv_smul_scalar_field Y.toFun f
       (fun y => covDeriv X.toFun Z.toFun y) x (hf_at x) h_dX_Z_smooth
   have hT2_g2X : covDeriv Y.toFun g2X x
       = Xf x • covDeriv Y.toFun Z.toFun x
         + (show ℝ from mfderiv I 𝓘(ℝ, ℝ) Xf x (Y.toFun x)) • Z.toFun x :=
-    covDeriv_smul_field Y.toFun Xf Z.toFun x hXf_at (Z.smoothAt x)
+    covDeriv_smul_scalar_field Y.toFun Xf Z.toFun x hXf_at (Z.smoothAt x)
   -- Third term: ∇_{[X,Y]} (f Z) x = f x • ∇_{[X,Y]} Z x + (mfderiv f x ([X,Y] x)) • Z x.
   have hT3 : covDeriv (mlieBracket I X.toFun Y.toFun) (f • Z.toFun) x
       = f x • covDeriv (mlieBracket I X.toFun Y.toFun) Z.toFun x
         + (show ℝ from mfderiv I 𝓘(ℝ, ℝ) f x
             (mlieBracket I X.toFun Y.toFun x)) • Z.toFun x :=
-    covDeriv_smul_field (mlieBracket I X.toFun Y.toFun) f Z.toFun x
+    covDeriv_smul_scalar_field (mlieBracket I X.toFun Y.toFun) f Z.toFun x
       (hf_at x) (Z.smoothAt x)
   rw [hT1_g1Y, hT1_g2Y, hT2_g1X, hT2_g2X, hT3]
   -- Apply Hessian-Lie identity: X(Yf) x - Y(Xf) x = mfderiv f x ([X,Y] x).

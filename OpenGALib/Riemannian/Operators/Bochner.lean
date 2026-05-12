@@ -566,7 +566,8 @@ constant tangent vectors. At every $y$ in a nbhd of $x$,
 $\mathrm{Hess}\,f\,(X(y), Y(y))(y) = \mathrm{Hess}\,f\,(Y(y), X(y))(y)$
 by pointwise `hessianBilin_symm`. This is the section-level Hess-sym
 input needed for the per-summand swap step in the heart-of-Bochner chain
-(external's `heart_per_summand_swap` analog). -/
+(`bochner_per_summand_swap` analog, OpenGALib analog of external
+`heart_per_summand_swap`). -/
 theorem hessianBilin_section_eventually_symm_of_strict_interior
     [IsManifold I 2 M]
     (f : M → ℝ) (X Y : Π y : M, TangentSpace I y) (x : M)

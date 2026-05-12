@@ -10,7 +10,7 @@ discharge of the heart-of-Bochner inner-product identity
 For a smooth scalar `f : M → ℝ`, smooth `B, W : SmoothVectorField I M`,
 and `x : M` in the strict interior of `range I`:
 
-* `heart_per_summand_swap` — Hess-sym swap form (step (d) of the textbook
+* `bochner_per_summand_swap` — Hess-sym swap form (step (d) of the textbook
   derivation):
   $$g_x(\nabla_{B} \nabla_B \nabla f, W) - g_x(\nabla_{\nabla_B B} \nabla f, W)
      = g_x(\nabla_{B} \nabla_W \nabla f, B) - g_x(\nabla_{\nabla_B W} \nabla f, B).$$
@@ -22,7 +22,7 @@ direction `B x`, combined with the section-level Hessian symmetry
 the two mfderiv values at `x`, and pointwise `hessianBilin_symm` at `x`
 to identify the cross-Christoffel terms.
 
-This is the OpenGALib analog of external's `heart_per_summand_swap`
+This is the OpenGALib analog of external's `bochner_per_summand_swap`
 (lines 2828–2966 of `external/differential-geometry/.../Bochner.lean`).
 The structural difference is that the section-level Hess-sym is stated
 as `=ᶠ[𝓝 x]` (relying on strict-interior nbhd propagation from
@@ -71,9 +71,9 @@ The proof combines:
 * `hessianBilin_symm` at `x` to identify the cross-Christoffel inner
   products `g(Q x, ∇_B W) = g(∇_{∇_B W} ∇f, B)` and symmetric counterpart.
 
-External reference: `heart_per_summand_swap` in
+External reference: `bochner_per_summand_swap` in
 `differential-geometry/.../Bochner.lean:2828–2966`. -/
-theorem heart_per_summand_swap
+theorem bochner_per_summand_swap
     [IsManifold I 2 M]
     (f : M → ℝ) (B W : SmoothVectorField I M) (x : M)
     (h_strict : extChartAt I x x ∈ interior (Set.range I))
@@ -230,9 +230,9 @@ $\nabla_\cdot \nabla f$ in its direction argument to split
 $\nabla_{[B,W]} \nabla f = \nabla_{\nabla_B W} \nabla f -
 \nabla_{\nabla_W B} \nabla f$.
 
-External reference: `heart_per_summand_riemann_form` in
+External reference: `bochner_per_summand_riemann_form` in
 `differential-geometry/.../Bochner.lean:2978–3076`. -/
-theorem heart_per_summand_riemann_form
+theorem bochner_per_summand_riemann_form
     (f : M → ℝ) (B W : SmoothVectorField I M) (x : M) :
     metricInner x
         (covDeriv B.toFun
@@ -317,8 +317,8 @@ $$g_x(\nabla_B \nabla_B \nabla f, W) - g_x(\nabla_{\nabla_B B} \nabla f, W)
      - 2\,\mathrm{Hess}\,f(B, \nabla_W B)(x).$$
 
 Composes:
-* `heart_per_summand_swap` (step d) — Hess-sym swap form.
-* `heart_per_summand_riemann_form` (step e) — torsion-free curvature
+* `bochner_per_summand_swap` (step d) — Hess-sym swap form.
+* `bochner_per_summand_riemann_form` (step e) — torsion-free curvature
   expansion.
 * A third `leviCivitaConnection_metric_compatible` on the section pair
   `(Q := ∇_B ∇f, B)` along direction `W x` at `x`, identifying
@@ -327,9 +327,9 @@ Composes:
   inner products as the single quantity
   `hessianBilin f x (B x) (∇_W B x)`.
 
-External reference: `heart_per_summand_assembled` in
+External reference: `bochner_per_summand_assembled` in
 `differential-geometry/.../Bochner.lean:3088–3239`. -/
-theorem heart_per_summand_assembled
+theorem bochner_per_summand_assembled
     [IsManifold I 2 M]
     (f : M → ℝ) (B W : SmoothVectorField I M) (x : M)
     (h_strict : extChartAt I x x ∈ interior (Set.range I))
@@ -358,10 +358,10 @@ theorem heart_per_summand_assembled
     { toFun := manifoldGradient (I := I) f, smooth := h_grad }
   set Q : Π y : M, TangentSpace I y :=
     fun y => covDeriv B.toFun gradF.toFun y with hQ_def
-  -- Step 1: chain `heart_per_summand_swap` + `heart_per_summand_riemann_form`.
+  -- Step 1: chain `bochner_per_summand_swap` + `bochner_per_summand_riemann_form`.
   -- Get LHS = R-term + g(LC Q x (W x), B x) - g(LC Gf x (LC B x (W x))) (B x).
-  have h_swap := heart_per_summand_swap (I := I) f B W x h_strict hf h_grad
-  have h_riem := heart_per_summand_riemann_form (I := I) f B W x
+  have h_swap := bochner_per_summand_swap (I := I) f B W x h_strict hf h_grad
+  have h_riem := bochner_per_summand_riemann_form (I := I) f B W x
   -- Step 2: third metric compat on (Q, B) along direction W x at x.
   have hQ_smooth : TangentSmoothAt Q x :=
     covDeriv_smoothVF_smoothAt B gradF x
