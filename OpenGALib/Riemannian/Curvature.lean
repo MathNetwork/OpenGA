@@ -505,6 +505,92 @@ theorem riemannCurvature_inner_self_zero
   -- Substitute and use hHL: X(Y(f)) - Y(X(f)) = mDirDeriv f x ([X,Y] x); h_inner_comm cancel.
   linarith [hA, hB, hC, hHL, h_inner_comm]
 
+/-! ### Metric-skew of Riemann curvature in the (3rd, 4th) slot
+
+Polarisation of `riemannCurvature_inner_self_zero` on $Z + W$ yields the
+classical metric-skew identity
+$\langle R(X, Y) Z, W\rangle_g + \langle R(X, Y) W, Z\rangle_g = 0$. -/
+
+/-- **Additivity of `riemannCurvature` in the differentiated (3rd) slot**:
+$R(X, Y)(Z_1 + Z_2)(x) = R(X, Y) Z_1(x) + R(X, Y) Z_2(x)$ for $X, Y, Z_i$
+smooth vector fields. Direct from `covDeriv_add_field` applied at $x$
+(outer) and at every $y$ (inner section sum) plus `funext`. -/
+private lemma riemannCurvature_add_third
+    (X Y Z₁ Z₂ : SmoothVectorField I M) (x : M) :
+    riemannCurvature X.toFun Y.toFun (Z₁ + Z₂).toFun x
+      = riemannCurvature X.toFun Y.toFun Z₁.toFun x
+        + riemannCurvature X.toFun Y.toFun Z₂.toFun x := by
+  classical
+  -- Pi-add of toFun.
+  have h_pi_add : (Z₁ + Z₂).toFun = Z₁.toFun + Z₂.toFun := by
+    funext y; show (Z₁ + Z₂) y = Z₁ y + Z₂ y; rfl
+  -- Inner section additivity (covDeriv Y (Z₁+Z₂) y = covDeriv Y Z₁ y + covDeriv Y Z₂ y).
+  have h_inner_Y : (fun y => covDeriv Y.toFun (Z₁ + Z₂).toFun y)
+      = (fun y => covDeriv Y.toFun Z₁.toFun y)
+        + (fun y => covDeriv Y.toFun Z₂.toFun y) := by
+    funext y
+    rw [h_pi_add]
+    exact covDeriv_add_field Y.toFun Z₁.toFun Z₂.toFun y
+      (Z₁.smoothAt y) (Z₂.smoothAt y)
+  have h_inner_X : (fun y => covDeriv X.toFun (Z₁ + Z₂).toFun y)
+      = (fun y => covDeriv X.toFun Z₁.toFun y)
+        + (fun y => covDeriv X.toFun Z₂.toFun y) := by
+    funext y
+    rw [h_pi_add]
+    exact covDeriv_add_field X.toFun Z₁.toFun Z₂.toFun y
+      (Z₁.smoothAt y) (Z₂.smoothAt y)
+  -- Unfold riemannCurvature.
+  show covDeriv X.toFun (fun y => covDeriv Y.toFun (Z₁ + Z₂).toFun y) x
+      - covDeriv Y.toFun (fun y => covDeriv X.toFun (Z₁ + Z₂).toFun y) x
+      - covDeriv (VectorField.mlieBracket I X.toFun Y.toFun) (Z₁ + Z₂).toFun x
+    = (covDeriv X.toFun (fun y => covDeriv Y.toFun Z₁.toFun y) x
+        - covDeriv Y.toFun (fun y => covDeriv X.toFun Z₁.toFun y) x
+        - covDeriv (VectorField.mlieBracket I X.toFun Y.toFun) Z₁.toFun x)
+      + (covDeriv X.toFun (fun y => covDeriv Y.toFun Z₂.toFun y) x
+        - covDeriv Y.toFun (fun y => covDeriv X.toFun Z₂.toFun y) x
+        - covDeriv (VectorField.mlieBracket I X.toFun Y.toFun) Z₂.toFun x)
+  rw [h_inner_Y, h_inner_X, h_pi_add]
+  rw [covDeriv_add_field X.toFun (fun y => covDeriv Y.toFun Z₁.toFun y)
+        (fun y => covDeriv Y.toFun Z₂.toFun y) x
+        (covDeriv_smoothVF_smoothAt Y Z₁ x)
+        (covDeriv_smoothVF_smoothAt Y Z₂ x),
+      covDeriv_add_field Y.toFun (fun y => covDeriv X.toFun Z₁.toFun y)
+        (fun y => covDeriv X.toFun Z₂.toFun y) x
+        (covDeriv_smoothVF_smoothAt X Z₁ x)
+        (covDeriv_smoothVF_smoothAt X Z₂ x),
+      covDeriv_add_field (VectorField.mlieBracket I X.toFun Y.toFun)
+        Z₁.toFun Z₂.toFun x (Z₁.smoothAt x) (Z₂.smoothAt x)]
+  abel
+
+/-- **Metric-skew of the Riemann curvature in the (3rd, 4th) slot**:
+$$\langle R(X, Y) Z, W\rangle_g(x) + \langle R(X, Y) W, Z\rangle_g(x) = 0.$$
+
+Derived by polarising `riemannCurvature_inner_self_zero` on $Z + W$:
+$$0 = \langle R(X, Y)(Z + W), Z + W\rangle_g
+    = \underbrace{\langle R Z, Z\rangle}_{=0} + \langle R Z, W\rangle
+      + \langle R W, Z\rangle + \underbrace{\langle R W, W\rangle}_{=0}.$$
+
+Reference: do Carmo §4 Proposition 2.5(iv). -/
+theorem riemannCurvature_metric_skew
+    [IsManifold I 2 M]
+    (X Y Z W : SmoothVectorField I M) (x : M)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I))) :
+    metricInner x (Riem(X.toFun, Y.toFun) Z.toFun x) (W x)
+      + metricInner x (Riem(X.toFun, Y.toFun) W.toFun x) (Z x) = 0 := by
+  -- Diagonal-zero applied to U = Z+W, Z, W.
+  have h_ZW := riemannCurvature_inner_self_zero X Y (Z + W) x h_interior
+  have h_Z := riemannCurvature_inner_self_zero X Y Z x h_interior
+  have h_W := riemannCurvature_inner_self_zero X Y W x h_interior
+  -- Additivity of R in 3rd slot.
+  have h_add := riemannCurvature_add_third X Y Z W x
+  -- (Z+W) x = Z x + W x.
+  have h_ZW_x : (Z + W) x = Z x + W x := rfl
+  -- Expand h_ZW via h_add and h_ZW_x and bilinearity of metricInner.
+  rw [h_add, h_ZW_x, metricInner_add_left, metricInner_add_right,
+      metricInner_add_right] at h_ZW
+  -- h_ZW : g(R Z, Z) + g(R Z, W) + (g(R W, Z) + g(R W, W)) = 0
+  linarith
+
 /-- $\mathrm{Ric}(X, Y) = \mathrm{Ric}(Y, X)$.
 
 Reference: do Carmo §4 ex. 1.
