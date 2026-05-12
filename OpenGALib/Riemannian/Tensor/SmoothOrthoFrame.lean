@@ -347,7 +347,202 @@ private lemma g_inner_smul_right_normalised
     g.inner b u (s⁻¹ • v) = s⁻¹ * g.inner b u v := by
   rw [map_smul]; rfl
 
-set_option maxHeartbeats 800000 in
+/-- **Span identity** (recursion-structural): for every $m$ with
+$m.\mathrm{val} < i.\mathrm{val}$, the normalised Gram-Schmidt vector
+$e_m(b) = \mathrm{chartFrameNormFiber}\,g\,\alpha\,b\,m$ lies in the
+$\mathbb{R}$-span of the chart-basis vectors $v_0(b), \ldots,
+v_{i-1}(b)$. Proved by strong induction on $m.\mathrm{val}$ using the
+recursive Gram-Schmidt formula `chartFrameNormFiber_eq`; entirely
+self-contained (no orthonormality IH required). -/
+private lemma chartFrameNormFiber_mem_span_chartBasis
+    (g : RiemannianMetric I M) (α : M) (b : M)
+    (i : Fin (Module.finrank ℝ E)) :
+    ∀ kk : ℕ, ∀ m : Fin (Module.finrank ℝ E),
+      m.val ≤ kk → m.val < i.val →
+      chartFrameNormFiber (I := I) g α b m ∈
+        Submodule.span ℝ
+          ((fun n : Fin i.val =>
+            chartBasisVecFiber (I := I) α
+              ⟨n.val, lt_trans n.isLt i.isLt⟩ b) ''
+            Set.univ) := by
+  intro kk
+  induction kk with
+  | zero =>
+    intro m hm_le hm_lt
+    have hm_val : m.val = 0 := Nat.le_zero.mp hm_le
+    have hm_eq : m = ⟨0, NeZero.pos _⟩ := Fin.ext hm_val
+    subst hm_eq
+    rw [chartFrameNormFiber_at_zero]
+    apply Submodule.smul_mem
+    apply Submodule.subset_span
+    exact ⟨⟨0, hm_lt⟩, Set.mem_univ _, rfl⟩
+  | succ kk ih_kk =>
+    intro m hm_le hm_lt
+    by_cases hcase : m.val ≤ kk
+    · exact ih_kk m hcase hm_lt
+    · rw [chartFrameNormFiber_eq]
+      apply Submodule.smul_mem
+      unfold chartFrameRawFiber
+      apply Submodule.sub_mem
+      · apply Submodule.subset_span
+        exact ⟨⟨m.val, hm_lt⟩, Set.mem_univ _, rfl⟩
+      · apply Submodule.sum_mem
+        intro j _
+        apply Submodule.smul_mem
+        have hj_in_fin : j.val < i.val := lt_trans j.isLt hm_lt
+        have hj_le_kk : j.val ≤ kk := by
+          have : j.val < m.val := j.isLt
+          omega
+        have hj_lt_total : j.val < Module.finrank ℝ E :=
+          lt_trans hj_in_fin i.isLt
+        exact ih_kk ⟨j.val, hj_lt_total⟩ hj_le_kk hj_in_fin
+
+/-- **Non-degeneracy of the unnormalised Gram-Schmidt step**: at any
+base-set point, $\mathrm{raw}_i \ne 0$.
+
+Argument: if $\mathrm{raw}_i = 0$, then $v_i$ equals its projection
+onto $\mathrm{span}(e_0, \ldots, e_{i-1})$. By
+`chartFrameNormFiber_mem_span_chartBasis`, this span is contained in
+$\mathrm{span}(v_0, \ldots, v_{i-1})$, so
+$v_i \in \mathrm{span}(v_0, \ldots, v_{i-1})$ — contradicting linear
+independence of the chart-basis family. -/
+private lemma chartFrameRawFiber_ne_zero
+    (g : RiemannianMetric I M) (α : M) {b : M}
+    (hb : b ∈ (trivializationAt E (TangentSpace I) α).baseSet)
+    (i : Fin (Module.finrank ℝ E)) :
+    chartFrameRawFiber (I := I) g α b i ≠ 0 := by
+  classical
+  have hLI : LinearIndependent ℝ
+      (fun i : Fin (Module.finrank ℝ E) =>
+        chartBasisVecFiber (I := I) α i b) :=
+    chartBasisFamily_linearIndependent (I := I) α hb
+  intro hraw_zero
+  have hv_eq : chartBasisVecFiber (I := I) α i b =
+      ∑ j' : Fin i.val,
+        (g.inner b (chartBasisVecFiber (I := I) α i b)
+          (chartFrameNormFiber (I := I) g α b
+            ⟨j'.val, lt_trans j'.isLt i.isLt⟩)) •
+          chartFrameNormFiber (I := I) g α b
+            ⟨j'.val, lt_trans j'.isLt i.isLt⟩ := by
+    have h_eq : chartBasisVecFiber (I := I) α i b -
+        ∑ j' : Fin i.val,
+          (g.inner b (chartBasisVecFiber (I := I) α i b)
+              (chartFrameNormFiber (I := I) g α b
+                ⟨j'.val, lt_trans j'.isLt i.isLt⟩)) •
+            chartFrameNormFiber (I := I) g α b
+              ⟨j'.val, lt_trans j'.isLt i.isLt⟩ = 0 := by
+      simpa [chartFrameRawFiber] using hraw_zero
+    exact sub_eq_zero.mp h_eq
+  have hvi_in_span : chartBasisVecFiber (I := I) α i b ∈
+      Submodule.span ℝ
+        ((fun n : Fin i.val =>
+          chartBasisVecFiber (I := I) α
+            ⟨n.val, lt_trans n.isLt i.isLt⟩ b) ''
+          Set.univ) := by
+    rw [hv_eq]
+    apply Submodule.sum_mem
+    intro j' _
+    apply Submodule.smul_mem
+    exact chartFrameNormFiber_mem_span_chartBasis (I := I) g α b i
+      (Module.finrank ℝ E) ⟨j'.val, lt_trans j'.isLt i.isLt⟩
+      (Nat.le_of_lt (lt_trans j'.isLt i.isLt)) j'.isLt
+  have hset_eq :
+      ((fun n : Fin i.val =>
+        chartBasisVecFiber (I := I) α
+          ⟨n.val, lt_trans n.isLt i.isLt⟩ b) ''
+        Set.univ) =
+      ((fun n : Fin (Module.finrank ℝ E) =>
+        chartBasisVecFiber (I := I) α n b) ''
+        {n : Fin (Module.finrank ℝ E) | n.val < i.val}) := by
+    ext v
+    constructor
+    · rintro ⟨n, _, rfl⟩
+      exact ⟨⟨n.val, lt_trans n.isLt i.isLt⟩, n.isLt, rfl⟩
+    · rintro ⟨n, hn, rfl⟩
+      exact ⟨⟨n.val, hn⟩, Set.mem_univ _, rfl⟩
+  rw [hset_eq] at hvi_in_span
+  have hi_notin : i ∉ {n : Fin (Module.finrank ℝ E) | n.val < i.val} := by
+    simp [Set.mem_setOf_eq]
+  exact hLI.notMem_span_image hi_notin hvi_in_span
+
+/-- **Orthogonality of `raw_i` to each previous `e_j`**, given that
+$\{e_0, \ldots, e_{i-1}\}$ is already $g$-orthonormal at $b$.
+
+Bilinear unfold of $\mathrm{raw}_i = v_i - \sum_{m < i} \langle v_i,
+e_m\rangle e_m$ paired with $e_j$ on the left: only the $m = j$ term
+of the sum survives (orthonormality), and that term equals
+$\langle e_j, v_i\rangle$ via $g.\mathrm{symm}$, cancelling the
+leading $\langle e_j, v_i\rangle$ to give $0$. -/
+private lemma chartFrameRawFiber_orth_to_orthonormal_prefix
+    (g : RiemannianMetric I M) (α : M) (b : M)
+    (i : Fin (Module.finrank ℝ E))
+    (h_orth : ∀ j j' : Fin (Module.finrank ℝ E),
+      j.val < i.val → j'.val < i.val →
+      g.inner b
+          (chartFrameNormFiber (I := I) g α b j)
+          (chartFrameNormFiber (I := I) g α b j') =
+        if j = j' then 1 else 0) :
+    ∀ j : Fin (Module.finrank ℝ E), j.val < i.val →
+      g.inner b
+          (chartFrameNormFiber (I := I) g α b j)
+          (chartFrameRawFiber (I := I) g α b i) = 0 := by
+  classical
+  intro j hj_lt
+  -- Local notation for the recurring index-coerced normalised vector.
+  set e := fun (j' : Fin i.val) =>
+    chartFrameNormFiber (I := I) g α b
+      ⟨j'.val, lt_trans j'.isLt i.isLt⟩ with he_def
+  set vi := chartBasisVecFiber (I := I) α i b with hvi_def
+  set ej := chartFrameNormFiber (I := I) g α b j with hej_def
+  set c : Fin i.val → ℝ := fun j' => g.inner b vi (e j') with hc_def
+  -- Unfold raw_i to the explicit subtraction form, then bilinearity.
+  change g.inner b ej (vi - ∑ j' : Fin i.val, c j' • e j') = 0
+  rw [show (g.inner b) ej (vi - ∑ j' : Fin i.val, c j' • e j') =
+      (g.inner b) ej vi - (g.inner b) ej (∑ j' : Fin i.val, c j' • e j') from
+    map_sub _ _ _]
+  rw [g_inner_sum_right (I := I) g b ej Finset.univ e c]
+  -- The sum: only j' = ⟨j.val, hj_lt⟩ survives.
+  set j_inFin : Fin i.val := ⟨j.val, hj_lt⟩ with hj_inFin_def
+  have hj_eq_inFin : (⟨j_inFin.val, lt_trans j_inFin.isLt i.isLt⟩ :
+      Fin (Module.finrank ℝ E)) = j := Fin.ext rfl
+  have hsingleton :
+      ∑ j' ∈ (Finset.univ : Finset (Fin i.val)),
+          c j' * g.inner b ej (e j') =
+        c j_inFin * g.inner b ej (e j_inFin) := by
+    refine Finset.sum_eq_single j_inFin ?_ ?_
+    · intro j' _ hj'_ne
+      have hj'_ne_val : j'.val ≠ j.val := fun h => hj'_ne (Fin.ext h)
+      have hj'_in_total : (⟨j'.val, lt_trans j'.isLt i.isLt⟩ :
+          Fin (Module.finrank ℝ E)).val < i.val := j'.isLt
+      have hj_in_total : j.val < i.val := hj_lt
+      have hj_ne_j' : j ≠ ⟨j'.val, lt_trans j'.isLt i.isLt⟩ := by
+        intro h
+        exact hj'_ne_val (congrArg Fin.val h).symm
+      have hzero := h_orth j ⟨j'.val, lt_trans j'.isLt i.isLt⟩
+        hj_in_total hj'_in_total
+      rw [if_neg hj_ne_j'] at hzero
+      show c j' * g.inner b ej (chartFrameNormFiber (I := I) g α b
+          ⟨j'.val, lt_trans j'.isLt i.isLt⟩) = 0
+      rw [hzero, mul_zero]
+    · intro h
+      exact absurd (Finset.mem_univ j_inFin) h
+  rw [hsingleton]
+  have hej_eq : e j_inFin = ej := by
+    show chartFrameNormFiber (I := I) g α b
+        ⟨j_inFin.val, lt_trans j_inFin.isLt i.isLt⟩ = ej
+    rw [hj_eq_inFin]
+  rw [hej_eq]
+  have hjj_unit : g.inner b ej ej = 1 := by
+    have h := h_orth j j hj_lt hj_lt
+    rw [if_pos rfl] at h
+    exact h
+  rw [hjj_unit, mul_one]
+  -- c j_inFin = ⟨v_i, e j_inFin⟩ = ⟨v_i, ej⟩ = ⟨ej, v_i⟩ by g.symm.
+  have hc_eq : c j_inFin = g.inner b vi ej := by
+    show g.inner b vi (e j_inFin) = g.inner b vi ej
+    rw [hej_eq]
+  rw [hc_eq, g.symm]; ring
+
 /-- The strong-induction package for the orthonormality of
 `chartFrameNormFiber`. The conclusion bundles three facts at every
 $i \le k$:
@@ -356,8 +551,12 @@ $i \le k$:
 2. for all $j < i$, $\langle e_j, e_i\rangle_g = 0$;
 3. $\langle e_i, e_i\rangle_g = 1$.
 
-We package them together to thread the strong-induction hypothesis
-cleanly. -/
+Now a thin wrapper: the bundled IH is unpacked into an "orthonormality
+on a prefix" hypothesis, which is fed to the standalone helpers
+`chartFrameRawFiber_ne_zero` (Step 2) and
+`chartFrameRawFiber_orth_to_orthonormal_prefix` (Step 1). The Step 3
+normalisation uses `g_inner_normalised`. No `maxHeartbeats` bump
+required — each helper compiles in isolation under defaults. -/
 private theorem chartFrameNormFiber_orth_strong_aux
     (g : RiemannianMetric I M) (α : M) {b : M}
     (hb : b ∈ (trivializationAt E (TangentSpace I) α).baseSet) :
@@ -371,10 +570,6 @@ private theorem chartFrameNormFiber_orth_strong_aux
           (chartFrameNormFiber (I := I) g α b i)
           (chartFrameNormFiber (I := I) g α b i) = 1 := by
   classical
-  have hLI : LinearIndependent ℝ
-      (fun i : Fin (Module.finrank ℝ E) =>
-        chartBasisVecFiber (I := I) α i b) :=
-    chartBasisFamily_linearIndependent (I := I) α hb
   intro k
   induction k with
   | zero =>
@@ -383,8 +578,7 @@ private theorem chartFrameNormFiber_orth_strong_aux
     have hi_eq : i = ⟨0, NeZero.pos _⟩ := Fin.ext hi_val
     subst hi_eq
     refine ⟨?_, ?_, ?_⟩
-    · rw [chartFrameRawFiber_at_zero]
-      exact hLI.ne_zero ⟨0, NeZero.pos _⟩
+    · exact chartFrameRawFiber_ne_zero (I := I) g α hb _
     · intro j hj
       simp at hj
     · exact chartFrameNormFiber_at_zero_norm (I := I) g α hb
@@ -392,7 +586,7 @@ private theorem chartFrameNormFiber_orth_strong_aux
     intro i hi_le
     by_cases hi_lt : i.val ≤ k
     · exact ih i hi_lt
-    · -- i.val = k + 1
+    · -- i.val = k + 1: extract orthonormality on the prefix from the IH.
       have ih_below : ∀ j : Fin (Module.finrank ℝ E), j.val < i.val →
           chartFrameRawFiber (I := I) g α b j ≠ 0 ∧
           (∀ j' : Fin (Module.finrank ℝ E), j'.val < j.val →
@@ -405,190 +599,40 @@ private theorem chartFrameNormFiber_orth_strong_aux
         intro j hj
         have hj_le : j.val ≤ k := by omega
         exact ih j hj_le
-      -- Step 1: orthogonality of `raw_i` to each `e_j` with `j.val < i.val`.
-      -- Bilinear unfold: ⟨e_j, raw_i⟩ = ⟨e_j, v_i⟩ - ∑_{m<i.val} ⟨v_i, e_m⟩ ⟨e_j, e_m⟩.
-      -- Only m = j survives (orthonormality of e's by IH); the surviving
-      -- term equals ⟨e_j, v_i⟩ by `g.symm`. Net: 0.
-      have horth_raw : ∀ j : Fin (Module.finrank ℝ E), j.val < i.val →
+      -- Orthonormality on the prefix {0, …, i.val - 1} (trichotomy on j vs j').
+      have h_orth_prefix : ∀ j j' : Fin (Module.finrank ℝ E),
+          j.val < i.val → j'.val < i.val →
           g.inner b
               (chartFrameNormFiber (I := I) g α b j)
-              (chartFrameRawFiber (I := I) g α b i) = 0 := by
-        intro j hj_lt
-        -- Local notation for the recurring index-coerced normalised vector.
-        set e := fun (j' : Fin i.val) =>
-          chartFrameNormFiber (I := I) g α b
-            ⟨j'.val, lt_trans j'.isLt i.isLt⟩ with he_def
-        set vi := chartBasisVecFiber (I := I) α i b with hvi_def
-        set ej := chartFrameNormFiber (I := I) g α b j with hej_def
-        -- Coefficient function for the Gram-Schmidt sum.
-        set c : Fin i.val → ℝ := fun j' => g.inner b vi (e j') with hc_def
-        -- Unfold raw_i to the explicit subtraction form.
-        change g.inner b ej (vi - ∑ j' : Fin i.val, c j' • e j') = 0
-        rw [show (g.inner b) ej (vi - ∑ j' : Fin i.val, c j' • e j') =
-            (g.inner b) ej vi - (g.inner b) ej (∑ j' : Fin i.val, c j' • e j') from
-          map_sub _ _ _]
-        rw [g_inner_sum_right (I := I) g b ej Finset.univ e c]
-        -- The sum: only j' = ⟨j.val, hj_lt⟩ survives (by IH orthonormality of e's).
-        set j_inFin : Fin i.val := ⟨j.val, hj_lt⟩ with hj_inFin_def
-        have hj_eq_inFin : (⟨j_inFin.val, lt_trans j_inFin.isLt i.isLt⟩ :
-            Fin (Module.finrank ℝ E)) = j := Fin.ext rfl
-        have hsingleton :
-            ∑ j' ∈ (Finset.univ : Finset (Fin i.val)),
-                c j' * g.inner b ej (e j') =
-              c j_inFin * g.inner b ej (e j_inFin) := by
-          refine Finset.sum_eq_single j_inFin ?_ ?_
-          · intro j' _ hj'_ne
-            -- For j' ≠ j_inFin, j'.val ≠ j.val ⇒ ⟨e_j, e_⟨j'.val,_⟩⟩ = 0.
-            have hj'_ne_val : j'.val ≠ j.val := fun h => hj'_ne (Fin.ext h)
-            by_cases hcompare : j'.val < j.val
-            · -- Use IH on j (size j.val ≤ k): ⟨e_j', e_j⟩ = 0, then symm.
-              have hIH_j := ih_below j hj_lt
-              have hzero := hIH_j.2.1 ⟨j'.val, lt_trans hcompare j.isLt⟩ hcompare
-              have h_symm : g.inner b ej (e j') =
-                  g.inner b
-                    (chartFrameNormFiber (I := I) g α b
-                      ⟨j'.val, lt_trans hcompare j.isLt⟩)
-                    ej := by
-                show g.inner b ej (chartFrameNormFiber (I := I) g α b
-                    ⟨j'.val, lt_trans j'.isLt i.isLt⟩) = _
-                rw [g.symm]
-              rw [h_symm, hzero, mul_zero]
-            · -- j.val < j'.val: use IH on ⟨j'.val,_⟩ (size j'.val ≤ k).
-              have hcompare_le : j.val ≤ j'.val := Nat.le_of_not_lt hcompare
-              have hcompare' : j.val < j'.val :=
-                lt_of_le_of_ne hcompare_le hj'_ne_val.symm
-              have hj'_in : (⟨j'.val, lt_trans j'.isLt i.isLt⟩ :
-                Fin (Module.finrank ℝ E)).val < i.val := j'.isLt
-              have hIH_j' := ih_below ⟨j'.val, lt_trans j'.isLt i.isLt⟩ hj'_in
-              have hzero := hIH_j'.2.1 j hcompare'
-              show c j' * g.inner b ej (chartFrameNormFiber (I := I) g α b
-                  ⟨j'.val, lt_trans j'.isLt i.isLt⟩) = 0
-              rw [hzero, mul_zero]
-          · intro h
-            exact absurd (Finset.mem_univ j_inFin) h
-        rw [hsingleton]
-        -- Now c j_inFin * ⟨e_j, e_j_inFin⟩ = ⟨v_i, e_j⟩ * 1 = ⟨v_i, e_j⟩ = ⟨e_j, v_i⟩.
-        have hej_eq : e j_inFin = ej := by
-          show chartFrameNormFiber (I := I) g α b
-              ⟨j_inFin.val, lt_trans j_inFin.isLt i.isLt⟩ = ej
-          rw [hj_eq_inFin]
-        rw [hej_eq]
-        have hjj_unit : g.inner b ej ej = 1 := (ih_below j hj_lt).2.2
-        rw [hjj_unit, mul_one]
-        -- Target: g.inner b ej vi - c j_inFin = 0.
-        -- c j_inFin = g.inner b vi (e j_inFin) = g.inner b vi ej (by hej_eq).
-        -- So target ≡ g.inner b ej vi - g.inner b vi ej = 0, which holds by g.symm.
-        have hc_eq : c j_inFin = g.inner b vi ej := by
-          show g.inner b vi (e j_inFin) = g.inner b vi ej
-          rw [hej_eq]
-        rw [hc_eq, g.symm]
-        ring
-      -- Step 2: `raw_i ≠ 0`. Argument: if raw_i = 0, then v_i is in
-      -- span(e_0,…,e_{i-1}); by induction on the recursion, each e_j is
-      -- in span(v_0,…,v_j), so v_i ∈ span(v_0,…,v_{i-1}), contradicting LI.
-      have hraw_ne : chartFrameRawFiber (I := I) g α b i ≠ 0 := by
-        intro hraw_zero
-        have hv_eq : chartBasisVecFiber (I := I) α i b =
-            ∑ j' : Fin i.val,
-              (g.inner b (chartBasisVecFiber (I := I) α i b)
-                (chartFrameNormFiber (I := I) g α b
-                  ⟨j'.val, lt_trans j'.isLt i.isLt⟩)) •
-                chartFrameNormFiber (I := I) g α b
-                  ⟨j'.val, lt_trans j'.isLt i.isLt⟩ := by
-          have h_eq : chartBasisVecFiber (I := I) α i b -
-              ∑ j' : Fin i.val,
-                (g.inner b (chartBasisVecFiber (I := I) α i b)
-                    (chartFrameNormFiber (I := I) g α b
-                      ⟨j'.val, lt_trans j'.isLt i.isLt⟩)) •
-                  chartFrameNormFiber (I := I) g α b
-                    ⟨j'.val, lt_trans j'.isLt i.isLt⟩ = 0 := by
-            simpa [chartFrameRawFiber] using hraw_zero
-          exact sub_eq_zero.mp h_eq
-        -- Each e_m (m.val < i.val) is in span(v_0,…,v_{i-1}) by induction on m.val.
-        have h_e_in_span_v : ∀ kk : ℕ, ∀ m : Fin (Module.finrank ℝ E),
-            m.val ≤ kk → m.val < i.val →
-            chartFrameNormFiber (I := I) g α b m ∈
-              Submodule.span ℝ
-                ((fun n : Fin i.val =>
-                  chartBasisVecFiber (I := I) α
-                    ⟨n.val, lt_trans n.isLt i.isLt⟩ b) ''
-                  Set.univ) := by
-          intro kk
-          induction kk with
-          | zero =>
-            intro m hm_le hm_lt
-            have hm_val : m.val = 0 := Nat.le_zero.mp hm_le
-            have hm_eq : m = ⟨0, NeZero.pos _⟩ := Fin.ext hm_val
-            subst hm_eq
-            rw [chartFrameNormFiber_at_zero]
-            apply Submodule.smul_mem
-            apply Submodule.subset_span
-            refine ⟨⟨0, hm_lt⟩, Set.mem_univ _, rfl⟩
-          | succ kk ih_kk =>
-            intro m hm_le hm_lt
-            by_cases hcase : m.val ≤ kk
-            · exact ih_kk m hcase hm_lt
-            · rw [chartFrameNormFiber_eq]
-              apply Submodule.smul_mem
-              unfold chartFrameRawFiber
-              apply Submodule.sub_mem
-              · apply Submodule.subset_span
-                exact ⟨⟨m.val, hm_lt⟩, Set.mem_univ _, rfl⟩
-              · apply Submodule.sum_mem
-                intro j _
-                apply Submodule.smul_mem
-                have hj_in_fin : j.val < i.val := lt_trans j.isLt hm_lt
-                have hj_le_kk : j.val ≤ kk := by
-                  have : j.val < m.val := j.isLt
-                  omega
-                have hj_lt_total : j.val < Module.finrank ℝ E :=
-                  lt_trans hj_in_fin i.isLt
-                exact ih_kk ⟨j.val, hj_lt_total⟩ hj_le_kk hj_in_fin
-        -- v_i is in span(v_0,…,v_{i-1}) by hv_eq + h_e_in_span_v.
-        have hvi_in_span : chartBasisVecFiber (I := I) α i b ∈
-            Submodule.span ℝ
-              ((fun n : Fin i.val =>
-                chartBasisVecFiber (I := I) α
-                  ⟨n.val, lt_trans n.isLt i.isLt⟩ b) ''
-                Set.univ) := by
-          rw [hv_eq]
-          apply Submodule.sum_mem
-          intro j' _
-          apply Submodule.smul_mem
-          have hj'_lt : j'.val < i.val := j'.isLt
-          have hj'_le_k : j'.val ≤ k := by
-            have : j'.val < i.val := j'.isLt
-            omega
-          exact h_e_in_span_v k ⟨j'.val, lt_trans j'.isLt i.isLt⟩ hj'_le_k hj'_lt
-        -- Contradiction via `LinearIndependent.notMem_span_image`.
-        have hset_eq :
-            ((fun n : Fin i.val =>
-              chartBasisVecFiber (I := I) α
-                ⟨n.val, lt_trans n.isLt i.isLt⟩ b) ''
-              Set.univ) =
-            ((fun n : Fin (Module.finrank ℝ E) =>
-              chartBasisVecFiber (I := I) α n b) ''
-              {n : Fin (Module.finrank ℝ E) | n.val < i.val}) := by
-          ext v
-          constructor
-          · rintro ⟨n, _, rfl⟩
-            refine ⟨⟨n.val, lt_trans n.isLt i.isLt⟩, n.isLt, rfl⟩
-          · rintro ⟨n, hn, rfl⟩
-            refine ⟨⟨n.val, hn⟩, Set.mem_univ _, rfl⟩
-        rw [hset_eq] at hvi_in_span
-        have hi_notin : i ∉ {n : Fin (Module.finrank ℝ E) | n.val < i.val} := by
-          simp [Set.mem_setOf_eq]
-        exact hLI.notMem_span_image hi_notin hvi_in_span
-      -- Step 3: orthogonality and unit norm of e_i = (1/sqrt N) • raw_i.
+              (chartFrameNormFiber (I := I) g α b j') =
+            if j = j' then 1 else 0 := by
+        intro j j' hj_lt hj'_lt
+        rcases Nat.lt_trichotomy j.val j'.val with hlt | heq | hgt
+        · -- j.val < j'.val: use IH at j'.
+          have hzero := (ih_below j' hj'_lt).2.1 j hlt
+          have hne : j ≠ j' := fun h => by rw [h] at hlt; omega
+          rw [if_neg hne, hzero]
+        · -- j = j'.
+          have hjj : j = j' := Fin.ext heq
+          subst hjj
+          rw [if_pos rfl]
+          exact (ih_below j hj_lt).2.2
+        · -- j.val > j'.val: use IH at j, swap with g.symm.
+          have hzero := (ih_below j hj_lt).2.1 j' hgt
+          have hne : j ≠ j' := fun h => by rw [h] at hgt; omega
+          rw [if_neg hne, g.symm]; exact hzero
+      -- Step 2: raw_i ≠ 0 (standalone).
+      have hraw_ne := chartFrameRawFiber_ne_zero (I := I) g α hb i
+      -- Step 1: ⟨e_j, raw_i⟩ = 0 for j.val < i.val (uses h_orth_prefix).
+      have horth_raw := chartFrameRawFiber_orth_to_orthonormal_prefix
+        (I := I) g α b i h_orth_prefix
+      -- Step 3: orthogonality + unit norm of e_i = (1/√N) • raw_i.
       have hgpos : 0 < g.inner b
           (chartFrameRawFiber (I := I) g α b i)
           (chartFrameRawFiber (I := I) g α b i) :=
         g.pos b (chartFrameRawFiber (I := I) g α b i) hraw_ne
       refine ⟨hraw_ne, ?_, ?_⟩
-      · -- Orthogonality: ⟨e_j, e_i⟩ = (1/√N) ⟨e_j, raw_i⟩ = 0.
-        intro j hj_lt
-        -- Rewrite ONLY the second slot (e_i) to its (1/√N) • raw_i form;
-        -- a bare `rw [chartFrameNormFiber_eq]` would fire on e_j first.
+      · intro j hj_lt
         conv_lhs => rw [show chartFrameNormFiber (I := I) g α b i =
             (Real.sqrt (g.inner b
                 (chartFrameRawFiber (I := I) g α b i)
@@ -597,8 +641,7 @@ private theorem chartFrameNormFiber_orth_strong_aux
           chartFrameNormFiber_eq (I := I) g α b i]
         rw [g_inner_smul_right_normalised (I := I) g b _ _ _]
         rw [horth_raw j hj_lt, mul_zero]
-      · -- Unit norm: ⟨(1/√N) raw_i, (1/√N) raw_i⟩ = 1 by `g_inner_normalised`.
-        rw [chartFrameNormFiber_eq]
+      · rw [chartFrameNormFiber_eq]
         exact g_inner_normalised (I := I) g b
           (chartFrameRawFiber (I := I) g α b i) hgpos
 
