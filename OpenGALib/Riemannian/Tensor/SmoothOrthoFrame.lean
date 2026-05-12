@@ -875,6 +875,196 @@ private lemma chartBasisVec_contMDiffOn_section
         (trivializationAt E (TangentSpace I) α).baseSet :=
   chartBasisVec_contMDiffOn (I := I) α i
 
+/-- **Step 2 helper (generic normalisation).** Given a smooth tangent
+section `Y` that is nonvanishing on `s`, the normalised section
+$b \mapsto (\sqrt{g_b(Y_b, Y_b)})^{-1} \cdot Y_b$ is $C^\infty$ on `s`.
+
+This is the workhorse for both the zero-case and the succ-case of
+`chartFrameNormFiber_contMDiffOn_strong`. Factoring it out keeps each
+case under default `maxHeartbeats`, replacing the external $20\times$
+bump on the inlined induction. -/
+private lemma chartFrame_normalise_section_contMDiffOn
+    (g : RiemannianMetric I M)
+    {Y : Π b : M, TangentSpace I b} {s : Set M}
+    (hY : ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞ (T% Y) s)
+    (hY_ne : ∀ b ∈ s, Y b ≠ 0) :
+    ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+        (T% (fun b : M => (Real.sqrt (g.inner b (Y b) (Y b)))⁻¹ • Y b)) s := by
+  classical
+  have h_inner : ContMDiffOn I 𝓘(ℝ) ∞
+      (fun b : M => g.inner b (Y b) (Y b)) s :=
+    g_inner_contMDiffOn_of_sections (I := I) g hY hY
+  have h_inner_pos : ∀ b ∈ s, 0 < g.inner b (Y b) (Y b) :=
+    fun b hb => g.pos b _ (hY_ne b hb)
+  have h_sqrt_ne : ∀ b ∈ s,
+      Real.sqrt (g.inner b (Y b) (Y b)) ≠ 0 :=
+    fun b hb => ne_of_gt (Real.sqrt_pos.mpr (h_inner_pos b hb))
+  have h_sqrt : ContMDiffOn I 𝓘(ℝ) ∞
+      (fun b : M => Real.sqrt (g.inner b (Y b) (Y b))) s := by
+    intro b hb
+    have h_inner_at := h_inner b hb
+    have h_sqrt_real : ContDiffAt ℝ ∞ Real.sqrt (g.inner b (Y b) (Y b)) :=
+      Real.contDiffAt_sqrt (ne_of_gt (h_inner_pos b hb))
+    exact h_sqrt_real.contMDiffAt.comp_contMDiffWithinAt
+      (I := I) (I' := 𝓘(ℝ)) (I'' := 𝓘(ℝ)) b h_inner_at
+  have h_inv : ContMDiffOn I 𝓘(ℝ) ∞
+      (fun b : M => (Real.sqrt (g.inner b (Y b) (Y b)))⁻¹) s :=
+    fun b hb => (h_sqrt b hb).inv₀ (h_sqrt_ne b hb)
+  exact ContMDiffOn.smul_section h_inv hY
+
+/-- **Step 2 helper (succ step).** Given that
+`chartFrameNormFiber g α b j` is $C^\infty$ as a section on the
+trivialization base set for every `j` with `j.val < i.val`, the
+unnormalised Gram-Schmidt vector `chartFrameRawFiber g α b i` is
+$C^\infty$ as a section on the base set. -/
+private lemma chartFrameRawFiber_succ_section_contMDiffOn
+    (g : RiemannianMetric I M) (α : M)
+    (i : Fin (Module.finrank ℝ E))
+    (ih : ∀ j : Fin (Module.finrank ℝ E), j.val < i.val →
+        ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+          (T% (fun b : M => chartFrameNormFiber (I := I) g α b j))
+          (trivializationAt E (TangentSpace I) α).baseSet) :
+    ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+      (T% (fun b : M => chartFrameRawFiber (I := I) g α b i))
+      (trivializationAt E (TangentSpace I) α).baseSet := by
+  classical
+  have hbase_i := chartBasisVec_contMDiffOn_section (I := I) α i
+  have h_j' : ∀ j' : Fin i.val,
+      ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+        (T% (fun b : M => chartFrameNormFiber (I := I) g α b
+            ⟨j'.val, lt_trans j'.isLt i.isLt⟩))
+        (trivializationAt E (TangentSpace I) α).baseSet :=
+    fun j' => ih ⟨j'.val, lt_trans j'.isLt i.isLt⟩ j'.isLt
+  have h_coef : ∀ j' : Fin i.val,
+      ContMDiffOn I 𝓘(ℝ) ∞
+        (fun b : M => g.inner b (chartBasisVecFiber (I := I) α i b)
+            (chartFrameNormFiber (I := I) g α b
+              ⟨j'.val, lt_trans j'.isLt i.isLt⟩))
+        (trivializationAt E (TangentSpace I) α).baseSet :=
+    fun j' => g_inner_contMDiffOn_of_sections (I := I) g hbase_i (h_j' j')
+  have h_summand : ∀ j' ∈ (Finset.univ : Finset (Fin i.val)),
+      ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+        (T% (fun b : M =>
+          g.inner b (chartBasisVecFiber (I := I) α i b)
+              (chartFrameNormFiber (I := I) g α b
+                ⟨j'.val, lt_trans j'.isLt i.isLt⟩) •
+            chartFrameNormFiber (I := I) g α b
+              ⟨j'.val, lt_trans j'.isLt i.isLt⟩))
+        (trivializationAt E (TangentSpace I) α).baseSet :=
+    fun j' _ => ContMDiffOn.smul_section (h_coef j') (h_j' j')
+  have h_sum : ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+      (T% (fun b : M =>
+        ∑ j' : Fin i.val,
+          g.inner b (chartBasisVecFiber (I := I) α i b)
+              (chartFrameNormFiber (I := I) g α b
+                ⟨j'.val, lt_trans j'.isLt i.isLt⟩) •
+            chartFrameNormFiber (I := I) g α b
+              ⟨j'.val, lt_trans j'.isLt i.isLt⟩))
+      (trivializationAt E (TangentSpace I) α).baseSet :=
+    ContMDiffOn.sum_section h_summand
+  have h_sub : ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+      (T% (fun b : M =>
+        chartBasisVecFiber (I := I) α i b -
+          ∑ j' : Fin i.val,
+            g.inner b (chartBasisVecFiber (I := I) α i b)
+                (chartFrameNormFiber (I := I) g α b
+                  ⟨j'.val, lt_trans j'.isLt i.isLt⟩) •
+              chartFrameNormFiber (I := I) g α b
+                ⟨j'.val, lt_trans j'.isLt i.isLt⟩))
+      (trivializationAt E (TangentSpace I) α).baseSet :=
+    ContMDiffOn.sub_section hbase_i h_sum
+  have hT_eq : (fun b : M => TotalSpace.mk' E (E := TangentSpace I) b
+        (chartFrameRawFiber (I := I) g α b i)) =
+      (fun b : M => TotalSpace.mk' E (E := TangentSpace I) b
+        (chartBasisVecFiber (I := I) α i b -
+          ∑ j' : Fin i.val,
+            g.inner b (chartBasisVecFiber (I := I) α i b)
+                (chartFrameNormFiber (I := I) g α b
+                  ⟨j'.val, lt_trans j'.isLt i.isLt⟩) •
+              chartFrameNormFiber (I := I) g α b
+                ⟨j'.val, lt_trans j'.isLt i.isLt⟩)) := by
+    funext b; unfold chartFrameRawFiber; rfl
+  rw [hT_eq]
+  exact h_sub
+
+/-- **Step 2 of Stage 6 (joint smoothness).** By strong induction on
+`i.val`, both `chartFrameRawFiber g α b i` and
+`chartFrameNormFiber g α b i` define $C^\infty$ sections on the
+trivialization base set. Thin wrapper around
+`chartFrame_normalise_section_contMDiffOn` and
+`chartFrameRawFiber_succ_section_contMDiffOn`; each case factored
+through these helpers compiles under default `maxHeartbeats`. -/
+private theorem chartFrameNormFiber_contMDiffOn_strong
+    (g : RiemannianMetric I M) (α : M) :
+    ∀ k : ℕ, ∀ i : Fin (Module.finrank ℝ E), i.val ≤ k →
+      ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+        (T% (fun b : M => chartFrameRawFiber (I := I) g α b i))
+        (trivializationAt E (TangentSpace I) α).baseSet ∧
+      ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+        (T% (fun b : M => chartFrameNormFiber (I := I) g α b i))
+        (trivializationAt E (TangentSpace I) α).baseSet := by
+  classical
+  intro k
+  induction k with
+  | zero =>
+    intro i hi
+    have hi_val : i.val = 0 := Nat.le_zero.mp hi
+    have hi_eq : i = ⟨0, NeZero.pos _⟩ := Fin.ext hi_val
+    subst hi_eq
+    have h_v := chartBasisVec_contMDiffOn_section (I := I) α ⟨0, NeZero.pos _⟩
+    refine ⟨?_, ?_⟩
+    · -- raw_0 = chartBasisVecFiber α 0
+      have hT_eq : (fun b : M => TotalSpace.mk' E (E := TangentSpace I) b
+            (chartFrameRawFiber (I := I) g α b ⟨0, NeZero.pos _⟩)) =
+          (fun b : M => TotalSpace.mk' E (E := TangentSpace I) b
+            (chartBasisVecFiber (I := I) α ⟨0, NeZero.pos _⟩ b)) := by
+        funext b; rw [chartFrameRawFiber_at_zero (I := I) g α b]
+      rw [hT_eq]; exact h_v
+    · -- norm_0 via Helper A on Y = chartBasisVecFiber α 0
+      have h_v_ne : ∀ b ∈ (trivializationAt E (TangentSpace I) α).baseSet,
+          chartBasisVecFiber (I := I) α ⟨0, NeZero.pos _⟩ b ≠ 0 :=
+        fun b hb =>
+          (chartBasisFamily_linearIndependent (I := I) α hb).ne_zero _
+      have h_norm := chartFrame_normalise_section_contMDiffOn
+        (I := I) g h_v h_v_ne
+      have hT_eq : (fun b : M => TotalSpace.mk' E (E := TangentSpace I) b
+            (chartFrameNormFiber (I := I) g α b ⟨0, NeZero.pos _⟩)) =
+          (fun b : M => TotalSpace.mk' E (E := TangentSpace I) b
+            ((Real.sqrt (g.inner b
+                (chartBasisVecFiber (I := I) α ⟨0, NeZero.pos _⟩ b)
+                (chartBasisVecFiber (I := I) α ⟨0, NeZero.pos _⟩ b)))⁻¹ •
+              chartBasisVecFiber (I := I) α ⟨0, NeZero.pos _⟩ b)) := by
+        funext b; rw [chartFrameNormFiber_at_zero (I := I) g α b]
+      rw [hT_eq]; exact h_norm
+  | succ k ih =>
+    intro i hi
+    by_cases hcase : i.val ≤ k
+    · exact ih i hcase
+    · have ih_below : ∀ j : Fin (Module.finrank ℝ E), j.val < i.val →
+          ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+            (T% (fun b : M => chartFrameNormFiber (I := I) g α b j))
+            (trivializationAt E (TangentSpace I) α).baseSet := by
+        intro j hj
+        have hj_le_k : j.val ≤ k := by omega
+        exact (ih j hj_le_k).2
+      have h_raw := chartFrameRawFiber_succ_section_contMDiffOn
+        (I := I) g α i ih_below
+      have h_raw_ne : ∀ b ∈ (trivializationAt E (TangentSpace I) α).baseSet,
+          chartFrameRawFiber (I := I) g α b i ≠ 0 :=
+        fun b hb => chartFrameRawFiber_ne_zero (I := I) g α hb i
+      have h_norm := chartFrame_normalise_section_contMDiffOn
+        (I := I) g h_raw h_raw_ne
+      have hT_eq : (fun b : M => TotalSpace.mk' E (E := TangentSpace I) b
+            (chartFrameNormFiber (I := I) g α b i)) =
+          (fun b : M => TotalSpace.mk' E (E := TangentSpace I) b
+            ((Real.sqrt (g.inner b
+                (chartFrameRawFiber (I := I) g α b i)
+                (chartFrameRawFiber (I := I) g α b i)))⁻¹ •
+              chartFrameRawFiber (I := I) g α b i)) := by
+        funext b; rw [chartFrameNormFiber_eq (I := I) g α b i]
+      refine ⟨h_raw, ?_⟩
+      rw [hT_eq]; exact h_norm
+
 /-! ## Stage 7: smoothOrthoFrame as an `OrthonormalBasis` at $\alpha$,
 and the basis-invariance bridge
 
