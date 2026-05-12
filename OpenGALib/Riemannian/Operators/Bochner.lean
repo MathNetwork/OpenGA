@@ -64,6 +64,60 @@ theorem ricciTensor_eq_sum_inner_orthonormal
   unfold ricci
   exact LinearMap.trace_eq_sum_inner _ (stdOrthonormalBasis ℝ (TangentSpace I x))
 
+/-! ## Helper: `mfderiv` of the gradient norm squared
+
+The function $|\nabla f|_g^2 : M \to \mathbb{R}$ is $y \mapsto
+\langle \nabla f(y), \nabla f(y)\rangle_g$. Its `mfderiv` at $y$ in direction
+$v$ is $2 \langle \nabla_v \nabla f, \nabla f\rangle_g(y)$ — direct application
+of metric-compatibility on $(\nabla f, \nabla f)$ plus inner-product symmetry.
+
+This is the fundamental level-1 differentiation step used in `leibniz_trace_reduction` (E).
+-/
+
+/-- $\mathrm{d}(|\nabla f|_g^2)(y)\,v = 2 \langle \nabla_v \nabla f, \nabla f\rangle_g(y)$.
+
+Pointwise hypothesis on the gradient: `TangentSmoothAt (∇f) y`. -/
+theorem mfderiv_gradientNormSq_apply
+    (f : M → ℝ) (y : M) (v : TangentSpace I y)
+    (h_grad_y : TangentSmoothAt (manifoldGradient (I := I) f) y) :
+    mfderiv I 𝓘(ℝ, ℝ) (‖grad_g[I] f‖²_g) y v
+      = 2 * metricInner y
+              (covDerivAt (manifoldGradient (I := I) f) y v)
+              (manifoldGradient (I := I) f y) := by
+  -- ‖grad_g[I] f‖²_g = fun z => metricInner z (∇f z) (∇f z) (MetricNormSq instance)
+  show mfderiv I 𝓘(ℝ, ℝ)
+        (fun z : M => metricInner z (manifoldGradient (I := I) f z)
+                                      (manifoldGradient (I := I) f z)) y v = _
+  -- Metric-compatibility on (X = const v, Y = ∇f, Z = ∇f) at y
+  have hVsm : TangentSmoothAt (fun _ : M => (v : TangentSpace I y)) y :=
+    (SmoothVectorField.const (I := I) (M := M) (v : E)).smoothAt y
+  have h := leviCivitaConnection_metric_compatible
+    (fun _ : M => (v : TangentSpace I y))
+    (manifoldGradient (I := I) f)
+    (manifoldGradient (I := I) f)
+    y hVsm h_grad_y h_grad_y
+  -- h: mfderiv (fun z => ⟨∇f z, ∇f z⟩) y · v
+  --    = ⟨lcc.toFun ∇f y v, ∇f y⟩ + ⟨∇f y, lcc.toFun ∇f y v⟩
+  -- = 2 ⟨covDerivAt ∇f y v, ∇f y⟩ (by inner-product symmetry)
+  rw [h]
+  rw [metricInner_comm y (manifoldGradient (I := I) f y)
+       ((leviCivitaConnection (I := I) (M := M)).toFun
+          (manifoldGradient (I := I) f) y v)]
+  -- `covDerivAt Y x = lcc.toFun Y x` definitionally, then `a + a = 2 * a`.
+  show metricInner y
+        ((leviCivitaConnection (I := I) (M := M)).toFun
+            (manifoldGradient (I := I) f) y v)
+        (manifoldGradient (I := I) f y)
+      + metricInner y
+        ((leviCivitaConnection (I := I) (M := M)).toFun
+            (manifoldGradient (I := I) f) y v)
+        (manifoldGradient (I := I) f y)
+      = 2 * metricInner y
+              ((leviCivitaConnection (I := I) (M := M)).toFun
+                (manifoldGradient (I := I) f) y v)
+              (manifoldGradient (I := I) f y)
+  ring
+
 /-! ## Two intermediates (E, G) for the Bochner identity -/
 
 /-- **E — Leibniz trace reduction**: the scalar Laplacian of $|\nabla f|_g^2$
