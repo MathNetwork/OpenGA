@@ -197,5 +197,51 @@ theorem connectionLaplacian_eq_sum_secondCovDerivAt
   intro i _
   rfl
 
+/-- **Ricci identity at chart-frame constant directions** (the heart of the
+heart-of-Bochner identity):
+$$(\nabla^2 Z)(v, w) - (\nabla^2 Z)(w, v) \;=\; R(\tilde v, \tilde w) Z,$$
+where $\tilde v, \tilde w$ are the chart-frame constant extensions of $v, w$.
+Under `[IsLocallyConstantChartedSpace H M]`, the constant extensions
+$\tilde v(y) := v$, $\tilde w(y) := w$ have **vanishing covariant derivative
+torsion** at each point, so the antisymmetric part of the second covariant
+derivative is exactly the Riemann curvature.
+
+Proof sketch: combines (i) torsion-freeness of Levi-Civita
+(`covDeriv_sub_swap_eq_mlieBracket`) applied to the smooth-everywhere constant
+sections $\tilde v, \tilde w$, and (ii) ℝ-linearity of `covDerivAt Z x` (a CLM)
+to lift the bracket through the inner derivative.
+
+**Ground truth**: do Carmo §4 Proposition 2.5 (ii); Lee §11. -/
+theorem secondCovDerivAt_sub_swap_eq_riemannCurvature
+    (Z : Π x : M, TangentSpace I x) (x : M) (v w : TangentSpace I x) :
+    secondCovDerivAt (I := I) (M := M) Z x v w
+      - secondCovDerivAt (I := I) (M := M) Z x w v
+      = riemannCurvature
+          (fun _ : M => (v : TangentSpace I x))
+          (fun _ : M => (w : TangentSpace I x)) Z x := by
+  set V : Π y : M, TangentSpace I y := fun _ => (v : TangentSpace I x) with hV
+  set W : Π y : M, TangentSpace I y := fun _ => (w : TangentSpace I x) with hW
+  have hVsm : TangentSmoothAt V x :=
+    (SmoothVectorField.const (I := I) (M := M) (v : E)).smoothAt x
+  have hWsm : TangentSmoothAt W x :=
+    (SmoothVectorField.const (I := I) (M := M) (w : E)).smoothAt x
+  -- Torsion-free identity at x for the constant chart-frame sections
+  have h_tor : (∇[V] W) x - (∇[W] V) x = (⟦V, W⟧) x :=
+    covDeriv_sub_swap_eq_mlieBracket V W x hVsm hWsm
+  -- Lift through covDerivAt Z x (a CLM, hence ℝ-linear)
+  have h_lifted : covDerivAt Z x ((∇[V] W) x) - covDerivAt Z x ((∇[W] V) x)
+      = covDerivAt Z x ((⟦V, W⟧) x) := by
+    rw [← (covDerivAt Z x).map_sub, h_tor]
+  rw [riemannCurvature_def]
+  -- After unfolding: both `secondCovDerivAt` reduce to the covDeriv pattern (rfl)
+  show (covDeriv V (covDeriv W Z) x - covDerivAt Z x ((∇[V] W) x))
+       - (covDeriv W (covDeriv V Z) x - covDerivAt Z x ((∇[W] V) x))
+       = covDeriv V (covDeriv W Z) x - covDeriv W (covDeriv V Z) x
+         - covDeriv (⟦V, W⟧) Z x
+  -- `covDeriv (⟦V, W⟧) Z x = covDerivAt Z x ((⟦V, W⟧) x)` by definition.
+  rw [show covDeriv (⟦V, W⟧) Z x = covDerivAt Z x ((⟦V, W⟧) x) from rfl]
+  rw [← h_lifted]
+  abel
+
 end Operators
 end Riemannian
