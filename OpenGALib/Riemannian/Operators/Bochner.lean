@@ -381,19 +381,51 @@ with $\nabla f$ over the $g$-orthonormal frame produces the
 $\langle \nabla f, \nabla(\Delta_g f)\rangle_g + \mathrm{Ric}(\nabla f,
 \nabla f)$ decomposition.
 
-**Sorry: PRE-PAPER**. Closure path (textbook Bochner derivation, cf.
-Petersen §9, do Carmo §6, and `external/differential-geometry`'s
-`heart_of_bochner_*` series):
-1. **Per-summand metric-compat** — apply `leviCivitaConnection_metric_compatible`
-   on $(\varepsilon_i, \nabla_{\varepsilon_i}\nabla f, \nabla f)$ at $x$;
-2. **Hessian symmetry swap** — use `hessianBilin_symm` (B) at the section
-   level to swap the slots of $\nabla^2 f$;
-3. **Ricci identity application** — apply `secondCovDerivAt_sub_swap_eq_riemannCurvature`
-   (D.2) to extract the curvature term;
-4. **Sum identification**: curvature sum → $\mathrm{Ric}_g(\nabla f, \nabla f)$
-   via `ricciTensor_eq_sum_inner_orthonormal` (F); Hessian-trace sum →
-   $\langle \nabla f, \nabla(\Delta_g f)\rangle_g$ via `manifoldGradient_inner_eq`
-   + `scalarLaplacian_eq_laplacian_hessianBilin`. -/
+**Sorry: PRE-PAPER**. Algebraic chain (textbook Bochner derivation,
+cf. Petersen §9, do Carmo §6, external `secondCovDeriv_weitzenbock`):
+1. **Step 1 (Hess-sym swap, per i)**: $g(\nabla^2_{\varepsilon_i,\varepsilon_i}\nabla f, \nabla f)
+   = g(\nabla^2_{\varepsilon_i,\nabla f}\nabla f, \varepsilon_i)$ at $x$. Uses
+   metric-compat $\times 2$ and `hessianBilin_symm` (B).
+2. **Step 2 (smooth-frame Ricci identity)**: now closed via D.3 —
+   `secondCovDerivSection_sub_swap_eq_riemannCurvature` in
+   `OpenGALib/Riemannian/Operators/ConnectionLaplacian.lean`. Lifting
+   the constant frame $\tilde\varepsilon_i$ and the smooth gradient
+   section $\nabla f$, gives
+   $\nabla^2_{\varepsilon_i,\nabla f}\nabla f - \nabla^2_{\nabla f,\varepsilon_i}\nabla f
+       = R(\tilde\varepsilon_i,\nabla f)\nabla f$ at $x$.
+3. **Step 3 (Ric identification)**: $\sum_i g(R(\tilde\varepsilon_i,\nabla f)\nabla f,
+   \varepsilon_i) = \mathrm{Ric}_g(\nabla f,\nabla f)$ at $x$ via
+   `riemannCurvature_antisymm` + Riemann-tensor block symmetry +
+   `ricciTensor_eq_sum_inner_orthonormal` (F) + tensoriality
+   (smooth section $\nabla f$ vs constant lift of $\nabla f x$ at $x$).
+4. **Step 4 (∇Δf identification — INFRASTRUCTURE GAP)**:
+   $\sum_i g(\nabla^2_{\nabla f,\varepsilon_i}\nabla f, \varepsilon_i)(x)
+   = g(\nabla f, \nabla\Delta_g f)(x)$. Requires producing a
+   **smooth $g$-orthonormal frame near $x$** that extends
+   $\{\varepsilon_i\} = \mathrm{stdOrthonormalBasis}\,\mathbb{R}\,(T_xM)$.
+   The chart-frame constant lift $\tilde\varepsilon_i$ is *not*
+   $g$-orthonormal at $y \ne x$, so the chart-trace function
+   $T_\mathrm{chart}(y) := \sum_i \mathrm{Hess}\,f(y)(\varepsilon_i,\varepsilon_i)$
+   does **not** equal $\Delta_g f(y)$ off $x$. The $\nabla f$-direction
+   derivative therefore picks up a Christoffel/Gram-correction term that
+   the constant lift cannot cancel.
+
+**Repair plan**: port `external/differential-geometry/`'s
+`RicciIdentitySmoothFrame.lean` (~1443 lines) — chart-bump-multiplied
+$g$-Gram-Schmidt of the chart frame yields `smoothOrthoFrame g x i`,
+which is $g$-orthonormal at every point of `smoothOrthoFrameNbhd x`
+and reduces to `stdOrthonormalBasis` at $x$. Restating this lemma
+against `smoothOrthoFrame` (instead of the constant lift of
+`stdOrthonormalBasis`) makes Step 4 mechanical. The basis-change
+between `smoothOrthoFrame g x · x` and `stdOrthonormalBasis ℝ (T_x M)`
+at $x$ is an orthogonal transformation; the trace $\sum_i ⟨\Delta_\nabla\nabla f,
+\varepsilon_i⟩ \cdot ⟨\nabla f, \varepsilon_i⟩$ is invariant under this
+basis change, so the original statement (in `stdOrthonormalBasis`)
+follows from the smooth-frame version at $x$.
+
+**Repair owner**: framework self-build. Estimated scope: ~500–1000
+LOC port (chart bump + Gram-Schmidt + smoothness on the bump
+neighbourhood + at-$x$ orthonormality + basis-change at $x$). -/
 private theorem sum_inner_secondCovDerivAt_grad_eq_inner_grad_laplacian_add_ricci
     [IsManifold I 2 M]
     (f : M → ℝ) (x : M)

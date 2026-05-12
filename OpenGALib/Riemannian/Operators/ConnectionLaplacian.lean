@@ -318,5 +318,82 @@ theorem secondCovDerivAt_swap_eq
   -- Goal: sCDA(w,v) = sCDA(v,w) - R(v,w) Z
   rw [← h]; abel
 
+/-! ## Smooth-section second covariant derivative (D.3 layer)
+
+The point-vector `secondCovDerivAt Z x v w` extends both `v, w` as
+chart-frame constants. For the heart-of-Bochner derivation, one of the
+slots is itself a smooth vector field (typically `∇f`), so we need a
+section-form analog `secondCovDerivSection Z V W x` where `V, W` are
+smooth tangent fields. The chart-frame constant case recovers
+`secondCovDerivAt` definitionally. -/
+
+/-- **Smooth-section second covariant derivative** at $x$:
+$$(\nabla^2 Z)(V, W)(x) \;=\;
+  \nabla_V (\nabla_W Z)\,x \;-\; \nabla_{(\nabla_V W)}\,Z\,x.$$
+
+For $V(y) := v$, $W(y) := w$ (chart-frame constant lifts of vectors at
+$x$), this reduces to `secondCovDerivAt Z x v w` definitionally
+(`secondCovDerivSection_const_const` below). -/
+noncomputable def secondCovDerivSection
+    (Z V W : Π x : M, TangentSpace I x) (x : M) : TangentSpace I x :=
+  covDerivAt (fun y : M => covDerivAt Z y (W y)) x (V x)
+    - covDerivAt Z x (covDerivAt W x (V x))
+
+/-- Bridge: chart-frame constant lifts of $v, w$ recover `secondCovDerivAt`. -/
+theorem secondCovDerivSection_const_const
+    (Z : Π x : M, TangentSpace I x) (x : M) (v w : TangentSpace I x) :
+    secondCovDerivSection (I := I) (M := M) Z
+        (fun _ : M => (v : TangentSpace I x))
+        (fun _ : M => (w : TangentSpace I x)) x
+      = secondCovDerivAt (I := I) (M := M) Z x v w := rfl
+
+/-- **D.3 — Smooth-frame Ricci identity**: for smooth tangent fields $V, W$
+at $x$ and any tangent field $Z$,
+$$(\nabla^2 Z)(V, W)(x) \;-\; (\nabla^2 Z)(W, V)(x) \;=\; R(V, W)\,Z\,(x).$$
+
+Generalises `secondCovDerivAt_sub_swap_eq_riemannCurvature` (D.2): the
+constant lifts $\tilde v, \tilde w$ are replaced by arbitrary smooth $V, W$.
+The proof is the same algebraic chain — torsion-freeness
+(`covDeriv_sub_swap_eq_mlieBracket`) on $V, W$, lifted through the CLM
+$\nabla_\bullet Z$ at $x$, then matched against `riemannCurvature_def`.
+
+**Ground truth**: do Carmo §4 Prop 2.5; Lee §11. -/
+theorem secondCovDerivSection_sub_swap_eq_riemannCurvature
+    (Z V W : Π x : M, TangentSpace I x) (x : M)
+    (hV : TangentSmoothAt V x) (hW : TangentSmoothAt W x) :
+    secondCovDerivSection (I := I) (M := M) Z V W x
+      - secondCovDerivSection (I := I) (M := M) Z W V x
+      = riemannCurvature V W Z x := by
+  -- Torsion-free identity at x for V, W
+  have h_tor : (∇[V] W) x - (∇[W] V) x = (⟦V, W⟧) x :=
+    covDeriv_sub_swap_eq_mlieBracket V W x hV hW
+  -- Lift through covDerivAt Z x (a CLM, hence ℝ-linear)
+  have h_lifted : covDerivAt Z x ((∇[V] W) x) - covDerivAt Z x ((∇[W] V) x)
+      = covDerivAt Z x ((⟦V, W⟧) x) := by
+    rw [← (covDerivAt Z x).map_sub, h_tor]
+  rw [riemannCurvature_def]
+  unfold secondCovDerivSection
+  -- After unfolding both `secondCovDerivSection`, both sides are in covDeriv form
+  show (covDeriv V (covDeriv W Z) x - covDerivAt Z x ((∇[V] W) x))
+       - (covDeriv W (covDeriv V Z) x - covDerivAt Z x ((∇[W] V) x))
+       = covDeriv V (covDeriv W Z) x - covDeriv W (covDeriv V Z) x
+         - covDeriv (⟦V, W⟧) Z x
+  rw [show covDeriv (⟦V, W⟧) Z x = covDerivAt Z x ((⟦V, W⟧) x) from rfl]
+  rw [← h_lifted]
+  abel
+
+/-- **Swap form of D.3** (smooth-frame Ricci identity, swap orientation):
+$$(\nabla^2 Z)(W, V)(x) \;=\; (\nabla^2 Z)(V, W)(x) \;-\; R(V, W)\,Z\,(x).$$
+Direct corollary of `secondCovDerivSection_sub_swap_eq_riemannCurvature`. -/
+theorem secondCovDerivSection_swap_eq
+    (Z V W : Π x : M, TangentSpace I x) (x : M)
+    (hV : TangentSmoothAt V x) (hW : TangentSmoothAt W x) :
+    secondCovDerivSection (I := I) (M := M) Z W V x
+      = secondCovDerivSection (I := I) (M := M) Z V W x
+        - riemannCurvature V W Z x := by
+  have h := secondCovDerivSection_sub_swap_eq_riemannCurvature
+    (I := I) (M := M) Z V W x hV hW
+  rw [← h]; abel
+
 end Operators
 end Riemannian
