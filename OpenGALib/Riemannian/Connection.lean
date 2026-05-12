@@ -1857,6 +1857,38 @@ theorem covDeriv_sub_field
   show covDeriv X Y₁ x + (-1 : ℝ) • covDeriv X Y₂ x = covDeriv X Y₁ x - covDeriv X Y₂ x
   rw [neg_one_smul, sub_eq_add_neg]
 
+/-- **Leibniz rule (`C^∞`-linearity in differentiated section): the connection
+acts as a derivation in the scalar factor of `g • Y`**:
+$$\nabla_X (g \cdot Y)(x) = g(x) \cdot \nabla_X Y(x) + (\mathrm{d}g \cdot X)(x) \cdot Y(x).$$
+
+Directly lifted from Mathlib's `IsCovariantDerivativeOn.leibniz` applied to
+`leviCivitaConnection.isCovariantDerivativeOnUniv`, then projected onto the
+direction `X(x)`. The `extDerivFun g x v = mfderiv g x v` reduction is
+definitional via `NormedSpace.fromTangentSpace` (the identity bridge on the
+scalar tangent space `TangentSpace 𝓘(ℝ, ℝ) (g x) ≃L ℝ`). -/
+theorem covDeriv_smul_field
+    (X : Π y : M, TangentSpace I y)
+    (g : M → ℝ) (Y : Π y : M, TangentSpace I y) (x : M)
+    (hg : MDifferentiableAt I 𝓘(ℝ, ℝ) g x)
+    (hY : TangentSmoothAt Y x) :
+    covDeriv X (g • Y) x
+      = g x • covDeriv X Y x
+        + (show ℝ from mfderiv I 𝓘(ℝ, ℝ) g x (X x)) • Y x := by
+  have h := leviCivitaConnection.isCovariantDerivativeOnUniv.leibniz
+    (σ := Y) (g := g) (x := x) hY hg trivial
+  -- h : leviCivitaConnection.toFun (g • Y) x
+  --     = g x • leviCivitaConnection.toFun Y x + (extDerivFun g x).smulRight (Y x)
+  show (leviCivitaConnection.toFun (g • Y) x) (X x) = _
+  rw [h]
+  show g x • (leviCivitaConnection.toFun Y x) (X x)
+      + ((extDerivFun g x).smulRight (Y x)) (X x)
+    = g x • (leviCivitaConnection.toFun Y x) (X x)
+      + (show ℝ from mfderiv I 𝓘(ℝ, ℝ) g x (X x)) • Y x
+  -- `((extDerivFun g x).smulRight (Y x)) v = (extDerivFun g x v) • Y x` (def-eq).
+  -- `extDerivFun g x v = mfderiv g x v` via `NormedSpace.fromTangentSpace` identity
+  -- on the scalar tangent space `TangentSpace 𝓘(ℝ, ℝ) (g x) ≃L ℝ`.
+  congr 1
+
 /-! ## Riemann curvature tensor (connection-level definition)
 
 The Riemann curvature tensor depends only on $\nabla$ (and the Lie
