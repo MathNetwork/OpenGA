@@ -740,7 +740,7 @@ omit [FiniteDimensional ℝ E] [IsLocallyConstantChartedSpace H M] hm in
 /-- **`mlieBracket` of two `ContMDiff` bundle sections is a smooth bundle section**.
 Wrapper around Mathlib `ContMDiffAt.mlieBracket_vectorField` giving
 `TangentSmoothAt` (framework's MDifferentiableAt-form predicate). -/
-private theorem mlieBracket_tangentSmoothAt
+theorem mlieBracket_tangentSmoothAt
     {U V : (y : M) → TangentSpace I y} {x : M}
     (hU : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞ (fun y => (⟨y, U y⟩ : TangentBundle I M)))
     (hV : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞ (fun y => (⟨y, V y⟩ : TangentBundle I M))) :

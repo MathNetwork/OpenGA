@@ -225,20 +225,285 @@ noncomputable def ricci
 `(Ric(X, Y))(x) = ricci X Y x`. -/
 scoped[Riemannian] notation:max "Ric(" X ", " Y ")" => ricci X Y
 
-/-- $\langle R(X, Y) Z, Z \rangle_g(x) = 0$.
+/-! ### Heart of Bochner: `g(R(X,Y)Z, Z) = 0`
 
-Reference: do Carmo §4 Proposition 2.5 (iii).
+do Carmo §4 Proposition 2.5(iii) closure. The proof reduces, via metric
+compatibility applied diagonally at every $y$, to the half-derivative
+identity $D_V (g(Z, Z))(y) = 2\,g(\nabla_V Z, Z)(y)$. Differentiating
+again at $x$ and using metric-compat once more expresses each
+$g(\nabla_W \nabla_V Z, Z)$ in terms of iterated directional derivatives
+of $f := g(Z, Z)$; the Hessian–Lie identity
+(`mfderiv_iterate_sub_eq_mlieBracket_apply`) collapses
+$X(Y(f)) - Y(X(f)) - [X,Y](f) = 0$, closing the chain. -/
 
-**Sorry: PRE-PAPER**. Closure path: expand `riemannCurvature` to its
-$\nabla\nabla - \nabla\nabla - \nabla_{[\cdot,\cdot]}$ form, apply
-metric-compatibility four times to reduce each $\langle \nabla_\cdot \nabla_\cdot Z, Z\rangle$
-to $\tfrac12 X(Y(f))$ where $f := \langle Z, Z\rangle$, and collapse via the
-manifold scalar Hessian-Lie identity (`mfderiv_iterate_sub_eq_mlieBracket_apply`). -/
+/-- **Diagonal metric-compat identity**: at every point $y \in M$ with
+the direction $V$ smooth, metric compatibility gives
+$$D_V (g(Z, Z))(y) = 2\,\langle \nabla_V Z, Z\rangle_g(y).$$
+Stated using `mDirDeriv` (the `ℝ`-typed `mfderiv` wrapper) on the LHS
+and `leviCivitaConnection.toFun` (definitionally equal to `covDeriv`)
+on the RHS. -/
+private lemma mDirDeriv_self_eq_two_metricInner_leviCivita_self
+    (V : Π y : M, TangentSpace I y) (Z : SmoothVectorField I M) (y : M)
+    (hV : TangentSmoothAt V y) :
+    mDirDeriv (fun y' => metricInner y' (Z y') (Z y')) y (V y)
+      = 2 * metricInner y
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y (V y)) (Z y) := by
+  have h := leviCivitaConnection_metric_compatible V Z.toFun Z.toFun y
+    hV (Z.smoothAt y) (Z.smoothAt y)
+  have hsym :
+      metricInner y (Z y)
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y (V y))
+        = metricInner y
+            ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y (V y)) (Z y) :=
+    metricInner_comm y _ _
+  rw [hsym] at h
+  have h_ℝ : mDirDeriv (fun y' => metricInner y' (Z y') (Z y')) y (V y)
+      = metricInner y
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y (V y)) (Z y)
+        + metricInner y
+            ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y (V y)) (Z y) :=
+    h
+  rw [h_ℝ]; ring
+
+/-- Function-equality form: at every $y$, the directional derivative of
+$y \mapsto g(Z, Z)(y)$ along the smooth vector field $V$ equals
+$2\,g(\nabla_V Z, Z)(y)$. -/
+private lemma fun_mDirDeriv_self_eq_two_metricInner_leviCivita_self
+    (V Z : SmoothVectorField I M) :
+    (fun y' : M => mDirDeriv (fun y'' => metricInner y'' (Z y'') (Z y'')) y' (V.toFun y'))
+      = (fun y' : M => 2 * metricInner y'
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+          (Z y')) := by
+  funext y'
+  exact mDirDeriv_self_eq_two_metricInner_leviCivita_self V.toFun Z y' (V.smoothAt y')
+
+/-- **Iterated metric-compat identity at $x$**: differentiating the
+diagonal identity once more at $x$ in direction $W(x)$ and applying
+metric-compat at $x$ yields
+$$\tfrac12\,W\!\left(V (g(Z, Z))\right)(x)
+  = \langle \nabla_W \nabla_V Z, Z\rangle_g(x)
+    + \langle \nabla_V Z, \nabla_W Z\rangle_g(x).$$ -/
+private lemma half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv
+    [IsManifold I 2 M]
+    (V W Z : SmoothVectorField I M) (x : M) :
+    (1/2 : ℝ) * mDirDeriv
+        (fun y' : M => mDirDeriv
+          (fun y'' => metricInner y'' (Z y'') (Z y'')) y' (V.toFun y')) x (W.toFun x)
+      = metricInner x
+          ((leviCivitaConnection (I := I) (M := M)).toFun
+            (fun y' => covDeriv V.toFun Z.toFun y') x (W.toFun x))
+          (Z x)
+        + metricInner x (covDeriv V.toFun Z.toFun x)
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun x (W.toFun x)) := by
+  -- Use function-equality form of the diagonal identity to rewrite the LHS
+  -- inner function; then apply mfderiv_const_smul and metric-compat at x.
+  have h_fun := fun_mDirDeriv_self_eq_two_metricInner_leviCivita_self V Z
+  -- Sections smooth at x.
+  have hcovVZ : TangentSmoothAt (fun y' => covDeriv V.toFun Z.toFun y') x :=
+    covDeriv_smoothVF_smoothAt V Z x
+  -- The mfderiv of LHS (the iterated mDirDeriv expression) at x in dir W(x):
+  -- by h_fun, equals mfderiv of `fun y' => 2 * g(∇_V Z, Z)(y')` at x in dir W(x).
+  -- That = 2 * mfderiv (g(∇_V Z, Z)) x (W x), and by metric-compat at x:
+  --      = 2 * [g(∇_W ∇_V Z, Z) + g(∇_V Z, ∇_W Z)] x.
+  -- So (1/2) * LHS = g(∇_W ∇_V Z, Z) x + g(∇_V Z, ∇_W Z) x.
+  have h_compat := leviCivitaConnection_metric_compatible
+    W.toFun (fun y' => covDeriv V.toFun Z.toFun y') Z.toFun x
+    (W.smoothAt x) hcovVZ (Z.smoothAt x)
+  -- h_compat : mfderiv (fun y' => g(∇_V Z, Z) y') x (W x) =
+  --              g(∇_W (∇_V Z), Z) + g(∇_V Z, ∇_W Z)
+  -- Rewrite the LHS function via h_fun:
+  conv_lhs => rw [show (fun y' : M => mDirDeriv
+        (fun y'' => metricInner y'' (Z y'') (Z y'')) y' (V.toFun y'))
+      = (fun y' : M => 2 * metricInner y'
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+          (Z y')) from h_fun]
+  -- Now LHS = (1/2) * mfderiv (fun y' => 2 * g(∇_V Z, Z) y') x (W x)
+  -- Pull the 2 out: mfderiv (2 * h) x v = 2 * mfderiv h x v (linear).
+  -- The function under mfderiv:  fun y' => 2 * g(LC.toFun Z y' (V y'), Z y')
+  -- equals  2 • (fun y' => g(LC.toFun Z y' (V y'), Z y'))  via funext.
+  -- Use mfderiv_const_smul; we need MDifferentiableAt of the inner section.
+  -- The "covDeriv V Z = LC.toFun Z y (V y)" is def-eq; the inner section's
+  -- smoothness at x is hcovVZ (via metricInner_mdifferentiableAt).
+  have h_inner_mdiff : MDifferentiableAt I 𝓘(ℝ, ℝ)
+      (fun y' : M => metricInner y'
+        ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+        (Z y')) x := by
+    -- The function is `y' ↦ g(covDeriv V Z y', Z y')` (def-eq covDeriv ↔ LC.toFun).
+    -- Use `metricInner_mdifferentiableAt` with `hcovVZ` and `Z.smoothAt x`.
+    have h := hm.metric.metricInner_mdifferentiableAt
+      (v := fun y' => covDeriv V.toFun Z.toFun y') (w := Z.toFun) hcovVZ (Z.smoothAt x)
+    exact h
+  -- Avoid CLM-smul issues by writing `2 * h = h + h` and using `mfderiv_add`.
+  have h_two_add : (fun y' : M => (2 : ℝ) * metricInner y'
+        ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+        (Z y'))
+      = (fun y' : M => metricInner y'
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+          (Z y')
+        + metricInner y'
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+          (Z y')) := by
+    funext y'; ring
+  rw [h_two_add]
+  -- Now: (1/2) * mDirDeriv (fun y' => h y' + h y') x (W x) where h := g(∇_V Z, Z) y'.
+  -- Convert `fun y' => h y' + h y'` to the Pi-add form `h + h` (definitional).
+  have h_pi_add : (fun y' : M => metricInner y'
+        ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+        (Z y')
+      + metricInner y'
+        ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+        (Z y'))
+      = (fun y' : M => metricInner y'
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+          (Z y'))
+        + (fun y' : M => metricInner y'
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+          (Z y')) := rfl
+  rw [h_pi_add]
+  -- `mfderiv (f + g) x v = mfderiv f x v + mfderiv g x v`.
+  -- Compute the CLM add via `mfderiv_add` then evaluate at `W.toFun x`.
+  have h_clm_add :
+      mfderiv I 𝓘(ℝ, ℝ) ((fun y' : M => metricInner y'
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+          (Z y'))
+        + (fun y' : M => metricInner y'
+            ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+            (Z y'))) x
+        = mfderiv I 𝓘(ℝ, ℝ) (fun y' : M => metricInner y'
+            ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+            (Z y')) x
+          + mfderiv I 𝓘(ℝ, ℝ) (fun y' : M => metricInner y'
+              ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+              (Z y')) x :=
+    mfderiv_add h_inner_mdiff h_inner_mdiff
+  -- Apply both sides to (W.toFun x) and use CLM-add evaluation.
+  have h_val_add : mDirDeriv ((fun y' : M => metricInner y'
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+          (Z y'))
+        + (fun y' : M => metricInner y'
+            ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+            (Z y'))) x (W.toFun x)
+      = mDirDeriv (fun y' : M => metricInner y'
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+          (Z y')) x (W.toFun x)
+        + mDirDeriv (fun y' : M => metricInner y'
+            ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+            (Z y')) x (W.toFun x) := by
+    show mfderiv I 𝓘(ℝ, ℝ) _ x (W.toFun x) = _
+    rw [h_clm_add]
+    rfl
+  rw [h_val_add]
+  -- Now: (1/2) * (mDirDeriv h x v + mDirDeriv h x v) = h_compat
+  have h_compat_ℝ :
+      mDirDeriv (fun y' : M => metricInner y'
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
+          (Z y')) x (W.toFun x)
+        = metricInner x
+            ((leviCivitaConnection (I := I) (M := M)).toFun
+              (fun y' => covDeriv V.toFun Z.toFun y') x (W.toFun x))
+            (Z x)
+          + metricInner x (covDeriv V.toFun Z.toFun x)
+            ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun x (W.toFun x)) :=
+    h_compat
+  rw [h_compat_ℝ]; ring
+
+/-- $\langle R(X, Y) Z, Z \rangle_g(x) = 0$ for smooth vector fields
+$X, Y, Z$, with $x$ in the closure of the interior of $\mathrm{range}\,I$
+(required by the Hessian–Lie identity for boundary-aware models).
+
+Reference: do Carmo §4 Proposition 2.5(iii). -/
 theorem riemannCurvature_inner_self_zero
     [IsManifold I 2 M]
-    (X Y Z : SmoothVectorField I M) (x : M) :
+    (X Y Z : SmoothVectorField I M) (x : M)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I))) :
     metricInner x (Riem(X.toFun, Y.toFun) Z.toFun x) (Z x) = 0 := by
-  sorry
+  classical
+  -- Setup: f := g(Z, Z), the self-norm-squared scalar function.
+  set f : M → ℝ := fun y' => metricInner y' (Z y') (Z y') with hf_def
+  -- f is C∞ globally, hence C² at x.
+  have hf_smooth : ContMDiff I 𝓘(ℝ, ℝ) ∞ f := fun y =>
+    hm.metric.metricInner_contMDiffAt (n := ∞) (Z.smooth y) (Z.smooth y)
+  have hf_2 : ContMDiffAt I 𝓘(ℝ, ℝ) 2 f x :=
+    (hf_smooth x).of_le (by
+      show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
+      exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
+  -- [X, Y] is smooth at x (Mathlib + framework's mlieBracket_tangentSmoothAt).
+  have hXY_br : TangentSmoothAt (mlieBracket I X.toFun Y.toFun) x :=
+    mlieBracket_tangentSmoothAt X.smooth Y.smooth
+  -- Equations (A) and (B): iterated metric-compat at x.
+  have hA := half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv X Y Z x  -- (V=X, W=Y)
+  have hB := half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv Y X Z x  -- (V=Y, W=X)
+  -- Equation (C): metric-compat at x for V = [X, Y].
+  have hC := mDirDeriv_self_eq_two_metricInner_leviCivita_self
+    (mlieBracket I X.toFun Y.toFun) Z x hXY_br
+  -- Hessian–Lie identity at x: X(Y(f))(x) - Y(X(f))(x) = mfderiv f x ([X,Y](x))
+  have hX1 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) 1
+      (fun y => (⟨y, X.toFun y⟩ : TangentBundle I M)) x :=
+    (X.smooth x).of_le (by
+      show ((1 : ℕ∞) : ℕ∞ω) ≤ ∞
+      exact_mod_cast (le_top : (1 : ℕ∞) ≤ ⊤))
+  have hY1 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) 1
+      (fun y => (⟨y, Y.toFun y⟩ : TangentBundle I M)) x :=
+    (Y.smooth x).of_le (by
+      show ((1 : ℕ∞) : ℕ∞ω) ≤ ∞
+      exact_mod_cast (le_top : (1 : ℕ∞) ≤ ⊤))
+  have hHL : mDirDeriv (fun y' => mDirDeriv f y' (Y.toFun y')) x (X.toFun x)
+      - mDirDeriv (fun y' => mDirDeriv f y' (X.toFun y')) x (Y.toFun x)
+      = mDirDeriv f x (mlieBracket I X.toFun Y.toFun x) :=
+    mfderiv_iterate_sub_eq_mlieBracket_apply f X.toFun Y.toFun x h_interior hf_2 hX1 hY1
+  -- Inner product cross-cancel: g(∇_X Z, ∇_Y Z) = g(∇_Y Z, ∇_X Z).
+  have h_inner_comm : metricInner x (covDeriv X.toFun Z.toFun x)
+        ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun x (Y.toFun x))
+      = metricInner x (covDeriv Y.toFun Z.toFun x)
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun x (X.toFun x)) := by
+    show metricInner x ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun x (X.toFun x))
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun x (Y.toFun x))
+      = metricInner x ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun x (Y.toFun x))
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun x (X.toFun x))
+    exact metricInner_comm x _ _
+  -- Expand R via riemannCurvature_def + metricInner_sub_left twice.
+  show metricInner x (riemannCurvature X.toFun Y.toFun Z.toFun x) (Z x) = 0
+  rw [riemannCurvature_def]
+  -- Goal: g(∇_X ∇_Y Z - ∇_Y ∇_X Z - ∇_{[X,Y]} Z, Z) x = 0
+  rw [show metricInner x (covDeriv X.toFun (fun y => covDeriv Y.toFun Z.toFun y) x
+        - covDeriv Y.toFun (fun y => covDeriv X.toFun Z.toFun y) x
+        - covDeriv (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x) (Z x)
+      = metricInner x (covDeriv X.toFun (fun y => covDeriv Y.toFun Z.toFun y) x) (Z x)
+        - metricInner x (covDeriv Y.toFun (fun y => covDeriv X.toFun Z.toFun y) x) (Z x)
+        - metricInner x (covDeriv (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x) (Z x)
+      from by
+    rw [show ((covDeriv X.toFun (fun y => covDeriv Y.toFun Z.toFun y) x
+          - covDeriv Y.toFun (fun y => covDeriv X.toFun Z.toFun y) x
+          - covDeriv (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x : TangentSpace I x))
+        = (covDeriv X.toFun (fun y => covDeriv Y.toFun Z.toFun y) x
+          - covDeriv Y.toFun (fun y => covDeriv X.toFun Z.toFun y) x)
+          - covDeriv (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x from rfl,
+      metricInner_sub_left, metricInner_sub_left]]
+  -- Now: g(∇_X ∇_Y Z, Z) - g(∇_Y ∇_X Z, Z) - g(∇_{[X,Y]} Z, Z) = 0
+  -- From hB (V=Y, W=X): (1/2) X(Y(f))(x) = g(∇_X ∇_Y Z, Z) + g(∇_Y Z, ∇_X Z)
+  --                    ⇒ g(∇_X ∇_Y Z, Z) = (1/2) X(Y(f))(x) - g(∇_Y Z, ∇_X Z)
+  -- From hA (V=X, W=Y): g(∇_Y ∇_X Z, Z) = (1/2) Y(X(f))(x) - g(∇_X Z, ∇_Y Z)
+  -- From hC: 2 g(∇_{[X,Y]} Z, Z) = D_{[X,Y]} f(x)
+  --        ⇒ g(∇_{[X,Y]} Z, Z) = (1/2) D_{[X,Y]} f(x) = (1/2) mDirDeriv f x ([X,Y] x)
+  -- Combine: difference = (1/2) [X(Y(f)) - Y(X(f)) - [X,Y](f)] - inner cross-cancel = 0.
+  -- Show all four covDeriv terms are def-equal to LC.toFun forms:
+  show metricInner x
+        ((leviCivitaConnection (I := I) (M := M)).toFun
+          (fun y => covDeriv Y.toFun Z.toFun y) x (X.toFun x)) (Z x)
+      - metricInner x
+          ((leviCivitaConnection (I := I) (M := M)).toFun
+            (fun y => covDeriv X.toFun Z.toFun y) x (Y.toFun x)) (Z x)
+      - metricInner x
+          ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun x
+            (VectorField.mlieBracket I X.toFun Y.toFun x)) (Z x)
+      = 0
+  -- Substitute via hA, hB, hC, hHL.
+  -- hB: (1/2) X(Y(f))(x) = g(LC.toFun (∇_Y Z) x (X x), Z) + g(∇_Y Z, LC.toFun Z x (X x))
+  -- ⇒ g(LC.toFun (∇_Y Z) x (X x), Z) = (1/2) X(Y(f))(x) - g(∇_Y Z, LC.toFun Z x (X x))
+  -- hA: g(LC.toFun (∇_X Z) x (Y x), Z) = (1/2) Y(X(f))(x) - g(∇_X Z, LC.toFun Z x (Y x))
+  -- hC: 2 g(LC.toFun Z x ([X,Y] x), Z) = mDirDeriv f x ([X,Y] x)
+  -- Substitute and use hHL: X(Y(f)) - Y(X(f)) = mDirDeriv f x ([X,Y] x); h_inner_comm cancel.
+  linarith [hA, hB, hC, hHL, h_inner_comm]
 
 /-- $\mathrm{Ric}(X, Y) = \mathrm{Ric}(Y, X)$.
 
