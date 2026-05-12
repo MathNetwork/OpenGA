@@ -386,8 +386,8 @@ as input the relevant algebraic identity and producing the form the
 downstream consumer needs. These conditionals do not close any sorry by
 themselves — they package the assumptions cleanly. -/
 
-/-- **Step 1 helper — Hess-sym swap for $\nabla^2 \nabla f$**: for
-constant lifts of $v, w, z$ at $x$,
+/-- **Hess-sym swap of the inner-product partner for $\nabla^2 \nabla f$**:
+for constant lifts of $v, w, z$ at $x$,
 $$\langle (\nabla^2 \nabla f)(v, w),\, z\rangle_g(x)
   = \langle (\nabla^2 \nabla f)(v, z),\, w\rangle_g(x).$$
 
@@ -408,8 +408,8 @@ The `h_eventual_sym` hypothesis is discharged in the downstream assembly
 by combining pointwise `hessianBilin_symm` at each $y$ in a nbhd of $x$
 with nbhd-`h_interior` propagation (available under
 `IsLocallyConstantChartedSpace H M` and strict-interior `h_interior` at
-$x$). Ported from do Carmo §6 / Petersen Ch 7 §1 Prop 33's Step 1. -/
-theorem step1_secondCovDerivAt_grad_swap_at
+$x$). Ported from do Carmo §6 / Petersen Ch 7 §1 Prop 33. -/
+theorem metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym
     [IsManifold I 2 M]
     (f : M → ℝ) (x : M) (v w z : TangentSpace I x)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
@@ -522,7 +522,7 @@ theorem step1_secondCovDerivAt_grad_swap_at
   -- ⇒ A - hA = (P - hB') - hA = (Q - hB) - hA' = (B + hA' - hB) - hA' = B - hB ✓
   linear_combination -h_compat_W + h_compat_Z + h_eq_at_v + h_sym_zΓvw - h_sym_wΓvz
 
-/-- **Step 2 helper — D.2 swap of `secondCovDerivAt`'s outer pair**:
+/-- **Inner-form of the D.2 swap of `secondCovDerivAt`'s outer pair**:
 for $v, w, z \in T_xM$,
 $$\langle (\nabla^2 \nabla f)(v, w),\, z\rangle_g(x)
   = \langle (\nabla^2 \nabla f)(w, v),\, z\rangle_g(x)
@@ -531,10 +531,10 @@ $$\langle (\nabla^2 \nabla f)(v, w),\, z\rangle_g(x)
 Direct corollary of `secondCovDerivAt_sub_swap_eq_riemannCurvature` (D.2)
 applied to $Z = \nabla f$, paired with $z$ via the bilinearity of
 `metricInner`. The third slot of `riemannCurvature` is the section
-$\nabla f$ (not a constant lift); closing the Ric identification (Step 3)
+$\nabla f$ (not a constant lift); closing the Ric identification
 requires `riemannCurvature` tensoriality in the 3rd slot plus
 `ricci_symm` (both currently PRE-PAPER sorrys in `Curvature.lean`). -/
-theorem step2_secondCovDerivAt_grad_swap_curvature_at
+theorem metricInner_secondCovDerivAt_grad_eq_swap_add_curvature
     (f : M → ℝ) (x : M) (v w z : TangentSpace I x) :
     metricInner x (secondCovDerivAt (I := I) (M := M)
         (manifoldGradient (I := I) f) x v w) z
