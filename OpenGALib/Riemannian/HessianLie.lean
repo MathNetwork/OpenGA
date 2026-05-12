@@ -434,4 +434,24 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
       ← mlieBracket_eq_lieBracketWithin_chart_pullback V W x]
   exact (mfderiv_chart_compose_apply x f_loc h_f_loc_diff (mlieBracket I V W x)).symm
 
+set_option linter.unusedSectionVars false in
+/-- **Manifold Lie bracket of two constant tangent sections vanishes.**
+Chart-pullback (`mlieBracket_eq_lieBracketWithin_chart_pullback`) reduces
+`mlieBracket I (fun _ => v) (fun _ => w) x` to a `lieBracketWithin` in the
+model space `E_M` of two constant functions; `fderivWithin` of a constant
+is zero, so the bracket vanishes at every $x \in M$. -/
+theorem mlieBracket_const_const_apply_zero
+    (v w : E_M) (x : M) :
+    mlieBracket I (fun _ : M => v) (fun _ : M => w) x = 0 := by
+  rw [mlieBracket_eq_lieBracketWithin_chart_pullback]
+  -- Goal (after β-reduction): `lieBracketWithin ℝ (fun _ => v) (fun _ => w) (range I)
+  --   (extChartAt I x x) = 0`. Unfold `lieBracketWithin`; both `fderivWithin` terms
+  -- are zero (`fderivWithin_const_apply`).
+  show fderivWithin ℝ (fun _ : E_M => w) (Set.range I) (extChartAt I x x)
+          ((fun _ : E_M => v) (extChartAt I x x))
+        - fderivWithin ℝ (fun _ : E_M => v) (Set.range I) (extChartAt I x x)
+            ((fun _ : E_M => w) (extChartAt I x x)) = 0
+  rw [fderivWithin_const_apply, fderivWithin_const_apply]
+  simp
+
 end Riemannian
