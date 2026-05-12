@@ -198,4 +198,85 @@ theorem riemannCurvature_smul_third_scalar_field
   rw [smul_sub, smul_sub]
   abel
 
+/-! ## Z-slot locality
+
+`riemannCurvature` is local in the Z-slot: if `Z =ᶠ[𝓝 x] Z'`, then
+`R(X, Y) Z(x) = R(X, Y) Z'(x)`. Each of the three terms in `riemannCurvature_def`
+satisfies a covariant-derivative locality identity in `Z`:
+
+* `covDeriv X (covDeriv Y Z) x` and `covDeriv Y (covDeriv X Z) x` use the
+  fact that the inner section `covDeriv U Z` is locally constant in `Z`
+  (apply `covDeriv_congr_eventuallyEq_field` at every nearby `b`), then
+  evaluate the outer `covDeriv` via the same field-locality lemma.
+* `covDeriv [X, Y] Z x` reduces directly. -/
+
+/-- **Z-slot locality of `riemannCurvature`**: if `Z =ᶠ[𝓝 x] Z'`, then
+`R(X, Y) Z(x) = R(X, Y) Z'(x)`. External reference: `riemannSec_eq_of_Z_eventuallyEq`
+(`differential-geometry/.../CurvatureBundling.lean:227`). -/
+theorem riemannCurvature_eq_of_Z_eventuallyEq
+    (X Y Z Z' : SmoothVectorField I M) (x : M)
+    (hZZ' : ∀ᶠ y in 𝓝 x, Z.toFun y = Z'.toFun y) :
+    riemannCurvature X.toFun Y.toFun Z.toFun x
+      = riemannCurvature X.toFun Y.toFun Z'.toFun x := by
+  classical
+  -- Convert eventual equality to an open nbhd `V'` on which `Z = Z'`.
+  rw [Filter.eventually_iff_exists_mem] at hZZ'
+  obtain ⟨U, hU, hZeqZ'⟩ := hZZ'
+  obtain ⟨V', hV'U, hV'_open, hpV'⟩ := mem_nhds_iff.mp hU
+  -- `Z =ᶠ[𝓝 b] Z'` for any `b ∈ V'` (V' open, V' ⊆ U).
+  have hZZ'_at : ∀ b ∈ V', ∀ᶠ b' in 𝓝 b, Z.toFun b' = Z'.toFun b' := by
+    intro b hbV'
+    exact Filter.eventually_of_mem (hV'_open.mem_nhds hbV')
+      (fun b' hb'V' => hZeqZ' b' (hV'U hb'V'))
+  -- Inner section pointwise equality on `V'` (Y- and X-flavored).
+  have h_inner_Y_pt : ∀ b ∈ V',
+      (fun y => covDeriv Y.toFun Z.toFun y) b
+        = (fun y => covDeriv Y.toFun Z'.toFun y) b := by
+    intro b hbV'
+    exact covDeriv_congr_eventuallyEq_field Y.toFun Z.toFun Z'.toFun b
+      (Z.smoothAt b) (Z'.smoothAt b) (hZZ'_at b hbV')
+  have h_inner_X_pt : ∀ b ∈ V',
+      (fun y => covDeriv X.toFun Z.toFun y) b
+        = (fun y => covDeriv X.toFun Z'.toFun y) b := by
+    intro b hbV'
+    exact covDeriv_congr_eventuallyEq_field X.toFun Z.toFun Z'.toFun b
+      (Z.smoothAt b) (Z'.smoothAt b) (hZZ'_at b hbV')
+  -- Lift to eventual equality on a nbhd of `x`.
+  have h_inner_Y_ev : ∀ᶠ b in 𝓝 x,
+      (fun y => covDeriv Y.toFun Z.toFun y) b
+        = (fun y => covDeriv Y.toFun Z'.toFun y) b :=
+    Filter.eventually_of_mem (hV'_open.mem_nhds hpV') h_inner_Y_pt
+  have h_inner_X_ev : ∀ᶠ b in 𝓝 x,
+      (fun y => covDeriv X.toFun Z.toFun y) b
+        = (fun y => covDeriv X.toFun Z'.toFun y) b :=
+    Filter.eventually_of_mem (hV'_open.mem_nhds hpV') h_inner_X_pt
+  -- T1: outer `covDeriv X ·` field-locality, with `covDeriv_smoothVF_smoothAt`
+  -- discharging the inner-section smoothness witnesses.
+  have hT1 : covDeriv X.toFun (fun y => covDeriv Y.toFun Z.toFun y) x
+      = covDeriv X.toFun (fun y => covDeriv Y.toFun Z'.toFun y) x :=
+    covDeriv_congr_eventuallyEq_field X.toFun
+      (fun y => covDeriv Y.toFun Z.toFun y)
+      (fun y => covDeriv Y.toFun Z'.toFun y) x
+      (covDeriv_smoothVF_smoothAt Y Z x)
+      (covDeriv_smoothVF_smoothAt Y Z' x) h_inner_Y_ev
+  -- T2: outer `covDeriv Y ·` field-locality.
+  have hT2 : covDeriv Y.toFun (fun y => covDeriv X.toFun Z.toFun y) x
+      = covDeriv Y.toFun (fun y => covDeriv X.toFun Z'.toFun y) x :=
+    covDeriv_congr_eventuallyEq_field Y.toFun
+      (fun y => covDeriv X.toFun Z.toFun y)
+      (fun y => covDeriv X.toFun Z'.toFun y) x
+      (covDeriv_smoothVF_smoothAt X Z x)
+      (covDeriv_smoothVF_smoothAt X Z' x) h_inner_X_ev
+  -- T3: `covDeriv [X, Y] Z x = covDeriv [X, Y] Z' x` direct.
+  have hZZ'_x : ∀ᶠ y in 𝓝 x, Z.toFun y = Z'.toFun y :=
+    Filter.eventually_of_mem (hV'_open.mem_nhds hpV')
+      (fun b hbV' => hZeqZ' b (hV'U hbV'))
+  have hT3 : covDeriv (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x
+      = covDeriv (VectorField.mlieBracket I X.toFun Y.toFun) Z'.toFun x :=
+    covDeriv_congr_eventuallyEq_field
+      (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun Z'.toFun x
+      (Z.smoothAt x) (Z'.smoothAt x) hZZ'_x
+  -- Combine via `riemannCurvature_def`.
+  rw [riemannCurvature_def, riemannCurvature_def, hT1, hT2, hT3]
+
 end Riemannian

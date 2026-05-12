@@ -1815,6 +1815,24 @@ theorem covDeriv_add_field
   rw [h]
   rfl
 
+/-- **Locality of `covDeriv` in the differentiated field**: if
+$Y_1 =ᶠ[𝓝 x] Y_2$ and both are smooth at $x$, then
+$\nabla_X Y_1(x) = \nabla_X Y_2(x)$.
+
+Direct application of `IsCovariantDerivativeOn.congr_of_eventuallyEq` to the
+Levi-Civita connection. Smoothness of the direction `X` is not required:
+the section-level connection `leviCivitaConnection.toFun Y x` is a CLM in
+the direction slot, so the value at `X x` depends only on `Y` near `x`. -/
+theorem covDeriv_congr_eventuallyEq_field
+    (X Y₁ Y₂ : Π x : M, TangentSpace I x) (x : M)
+    (hY₁ : TangentSmoothAt Y₁ x) (hY₂ : TangentSmoothAt Y₂ x)
+    (h : ∀ᶠ y in 𝓝 x, Y₁ y = Y₂ y) :
+    (∇[X] Y₁) x = (∇[X] Y₂) x := by
+  show (leviCivitaConnection.toFun Y₁ x) (X x)
+      = (leviCivitaConnection.toFun Y₂ x) (X x)
+  rw [leviCivitaConnection.isCovariantDerivativeOnUniv.congr_of_eventuallyEq
+        hY₁ hY₂ Filter.univ_mem h]
+
 /-- **`covDeriv` of a constant scalar multiple in the differentiated field**:
 $\nabla_X (a \cdot Y)(x) = a \cdot \nabla_X Y(x)$ for $a : \mathbb{R}$.
 
