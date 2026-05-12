@@ -522,6 +522,43 @@ theorem metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym
   -- ⇒ A - hA = (P - hB') - hA = (Q - hB) - hA' = (B + hA' - hB) - hA' = B - hB ✓
   linear_combination -h_compat_W + h_compat_Z + h_eq_at_v + h_sym_zΓvw - h_sym_wΓvz
 
+/-- **Discharge of `h_eventual_sym` from strict interior hypothesis**.
+Combines `extChartAt_self_eventually_mem_closure_interior_range` (nbhd
+propagation of `h_interior` under `IsLocallyConstantChartedSpace`) with
+pointwise `hessianBilin_symm` to produce the nbhd-Hessian-symmetry
+equation needed by `metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym`.
+
+The stricter `extChartAt I x x ∈ interior (Set.range I)` hypothesis is
+required so that the strict-interior open set has a nbhd of `x` as its
+preimage; the conclusion is `eventually equal as a section` w.r.t. the
+weaker closure-interior membership predicate used by the pointwise
+`hessianBilin_symm`. -/
+theorem hessianBilin_eventually_symm_of_strict_interior
+    [IsManifold I 2 M]
+    (f : M → ℝ) (x : M)
+    (h_strict : extChartAt I x x ∈ interior (Set.range I))
+    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M)))
+    (w z : TangentSpace I x) :
+    (fun y : M => hessianBilin (I := I) f y w z)
+      =ᶠ[𝓝 x] (fun y : M => hessianBilin (I := I) f y z w) := by
+  -- Propagate strict h_strict to closure-interior eventually.
+  have h_interior_nbhd :=
+    extChartAt_self_eventually_mem_closure_interior_range (I := I) (M := M) h_strict
+  filter_upwards [h_interior_nbhd] with y hy_interior
+  -- C² of f at y from global C∞.
+  have hf_2_y : ContMDiffAt I 𝓘(ℝ, ℝ) 2 f y :=
+    (hf y).of_le (by
+      show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
+      exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
+  -- Smoothness of ∇f at y from global smoothness.
+  have h_grad_y : TangentSmoothAt (manifoldGradient (I := I) f) y :=
+    (h_grad y).mdifferentiableAt (by simp)
+  -- Pointwise Hess-sym at y. The `w z : TangentSpace I x` args are def-eq to
+  -- `TangentSpace I y = E` arguments under `IsLocallyConstantChartedSpace`.
+  exact hessianBilin_symm (I := I) f y hy_interior hf_2_y h_grad_y w z
+
 /-- **Inner-form of the D.2 swap of `secondCovDerivAt`'s outer pair**:
 for $v, w, z \in T_xM$,
 $$\langle (\nabla^2 \nabla f)(v, w),\, z\rangle_g(x)
