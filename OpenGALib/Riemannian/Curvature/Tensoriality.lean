@@ -885,4 +885,37 @@ theorem riemannCurvature_eq_of_X_eq_at
   rw [h_pi] at h_add
   rw [h_add, hτ_vanish, add_zero]
 
+/-- **Y-slot pointwise dependence**: `Y x = Y' x ⇒ R(X, Y) Z(x) = R(X, Y') Z(x)`.
+Reduces to X-slot pointwise dependence via antisymmetry of the first pair. -/
+theorem riemannCurvature_eq_of_Y_eq_at
+    [IsManifold I 2 M] [T2Space M]
+    (X Y Y' Z : SmoothVectorField I M) (x : M)
+    (hYY' : Y.toFun x = Y'.toFun x) :
+    riemannCurvature X.toFun Y.toFun Z.toFun x
+      = riemannCurvature X.toFun Y'.toFun Z.toFun x := by
+  -- R(X, Y) Z x = -R(Y, X) Z x = -R(Y', X) Z x = R(X, Y') Z x.
+  rw [riemannCurvature_antisymm X.toFun Y.toFun Z.toFun x,
+      riemannCurvature_eq_of_X_eq_at Y Y' X Z x hYY',
+      ← riemannCurvature_antisymm X.toFun Y'.toFun Z.toFun x]
+
+/-- **Pointwise well-definedness of `riemannCurvature` on smooth global sections**:
+given two triples `(X, Y, Z)` and `(X', Y', Z')` of smooth global sections
+agreeing pointwise at `x`, the values of `riemannCurvature` at `x` coincide.
+
+Chained through the X-, Y-, and Z-slot `eq_at` lemmas. Used to define
+`riemannCurvature` as a continuous trilinear form `riemannOp x` on
+`T_xM × T_xM × T_xM → T_xM` (downstream bundling). -/
+theorem riemannCurvature_eq_of_pointwise_eq
+    [IsManifold I 2 M] [T2Space M]
+    (X X' Y Y' Z Z' : SmoothVectorField I M) (x : M)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
+    (hX_eq : X.toFun x = X'.toFun x)
+    (hY_eq : Y.toFun x = Y'.toFun x)
+    (hZ_eq : Z.toFun x = Z'.toFun x) :
+    riemannCurvature X.toFun Y.toFun Z.toFun x
+      = riemannCurvature X'.toFun Y'.toFun Z'.toFun x := by
+  rw [riemannCurvature_eq_of_X_eq_at X X' Y Z x hX_eq,
+      riemannCurvature_eq_of_Y_eq_at X' Y Y' Z x hY_eq,
+      riemannCurvature_eq_of_Z_eq_at X' Y' Z Z' x h_interior hZ_eq]
+
 end Riemannian
