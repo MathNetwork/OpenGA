@@ -124,6 +124,11 @@ theorem massOn_nonneg (V : Varifold M) (U : Set M) : 0 ≤ massOn V U :=
   ENNReal.toReal_nonneg
 
 omit [MeasureTheory.MeasureSpace M] in
+/-- Localized mass on the empty set is zero. -/
+@[simp] theorem massOn_empty (V : Varifold M) : massOn V ∅ = 0 := by
+  simp [massOn]
+
+omit [MeasureTheory.MeasureSpace M] in
 /-- Localized mass is monotone in the set. -/
 theorem massOn_mono (V : Varifold M) {U W : Set M} (h : U ⊆ W) :
     massOn V U ≤ massOn V W := by
@@ -133,6 +138,7 @@ theorem massOn_mono (V : Varifold M) {U W : Set M} (h : U ⊆ W) :
 
 omit [MeasureTheory.MeasureSpace M] in
 /-- The total mass equals the localized mass on the whole space. -/
+@[simp]
 theorem massOn_univ (V : Varifold M) : massOn V Set.univ = mass V := rfl
 
 /-- $p \in \mathrm{spt}\|V\|$ iff every open ball around $p$ has positive
