@@ -1,5 +1,7 @@
 import Mathlib.Geometry.Manifold.BumpFunction
+import Mathlib.Geometry.Manifold.VectorBundle.Hom
 import Mathlib.Geometry.Manifold.VectorBundle.Riemannian
+import Mathlib.Geometry.Manifold.VectorBundle.SmoothSection
 import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 import Mathlib.Geometry.Manifold.ContMDiff.NormedSpace
 import Mathlib.Analysis.SpecialFunctions.Sqrt
@@ -810,6 +812,68 @@ theorem smoothOrthoFrame_orthonormal_at_center
       if i = j then 1 else 0 :=
   smoothOrthoFrame_orthonormal (I := I) g α
     (mem_smoothOrthoFrameNbhd_self (I := I) (M := M) α) i j
+
+/-! ## Stage 6: smoothness of the smooth orthonormal frame
+
+We establish that each `smoothOrthoFrame g α i` is $C^\infty$ as a
+tangent-bundle section on $M$. The argument has three layers:
+
+1. **Inner product of smooth sections is smooth.** The fiberwise inner
+   product `b ↦ g.inner b (Y b) (Z b)` of two $C^\infty$ tangent
+   sections is a $C^\infty$ scalar function, via
+   `ContMDiffOn.clm_bundle_apply₂` applied to the bundled bilinear
+   form `g.contMDiff`.
+2. **Strong induction on the Gram-Schmidt step.** By strong induction
+   on `i.val`, both `chartFrameRawFiber g α b i` and
+   `chartFrameNormFiber g α b i` are $C^\infty$ as sections on the
+   trivialization base set. The Gram-Schmidt formula combines smooth
+   scalars (`g.inner` plus `Real.sqrt` and `inv₀`) with smooth sections
+   via `ContMDiffOn.smul_section`, `.sum_section`, `.sub_section`.
+   Positivity of $g.\mathrm{inner}\,b\,\mathrm{raw}_i\,\mathrm{raw}_i$
+   (from `chartFrameNormFiber_orth_strong_aux`) keeps `Real.sqrt`
+   nonzero so its inverse is smooth.
+3. **Bump multiplication is globally smooth.** Multiplying by
+   `chartBumpAt α` and using `ContMDiffOn.smul_section_of_tsupport`
+   together with `tsupport_subset_chartAt_source` extends the local
+   smoothness to a global $C^\infty$ tangent section. -/
+
+/-- **Step 1 of Stage 6.** The fiberwise inner product of two
+$C^\infty$ tangent-bundle sections is a $C^\infty$ scalar function on
+the same set `s ⊆ M`. -/
+private lemma g_inner_contMDiffOn_of_sections
+    (g : RiemannianMetric I M)
+    {Y Z : Π b : M, TangentSpace I b} {s : Set M}
+    (hY : ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞ (T% Y) s)
+    (hZ : ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞ (T% Z) s) :
+    ContMDiffOn I 𝓘(ℝ) ∞ (fun b : M => g.inner b (Y b) (Z b)) s := by
+  classical
+  have hg : ContMDiffOn I (I.prod 𝓘(ℝ, E →L[ℝ] E →L[ℝ] ℝ)) ∞
+      (fun b : M => TotalSpace.mk' (E →L[ℝ] E →L[ℝ] ℝ)
+        (E := fun y => TangentSpace I y →L[ℝ] TangentSpace I y →L[ℝ] ℝ)
+        b (g.inner b)) s :=
+    g.contMDiff.contMDiffOn
+  have happ :
+      ContMDiffOn I (I.prod 𝓘(ℝ, ℝ)) ∞
+        (fun m : M => (⟨m, g.inner m (Y m) (Z m)⟩ :
+            TotalSpace ℝ (Bundle.Trivial M ℝ))) s :=
+    ContMDiffOn.clm_bundle_apply₂ (F₁ := E) (F₂ := E) (F₃ := ℝ)
+      (b := id) hg hY hZ
+  intro x hx
+  have hpx := happ x hx
+  rw [Bundle.contMDiffWithinAt_totalSpace] at hpx
+  exact hpx.2
+
+/-- **Step 1' of Stage 6.** `T%`-form repackaging of
+`chartBasisVec_contMDiffOn`: the chart-basis tangent section is
+$C^\infty$ on the trivialization base set, stated in the `T%` form
+expected by Mathlib's section-level API
+(`ContMDiffOn.smul_section`, etc.). -/
+private lemma chartBasisVec_contMDiffOn_section
+    (α : M) (i : Fin (Module.finrank ℝ E)) :
+    ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+        (T% (fun b : M => chartBasisVecFiber (I := I) α i b))
+        (trivializationAt E (TangentSpace I) α).baseSet :=
+  chartBasisVec_contMDiffOn (I := I) α i
 
 /-! ## Stage 7: smoothOrthoFrame as an `OrthonormalBasis` at $\alpha$,
 and the basis-invariance bridge
