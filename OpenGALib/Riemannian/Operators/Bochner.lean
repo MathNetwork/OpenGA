@@ -375,6 +375,43 @@ theorem leibniz_trace_reduction
       _ = ∑ j, ⟪v, b j⟫_ℝ ^ 2 := (b.sum_sq_inner_left v).symm
       _ = ∑ j, (metricInner x v (b j)) ^ 2 := rfl
 
+/-- **Heart-of-Bochner sum identity** (the per-summand-assembled core that
+G reduces to): summing the diagonal trace of $\nabla^2(\nabla f)$ paired
+with $\nabla f$ over the $g$-orthonormal frame produces the
+$\langle \nabla f, \nabla(\Delta_g f)\rangle_g + \mathrm{Ric}(\nabla f,
+\nabla f)$ decomposition.
+
+**Sorry: PRE-PAPER**. Closure path (textbook Bochner derivation, cf.
+Petersen §9, do Carmo §6, and `external/differential-geometry`'s
+`heart_of_bochner_*` series):
+1. **Per-summand metric-compat** — apply `leviCivitaConnection_metric_compatible`
+   on $(\varepsilon_i, \nabla_{\varepsilon_i}\nabla f, \nabla f)$ at $x$;
+2. **Hessian symmetry swap** — use `hessianBilin_symm` (B) at the section
+   level to swap the slots of $\nabla^2 f$;
+3. **Ricci identity application** — apply `secondCovDerivAt_sub_swap_eq_riemannCurvature`
+   (D.2) to extract the curvature term;
+4. **Sum identification**: curvature sum → $\mathrm{Ric}_g(\nabla f, \nabla f)$
+   via `ricciTensor_eq_sum_inner_orthonormal` (F); Hessian-trace sum →
+   $\langle \nabla f, \nabla(\Delta_g f)\rangle_g$ via `manifoldGradient_inner_eq`
+   + `scalarLaplacian_eq_laplacian_hessianBilin`. -/
+private theorem sum_inner_secondCovDerivAt_grad_eq_inner_grad_laplacian_add_ricci
+    [IsManifold I 2 M]
+    (f : M → ℝ) (x : M)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
+    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    ∑ i, metricInner x
+        (secondCovDerivAt (I := I) (M := M) (manifoldGradient (I := I) f) x
+          ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)
+          ((stdOrthonormalBasis ℝ (TangentSpace I x)) i))
+        (manifoldGradient (I := I) f x)
+      = metricInner x (manifoldGradient (I := I) f x)
+            (manifoldGradient (I := I) (Δ_g[I] f) x)
+        + Ric_g((manifoldGradient (I := I) f x),
+                (manifoldGradient (I := I) f x)) x := by
+  sorry
+
 /-- **G — heart-of-Bochner reduction**: the connection Laplacian on $\nabla f$
 contracted with $\nabla f$ equals the inner product of $\nabla f$ with the
 gradient of the scalar Laplacian, plus the Ricci correction:
@@ -382,25 +419,13 @@ $$\langle \Delta_\nabla \nabla f,\, \nabla f\rangle_g
    \;=\; \langle \nabla f,\, \nabla\,\Delta_g f\rangle_g
        + \mathrm{Ric}(\nabla f,\, \nabla f).$$
 
-This is the trace form of the Ricci identity (D) applied to $Z = \nabla f$,
-with one slot contracted via the $g$-orthonormal frame, using Hessian
-symmetry (B) to swap $\nabla^2 f(\varepsilon_i, \varepsilon_j)
-\leftrightarrow \nabla^2 f(\varepsilon_j, \varepsilon_i)$.
-
-**Sorry: PRE-PAPER**. Closure path:
-1. expand `connectionLaplacian (∇f) x` via
-   `connectionLaplacian_eq_sum_secondCovDerivAt` into
-   $\sum_i \nabla^2 (\nabla f)(\varepsilon_i, \varepsilon_i)\,(x)$;
-2. apply `secondCovDerivAt_sub_swap_eq_riemannCurvature` (D.2) summed over $i$,
-   in conjunction with `hessianBilin_symm` (B) to swap the inner indices
-   in $\langle \nabla_{\varepsilon_i}\nabla_{\varepsilon_i}\nabla f,
-      \nabla f\rangle_g$ via the Hessian's $(0,2)$ symmetry;
-3. recognise the sum-of-trace term $\sum_i \langle R(\varepsilon_i, \nabla f) \nabla f,
-   \varepsilon_i\rangle_g$ as $\mathrm{Ric}_g(\nabla f, \nabla f)\,(x)$ via
-   `ricciTensor_eq_sum_inner_orthonormal` (F);
-4. recognise the remaining trace as $\langle \nabla f, \nabla(\Delta_g f)\rangle_g$
-   via gradient duality `manifoldGradient_inner_eq` and the trace
-   identification `scalarLaplacian_eq_laplacian_hessianBilin`.
+The outer assembly is proved here: the LHS unfolds via
+`connectionLaplacian_eq_sum_secondCovDerivAt` and bilinearity of
+`metricInner` (`sum_inner`) to the diagonal trace
+$\sum_i \langle (\nabla^2 \nabla f)(\varepsilon_i, \varepsilon_i),
+\nabla f\rangle_g(x)$, which equals the RHS by the sum identity
+`sum_inner_secondCovDerivAt_grad_eq_inner_grad_laplacian_add_ricci` (the
+heart-of-Bochner sum identity, currently a focused PRE-PAPER sorry).
 
 Used in `bochner_weitzenboeck` (assembly step H) along with E. -/
 theorem connectionLaplacian_grad_eq_grad_laplacian_add_ricci
@@ -413,7 +438,23 @@ theorem connectionLaplacian_grad_eq_grad_laplacian_add_ricci
     ⟪connectionLaplacian (grad_g[I] f) x, (grad_g[I] f) x⟫_g
       = ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
         + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
-  sorry
+  show metricInner x
+        (connectionLaplacian (I := I) (M := M) (manifoldGradient (I := I) f) x)
+        (manifoldGradient (I := I) f x)
+      = metricInner x (manifoldGradient (I := I) f x)
+          (manifoldGradient (I := I) (Δ_g[I] f) x)
+        + Ric_g((manifoldGradient (I := I) f x),
+                (manifoldGradient (I := I) f x)) x
+  rw [connectionLaplacian_eq_sum_secondCovDerivAt]
+  -- Push sum out of `metricInner` via bilinearity (`= ⟪·,·⟫_ℝ` def-eq + `sum_inner`)
+  change ⟪∑ i,
+        secondCovDerivAt (I := I) (M := M) (manifoldGradient (I := I) f) x
+          ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)
+          ((stdOrthonormalBasis ℝ (TangentSpace I x)) i),
+      manifoldGradient (I := I) f x⟫_ℝ = _
+  rw [sum_inner]
+  exact sum_inner_secondCovDerivAt_grad_eq_inner_grad_laplacian_add_ricci
+    f x h_interior hf h_grad
 
 /-! ## Bochner–Weitzenböck identity -/
 
