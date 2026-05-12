@@ -1,5 +1,6 @@
 import OpenGALib.Riemannian.Connection
 import OpenGALib.Riemannian.Gradient
+import OpenGALib.Riemannian.HessianLie
 import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.LinearAlgebra.Dimension.Free
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
@@ -227,6 +228,128 @@ theorem trace_sq_div_dim_le_frobeniusSq
     exact_mod_cast this
   exact (div_le_iff₀ hpos).mpr
     (by linarith [trace_sq_le_dim_mul_frobeniusSq (I := I) (M := M) B x])
+
+/-! ## Symmetry of the Hessian on scalar functions -/
+
+variable [IsLocallyConstantChartedSpace H M]
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **Hessian symmetry on scalar functions** (covariant Schwarz / Clairaut):
+$$\mathrm{Hess}\,f(x)(v, w) \;=\; \mathrm{Hess}\,f(x)(w, v).$$
+For $f \in C^2$ near $x$, with $\nabla^M f$ smooth at $x$ as a tangent
+bundle section. The chart-interior hypothesis `h_interior` enables the
+manifold scalar Hessian–Lie identity from
+`mfderiv_iterate_sub_eq_mlieBracket_apply`.
+
+Proof: combines (i) Levi-Civita's metric-compatibility applied twice (for
+constant chart-frame extensions of $v, w$), (ii) torsion-freeness via
+`covDeriv_sub_swap_eq_mlieBracket`, (iii) the manifold scalar Hessian–Lie
+identity, and (iv) gradient duality `manifoldGradient_inner_eq`. The Lie
+bracket of constant chart-frame extensions appears on both sides and
+cancels, leaving $\mathrm{Hess}\,f(x)(v, w) - \mathrm{Hess}\,f(x)(w, v) = 0$.
+
+**Ground truth**: do Carmo §2 ex. 7; Lee §4 (symmetry of the Hessian). -/
+theorem hessianBilin_symm
+    [IsManifold I 2 M]
+    (f : M → ℝ) (x : M)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
+    (hf : ContMDiffAt I 𝓘(ℝ, ℝ) 2 f x)
+    (h_grad : TangentSmoothAt (manifoldGradient (I := I) f) x)
+    (v w : TangentSpace I x) :
+    hessianBilin (I := I) f x v w = hessianBilin (I := I) f x w v := by
+  set V : Π y : M, TangentSpace I y := fun _ => (v : TangentSpace I x) with hV_def
+  set W : Π y : M, TangentSpace I y := fun _ => (w : TangentSpace I x) with hW_def
+  have hVsm : TangentSmoothAt V x :=
+    (SmoothVectorField.const (I := I) (M := M) (v : E)).smoothAt x
+  have hWsm : TangentSmoothAt W x :=
+    (SmoothVectorField.const (I := I) (M := M) (w : E)).smoothAt x
+  -- Bundle smoothness for HessianLie iterate (need ContMDiffAt 1; have ContMDiff ∞)
+  have hV_cmd : ContMDiffAt I (I.prod 𝓘(ℝ, E)) 1
+      (fun y => (⟨y, V y⟩ : TotalSpace E (TangentSpace I))) x :=
+    ((SmoothVectorField.const (I := I) (M := M) (v : E)).smooth x).of_le
+      (by norm_num : (1 : ℕ∞ω) ≤ ∞)
+  have hW_cmd : ContMDiffAt I (I.prod 𝓘(ℝ, E)) 1
+      (fun y => (⟨y, W y⟩ : TotalSpace E (TangentSpace I))) x :=
+    ((SmoothVectorField.const (I := I) (M := M) (w : E)).smooth x).of_le
+      (by norm_num : (1 : ℕ∞ω) ≤ ∞)
+  -- Torsion-free identity at x; restate in `lcc.toFun` form (def-equal)
+  have h_torsion : (∇[V] W) x - (∇[W] V) x = (⟦V, W⟧) x :=
+    covDeriv_sub_swap_eq_mlieBracket V W x hVsm hWsm
+  have h_torsion' :
+      (leviCivitaConnection (I := I) (M := M)).toFun W x v
+        - (leviCivitaConnection (I := I) (M := M)).toFun V x w
+      = VectorField.mlieBracket I V W x := h_torsion
+  -- Metric-compatibility, both directions:
+  -- Args are (direction X, first slot Y, second slot Z) of `mfderiv ⟨Y, Z⟩ x · X x`
+  have h_compat_vw := leviCivitaConnection_metric_compatible
+    V (manifoldGradient (I := I) f) W x hVsm h_grad hWsm
+  have h_compat_wv := leviCivitaConnection_metric_compatible
+    W (manifoldGradient (I := I) f) V x hWsm h_grad hVsm
+  -- Substitute `metricInner _ ∇f _ = mDirDeriv f _` to match HessianLie iterate form.
+  -- (Use `mDirDeriv` to strip basepoint-dependent typing on the codomain.)
+  have h_repl_W :
+      (fun y : M => metricInner y (manifoldGradient (I := I) f y) (W y))
+        = (fun y : M => mDirDeriv (I := I) f y w) := by
+    funext y
+    show metricInner y (manifoldGradient (I := I) f y) w
+        = mDirDeriv (I := I) f y w
+    exact manifoldGradient_inner_eq (I := I) f y w
+  have h_repl_V :
+      (fun y : M => metricInner y (manifoldGradient (I := I) f y) (V y))
+        = (fun y : M => mDirDeriv (I := I) f y v) := by
+    funext y
+    show metricInner y (manifoldGradient (I := I) f y) v
+        = mDirDeriv (I := I) f y v
+    exact manifoldGradient_inner_eq (I := I) f y v
+  rw [h_repl_W] at h_compat_vw
+  rw [h_repl_V] at h_compat_wv
+  -- Lift h_compat_vw / h_compat_wv from `mfderiv ... x (V x)` to `mDirDeriv ... x v`
+  have hVx : V x = v := rfl
+  have hWx : W x = w := rfl
+  rw [hVx] at h_compat_vw
+  rw [hWx] at h_compat_wv
+  -- h_compat_vw : mfderiv (fun y => mDirDeriv f y w) x v = ...
+  -- but `mfderiv g x v = mDirDeriv g x v` definitionally
+  change mDirDeriv (fun y => mDirDeriv (I := I) f y w) x v = _ at h_compat_vw
+  change mDirDeriv (fun y => mDirDeriv (I := I) f y v) x w = _ at h_compat_wv
+  -- HessianLie iterate identity. Normalize the inner `(W y)`/`(V y)` to
+  -- the constants `w`/`v` via `change` (definitional, since V, W are constants).
+  have h_iter := mfderiv_iterate_sub_eq_mlieBracket_apply
+    (I := I) (M := M) f V W x h_interior hf hV_cmd hW_cmd
+  rw [hVx, hWx] at h_iter
+  change mDirDeriv (fun y => mDirDeriv (I := I) f y w) x v
+         - mDirDeriv (fun y => mDirDeriv (I := I) f y v) x w
+         = mDirDeriv (I := I) f x ((⟦V, W⟧) x) at h_iter
+  -- Convert RHS via gradient duality
+  have h_grad_dual :
+      mDirDeriv (I := I) f x ((⟦V, W⟧) x)
+      = metricInner x (manifoldGradient (I := I) f x) ((⟦V, W⟧) x) :=
+    (manifoldGradient_inner_eq (I := I) f x ((⟦V, W⟧) x)).symm
+  rw [h_grad_dual] at h_iter
+  -- Identify the connection-toFun terms in h_compat_vw, h_compat_wv with hessianBilin
+  have h_hess_lhs :
+      metricInner x
+          ((leviCivitaConnection (I := I) (M := M)).toFun
+            (manifoldGradient (I := I) f) x v) w
+        = hessianBilin (I := I) f x v w := rfl
+  have h_hess_rhs :
+      metricInner x
+          ((leviCivitaConnection (I := I) (M := M)).toFun
+            (manifoldGradient (I := I) f) x w) v
+        = hessianBilin (I := I) f x w v := rfl
+  rw [h_hess_lhs] at h_compat_vw
+  rw [h_hess_rhs] at h_compat_wv
+  -- The bracket-correction terms via torsion-free + CLM linearity
+  have h_inner_diff :
+      metricInner x (manifoldGradient (I := I) f x)
+          ((leviCivitaConnection (I := I) (M := M)).toFun W x v)
+        - metricInner x (manifoldGradient (I := I) f x)
+          ((leviCivitaConnection (I := I) (M := M)).toFun V x w)
+      = metricInner x (manifoldGradient (I := I) f x) ((⟦V, W⟧) x) := by
+    rw [← metricInner_sub_right, h_torsion']
+  -- Combine: subtract h_compat_vw - h_compat_wv, use h_iter to eliminate LHS,
+  -- and h_inner_diff to convert the bracket-correction term
+  linarith [h_iter, h_compat_vw, h_compat_wv, h_inner_diff]
 
 end Operators
 end Riemannian
