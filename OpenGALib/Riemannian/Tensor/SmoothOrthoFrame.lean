@@ -1065,6 +1065,62 @@ private theorem chartFrameNormFiber_contMDiffOn_strong
       refine ⟨h_raw, ?_⟩
       rw [hT_eq]; exact h_norm
 
+/-- **Step 2 of Stage 6 (section form).** `chartFrameNorm g α i b` is
+$C^\infty$ as a tangent-bundle section in `b`, on the trivialization
+base set. -/
+lemma chartFrameNorm_contMDiffOn
+    (g : RiemannianMetric I M) (α : M)
+    (i : Fin (Module.finrank ℝ E)) :
+    ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+        (T% (fun b : M => chartFrameNorm (I := I) g α i b))
+        (trivializationAt E (TangentSpace I) α).baseSet := by
+  unfold chartFrameNorm
+  exact (chartFrameNormFiber_contMDiffOn_strong (I := I) g α i.val i
+    (le_refl _)).2
+
+/-- **Step 3 of Stage 6 — global smoothness of the smooth orthonormal
+frame.** Each component `smoothOrthoFrame g α i` is $C^\infty$ as a
+tangent-bundle section on $M$. The bump function `chartBumpAt α` is
+$C^\infty$ globally; its tsupport sits inside the chart source where
+`chartFrameNorm g α i` is $C^\infty$. `ContMDiffOn.smul_section_of_tsupport`
+combines these into a global $C^\infty$ section.
+
+The `[T2Space M]` assumption is required for the bump function's
+`tsupport_subset_chartAt_source` (Mathlib's `SmoothBumpFunction`
+tsupport API is gated on Hausdorffness). All Riemannian manifolds in
+applications are Hausdorff, so this is a free assumption downstream. -/
+theorem smoothOrthoFrame_smooth [T2Space M]
+    (g : RiemannianMetric I M) (α : M)
+    (i : Fin (Module.finrank ℝ E)) :
+    ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+        (T% (smoothOrthoFrame (I := I) g α i)) := by
+  classical
+  set u : Set M := (chartAt H α).source with hu_def
+  set ψ : M → ℝ := (chartBumpAt (I := I) (M := M) α : M → ℝ) with hψ_def
+  have hψ_smooth : ContMDiffOn I 𝓘(ℝ) ∞ ψ u :=
+    (chartBumpAt (I := I) (M := M) α).contMDiff.contMDiffOn
+  have hu_open : IsOpen u := (chartAt H α).open_source
+  have hψ_tsupport : tsupport ψ ⊆ u :=
+    (chartBumpAt (I := I) (M := M) α).tsupport_subset_chartAt_source
+  have hs_smooth : ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+      (T% (fun b : M => chartFrameNorm (I := I) g α i b)) u := by
+    rw [show u = (trivializationAt E (TangentSpace I) α).baseSet from rfl]
+    exact chartFrameNorm_contMDiffOn (I := I) g α i
+  have h := ContMDiffOn.smul_section_of_tsupport (𝕜 := ℝ) (n := ∞)
+    (V := TangentSpace I) hψ_smooth hu_open hψ_tsupport hs_smooth
+  -- smoothOrthoFrame g α i b = ψ b • chartFrameNorm g α i b by definition.
+  have h_eq : (fun b : M => TotalSpace.mk' E (E := TangentSpace I) b
+        (smoothOrthoFrame (I := I) g α i b)) =
+      (fun b : M => TotalSpace.mk' E (E := TangentSpace I) b
+        ((ψ • fun b' : M => chartFrameNorm (I := I) g α i b') b)) := by
+    funext b
+    change TotalSpace.mk' E b (smoothOrthoFrame (I := I) g α i b) =
+      TotalSpace.mk' E b ((ψ b) • chartFrameNorm (I := I) g α i b)
+    unfold smoothOrthoFrame
+    rfl
+  rw [h_eq]
+  exact h
+
 /-! ## Stage 7: smoothOrthoFrame as an `OrthonormalBasis` at $\alpha$,
 and the basis-invariance bridge
 
