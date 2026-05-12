@@ -65,19 +65,10 @@ theorem ricciTensor_eq_sum_inner_orthonormal
   unfold ricci
   exact LinearMap.trace_eq_sum_inner _ (stdOrthonormalBasis ℝ (TangentSpace I x))
 
-/-! ## Helper: `mfderiv` of the gradient norm squared
+/-! ## Helpers for the Leibniz trace reduction (E) -/
 
-The function $|\nabla f|_g^2 : M \to \mathbb{R}$ is $y \mapsto
-\langle \nabla f(y), \nabla f(y)\rangle_g$. Its `mfderiv` at $y$ in direction
-$v$ is $2 \langle \nabla_v \nabla f, \nabla f\rangle_g(y)$ — direct application
-of metric-compatibility on $(\nabla f, \nabla f)$ plus inner-product symmetry.
-
-This is the fundamental level-1 differentiation step used in `leibniz_trace_reduction` (E).
--/
-
-/-- $\mathrm{d}(|\nabla f|_g^2)(y)\,v = 2 \langle \nabla_v \nabla f, \nabla f\rangle_g(y)$.
-
-Pointwise hypothesis on the gradient: `TangentSmoothAt (∇f) y`. -/
+/-- $\mathrm{d}(|\nabla f|_g^2)(y)\,v = 2\,\langle \nabla_v \nabla f,\,\nabla f\rangle_g(y)$.
+Level-1 metric-compatibility on $(\nabla f,\, \nabla f)$ plus inner-product symmetry. -/
 theorem mfderiv_gradientNormSq_apply
     (f : M → ℝ) (y : M) (v : TangentSpace I y)
     (h_grad_y : TangentSmoothAt (manifoldGradient (I := I) f) y) :
@@ -85,11 +76,9 @@ theorem mfderiv_gradientNormSq_apply
       = 2 * metricInner y
               (covDerivAt (manifoldGradient (I := I) f) y v)
               (manifoldGradient (I := I) f y) := by
-  -- ‖grad_g[I] f‖²_g = fun z => metricInner z (∇f z) (∇f z) (MetricNormSq instance)
   show mfderiv I 𝓘(ℝ, ℝ)
         (fun z : M => metricInner z (manifoldGradient (I := I) f z)
                                       (manifoldGradient (I := I) f z)) y v = _
-  -- Metric-compatibility on (X = const v, Y = ∇f, Z = ∇f) at y
   have hVsm : TangentSmoothAt (fun _ : M => (v : TangentSpace I y)) y :=
     (SmoothVectorField.const (I := I) (M := M) (v : E)).smoothAt y
   have h := leviCivitaConnection_metric_compatible
@@ -97,14 +86,10 @@ theorem mfderiv_gradientNormSq_apply
     (manifoldGradient (I := I) f)
     (manifoldGradient (I := I) f)
     y hVsm h_grad_y h_grad_y
-  -- h: mfderiv (fun z => ⟨∇f z, ∇f z⟩) y · v
-  --    = ⟨lcc.toFun ∇f y v, ∇f y⟩ + ⟨∇f y, lcc.toFun ∇f y v⟩
-  -- = 2 ⟨covDerivAt ∇f y v, ∇f y⟩ (by inner-product symmetry)
-  rw [h]
-  rw [metricInner_comm y (manifoldGradient (I := I) f y)
+  rw [h, metricInner_comm y (manifoldGradient (I := I) f y)
        ((leviCivitaConnection (I := I) (M := M)).toFun
           (manifoldGradient (I := I) f) y v)]
-  -- `covDerivAt Y x = lcc.toFun Y x` definitionally, then `a + a = 2 * a`.
+  -- `covDerivAt Y x = lcc.toFun Y x` def-eq; close `a + a = 2 * a` via ring after `show`.
   show metricInner y
         ((leviCivitaConnection (I := I) (M := M)).toFun
             (manifoldGradient (I := I) f) y v)
@@ -119,21 +104,17 @@ theorem mfderiv_gradientNormSq_apply
               (manifoldGradient (I := I) f y)
   ring
 
-/-! ## Per-direction expansion of the gradient-norm-squared scalar Hessian -/
+/-- Per-direction Hessian expansion of $g = |\nabla f|_g^2$ on a chart-frame
+constant section $v$:
+$$\mathrm{Hess}\,g(v, v)(x) = 2\bigl(\langle (\nabla^2 \nabla f)(v, v), \nabla f\rangle_g
+   + \|(\nabla_v \nabla f)\|_g^2\bigr)(x).$$
 
-/-- The connection Hessian of $g = |\nabla f|_g^2$ on a chart-frame constant
-direction $v$ decomposes into a `secondCovDerivAt` $\langle\,\cdot\,, \nabla f\rangle_g$
-piece plus a Hessian Frobenius$^2$-like piece:
-$$\mathrm{Hess}\,g(v, v)(x) \;=\; 2 \bigl(\langle (\nabla^2 \nabla f)(v, v),
-   \nabla f\rangle_g + \|(\nabla_v \nabla f)\|_g^2 \bigr)(x).$$
-
-Combines (i) `hessian_eq_mDirDeriv_iterate_sub_chris` (bridge to iterated
-`mDirDeriv` form), (ii) `mfderiv_gradientNormSq_apply` (level-1 metric-
-compat to expand `mDirDeriv g y v`), and (iii) a level-2 metric-compat
-on $(v_\text{const}, \nabla_v\nabla f, \nabla f)$ at $x$ — the level-2 step
-needs `TangentSmoothAt (covDerivAt ∇f · v) x`, discharged via
-`leviCivitaConnection_smoothAt_const_dir` on the `SmoothVectorField`
-wrapper of $\nabla f$ (using the C^∞ hypothesis `h_grad`). -/
+Combines (i) `hessian_eq_mDirDeriv_iterate_sub_chris` to bridge into iterated
+`mDirDeriv`, (ii) `mfderiv_gradientNormSq_apply` for the level-1 unfolding,
+and (iii) a level-2 metric-compat on $(v_\text{const}, \nabla_v \nabla f, \nabla f)$
+— the C² gap on $\nabla f$ is discharged via
+`leviCivitaConnection_smoothAt_const_dir` on the `SmoothVectorField` wrapper
+constructed from `h_grad`. -/
 private theorem hessian_gradientNormSq_apply_chartFrame
     [IsManifold I 2 M]
     (f : M → ℝ) (x : M) (v : TangentSpace I x)
@@ -149,7 +130,6 @@ private theorem hessian_gradientNormSq_apply_chartFrame
          + metricInner x
             (covDerivAt (manifoldGradient (I := I) f) x v)
             (covDerivAt (manifoldGradient (I := I) f) x v)) := by
-  -- Smoothness witnesses
   let gradSV : SmoothVectorField I M := ⟨manifoldGradient (I := I) f, h_grad⟩
   have h_grad_smoothAt : ∀ y, TangentSmoothAt (manifoldGradient (I := I) f) y :=
     fun y => gradSV.smoothAt y
@@ -168,29 +148,23 @@ private theorem hessian_gradientNormSq_apply_chartFrame
       (h_grad_g_cmd.mdifferentiableAt (by simp : (∞ : ℕ∞ω) ≠ 0))
   have hVsm : TangentSmoothAt (fun _ : M => (v : TangentSpace I x)) x :=
     (SmoothVectorField.const (I := I) (M := M) (v : E)).smoothAt x
-  -- Level-2 smoothness of `S_v y := covDerivAt ∇f y v` at x (C² gap discharged)
+  -- C² gap on ∇f: smoothness of `y ↦ covDerivAt ∇f y v` at x.
   have hSvsm : TangentSmoothAt
       (fun y : M =>
         (leviCivitaConnection (I := I) (M := M)).toFun
           (manifoldGradient (I := I) f) y (v : TangentSpace I x)) x :=
     leviCivitaConnection_smoothAt_const_dir gradSV (v : E) x
-  -- Apply bridge: hessian g (const v) (const v) x
-  --   = mDirDeriv (fun y => mDirDeriv g y v) x v
-  --     - mDirDeriv g x (covDeriv (const v) (const v) x)
   have h_bridge := Riemannian.Operators.hessian_eq_mDirDeriv_iterate_sub_chris
     (‖grad_g[I] f‖²_g) (fun _ : M => (v : TangentSpace I x))
     (fun _ : M => (v : TangentSpace I x)) x
     h_grad_g_smoothAt hVsm hVsm
-  -- Substitute `mDirDeriv g y v = 2 ⟨covDerivAt ∇f y v, ∇f y⟩` in the inner section
   have h_inner_eq :
       (fun y : M => mDirDeriv (I := I) (‖grad_g[I] f‖²_g) y (v : TangentSpace I x))
         = (fun y : M => 2 * metricInner y
                     (covDerivAt (manifoldGradient (I := I) f) y (v : TangentSpace I x))
                     (manifoldGradient (I := I) f y)) := by
-    funext y
-    exact mfderiv_gradientNormSq_apply f y v (h_grad_smoothAt y)
+    funext y; exact mfderiv_gradientNormSq_apply f y v (h_grad_smoothAt y)
   rw [h_inner_eq] at h_bridge
-  -- Substitute `mDirDeriv g x · = 2 ⟨covDerivAt ∇f x ·, ∇f x⟩` in the chris term
   have h_chris_term : mDirDeriv (I := I) (‖grad_g[I] f‖²_g) x
               (covDeriv (fun _ : M => (v : TangentSpace I x))
                         (fun _ : M => (v : TangentSpace I x)) x)
@@ -204,13 +178,13 @@ private theorem hessian_gradientNormSq_apply_chartFrame
                 (fun _ : M => (v : TangentSpace I x)) x)
       (h_grad_smoothAt x)
   rw [h_chris_term] at h_bridge
-  -- Pull `2` out of the iterated mDirDeriv: `mDirDeriv (2 • h) x v = 2 • mDirDeriv h x v`
   have h_inner_smooth :
       MDifferentiableAt I 𝓘(ℝ, ℝ)
         (fun y : M => metricInner y
               (covDerivAt (manifoldGradient (I := I) f) y (v : TangentSpace I x))
               (manifoldGradient (I := I) f y)) x :=
     metricInner_mdifferentiableAt_of_tangentSmoothAt hSvsm (h_grad_smoothAt x)
+  -- Pull `2` out of the iterated `mDirDeriv` via `const_smul_mfderiv`.
   have h_pull_two :
       mDirDeriv (I := I)
           (fun y : M => 2 * metricInner y
@@ -232,7 +206,6 @@ private theorem hessian_gradientNormSq_apply_chartFrame
               (manifoldGradient (I := I) f y)) := by
       funext y; simp [Pi.smul_apply, smul_eq_mul]
     rw [h_smul, const_smul_mfderiv h_inner_smooth (2 : ℝ)]
-    -- `(2 • CLM) v = 2 • (CLM v) = 2 * (CLM v)` for ℝ-valued CLM
     show (2 : ℝ) • (mfderiv I 𝓘(ℝ, ℝ) (fun y : M => metricInner y
             (covDerivAt (manifoldGradient (I := I) f) y (v : TangentSpace I x))
             (manifoldGradient (I := I) f y)) x) v
@@ -241,18 +214,14 @@ private theorem hessian_gradientNormSq_apply_chartFrame
               (manifoldGradient (I := I) f y)) x v
     rfl
   rw [h_pull_two] at h_bridge
-  -- Apply level-2 metric-compat to expand the inner mDirDeriv
-  -- (X = const v, Y = S_v = fun y => covDerivAt ∇f y v, Z = ∇f) at x
+  -- Level-2 metric-compat on (const v, S_v, ∇f); convert lcc.toFun to covDerivAt
+  -- (def-eq) at h_compat2 to match h_bridge's pattern.
   have h_compat2 := leviCivitaConnection_metric_compatible
     (fun _ : M => (v : TangentSpace I x))
     (fun y : M =>
       (leviCivitaConnection (I := I) (M := M)).toFun
         (manifoldGradient (I := I) f) y (v : TangentSpace I x))
     (manifoldGradient (I := I) f) x hVsm hSvsm (h_grad_smoothAt x)
-  -- h_compat2 : mfderiv (fun y => ⟨S_v y, ∇f y⟩) x v
-  --           = ⟨covDerivAt S_v x v, ∇f x⟩ + ⟨S_v x, covDerivAt ∇f x v⟩
-  -- The mfderiv form on LHS = mDirDeriv form. Convert lcc.toFun to covDerivAt
-  -- (def-eq) so h_compat2's pattern matches h_bridge.
   change mDirDeriv (I := I)
       (fun y : M => metricInner y
         (covDerivAt (manifoldGradient (I := I) f) y (v : TangentSpace I x))
@@ -269,7 +238,7 @@ private theorem hessian_gradientNormSq_apply_chartFrame
         at h_compat2
   rw [h_compat2] at h_bridge
   -- Normalize `(∇[const v] const v) x` notation to `covDerivAt (const v) x v` (def-eq)
-  -- so it matches the `secondCovDerivAt` def shape.
+  -- to match the `secondCovDerivAt_def` unfolding.
   change hessian (I := I) (M := M) (‖grad_g[I] f‖²_g)
         (fun _ : M => (v : TangentSpace I x))
         (fun _ : M => (v : TangentSpace I x)) x =
@@ -287,29 +256,7 @@ private theorem hessian_gradientNormSq_apply_chartFrame
                 (covDerivAt (fun _ : M => (v : TangentSpace I x)) x
                   (v : TangentSpace I x)))
               (manifoldGradient (I := I) f x) at h_bridge
-  -- h_bridge now has the fully-expanded form. Goal is to read off the result.
-  -- Let's show the goal equals h_bridge's RHS modulo (i) metricInner_sub_left to combine,
-  -- (ii) recognition of the secondCovDerivAt def.
-  --
-  -- h_bridge:
-  -- hessian g (const v) (const v) x
-  --   = 2 * (⟨covDerivAt S_v x v, ∇f x⟩ + ⟨S_v x, covDerivAt ∇f x v⟩)
-  --     - 2 * ⟨covDerivAt ∇f x (covDeriv (const v) (const v) x), ∇f x⟩
-  --
-  -- S_v x = (lcc.toFun ∇f) x v = covDerivAt ∇f x v (def-eq).
-  -- covDeriv (const v) (const v) x = (lcc.toFun (const v)) x v = covDerivAt (const v) x v.
-  -- secondCovDerivAt (∇f) x v v = covDerivAt S_v x v - covDerivAt ∇f x (covDerivAt (const v) x v)
-  -- (by `secondCovDerivAt_def` and `S_v` definition).
-  --
-  -- So after metricInner_sub_left + rearrangement, h_bridge gives the goal RHS.
   rw [h_bridge]
-  -- Goal: 2 * (⟨covDerivAt S_v x v, ∇f x⟩ + ⟨covDerivAt ∇f x v, covDerivAt ∇f x v⟩)
-  --     - 2 * ⟨covDerivAt ∇f x (covDerivAt (const v) x v), ∇f x⟩
-  --   = 2 * (⟨secondCovDerivAt(∇f) x v v, ∇f x⟩ + ⟨covDerivAt ∇f x v, covDerivAt ∇f x v⟩)
-  -- which reduces to:
-  --   ⟨covDerivAt S_v x v - covDerivAt ∇f x (covDerivAt (const v) x v), ∇f x⟩
-  --     = ⟨secondCovDerivAt(∇f) x v v, ∇f x⟩
-  -- which is by `secondCovDerivAt_def` + `metricInner_sub_left`.
   have h_secondCD :
       metricInner x
           (secondCovDerivAt (I := I) (M := M)
@@ -327,8 +274,6 @@ private theorem hessian_gradientNormSq_apply_chartFrame
                   (v : TangentSpace I x)))
               (manifoldGradient (I := I) f x) := by
     rw [secondCovDerivAt_def, metricInner_sub_left]
-  -- Goal LHS uses `(∇[fun x ↦ v] fun x ↦ v) x = covDerivAt (fun _ => v) x v` (def-eq)
-  -- linarith should close given h_secondCD
   linarith [h_secondCD]
 
 /-! ## Two intermediates (E, G) for the Bochner identity -/
@@ -437,12 +382,10 @@ theorem bochner_weitzenboeck
     (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
     (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
               (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
-    (1 / 2 : ℝ) * (Δ_g[I] ‖grad_g[I] f‖²_g) x
-    = ‖hess_g[I] f‖²_g x
-      + ⟪(grad_g[I] f) x,
-         (grad_g[I] (Δ_g[I] f)) x⟫_g
-      + Ric_g((grad_g[I] f) x,
-              (grad_g[I] f) x) x := by
+    (1 / 2 : ℝ) * (Δ_g[I] ‖grad_g[I] f‖²_g) x =
+      ‖hess_g[I] f‖²_g x
+      + ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
+      + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
   rw [leibniz_trace_reduction f x h_interior hf h_grad,
       connectionLaplacian_grad_eq_grad_laplacian_add_ricci f x h_interior hf h_grad]
   abel
