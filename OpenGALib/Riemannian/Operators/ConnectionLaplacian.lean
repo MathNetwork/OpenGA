@@ -234,6 +234,28 @@ theorem connectionLaplacian_eq_sum_secondCovDerivAt
   intro i _
   rfl
 
+/-- $(\nabla^2\,0)(v, w) = 0$: the second covariant derivative of the zero
+vector field vanishes identically. -/
+@[simp] theorem secondCovDerivAt_zero
+    (x : M) (v w : TangentSpace I x) :
+    secondCovDerivAt (I := I) (M := M)
+        (0 : Π x : M, TangentSpace I x) x v w = 0 := by
+  unfold secondCovDerivAt
+  have h_inner : (fun y : M => covDerivAt (0 : Π x : M, TangentSpace I x) y w)
+      = (fun _ : M => (0 : TangentSpace I x)) := by
+    funext y
+    show ((leviCivitaConnection (I := I) (M := M)).toFun 0 y) w = 0
+    rw [CovariantDerivative.zero]; rfl
+  rw [h_inner]
+  have h0a : covDerivAt (fun _ : M => (0 : TangentSpace I x)) x v = 0 := by
+    show ((leviCivitaConnection (I := I) (M := M)).toFun 0 x) v = 0
+    rw [CovariantDerivative.zero]; rfl
+  have h0b : covDerivAt (0 : Π x : M, TangentSpace I x) x
+      (covDerivAt (fun _ : M => w) x v) = 0 := by
+    show ((leviCivitaConnection (I := I) (M := M)).toFun 0 x) _ = 0
+    rw [CovariantDerivative.zero]; rfl
+  rw [h0a, h0b, sub_zero]
+
 /-- **Ricci identity at chart-frame constant directions** (the heart of the
 heart-of-Bochner identity):
 $$(\nabla^2 Z)(v, w) - (\nabla^2 Z)(w, v) \;=\; R(\tilde v, \tilde w) Z,$$
@@ -279,6 +301,22 @@ theorem secondCovDerivAt_sub_swap_eq_riemannCurvature
   rw [show covDeriv (⟦V, W⟧) Z x = covDerivAt Z x ((⟦V, W⟧) x) from rfl]
   rw [← h_lifted]
   abel
+
+/-- **Swap form of the Ricci identity at chart-frame constant directions**:
+$$(\nabla^2 Z)(w, v) \;=\; (\nabla^2 Z)(v, w) \;-\; R(\tilde v, \tilde w) Z.$$
+Direct corollary of `secondCovDerivAt_sub_swap_eq_riemannCurvature`. -/
+theorem secondCovDerivAt_swap_eq
+    (Z : Π x : M, TangentSpace I x) (x : M) (v w : TangentSpace I x) :
+    secondCovDerivAt (I := I) (M := M) Z x w v
+      = secondCovDerivAt (I := I) (M := M) Z x v w
+        - riemannCurvature
+            (fun _ : M => (v : TangentSpace I x))
+            (fun _ : M => (w : TangentSpace I x)) Z x := by
+  have h := secondCovDerivAt_sub_swap_eq_riemannCurvature
+    (I := I) (M := M) Z x v w
+  -- h : sCDA(v,w) - sCDA(w,v) = R(v,w) Z
+  -- Goal: sCDA(w,v) = sCDA(v,w) - R(v,w) Z
+  rw [← h]; abel
 
 end Operators
 end Riemannian
