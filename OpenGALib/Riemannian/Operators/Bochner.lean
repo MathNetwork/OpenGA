@@ -559,6 +559,34 @@ theorem hessianBilin_eventually_symm_of_strict_interior
   -- `TangentSpace I y = E` arguments under `IsLocallyConstantChartedSpace`.
   exact hessianBilin_symm (I := I) f y hy_interior hf_2_y h_grad_y w z
 
+/-- **Section-level Hessian symmetry on smooth vector fields**, discharged
+from strict interior. Variant of `hessianBilin_eventually_symm_of_strict_interior`
+where the two test slots are smooth varying sections `X, Y` instead of
+constant tangent vectors. At every $y$ in a nbhd of $x$,
+$\mathrm{Hess}\,f\,(X(y), Y(y))(y) = \mathrm{Hess}\,f\,(Y(y), X(y))(y)$
+by pointwise `hessianBilin_symm`. This is the section-level Hess-sym
+input needed for the per-summand swap step in the heart-of-Bochner chain
+(external's `heart_per_summand_swap` analog). -/
+theorem hessianBilin_section_eventually_symm_of_strict_interior
+    [IsManifold I 2 M]
+    (f : M → ℝ) (X Y : Π y : M, TangentSpace I y) (x : M)
+    (h_strict : extChartAt I x x ∈ interior (Set.range I))
+    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    (fun y : M => hessianBilin (I := I) f y (X y) (Y y))
+      =ᶠ[𝓝 x] (fun y : M => hessianBilin (I := I) f y (Y y) (X y)) := by
+  have h_interior_nbhd :=
+    extChartAt_self_eventually_mem_closure_interior_range (I := I) (M := M) h_strict
+  filter_upwards [h_interior_nbhd] with y hy_interior
+  have hf_2_y : ContMDiffAt I 𝓘(ℝ, ℝ) 2 f y :=
+    (hf y).of_le (by
+      show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
+      exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
+  have h_grad_y : TangentSmoothAt (manifoldGradient (I := I) f) y :=
+    (h_grad y).mdifferentiableAt (by simp)
+  exact hessianBilin_symm (I := I) f y hy_interior hf_2_y h_grad_y (X y) (Y y)
+
 /-- **Inner-form of the D.2 swap of `secondCovDerivAt`'s outer pair**:
 for $v, w, z \in T_xM$,
 $$\langle (\nabla^2 \nabla f)(v, w),\, z\rangle_g(x)
