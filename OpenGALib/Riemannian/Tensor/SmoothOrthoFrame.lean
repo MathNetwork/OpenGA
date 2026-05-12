@@ -3,8 +3,11 @@ import Mathlib.Geometry.Manifold.VectorBundle.Riemannian
 import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 import Mathlib.Geometry.Manifold.ContMDiff.NormedSpace
 import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.InnerProductSpace.Orthonormal
 import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.LinearAlgebra.Dimension.Free
+import OpenGALib.Algebraic.Auxiliary.OrthonormalBasisDiagonal
 import OpenGALib.Riemannian.Metric
 import OpenGALib.Riemannian.TangentBundle
 
@@ -807,6 +810,127 @@ theorem smoothOrthoFrame_orthonormal_at_center
       if i = j then 1 else 0 :=
   smoothOrthoFrame_orthonormal (I := I) g α
     (mem_smoothOrthoFrameNbhd_self (I := I) (M := M) α) i j
+
+/-! ## Stage 7: smoothOrthoFrame as an `OrthonormalBasis` at $\alpha$,
+and the basis-invariance bridge
+
+For the heart-of-Bochner closure, we need to compare diagonal sums
+indexed by the smooth orthonormal frame (smooth-section-friendly) with
+diagonal sums indexed by `stdOrthonormalBasis ℝ (TangentSpace I α)`
+(the basis used in the existing `connectionLaplacian` /
+`scalarLaplacian` API). The values $b_i = \mathrm{smoothOrthoFrame}\,
+\mathrm{hm.metric}\,\alpha\,i\,\alpha \in T_\alpha M$ form an
+orthonormal family at $\alpha$ (in the IPS sense, via the
+`HasMetric I M` typeclass bridge), and so can be packaged as an
+`OrthonormalBasis`. Combined with
+`OrthonormalBasis.sum_apply_diagonal_invariant`, this gives
+basis-invariance of $\sum_i B(b_i)(b_i)$ for any bilinear
+$B : T_\alpha M \to_\ell T_\alpha M \to_\ell W$.
+
+This stage uses `[HasMetric I M]` and instantiates the construction at
+the canonical metric `hm.metric`; the IPS inner product
+`⟪·, ·⟫_ℝ` on `TangentSpace I α` is then definitionally
+`hm.metric.inner α`. -/
+
+variable [hm : HasMetric I M]
+
+open scoped InnerProductSpace
+
+/-- Orthonormality of `smoothOrthoFrame hm.metric α · α` in the
+`InnerProductSpace ℝ` sense (via `⟪·, ·⟫_ℝ` rather than
+`hm.metric.inner α`). Direct from
+`smoothOrthoFrame_orthonormal_at_center` and the def-eq
+`⟪v, w⟫_ℝ = hm.metric.inner α v w` via the `RiemannianBundle` routing
+from `instRiemannianBundleOfHasMetric`. -/
+theorem smoothOrthoFrame_inner_at_center (α : M)
+    (i j : Fin (Module.finrank ℝ E)) :
+    ⟪smoothOrthoFrame (I := I) hm.metric α i α,
+        smoothOrthoFrame (I := I) hm.metric α j α⟫_ℝ =
+      if i = j then 1 else 0 := by
+  -- The IPS inner product on `TangentSpace I α` (via `HasMetric I M` →
+  -- `RiemannianBundle (TangentSpace I)`) is definitionally `hm.metric.inner α`.
+  show hm.metric.inner α _ _ = _
+  exact smoothOrthoFrame_orthonormal_at_center (I := I) hm.metric α i j
+
+/-- `smoothOrthoFrame hm.metric α · α` is an `Orthonormal` family in
+`TangentSpace I α`. -/
+theorem smoothOrthoFrame_orthonormal_family (α : M) :
+    Orthonormal ℝ
+      (fun i : Fin (Module.finrank ℝ E) =>
+        smoothOrthoFrame (I := I) hm.metric α i α) := by
+  classical
+  rw [orthonormal_iff_ite]
+  intro i j
+  exact smoothOrthoFrame_inner_at_center (I := I) α i j
+
+/-- **`smoothOrthoFrame` packaged as an `OrthonormalBasis` at $\alpha$**.
+The smooth orthonormal frame evaluated at the centre $\alpha$, indexed
+by `Fin (Module.finrank ℝ E)`, with the canonical orthonormality from
+`smoothOrthoFrame_orthonormal_family`. Constructed via
+`basisOfOrthonormalOfCardEqFinrank` (orthonormal family of correct
+cardinality is a basis) and `Basis.toOrthonormalBasis` (upgrade to
+`OrthonormalBasis` given the orthonormality witness, which transfers
+through `coe_basisOfOrthonormalOfCardEqFinrank`). -/
+noncomputable def smoothOrthoFrameOrthonormalBasis (α : M) :
+    OrthonormalBasis (Fin (Module.finrank ℝ E)) ℝ (TangentSpace I α) := by
+  classical
+  have hOrth := smoothOrthoFrame_orthonormal_family (I := I) α
+  -- `TangentSpace I α` reduces to `E` via Mathlib's `@[reducible] def TangentSpace`.
+  have hcard : Fintype.card (Fin (Module.finrank ℝ E))
+      = Module.finrank ℝ (TangentSpace I α) := Fintype.card_fin _
+  refine (basisOfOrthonormalOfCardEqFinrank hOrth hcard).toOrthonormalBasis ?_
+  rw [coe_basisOfOrthonormalOfCardEqFinrank]
+  exact hOrth
+
+@[simp] theorem smoothOrthoFrameOrthonormalBasis_apply (α : M)
+    (i : Fin (Module.finrank ℝ E)) :
+    smoothOrthoFrameOrthonormalBasis (I := I) α i =
+      smoothOrthoFrame (I := I) hm.metric α i α := by
+  unfold smoothOrthoFrameOrthonormalBasis
+  rw [Module.Basis.coe_toOrthonormalBasis]
+  exact congrFun
+    (coe_basisOfOrthonormalOfCardEqFinrank
+      (smoothOrthoFrame_orthonormal_family (I := I) α) _) i
+
+/-- **Basis-change bridge at $\alpha$**: for any bilinear
+$B : T_\alpha M \to_\ell T_\alpha M \to_\ell W$ and any
+`OrthonormalBasis b` of `TangentSpace I α`, the diagonal sum over
+the smooth orthonormal frame equals the diagonal sum over $b$.
+
+Applied with $b = \mathrm{stdOrthonormalBasis}\,\mathbb{R}\,
+(T_\alpha M)$, this bridges the heart-of-Bochner formulation against
+`smoothOrthoFrame` (which is smoothness-friendly for the algebraic
+chain) to the existing API formulation against `stdOrthonormalBasis`
+(used in `connectionLaplacian` / `scalarLaplacian`). -/
+theorem sum_diagonal_smoothOrthoFrame_eq_orthonormalBasis
+    {W : Type*} [AddCommGroup W] [Module ℝ W]
+    (α : M)
+    (B : TangentSpace I α →ₗ[ℝ] TangentSpace I α →ₗ[ℝ] W)
+    (b : OrthonormalBasis (Fin (Module.finrank ℝ E)) ℝ (TangentSpace I α)) :
+    ∑ i, B (smoothOrthoFrame (I := I) hm.metric α i α)
+            (smoothOrthoFrame (I := I) hm.metric α i α) =
+      ∑ i, B (b i) (b i) := by
+  have h := OrthonormalBasis.sum_apply_diagonal_invariant
+    (smoothOrthoFrameOrthonormalBasis (I := I) α) b B
+  -- Rewrite LHS sum via the simp lemma for smoothOrthoFrameOrthonormalBasis.
+  simp only [smoothOrthoFrameOrthonormalBasis_apply] at h
+  exact h
+
+/-- **Basis-change bridge to `stdOrthonormalBasis`**: specialization of
+`sum_diagonal_smoothOrthoFrame_eq_orthonormalBasis` with
+$b = \mathrm{stdOrthonormalBasis}\,\mathbb{R}\,(T_\alpha M)$ — the
+basis used by `connectionLaplacian` / `scalarLaplacian` / the
+heart-of-Bochner statement. -/
+theorem sum_diagonal_smoothOrthoFrame_eq_std
+    {W : Type*} [AddCommGroup W] [Module ℝ W]
+    (α : M)
+    (B : TangentSpace I α →ₗ[ℝ] TangentSpace I α →ₗ[ℝ] W) :
+    ∑ i, B (smoothOrthoFrame (I := I) hm.metric α i α)
+            (smoothOrthoFrame (I := I) hm.metric α i α) =
+      ∑ i, B ((stdOrthonormalBasis ℝ (TangentSpace I α)) i)
+              ((stdOrthonormalBasis ℝ (TangentSpace I α)) i) :=
+  sum_diagonal_smoothOrthoFrame_eq_orthonormalBasis (I := I) α B
+    (stdOrthonormalBasis ℝ (TangentSpace I α))
 
 end Tensor
 end Riemannian
