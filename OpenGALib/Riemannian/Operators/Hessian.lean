@@ -229,9 +229,74 @@ theorem trace_sq_div_dim_le_frobeniusSq
   exact (div_le_iff₀ hpos).mpr
     (by linarith [trace_sq_le_dim_mul_frobeniusSq (I := I) (M := M) B x])
 
-/-! ## Symmetry of the Hessian on scalar functions -/
+/-! ## Bridge: scalar Hessian via iterated `mDirDeriv` -/
 
 variable [IsLocallyConstantChartedSpace H M]
+
+/-- **Bridge: scalar Hessian as iterated `mDirDeriv` minus Christoffel correction.**
+
+For a smooth scalar function $g : M \to \mathbb{R}$ with $\nabla^M g$
+smooth at $x$, the connection Hessian admits the textbook decomposition
+$$\mathrm{Hess}\,g(X, Y)(x) \;=\; X(Y(g))(x) \;-\; (\nabla_X Y)(g)(x),$$
+i.e. iterated directional differentiation of $g$ along $Y$ then $X$,
+minus the Christoffel correction $\nabla_X Y$ acting on $g$.
+
+In framework notation (using `mDirDeriv g y v = (\mathrm{d}g)_y(v)` and
+`covDeriv X Y x = (\nabla_X Y)(x)`):
+
+`hessian g X Y x = mDirDeriv (fun y ↦ mDirDeriv g y (Y y)) x (X x) - mDirDeriv g x (covDeriv X Y x)`.
+
+Bridges the framework's `metricInner ∘ covDerivAt ∘ ∇g` form (the
+`hessian` def) and the textbook iterated-action-of-vector-fields form,
+via metric-compatibility on $(X, \nabla g, Y)$ plus gradient duality
+`manifoldGradient_inner_eq`.
+
+**Used by**: `OpenGALib.Riemannian.Operators.Bochner` (`leibniz_trace_reduction`,
+which applies this for $g = |\nabla f|_g^2$ and $X = Y =$ chart-frame
+constants $\varepsilon_i$). -/
+theorem hessian_eq_mDirDeriv_iterate_sub_chris
+    (g : M → ℝ) (X Y : Π x : M, TangentSpace I x) (x : M)
+    (h_grad_g : TangentSmoothAt (manifoldGradient (I := I) g) x)
+    (hX : TangentSmoothAt X x)
+    (hY : TangentSmoothAt Y x) :
+    hessian (I := I) g X Y x =
+      mDirDeriv (I := I) (fun y => mDirDeriv (I := I) g y (Y y)) x (X x)
+        - mDirDeriv (I := I) g x (covDeriv X Y x) := by
+  -- metric-compat on (X, ∇g, Y) at x
+  have h_compat := leviCivitaConnection_metric_compatible
+    X (manifoldGradient (I := I) g) Y x hX h_grad_g hY
+  -- Replace `⟨∇g y, Y y⟩` by `mDirDeriv g y (Y y)` (grad duality)
+  have h_lhs :
+      (fun y : M => metricInner y (manifoldGradient (I := I) g y) (Y y))
+        = (fun y : M => mDirDeriv (I := I) g y (Y y)) := by
+    funext y
+    exact manifoldGradient_inner_eq (I := I) g y (Y y)
+  rw [h_lhs] at h_compat
+  -- Replace `⟨∇g x, covDeriv X Y x⟩` by `mDirDeriv g x (covDeriv X Y x)`.
+  -- State in `lcc.toFun` form to match `h_compat`'s pattern.
+  have h_chris_inner :
+      metricInner x (manifoldGradient (I := I) g x)
+          ((leviCivitaConnection (I := I) (M := M)).toFun Y x (X x))
+        = mDirDeriv (I := I) g x (covDeriv X Y x) :=
+    manifoldGradient_inner_eq (I := I) g x (covDeriv X Y x)
+  rw [h_chris_inner] at h_compat
+  -- Convert h_compat's `mfderiv` to `mDirDeriv` (definitional)
+  change mDirDeriv (I := I) (fun y => mDirDeriv (I := I) g y (Y y)) x (X x)
+       = metricInner x
+            ((leviCivitaConnection (I := I) (M := M)).toFun
+              (manifoldGradient (I := I) g) x (X x)) (Y x)
+         + mDirDeriv (I := I) g x (covDeriv X Y x) at h_compat
+  -- Goal in `lcc.toFun` form so linarith matches h_compat's first `metricInner`
+  -- (`hessian g X Y x = metricInner x (covDeriv X ∇g x) (Y x)` def, and
+  -- `covDeriv X ∇g x = (lcc.toFun ∇g) x (X x)` def)
+  show metricInner x
+        ((leviCivitaConnection (I := I) (M := M)).toFun
+            (manifoldGradient (I := I) g) x (X x)) (Y x)
+      = mDirDeriv (I := I) (fun y => mDirDeriv (I := I) g y (Y y)) x (X x)
+        - mDirDeriv (I := I) g x (covDeriv X Y x)
+  linarith [h_compat]
+
+/-! ## Symmetry of the Hessian on scalar functions -/
 
 set_option backward.isDefEq.respectTransparency false in
 /-- **Hessian symmetry on scalar functions** (covariant Schwarz / Clairaut):
