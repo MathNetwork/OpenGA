@@ -517,8 +517,12 @@ $\langle R(X, Y) Z, W\rangle_g + \langle R(X, Y) W, Z\rangle_g = 0$. -/
 /-- **Additivity of `riemannCurvature` in the differentiated (3rd) slot**:
 $R(X, Y)(Z_1 + Z_2)(x) = R(X, Y) Z_1(x) + R(X, Y) Z_2(x)$ for $X, Y, Z_i$
 smooth vector fields. Direct from `covDeriv_add_field` applied at $x$
-(outer) and at every $y$ (inner section sum) plus `funext`. -/
-private lemma riemannCurvature_add_third
+(outer) and at every $y$ (inner section sum) plus `funext`.
+
+Public-exposure of formerly `private` helper, needed by the Z-slot
+additivity step of the full 3-slot tensoriality chain
+(`Riemannian/Curvature/Tensoriality.lean`). -/
+theorem riemannCurvature_add_third
     (X Y Z₁ Z₂ : SmoothVectorField I M) (x : M) :
     riemannCurvature X.toFun Y.toFun (Z₁ + Z₂).toFun x
       = riemannCurvature X.toFun Y.toFun Z₁.toFun x
