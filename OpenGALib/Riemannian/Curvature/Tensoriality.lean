@@ -1,5 +1,9 @@
 import OpenGALib.Riemannian.Curvature
 import OpenGALib.Riemannian.Gradient
+import Mathlib.Geometry.Manifold.VectorBundle.LocalFrame
+import Mathlib.Geometry.Manifold.BumpFunction
+import Mathlib.LinearAlgebra.Dimension.Free
+import Mathlib.LinearAlgebra.Basis.Defs
 
 /-!
 # Tensoriality of the Riemann curvature tensor — Z-slot Leibniz
@@ -278,5 +282,193 @@ theorem riemannCurvature_eq_of_Z_eventuallyEq
       (Z.smoothAt x) (Z'.smoothAt x) hZZ'_x
   -- Combine via `riemannCurvature_def`.
   rw [riemannCurvature_def, riemannCurvature_def, hT1, hT2, hT3]
+
+/-! ## Z-slot vanishing
+
+If `Z x = 0` for a smooth global section `Z`, then `R(X, Y) Z(x) = 0`.
+
+Decomposition strategy: pick a local trivialization `e` of `TM` at `x`, the
+induced local frame `e.localFrame basisF`, and a smooth bump function `χ`
+with `tsupport χ ⊆ e.baseSet`. Write `Z` near `x` as a finite sum
+`∑ gᵢ • s'ᵢ` of products of smooth scalar functions `gᵢ` vanishing at `x`
+(because `Z x = 0`) with smooth global frame extensions `s'ᵢ`. Apply
+Z-slot scalar multiplication (`riemannCurvature_smul_third_scalar_field`)
+and additivity (`riemannCurvature_add_third`) inductively to each summand.
+
+External reference: `riemannSec_eq_zero_of_Z_eq_zero`
+(`differential-geometry/.../CurvatureBundling.lean:436`). -/
+
+/-- **Z-slot vanishing**: $Z(x) = 0 \Rightarrow R(X, Y) Z(x) = 0$ for smooth
+global sections `X, Y, Z`. -/
+theorem riemannCurvature_eq_zero_of_Z_eq_zero_field
+    [IsManifold I 2 M] [T2Space M]
+    (X Y Z : SmoothVectorField I M) (x : M)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
+    (hZx : Z.toFun x = 0) :
+    riemannCurvature X.toFun Y.toFun Z.toFun x = 0 := by
+  classical
+  -- Trivialization at `x`, basis of model fibre, induced local frame.
+  let e := trivializationAt E (TangentSpace I) x
+  have he_mem : x ∈ e.baseSet := mem_baseSet_trivializationAt E _ x
+  let basisF : Module.Basis (Fin (Module.finrank ℝ E)) ℝ E := Module.finBasis ℝ E
+  -- Bump function `χ` at `x` with `tsupport χ ⊆ e.baseSet`.
+  obtain ⟨χ, -, hχsupp⟩ :=
+    (SmoothBumpFunction.nhds_basis_tsupport (I := I) x).mem_iff.mp
+      (e.open_baseSet.mem_nhds he_mem)
+  -- Smoothness of `b ↦ χ b • e.localFrame basisF i b` as a global section.
+  have hs'_smooth : ∀ i : Fin (Module.finrank ℝ E),
+      ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+        (fun b : M => (⟨b, χ b • e.localFrame basisF i b⟩ : TangentBundle I M)) := by
+    intro i
+    have hχ_on : ContMDiffOn I 𝓘(ℝ, ℝ) ∞ (χ : M → ℝ) e.baseSet :=
+      χ.contMDiff.contMDiffOn
+    have hlf := e.contMDiffOn_localFrame_baseSet (I := I) (n := ∞) (b := basisF) i
+    exact hχ_on.smul_section_of_tsupport e.open_baseSet hχsupp hlf
+  -- Bundled `s' i : SmoothVectorField I M`.
+  let s' : Fin (Module.finrank ℝ E) → SmoothVectorField I M := fun i =>
+    { toFun := fun b => χ b • e.localFrame basisF i b
+      smooth := hs'_smooth i }
+  -- Smoothness of the scalar coefficient `g i b = χ b • coeff i b (Z b)`.
+  let g : Fin (Module.finrank ℝ E) → M → ℝ := fun i b =>
+    χ b • e.localFrame_coeff I basisF i b (Z.toFun b)
+  have hg_smooth : ∀ i, ContMDiff I 𝓘(ℝ, ℝ) ∞ (g i) := by
+    intro i b
+    by_cases hb : b ∈ tsupport (χ : M → ℝ)
+    · have hb_base : b ∈ e.baseSet := hχsupp hb
+      have hχ_at : ContMDiffAt I 𝓘(ℝ, ℝ) ∞ (χ : M → ℝ) b :=
+        χ.contMDiff.contMDiffAt
+      have hcoeff_at : ContMDiffAt I 𝓘(ℝ, ℝ) ∞
+          ((LinearMap.piApply (e.localFrame_coeff I basisF i)) Z.toFun) b :=
+        contMDiffAt_localFrame_coeff basisF hb_base (Z.smooth b) i
+      exact hχ_at.smul hcoeff_at
+    · -- Outside `tsupport χ`, `χ = 0` near `b`, so `g i = 0` near `b`.
+      have hχ_zero : ∀ᶠ y in nhds b, (χ : M → ℝ) y = 0 := by
+        apply Filter.Eventually.mono
+          ((isClosed_tsupport (χ : M → ℝ)).isOpen_compl.mem_nhds hb)
+        intro y hy
+        exact (notMem_tsupport_iff_eventuallyEq.mp hy).self_of_nhds
+      apply (contMDiffAt_const (c := (0 : ℝ))).congr_of_eventuallyEq
+      filter_upwards [hχ_zero] with y hy
+      show χ y • e.localFrame_coeff I basisF i y (Z.toFun y) = 0
+      rw [hy, zero_smul]
+  -- `g i x = 0` from `Z x = 0` and linearity of `localFrame_coeff`.
+  have hg_zero : ∀ i, g i x = 0 := by
+    intro i
+    show χ x • e.localFrame_coeff I basisF i x (Z.toFun x) = 0
+    rw [hZx, map_zero, smul_zero]
+  -- `Z =ᶠ ∑ g_i • s'_i` near `x`: on a nbhd where `χ = 1` and `b ∈ e.baseSet`,
+  -- the sum reduces to `eq_sum_localFrame_coeff_smul`.
+  have hZ_eq_sum : ∀ᶠ b in 𝓝 x,
+      Z.toFun b = ∑ i, g i b • (s' i).toFun b := by
+    filter_upwards [χ.eventuallyEq_one, e.open_baseSet.mem_nhds he_mem]
+      with b hχb hb_base
+    show Z.toFun b
+      = ∑ i, (χ b • e.localFrame_coeff I basisF i b (Z.toFun b))
+          • (χ b • e.localFrame basisF i b)
+    have hχ1 : (χ : M → ℝ) b = 1 := hχb
+    simp only [hχ1, one_smul]
+    exact e.eq_sum_localFrame_coeff_smul (b := basisF) hb_base
+  -- Wrap the finite sum as a `SmoothVectorField`.
+  have hZsum_smooth : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+      (fun b : M => (⟨b, ∑ i, g i b • (s' i).toFun b⟩ : TangentBundle I M)) := by
+    refine ContMDiff.sum_section (s := Finset.univ) ?_
+    intro i _
+    exact (hg_smooth i).smul_section (hs'_smooth i)
+  let Zsum : SmoothVectorField I M :=
+    { toFun := fun b => ∑ i, g i b • (s' i).toFun b
+      smooth := hZsum_smooth }
+  -- Z-slot locality reduces to the sum form.
+  rw [riemannCurvature_eq_of_Z_eventuallyEq X Y Z Zsum x hZ_eq_sum]
+  -- Induct on the Finset, splitting summands and applying Z-slot Leibniz + additivity.
+  show riemannCurvature X.toFun Y.toFun
+        (fun b => ∑ i ∈ (Finset.univ : Finset (Fin (Module.finrank ℝ E))),
+                  g i b • (s' i).toFun b) x = 0
+  -- The generalized induction statement.
+  suffices h : ∀ (T : Finset (Fin (Module.finrank ℝ E))),
+      riemannCurvature X.toFun Y.toFun
+        (fun b => ∑ i ∈ T, g i b • (s' i).toFun b) x
+      = ∑ i ∈ T, g i x • riemannCurvature X.toFun Y.toFun (s' i).toFun x by
+    rw [h Finset.univ]
+    apply Finset.sum_eq_zero
+    intro i _
+    rw [hg_zero i, zero_smul]
+  intro T
+  induction T using Finset.induction_on with
+  | empty =>
+    -- Goal: R(X, Y) (fun _ => 0) x = 0.
+    simp only [Finset.sum_empty]
+    -- Identify `fun _ : M => (0 : TangentSpace I _)` with the zero global section.
+    show riemannCurvature X.toFun Y.toFun (fun _ : M => (0 : TangentSpace I _)) x = 0
+    -- Each `covDeriv U (fun _ => 0)` is the zero section pointwise.
+    have h_zero_outer : ∀ U V : Π b : M, TangentSpace I b,
+        covDeriv U (fun y : M =>
+          covDeriv V (fun _ : M => (0 : TangentSpace I _)) y) x = 0 := by
+      intro U V
+      -- Inner section is the zero section.
+      have h_inner : (fun y : M =>
+            covDeriv V (fun _ : M => (0 : TangentSpace I _)) y)
+          = (fun _ : M => (0 : TangentSpace I _)) := by
+        funext y
+        show (leviCivitaConnection.toFun (fun _ : M => (0 : TangentSpace I _)) y) (V y) = 0
+        have h0 : leviCivitaConnection.toFun (fun _ : M => (0 : TangentSpace I _)) y = 0 :=
+          leviCivitaConnection.isCovariantDerivativeOnUniv.zero (x := y)
+        rw [h0]; rfl
+      rw [h_inner]
+      show (leviCivitaConnection.toFun (fun _ : M => (0 : TangentSpace I _)) x) (U x) = 0
+      have h0 : leviCivitaConnection.toFun (fun _ : M => (0 : TangentSpace I _)) x = 0 :=
+        leviCivitaConnection.isCovariantDerivativeOnUniv.zero (x := x)
+      rw [h0]; rfl
+    have h_zero_third :
+        covDeriv (VectorField.mlieBracket I X.toFun Y.toFun)
+          (fun _ : M => (0 : TangentSpace I _)) x = 0 := by
+      show (leviCivitaConnection.toFun (fun _ : M => (0 : TangentSpace I _)) x)
+        (VectorField.mlieBracket I X.toFun Y.toFun x) = 0
+      have h0 : leviCivitaConnection.toFun (fun _ : M => (0 : TangentSpace I _)) x = 0 :=
+        leviCivitaConnection.isCovariantDerivativeOnUniv.zero (x := x)
+      rw [h0]; rfl
+    rw [riemannCurvature_def, h_zero_outer X.toFun Y.toFun,
+        h_zero_outer Y.toFun X.toFun, h_zero_third]
+    abel
+  | insert j s hjs IH =>
+    -- Split `∑_{insert j s} = g j • s'_j + ∑_s` via `Finset.sum_insert`.
+    have hsplit : (fun b : M => ∑ i ∈ insert j s, g i b • (s' i).toFun b)
+        = ((g j • (s' j).toFun : Π b, TangentSpace I b)
+           + (fun b : M => ∑ i ∈ s, g i b • (s' i).toFun b)) := by
+      funext b
+      change ∑ i ∈ insert j s, g i b • (s' i).toFun b
+        = g j b • (s' j).toFun b + ∑ i ∈ s, g i b • (s' i).toFun b
+      rw [Finset.sum_insert hjs]
+    rw [hsplit]
+    -- Wrap the head summand and the tail as `SmoothVectorField`.
+    have hgj_smooth_section : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+        (fun b : M => (⟨b, g j b • (s' j).toFun b⟩ : TangentBundle I M)) :=
+      (hg_smooth j).smul_section (hs'_smooth j)
+    have hrest_smooth : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+        (fun b : M => (⟨b, ∑ i ∈ s, g i b • (s' i).toFun b⟩ : TangentBundle I M)) := by
+      refine ContMDiff.sum_section (s := s) ?_
+      intro i _
+      exact (hg_smooth i).smul_section (hs'_smooth i)
+    let gjs : SmoothVectorField I M :=
+      { toFun := fun b => g j b • (s' j).toFun b, smooth := hgj_smooth_section }
+    let rest : SmoothVectorField I M :=
+      { toFun := fun b => ∑ i ∈ s, g i b • (s' i).toFun b, smooth := hrest_smooth }
+    show riemannCurvature X.toFun Y.toFun (gjs.toFun + rest.toFun) x
+      = ∑ i ∈ insert j s, g i x • riemannCurvature X.toFun Y.toFun (s' i).toFun x
+    -- Z-slot additivity on the sum head + tail.
+    have h_add :
+        riemannCurvature X.toFun Y.toFun (gjs.toFun + rest.toFun) x
+        = riemannCurvature X.toFun Y.toFun gjs.toFun x
+          + riemannCurvature X.toFun Y.toFun rest.toFun x := by
+      have := riemannCurvature_add_third X Y gjs rest x
+      simpa using this
+    -- Z-slot scalar Leibniz on the head: R(X, Y) (g j • s' j) x = g j x • R(X, Y) (s' j) x.
+    have h_smul :
+        riemannCurvature X.toFun Y.toFun gjs.toFun x
+        = g j x • riemannCurvature X.toFun Y.toFun (s' j).toFun x := by
+      show riemannCurvature X.toFun Y.toFun (g j • (s' j).toFun) x
+        = g j x • riemannCurvature X.toFun Y.toFun (s' j).toFun x
+      exact riemannCurvature_smul_third_scalar_field
+        (g j) X Y (s' j) x h_interior (hg_smooth j)
+    rw [h_add, h_smul, IH, Finset.sum_insert hjs]
 
 end Riemannian
