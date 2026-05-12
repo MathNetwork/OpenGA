@@ -213,5 +213,97 @@ theorem heart_per_summand_swap
             (B.toFun x)
   linarith [h_combined]
 
+/-- **Per-summand riemann form** (step (e) of Petersen Ch 7 §1 Prop 33,
+torsion-free curvature expansion).
+
+For smooth `B, W : SmoothVectorField I M` and `f : M → ℝ` smooth at `x`:
+
+$$g_x(\nabla_B \nabla_W \nabla f, B) - g_x(\nabla_{\nabla_B W} \nabla f, B)
+   = g_x(R(B, W) \nabla f, B) + g_x(\nabla_W \nabla_B \nabla f, B)
+     - g_x(\nabla_{\nabla_W B} \nabla f, B).$$
+
+Algebraic identity: unfolds `riemannCurvature` via
+$R(B, W) \nabla f = \nabla_B \nabla_W \nabla f - \nabla_W \nabla_B \nabla f
+- \nabla_{[B, W]} \nabla f$, applies torsion-freeness
+$[B, W] = \nabla_B W - \nabla_W B$, and the ℝ-linearity of
+$\nabla_\cdot \nabla f$ in its direction argument to split
+$\nabla_{[B,W]} \nabla f = \nabla_{\nabla_B W} \nabla f -
+\nabla_{\nabla_W B} \nabla f$.
+
+External reference: `heart_per_summand_riemann_form` in
+`differential-geometry/.../Bochner.lean:2978–3076`. -/
+theorem heart_per_summand_riemann_form
+    (f : M → ℝ) (B W : SmoothVectorField I M) (x : M) :
+    metricInner x
+        (covDeriv B.toFun
+          (fun y => covDeriv W.toFun (manifoldGradient (I := I) f) y) x)
+        (B.toFun x)
+      - metricInner x
+          (covDerivAt (manifoldGradient (I := I) f) x
+            (covDeriv B.toFun W.toFun x))
+          (B.toFun x)
+    = metricInner x
+        (riemannCurvature B.toFun W.toFun (manifoldGradient (I := I) f) x)
+        (B.toFun x)
+      + metricInner x
+          (covDeriv W.toFun
+            (fun y => covDeriv B.toFun (manifoldGradient (I := I) f) y) x)
+          (B.toFun x)
+      - metricInner x
+          (covDerivAt (manifoldGradient (I := I) f) x
+            (covDeriv W.toFun B.toFun x))
+          (B.toFun x) := by
+  classical
+  -- Unfold `riemannCurvature` via def.
+  -- riemannCurvature B W ∇f x = ∇_B (∇_W ∇f) x - ∇_W (∇_B ∇f) x - ∇_{[B,W]} ∇f x
+  have h_riem :
+      riemannCurvature B.toFun W.toFun (manifoldGradient (I := I) f) x
+        = covDeriv B.toFun
+            (fun y => covDeriv W.toFun (manifoldGradient (I := I) f) y) x
+          - covDeriv W.toFun
+            (fun y => covDeriv B.toFun (manifoldGradient (I := I) f) y) x
+          - covDeriv (VectorField.mlieBracket I B.toFun W.toFun)
+              (manifoldGradient (I := I) f) x :=
+    riemannCurvature_def B.toFun W.toFun (manifoldGradient (I := I) f) x
+  -- Torsion-free at x: `[B, W] x = ∇_B W x - ∇_W B x`. Use
+  -- `covDeriv_sub_swap_eq_mlieBracket B W x (B.smoothAt x) (W.smoothAt x)`:
+  -- (∇_B W) x - (∇_W B) x = [B, W] x.
+  have h_torsion :
+      covDeriv B.toFun W.toFun x - covDeriv W.toFun B.toFun x
+        = VectorField.mlieBracket I B.toFun W.toFun x :=
+    covDeriv_sub_swap_eq_mlieBracket B.toFun W.toFun x (B.smoothAt x) (W.smoothAt x)
+  -- `covDeriv U Z x = lcc.toFun Z x (U x)`; in particular, depends ℝ-linearly on `U x`.
+  -- So `covDeriv (mlieBracket I B W) ∇f x = lcc.toFun ∇f x ((mlieBracket I B W) x)`
+  --                                        = lcc.toFun ∇f x ((∇_B W - ∇_W B) x)
+  --                                        = lcc.toFun ∇f x ((∇_B W) x) - lcc.toFun ∇f x ((∇_W B) x)
+  --                                        = covDerivAt ∇f x (∇_B W x) - covDerivAt ∇f x (∇_W B x).
+  have h_lieb_dir :
+      covDeriv (VectorField.mlieBracket I B.toFun W.toFun)
+          (manifoldGradient (I := I) f) x
+        = covDerivAt (manifoldGradient (I := I) f) x
+            (covDeriv B.toFun W.toFun x)
+          - covDerivAt (manifoldGradient (I := I) f) x
+            (covDeriv W.toFun B.toFun x) := by
+    -- Replace `(mlieBracket I B W) x` with `∇_B W x - ∇_W B x` via h_torsion.
+    show (leviCivitaConnection (I := I) (M := M)).toFun
+            (manifoldGradient (I := I) f) x
+            (VectorField.mlieBracket I B.toFun W.toFun x)
+        = (leviCivitaConnection (I := I) (M := M)).toFun
+            (manifoldGradient (I := I) f) x
+            (covDeriv B.toFun W.toFun x)
+          - (leviCivitaConnection (I := I) (M := M)).toFun
+              (manifoldGradient (I := I) f) x
+              (covDeriv W.toFun B.toFun x)
+    rw [← h_torsion]
+    exact ContinuousLinearMap.map_sub _ _ _
+  -- Substitute and rearrange.
+  rw [h_riem, h_lieb_dir]
+  -- Now: g(∇_B ∇_W ∇f - ∇_W ∇_B ∇f - (covDeriv ∇f (∇_B W) - covDeriv ∇f (∇_W B)), B x)
+  --     = g(∇_B ∇_W ∇f, B) - g(∇_W ∇_B ∇f, B) - g(covDeriv ∇f (∇_B W), B) + g(covDeriv ∇f (∇_W B), B)
+  -- (by metricInner_sub_left distribution × 2 + metricInner_add_left for the inner +).
+  -- Goal becomes pure algebra; linarith with metricInner-sub distribution closes.
+  rw [metricInner_sub_left, metricInner_sub_left, metricInner_sub_left]
+  linarith
+
 end Operators
 end Riemannian
