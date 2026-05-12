@@ -376,6 +376,105 @@ theorem leibniz_trace_reduction
       _ = ∑ j, ⟪v, b j⟫_ℝ ^ 2 := (b.sum_sq_inner_left v).symm
       _ = ∑ j, (metricInner x v (b j)) ^ 2 := rfl
 
+/-! ## Conditional infrastructure for the heart-of-Bochner closure
+
+Two conditional reductions, ported from `external/differential-geometry`'s
+`heart_of_bochner_curvature_term` (Item 5) and
+`heart_of_bochner_of_inner_form` (Item 8). They expose the natural
+"shape" of the algebraic content of the heart-of-Bochner closure, taking
+as input the relevant algebraic identity and producing the form the
+downstream consumer needs. These conditionals do not close any sorry by
+themselves — they package the assumptions cleanly. -/
+
+/-- **Step 3 helper — curvature term metric-skew packaging.** Given the
+metric-skew identity of the Riemann curvature in the last pair of
+arguments (the standard $g(R(X,Y)Z, W) = -g(R(X,Y)W, Z)$, applied to
+$Z = \nabla f$ and $W = B(x)$), the curvature contribution of the
+heart-of-Bochner trace summand reduces to
+$- \langle \nabla f, R(B, w) B\rangle_g$ at $x$.
+
+The metric-skew hypothesis is derivable from
+`riemannCurvature_inner_self_zero` (existing PRE-PAPER sorry in
+`Curvature.lean`) by polarization, or directly from twice-applied
+metric-compat — both are independent infrastructure tasks. Ported from
+external's `heart_of_bochner_curvature_term`. -/
+theorem heart_of_bochner_curvature_term
+    (f : M → ℝ)
+    {B w : Π b : M, TangentSpace I b} {x : M}
+    (h_metric_skew : metricInner x
+        (riemannCurvature B w (manifoldGradient (I := I) f) x) (B x)
+      + metricInner x (manifoldGradient (I := I) f x)
+          (riemannCurvature B w B x) = 0) :
+    metricInner x
+        (riemannCurvature B w (manifoldGradient (I := I) f) x) (B x) =
+      - metricInner x (manifoldGradient (I := I) f x)
+          (riemannCurvature B w B x) := by
+  linarith
+
+/-- **Conditional inner-form reduction.** Given the inner-product form
+of the heart-of-Bochner sum identity against every test direction $w$
+(against the smooth orthonormal frame `smoothOrthoFrame g x · x`), the
+scalar form paired specifically against $\nabla f x$ follows by
+Riesz-style specialisation plus pulling the sum out of the metric inner
+product (bilinearity).
+
+This is the OpenGALib analog of external's
+`heart_of_bochner_smoothOrthoFrame_of_inner_form` (Item 8 of
+`RicciIdentity.lean`). The inner-form hypothesis is the natural product
+of the 4-step algebraic chain (Step 1 Hess-sym swap, Step 2 D.3, Step 3
+Ric identification, Step 4 smooth-trace identification) when each step
+is proven against an arbitrary test direction $w$. Specialising
+afterwards at $w = \nabla f x$ recovers the scalar form needed by the
+downstream Bochner-Weitzenböck assembly. -/
+theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_of_inner_form
+    [IsManifold I 2 M] [T2Space M]
+    (f : M → ℝ) (x : M)
+    (hInner : ∀ w : TangentSpace I x,
+      metricInner x
+          (∑ i, secondCovDerivAt (I := I) (M := M)
+            (manifoldGradient (I := I) f) x
+            (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
+            (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
+          w
+        = metricInner x (manifoldGradient (I := I) (Δ_g[I] f) x) w
+          + Ric_g(manifoldGradient (I := I) f x, w) x) :
+    ∑ i, metricInner x
+        (secondCovDerivAt (I := I) (M := M) (manifoldGradient (I := I) f) x
+          (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
+          (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
+        (manifoldGradient (I := I) f x)
+      = metricInner x (manifoldGradient (I := I) f x)
+            (manifoldGradient (I := I) (Δ_g[I] f) x)
+        + Ric_g((manifoldGradient (I := I) f x),
+                (manifoldGradient (I := I) f x)) x := by
+  classical
+  -- Specialise hInner at w = ∇f x.
+  have h := hInner (manifoldGradient (I := I) f x)
+  -- Chain: ∑ ⟨A i, ∇f⟩ = ⟨∑ A i, ∇f⟩ (sum_inner, via metricInner = ⟪·,·⟫_ℝ
+  -- def-eq) = ⟨∇Δf, ∇f⟩ + Ric (hInner) = ⟨∇f, ∇Δf⟩ + Ric (metricInner_comm).
+  calc ∑ i, metricInner x
+          (secondCovDerivAt (I := I) (M := M)
+            (manifoldGradient (I := I) f) x
+            (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
+            (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
+          (manifoldGradient (I := I) f x)
+      = metricInner x
+          (∑ i, secondCovDerivAt (I := I) (M := M)
+            (manifoldGradient (I := I) f) x
+            (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
+            (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
+          (manifoldGradient (I := I) f x) :=
+        (sum_inner Finset.univ _ (manifoldGradient (I := I) f x)).symm
+    _ = metricInner x (manifoldGradient (I := I) (Δ_g[I] f) x)
+            (manifoldGradient (I := I) f x)
+          + Ric_g(manifoldGradient (I := I) f x,
+                  manifoldGradient (I := I) f x) x := h
+    _ = metricInner x (manifoldGradient (I := I) f x)
+            (manifoldGradient (I := I) (Δ_g[I] f) x)
+          + Ric_g(manifoldGradient (I := I) f x,
+                  manifoldGradient (I := I) f x) x := by
+        rw [metricInner_comm x (manifoldGradient (I := I) (Δ_g[I] f) x)]
+
 /-- **Narrowed PRE-PAPER sorry**: heart-of-Bochner sum identity stated
 against `smoothOrthoFrame` (Stage 6) instead of `stdOrthonormalBasis`.
 
