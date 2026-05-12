@@ -305,5 +305,166 @@ theorem heart_per_summand_riemann_form
   rw [metricInner_sub_left, metricInner_sub_left, metricInner_sub_left]
   linarith
 
+/-- **Per-summand assembled form** (step (f) of Petersen Ch 7 §1 Prop 33,
+final per-summand assembly).
+
+For smooth `B, W : SmoothVectorField I M` and `f : M → ℝ` smooth, at
+strict-interior `x`:
+
+$$g_x(\nabla_B \nabla_B \nabla f, W) - g_x(\nabla_{\nabla_B B} \nabla f, W)
+   = g_x(R(B, W) \nabla f, B)
+     + \mathrm{d}\left(b \mapsto \mathrm{Hess}\,f(B, B)\right)(x)\cdot W
+     - 2\,\mathrm{Hess}\,f(B, \nabla_W B)(x).$$
+
+Composes:
+* `heart_per_summand_swap` (step d) — Hess-sym swap form.
+* `heart_per_summand_riemann_form` (step e) — torsion-free curvature
+  expansion.
+* A third `leviCivitaConnection_metric_compatible` on the section pair
+  `(Q := ∇_B ∇f, B)` along direction `W x` at `x`, identifying
+  `g(∇_W Q, B)` as `mfderiv (b ↦ g(Q b, B b)) x (W x) - g(Q x, ∇_W B x)`.
+* `hessianBilin_symm` at `x` to identify both Christoffel-correction
+  inner products as the single quantity
+  `hessianBilin f x (B x) (∇_W B x)`.
+
+External reference: `heart_per_summand_assembled` in
+`differential-geometry/.../Bochner.lean:3088–3239`. -/
+theorem heart_per_summand_assembled
+    [IsManifold I 2 M]
+    (f : M → ℝ) (B W : SmoothVectorField I M) (x : M)
+    (h_strict : extChartAt I x x ∈ interior (Set.range I))
+    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    metricInner x
+        (covDeriv B.toFun
+          (fun y => covDeriv B.toFun (manifoldGradient (I := I) f) y) x)
+        (W.toFun x)
+      - metricInner x
+          (covDerivAt (manifoldGradient (I := I) f) x
+            (covDeriv B.toFun B.toFun x))
+          (W.toFun x)
+    = metricInner x
+        (riemannCurvature B.toFun W.toFun (manifoldGradient (I := I) f) x)
+        (B.toFun x)
+      + (show ℝ from mfderiv I 𝓘(ℝ, ℝ)
+          (fun y : M => hessianBilin (I := I) f y (B.toFun y) (B.toFun y))
+          x (W.toFun x))
+      - 2 * hessianBilin (I := I) f x (B.toFun x)
+              (covDeriv W.toFun B.toFun x) := by
+  classical
+  -- Wrap ∇f as SmoothVectorField.
+  let gradF : SmoothVectorField I M :=
+    { toFun := manifoldGradient (I := I) f, smooth := h_grad }
+  set Q : Π y : M, TangentSpace I y :=
+    fun y => covDeriv B.toFun gradF.toFun y with hQ_def
+  -- Step 1: chain `heart_per_summand_swap` + `heart_per_summand_riemann_form`.
+  -- Get LHS = R-term + g(LC Q x (W x), B x) - g(LC Gf x (LC B x (W x))) (B x).
+  have h_swap := heart_per_summand_swap (I := I) f B W x h_strict hf h_grad
+  have h_riem := heart_per_summand_riemann_form (I := I) f B W x
+  -- Step 2: third metric compat on (Q, B) along direction W x at x.
+  have hQ_smooth : TangentSmoothAt Q x :=
+    covDeriv_smoothVF_smoothAt B gradF x
+  have h_compat_QB := leviCivitaConnection_metric_compatible
+    W.toFun Q B.toFun x (W.smoothAt x) hQ_smooth (B.smoothAt x)
+  -- Identify `(fun y => metricInner y (Q y) (B y)) = (fun y => hessianBilin f y (B y) (B y))`.
+  have h_QB_section :
+      (fun y : M => metricInner y (Q y) (B.toFun y))
+        = (fun y : M => hessianBilin (I := I) f y (B.toFun y) (B.toFun y)) := by
+    funext y
+    -- hessianBilin f y v w = metricInner y (covDerivAt ∇f y v) w (def).
+    -- Q y = covDeriv B ∇f y = covDerivAt ∇f y (B y) (def).
+    rfl
+  rw [h_QB_section] at h_compat_QB
+  -- h_compat_QB : mfderiv (b ↦ Hess(B b, B b)) x (W x)
+  --             = g(LC Q x (W x), B x) + g(Q x, LC B x (W x))
+  -- Step 3: identify `g(Q x, LC B x (W x))` via `hessianBilin_symm` at `x`.
+  -- Q x = covDerivAt ∇f x (B x), LC B x (W x) = covDeriv W B x.
+  -- So g(Q x, covDeriv W B x) = hessianBilin f x (B x) (covDeriv W B x).
+  -- Identical to RHS's third term (the `2 *` factor will come from combining with
+  -- the swap's RHS third term, which equals hessianBilin f x (covDeriv W B x) (B x)
+  -- via def, and then by hessianBilin_symm at x, also equals hessianBilin f x (B x) (covDeriv W B x)).
+  have hf_2 : ContMDiffAt I 𝓘(ℝ, ℝ) 2 f x :=
+    (hf x).of_le (by
+      show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
+      exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
+  have h_grad_at_x : TangentSmoothAt (manifoldGradient (I := I) f) x :=
+    (h_grad x).mdifferentiableAt (by simp)
+  have h_interior : extChartAt I x x ∈ closure (interior (Set.range I)) :=
+    subset_closure h_strict
+  have h_hess_sym : ∀ a b : TangentSpace I x,
+      hessianBilin (I := I) f x a b = hessianBilin (I := I) f x b a :=
+    fun a b => hessianBilin_symm (I := I) f x h_interior hf_2 h_grad_at_x a b
+  -- Use h_hess_sym at (covDeriv W B x, B x) to fold the second Christoffel.
+  have h_sym_WB : hessianBilin (I := I) f x (covDeriv W.toFun B.toFun x) (B.toFun x)
+                = hessianBilin (I := I) f x (B.toFun x) (covDeriv W.toFun B.toFun x) :=
+    h_hess_sym _ _
+  -- Compose h_swap (LHS = swap RHS) and h_riem (swap RHS = riemann RHS):
+  -- LHS = g(R(B, W) ∇f, B x) + g(LC Q x (W x), B x) - g(LC Gf x (LC B x (W x))) (B x)
+  -- where `LC Q x (W x) = covDeriv W Q x` (a CLM eval at W x of the section ∇_Q),
+  -- but actually here it's `lcc.toFun Q x (W x)` = `covDeriv W.toFun (fun y => covDeriv B.toFun ∇f y) x`.
+  rw [h_swap, h_riem]
+  -- Now goal:
+  -- g(R(B,W) ∇f, B) + g(LC Q x (W x), B) - g(LC Gf x (LC B x (W x))) (B)
+  --   = g(R(B,W) ∇f, B) + mfderiv (b ↦ Hess(B,B)) x (W x) - 2 * Hess(x, B x, ∇_W B)
+  -- Substitute g(LC Q x (W x), B) via h_compat_QB:
+  --   g(LC Q x (W x), B) = mfderiv (...) - g(Q x, LC B x (W x))
+  --                       = mfderiv (...) - hessianBilin f x (B x) (LC B x (W x))
+  -- and g(LC Gf x (LC B x (W x))) (B) = hessianBilin f x (LC B x (W x)) (B x)
+  --   (def: hessianBilin f x v w = metricInner x (covDerivAt ∇f x v) w; here v = LC B x (W x) = ∇_W B x, w = B x)
+  --   = hessianBilin f x (B x) (LC B x (W x))   [by h_sym_WB]
+  -- So the cancellation:
+  --   g(R + g(LC Q W, B) - Hess(LC B W, B)
+  --   = R + (mfderiv - Hess(B, LC B W)) - Hess(B, LC B W)   [via h_sym_WB on last]
+  --   = R + mfderiv - 2 * Hess(B, LC B W).
+  -- We rewrite the goal's last subtraction using h_sym_WB to get a `2 *` factor.
+  -- Cast the mfderiv result to `ℝ` via a `let`-binding `mf_val` so that
+  -- subsequent arithmetic tactics don't have to traverse `show ℝ from ...`.
+  set mf_val : ℝ := mfderiv I 𝓘(ℝ, ℝ)
+      (fun y : M => hessianBilin (I := I) f y (B.toFun y) (B.toFun y))
+      x (W.toFun x) with hmf_val
+  -- Rewrite h_compat_QB in terms of mf_val.
+  have h_compat_QB' :
+      mf_val
+        = metricInner x ((leviCivitaConnection (I := I) (M := M)).toFun Q x (W.toFun x))
+            (B.toFun x)
+          + metricInner x (Q x)
+              ((leviCivitaConnection (I := I) (M := M)).toFun B.toFun x (W.toFun x)) :=
+    h_compat_QB
+  have h_id_LCQW :
+      metricInner x
+          ((leviCivitaConnection (I := I) (M := M)).toFun Q x (W.toFun x))
+          (B.toFun x)
+        = mf_val - hessianBilin (I := I) f x (B.toFun x)
+            (covDeriv W.toFun B.toFun x) := by
+    have h_id_Q_LCBW :
+        metricInner x (Q x)
+            ((leviCivitaConnection (I := I) (M := M)).toFun B.toFun x (W.toFun x))
+          = hessianBilin (I := I) f x (B.toFun x)
+              (covDeriv W.toFun B.toFun x) := rfl
+    linarith [h_compat_QB', h_id_Q_LCBW]
+  -- Identification of the LHS's third term as `hessianBilin (... ) (B x)`,
+  -- folded via h_sym_WB into the `(B x) (...)` form.
+  have h_id_LCBW :
+      metricInner x
+          (covDerivAt (manifoldGradient (I := I) f) x
+            (covDeriv W.toFun B.toFun x))
+          (B.toFun x)
+        = hessianBilin (I := I) f x (B.toFun x)
+            (covDeriv W.toFun B.toFun x) := by
+    show hessianBilin (I := I) f x (covDeriv W.toFun B.toFun x) (B.toFun x)
+        = hessianBilin (I := I) f x (B.toFun x) (covDeriv W.toFun B.toFun x)
+    exact h_sym_WB
+  -- The goal's `covDeriv W.toFun (fun y => covDeriv B.toFun ∇f y) x` is exactly
+  -- `lcc.toFun Q x (W.toFun x)` (def-eq).
+  have h_id_outer :
+      covDeriv W.toFun (fun y => covDeriv B.toFun
+            (manifoldGradient (I := I) f) y) x
+        = (leviCivitaConnection (I := I) (M := M)).toFun Q x (W.toFun x) := rfl
+  rw [h_id_outer]
+  rw [h_id_LCQW, h_id_LCBW]
+  -- Goal: R + (mfderiv - Hess(B, ∇_W B)) - Hess(B, ∇_W B) = R + mfderiv - 2 * Hess(B, ∇_W B)
+  ring
+
 end Operators
 end Riemannian
