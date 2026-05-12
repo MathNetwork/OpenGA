@@ -152,7 +152,8 @@ theorem leibniz_trace_reduction
     (f : M → ℝ) (x : M)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
     (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
-    (h_grad : ∀ y : M, TangentSmoothAt (manifoldGradient (I := I) f) y) :
+    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
     (1 / 2 : ℝ) * (Δ_g[I] ‖grad_g[I] f‖²_g) x
       = ⟪connectionLaplacian (grad_g[I] f) x, (grad_g[I] f) x⟫_g
         + ‖hess_g[I] f‖²_g x := by
@@ -191,7 +192,8 @@ theorem connectionLaplacian_grad_eq_grad_laplacian_add_ricci
     (f : M → ℝ) (x : M)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
     (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
-    (h_grad : ∀ y : M, TangentSmoothAt (manifoldGradient (I := I) f) y) :
+    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
     ⟪connectionLaplacian (grad_g[I] f) x, (grad_g[I] f) x⟫_g
       = ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
         + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
@@ -220,7 +222,8 @@ theorem bochner_weitzenboeck
     (f : M → ℝ) (x : M)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
     (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
-    (h_grad : ∀ y : M, TangentSmoothAt (manifoldGradient (I := I) f) y) :
+    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
     (1 / 2 : ℝ) * (Δ_g[I] ‖grad_g[I] f‖²_g) x
     = ‖hess_g[I] f‖²_g x
       + ⟪(grad_g[I] f) x,
