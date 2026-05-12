@@ -55,12 +55,10 @@ CI workflow `.github/workflows/ci.yml` asserts the total equals 34 (`EXPECTED=34
 | `DifferentialForm/Basic.lean:326` | `pullback_ederiv` (outer) | PRE-PAPER | Outer goal of same proof. |
 | `Product/Pretrivialization.lean:281` | `tensorProductCoordChange_contMDiffOn` | PRE-PAPER | Bundle pretrivialization plumbing; Mathlib gap on tensor-product bundle smoothness. |
 
-## Riemannian (5)
+## Riemannian (3)
 
 | File:line | Identifier | Classification | Notes |
 |-----------|-----------|---------------|-------|
-| `Curvature.lean:241` | `riemannCurvature_inner_self_zero` | PRE-PAPER | Skew-symmetry of $R(X,Y)$. Closure path: metric-compat 4× + Hessian-Lie identity (`mfderiv_iterate_sub_eq_mlieBracket_apply`). Proof body sketches it. |
-| `Curvature.lean:256` | `ricci_symm` | PRE-PAPER | Symmetry of Ricci. Closure path: trace-via-orthonormal-basis + Bianchi I (closed) + diagonal-zero (above). |
 | `Connection.lean:1387` | `koszulCovDeriv_const_smoothAt` | PRE-PAPER | Path-B cascade leftover. Closure: write `metricRiesz_section_smoothAt` against `Bundle.ContMDiffRiemannianMetric` API via chart-pullback unwrapping of the Riesz isomorphism. Self-build follow-up. |
 | `Gradient.lean:76` | `manifoldGradient_smooth_of_smooth` | PRE-PAPER | Gradient smoothness propagation: $g \in C^\infty \Rightarrow \nabla^M g$ is $C^\infty$ as bundle section. Mathematically trivial; framework-side closure shares the `metricRiesz_section_smoothAt` chartGramMatrix path with `koszulCovDeriv_const_smoothAt`. Once that primitive lands, this is one-line composition. |
 | `Operators/Bochner.lean` | `sum_inner_secondCovDerivAt_grad_eq_inner_grad_laplacian_add_ricci` (G inner) | PRE-PAPER | Bochner heart-of-Bochner sum identity (focused private helper used by G): $\sum_i \langle (\nabla^2 \nabla f)(\varepsilon_i, \varepsilon_i), \nabla f\rangle_g = \langle \nabla f, \nabla(\Delta_g f)\rangle_g + \mathrm{Ric}(\nabla f, \nabla f)$. The full G theorem (`connectionLaplacian_grad_eq_grad_laplacian_add_ricci`) is proved modulo this sum identity. **Steps 1-3 closed via D.3** (`secondCovDerivSection_sub_swap_eq_riemannCurvature` in `Operators/ConnectionLaplacian.lean`) + Hess sym (B) + Ricci tensor identification (F). **Step 4 (∇Δf identification) blocked**: chart-frame constant lift $\tilde\varepsilon_i$ is not $g$-orthonormal off $x$, so $\sum_i \mathrm{Hess}\,f(y)(\varepsilon_i,\varepsilon_i) \ne \Delta_g f(y)$ for $y \ne x$, breaking the gradient-direction trace identification. **Repair**: port `external/differential-geometry/.../RicciIdentitySmoothFrame.lean` `smoothOrthoFrame g x` (chart-bump × Gram-Schmidt; ~500-1000 LOC). **Repair owner**: framework self-build (next session). |

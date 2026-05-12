@@ -7,6 +7,9 @@ import OpenGALib.Riemannian.HessianLie
 -- `import OpenGALib.Riemannian.Connection` above.
 import Mathlib.LinearAlgebra.Trace
 import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.InnerProductSpace.Trace
+import Mathlib.Geometry.Manifold.VectorField.LieBracket
+import Mathlib.Analysis.Calculus.FDeriv.Symmetric
 
 /-!
 # Riemann curvature, Ricci, and scalar curvature
@@ -36,14 +39,14 @@ and the metric-dependent Ricci / scalar-curvature constructions.
 ## Main results
 
 * `riemannCurvature_antisymm` — $R(X, Y) Z = -R(Y, X) Z$.
-* `riemannCurvature_inner_self_zero` (sorry, PRE-PAPER) — $\langle R(X, Y) Z, Z \rangle_g = 0$.
-* `ricci_symm` (sorry, PRE-PAPER) — $\mathrm{Ric}(X, Y) = \mathrm{Ric}(Y, X)$.
+* `riemannCurvature_inner_self_zero` — $\langle R(X, Y) Z, Z \rangle_g = 0$.
+* `ricci_symm` — $\mathrm{Ric}(X, Y) = \mathrm{Ric}(Y, X)$.
 
 Reference: do Carmo 1992 §4.
 -/
 
 open Bundle VectorField
-open scoped ContDiff Manifold Riemannian
+open scoped ContDiff Manifold Riemannian InnerProductSpace
 
 namespace Riemannian
 
@@ -591,20 +594,153 @@ theorem riemannCurvature_metric_skew
   -- h_ZW : g(R Z, Z) + g(R Z, W) + (g(R W, Z) + g(R W, W)) = 0
   linarith
 
+/-! ### Constant-direction Bianchi swap
+
+Specialisation of `bianchi_first` to the triple $(\mathrm{const}\,v, X, Y)$,
+combined with `riemannCurvature_antisymm` on the third Bianchi summand:
+$$R(\mathrm{const}\,v, X)\,Y - R(\mathrm{const}\,v, Y)\,X
+   = -R(X, Y)(\mathrm{const}\,v).$$
+This is the per-basis-vector algebraic identity that drives `ricci_symm`. -/
+
+/-- **Constant-direction Bianchi swap**. Bianchi I on $(\mathrm{const}\,v, X, Y)$
+together with first-pair antisymmetry of $R$ rearranges to the form needed
+for the Ricci-symmetry trace argument. -/
+private lemma riemannCurvature_const_first_swap_eq_neg
+    [IsManifold I 2 M]
+    (v : E) (X Y : SmoothVectorField I M) (x : M) :
+    riemannCurvature (fun _ : M => v) X.toFun Y.toFun x
+        - riemannCurvature (fun _ : M => v) Y.toFun X.toFun x
+      = -riemannCurvature X.toFun Y.toFun (fun _ : M => v) x := by
+  classical
+  set V : SmoothVectorField I M := SmoothVectorField.const (I := I) (M := M) v with hV_def
+  -- Pointwise smoothness witnesses for V, X, Y.
+  have hV_smooth : ∀ y, TangentSmoothAt (fun _ : M => v) y := V.smoothAt
+  have hX_smooth : ∀ y, TangentSmoothAt X.toFun y := X.smoothAt
+  have hY_smooth : ∀ y, TangentSmoothAt Y.toFun y := Y.smoothAt
+  -- First-derivative sections smooth.
+  have h_dVY : ∀ y, TangentSmoothAt
+      (fun y' => covDeriv (fun _ : M => v) Y.toFun y') y :=
+    fun y => covDeriv_const_smoothVF_smoothAt v Y y
+  have h_dXV : ∀ y, TangentSmoothAt
+      (fun y' => covDeriv X.toFun (fun _ : M => v) y') y :=
+    fun y => covDeriv_smoothVF_smoothAt X V y
+  have h_dYX : ∀ y, TangentSmoothAt
+      (fun y' => covDeriv Y.toFun X.toFun y') y :=
+    fun y => covDeriv_smoothVF_smoothAt Y X y
+  -- Lie-bracket sections smooth.
+  have h_VX_br : ∀ y, TangentSmoothAt
+      (fun y' => mlieBracket I (fun _ : M => v) X.toFun y') y :=
+    fun y => mlieBracket_tangentSmoothAt V.smooth X.smooth
+  have h_XV_br : ∀ y, TangentSmoothAt
+      (fun y' => mlieBracket I X.toFun (fun _ : M => v) y') y :=
+    fun y => mlieBracket_tangentSmoothAt X.smooth V.smooth
+  have h_XY_br : ∀ y, TangentSmoothAt
+      (fun y' => mlieBracket I X.toFun Y.toFun y') y :=
+    fun y => mlieBracket_tangentSmoothAt X.smooth Y.smooth
+  have h_YV_br : ∀ y, TangentSmoothAt
+      (fun y' => mlieBracket I Y.toFun (fun _ : M => v) y') y :=
+    fun y => mlieBracket_tangentSmoothAt Y.smooth V.smooth
+  have h_VY_br : ∀ y, TangentSmoothAt
+      (fun y' => mlieBracket I (fun _ : M => v) Y.toFun y') y :=
+    fun y => mlieBracket_tangentSmoothAt V.smooth Y.smooth
+  -- Jacobi identity at x from Mathlib (`leibniz_identity_mlieBracket_apply`).
+  -- Smoothness witnesses at level `minSmoothness ℝ 2`, downgraded from ∞.
+  have hV_2 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) (minSmoothness ℝ 2)
+      (fun y => (⟨y, (fun _ : M => v) y⟩ : TangentBundle I M)) x := by
+    rw [minSmoothness_of_isRCLikeNormedField]
+    exact (V.smooth x).of_le (by
+      show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
+      exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
+  have hX_2 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) (minSmoothness ℝ 2)
+      (fun y => (⟨y, X.toFun y⟩ : TangentBundle I M)) x := by
+    rw [minSmoothness_of_isRCLikeNormedField]
+    exact (X.smooth x).of_le (by
+      show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
+      exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
+  have hY_2 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) (minSmoothness ℝ 2)
+      (fun y => (⟨y, Y.toFun y⟩ : TangentBundle I M)) x := by
+    rw [minSmoothness_of_isRCLikeNormedField]
+    exact (Y.smooth x).of_le (by
+      show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
+      exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
+  -- `leibniz_identity_mlieBracket_apply` needs `IsManifold I (minSmoothness ℝ 3) M`;
+  -- provide it from `IsManifold I ∞ M` (`LEInfty` cascade on `ℕ∞ω`).
+  haveI hM3 : IsManifold I (minSmoothness ℝ 3) M := by
+    rw [minSmoothness_of_isRCLikeNormedField]; infer_instance
+  have h_jac := VectorField.leibniz_identity_mlieBracket_apply
+    (I := I) (M := M) (U := fun _ : M => v) (V := X.toFun) (W := Y.toFun)
+    hV_2 hX_2 hY_2
+  -- Bianchi I with (X', Y', Z') = (const v, X.toFun, Y.toFun).
+  have h_bianchi := bianchi_first (fun _ : M => v) X.toFun Y.toFun x
+    hV_smooth hX_smooth hY_smooth
+    h_dVY h_dXV h_dYX
+    h_VX_br h_XV_br h_XY_br h_YV_br h_VY_br
+    h_jac
+  -- First-pair antisymmetry on the 3rd Bianchi summand.
+  have h_antisym :
+      riemannCurvature Y.toFun (fun _ : M => v) X.toFun x
+        = -riemannCurvature (fun _ : M => v) Y.toFun X.toFun x :=
+    riemannCurvature_antisymm Y.toFun (fun _ : M => v) X.toFun x
+  rw [h_antisym] at h_bianchi
+  -- h_bianchi : R(V,X) Y + R(X,Y) V + - R(V,Y) X = 0
+  -- Goal: R(V,X) Y - R(V,Y) X = -R(X,Y) V  ⇔  (R(V,X) Y - R(V,Y) X) + R(X,Y) V = 0.
+  apply eq_neg_of_add_eq_zero_left
+  -- Rearrange h_bianchi via `abel`.
+  rw [show (riemannCurvature (fun _ : M => v) X.toFun Y.toFun x
+              - riemannCurvature (fun _ : M => v) Y.toFun X.toFun x
+            + riemannCurvature X.toFun Y.toFun (fun _ : M => v) x
+            : TangentSpace I x)
+        = riemannCurvature (fun _ : M => v) X.toFun Y.toFun x
+            + riemannCurvature X.toFun Y.toFun (fun _ : M => v) x
+            + -riemannCurvature (fun _ : M => v) Y.toFun X.toFun x from by abel]
+  exact h_bianchi
+
 /-- $\mathrm{Ric}(X, Y) = \mathrm{Ric}(Y, X)$.
 
 Reference: do Carmo §4 ex. 1.
 
-**Sorry: PRE-PAPER**. Closure path: trace-via-orthonormal-basis + Bianchi I +
-first-arg antisymmetry of $R$ + diagonal-zero (`riemannCurvature_inner_self_zero`).
-For each $e_i$ in an orthonormal basis, Bianchi I on $(\mathrm{const}\,e_i, X, Y)$
-gives $\langle R(e_i, X) Y, e_i\rangle - \langle R(e_i, Y) X, e_i\rangle = -\langle R(X, Y) e_i, e_i\rangle$;
-summing produces $\mathrm{Ric}(X, Y) - \mathrm{Ric}(Y, X) = -\mathrm{tr}(R(X, Y)) = 0$. -/
+Closure via:
+* `LinearMap.trace_eq_sum_inner` on `curvatureEndo X Y x` against
+  `stdOrthonormalBasis ℝ (T_xM)` (so each Ricci scalar is a sum of
+  $\langle b_i, R(\mathrm{const}\,b_i, X)\,Y\,x\rangle$ pairings),
+* `riemannCurvature_const_first_swap_eq_neg` per basis vector (Bianchi I +
+  antisym packaging),
+* `riemannCurvature_inner_self_zero` on $(X, Y, \mathrm{const}\,b_i)$ to kill
+  every summand.
+
+The hypothesis `h_interior` is required by `riemannCurvature_inner_self_zero`
+(via the Hessian-Lie identity on boundary-aware models). -/
 theorem ricci_symm
     [IsManifold I 2 M]
-    (X Y : SmoothVectorField I M) (x : M) :
+    (X Y : SmoothVectorField I M) (x : M)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I))) :
     Ric(X, Y) x = Ric(Y, X) x := by
-  sorry
+  classical
+  set b := stdOrthonormalBasis ℝ (TangentSpace I x) with hb_def
+  -- Expand each Ricci scalar as `∑ i, ⟪b i, R(const b i, ·) · x⟫_ℝ` via
+  -- `LinearMap.trace_eq_sum_inner`.
+  have h_RXY : Ric(X, Y) x =
+      ∑ i, ⟪b i, riemannCurvature (fun _ : M => (b i : E)) X.toFun Y.toFun x⟫_ℝ := by
+    show LinearMap.trace ℝ (TangentSpace I x) (curvatureEndo X Y x) = _
+    exact LinearMap.trace_eq_sum_inner _ b
+  have h_RYX : Ric(Y, X) x =
+      ∑ i, ⟪b i, riemannCurvature (fun _ : M => (b i : E)) Y.toFun X.toFun x⟫_ℝ := by
+    show LinearMap.trace ℝ (TangentSpace I x) (curvatureEndo Y X x) = _
+    exact LinearMap.trace_eq_sum_inner _ b
+  rw [h_RXY, h_RYX]
+  -- Per i: the two inner products are equal (their difference vanishes
+  -- by const-swap Bianchi + diagonal-zero).
+  refine Finset.sum_congr rfl (fun i _ => ?_)
+  rw [← sub_eq_zero, ← inner_sub_right,
+      riemannCurvature_const_first_swap_eq_neg (I := I) (M := M) (b i : E) X Y x]
+  -- Goal: ⟪b i, -R(X, Y) (const b i) x⟫_ℝ = 0
+  rw [inner_neg_right, neg_eq_zero]
+  -- Goal: ⟪b i, R(X, Y) (const b i) x⟫_ℝ = 0
+  -- Use real_inner_comm + riemannCurvature_inner_self_zero (with Z = cF[b i]).
+  rw [real_inner_comm]
+  -- Goal: ⟪R(X, Y) (const b i) x, b i⟫_ℝ = 0 (def-eq metricInner via hm.metric).
+  exact riemannCurvature_inner_self_zero X Y
+    (SmoothVectorField.const (I := I) (M := M) (b i : E)) x h_interior
 
 /-- The **Ricci tensor** at $x$ as a bilinear form $T_xM \times T_xM \to \mathbb{R}$,
 $(V, W) \mapsto \mathrm{Ric}(V, W)(x)$ with $V, W$ extended to constant sections.
