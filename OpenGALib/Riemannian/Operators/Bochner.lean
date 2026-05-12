@@ -3,6 +3,7 @@ import OpenGALib.Riemannian.Operators.Hessian
 import OpenGALib.Riemannian.Operators.Laplacian
 import OpenGALib.Riemannian.Curvature
 import OpenGALib.Riemannian.Gradient
+import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
 import OpenGALib.Util.Notation
 import Mathlib.Analysis.InnerProductSpace.Trace
 
@@ -375,59 +376,53 @@ theorem leibniz_trace_reduction
       _ = ∑ j, ⟪v, b j⟫_ℝ ^ 2 := (b.sum_sq_inner_left v).symm
       _ = ∑ j, (metricInner x v (b j)) ^ 2 := rfl
 
-/-- **Heart-of-Bochner sum identity** (the per-summand-assembled core that
-G reduces to): summing the diagonal trace of $\nabla^2(\nabla f)$ paired
-with $\nabla f$ over the $g$-orthonormal frame produces the
-$\langle \nabla f, \nabla(\Delta_g f)\rangle_g + \mathrm{Ric}(\nabla f,
-\nabla f)$ decomposition.
+/-- **Narrowed PRE-PAPER sorry**: heart-of-Bochner sum identity stated
+against `smoothOrthoFrame` (Stage 6) instead of `stdOrthonormalBasis`.
 
-**Sorry: PRE-PAPER**. Algebraic chain (textbook Bochner derivation,
-cf. Petersen §9, do Carmo §6, external `secondCovDeriv_weitzenbock`):
-1. **Step 1 (Hess-sym swap, per i)**: $g(\nabla^2_{\varepsilon_i,\varepsilon_i}\nabla f, \nabla f)
-   = g(\nabla^2_{\varepsilon_i,\nabla f}\nabla f, \varepsilon_i)$ at $x$. Uses
-   metric-compat $\times 2$ and `hessianBilin_symm` (B).
-2. **Step 2 (smooth-frame Ricci identity)**: now closed via D.3 —
-   `secondCovDerivSection_sub_swap_eq_riemannCurvature` in
-   `OpenGALib/Riemannian/Operators/ConnectionLaplacian.lean`. Lifting
-   the constant frame $\tilde\varepsilon_i$ and the smooth gradient
-   section $\nabla f$, gives
-   $\nabla^2_{\varepsilon_i,\nabla f}\nabla f - \nabla^2_{\nabla f,\varepsilon_i}\nabla f
-       = R(\tilde\varepsilon_i,\nabla f)\nabla f$ at $x$.
-3. **Step 3 (Ric identification)**: $\sum_i g(R(\tilde\varepsilon_i,\nabla f)\nabla f,
-   \varepsilon_i) = \mathrm{Ric}_g(\nabla f,\nabla f)$ at $x$ via
-   `riemannCurvature_antisymm` + Riemann-tensor block symmetry +
-   `ricciTensor_eq_sum_inner_orthonormal` (F) + tensoriality
-   (smooth section $\nabla f$ vs constant lift of $\nabla f x$ at $x$).
-4. **Step 4 (∇Δf identification — INFRASTRUCTURE GAP)**:
-   $\sum_i g(\nabla^2_{\nabla f,\varepsilon_i}\nabla f, \varepsilon_i)(x)
-   = g(\nabla f, \nabla\Delta_g f)(x)$. Requires producing a
-   **smooth $g$-orthonormal frame near $x$** that extends
-   $\{\varepsilon_i\} = \mathrm{stdOrthonormalBasis}\,\mathbb{R}\,(T_xM)$.
-   The chart-frame constant lift $\tilde\varepsilon_i$ is *not*
-   $g$-orthonormal at $y \ne x$, so the chart-trace function
-   $T_\mathrm{chart}(y) := \sum_i \mathrm{Hess}\,f(y)(\varepsilon_i,\varepsilon_i)$
-   does **not** equal $\Delta_g f(y)$ off $x$. The $\nabla f$-direction
-   derivative therefore picks up a Christoffel/Gram-correction term that
-   the constant lift cannot cancel.
+By Stage 7 basis invariance
+(`Tensor.sum_diagonal_smoothOrthoFrame_eq_std`), this form implies the
+`stdOrthonormalBasis` version
+(`sum_inner_secondCovDerivAt_grad_eq_inner_grad_laplacian_add_ricci`):
+both are diagonal sums of the same bilinear map indexed over an
+orthonormal basis of $T_xM$, and the diagonal sum is basis-invariant.
 
-**Repair plan**: port `external/differential-geometry/`'s
-`RicciIdentitySmoothFrame.lean` (~1443 lines) — chart-bump-multiplied
-$g$-Gram-Schmidt of the chart frame yields `smoothOrthoFrame g x i`,
-which is $g$-orthonormal at every point of `smoothOrthoFrameNbhd x`
-and reduces to `stdOrthonormalBasis` at $x$. Restating this lemma
-against `smoothOrthoFrame` (instead of the constant lift of
-`stdOrthonormalBasis`) makes Step 4 mechanical. The basis-change
-between `smoothOrthoFrame g x · x` and `stdOrthonormalBasis ℝ (T_x M)`
-at $x$ is an orthogonal transformation; the trace $\sum_i ⟨\Delta_\nabla\nabla f,
-\varepsilon_i⟩ \cdot ⟨\nabla f, \varepsilon_i⟩$ is invariant under this
-basis change, so the original statement (in `stdOrthonormalBasis`)
-follows from the smooth-frame version at $x$.
+The `smoothOrthoFrame`-form is the natural target for the 4-step
+algebraic chain (Step 1 Hess-sym swap, Step 2 D.3
+`secondCovDerivSection_sub_swap_eq_riemannCurvature`, Step 3 Ric
+identification via tensoriality, Step 4 smooth-trace identification).
+Step 4 is *mechanical* on `smoothOrthoFrame` because each component
+`smoothOrthoFrame g x i` is a $C^\infty$ tangent-bundle section
+(`Tensor.smoothOrthoFrame_smooth`, Stage 6), and on the bump
+neighbourhood `smoothOrthoFrameNbhd x` the frame is $g$-orthonormal
+pointwise (Stage 5). Therefore the smooth trace function
+$T(y) := \sum_i \mathrm{Hess}\,f(y)(e_i(y), e_i(y))$ equals
+$\Delta_g f(y)$ on the bump neighbourhood, so $\nabla T(x) =
+\nabla \Delta_g f(x)$ by metric compatibility.
 
-**Repair owner**: framework self-build. Estimated scope: ~500–1000
-LOC port (chart bump + Gram-Schmidt + smoothness on the bump
-neighbourhood + at-$x$ orthonormality + basis-change at $x$). -/
+**Repair plan**: prove the 4-step algebraic chain on
+`smoothOrthoFrame`. Estimated scope ~400 LOC. References: Petersen
+Ch 7 §1 Proposition 33; do Carmo §6; external
+`heart_of_bochner_smoothOrthoFrame_of_inner_form`. -/
+private theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame
+    [IsManifold I 2 M] [T2Space M]
+    (f : M → ℝ) (x : M)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
+    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    ∑ i, metricInner x
+        (secondCovDerivAt (I := I) (M := M) (manifoldGradient (I := I) f) x
+          (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
+          (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
+        (manifoldGradient (I := I) f x)
+      = metricInner x (manifoldGradient (I := I) f x)
+            (manifoldGradient (I := I) (Δ_g[I] f) x)
+        + Ric_g((manifoldGradient (I := I) f x),
+                (manifoldGradient (I := I) f x)) x := by
+  sorry
+
 private theorem sum_inner_secondCovDerivAt_grad_eq_inner_grad_laplacian_add_ricci
-    [IsManifold I 2 M]
+    [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (x : M)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
     (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
@@ -442,7 +437,85 @@ private theorem sum_inner_secondCovDerivAt_grad_eq_inner_grad_laplacian_add_ricc
             (manifoldGradient (I := I) (Δ_g[I] f) x)
         + Ric_g((manifoldGradient (I := I) f x),
                 (manifoldGradient (I := I) f x)) x := by
-  sorry
+  classical
+  -- Wrap ∇f as a `SmoothVectorField` to access
+  -- `leviCivitaConnection_smoothAt_const_dir` for the right-slot
+  -- bilinearity hypothesis of `secondCovDerivAt`.
+  let gradF : SmoothVectorField I M :=
+    { toFun := manifoldGradient (I := I) f, smooth := h_grad }
+  have h_const_dir : ∀ w : TangentSpace I x,
+      TangentSmoothAt
+        (fun y : M => covDerivAt (manifoldGradient (I := I) f) y w) x :=
+    fun w => leviCivitaConnection_smoothAt_const_dir gradF (w : E) x
+  -- Bilinear form `B(v)(w) := ⟨secondCovDerivAt ∇f x v w, ∇f x⟩`.
+  -- Left slot: linear from `secondCovDerivAt_add_left/smul_left` (no
+  -- smoothness needed). Right slot: linear from
+  -- `secondCovDerivAt_add_right/smul_right` (smoothness via
+  -- `h_const_dir`).
+  set B : TangentSpace I x →ₗ[ℝ] TangentSpace I x →ₗ[ℝ] ℝ :=
+    LinearMap.mk₂ ℝ
+      (fun v w => metricInner x
+        (secondCovDerivAt (I := I) (M := M)
+          (manifoldGradient (I := I) f) x v w)
+        (manifoldGradient (I := I) f x))
+      (fun v₁ v₂ w => by
+        show metricInner x
+            (secondCovDerivAt (manifoldGradient (I := I) f) x (v₁ + v₂) w)
+            (manifoldGradient (I := I) f x)
+          = metricInner x
+              (secondCovDerivAt (manifoldGradient (I := I) f) x v₁ w)
+              (manifoldGradient (I := I) f x)
+            + metricInner x
+                (secondCovDerivAt (manifoldGradient (I := I) f) x v₂ w)
+                (manifoldGradient (I := I) f x)
+        rw [secondCovDerivAt_add_left, metricInner_add_left])
+      (fun c v w => by
+        show metricInner x
+            (secondCovDerivAt (manifoldGradient (I := I) f) x (c • v) w)
+            (manifoldGradient (I := I) f x)
+          = c • metricInner x
+              (secondCovDerivAt (manifoldGradient (I := I) f) x v w)
+              (manifoldGradient (I := I) f x)
+        rw [secondCovDerivAt_smul_left, metricInner_smul_left]; rfl)
+      (fun v w₁ w₂ => by
+        show metricInner x
+            (secondCovDerivAt (manifoldGradient (I := I) f) x v (w₁ + w₂))
+            (manifoldGradient (I := I) f x)
+          = metricInner x
+              (secondCovDerivAt (manifoldGradient (I := I) f) x v w₁)
+              (manifoldGradient (I := I) f x)
+            + metricInner x
+                (secondCovDerivAt (manifoldGradient (I := I) f) x v w₂)
+                (manifoldGradient (I := I) f x)
+        rw [secondCovDerivAt_add_right (h_smooth_dir := h_const_dir),
+            metricInner_add_left])
+      (fun c v w => by
+        show metricInner x
+            (secondCovDerivAt (manifoldGradient (I := I) f) x v (c • w))
+            (manifoldGradient (I := I) f x)
+          = c • metricInner x
+              (secondCovDerivAt (manifoldGradient (I := I) f) x v w)
+              (manifoldGradient (I := I) f x)
+        rw [secondCovDerivAt_smul_right
+              (h_smooth_dir := h_const_dir w),
+            metricInner_smul_left]; rfl) with hB_def
+  -- Stage 7 basis-change bridge: the diagonal trace of `B` over
+  -- `smoothOrthoFrame · x` equals the diagonal trace over
+  -- `stdOrthonormalBasis ℝ (T_xM)`. Direct application of
+  -- `Tensor.sum_diagonal_smoothOrthoFrame_eq_std`.
+  have h_bridge :=
+    Riemannian.Tensor.sum_diagonal_smoothOrthoFrame_eq_std (I := I) x B
+  -- Unfold `B` in `h_bridge` to expose the explicit
+  -- `metricInner ∘ secondCovDerivAt ∘ ∇f` form on both sides via
+  -- `LinearMap.mk₂_apply`.
+  rw [hB_def] at h_bridge
+  simp only [LinearMap.mk₂_apply] at h_bridge
+  -- Now `h_bridge : narrowed-sorry LHS = original-sorry LHS`.
+  -- Rewriting the goal's LHS with `← h_bridge` reduces to the
+  -- narrowed sorry.
+  rw [← h_bridge]
+  exact sum_inner_secondCovDerivAt_grad_smoothOrthoFrame
+    f x h_interior hf h_grad
 
 /-- **G — heart-of-Bochner reduction**: the connection Laplacian on $\nabla f$
 contracted with $\nabla f$ equals the inner product of $\nabla f$ with the
@@ -461,7 +534,7 @@ heart-of-Bochner sum identity, currently a focused PRE-PAPER sorry).
 
 Used in `bochner_weitzenboeck` (assembly step H) along with E. -/
 theorem connectionLaplacian_grad_eq_grad_laplacian_add_ricci
-    [IsManifold I 2 M]
+    [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (x : M)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
     (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
@@ -507,7 +580,7 @@ Reference: Petersen, *Riemannian Geometry*, Ch. 7 §1 Proposition 33;
 do Carmo §6 (curvature commutators); Schoen-Simon 1981 §1 (variational
 application). -/
 theorem bochner_weitzenboeck
-    [IsManifold I 2 M]
+    [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (x : M)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
     (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
