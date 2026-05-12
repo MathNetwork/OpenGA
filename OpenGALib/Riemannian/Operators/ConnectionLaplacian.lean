@@ -76,6 +76,43 @@ noncomputable def secondCovDerivAt
             (covDerivAt (fun _ : M => (w : TangentSpace I x)) x v) :=
   rfl
 
+/-- $(\nabla^2 Z)(0, w) = 0$: the second covariant derivative vanishes when
+the outer direction is zero. Pure CLM linearity in the outer direction slot;
+no smoothness hypothesis. -/
+@[simp] theorem secondCovDerivAt_zero_left
+    (Z : Π x : M, TangentSpace I x) (x : M) (w : TangentSpace I x) :
+    secondCovDerivAt (I := I) (M := M) Z x 0 w = 0 := by
+  unfold secondCovDerivAt
+  rw [(covDerivAt (fun y : M => covDerivAt Z y w) x).map_zero,
+      (covDerivAt (fun _ : M => w) x).map_zero,
+      (covDerivAt Z x).map_zero]
+  abel
+
+/-- $(\nabla^2 Z)(v_1 + v_2, w) = (\nabla^2 Z)(v_1, w) + (\nabla^2 Z)(v_2, w)$.
+Pure CLM linearity in the outer direction slot; no smoothness hypothesis. -/
+theorem secondCovDerivAt_add_left
+    (Z : Π x : M, TangentSpace I x) (x : M) (v₁ v₂ w : TangentSpace I x) :
+    secondCovDerivAt (I := I) (M := M) Z x (v₁ + v₂) w =
+      secondCovDerivAt Z x v₁ w + secondCovDerivAt Z x v₂ w := by
+  unfold secondCovDerivAt
+  rw [(covDerivAt (fun y : M => covDerivAt Z y w) x).map_add,
+      (covDerivAt (fun _ : M => w) x).map_add,
+      (covDerivAt Z x).map_add]
+  abel
+
+/-- $(\nabla^2 Z)(c \cdot v, w) = c \cdot (\nabla^2 Z)(v, w)$.
+Pure CLM linearity in the outer direction slot; no smoothness hypothesis. -/
+theorem secondCovDerivAt_smul_left
+    (Z : Π x : M, TangentSpace I x) (x : M)
+    (c : ℝ) (v w : TangentSpace I x) :
+    secondCovDerivAt (I := I) (M := M) Z x (c • v) w =
+      c • secondCovDerivAt Z x v w := by
+  unfold secondCovDerivAt
+  rw [(covDerivAt (fun y : M => covDerivAt Z y w) x).map_smul,
+      (covDerivAt (fun _ : M => w) x).map_smul,
+      (covDerivAt Z x).map_smul]
+  rw [smul_sub]
+
 set_option backward.isDefEq.respectTransparency false in
 /-- The **connection Laplacian** $\Delta_\nabla Z$ on a tangent vector
 field $Z : \Pi x : M, T_x M$, computed against the $g$-orthonormal frame
