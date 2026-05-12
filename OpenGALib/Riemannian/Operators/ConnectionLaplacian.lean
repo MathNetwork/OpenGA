@@ -113,6 +113,146 @@ theorem secondCovDerivAt_smul_left
       (covDerivAt Z x).map_smul]
   rw [smul_sub]
 
+/-! ### Right-slot bilinearity
+
+Right-slot (inner direction) bilinearity is **not** automatic from CLM
+properties of $\nabla_v$: the inner $w$ appears inside the section
+`fun y => covDerivAt Z y w`, and to commute the section sum past the
+outer `covDerivAt (·) x v` we need `covDeriv_add_field` /
+`covDeriv_smul_const_field`, both of which require smoothness of
+the section at $x$.
+
+For $Z = \nabla f$ with smooth gradient, the relevant sections
+`y ↦ covDerivAt Z y w` are smooth at $x$ via
+`leviCivitaConnection_smoothAt_const_dir` on the
+`SmoothVectorField` wrapper around $\nabla f$. We expose the
+right-slot lemmas with this smoothness as an explicit hypothesis,
+so they are usable for any `Z` whose connection-on-constant-direction
+sections are smooth at $x$ — including the heart-of-Bochner setting. -/
+
+/-- Pi-level additivity of the section `y ↦ covDerivAt Z y w` in the
+constant direction $w$. Pure CLM additivity, no smoothness needed:
+$\nabla_y$ is a CLM in its second arg, so the sum splits pointwise. -/
+private lemma covDerivAt_const_dir_section_add
+    (Z : Π x : M, TangentSpace I x) (x : M) (w₁ w₂ : TangentSpace I x) :
+    (fun y : M => covDerivAt Z y (w₁ + w₂))
+      = (fun y : M => covDerivAt Z y w₁) + (fun y : M => covDerivAt Z y w₂) := by
+  funext y
+  exact (covDerivAt Z y).map_add w₁ w₂
+
+/-- Pi-level scalar multiplication of the section
+`y ↦ covDerivAt Z y w` in the constant direction $w$. -/
+private lemma covDerivAt_const_dir_section_smul
+    (Z : Π x : M, TangentSpace I x) (x : M) (c : ℝ) (w : TangentSpace I x) :
+    (fun y : M => covDerivAt Z y (c • w))
+      = c • (fun y : M => covDerivAt Z y w) := by
+  funext y
+  exact (covDerivAt Z y).map_smul c w
+
+/-- $(\nabla^2 Z)(v, 0) = 0$: the second covariant derivative vanishes
+when the inner direction is zero. Inner CLM-zero in both occurrences
+of $w$. No smoothness hypothesis. -/
+@[simp] theorem secondCovDerivAt_zero_right
+    (Z : Π x : M, TangentSpace I x) (x : M) (v : TangentSpace I x) :
+    secondCovDerivAt (I := I) (M := M) Z x v 0 = 0 := by
+  unfold secondCovDerivAt
+  -- (fun y => covDerivAt Z y 0) = 0 (Pi-zero, by CLM map_zero pointwise).
+  have h1 : (fun y : M => covDerivAt Z y (0 : TangentSpace I x))
+      = (fun _ : M => (0 : TangentSpace I x)) := by
+    funext y; exact (covDerivAt Z y).map_zero
+  rw [h1]
+  -- covDerivAt of the zero Pi-section at any direction is 0
+  -- (`CovariantDerivative.zero` says `lcc.toFun 0 = 0`).
+  have hZero : covDerivAt (fun _ : M => (0 : TangentSpace I x)) x v = 0 := by
+    show ((leviCivitaConnection (I := I) (M := M)).toFun 0 x) v = 0
+    rw [CovariantDerivative.zero]; rfl
+  rw [hZero, (covDerivAt Z x).map_zero]
+  abel
+
+/-- $(\nabla^2 Z)(v, w_1 + w_2) = (\nabla^2 Z)(v, w_1) + (\nabla^2 Z)(v, w_2)$,
+under smoothness of $y \mapsto \nabla_y Z(w_i)$ at $x$ for each
+$w \in \{w_1, w_2\}$.
+
+The smoothness hypothesis is the natural condition for $Z$ in the
+heart-of-Bochner setting: for $Z = \nabla f$ with smooth gradient,
+`leviCivitaConnection_smoothAt_const_dir` on the `SmoothVectorField`
+wrapper supplies it. -/
+theorem secondCovDerivAt_add_right
+    (Z : Π x : M, TangentSpace I x) (x : M) (v w₁ w₂ : TangentSpace I x)
+    (h_smooth_dir : ∀ w : TangentSpace I x,
+      TangentSmoothAt (fun y : M => covDerivAt Z y w) x) :
+    secondCovDerivAt (I := I) (M := M) Z x v (w₁ + w₂) =
+      secondCovDerivAt Z x v w₁ + secondCovDerivAt Z x v w₂ := by
+  unfold secondCovDerivAt
+  -- Outer term: distribute via covDeriv_add_field on the section sum.
+  rw [covDerivAt_const_dir_section_add Z x w₁ w₂]
+  -- `covDerivAt (s₁ + s₂) x v = covDerivAt s₁ x v + covDerivAt s₂ x v` via
+  -- covDeriv_add_field with X := const v.
+  have h_outer : covDerivAt
+        ((fun y : M => covDerivAt Z y w₁) + (fun y : M => covDerivAt Z y w₂)) x v
+      = covDerivAt (fun y : M => covDerivAt Z y w₁) x v
+        + covDerivAt (fun y : M => covDerivAt Z y w₂) x v := by
+    have h := covDeriv_add_field (fun _ : M => v)
+      (fun y : M => covDerivAt Z y w₁) (fun y : M => covDerivAt Z y w₂) x
+      (h_smooth_dir w₁) (h_smooth_dir w₂)
+    -- h : (∇[const v] (s₁ + s₂)) x = (∇[const v] s₁) x + (∇[const v] s₂) x
+    -- Unfolds to covDerivAt _ x v on each side.
+    exact h
+  rw [h_outer]
+  -- Inner-direction term: const(w₁+w₂) = const w₁ + const w₂ pointwise,
+  -- and covDerivAt (constant section) is CLM in the inner argument.
+  -- (fun _ => w₁ + w₂) = (fun _ => w₁) + (fun _ => w₂) (pointwise sum of consts).
+  have h_const_add : (fun _ : M => (w₁ + w₂ : TangentSpace I x))
+      = (fun _ : M => (w₁ : TangentSpace I x))
+          + (fun _ : M => (w₂ : TangentSpace I x)) := by
+    funext y; rfl
+  rw [h_const_add]
+  -- covDerivAt (s₁ + s₂) x v = covDerivAt s₁ x v + covDerivAt s₂ x v on const sums
+  -- (smoothness of constant sections is automatic).
+  have h_const_w₁_smooth : TangentSmoothAt (fun _ : M => (w₁ : TangentSpace I x)) x :=
+    (SmoothVectorField.const (I := I) (M := M) (w₁ : E)).smoothAt x
+  have h_const_w₂_smooth : TangentSmoothAt (fun _ : M => (w₂ : TangentSpace I x)) x :=
+    (SmoothVectorField.const (I := I) (M := M) (w₂ : E)).smoothAt x
+  have h_inner_dir : covDerivAt
+        ((fun _ : M => (w₁ : TangentSpace I x)) + (fun _ : M => w₂)) x v
+      = covDerivAt (fun _ : M => (w₁ : TangentSpace I x)) x v
+        + covDerivAt (fun _ : M => (w₂ : TangentSpace I x)) x v := by
+    have h := covDeriv_add_field (fun _ : M => v)
+      (fun _ : M => (w₁ : TangentSpace I x)) (fun _ : M => (w₂ : TangentSpace I x))
+      x h_const_w₁_smooth h_const_w₂_smooth
+    exact h
+  rw [h_inner_dir, (covDerivAt Z x).map_add]
+  abel
+
+/-- $(\nabla^2 Z)(v, c \cdot w) = c \cdot (\nabla^2 Z)(v, w)$, under
+the same smoothness hypothesis as `secondCovDerivAt_add_right`. -/
+theorem secondCovDerivAt_smul_right
+    (Z : Π x : M, TangentSpace I x) (x : M)
+    (c : ℝ) (v w : TangentSpace I x)
+    (h_smooth_dir : TangentSmoothAt (fun y : M => covDerivAt Z y w) x) :
+    secondCovDerivAt (I := I) (M := M) Z x v (c • w) =
+      c • secondCovDerivAt Z x v w := by
+  unfold secondCovDerivAt
+  rw [covDerivAt_const_dir_section_smul Z x c w]
+  -- covDeriv_smul_const_field with field = (fun y => covDerivAt Z y w), constant c
+  have h_outer : covDerivAt (c • (fun y : M => covDerivAt Z y w)) x v
+      = c • covDerivAt (fun y : M => covDerivAt Z y w) x v := by
+    exact covDeriv_smul_const_field (fun _ : M => v)
+      (fun y : M => covDerivAt Z y w) x c h_smooth_dir
+  rw [h_outer]
+  -- Inner-direction: const (c • w) = c • const w (pointwise scalar multiple).
+  have h_const_smul : (fun _ : M => (c • w : TangentSpace I x))
+      = c • (fun _ : M => (w : TangentSpace I x)) := by
+    funext y; rfl
+  rw [h_const_smul]
+  have h_const_w_smooth : TangentSmoothAt (fun _ : M => (w : TangentSpace I x)) x :=
+    (SmoothVectorField.const (I := I) (M := M) (w : E)).smoothAt x
+  have h_inner_smul : covDerivAt (c • (fun _ : M => (w : TangentSpace I x))) x v
+      = c • covDerivAt (fun _ : M => (w : TangentSpace I x)) x v :=
+    covDeriv_smul_const_field (fun _ : M => v)
+      (fun _ : M => (w : TangentSpace I x)) x c h_const_w_smooth
+  rw [h_inner_smul, (covDerivAt Z x).map_smul, smul_sub]
+
 set_option backward.isDefEq.respectTransparency false in
 /-- The **connection Laplacian** $\Delta_\nabla Z$ on a tangent vector
 field $Z : \Pi x : M, T_x M$, computed against the $g$-orthonormal frame
