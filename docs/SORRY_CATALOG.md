@@ -25,11 +25,11 @@ public count.
 |--------|-----------|------------------|-------|
 | Algebraic | 5 | 0 | 5 |
 | Tensor | 9 | 0 | 9 |
-| Riemannian | 6 | 0 | 6 |
+| Riemannian | 5 | 0 | 5 |
 | GeometricMeasureTheory | 5 | 10 | 15 |
-| **Total** | **25** | **10** | **35** |
+| **Total** | **24** | **10** | **34** |
 
-CI workflow `.github/workflows/ci.yml` asserts the total equals 35 (`EXPECTED=35`).
+CI workflow `.github/workflows/ci.yml` asserts the total equals 34 (`EXPECTED=34`).
 
 ## Algebraic (5)
 
@@ -55,7 +55,7 @@ CI workflow `.github/workflows/ci.yml` asserts the total equals 35 (`EXPECTED=35
 | `DifferentialForm/Basic.lean:326` | `pullback_ederiv` (outer) | PRE-PAPER | Outer goal of same proof. |
 | `Product/Pretrivialization.lean:281` | `tensorProductCoordChange_contMDiffOn` | PRE-PAPER | Bundle pretrivialization plumbing; Mathlib gap on tensor-product bundle smoothness. |
 
-## Riemannian (6)
+## Riemannian (5)
 
 | File:line | Identifier | Classification | Notes |
 |-----------|-----------|---------------|-------|
@@ -63,8 +63,7 @@ CI workflow `.github/workflows/ci.yml` asserts the total equals 35 (`EXPECTED=35
 | `Curvature.lean:256` | `ricci_symm` | PRE-PAPER | Symmetry of Ricci. Closure path: trace-via-orthonormal-basis + Bianchi I (closed) + diagonal-zero (above). |
 | `Connection.lean:1387` | `koszulCovDeriv_const_smoothAt` | PRE-PAPER | Path-B cascade leftover. Closure: write `metricRiesz_section_smoothAt` against `Bundle.ContMDiffRiemannianMetric` API via chart-pullback unwrapping of the Riesz isomorphism. Self-build follow-up. |
 | `Gradient.lean:76` | `manifoldGradient_smooth_of_smooth` | PRE-PAPER | Gradient smoothness propagation: $g \in C^\infty \Rightarrow \nabla^M g$ is $C^\infty$ as bundle section. Mathematically trivial; framework-side closure shares the `metricRiesz_section_smoothAt` chartGramMatrix path with `koszulCovDeriv_const_smoothAt`. Once that primitive lands, this is one-line composition. |
-| `Operators/Bochner.lean:96` | `leibniz_trace_reduction` (E) | PRE-PAPER | Bochner intermediate: $\tfrac12 \Delta_g \|\nabla f\|^2 = \langle \Delta_\nabla \nabla f, \nabla f\rangle + \|\nabla^2 f\|^2$. Closure path: metric-compat ×2 on $\langle \nabla f, \nabla f\rangle$ + trace via `stdOrthonormalBasis` + `connectionLaplacian_eq_sum_secondCovDerivAt` + `manifoldGradient_smooth_of_smooth` (for $\nabla(\|\nabla f\|^2)$). Detailed plan in docstring. |
-| `Operators/Bochner.lean:135` | `connectionLaplacian_grad_eq_grad_laplacian_add_ricci` (G) | PRE-PAPER | Bochner intermediate: $\langle \Delta_\nabla \nabla f, \nabla f\rangle = \langle \nabla f, \nabla(\Delta_g f)\rangle + \mathrm{Ric}(\nabla f, \nabla f)$. Closure path: D.2 (Ricci identity, closed) + B (Hessian symmetry, closed modulo gradient smoothness) + F (Ricci trace formula, closed) + grad duality. Detailed plan in docstring. |
+| `Operators/Bochner.lean` | `connectionLaplacian_grad_eq_grad_laplacian_add_ricci` (G) | PRE-PAPER | Bochner intermediate: $\langle \Delta_\nabla \nabla f, \nabla f\rangle = \langle \nabla f, \nabla(\Delta_g f)\rangle + \mathrm{Ric}(\nabla f, \nabla f)$. Closure path: D.2 (Ricci identity, closed) + B (Hessian symmetry, closed modulo gradient smoothness) + F (Ricci trace formula, closed) + grad duality. Detailed plan in docstring. |
 
 ## GeometricMeasureTheory (15)
 

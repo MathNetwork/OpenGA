@@ -284,38 +284,96 @@ $$\tfrac{1}{2}\,\Delta_g \, |\nabla f|_g^2 \;=\;
    \langle \Delta_\nabla \nabla f,\, \nabla f \rangle_g
    + |\nabla^2 f|_g^2.$$
 
-This is the trace form of the Leibniz product rule applied twice to
-$\langle \nabla f, \nabla f\rangle_g$ in the $g$-orthonormal frame
-`stdOrthonormalBasis ℝ (TangentSpace I x)`.
-
-**Sorry: PRE-PAPER**. Closure path:
-1. apply `leviCivitaConnection_metric_compatible` to $(\nabla f, \nabla f, \varepsilon_i)$
-   to get $\nabla_{\varepsilon_i} \langle \nabla f, \nabla f\rangle_g
-       = 2 \langle \nabla_{\varepsilon_i} \nabla f, \nabla f\rangle_g$;
-2. apply metric-compat again to differentiate $\langle \nabla_{\varepsilon_i} \nabla f, \nabla f\rangle_g$
-   in the $\varepsilon_i$-direction, yielding
-   $\langle \nabla_{\varepsilon_i} \nabla_{\varepsilon_i} \nabla f, \nabla f\rangle_g
-     + \langle \nabla_{\varepsilon_i} \nabla f, \nabla_{\varepsilon_i} \nabla f\rangle_g$;
-3. sum over $i$, identify the second sum with $|\nabla^2 f|_g^2$ via
-   `frobeniusSq` in the $g$-orthonormal frame;
-4. reduce the iterated chart-coord trace
-   $\sum_i \mathrm{mfderiv}^2 \,(|\nabla f|^2_g)\,\varepsilon_i\,\varepsilon_i$
-   to $\Delta_g(|\nabla f|^2_g)\,(x)$ via `scalarLaplacian` definition + the
-   Christoffel-correction matching of `secondCovDerivAt` against
-   `connectionLaplacian` (`connectionLaplacian_eq_sum_secondCovDerivAt`).
+Combines `hessian_gradientNormSq_apply_chartFrame` (per-direction Leibniz
+expansion) summed over `stdOrthonormalBasis ℝ (TangentSpace I x)`,
+with `connectionLaplacian_eq_sum_secondCovDerivAt` for the trace identification
+and `OrthonormalBasis.sum_sq_inner_left` for the Hessian Frobenius²
+identification (orthonormal basis decomposition of $\|\nabla_{\varepsilon_i}
+\nabla f\|_g^2$).
 
 Used in `bochner_weitzenboeck` (assembly step H) along with G. -/
 theorem leibniz_trace_reduction
     [IsManifold I 2 M]
     (f : M → ℝ) (x : M)
-    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
-    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
     (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
               (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
     (1 / 2 : ℝ) * (Δ_g[I] ‖grad_g[I] f‖²_g) x
       = ⟪connectionLaplacian (grad_g[I] f) x, (grad_g[I] f) x⟫_g
         + ‖hess_g[I] f‖²_g x := by
-  sorry
+  show (1 / 2 : ℝ) * Operators.scalarLaplacian (I := I) (M := M) (‖grad_g[I] f‖²_g) x
+      = metricInner x
+          (connectionLaplacian (I := I) (M := M) (manifoldGradient (I := I) f) x)
+          (manifoldGradient (I := I) f x)
+        + frobeniusSq (I := I) (M := M) (hessianBilin (I := I) f) x
+  unfold scalarLaplacian
+  rw [Finset.mul_sum]
+  -- Per-summand expansion via the helper, with `(1/2) * 2 = 1`
+  have h_summand : ∀ i,
+      (1 / 2 : ℝ) * hessian (I := I) (M := M) (‖grad_g[I] f‖²_g)
+        (fun _ : M => ((stdOrthonormalBasis ℝ (TangentSpace I x)) i
+                        : TangentSpace I x))
+        (fun _ : M => ((stdOrthonormalBasis ℝ (TangentSpace I x)) i
+                        : TangentSpace I x)) x
+      = metricInner x
+            (secondCovDerivAt (I := I) (M := M) (manifoldGradient (I := I) f) x
+              ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)
+              ((stdOrthonormalBasis ℝ (TangentSpace I x)) i))
+            (manifoldGradient (I := I) f x)
+          + metricInner x
+              (covDerivAt (manifoldGradient (I := I) f) x
+                ((stdOrthonormalBasis ℝ (TangentSpace I x)) i))
+              (covDerivAt (manifoldGradient (I := I) f) x
+                ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)) := by
+    intro i
+    rw [hessian_gradientNormSq_apply_chartFrame f x _ h_grad]
+    ring
+  rw [Finset.sum_congr rfl (fun i _ => h_summand i), Finset.sum_add_distrib]
+  -- Goal:
+  --   ∑ᵢ metricInner x (sCD ∇f x εᵢ εᵢ) (∇f x)
+  --   + ∑ᵢ metricInner x (covD ∇f x εᵢ) (covD ∇f x εᵢ)
+  --   = metricInner x (connectionLaplacian (∇f) x) (∇f x) + frobeniusSq (hessianBilin f) x
+  congr 1
+  · -- First sum: bilinearity of metricInner + connectionLaplacian as trace bridge
+    rw [connectionLaplacian_eq_sum_secondCovDerivAt]
+    -- Goal: ∑ᵢ ⟨sCD εᵢ εᵢ, ∇f⟩ = ⟨∑ᵢ sCD εᵢ εᵢ, ∇f⟩
+    -- via `sum_inner` on the InnerProductSpace ℝ (TangentSpace I x) instance
+    -- (`metricInner x` = `⟪·,·⟫` def-eq via RiemannianBundle routing)
+    exact (sum_inner Finset.univ
+      (fun i =>
+        secondCovDerivAt (I := I) (M := M) (manifoldGradient (I := I) f) x
+          ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)
+          ((stdOrthonormalBasis ℝ (TangentSpace I x)) i))
+      (manifoldGradient (I := I) f x)).symm
+  · -- Second sum: ∑ᵢ ‖covD ∇f x εᵢ‖² = frobeniusSq (hessianBilin f) x
+    -- frobeniusSq B x = ∑ᵢ ∑ⱼ (B x εᵢ εⱼ)²; per-i this is ‖covD ∇f x εᵢ‖² via
+    -- orthonormal basis decomposition (`OrthonormalBasis.sum_sq_inner_left`).
+    show ∑ i, metricInner x
+            (covDerivAt (manifoldGradient (I := I) f) x
+              ((stdOrthonormalBasis ℝ (TangentSpace I x)) i))
+            (covDerivAt (manifoldGradient (I := I) f) x
+              ((stdOrthonormalBasis ℝ (TangentSpace I x)) i))
+      = frobeniusSq (I := I) (M := M) (hessianBilin (I := I) f) x
+    unfold frobeniusSq
+    refine Finset.sum_congr rfl ?_
+    intro i _
+    set b := stdOrthonormalBasis ℝ (TangentSpace I x)
+    set v : TangentSpace I x :=
+      covDerivAt (manifoldGradient (I := I) f) x (b i)
+    -- For each i: metricInner x v v = ∑ⱼ ((hessianBilin f x) (b i) (b j))²
+    -- = ∑ⱼ (metricInner x v (b j))² (by hessianBilin def + LinearMap.mk₂_apply)
+    -- = ∑ⱼ ⟪v, b j⟫_ℝ² (def-eq metricInner ↔ inner)
+    -- = ‖v‖² (by OrthonormalBasis.sum_sq_inner_left)
+    -- = metricInner x v v (def-eq)
+    have h_hess_unfold : ∀ j, ((hessianBilin (I := I) f x) (b i)) (b j)
+                            = metricInner x v (b j) := fun _ => rfl
+    simp only [h_hess_unfold]
+    -- Goal: metricInner x v v = ∑ⱼ (metricInner x v (b j))^2
+    -- Chain: metricInner x v v = ⟪v, v⟫_ℝ = ‖v‖^2 = ∑ⱼ ⟪v, b j⟫^2 = ∑ⱼ (metricInner x v (b j))^2
+    calc metricInner x v v
+        = ⟪v, v⟫_ℝ := rfl
+      _ = ‖v‖ ^ 2 := real_inner_self_eq_norm_sq v
+      _ = ∑ j, ⟪v, b j⟫_ℝ ^ 2 := (b.sum_sq_inner_left v).symm
+      _ = ∑ j, (metricInner x v (b j)) ^ 2 := rfl
 
 /-- **G — heart-of-Bochner reduction**: the connection Laplacian on $\nabla f$
 contracted with $\nabla f$ equals the inner product of $\nabla f$ with the
@@ -386,7 +444,7 @@ theorem bochner_weitzenboeck
       ‖hess_g[I] f‖²_g x
       + ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
       + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
-  rw [leibniz_trace_reduction f x h_interior hf h_grad,
+  rw [leibniz_trace_reduction f x h_grad,
       connectionLaplacian_grad_eq_grad_laplacian_add_ricci f x h_interior hf h_grad]
   abel
 
