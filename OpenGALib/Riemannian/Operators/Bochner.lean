@@ -817,6 +817,211 @@ theorem sum_hessianBilin_smoothOrthoFrame_eventuallyEq_laplacian
   rw [scalarLaplacian_eq_laplacian_hessianBilin]
   rfl
 
+/-! ### Orthonormal-frame skew-derivative and the connection-cancel sum -/
+
+/-- **Smooth orthonormal frame cov-skew at `x`**: differentiating the constant
+function `b ↦ g(B_i b, B_j b) = δ_{ij}` on `smoothOrthoFrameNbhd x` along
+any direction `v ∈ T_xM` and applying metric compatibility gives
+$$g_x(\nabla_v B_i, B_j x) + g_x(B_i x, \nabla_v B_j) = 0.$$
+
+External reference: `smoothOrthoFrame_cov_skew` in
+`differential-geometry/.../Bochner.lean:2058`. -/
+theorem smoothOrthoFrame_cov_skew
+    [T2Space M]
+    (x : M) (i j : Fin (Module.finrank ℝ E)) (v : TangentSpace I x) :
+    metricInner x
+        ((leviCivitaConnection (I := I) (M := M)).toFun
+          (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x v)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j x) +
+    metricInner x
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
+        ((leviCivitaConnection (I := I) (M := M)).toFun
+          (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j) x v)
+      = 0 := by
+  classical
+  -- Section-level smoothness of the smooth orthonormal frame.
+  have hBi := Riemannian.Tensor.smoothOrthoFrame_smooth (I := I) hm.metric x i
+  have hBj := Riemannian.Tensor.smoothOrthoFrame_smooth (I := I) hm.metric x j
+  have hBi_at : TangentSmoothAt
+      (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x :=
+    (hBi x).mdifferentiableAt (by simp)
+  have hBj_at : TangentSmoothAt
+      (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j) x :=
+    (hBj x).mdifferentiableAt (by simp)
+  -- Treat as constant section on the nbhd: `b ↦ g(B_i b, B_j b) =ᶠ if i = j then 1 else 0`.
+  have h_constant_on_nbhd : ∀ᶠ b in 𝓝 x,
+      metricInner b (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i b)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j b)
+      = (if i = j then (1 : ℝ) else 0) := by
+    filter_upwards [Riemannian.Tensor.smoothOrthoFrameNbhd_mem_nhds (I := I) (M := M) x]
+      with b hb
+    exact Riemannian.Tensor.smoothOrthoFrame_orthonormal (I := I) hm.metric x hb i j
+  -- mfderiv equality.
+  have h_eq : (fun b : M => metricInner b
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i b)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j b)) =ᶠ[𝓝 x]
+      (fun _ : M => (if i = j then (1 : ℝ) else 0)) := h_constant_on_nbhd
+  have h_mfderiv_eq : mfderiv I 𝓘(ℝ, ℝ) (fun b : M => metricInner b
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i b)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j b)) x =
+      mfderiv I 𝓘(ℝ, ℝ) (fun _ : M => (if i = j then (1 : ℝ) else 0)) x :=
+    Filter.EventuallyEq.mfderiv_eq h_eq
+  -- The const function has zero mfderiv.
+  have h_const_zero : mfderiv I 𝓘(ℝ, ℝ)
+      (fun _ : M => (if i = j then (1 : ℝ) else 0)) x = 0 := mfderiv_const ..
+  -- Metric compatibility at x along the constant direction `v`.
+  have hVsm : TangentSmoothAt (fun _ : M => (v : TangentSpace I x)) x :=
+    (SmoothVectorField.const (I := I) (M := M) (v : E)).smoothAt x
+  have hmc := leviCivitaConnection_metric_compatible
+    (fun _ : M => (v : TangentSpace I x))
+    (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i)
+    (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j) x hVsm hBi_at hBj_at
+  -- hmc : mfderiv (b ↦ g(B_i, B_j)) x ((const v) x) = g(LC B_i x (v), B_j x) + g(B_i x, LC B_j x (v))
+  -- (const v) x = v, so this becomes the desired form, but with LHS = 0.
+  have h_lhs_zero : (mfderiv I 𝓘(ℝ, ℝ) (fun b : M => metricInner b
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i b)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j b)) x) v = 0 := by
+    rw [h_mfderiv_eq, h_const_zero]; rfl
+  rw [h_lhs_zero] at hmc
+  exact hmc.symm
+
+/-- **Hessian × cov-frame antisym-symm sum vanishes** (heart-of-Bochner Step 4):
+for smooth scalar `f` (C∞), `W : SmoothVectorField`, and `x` in the strict
+interior with smooth `∇f`,
+$$\sum_i \mathrm{Hess}\,f(x)(B_i x,\, \nabla_{W(x)} B_i) \;=\; 0,$$
+where `B_i = smoothOrthoFrame g x i` and `∇_{W(x)} B_i = covDeriv W B_i (x)`.
+
+Strategy:
+1. Expand `∇_{W(x)} B_i = ∑_j ⟨∇_{W(x)} B_i, B_j x⟩ • B_j x` (orthonormal Riesz).
+2. By bilinearity, `Hess f(B_i, ∇_W B_i) = ∑_j ⟨∇_{W(x)} B_i, B_j⟩ • Hess f(B_i, B_j)`.
+3. The matrix `a_{ij} := ⟨∇_{W(x)} B_i, B_j x⟩` is antisymmetric in (i, j) by
+   `smoothOrthoFrame_cov_skew` + `metricInner_comm`.
+4. The Hessian matrix `h_{ij} := Hess f(B_i, B_j)` is symmetric in (i, j) by
+   `hessianBilin_symm` (needs `h_interior` + `f` C^2 + ∇f smooth).
+5. `∑_{i,j} a_{ij} • h_{ij}` with antisym × symm = 0 (`Finset.sum_apply_diagonal_invariant`-style
+   cancellation, or direct `Finset.sum_swap`-symmetry argument). -/
+theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
+    [IsManifold I 2 M] [T2Space M]
+    (f : M → ℝ) (W : SmoothVectorField I M) (x : M)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
+    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    ∑ i, hessianBilin (I := I) f x
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
+        ((leviCivitaConnection (I := I) (M := M)).toFun
+          (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x
+          (W.toFun x)) = 0 := by
+  classical
+  set bAt : OrthonormalBasis (Fin (Module.finrank ℝ E)) ℝ (TangentSpace I x) :=
+    Riemannian.Tensor.smoothOrthoFrameOrthonormalBasis (I := I) x with hbAt_def
+  -- Key matrices.
+  set a : Fin (Module.finrank ℝ E) → Fin (Module.finrank ℝ E) → ℝ :=
+    fun i j => metricInner x
+      ((leviCivitaConnection (I := I) (M := M)).toFun
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x (W.toFun x))
+      (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j x) with ha_def
+  set h_mat : Fin (Module.finrank ℝ E) → Fin (Module.finrank ℝ E) → ℝ :=
+    fun i j => hessianBilin (I := I) f x
+      (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
+      (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j x) with hh_def
+  -- Step 1: Orthonormal Riesz expansion of ∇_{W(x)} B_i.
+  -- `v = ∑ k, ⟪b_k, v⟫_ℝ • b_k` for orthonormal basis `b_k` and `v ∈ T_xM`.
+  have h_riesz : ∀ i,
+      (leviCivitaConnection (I := I) (M := M)).toFun
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x (W.toFun x)
+        = ∑ j, a i j •
+            (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j x) := by
+    intro i
+    set v : TangentSpace I x :=
+      (leviCivitaConnection (I := I) (M := M)).toFun
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x (W.toFun x)
+      with hv_def
+    -- `OrthonormalBasis.sum_repr'` : `∑ j, ⟪b j, v⟫_ℝ • b j = v`.
+    have h_sum : v = ∑ j, ⟪bAt j, v⟫_ℝ • bAt j := (bAt.sum_repr' v).symm
+    rw [h_sum]
+    refine Finset.sum_congr rfl (fun j _ => ?_)
+    -- bAt j = smoothOrthoFrame ... j x by `smoothOrthoFrameOrthonormalBasis_apply`.
+    rw [Riemannian.Tensor.smoothOrthoFrameOrthonormalBasis_apply]
+    -- ⟪B_j x, v⟫_ℝ = metricInner x (B_j x) v = a i j (by metricInner_comm).
+    show ⟪Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j x, v⟫_ℝ • _ = a i j • _
+    show metricInner x
+            (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j x) v • _
+        = a i j • _
+    congr 1
+    show metricInner x
+            (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j x) v
+        = metricInner x v
+            (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j x)
+    exact metricInner_comm x _ _
+  -- Step 2: rewrite the sum with the Riesz expansion + bilinearity of hessianBilin.
+  have h_expand : ∀ i, hessianBilin (I := I) f x
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
+        ((leviCivitaConnection (I := I) (M := M)).toFun
+          (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x
+          (W.toFun x))
+      = ∑ j, a i j * h_mat i j := by
+    intro i
+    rw [h_riesz i]
+    -- hessianBilin is bilinear; push sum out.
+    rw [map_sum]
+    refine Finset.sum_congr rfl (fun j _ => ?_)
+    rw [LinearMap.map_smul]
+    show a i j • h_mat i j = a i j * h_mat i j
+    rfl
+  rw [show (∑ i, hessianBilin (I := I) f x _ _)
+      = (∑ i, ∑ j, a i j * h_mat i j) from
+    Finset.sum_congr rfl (fun i _ => h_expand i)]
+  -- Step 3: Antisym of a, symm of h_mat ⇒ ∑_{i,j} a_{ij} h_{ij} = 0.
+  -- Use a swap-of-indices argument: ∑_{i,j} a_{ij} h_{ij} = ∑_{i,j} a_{ji} h_{ji}
+  --                                                     = -∑_{i,j} a_{ij} h_{ij}
+  -- (by anti-symm of a and symm of h). Hence 2 * sum = 0 ⇒ sum = 0.
+  have h_anti : ∀ i j, a i j = -(a j i) := by
+    intro i j
+    -- From smoothOrthoFrame_cov_skew: a i j + g(B_i, ∇_W B_j) = 0.
+    -- And g(B_i x, ∇_{W x} B_j) = g(∇_{W x} B_j, B_i x) = a j i by metricInner_comm.
+    have h := smoothOrthoFrame_cov_skew x i j (W.toFun x)
+    have h_swap : metricInner x
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
+        ((leviCivitaConnection (I := I) (M := M)).toFun
+          (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j) x (W.toFun x))
+        = a j i := by
+      show metricInner x _ _ = metricInner x _ _
+      exact metricInner_comm x _ _
+    rw [h_swap] at h
+    linarith
+  have h_symm : ∀ i j, h_mat i j = h_mat j i := by
+    intro i j
+    have hf_2 : ContMDiffAt I 𝓘(ℝ, ℝ) 2 f x :=
+      (hf x).of_le (by
+        show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
+        exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
+    have h_grad_at : TangentSmoothAt (manifoldGradient (I := I) f) x :=
+      (h_grad x).mdifferentiableAt (by simp)
+    exact hessianBilin_symm (I := I) f x h_interior hf_2 h_grad_at _ _
+  -- ∑_{i,j} a_{ij} h_{ij} = ∑_{j,i} a_{ij} h_{ij}  (Finset.sum_comm on the outer)
+  --                       = ∑_{j,i} a_{ji} h_{ji}  (relabel i ↔ j: a single rename)
+  -- Combined with antisym + symm: a_{ji} h_{ji} = -a_{ij} h_{ij}.
+  have h_anti_symm : ∀ i j, a i j * h_mat i j = -(a j i * h_mat j i) := by
+    intro i j
+    rw [h_anti i j, h_symm i j]; ring
+  -- ∑_{i,j} a_{ij} h_{ij} = ∑_{i,j} -(a_{ji} h_{ji}) = -∑_{i,j} a_{ji} h_{ji}
+  --                       = -∑_{j,i} a_{ji} h_{ji}  (rename outer)
+  --                       = -∑_{i,j} a_{ij} h_{ij}  (sum_comm on inner)
+  have h_sum_eq_neg : (∑ i, ∑ j, a i j * h_mat i j)
+      = -(∑ i, ∑ j, a i j * h_mat i j) :=
+    calc (∑ i, ∑ j, a i j * h_mat i j)
+        = ∑ i, ∑ j, -(a j i * h_mat j i) :=
+          Finset.sum_congr rfl (fun i _ =>
+            Finset.sum_congr rfl (fun j _ => h_anti_symm i j))
+      _ = -∑ i, ∑ j, a j i * h_mat j i := by
+          simp only [← Finset.sum_neg_distrib]
+      _ = -∑ j, ∑ i, a j i * h_mat j i := by
+          rw [Finset.sum_comm (f := fun i j => a j i * h_mat j i)]
+      _ = -∑ i, ∑ j, a i j * h_mat i j := rfl
+  -- s = -s ⇒ s = 0.
+  linarith
+
 /-- **Conditional inner-form reduction.** Given the inner-product form
 of the heart-of-Bochner sum identity against every test direction $w$
 (against the smooth orthonormal frame `smoothOrthoFrame g x · x`), the
