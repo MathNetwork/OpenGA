@@ -36,28 +36,15 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
-/-- **Per-summand swap form** (Hess-sym swap, step (d) of Petersen Ch 7 §1
-Prop 33).
-
-Given smooth `B, W : SmoothVectorField I M` and `f : M → ℝ` smooth with
-smooth gradient bundle section, at any point `x` mapping into the strict
-interior of `range I`:
-
+/-- **Math.** **Per-summand swap form** (Hess-sym swap, step (d) of
+Petersen Ch 7 §1 Prop 33). At an interior point $x$:
 $$g_x(\nabla_B \nabla_B \nabla f, W) - g_x(\nabla_{\nabla_B B} \nabla f, W)
    = g_x(\nabla_B \nabla_W \nabla f, B) - g_x(\nabla_{\nabla_B W} \nabla f, B).$$
 
-The proof combines:
-* Two `leviCivitaConnection_metric_compatible` applications on the section
-  pairs `(Q, W)` and `(P, B)` where `Q := ∇_B ∇f`, `P := ∇_W ∇f`.
-* `hessianBilin_section_eventually_symm_of_strict_interior` to obtain
-  the section-level Hess sym `(b ↦ g(Q, W)) =ᶠ (b ↦ g(P, B))`.
-* `Filter.EventuallyEq.mfderiv_eq` to lift the section-level equality to
-  equality of mfderiv values at `x` along direction `B x`.
-* `hessianBilin_symm` at `x` to identify the cross-Christoffel inner
-  products `g(Q x, ∇_B W) = g(∇_{∇_B W} ∇f, B)` and symmetric counterpart.
-
-External reference: `bochner_per_summand_swap` in
-`differential-geometry/.../Bochner.lean:2828–2966`. -/
+Combines two `leviCivitaConnection_metric_compatible` applications with
+`hessianBilin_section_eventually_symm_of_strict_interior` lifted through
+`Filter.EventuallyEq.mfderiv_eq`, plus pointwise `hessianBilin_symm` for
+the cross-Christoffel terms. -/
 theorem bochner_per_summand_swap
     [IsManifold I 2 M]
     (f : M → ℝ) (B W : SmoothVectorField I M) (x : M)
@@ -198,25 +185,14 @@ theorem bochner_per_summand_swap
             (B.toFun x)
   linarith [h_combined]
 
-/-- **Per-summand riemann form** (step (e) of Petersen Ch 7 §1 Prop 33,
-torsion-free curvature expansion).
-
-For smooth `B, W : SmoothVectorField I M` and `f : M → ℝ` smooth at `x`:
-
+/-- **Math.** **Per-summand riemann form** (step (e) of Petersen Ch 7 §1
+Prop 33). At $x$:
 $$g_x(\nabla_B \nabla_W \nabla f, B) - g_x(\nabla_{\nabla_B W} \nabla f, B)
    = g_x(R(B, W) \nabla f, B) + g_x(\nabla_W \nabla_B \nabla f, B)
      - g_x(\nabla_{\nabla_W B} \nabla f, B).$$
 
-Algebraic identity: unfolds `riemannCurvature` via
-$R(B, W) \nabla f = \nabla_B \nabla_W \nabla f - \nabla_W \nabla_B \nabla f
-- \nabla_{[B, W]} \nabla f$, applies torsion-freeness
-$[B, W] = \nabla_B W - \nabla_W B$, and the ℝ-linearity of
-$\nabla_\cdot \nabla f$ in its direction argument to split
-$\nabla_{[B,W]} \nabla f = \nabla_{\nabla_B W} \nabla f -
-\nabla_{\nabla_W B} \nabla f$.
-
-External reference: `bochner_per_summand_riemann_form` in
-`differential-geometry/.../Bochner.lean:2978–3076`. -/
+Unfolds `riemannCurvature`, applies torsion-freeness $[B, W] = \nabla_B W
+- \nabla_W B$, and the direction-slot ℝ-linearity of $\nabla_\cdot \nabla f$. -/
 theorem bochner_per_summand_riemann_form
     (f : M → ℝ) (B W : SmoothVectorField I M) (x : M) :
     metricInner x
@@ -290,30 +266,17 @@ theorem bochner_per_summand_riemann_form
   rw [metricInner_sub_left, metricInner_sub_left, metricInner_sub_left]
   linarith
 
-/-- **Per-summand assembled form** (step (f) of Petersen Ch 7 §1 Prop 33,
-final per-summand assembly).
-
-For smooth `B, W : SmoothVectorField I M` and `f : M → ℝ` smooth, at
-strict-interior `x`:
-
+/-- **Math.** **Per-summand assembled form** (step (f) of Petersen Ch 7
+§1 Prop 33). At strict-interior $x$:
 $$g_x(\nabla_B \nabla_B \nabla f, W) - g_x(\nabla_{\nabla_B B} \nabla f, W)
    = g_x(R(B, W) \nabla f, B)
      + \mathrm{d}\left(b \mapsto \mathrm{Hess}\,f(B, B)\right)(x)\cdot W
      - 2\,\mathrm{Hess}\,f(B, \nabla_W B)(x).$$
 
-Composes:
-* `bochner_per_summand_swap` (step d) — Hess-sym swap form.
-* `bochner_per_summand_riemann_form` (step e) — torsion-free curvature
-  expansion.
-* A third `leviCivitaConnection_metric_compatible` on the section pair
-  `(Q := ∇_B ∇f, B)` along direction `W x` at `x`, identifying
-  `g(∇_W Q, B)` as `mfderiv (b ↦ g(Q b, B b)) x (W x) - g(Q x, ∇_W B x)`.
-* `hessianBilin_symm` at `x` to identify both Christoffel-correction
-  inner products as the single quantity
-  `hessianBilin f x (B x) (∇_W B x)`.
-
-External reference: `bochner_per_summand_assembled` in
-`differential-geometry/.../Bochner.lean:3088–3239`. -/
+Composes `bochner_per_summand_swap` (step d), `bochner_per_summand_riemann_form`
+(step e), and a third `leviCivitaConnection_metric_compatible` on
+$(\nabla_B \nabla f, B)$, with `hessianBilin_symm` collapsing the two
+Christoffel-correction terms. -/
 theorem bochner_per_summand_assembled
     [IsManifold I 2 M]
     (f : M → ℝ) (B W : SmoothVectorField I M) (x : M)
@@ -461,9 +424,9 @@ $$\langle \Delta_\nabla \nabla f, \nabla f\rangle_g
    = \langle \nabla f, \nabla(\Delta_g f)\rangle_g + \mathrm{Ric}(\nabla f, \nabla f)$$
 without any Hom-bundle Leibniz bridge. -/
 
-/-- Smoothness of the section-form Hessian summand
+/-- **Eng.** Smoothness of the section-form Hessian summand
 `b ↦ ⟨covDerivAt ∇f b (B b), B b⟩_g` at `x`, via composition of
-`leviCivitaConnection_smoothAt_smoothVF_dir` (smoothness of `∇_B ∇f`) with
+`leviCivitaConnection_smoothAt_smoothVF_dir` with
 `metricInner_mdifferentiableAt_of_tangentSmoothAt`. -/
 private lemma hessianBilin_smoothVF_diag_mdifferentiableAt
     (f : M → ℝ) (B : SmoothVectorField I M) (x : M)
@@ -483,18 +446,14 @@ private lemma hessianBilin_smoothVF_diag_mdifferentiableAt
   -- So the diagonal is `metricInner y (covDerivAt ∇f y (B y)) (B y)`.
   exact metricInner_mdifferentiableAt_of_tangentSmoothAt h_covAt h_B
 
-/-- **G — heart-of-Bochner reduction (section form, unconditional)**:
+/-- **Math.** **Heart-of-Bochner reduction (section form, unconditional)**:
 $$\langle \Delta_\nabla \nabla f, \nabla f\rangle_g
    = \langle \nabla f, \nabla(\Delta_g f)\rangle_g
    + \mathrm{Ric}(\nabla f, \nabla f).$$
 
-Direct composition of `bochner_per_summand_assembled` (section-form
-per-summand identity) with the section-form `connectionLaplacian` definition.
-Requires strict-interior `h_strict` for the Hess-symmetry-on-nbhd used
-inside `bochner_per_summand_swap`.
-
-Architecture: section form throughout (matches Mathlib LC PR #36845 + external
-`differential-geometry` convention), no Hom-bundle Leibniz bridge needed. -/
+Composes `bochner_per_summand_assembled` with the section-form
+`connectionLaplacian` definition; strict-interior `h_strict` feeds the
+Hess-symmetry-on-nbhd used inside `bochner_per_summand_swap`. -/
 theorem connectionLaplacian_grad_eq_grad_laplacian_add_ricci
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (x : M)
@@ -613,17 +572,16 @@ theorem connectionLaplacian_grad_eq_grad_laplacian_add_ricci
       metricInner_comm x (manifoldGradient (I := I) (Δ_g[I] f) x)]
   ring
 
-/-- **Bochner–Weitzenböck identity** (section form, unconditional, strict
-interior). Combines `leibniz_trace_reduction` (E) and
-`connectionLaplacian_grad_eq_grad_laplacian_add_ricci` (G):
+/-- **Math.** **Bochner–Weitzenböck identity** (unconditional at strict
+interior):
 $$\tfrac{1}{2}\,\Delta_g\,|\nabla f|_g^2
   = |\nabla^2 f|_g^2
     + \langle \nabla f, \nabla\,\Delta_g f\rangle_g
     + \mathrm{Ric}(\nabla f, \nabla f).$$
+Combines `leibniz_trace_reduction` and
+`connectionLaplacian_grad_eq_grad_laplacian_add_ricci`.
 
-Reference: Petersen, *Riemannian Geometry*, Ch. 7 §1 Proposition 33;
-do Carmo §6 (curvature commutators); Schoen-Simon 1981 §1 (variational
-application). -/
+Reference: Petersen Ch. 7 §1 Prop 33; do Carmo §6; Schoen–Simon 1981 §1. -/
 theorem bochner_weitzenboeck
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (x : M)

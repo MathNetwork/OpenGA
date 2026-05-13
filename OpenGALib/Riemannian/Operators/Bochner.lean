@@ -41,15 +41,11 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
 
 /-! ## `mfderiv` distribution over `Finset.sum` -/
 
-/-- **`mfderiv` distributes over `Finset.sum`** (evaluated at a tangent vector):
-for a finite family of scalar functions `g : ι → M → ℝ` each
-`MDifferentiableAt` at `x`,
+/-- **Eng.** `mfderiv` distributes over `Finset.sum` (evaluated at a
+tangent vector):
 $$\mathrm{d}\Bigl(\sum_{i \in s} g_i\Bigr)(x)(v)
    \;=\; \sum_{i \in s} \mathrm{d}(g_i)(x)(v).$$
-
-Direct application of Mathlib's `HasMFDerivAt.sum` (which combines per-summand
-`HasMFDerivAt` witnesses additively); `.mfderiv` extraction lifts the
-section-level equality of CLMs to evaluation at `v`. -/
+Wraps Mathlib's `HasMFDerivAt.sum`. -/
 theorem mfderiv_finset_sum_apply
     {ι : Type} (s : Finset ι) (g : ι → M → ℝ) (x : M) (v : TangentSpace I x)
     (hg : ∀ i ∈ s, MDifferentiableAt I 𝓘(ℝ, ℝ) (g i) x) :
@@ -70,18 +66,12 @@ theorem mfderiv_finset_sum_apply
 
 /-! ## Building block: Ricci as g-orthonormal trace -/
 
-/-- **F — Ricci as a g-orthonormal trace** (`ricciTensor` unwound via
-`LinearMap.trace_eq_sum_inner`):
+/-- **Math.** **Ricci as a g-orthonormal trace**:
 $$\mathrm{Ric}_g(V, W)(x) \;=\; \sum_i \bigl\langle \varepsilon_i,\,
   R(\varepsilon_i,\,V)\,W\,(x)\bigr\rangle_g,$$
-where $\{\varepsilon_i\} = \mathrm{stdOrthonormalBasis}\,\mathbb{R}\,(T_xM)$
-and $R$ is the Riemann curvature tensor with the standard sign convention.
-
-The proof is `ricciTensor` def + `ricci` def + Mathlib's
-`LinearMap.trace_eq_sum_inner` on the curvature endomorphism. The
-$g$-orthonormal structure on $T_xM$ comes from
-`instRiemannianBundleOfHasMetric` (the "single NACG/IPS source") under
-`[HasMetric I M]`. -/
+for $\{\varepsilon_i\} = \mathrm{stdOrthonormalBasis}\,\mathbb{R}\,(T_xM)$.
+Unfolds `ricci` via `LinearMap.trace_eq_sum_inner` on the curvature
+endomorphism. -/
 theorem ricciTensor_eq_sum_inner_orthonormal
     [IsManifold I 2 M]
     (x : M) (V W : TangentSpace I x) :
@@ -98,8 +88,8 @@ theorem ricciTensor_eq_sum_inner_orthonormal
 
 /-! ## Helpers for the Leibniz trace reduction (E) -/
 
-/-- $\mathrm{d}(|\nabla f|_g^2)(y)\,v = 2\,\langle \nabla_v \nabla f,\,\nabla f\rangle_g(y)$.
-Level-1 metric-compatibility on $(\nabla f,\, \nabla f)$ plus inner-product symmetry. -/
+/-- **Math.** $\mathrm{d}(|\nabla f|_g^2)(y)\,v = 2\,\langle \nabla_v \nabla f,\,\nabla f\rangle_g(y)$.
+Metric-compatibility on $(\nabla f, \nabla f)$ plus inner-product symmetry. -/
 theorem mfderiv_gradientNormSq_apply
     (f : M → ℝ) (y : M) (v : TangentSpace I y)
     (h_grad_y : TangentSmoothAt (manifoldGradient (I := I) f) y) :
@@ -135,18 +125,12 @@ theorem mfderiv_gradientNormSq_apply
               (manifoldGradient (I := I) f y)
   ring
 
-/-- **Section-form Hessian expansion** of $g = |\nabla f|_g^2$ on a smooth
-vector field $B$ (replacing the chart-frame constant section):
+/-- **Math.** **Section-form Hessian expansion** of $g = |\nabla f|_g^2$
+on a smooth vector field $B$:
 $$\mathrm{Hess}\,(|\nabla f|^2)(B, B)(x) = 2\bigl(
    \langle (\nabla^2 \nabla f)(B, B),\, \nabla f\rangle_g
    + \|\nabla_B \nabla f\|_g^2\bigr)(x).$$
-
-This is the section-form analog of `hessian_gradientNormSq_apply_chartFrame`,
-producing `secondCovDerivSection` (matching the section-form output of
-`bochner_per_summand_assembled`). The proof is via section-level
-metric-compatibility on $(B, \nabla_B \nabla f, \nabla f)$ at $x$.
-
-Used in the section-form `leibniz_trace_reduction`. -/
+Section-form analog of `hessian_gradientNormSq_apply_chartFrame`. -/
 private theorem hessian_gradientNormSq_apply_section
     [IsManifold I 2 M]
     (f : M → ℝ) (B : SmoothVectorField I M) (x : M)
@@ -286,17 +270,12 @@ private theorem hessian_gradientNormSq_apply_section
   rw [h_covDeriv_eq]
   linarith [h_bridge, h_secondCDS]
 
-/-- Per-direction Hessian expansion of $g = |\nabla f|_g^2$ on a chart-frame
-constant section $v$:
+/-- **Math.** Per-direction Hessian expansion of $g = |\nabla f|_g^2$ on a
+chart-frame constant section $v$:
 $$\mathrm{Hess}\,g(v, v)(x) = 2\bigl(\langle (\nabla^2 \nabla f)(v, v), \nabla f\rangle_g
    + \|(\nabla_v \nabla f)\|_g^2\bigr)(x).$$
-
-Combines (i) `hessian_eq_mDirDeriv_iterate_sub_chris` to bridge into iterated
-`mDirDeriv`, (ii) `mfderiv_gradientNormSq_apply` for the level-1 unfolding,
-and (iii) a level-2 metric-compat on $(v_\text{const}, \nabla_v \nabla f, \nabla f)$
-— the C² gap on $\nabla f$ is discharged via
-`leviCivitaConnection_smoothAt_const_dir` on the `SmoothVectorField` wrapper
-constructed from `h_grad`. -/
+Combines `hessian_eq_mDirDeriv_iterate_sub_chris`,
+`mfderiv_gradientNormSq_apply`, and a level-2 metric-compat. -/
 private theorem hessian_gradientNormSq_apply_chartFrame
     [IsManifold I 2 M]
     (f : M → ℝ) (x : M) (v : TangentSpace I x)
@@ -473,23 +452,19 @@ Mathlib LC PR works around with `set_option backward.isDefEq.respectTransparency
 With section form, the trace identifies directly with the section-form
 output of `bochner_per_summand_assembled`, eliminating the bridge entirely. -/
 
-/-- **Connection Laplacian** $\Delta_\nabla Z$ on a tangent vector field
-$Z : \Pi x : M, T_x M$, computed against the smooth $g$-orthonormal frame
-`smoothOrthoFrame g α` centered at the evaluation point $\alpha$:
+/-- **Math.** **Connection Laplacian** $\Delta_\nabla Z$ on a tangent
+vector field $Z$, computed against `smoothOrthoFrame g α`:
 $$(\Delta_\nabla Z)(\alpha) \;=\; \sum_i (\nabla^2 Z)(B_i, B_i)(\alpha),$$
-where $B_i := \mathrm{smoothOrthoFrame}\,g\,\alpha\,i$ is the $i$-th smooth
-$g$-orthonormal-at-$\alpha$ frame section.
+where $B_i := \mathrm{smoothOrthoFrame}\,g\,\alpha\,i$.
 
-**Ground truth**: Petersen, *Riemannian Geometry*, Ch. 7 §1 Proposition 33
-(Bochner identity); do Carmo §6 ex. 12. -/
+**Ground truth**: Petersen Ch. 7 §1 Prop 33; do Carmo §6 ex. 12. -/
 noncomputable def connectionLaplacian
     (Z : Π x : M, TangentSpace I x) (α : M) : TangentSpace I α :=
   ∑ i, Riemannian.Operators.secondCovDerivSection (I := I) (M := M) Z
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α
 
-/-- Definitional unfolding of `connectionLaplacian` as the section-form
-trace of $\nabla^2 Z$ along `smoothOrthoFrame g α`. -/
+/-- **Eng.** Definitional unfolding of `connectionLaplacian`. -/
 @[simp] lemma connectionLaplacian_def
     (Z : Π x : M, TangentSpace I x) (α : M) :
     connectionLaplacian (I := I) (M := M) Z α =
@@ -498,7 +473,7 @@ trace of $\nabla^2 Z$ along `smoothOrthoFrame g α`. -/
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α :=
   rfl
 
-/-- The connection Laplacian on the zero vector field is zero. -/
+/-- **Math.** The connection Laplacian on the zero vector field is zero. -/
 @[simp] theorem connectionLaplacian_zero (α : M) :
     connectionLaplacian (I := I) (M := M)
         (0 : Π x : M, TangentSpace I x) α = 0 := by
@@ -528,20 +503,14 @@ trace of $\nabla^2 Z$ along `smoothOrthoFrame g α`. -/
 
 /-! ## Two intermediates (E, G) for the Bochner identity -/
 
-/-- **E — Leibniz trace reduction**: the scalar Laplacian of $|\nabla f|_g^2$
-decomposes into a connection-Laplacian term and a Hessian Frobenius² term:
+/-- **Math.** **Leibniz trace reduction**: the scalar Laplacian of
+$|\nabla f|_g^2$ decomposes as
 $$\tfrac{1}{2}\,\Delta_g \, |\nabla f|_g^2 \;=\;
    \langle \Delta_\nabla \nabla f,\, \nabla f \rangle_g
    + |\nabla^2 f|_g^2.$$
-
-Combines `hessian_gradientNormSq_apply_chartFrame` (per-direction Leibniz
-expansion) summed over `stdOrthonormalBasis ℝ (TangentSpace I x)`,
-with `connectionLaplacian_eq_sum_secondCovDerivAt` for the trace identification
-and `OrthonormalBasis.sum_sq_inner_left` for the Hessian Frobenius²
-identification (orthonormal basis decomposition of $\|\nabla_{\varepsilon_i}
-\nabla f\|_g^2$).
-
-Used in `bochner_weitzenboeck` (assembly step H) along with G. -/
+Combines `hessian_gradientNormSq_apply_chartFrame` summed over
+`stdOrthonormalBasis`, the trace identity for `connectionLaplacian`, and
+`OrthonormalBasis.sum_sq_inner_left` for Frobenius². -/
 theorem leibniz_trace_reduction
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (x : M)
@@ -704,8 +673,8 @@ as input the relevant algebraic identity and producing the form the
 downstream consumer needs. These conditionals do not close any sorry by
 themselves — they package the assumptions cleanly. -/
 
-/-- **Hess-sym swap of the inner-product partner for $\nabla^2 \nabla f$**:
-for constant lifts of $v, w, z$ at $x$,
+/-- **Math.** **Hess-sym swap of the inner-product partner for
+$\nabla^2 \nabla f$**: for constant lifts of $v, w, z$ at $x$,
 $$\langle (\nabla^2 \nabla f)(v, w),\, z\rangle_g(x)
   = \langle (\nabla^2 \nabla f)(v, z),\, w\rangle_g(x).$$
 
@@ -830,17 +799,11 @@ theorem metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym
   -- ⇒ A - hA = (P - hB') - hA = (Q - hB) - hA' = (B + hA' - hB) - hA' = B - hB ✓
   linear_combination -h_compat_W + h_compat_Z + h_eq_at_v + h_sym_zΓvw - h_sym_wΓvz
 
-/-- **Discharge of `h_eventual_sym` from strict interior hypothesis**.
-Combines `extChartAt_self_eventually_mem_closure_interior_range` (nbhd
-propagation of `h_interior` under `IsLocallyConstantChartedSpace`) with
-pointwise `hessianBilin_symm` to produce the nbhd-Hessian-symmetry
-equation needed by `metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym`.
-
-The stricter `extChartAt I x x ∈ interior (Set.range I)` hypothesis is
-required so that the strict-interior open set has a nbhd of `x` as its
-preimage; the conclusion is `eventually equal as a section` w.r.t. the
-weaker closure-interior membership predicate used by the pointwise
-`hessianBilin_symm`. -/
+/-- **Eng.** Discharge of `h_eventual_sym` from strict interior hypothesis.
+Propagates `h_interior` to a nbhd via
+`extChartAt_self_eventually_mem_closure_interior_range` and applies
+pointwise `hessianBilin_symm` to feed
+`metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym`. -/
 theorem hessianBilin_eventually_symm_of_strict_interior
     [IsManifold I 2 M]
     (f : M → ℝ) (x : M)
@@ -867,15 +830,10 @@ theorem hessianBilin_eventually_symm_of_strict_interior
   -- `TangentSpace I y = E` arguments under `IsLocallyConstantChartedSpace`.
   exact hessianBilin_symm (I := I) f y hy_interior hf_2_y h_grad_y w z
 
-/-- **Section-level Hessian symmetry on smooth vector fields**, discharged
-from strict interior. Variant of `hessianBilin_eventually_symm_of_strict_interior`
-where the two test slots are smooth varying sections `X, Y` instead of
-constant tangent vectors. At every $y$ in a nbhd of $x$,
-$\mathrm{Hess}\,f\,(X(y), Y(y))(y) = \mathrm{Hess}\,f\,(Y(y), X(y))(y)$
-by pointwise `hessianBilin_symm`. This is the section-level Hess-sym
-input needed for the per-summand swap step in the heart-of-Bochner chain
-(`bochner_per_summand_swap` analog, OpenGALib analog of external
-`heart_per_summand_swap`). -/
+/-- **Math.** Section-level Hessian symmetry on smooth vector fields,
+discharged from strict interior. Variant with smooth varying sections
+$X, Y$ instead of constant lifts: at every $y$ near $x$,
+$\mathrm{Hess}\,f\,(X(y), Y(y))(y) = \mathrm{Hess}\,f\,(Y(y), X(y))(y)$. -/
 theorem hessianBilin_section_eventually_symm_of_strict_interior
     [IsManifold I 2 M]
     (f : M → ℝ) (X Y : Π y : M, TangentSpace I y) (x : M)
@@ -896,20 +854,11 @@ theorem hessianBilin_section_eventually_symm_of_strict_interior
     (h_grad y).mdifferentiableAt (by simp)
   exact hessianBilin_symm (I := I) f y hy_interior hf_2_y h_grad_y (X y) (Y y)
 
-/-- **Inner-form of the D.2 swap of `secondCovDerivAt`'s outer pair**:
+/-- **Math.** **Inner-form D.2 swap of `secondCovDerivAt`'s outer pair**:
 for $v, w, z \in T_xM$,
 $$\langle (\nabla^2 \nabla f)(v, w),\, z\rangle_g(x)
   = \langle (\nabla^2 \nabla f)(w, v),\, z\rangle_g(x)
-    + \langle R(\mathrm{const}\,v,\,\mathrm{const}\,w)\,\nabla f,\, z\rangle_g(x).$$
-
-Direct corollary of `secondCovDerivAt_sub_swap_eq_riemannCurvature` (D.2)
-applied to $Z = \nabla f$, paired with $z$ via the bilinearity of
-`metricInner`. The third slot of `riemannCurvature` is the section
-$\nabla f$ (not a constant lift); closing the Ric identification
-requires the full 3-slot tensoriality of `riemannCurvature` (Z-slot
-Leibniz `riemannCurvature_smul_third_scalar_field` already landed in
-`Curvature/Tensoriality.lean`; Z-slot vanishing + X/Y-slot mirrors
-outstanding) plus `ricci_symm` (now closed in `Curvature.lean`). -/
+    + \langle R(\mathrm{const}\,v,\,\mathrm{const}\,w)\,\nabla f,\, z\rangle_g(x).$$ -/
 theorem metricInner_secondCovDerivAt_grad_eq_swap_add_curvature
     (f : M → ℝ) (x : M) (v w z : TangentSpace I x) :
     metricInner x (secondCovDerivAt (I := I) (M := M)
@@ -933,17 +882,12 @@ theorem metricInner_secondCovDerivAt_grad_eq_swap_add_curvature
     rw [← h]; abel
   rw [h', metricInner_add_left]
 
-/-- **Step 3 helper — curvature term metric-skew packaging.** Given the
-metric-skew identity of the Riemann curvature in the last pair of
-arguments (the standard $g(R(X,Y)Z, W) = -g(R(X,Y)W, Z)$, applied to
-$Z = \nabla f$ and $W = B(x)$), the curvature contribution of the
-heart-of-Bochner trace summand reduces to
+/-- **Math.** Curvature-term metric-skew packaging:
+given $g(R(B, w)\nabla f, B) + g(\nabla f, R(B, w) B) = 0$, the
+heart-of-Bochner curvature summand reduces to
 $- \langle \nabla f, R(B, w) B\rangle_g$ at $x$.
 
-The metric-skew hypothesis is derivable from
-`riemannCurvature_inner_self_zero` (now closed in `Curvature.lean`) by
-polarisation — see `riemannCurvature_metric_skew`. Ported from external's
-`heart_of_bochner_curvature_term`. -/
+The hypothesis is the polarisation of `riemannCurvature_inner_self_zero`. -/
 theorem heart_of_bochner_curvature_term
     (f : M → ℝ)
     {B w : Π b : M, TangentSpace I b} {x : M}
@@ -957,18 +901,11 @@ theorem heart_of_bochner_curvature_term
           (riemannCurvature B w B x) := by
   linarith
 
-/-- **Ricci sum identity** (heart-of-Bochner Step 3): the curvature trace
-over the smooth orthonormal frame at `x` against `(W, ∇f, B_i)` equals the
-Ricci bilinear evaluated at `(∇f x, W x)`:
+/-- **Math.** **Ricci sum identity** (heart-of-Bochner Step 3): the
+curvature trace over the smooth orthonormal frame at $x$ against
+$(W, \nabla f, B_i)$ equals the Ricci bilinear at $(\nabla f x, W x)$:
 $$\sum_i g_x\bigl(R(B_i, W)\,\nabla f,\, B_i\bigr) \;=\;
-  \mathrm{Ric}_g(\nabla f, W)(x).$$
-
-Replaces the three smooth-section arguments of $R$ with their constant
-lifts at $x$, then identifies the diagonal sum of
-$\Phi(v, w) := g_x(R(v, W)\,\nabla f,\, w)$ over `smoothOrthoFrame` with
-the same sum over `stdBasis` via `sum_diagonal_smoothOrthoFrame_eq_std`,
-then with $\mathrm{Ric}_g(W, \nabla f)$ via
-`ricciTensor_eq_sum_inner_orthonormal` (and `ricci_symm` for the swap). -/
+  \mathrm{Ric}_g(\nabla f, W)(x).$$ -/
 theorem heart_curvature_orthonormal_sum_eq_ricci
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (W : SmoothVectorField I M) (x : M)
@@ -1056,18 +993,12 @@ theorem heart_curvature_orthonormal_sum_eq_ricci
         show ricci WV GV x = ricci GV WV x
         exact ricci_symm WV GV x h_interior
 
-/-- **Hessian-frame trace = Laplacian, locally**: on a neighbourhood of `x`,
-$$\sum_i \mathrm{Hess}\,f(b)(B_i b, B_i b) \;=\; \Delta_g f(b),$$
-where `B_i = smoothOrthoFrame g x i`.
-
-Strategy:
-1. On `smoothOrthoFrameNbhd x`, `(B_i b)_i` is `g_b`-orthonormal at each `b`
-   (via `smoothOrthoFrame_orthonormal`).
-2. Apply `Tensor.sum_diagonal_smoothOrthoFrame_at_nbhd_eq_std` to swap
-   the diagonal trace of `hessianBilin f b` over `(B_i b)` to the diagonal
-   trace over `stdOrthonormalBasis ℝ (T_bM)`.
-3. The latter equals `laplacian (hessianBilin f) b = scalarLaplacian f b
-   = Δ_g f b` by definition + `scalarLaplacian_eq_laplacian_hessianBilin`. -/
+/-- **Math.** Hessian-frame trace equals Laplacian locally: on a
+neighbourhood of $x$,
+$$\sum_i \mathrm{Hess}\,f(b)(B_i b, B_i b) \;=\; \Delta_g f(b).$$
+Combines orthonormality of `smoothOrthoFrame` on `smoothOrthoFrameNbhd`
+with `sum_diagonal_smoothOrthoFrame_at_nbhd_eq_std` and the std-basis
+trace identification with `scalarLaplacian`. -/
 theorem sum_hessianBilin_smoothOrthoFrame_eventuallyEq_laplacian
     (f : M → ℝ) (x : M) :
     (fun b => ∑ i, hessianBilin (I := I) f b
@@ -1089,13 +1020,10 @@ theorem sum_hessianBilin_smoothOrthoFrame_eventuallyEq_laplacian
 
 /-! ### Orthonormal-frame skew-derivative and the connection-cancel sum -/
 
-/-- **Smooth orthonormal frame cov-skew at `x`**: differentiating the constant
-function `b ↦ g(B_i b, B_j b) = δ_{ij}` on `smoothOrthoFrameNbhd x` along
-any direction `v ∈ T_xM` and applying metric compatibility gives
+/-- **Math.** **Smooth orthonormal frame cov-skew** at $x$:
 $$g_x(\nabla_v B_i, B_j x) + g_x(B_i x, \nabla_v B_j) = 0.$$
-
-External reference: `smoothOrthoFrame_cov_skew` in
-`differential-geometry/.../Bochner.lean:2058`. -/
+Differentiate $g(B_i, B_j) = \delta_{ij}$ on `smoothOrthoFrameNbhd x`
+and apply metric compatibility. -/
 theorem smoothOrthoFrame_cov_skew
     [T2Space M]
     (x : M) (i j : Fin (Module.finrank ℝ E)) (v : TangentSpace I x) :
@@ -1155,16 +1083,13 @@ theorem smoothOrthoFrame_cov_skew
   rw [h_lhs_zero] at hmc
   exact hmc.symm
 
-/-- **Hessian × cov-frame antisym-symm sum vanishes** (heart-of-Bochner Step 4):
-for smooth $f$, `W : SmoothVectorField`, and $x$ in the strict interior with
-smooth $\nabla f$,
+/-- **Math.** **Hessian × cov-frame antisym-symm sum vanishes** (heart-of-
+Bochner Step 4):
 $$\sum_i \mathrm{Hess}\,f(x)(B_i x,\, \nabla_{W(x)} B_i) \;=\; 0,$$
-where $B_i = $`smoothOrthoFrame g x i`.
-
-Expands $\nabla_{W(x)} B_i$ in the orthonormal frame, factoring the sum into
-$\sum_{i,j} a_{ij} h_{ij}$ with $a_{ij} := \langle\nabla_{W(x)} B_i, B_j\rangle$
-antisymmetric (by `smoothOrthoFrame_cov_skew`) and $h_{ij} :=$
-`hessianBilin f x B_i B_j` symmetric (by `hessianBilin_symm`). -/
+where $B_i = $`smoothOrthoFrame g x i`. Expands $\nabla_{W(x)} B_i$ in
+the orthonormal frame, factoring into $\sum_{i,j} a_{ij} h_{ij}$ with
+$a_{ij}$ antisymmetric (`smoothOrthoFrame_cov_skew`) and $h_{ij}$
+symmetric (`hessianBilin_symm`). -/
 theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (W : SmoothVectorField I M) (x : M)
@@ -1287,16 +1212,12 @@ theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
   -- s = -s ⇒ s = 0.
   linarith
 
-/-- **Conditional inner-form reduction.** Given the inner-product form of
-the heart-of-Bochner sum identity against every test direction $w$, the
-scalar form paired against $\nabla f x$ follows by Riesz-style
-specialisation plus bilinearity of the metric inner product.
-
-The inner-form hypothesis is the natural output of the four-step
+/-- **Mixed.** Conditional inner-form reduction. Math: Given the
+heart-of-Bochner identity against every test direction $w$, the scalar
+form paired against $\nabla f x$ follows.
+Eng: Riesz-style specialisation plus bilinearity packages the four-step
 algebraic chain (Hess-sym swap, D.3, Ricci identification, smooth-trace
-identification) when each step is proven against an arbitrary test
-direction $w$; specialising at $w = \nabla f x$ recovers the scalar form
-needed by the Bochner-Weitzenböck assembly. -/
+identification) into the form consumed by the Bochner–Weitzenböck assembly. -/
 theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_of_inner_form
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (x : M)
