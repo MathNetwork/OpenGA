@@ -37,7 +37,7 @@ namespace BumpFunction
 
 /-! ## Scalar bumps on $\mathbb{R}$ -/
 
-/-- $\varphi(t) = e^{-1/t}$ for $t > 0$, zero for $t \le 0$.
+/-- **Math.** $\varphi(t) = e^{-1/t}$ for $t > 0$, zero for $t \le 0$.
 The standard non-analytic-but-$C^\infty$ glue. -/
 noncomputable abbrev expDamping : ℝ → ℝ := expNegInvGlue
 
@@ -53,8 +53,8 @@ theorem expDamping_pos_of_pos {t : ℝ} (h : 0 < t) : 0 < expDamping t :=
 theorem expDamping_nonneg (t : ℝ) : 0 ≤ expDamping t :=
   expNegInvGlue.nonneg t
 
-/-- Smooth transition: $0$ on $(-\infty, 0]$, $1$ on $[1, \infty)$,
-$C^\infty$ everywhere. -/
+/-- **Math.** Smooth transition: $0$ on $(-\infty, 0]$, $1$ on
+$[1, \infty)$, $C^\infty$ everywhere. -/
 noncomputable abbrev smoothStep : ℝ → ℝ := Real.smoothTransition
 
 theorem smoothStep_contDiff {n : ℕ∞} : ContDiff ℝ n smoothStep :=
@@ -74,8 +74,8 @@ theorem smoothStep_le_one (t : ℝ) : smoothStep t ≤ 1 :=
 
 /-! ## Radial bumps on a normed space -/
 
-/-- Smooth radial bump on a normed space, centered at `c`, with prescribed
-inner/outer radii. -/
+/-- **Math.** Smooth radial bump on a normed space, centered at `c`,
+with prescribed inner/outer radii. -/
 abbrev radialBump {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     (c : E) : Type _ := ContDiffBump c
 
@@ -85,14 +85,15 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
 
-/-- Smooth bump function on $M$ centered at `c`: $C^\infty$, compactly
-supported in the chart at `c`, equal to $1$ near `c`, valued in $[0, 1]$. -/
+/-- **Math.** Smooth bump function on $M$ centered at `c`: $C^\infty$,
+compactly supported in the chart at `c`, equal to $1$ near `c`, valued
+in $[0, 1]$. -/
 abbrev manifoldBump (c : M) : Type _ := SmoothBumpFunction I c
 
 variable [FiniteDimensional ℝ E]
 
-/-- Canonical bump at `c`, extracted from Mathlib's `Nonempty` instance.
-Used when a specific radius is not required. -/
+/-- **Eng.** Canonical bump at `c`, extracted from Mathlib's `Nonempty`
+instance. Used when a specific radius is not required. -/
 noncomputable def someBump (c : M) : SmoothBumpFunction I c :=
   Classical.choice inferInstance
 
@@ -100,12 +101,10 @@ noncomputable def someBump (c : M) : SmoothBumpFunction I c :=
 
 variable [IsManifold I ∞ M]
 
-/-- Given $v \in T_xM$, returns a smooth section $\widetilde{v}$ of $TM$
-supported in `(someBump x).tsupport` with $\widetilde{v}(x) = v$.
-
-Used to construct test sections in Riesz extractions
-(`koszulLinearFunctional_exists`): pick any global section attaining `v`
-at `x`; locality of the functional eliminates extension dependence. -/
+/-- **Math.** Given $v \in T_xM$, a smooth section $\widetilde{v}$ of
+$TM$ supported in `(someBump x).tsupport` with $\widetilde{v}(x) = v$.
+Used to construct test sections in Riesz extractions; locality of the
+functional eliminates extension dependence. -/
 noncomputable def extendVectorField (x : M) (v : TangentSpace I x) (y : M) :
     TangentSpace I y :=
   (((someBump x : SmoothBumpFunction I x) : M → ℝ) y) • (v : E)

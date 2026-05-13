@@ -82,7 +82,7 @@ private lemma contMDiffOn_coordChangeL_tangent (α β : M) :
   rw [tangent_baseSet_eq, tangent_baseSet_eq] at h
   exact h
 
-/-- The action of `coordChangeL` on `v` equals
+/-- **Eng.** The action of `coordChangeL` on `v` equals
 `(triv β).clmAt ℝ b ((triv α).symmL ℝ b v)`. -/
 private lemma coordChangeL_apply_eq_clmAt_symmL
     (α β : M) {b : M}
@@ -106,7 +106,7 @@ private lemma coordChangeL_apply_eq_clmAt_symmL
 
 /-! ## Matrix-entry scalar function and its smoothness -/
 
-/-- The model-basis-coordinate linear functional, viewed as a CLM `E →L[ℝ] ℝ`. -/
+/-- **Eng.** The model-basis-coordinate linear functional, viewed as a CLM `E →L[ℝ] ℝ`. -/
 private noncomputable def basisCoordCLM (j : Fin (Module.finrank ℝ E)) : E →L[ℝ] ℝ :=
   ((Module.finBasis ℝ E).coord j).toContinuousLinearMap
 
@@ -115,7 +115,7 @@ private noncomputable def basisCoordCLM (j : Fin (Module.finrank ℝ E)) : E →
 
 /-! ### Smoothness of the wrapped scalar matrix entry -/
 
-/-- Smoothness of the wrapped chart-Jacobian-inverse matrix entry on
+/-- **Eng.** Smoothness of the wrapped chart-Jacobian-inverse matrix entry on
 `(chart α).source ∩ (chart β).source`. The entry is
 
 ```
@@ -159,7 +159,7 @@ theorem chartJinvMatrix_wrapped_entry_contMDiffOn
     (coordChangeL_apply_eq_clmAt_symmL (I := I) α β hbα hbβ
       ((Module.finBasis ℝ E) i))).symm
 
-/-- Smoothness of the wrapped chart-Jacobian-forward matrix entry on
+/-- **Eng.** Smoothness of the wrapped chart-Jacobian-forward matrix entry on
 `(chart α).source ∩ (chart β).source`. The entry is
 
 ```
@@ -199,10 +199,8 @@ The smoothness at `b₀` of the bare matrix entry follows from the smoothness of
 the wrapped CLM at `b₀`, applied to `(basis i)` and projected via
 `basisCoordCLM j`. -/
 
-/-- Pointwise smoothness of the bare chart-Jacobian-inverse matrix entry: for
-each `b₀ ∈ (chart α).source`, there is a smooth scalar function on a
-neighbourhood of `b₀` (within the source) whose value at `b₀` equals the bare
-matrix entry. -/
+/-- **Eng.** Pointwise smoothness of the bare chart-Jacobian-inverse matrix entry,
+recovered from the wrapped form at `b₀ ∈ (chart α).source`. -/
 theorem chartJinvMatrix_entry_contMDiffAt_via_wrapped
     (α : M) (i j : Fin (Module.finrank ℝ E))
     {b₀ : M} (hb₀ : b₀ ∈ (chartAt H α).source) :
@@ -219,8 +217,8 @@ theorem chartJinvMatrix_entry_contMDiffAt_via_wrapped
     ⟨hb₀, mem_chart_source H b₀⟩
   exact (hwrapped _ hb₀mem).contMDiffAt (hOpen.mem_nhds hb₀mem)
 
-/-- At the centre `b = b₀`, the wrapped chart-Jacobian-inverse matrix entry
-equals the bare one. -/
+/-- **Eng.** At the centre `b = b₀`, the wrapped chart-Jacobian-inverse
+matrix entry equals the bare one. -/
 theorem chartJinvMatrix_entry_wrapped_at_centre
     (α : M) (i j : Fin (Module.finrank ℝ E))
     {b₀ : M} (_hb₀ : b₀ ∈ (chartAt H α).source) :
@@ -235,10 +233,8 @@ theorem chartJinvMatrix_entry_wrapped_at_centre
   rw [h]
   rfl
 
-/-- Pointwise smoothness of the bare chart-Jacobian-forward matrix entry: for
-each `b₀ ∈ (chart α).source`, there is a smooth scalar function on a
-neighbourhood of `b₀` (within the source) whose value at `b₀` equals the bare
-matrix entry. -/
+/-- **Eng.** Pointwise smoothness of the bare chart-Jacobian-forward matrix entry,
+recovered from the wrapped form at `b₀ ∈ (chart α).source`. -/
 theorem chartJMatrix_entry_contMDiffAt_via_wrapped
     (α : M) (i j : Fin (Module.finrank ℝ E))
     {b₀ : M} (hb₀ : b₀ ∈ (chartAt H α).source) :
@@ -255,8 +251,8 @@ theorem chartJMatrix_entry_contMDiffAt_via_wrapped
     ⟨hb₀, mem_chart_source H b₀⟩
   exact (hwrapped _ hb₀mem).contMDiffAt (hOpen.mem_nhds hb₀mem)
 
-/-- At the centre `b = b₀`, the wrapped chart-Jacobian-forward matrix entry
-equals the bare one. -/
+/-- **Eng.** At the centre `b = b₀`, the wrapped chart-Jacobian-forward
+matrix entry equals the bare one. -/
 theorem chartJMatrix_entry_wrapped_at_centre
     (α : M) (i j : Fin (Module.finrank ℝ E))
     {b₀ : M} (_hb₀ : b₀ ∈ (chartAt H α).source) :

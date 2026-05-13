@@ -28,9 +28,8 @@ open Bundle Bornology
 open scoped ContDiff Manifold InnerProductSpace
 
 set_option backward.isDefEq.respectTransparency false in
-/-- The flat metric on a finite-dim inner product space `E`: the constant
-`innerSL ℝ` as bundle-section metric tensor. Aligned with Mathlib's
-`riemannianMetricVectorSpace` but specialised to smoothness order `∞`. -/
+/-- **Math.** The flat metric on a finite-dim inner product space `E`:
+the constant `innerSL ℝ` as bundle-section metric tensor. -/
 noncomputable def euclideanRiemannianMetric
     (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E] :
     RiemannianMetric (𝓘(ℝ, E)) E where
@@ -55,8 +54,7 @@ noncomputable def euclideanRiemannianMetric
     ext v w
     simp [hom_trivializationAt_apply, ContinuousLinearMap.inCoordinates, TangentSpace]
 
-/-- $\langle v, w\rangle_g = \langle v, w\rangle_\mathbb{R}$ on the
-flat metric. -/
+/-- **Math.** $\langle v, w\rangle_g = \langle v, w\rangle_\mathbb{R}$ on the flat metric. -/
 @[simp]
 theorem metricInner_euclidean
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]

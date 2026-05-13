@@ -37,17 +37,17 @@ variable {r s : ℕ}
 ## Model Fibers
 -/
 
-/-- The trivial line bundle over `M` with constant fiber `𝕜`. -/
+/-- **Eng.** The trivial line bundle over `M` with constant fiber `𝕜`. -/
 abbrev TrivialBundle : M → Type _ := fun _ ↦  𝕜
 
-/-- The model fiber for the bundle of (0,s) covariant tensors:
+/-- **Math.** The model fiber for the bundle of (0,s) covariant tensors:
 continuous multilinear maps from `s` copies of `E` to `𝕜`. -/
 @[reducible]
 def Tensor0SModel (s : ℕ) (𝕜 : Type*) (E : Type*) [NontriviallyNormedField 𝕜]
   [NormedAddCommGroup E] [NormedSpace 𝕜 E] [Module.Finite 𝕜 E] [FiniteDimensional 𝕜 E] :=
   ContinuousMultilinearMap 𝕜 (fun _ : Fin s => E) 𝕜
 
-/-- The model fiber for the (r,s)-tensor bundle: continuous linear maps from (0,r)-tensors
+/-- **Math.** The model fiber for the (r,s)-tensor bundle: continuous linear maps from (0,r)-tensors
 to (0,s)-tensors, realizing `V* ⊗ W ≅ Hom(V, W)` for finite-dimensional `V`. -/
 @[reducible]
 def TensorRSModel (r s : ℕ) (𝕜 : Type*) (E : Type*) [NontriviallyNormedField 𝕜]
@@ -58,18 +58,18 @@ def TensorRSModel (r s : ℕ) (𝕜 : Type*) (E : Type*) [NontriviallyNormedFiel
 ## Point-wise Fibers
 -/
 
-/-- The fiber of the (0,s) covariant tensor bundle at `x ∈ M`, defined as
+/-- **Math.** The fiber of the (0,s) covariant tensor bundle at `x ∈ M`, defined as
 `Bundle.continuousMultilinearMap 𝕜 s E (TangentSpace I) x`. -/
 abbrev Tensor0SSpace (s : ℕ) (I : ModelWithCorners 𝕜 E H) [IsManifold I 1 M] (x : M) :=
   Bundle.continuousMultilinearMap 𝕜 s E (TangentSpace I) x
 
-/-- The cotangent space at `x ∈ M`: linear functionals on the tangent space,
+/-- **Math.** The cotangent space at `x ∈ M`: linear functionals on the tangent space,
 realized as (0,1)-tensors. -/
 @[reducible]
 def CotangentSpace (I : ModelWithCorners 𝕜 E H) [IsManifold I 1 M] (x : M) :=
   Tensor0SSpace 1 I x
 
-/-- The fiber of the (r,s)-tensor bundle at `x ∈ M`: continuous linear maps from
+/-- **Math.** The fiber of the (r,s)-tensor bundle at `x ∈ M`: continuous linear maps from
 (0,r)-tensors to (0,s)-tensors, using `(V⊗W)* ≅ V*⊗W*` and `V*⊗W ≅ Hom(V,W)`. -/
 /- TODO: Define the action of (r,s)-tensor on r covectors and s vectors.
     For example, F(ω₁,⋯,ωᵢ,v₁,⋯,vⱼ) := F(ω₁⋯ωⱼ)(v₁,⋯,vⱼ) -/
@@ -81,20 +81,20 @@ def TensorRSSpace (r s : ℕ) (I : ModelWithCorners 𝕜 E H) [IsManifold I 1 M]
 ## Model Fiber Instances
 -/
 
-/-- `Tensor0SModel s 𝕜 E` is a normed additive commutative group. -/
+/-- **Eng.** `Tensor0SModel s 𝕜 E` is a normed additive commutative group. -/
 instance (s : ℕ) :
     NormedAddCommGroup (Tensor0SModel s 𝕜 E) := by
   unfold Tensor0SModel
   letI : NormedAddCommGroup (ContinuousMultilinearMap 𝕜 (fun _ : Fin s => E) 𝕜) := inferInstance
   infer_instance
 
-/-- `Tensor0SModel s 𝕜 E` is a normed `𝕜`-module. -/
+/-- **Eng.** `Tensor0SModel s 𝕜 E` is a normed `𝕜`-module. -/
 instance tensor0SModel_normedSpace (s : ℕ) :
     NormedSpace 𝕜 (Tensor0SModel s 𝕜 E) := by
   unfold Tensor0SModel
   exact @ContinuousMultilinearMap.normedSpace 𝕜 (Fin s) (fun _ : Fin s => E) 𝕜 _ _ _ _ _ _ 𝕜 _ _ _
 
-/-- `TensorRSModel r s 𝕜 E` is a normed additive commutative group. -/
+/-- **Eng.** `TensorRSModel r s 𝕜 E` is a normed additive commutative group. -/
 instance (r s : ℕ) :
     NormedAddCommGroup (TensorRSModel r s 𝕜 E) := by
   unfold TensorRSModel
@@ -107,12 +107,12 @@ instance (r s : ℕ) :
     (ContinuousMultilinearMap 𝕜 (fun _ : Fin s => E) 𝕜)
      _ _ _ _ hr hs _ _
 
-/-- `TensorRSModel r s 𝕜 E` is a normed additive commutative group. -/
+/-- **Eng.** `TensorRSModel r s 𝕜 E` is a normed additive commutative group. -/
 instance tensorRSModel_normedAddCommGroup (r s : ℕ) :
     NormedAddCommGroup (TensorRSModel r s 𝕜 E) :=
   inferInstance
 
-/-- `TensorRSModel r s 𝕜 E` is a normed `𝕜`-module. -/
+/-- **Eng.** `TensorRSModel r s 𝕜 E` is a normed `𝕜`-module. -/
 instance tensorRSModel_normedSpace (r s : ℕ) :
     NormedSpace 𝕜 (TensorRSModel r s 𝕜 E) := by
   unfold TensorRSModel
@@ -131,12 +131,12 @@ each point gives a continuous linear equivalence to the model fiber, and all Hau
 locally convex topologies on a finite-dimensional space agree.
 -/
 
-/-- The tangent space at any point is a normed additive commutative group, inherited from `E`. -/
+/-- **Eng.** The tangent space at any point is a normed additive commutative group, inherited from `E`. -/
 instance tangentSpace_normedAddCommGroup (x : M) :
     NormedAddCommGroup (TangentSpace I x) :=
   inferInstanceAs (NormedAddCommGroup E)
 
-/-- The tangent space at any point is a normed `𝕜`-module, inherited from `E`. -/
+/-- **Eng.** The tangent space at any point is a normed `𝕜`-module, inherited from `E`. -/
 instance tangentSpace_normedSpace (x : M) :
     NormedSpace 𝕜 (TangentSpace I x) :=
   inferInstanceAs (NormedSpace 𝕜 E)
@@ -150,7 +150,7 @@ instance tangentSpace_moduleFree (x : M) :
   inferInstanceAs (Module.Free 𝕜 E)
 
 omit [FiniteDimensional 𝕜 E] in
-/-- Alias for the general `Bundle.continuousMultilinearMap.topology_eq`, specialized to the
+/-- **Eng.** Alias for the general `Bundle.continuousMultilinearMap.topology_eq`, specialized to the
 tangent bundle. Used internally by `tensor0SSpace_continuousLinearEquiv`. -/
 private theorem tensor0SSpace_topology_eq (s : ℕ) (x : M) :
     (inferInstance : TopologicalSpace (Tensor0SSpace s I x)) =
@@ -167,7 +167,7 @@ theorem finrank_tensor0SSpace [CompleteSpace 𝕜] (s : ℕ) (x : M) :
   Bundle.continuousMultilinearMap.finrank_eq s x
 
 omit [FiniteDimensional 𝕜 E] in
-/-- `Tensor0SSpace s I x` is definitionally equal to
+/-- **Eng.** `Tensor0SSpace s I x` is definitionally equal to
 `ContinuousMultilinearMap 𝕜 (fun _ : Fin s => E) 𝕜`, since `TangentSpace I x = E`. -/
 private theorem tensor0SSpace_type_eq (s : ℕ) (x : M) :
     Tensor0SSpace s I x =
@@ -175,7 +175,7 @@ private theorem tensor0SSpace_type_eq (s : ℕ) (x : M) :
   unfold Tensor0SSpace Bundle.continuousMultilinearMap
   rfl
 
-/-- The fiber `Tensor0SSpace s I x` is continuously linearly isomorphic to
+/-- **Math.** The fiber `Tensor0SSpace s I x` is continuously linearly isomorphic to
 `ContinuousMultilinearMap 𝕜 (fun _ : Fin s => E) 𝕜`: the underlying types are definitionally
 equal and the topologies agree by `tensor0SSpace_topology_eq`. -/
 def tensor0SSpace_continuousLinearEquiv (s : ℕ) (x : M) :
@@ -213,18 +213,18 @@ this as `Tensor0SSpace.toModel` (forward direction) and `Tensor0SSpace.ofModel`
 
 namespace Tensor0SSpace
 
-/-- Coerce a `Tensor0SSpace` fiber element to the model fiber.
+/-- **Eng.** Coerce a `Tensor0SSpace` fiber element to the model fiber.
 This is the forward direction of `tensor0SSpace_continuousLinearEquiv`. -/
 def toModel {s : ℕ} {x : M} (T : Tensor0SSpace s I x) :
     ContinuousMultilinearMap 𝕜 (fun _ : Fin s => E) 𝕜 :=
   tensor0SSpace_continuousLinearEquiv s x T
 
-/-- `Tensor0SSpace.toModel` as a bundled `ContinuousLinearMap`. -/
+/-- **Eng.** `Tensor0SSpace.toModel` as a bundled `ContinuousLinearMap`. -/
 def toModelL (s : ℕ) (x : M) :
     Tensor0SSpace s I x →L[𝕜] ContinuousMultilinearMap 𝕜 (fun _ : Fin s => E) 𝕜 :=
   (tensor0SSpace_continuousLinearEquiv s x).toContinuousLinearMap
 
-/-- Construct a `Tensor0SSpace` fiber element from a model fiber element.
+/-- **Eng.** Construct a `Tensor0SSpace` fiber element from a model fiber element.
 This is the inverse of `Tensor0SSpace.toModel`. -/
 def ofModel {s : ℕ} {x : M}
     (f : ContinuousMultilinearMap 𝕜 (fun _ : Fin s => E) 𝕜) :
@@ -297,7 +297,7 @@ theorem toModel_bijective {s : ℕ} {x : M} :
 
 end Tensor0SSpace
 
-/-- The fiber `TensorRSSpace r s I x` is continuously linearly isomorphic to
+/-- **Math.** The fiber `TensorRSSpace r s I x` is continuously linearly isomorphic to
 `TensorRSModel r s 𝕜 E`: this follows from `arrowCongr` applied to the
 `tensor0SSpace_continuousLinearEquiv` on both the domain and codomain. -/
 def tensorRSSpace_continuousLinearEquiv (r s : ℕ) (x : M) :
@@ -306,7 +306,7 @@ def tensorRSSpace_continuousLinearEquiv (r s : ℕ) (x : M) :
     (tensor0SSpace_continuousLinearEquiv (I := I) s x)
 
 omit [FiniteDimensional 𝕜 E] in
-/-- The `→L[𝕜]` between `Tensor0SSpace` fibers (with the bundle topology) is the
+/-- **Eng.** The `→L[𝕜]` between `Tensor0SSpace` fibers (with the bundle topology) is the
 same type as `→L[𝕜]` between `ContinuousMultilinearMap` fibers (with the norm topology),
 since the topologies agree by `tensor0SSpace_topology_eq`. -/
 private theorem tensorRSSpace_type_eq (r s : ℕ) (x : M) :
@@ -316,23 +316,23 @@ private theorem tensorRSSpace_type_eq (r s : ℕ) (x : M) :
   unfold TensorRSSpace Tensor0SSpace Bundle.continuousMultilinearMap
   congr 1 <;> exact tensor0SSpace_topology_eq (I := I) _ x
 
-/-- Transport `NormedAddCommGroup` and `NormedSpace` together from the norm-topology type. -/
+/-- **Eng.** Transport `NormedAddCommGroup` and `NormedSpace` together from the norm-topology type. -/
 private def tensorRSSpace_normedInstances (r s : ℕ) (x : M) :
     Σ' (ng : NormedAddCommGroup (TensorRSSpace r s I x)),
       @NormedSpace 𝕜 (TensorRSSpace r s I x) _ ng.toSeminormedAddCommGroup :=
   (tensorRSSpace_type_eq (I := I) r s x) ▸ ⟨inferInstance, inferInstance⟩
 
-/-- The fiber `TensorRSSpace r s I x` is a normed additive commutative group. -/
+/-- **Eng.** The fiber `TensorRSSpace r s I x` is a normed additive commutative group. -/
 instance tensorRSSpace_normedAddCommGroup (r s : ℕ) (x : M) :
     NormedAddCommGroup (TensorRSSpace r s I x) :=
   (tensorRSSpace_normedInstances r s x).1
 
-/-- The fiber `TensorRSSpace r s I x` is a normed `𝕜`-module. -/
+/-- **Eng.** The fiber `TensorRSSpace r s I x` is a normed `𝕜`-module. -/
 instance tensorRSSpace_normedSpace (r s : ℕ) (x : M) :
     NormedSpace 𝕜 (TensorRSSpace r s I x) :=
   (tensorRSSpace_normedInstances r s x).2
 
-/-- Scalar multiplication on `TensorRSSpace r s I x` is continuous. -/
+/-- **Eng.** Scalar multiplication on `TensorRSSpace r s I x` is continuous. -/
 instance tensorRSSpace_continuousSMul (r s : ℕ) (x : M) :
     ContinuousSMul 𝕜 (TensorRSSpace r s I x) :=
   inferInstanceAs (ContinuousSMul 𝕜 (TensorRSSpace r s I x))
@@ -348,18 +348,18 @@ together with linearity, continuity, and invertibility lemmas.
 
 namespace TensorRSSpace
 
-/-- Coerce a `TensorRSSpace` fiber element to the model fiber `TensorRSModel r s 𝕜 E`.
+/-- **Eng.** Coerce a `TensorRSSpace` fiber element to the model fiber `TensorRSModel r s 𝕜 E`.
 This is the forward direction of `tensorRSSpace_continuousLinearEquiv`. -/
 def toModel {r s : ℕ} {x : M} (T : TensorRSSpace r s I x) :
     TensorRSModel r s 𝕜 E :=
   tensorRSSpace_continuousLinearEquiv (I := I) r s x T
 
-/-- `TensorRSSpace.toModel` as a bundled `ContinuousLinearMap`. -/
+/-- **Eng.** `TensorRSSpace.toModel` as a bundled `ContinuousLinearMap`. -/
 def toModelL (r s : ℕ) (x : M) :
     TensorRSSpace r s I x →L[𝕜] TensorRSModel r s 𝕜 E :=
   (tensorRSSpace_continuousLinearEquiv (I := I) r s x).toContinuousLinearMap
 
-/-- Construct a `TensorRSSpace` fiber element from a model fiber element.
+/-- **Eng.** Construct a `TensorRSSpace` fiber element from a model fiber element.
 This is the inverse of `TensorRSSpace.toModel`. -/
 def ofModel {r s : ℕ} {x : M} (f : TensorRSModel r s 𝕜 E) :
     TensorRSSpace r s I x :=
@@ -428,7 +428,7 @@ end TensorRSSpace
 ## Currying
 -/
 
-/-- Currying isomorphism: a (0,s+1)-tensor is equivalent to a continuous linear map
+/-- **Math.** Currying isomorphism: a (0,s+1)-tensor is equivalent to a continuous linear map
 from the tangent space to the space of (0,s)-tensors.
 
 The proof composes three continuous linear equivalences:
@@ -452,7 +452,7 @@ The (0,s) covariant tensor bundle inherits its fiber bundle, vector bundle, and 
 vector bundle structure from `Bundle.continuousMultilinearMap` applied to the tangent bundle.
 -/
 
-/-- The total space of the (0,s)-tensor bundle carries a topology from the
+/-- **Eng.** The total space of the (0,s)-tensor bundle carries a topology from the
 multilinear bundle construction. -/
 instance tensor0SBundle_topology (s : ℕ) :
     TopologicalSpace (TotalSpace
@@ -460,7 +460,7 @@ instance tensor0SBundle_topology (s : ℕ) :
       (fun x : M => Tensor0SSpace s I x)) :=
   Bundle.continuousMultilinearMap.topologicalSpace_totalSpace 𝕜 s E (TangentSpace I)
 
-/-- The (0,s)-tensor bundle is a fiber bundle with model fiber `Tensor0SModel s 𝕜 E`. -/
+/-- **Math.** The (0,s)-tensor bundle is a fiber bundle with model fiber `Tensor0SModel s 𝕜 E`. -/
 @[simp]
 noncomputable instance tensor0SBundle_fiber (s : ℕ) :
     FiberBundle
@@ -468,7 +468,7 @@ noncomputable instance tensor0SBundle_fiber (s : ℕ) :
       (fun x : M => Tensor0SSpace s I x) :=
   Bundle.continuousMultilinearMap.fiberBundle 𝕜 s E (TangentSpace I)
 
-/-- The (0,s)-tensor bundle is a vector bundle with model fiber `Tensor0SModel s 𝕜 E`. -/
+/-- **Math.** The (0,s)-tensor bundle is a vector bundle with model fiber `Tensor0SModel s 𝕜 E`. -/
 @[simp]
 noncomputable instance tensor0SBundle_vector (s : ℕ) :
     VectorBundle 𝕜
@@ -485,7 +485,7 @@ The smooth bundle instances require `IsManifold I (n + 1) M` to get
 
 variable (n : WithTop ℕ∞) [IsManifold I (n + 1) M]
 
-/-- The (0,s)-tensor bundle is a `C^n` vector bundle over `M`. -/
+/-- **Math.** The (0,s)-tensor bundle is a `C^n` vector bundle over `M`. -/
 @[simp]
 noncomputable instance tensor0SBundle_smooth [CompleteSpace 𝕜] (s : ℕ) :
     ContMDiffVectorBundle n
@@ -506,7 +506,7 @@ The (r,s) tensor bundle is defined as the hom bundle from the (0,r)- to the (0,s
 bundle, using `Bundle.ContinuousLinearMap`.
 -/
 
-/-- The total space of the (r,s)-tensor bundle carries a topology, induced by viewing it
+/-- **Eng.** The total space of the (r,s)-tensor bundle carries a topology, induced by viewing it
 as the hom bundle from the (0,r)- to the (0,s)-tensor bundle. -/
 noncomputable instance tensorRSBundle_topology (r s : ℕ) :
     TopologicalSpace (TotalSpace (TensorRSModel r s 𝕜 E)
@@ -517,7 +517,7 @@ noncomputable instance tensorRSBundle_topology (r s : ℕ) :
     (Tensor0SModel s 𝕜 E)
     (fun (x : M) => Tensor0SSpace s I x)
 
-/-- The (r,s)-tensor bundle is a fiber bundle, as a hom bundle between two fiber bundles. -/
+/-- **Math.** The (r,s)-tensor bundle is a fiber bundle, as a hom bundle between two fiber bundles. -/
 noncomputable instance tensorRSBundle_fiber (r s : ℕ) :
     @FiberBundle M (TensorRSModel r s 𝕜 E) _ (by infer_instance : TopologicalSpace _)
       (fun x : M => TensorRSSpace r s I x)
@@ -528,7 +528,7 @@ noncomputable instance tensorRSBundle_fiber (r s : ℕ) :
     (Tensor0SModel s 𝕜 E)
     (fun (x : M) => Tensor0SSpace s I x)
 
-/-- The (r,s)-tensor bundle is a vector bundle with model fiber `TensorRSModel r s 𝕜 E`. -/
+/-- **Math.** The (r,s)-tensor bundle is a vector bundle with model fiber `TensorRSModel r s 𝕜 E`. -/
 noncomputable instance tensorRSBundle_vector (r s : ℕ) :
     @VectorBundle 𝕜 M (TensorRSModel r s 𝕜 E) (fun x : M => TensorRSSpace r s I x) _
       (fun x => by infer_instance) (fun x => by infer_instance)
@@ -541,7 +541,7 @@ noncomputable instance tensorRSBundle_vector (r s : ℕ) :
     (ContinuousMultilinearMap 𝕜 (fun _ : Fin s => E) 𝕜)
     (fun (x : M) => Tensor0SSpace s I x)
 
-/-- The (r,s)-tensor bundle is a `C^n` vector bundle over `M`. -/
+/-- **Math.** The (r,s)-tensor bundle is a `C^n` vector bundle over `M`. -/
 noncomputable instance tensorRSBundle_smooth [CompleteSpace 𝕜] (r s : ℕ) :
     @ContMDiffVectorBundle n 𝕜 M (TensorRSModel r s 𝕜 E) (fun x : M => TensorRSSpace r s I x)
       _ E _ _ H _ I _ _ _ _ _ _
@@ -571,26 +571,26 @@ to (m)differentiability/smoothness of the underlying section.
 -/
 
 omit [FiniteDimensional 𝕜 E] in
-/-- The forward direction of `tensor0SSpace_continuousLinearEquiv` is the identity function
+/-- **Eng.** The forward direction of `tensor0SSpace_continuousLinearEquiv` is the identity function
 on the underlying carrier. -/
 theorem tensor0SSpace_continuousLinearEquiv_apply (s : ℕ) (x : M)
     (T : Tensor0SSpace s I x) :
     tensor0SSpace_continuousLinearEquiv (I := I) (M := M) s x T = T := rfl
 
 omit [FiniteDimensional 𝕜 E] in
-/-- The inverse direction of `tensor0SSpace_continuousLinearEquiv` is the identity function
+/-- **Eng.** The inverse direction of `tensor0SSpace_continuousLinearEquiv` is the identity function
 on the underlying carrier. -/
 theorem tensor0SSpace_continuousLinearEquiv_symm_apply (s : ℕ) (x : M)
     (T : ContinuousMultilinearMap 𝕜 (fun _ : Fin s => E) 𝕜) :
     (tensor0SSpace_continuousLinearEquiv (I := I) (M := M) s x).symm T = T := rfl
 
 omit [FiniteDimensional 𝕜 E] in
-/-- The CLE coerces to `id` on the underlying carrier. -/
+/-- **Eng.** The CLE coerces to `id` on the underlying carrier. -/
 theorem tensor0SSpace_continuousLinearEquiv_coe (s : ℕ) (x : M) :
     (tensor0SSpace_continuousLinearEquiv (I := I) (M := M) s x : _ → _) = id := rfl
 
 omit [FiniteDimensional 𝕜 E] in
-/-- The inverse CLE coerces to `id` on the underlying carrier. -/
+/-- **Eng.** The inverse CLE coerces to `id` on the underlying carrier. -/
 theorem tensor0SSpace_continuousLinearEquiv_symm_coe (s : ℕ) (x : M) :
     ((tensor0SSpace_continuousLinearEquiv (I := I) (M := M) s x).symm : _ → _) = id := rfl
 

@@ -38,10 +38,9 @@ namespace Riemannian
 
 /-! ## The metric type -/
 
-/-- A **Riemannian metric** on a smooth manifold $M$, modelled on
-$(E, H, I)$. Defined as Mathlib's `Bundle.ContMDiffRiemannianMetric`
-applied to the tangent bundle: the metric is data, not a typeclass
-attribute. -/
+/-- **Math.** A **Riemannian metric** on a smooth manifold $M$ modelled
+on $(E, H, I)$. Mathlib's `Bundle.ContMDiffRiemannianMetric` aliased:
+data, not a typeclass attribute. -/
 abbrev RiemannianMetric
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H]
@@ -50,23 +49,11 @@ abbrev RiemannianMetric
     [IsManifold I ∞ M] : Type _ :=
   Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I : M → Type _)
 
-/-- **`[HasMetric I M]` typeclass**: a thin wrapper around
-`RiemannianMetric I M` that makes the metric instance-bindable.
-
-Path B's `abbrev RiemannianMetric` makes the metric *data*, which is
-correct mathematically (multiple metrics on the same manifold coexist as
-different inhabitants) but loses the `[g : RiemannianMetric I M]`
-instance-binding form. Downstream code that binds `{I : ModelWithCorners
-...}` independently from the manifold's bundled `modelI` needs an
-instance-form of "this manifold has a metric on `I`". `HasMetric I M`
-fills that gap: it's a single-field class whose `metric` field IS a
-`RiemannianMetric I M`.
-
-For typeclass-driven manifolds, `Manifold.lean` registers a bridge
-`[RiemannianManifold M] → [HasMetric (SmoothManifold.modelI M) M]`.
-For explicit-metric callers, declare `instance : HasMetric I M := ⟨g⟩`
-once and the rest of the API (algebra, Riesz, smoothness) becomes
-typeclass-resolvable. -/
+/-- **Eng.** **`[HasMetric I M]` typeclass**: thin wrapper around
+`RiemannianMetric I M` to make the metric instance-bindable when
+downstream code binds `{I : ModelWithCorners ...}` independently of
+the manifold's bundled `modelI`. Single-field class; bridged from
+`[RiemannianManifold M]` in `Manifold.lean`. -/
 class HasMetric {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
     (M : Type*) [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
@@ -74,10 +61,10 @@ class HasMetric {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   /-- The Riemannian metric on $(M, I)$. -/
   metric : RiemannianMetric I M
 
-/-- **Bridge**: `[HasMetric I M]` induces a global `Bundle.RiemannianBundle
-(TangentSpace I : M → Type _)`, which activates Mathlib's scoped
-`NormedAddCommGroup` and `InnerProductSpace ℝ` instances on each fibre
-`TangentSpace I x`. Single NACG/IPS source — see `Metric.lean` rationale. -/
+/-- **Eng.** Bridge: `[HasMetric I M]` induces a global
+`Bundle.RiemannianBundle (TangentSpace I : M → Type _)`, activating
+Mathlib's scoped `NormedAddCommGroup` and `InnerProductSpace ℝ`
+instances on each fibre. Single NACG/IPS source. -/
 noncomputable instance instRiemannianBundleOfHasMetric
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
@@ -97,7 +84,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
 /-! ## Inner product -/
 
-/-- The **metric inner product** $\langle V, W\rangle_g = g_x(V, W)$. -/
+/-- **Math.** The **metric inner product** $\langle V, W\rangle_g = g_x(V, W)$. -/
 noncomputable def metricInner (g : RiemannianMetric I M)
     (x : M) (V W : TangentSpace I x) : ℝ :=
   g.inner x V W
@@ -107,13 +94,13 @@ theorem metricInner_apply (g : RiemannianMetric I M)
     (x : M) (V W : TangentSpace I x) :
     g.metricInner x V W = g.inner x V W := rfl
 
-/-- **Symmetry**: $\langle V, W\rangle_g = \langle W, V\rangle_g$. -/
+/-- **Math.** Symmetry: $\langle V, W\rangle_g = \langle W, V\rangle_g$. -/
 theorem metricInner_comm (g : RiemannianMetric I M)
     (x : M) (V W : TangentSpace I x) :
     g.metricInner x V W = g.metricInner x W V :=
   g.symm x V W
 
-/-- **Positive-definiteness**: $V \ne 0 \Rightarrow \langle V, V\rangle_g > 0$. -/
+/-- **Math.** Positive-definiteness: $V \ne 0 \Rightarrow \langle V, V\rangle_g > 0$. -/
 theorem metricInner_self_pos (g : RiemannianMetric I M)
     (x : M) (V : TangentSpace I x) (hV : V ≠ 0) :
     0 < g.metricInner x V V :=
@@ -185,7 +172,7 @@ theorem metricInner_sub_right (g : RiemannianMetric I M)
     g.metricInner x V (W₁ - W₂) = g.metricInner x V W₁ - g.metricInner x V W₂ :=
   (g.inner x V).map_sub W₁ W₂
 
-/-- $\langle V, V\rangle_g \ge 0$ for any $V$. -/
+/-- **Math.** $\langle V, V\rangle_g \ge 0$ for any $V$. -/
 @[simp, metric_simp]
 theorem metricInner_self_nonneg (g : RiemannianMetric I M)
     (x : M) (V : TangentSpace I x) :
@@ -243,7 +230,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
-/-- Bridge from the metric's continuous bilinear form to the
+/-- **Eng.** Bridge from the metric's continuous bilinear form to the
 algebraic-core `BilinearForm.Form ℝ E`. -/
 private noncomputable def toBilinForm (g : RiemannianMetric I M) (x : M) :
     BilinearForm.Form ℝ E :=
@@ -265,7 +252,7 @@ private theorem toBilinForm_isPosDef (g : RiemannianMetric I M) (x : M) :
   show 0 < g.inner x v v
   exact g.pos x v hv
 
-/-- **Forward Riesz** $V \mapsto g_x(V, \cdot)$. -/
+/-- **Math.** Forward Riesz $V \mapsto g_x(V, \cdot)$. -/
 noncomputable def metricToDual (g : RiemannianMetric I M) (x : M) :
     TangentSpace I x →L[ℝ] (TangentSpace I x →L[ℝ] ℝ) :=
   g.inner x
@@ -286,13 +273,13 @@ theorem metricToDual_injective (g : RiemannianMetric I M) (x : M) :
   exact congrArg (fun (f : TangentSpace I x →L[ℝ] ℝ) => f w) h
 
 omit [FiniteDimensional ℝ E] in
-/-- **Non-degeneracy**: vectors with equal inner-products against everything are equal. -/
+/-- **Math.** Non-degeneracy: vectors with equal inner-products against everything are equal. -/
 theorem metricInner_eq_iff_eq (g : RiemannianMetric I M) (x : M)
     (v w : TangentSpace I x) :
     (∀ Z : TangentSpace I x, g.metricInner x v Z = g.metricInner x w Z) ↔ v = w :=
   BilinearForm.inner_eq_iff_eq (g.toBilinForm_isPosDef x) v w
 
-/-- **Inverse Riesz** $\varphi \mapsto V_\varphi$ such that $g_x(V_\varphi, W) = \varphi(W)$.
+/-- **Math.** Inverse Riesz $\varphi \mapsto V_\varphi$ such that $g_x(V_\varphi, W) = \varphi(W)$.
 
 Constructed via the algebraic-core `BilinearForm.riesz` applied to the
 `LinearMap` coercion of the continuous functional. -/
@@ -302,7 +289,7 @@ noncomputable def metricRiesz (g : RiemannianMetric I M) (x : M)
   BilinearForm.riesz (g.toBilinForm_isPosDef x)
     ((φ : TangentSpace I x →ₗ[ℝ] ℝ))
 
-/-- **Defining property of Riesz**: $\langle \text{metricRiesz}\,\varphi, W\rangle_g = \varphi(W)$. -/
+/-- **Math.** Defining property of Riesz: $\langle \text{metricRiesz}\,\varphi, W\rangle_g = \varphi(W)$. -/
 @[simp]
 theorem metricRiesz_inner (g : RiemannianMetric I M) (x : M)
     (φ : TangentSpace I x →L[ℝ] ℝ) (V : TangentSpace I x) :
@@ -310,7 +297,7 @@ theorem metricRiesz_inner (g : RiemannianMetric I M) (x : M)
   BilinearForm.riesz_inner (g.toBilinForm_isPosDef x)
     ((φ : TangentSpace I x →ₗ[ℝ] ℝ)) V
 
-/-- **Uniqueness**: if $g_x(V, \cdot) = \varphi$, then $V = \text{metricRiesz}\,\varphi$. -/
+/-- **Math.** Uniqueness: if $g_x(V, \cdot) = \varphi$, then $V = \text{metricRiesz}\,\varphi$. -/
 theorem metricRiesz_unique (g : RiemannianMetric I M) (x : M)
     (v : TangentSpace I x) (φ : TangentSpace I x →L[ℝ] ℝ)
     (h : ∀ w, g.metricInner x v w = φ w) :
@@ -326,7 +313,7 @@ theorem metricToDual_bijective (g : RiemannianMetric I M) (x : M) :
   ext v
   exact g.metricRiesz_inner x φ v
 
-/-- The Riesz isomorphism `T_xM ≃ₗ[ℝ] (T_xM →L[ℝ] ℝ)`, built directly
+/-- **Math.** The Riesz isomorphism `T_xM ≃ₗ[ℝ] (T_xM →L[ℝ] ℝ)`, built directly
 from `metricToDual` and its bijectivity. The forward map is
 `v ↦ g.inner x v` (the metric-induced continuous functional); the inverse
 is `g.metricRiesz x`. -/
@@ -369,7 +356,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
 variable {n : ℕ∞ω} [hLE : ENat.LEInfty n]
 
-/-- $\langle v(\cdot), w(\cdot)\rangle_g$ is `ContMDiffWithinAt` whenever
+/-- **Math.** $\langle v(\cdot), w(\cdot)\rangle_g$ is `ContMDiffWithinAt` whenever
 the tangent-bundle sections `v`, `w` are. -/
 theorem metricInner_contMDiffWithinAt
     (g : RiemannianMetric I M)
@@ -385,7 +372,7 @@ theorem metricInner_contMDiffWithinAt
     (E := (TangentSpace I : M → Type _)) (b := fun y => y)
     (v := v) (w := w) (IM := I) hv hw
 
-/-- Pointwise variant. -/
+/-- **Eng.** Pointwise variant. -/
 theorem metricInner_contMDiffAt
     (g : RiemannianMetric I M)
     (hv : ContMDiffAt I (I.prod 𝓘(ℝ, E)) n
@@ -396,7 +383,7 @@ theorem metricInner_contMDiffAt
       (fun y => g.metricInner y (v y) (w y)) x :=
   g.metricInner_contMDiffWithinAt hv hw
 
-/-- Set-form variant. -/
+/-- **Eng.** Set-form variant. -/
 theorem metricInner_contMDiffOn
     (g : RiemannianMetric I M)
     (hv : ContMDiffOn I (I.prod 𝓘(ℝ, E)) n
@@ -407,7 +394,7 @@ theorem metricInner_contMDiffOn
       (fun y => g.metricInner y (v y) (w y)) s :=
   fun y hy => g.metricInner_contMDiffWithinAt (hv y hy) (hw y hy)
 
-/-- Global variant. -/
+/-- **Eng.** Global variant. -/
 theorem metricInner_contMDiff
     (g : RiemannianMetric I M)
     (hv : ContMDiff I (I.prod 𝓘(ℝ, E)) n
@@ -420,7 +407,7 @@ theorem metricInner_contMDiff
 
 /-! ### `MDifferentiable` family — first-order differentiability -/
 
-/-- Differentiable-within-at variant. -/
+/-- **Eng.** Differentiable-within-at variant. -/
 theorem metricInner_mdifferentiableWithinAt
     (g : RiemannianMetric I M)
     (hv : MDifferentiableWithinAt I (I.prod 𝓘(ℝ, E))
@@ -435,7 +422,7 @@ theorem metricInner_mdifferentiableWithinAt
     (E := (TangentSpace I : M → Type _)) (b := fun y => y)
     (v := v) (w := w) (IM := I) hv hw
 
-/-- Pointwise differentiability. -/
+/-- **Eng.** Pointwise differentiability. -/
 theorem metricInner_mdifferentiableAt
     (g : RiemannianMetric I M)
     (hv : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
@@ -446,7 +433,7 @@ theorem metricInner_mdifferentiableAt
       (fun y => g.metricInner y (v y) (w y)) x :=
   g.metricInner_mdifferentiableWithinAt hv hw
 
-/-- Set-form differentiability. -/
+/-- **Eng.** Set-form differentiability. -/
 theorem metricInner_mdifferentiableOn
     (g : RiemannianMetric I M)
     (hv : MDifferentiableOn I (I.prod 𝓘(ℝ, E))
@@ -457,7 +444,7 @@ theorem metricInner_mdifferentiableOn
       (fun y => g.metricInner y (v y) (w y)) s :=
   fun y hy => g.metricInner_mdifferentiableWithinAt (hv y hy) (hw y hy)
 
-/-- Global differentiability. -/
+/-- **Eng.** Global differentiability. -/
 theorem metricInner_mdifferentiable
     (g : RiemannianMetric I M)
     (hv : MDifferentiable I (I.prod 𝓘(ℝ, E))

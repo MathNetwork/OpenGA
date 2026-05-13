@@ -32,21 +32,13 @@ open scoped ContDiff Manifold Bundle
 
 namespace Riemannian
 
-/-- A **smooth manifold** as a single bundled typeclass. Packages
-`(E, H, modelI)` plus the complete typeclass cascade needed by
-Riemannian-geometry operators in this framework.
-
-Once `[SmoothManifold M]` is in scope, *all* of the following
-synthesize automatically:
-
-* `NormedAddCommGroup E`, `NormedSpace ℝ E`
-* `FiniteDimensional ℝ E`, `CompleteSpace E`
-* `TopologicalSpace H`
-* `ChartedSpace H M`, `IsManifold modelI ∞ M`
-* `IsLocallyConstantChartedSpace H M`
-
-A pure-math user reading `[SmoothManifold M]` reads "M is a smooth
-finite-dimensional manifold" — exactly the textbook setting. -/
+/-- **Math.** A **smooth manifold** as a single bundled typeclass.
+Packages `(E, H, modelI)` plus the complete typeclass cascade
+(`NormedAddCommGroup E`, `NormedSpace ℝ E`, `FiniteDimensional ℝ E`,
+`CompleteSpace E`, `TopologicalSpace H`, `ChartedSpace H M`,
+`IsManifold modelI ∞ M`, `IsLocallyConstantChartedSpace H M`) needed by
+Riemannian operators. `[SmoothManifold M]` reads "M is a smooth
+finite-dimensional manifold" — the textbook setting. -/
 class SmoothManifold (M : Type*) [TopologicalSpace M] where
   /-- The model fibre. -/
   E : Type*
@@ -63,16 +55,12 @@ class SmoothManifold (M : Type*) [TopologicalSpace M] where
   [isManifold_M : IsManifold modelI ∞ M]
   [isLocallyConstantChartedSpace_M : IsLocallyConstantChartedSpace H M]
 
-/-- A **Riemannian manifold** $(M, g)$ as a single bundled typeclass.
-Extends `SmoothManifold M` with a regular field
-`metric : RiemannianMetric modelI M` (the metric is *data*, an inhabitant
-of `Bundle.ContMDiffRiemannianMetric`, not a typeclass attribute).
-
-Bundles `[InnerProductSpace ℝ E]` (needed for chart-background fibre
-instances) and `[NeZero (Module.finrank ℝ E)]` (needed for Frobenius
-norm / basis sums in curvature / Hessian operators). With these, the
-full cascade required by Bochner, Lichnerowicz, second-variation, etc.
-is provided by `[RiemannianManifold M]` alone. -/
+/-- **Math.** A **Riemannian manifold** $(M, g)$ as a single bundled
+typeclass. Extends `SmoothManifold M` with a `metric : RiemannianMetric
+modelI M` field (data). Also bundles `[InnerProductSpace ℝ E]` and
+`[NeZero (Module.finrank ℝ E)]` so the full cascade for Bochner,
+Lichnerowicz, second-variation is provided by `[RiemannianManifold M]`
+alone. -/
 class RiemannianManifold (M : Type*) [TopologicalSpace M]
     extends SmoothManifold M where
   [innerProductSpace_E : InnerProductSpace ℝ E]
@@ -111,22 +99,17 @@ variable {M : Type*} [TopologicalSpace M] [rm : RiemannianManifold M]
 instance : InnerProductSpace ℝ rm.E := rm.innerProductSpace_E
 instance : NeZero (Module.finrank ℝ rm.E) := rm.neZero_finrank_E
 
-/-- The metric carried by `[RiemannianManifold M]` induces a global
-`Bundle.RiemannianBundle (TangentSpace modelI : M → Type _)`, which in turn
-activates Mathlib's scoped `NormedAddCommGroup` and `InnerProductSpace ℝ`
-instances on each fibre `TangentSpace modelI x`. This is the single
-NACG/IPS source on tangent fibres in OpenGALib — chart-background
-shortcuts (`inferInstanceAs (NormedAddCommGroup E)` on `TangentSpace I x`)
-were deliberately retired in favour of this bridge, sidestepping the
-lean4#13063 NACG diamond. -/
+/-- **Eng.** The metric carried by `[RiemannianManifold M]` induces a
+global `Bundle.RiemannianBundle (TangentSpace modelI : M → Type _)`,
+activating Mathlib's scoped `NACG` / `InnerProductSpace ℝ` on each
+fibre. Single NACG/IPS source — sidesteps the lean4#13063 NACG diamond. -/
 noncomputable instance instRiemannianBundleOfRiemannianManifold :
     Bundle.RiemannianBundle (TangentSpace rm.modelI : M → Type _) :=
   ⟨rm.metric.toRiemannianMetric⟩
 
-/-- **Bridge**: a `[RiemannianManifold M]` instance automatically provides
-`[HasMetric (SmoothManifold.modelI M) M]`. This lets every API keyed on
-`[HasMetric I M]` (the math-first metric typeclass) work uniformly for
-RiemannianManifold-bundled callers and explicit-metric callers alike. -/
+/-- **Eng.** Bridge: `[RiemannianManifold M] → [HasMetric (SmoothManifold.modelI M) M]`.
+Lets every `[HasMetric I M]`-keyed API work uniformly for bundled and
+explicit-metric callers. -/
 instance instHasMetricOfRiemannianManifold :
     HasMetric rm.modelI M where
   metric := rm.metric
@@ -155,8 +138,8 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [hm : HasMetric I M]
 
-/-- The **metric inner product** $\langle V, W\rangle_g$ as a top-level
-function, sourcing $g$ from `[HasMetric I M]`. -/
+/-- **Math.** The **metric inner product** $\langle V, W\rangle_g$ as a
+top-level function, sourcing $g$ from `[HasMetric I M]`. -/
 noncomputable abbrev metricInner (x : M)
     (v w : TangentSpace I x) : ℝ :=
   hm.metric.metricInner x v w
@@ -165,12 +148,12 @@ noncomputable abbrev metricInner (x : M)
 theorem metricInner_apply (x : M) (v w : TangentSpace I x) :
     metricInner x v w = hm.metric.inner x v w := rfl
 
-/-- **Symmetry**: $\langle V, W\rangle_g = \langle W, V\rangle_g$. -/
+/-- **Math.** Symmetry: $\langle V, W\rangle_g = \langle W, V\rangle_g$. -/
 theorem metricInner_comm (x : M) (v w : TangentSpace I x) :
     metricInner x v w = metricInner x w v :=
   hm.metric.metricInner_comm x v w
 
-/-- **Positive-definiteness**: $V \ne 0 \Rightarrow \langle V, V\rangle_g > 0$. -/
+/-- **Math.** Positive-definiteness: $V \ne 0 \Rightarrow \langle V, V\rangle_g > 0$. -/
 theorem metricInner_self_pos (x : M) (v : TangentSpace I x)
     (hv : v ≠ 0) : 0 < metricInner x v v :=
   hm.metric.metricInner_self_pos x v hv
@@ -232,7 +215,7 @@ theorem metricInner_self_nonneg (x : M) (v : TangentSpace I x) :
     0 ≤ metricInner x v v :=
   hm.metric.metricInner_self_nonneg x v
 
-/-- **Non-degeneracy**: vectors with equal inner-products against every test
+/-- **Math.** Non-degeneracy: vectors with equal inner-products against every test
 vector are equal. -/
 theorem metricInner_eq_iff_eq (x : M) (v w : TangentSpace I x) :
     (∀ z : TangentSpace I x, metricInner x v z = metricInner x w z) ↔
@@ -243,7 +226,7 @@ section RieszSection
 
 variable [FiniteDimensional ℝ E]
 
-/-- The **metric-to-dual** CLM $V \mapsto g_x(V, \cdot)$. -/
+/-- **Math.** The **metric-to-dual** CLM $V \mapsto g_x(V, \cdot)$. -/
 noncomputable abbrev metricToDual (x : M) :
     TangentSpace I x →L[ℝ] (TangentSpace I x →L[ℝ] ℝ) :=
   hm.metric.metricToDual x
@@ -262,7 +245,7 @@ theorem metricToDual_bijective (x : M) :
     Function.Bijective (metricToDual (I := I) (M := M) x) :=
   hm.metric.metricToDual_bijective x
 
-/-- **Inverse Riesz**: $\varphi \mapsto V_\varphi$ such that
+/-- **Math.** Inverse Riesz: $\varphi \mapsto V_\varphi$ such that
 $g_x(V_\varphi, W) = \varphi(W)$. -/
 noncomputable abbrev metricRiesz (x : M)
     (φ : TangentSpace I x →L[ℝ] ℝ) : TangentSpace I x :=
@@ -280,7 +263,7 @@ theorem metricRiesz_unique (x : M) (v : TangentSpace I x)
     v = metricRiesz x φ :=
   hm.metric.metricRiesz_unique x v φ h
 
-/-- The Riesz isomorphism `T_xM ≃ₗ[ℝ] (T_xM →L[ℝ] ℝ)`. -/
+/-- **Math.** The Riesz isomorphism `T_xM ≃ₗ[ℝ] (T_xM →L[ℝ] ℝ)`. -/
 noncomputable abbrev metricToDualEquiv (x : M) :
     TangentSpace I x ≃ₗ[ℝ] (TangentSpace I x →L[ℝ] ℝ) :=
   hm.metric.metricToDualEquiv x
@@ -302,7 +285,7 @@ variable {v w : ∀ x : M, TangentSpace I x} {s : Set M} {x : M}
 
 variable {n : ℕ∞ω} [hLE : ENat.LEInfty n]
 
-/-- $\langle v(\cdot), w(\cdot)\rangle_g$ is `ContMDiffWithinAt`. -/
+/-- **Math.** $\langle v(\cdot), w(\cdot)\rangle_g$ is `ContMDiffWithinAt`. -/
 theorem metricInner_contMDiffWithinAt
     (hv : ContMDiffWithinAt I (I.prod 𝓘(ℝ, E)) n
       (fun y => (⟨y, v y⟩ : TangentBundle I M)) s x)
@@ -312,7 +295,7 @@ theorem metricInner_contMDiffWithinAt
       (fun y => metricInner y (v y) (w y)) s x :=
   hm.metric.metricInner_contMDiffWithinAt hv hw
 
-/-- Pointwise variant. -/
+/-- **Eng.** Pointwise variant. -/
 theorem metricInner_contMDiffAt
     (hv : ContMDiffAt I (I.prod 𝓘(ℝ, E)) n
       (fun y => (⟨y, v y⟩ : TangentBundle I M)) x)
@@ -322,7 +305,7 @@ theorem metricInner_contMDiffAt
       (fun y => metricInner y (v y) (w y)) x :=
   hm.metric.metricInner_contMDiffAt hv hw
 
-/-- Set-form variant. -/
+/-- **Eng.** Set-form variant. -/
 theorem metricInner_contMDiffOn
     (hv : ContMDiffOn I (I.prod 𝓘(ℝ, E)) n
       (fun y => (⟨y, v y⟩ : TangentBundle I M)) s)
@@ -332,7 +315,7 @@ theorem metricInner_contMDiffOn
       (fun y => metricInner y (v y) (w y)) s :=
   hm.metric.metricInner_contMDiffOn hv hw
 
-/-- Global variant. -/
+/-- **Eng.** Global variant. -/
 theorem metricInner_contMDiff
     (hv : ContMDiff I (I.prod 𝓘(ℝ, E)) n
       (fun y => (⟨y, v y⟩ : TangentBundle I M)))
@@ -344,7 +327,7 @@ theorem metricInner_contMDiff
 
 /-! ### `MDifferentiable` family — first-order differentiability -/
 
-/-- Differentiable-within-at variant. -/
+/-- **Eng.** Differentiable-within-at variant. -/
 theorem metricInner_mdifferentiableWithinAt
     (hv : MDifferentiableWithinAt I (I.prod 𝓘(ℝ, E))
       (fun y => (⟨y, v y⟩ : TangentBundle I M)) s x)
@@ -354,7 +337,7 @@ theorem metricInner_mdifferentiableWithinAt
       (fun y => metricInner y (v y) (w y)) s x :=
   hm.metric.metricInner_mdifferentiableWithinAt hv hw
 
-/-- Pointwise differentiability. -/
+/-- **Eng.** Pointwise differentiability. -/
 theorem metricInner_mdifferentiableAt
     (hv : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
       (fun y => (⟨y, v y⟩ : TangentBundle I M)) x)
@@ -364,7 +347,7 @@ theorem metricInner_mdifferentiableAt
       (fun y => metricInner y (v y) (w y)) x :=
   hm.metric.metricInner_mdifferentiableAt hv hw
 
-/-- Set-form differentiability. -/
+/-- **Eng.** Set-form differentiability. -/
 theorem metricInner_mdifferentiableOn
     (hv : MDifferentiableOn I (I.prod 𝓘(ℝ, E))
       (fun y => (⟨y, v y⟩ : TangentBundle I M)) s)
@@ -374,7 +357,7 @@ theorem metricInner_mdifferentiableOn
       (fun y => metricInner y (v y) (w y)) s :=
   hm.metric.metricInner_mdifferentiableOn hv hw
 
-/-- Global differentiability. -/
+/-- **Eng.** Global differentiability. -/
 theorem metricInner_mdifferentiable
     (hv : MDifferentiable I (I.prod 𝓘(ℝ, E))
       (fun y => (⟨y, v y⟩ : TangentBundle I M)))
@@ -384,7 +367,7 @@ theorem metricInner_mdifferentiable
       (fun y => metricInner y (v y) (w y)) :=
   hm.metric.metricInner_mdifferentiable hv hw
 
-/-- `TangentSmoothAt`-form pointwise differentiability — convenience
+/-- **Eng.** `TangentSmoothAt`-form pointwise differentiability — convenience
 wrapper that converts the framework's `TangentSmoothAt` predicate to
 the underlying `MDifferentiableAt` bundle-section form. -/
 theorem metricInner_mdifferentiableAt_of_tangentSmoothAt
@@ -407,12 +390,12 @@ vectors (yielding `ℝ`) and on sections / vector fields (yielding
 
 Reference: do Carmo 1992 §1.2 (inner product). -/
 
-/-- Polymorphic squared norm under the Riemannian metric. -/
+/-- **Eng.** Polymorphic squared norm typeclass dispatch. -/
 class MetricNormSq (V : Type*) (R : outParam Type*) where
   /-- The squared norm `‖·‖²_g`. -/
   normSqG : V → R
 
-/-- Polymorphic inner product under the Riemannian metric. -/
+/-- **Eng.** Polymorphic inner product typeclass dispatch. -/
 class MetricInnerHom (V W : Type*) (R : outParam Type*) where
   /-- The inner product `⟪·, ·⟫_g`. -/
   innerG : V → W → R
@@ -424,23 +407,23 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [HasMetric I M]
 
-/-- Pointwise tangent-vector squared norm. -/
+/-- **Math.** Pointwise tangent-vector squared norm $\|V\|^2_g$. -/
 noncomputable instance instMetricNormSqTangent (x : M) :
     MetricNormSq (TangentSpace I x) ℝ where
   normSqG v := metricInner x v v
 
-/-- Section-level squared norm: vector field `V` ↦ scalar function
+/-- **Math.** Section-level squared norm: vector field `V` ↦ scalar function
 `y ↦ ⟨V(y), V(y)⟩_g`. -/
 noncomputable instance instMetricNormSqSection :
     MetricNormSq ((y : M) → TangentSpace I y) (M → ℝ) where
   normSqG V := fun y => metricInner y (V y) (V y)
 
-/-- Pointwise tangent-vector inner product. -/
+/-- **Math.** Pointwise tangent-vector inner product $\langle V, W\rangle_g$. -/
 noncomputable instance instMetricInnerHomTangent (x : M) :
     MetricInnerHom (TangentSpace I x) (TangentSpace I x) ℝ where
   innerG v w := metricInner x v w
 
-/-- Section-level inner product: pair of vector fields ↦ scalar function
+/-- **Math.** Section-level inner product: pair of vector fields ↦ scalar function
 `y ↦ ⟨V(y), W(y)⟩_g`. -/
 noncomputable instance instMetricInnerHomSection :
     MetricInnerHom ((y : M) → TangentSpace I y) ((y : M) → TangentSpace I y)
@@ -449,11 +432,11 @@ noncomputable instance instMetricInnerHomSection :
 
 end MetricNotationInstances
 
-/-- The metric inner product `⟪V, W⟫_g`. Pointwise on tangent vectors → `ℝ`;
+/-- **Math.** Notation `⟪V, W⟫_g` for the metric inner product. Pointwise on tangent vectors → `ℝ`;
 on two sections → `M → ℝ`. -/
 scoped notation:max "⟪" V ", " W "⟫_g" => MetricInnerHom.innerG V W
 
-/-- The squared norm `‖V‖²_g`. Pointwise on a tangent vector → `ℝ`;
+/-- **Math.** Notation `‖V‖²_g` for the squared norm. Pointwise on a tangent vector → `ℝ`;
 on a section → `M → ℝ`. -/
 scoped notation:max "‖" V "‖²_g" => MetricNormSq.normSqG V
 

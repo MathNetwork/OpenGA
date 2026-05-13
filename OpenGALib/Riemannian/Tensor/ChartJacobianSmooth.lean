@@ -47,7 +47,7 @@ variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M
 
 /-! ## Smoothness of the inverse-trivialization CLM, in tangent coordinates -/
 
-/-- Smoothness, near `b₀ ∈ chart α source`, of the CLM-valued composition
+/-- **Eng.** Smoothness, near `b₀ ∈ chart α source`, of the CLM-valued composition
 `(triv b₀).continuousLinearMapAt ℝ b ∘L (triv α).symmL ℝ b`, viewed as an
 `E →L[ℝ] E`-valued function of `b`.
 
@@ -186,7 +186,7 @@ theorem chartJinv_pre_clm_contMDiffAt
 
 /-! ## Smoothness of the forward-trivialization CLM, in tangent coordinates -/
 
-/-- Smoothness, near `b₀ ∈ chart α source`, of the CLM-valued composition
+/-- **Eng.** Smoothness, near `b₀ ∈ chart α source`, of the CLM-valued composition
 `(triv α).continuousLinearMapAt ℝ b ∘L (triv b₀).symmL ℝ b`, viewed as an
 `E →L[ℝ] E`-valued function of `b`. -/
 theorem chartJ_pre_clm_contMDiffAt

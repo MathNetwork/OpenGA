@@ -61,14 +61,14 @@ theorem chartAt_eventually_eq_of_locallyConstant
     ∀ᶠ b in 𝓝 b₀, chartAt H b = chartAt H b₀ :=
   IsLocallyConstantChartedSpace.chartAt_eventually_eq b₀
 
-/-- `H` over itself satisfies the typeclass (charts are constantly
-`PartialHomeomorph.refl H`). -/
+/-- **Eng.** `H` over itself satisfies `IsLocallyConstantChartedSpace`
+(charts are constantly `PartialHomeomorph.refl H`). -/
 instance instIsLocallyConstantChartedSpace_self
     (H : Type*) [TopologicalSpace H] :
     IsLocallyConstantChartedSpace H H where
   chartAt_eventually_eq _ := Filter.Eventually.of_forall (fun _ => rfl)
 
-/-- **Strict-interior propagation to nbhd-closure-interior**. If $x \in M$
+/-- **Math.** **Strict-interior propagation to nbhd-closure-interior**. If $x \in M$
 maps strictly into the interior of $\mathrm{range}\,I$ under `extChartAt I x`,
 then in a neighbourhood of $x$, every point $y$ also maps into
 $\overline{\mathrm{interior}(\mathrm{range}\,I)}$.
@@ -123,7 +123,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
-/-- The tangent section `y ↦ ⟨y, V y⟩` is `MDifferentiableAt` at `x`
+/-- **Eng.** The tangent section `y ↦ ⟨y, V y⟩` is `MDifferentiableAt` at `x`
 as a map `M → TangentBundle I M`. -/
 def TangentSmoothAt (V : (y : M) → TangentSpace I y) (x : M) : Prop :=
   MDifferentiableAt I (I.prod 𝓘(ℝ, E))
@@ -141,7 +141,7 @@ theorem toBundleSection {V : (y : M) → TangentSpace I y} {x : M}
     MDifferentiableAt I (I.prod 𝓘(ℝ, E))
       (fun y => (⟨y, V y⟩ : TangentBundle I M)) x := h
 
-/-- Chart-coordinate form: `y ↦ (trivAt x ⟨y, V y⟩).2 : M → E` is smooth. -/
+/-- **Eng.** Chart-coordinate form: `y ↦ (trivAt x ⟨y, V y⟩).2 : M → E` is smooth. -/
 theorem coordSmoothAt {V : (y : M) → TangentSpace I y} {x : M}
     (hV : TangentSmoothAt V x) :
     MDifferentiableAt I 𝓘(ℝ, E)
@@ -158,7 +158,7 @@ theorem iff_coord {V : (y : M) → TangentSpace I y} {x : M} :
   rw [mdifferentiableAt_totalSpace]
   exact ⟨And.right, fun h => ⟨mdifferentiableAt_id, h⟩⟩
 
-/-- The zero vector field is smooth. -/
+/-- **Math.** The zero vector field is smooth. -/
 theorem zero (x : M) : TangentSmoothAt (fun y : M => (0 : TangentSpace I y)) x := by
   rw [TangentSmoothAt.iff_coord]
   set e := trivializationAt E (TangentSpace I) x
@@ -233,7 +233,7 @@ theorem smul {f : M → ℝ} {V : (y : M) → TangentSpace I y} {x : M}
 
 end TangentSmoothAt
 
-/-- Closes any `TangentSmoothAt V x` goal where `V` is built from
+/-- **Eng.** `tangent_smooth` tactic: closes any `TangentSmoothAt V x` goal where `V` is built from
 hypotheses by zero / add / sub / neg / smul. -/
 syntax "tangent_smooth" : tactic
 
@@ -270,7 +270,7 @@ smoothness via `inverse` composition). The four public theorems are
 namespace TangentBundle
 
 set_option backward.isDefEq.respectTransparency false in
-/-- Flat-codomain inverse trivialization: `(trivAt x).symmL ℝ y` retyped
+/-- **Eng.** Flat-codomain inverse trivialization: `(trivAt x).symmL ℝ y` retyped
 as `E →L[ℝ] E` via `TangentSpace I y = E`. -/
 noncomputable def symmLFlat
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
@@ -280,7 +280,7 @@ noncomputable def symmLFlat
   (trivializationAt E (TangentSpace I) x).symmL ℝ y
 
 set_option backward.isDefEq.respectTransparency false in
-/-- Flat-codomain forward chart-mfderiv:
+/-- **Eng.** Flat-codomain forward chart-mfderiv:
 `(trivAt x₀).continuousLinearMapAt ℝ y` retyped as `E →L[ℝ] E`. -/
 noncomputable def continuousLinearMapAtFlat
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
@@ -290,7 +290,7 @@ noncomputable def continuousLinearMapAtFlat
   (trivializationAt E (TangentSpace I) x₀).continuousLinearMapAt ℝ y
 
 set_option backward.isDefEq.respectTransparency false in
-/-- Flat-codomain `mfderivWithin (range I) (extChartAt I x).symm e₀`. -/
+/-- **Eng.** Flat-codomain `mfderivWithin (range I) (extChartAt I x).symm e₀`. -/
 private noncomputable def mfderivWithinFlat
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
@@ -300,7 +300,7 @@ private noncomputable def mfderivWithinFlat
 
 /-! ### Layer 1 — constant-section smoothness for the tangent bundle -/
 
-/-- Forward chart-mfderiv as a CLM-valued function of basepoint, smooth
+/-- **Eng.** Forward chart-mfderiv as a CLM-valued function of basepoint, smooth
 at `b₀`. With `IsLocallyConstantChartedSpace`, locally constant on
 `chartAt H b₀ = chartAt H b₀`'s neighborhood and equals the identity
 CLM via `coordChange_self`. -/
@@ -351,7 +351,7 @@ private theorem mfderiv_extChartAt_apply_smoothAt
     rfl
   exact h_apply.congr_of_eventuallyEq h_eq.symm
 
-/-- Constant-vector tangent section is smooth. For `v : E`, the section
+/-- **Math.** Constant-vector tangent section is smooth. For `v : E`, the section
 `b ↦ ⟨b, v⟩` (with `v` viewed as fiber via `TangentSpace I b = E`) is
 $C^\infty$. Used by `SmoothVectorField.const`. -/
 theorem contMDiff_constSection_TangentSpace
@@ -420,7 +420,7 @@ private theorem _root_.ContMDiffOn.finset_sum_normed
     refine (h i (Finset.mem_insert_self _ _)).add_normed
       (IH (fun j hj => h j (Finset.mem_insert_of_mem hj)))
 
-/-- Componentwise smoothness `(y ↦ T y bᵢ) : M → F₂` lifts to CLM-valued
+/-- **Eng.** Componentwise smoothness `(y ↦ T y bᵢ) : M → F₂` lifts to CLM-valued
 smoothness `T : M → (F₁ →L[𝕜] F₂)` via basis decomposition. -/
 private theorem contMDiffOn_clm_of_components
     {𝕜 : Type*} [NontriviallyNormedField 𝕜] [CompleteSpace 𝕜]
@@ -610,7 +610,7 @@ private theorem symmLFlat_eventuallyEq_mfderivWithinFlat
     mfderivWithin 𝓘(ℝ, E) I (extChartAt I x).symm (Set.range I) (extChartAt I x y)
   exact TangentBundle.symmL_trivializationAt hy
 
-/-- Smoothness of `symmLFlat` as a map `M → (E →L[ℝ] E)`. The
+/-- **Eng.** Smoothness of `symmLFlat` as a map `M → (E →L[ℝ] E)`. The
 `TangentSpace I y = E` def-eq is hidden inside the definition. -/
 theorem symmLFlat_mdifferentiableAt
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
@@ -659,7 +659,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
-/-- A smooth tangent vector field on `M`. -/
+/-- **Math.** A smooth tangent vector field on `M`. -/
 structure SmoothVectorField (I : ModelWithCorners ℝ E H)
     (M : Type*) [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] where
   /-- Underlying tangent section. -/
@@ -724,7 +724,7 @@ noncomputable instance : SMul ℝ (SmoothVectorField I M) := ⟨constSMul⟩
     (a • X) y = a • X y := by
   show (constSMul a X) y = a • X y; rfl
 
-/-- Smooth-scalar-function multiplication `f • X` for `f : M → ℝ` smooth. -/
+/-- **Math.** Smooth-scalar-function multiplication `f • X` for `f : M → ℝ` smooth. -/
 noncomputable def smul (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
     (X : SmoothVectorField I M) : SmoothVectorField I M where
   toFun := fun y => f y • X y
@@ -734,7 +734,7 @@ noncomputable def smul (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
     (X : SmoothVectorField I M) (y : M) :
     (smul f hf X) y = f y • X y := rfl
 
-/-- Constant `E`-valued section as a `SmoothVectorField`. -/
+/-- **Math.** Constant `E`-valued section as a `SmoothVectorField`. -/
 noncomputable def const [_root_.IsLocallyConstantChartedSpace H M] (v : E) :
     SmoothVectorField I M where
   toFun := fun _ => v
@@ -771,7 +771,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
 omit [FiniteDimensional ℝ E] [CompleteSpace E] in
 set_option backward.isDefEq.respectTransparency false in
-/-- Smoothness of $y \mapsto \mathrm{d}f_y(v)$ for chart-frame-constant $v$. -/
+/-- **Math.** Smoothness of $y \mapsto \mathrm{d}f_y(v)$ for chart-frame-constant $v$. -/
 theorem mfderiv_const_dir_smoothAt
     {f : M → ℝ} (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) (v : E) :
     MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y : M => mfderiv I 𝓘(ℝ, ℝ) f y v) x := by
@@ -849,7 +849,7 @@ theorem mfderiv_const_dir_smoothAt
 
 omit [FiniteDimensional ℝ E] [CompleteSpace E] in
 set_option backward.isDefEq.respectTransparency false in
-/-- Smoothness of $y \mapsto \mathrm{d}f_y(V(y))$ for smoothly-varying $V : M \to E$. -/
+/-- **Math.** Smoothness of $y \mapsto \mathrm{d}f_y(V(y))$ for smoothly-varying $V : M \to E$. -/
 theorem mfderiv_smoothDir_smoothAt
     {f : M → ℝ} (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) {x : M}
     {V : M → E} (hV : ContMDiffAt I 𝓘(ℝ, E) ∞ V x) :
