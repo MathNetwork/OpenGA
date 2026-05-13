@@ -29,9 +29,10 @@ public count.
 | GeometricMeasureTheory | 5 | 10 | 15 |
 | **Total** | **19** | **10** | **29** |
 
-CI workflow `.github/workflows/ci.yml` asserts the total equals 32 (`EXPECTED=32`):
-the 29 catalogued public-library sorrys above plus 3 sorrys in `Regularity/`
-(paper-specific consumer, gitignored, not catalogued here).
+CI workflow `.github/workflows/ci.yml` asserts the total equals 29
+(`EXPECTED=29`). CI runs on the checked-out repo, which excludes
+`Regularity/` (gitignored, paper-specific consumer), so its 3 sorrys
+do not count in CI even though local `grep` will see 32.
 
 ## Algebraic (5)
 
