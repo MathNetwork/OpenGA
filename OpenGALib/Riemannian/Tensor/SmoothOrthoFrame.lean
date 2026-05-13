@@ -1242,6 +1242,77 @@ theorem sum_diagonal_smoothOrthoFrame_eq_std
   sum_diagonal_smoothOrthoFrame_eq_orthonormalBasis (I := I) α B
     (stdOrthonormalBasis ℝ (TangentSpace I α))
 
+/-! ### `smoothOrthoFrame` as `OrthonormalBasis` at any point in the nbhd
+
+At any `b ∈ smoothOrthoFrameNbhd α`, the frame `(smoothOrthoFrame hm.metric α i b)_i`
+forms a `g_b`-orthonormal basis of `T_bM`. Same construction as
+`smoothOrthoFrameOrthonormalBasis α` but parameterised by the nbhd point. -/
+
+/-- Inner-product (IPS) form of `smoothOrthoFrame_orthonormal` at `b ∈ nbhd α`,
+routed through `HasMetric I M` → `InnerProductSpace ℝ (TangentSpace I b)`. -/
+theorem smoothOrthoFrame_inner_at_nbhd (α : M) {b : M}
+    (hb : b ∈ smoothOrthoFrameNbhd (I := I) (M := M) α)
+    (i j : Fin (Module.finrank ℝ E)) :
+    ⟪smoothOrthoFrame (I := I) hm.metric α i b,
+        smoothOrthoFrame (I := I) hm.metric α j b⟫_ℝ =
+      if i = j then 1 else 0 := by
+  show hm.metric.inner b _ _ = _
+  exact smoothOrthoFrame_orthonormal (I := I) hm.metric α hb i j
+
+/-- `smoothOrthoFrame hm.metric α · b` is an `Orthonormal` family in `T_bM`. -/
+theorem smoothOrthoFrame_orthonormal_family_at_nbhd (α : M) {b : M}
+    (hb : b ∈ smoothOrthoFrameNbhd (I := I) (M := M) α) :
+    Orthonormal ℝ
+      (fun i : Fin (Module.finrank ℝ E) =>
+        smoothOrthoFrame (I := I) hm.metric α i b) := by
+  classical
+  rw [orthonormal_iff_ite]
+  intro i j
+  exact smoothOrthoFrame_inner_at_nbhd (I := I) α hb i j
+
+/-- **`smoothOrthoFrame` packaged as an `OrthonormalBasis` at `b ∈ nbhd α`**.
+Parametric in the nbhd point. -/
+noncomputable def smoothOrthoFrameOrthonormalBasis_at_nbhd (α : M) {b : M}
+    (hb : b ∈ smoothOrthoFrameNbhd (I := I) (M := M) α) :
+    OrthonormalBasis (Fin (Module.finrank ℝ E)) ℝ (TangentSpace I b) := by
+  classical
+  have hOrth := smoothOrthoFrame_orthonormal_family_at_nbhd (I := I) α hb
+  have hcard : Fintype.card (Fin (Module.finrank ℝ E))
+      = Module.finrank ℝ (TangentSpace I b) := Fintype.card_fin _
+  refine (basisOfOrthonormalOfCardEqFinrank hOrth hcard).toOrthonormalBasis ?_
+  rw [coe_basisOfOrthonormalOfCardEqFinrank]
+  exact hOrth
+
+@[simp] theorem smoothOrthoFrameOrthonormalBasis_at_nbhd_apply
+    (α : M) {b : M} (hb : b ∈ smoothOrthoFrameNbhd (I := I) (M := M) α)
+    (i : Fin (Module.finrank ℝ E)) :
+    smoothOrthoFrameOrthonormalBasis_at_nbhd (I := I) α hb i =
+      smoothOrthoFrame (I := I) hm.metric α i b := by
+  unfold smoothOrthoFrameOrthonormalBasis_at_nbhd
+  rw [Module.Basis.coe_toOrthonormalBasis]
+  exact congrFun
+    (coe_basisOfOrthonormalOfCardEqFinrank
+      (smoothOrthoFrame_orthonormal_family_at_nbhd (I := I) α hb) _) i
+
+/-- **Basis-change bridge at `b ∈ nbhd α` (to `stdOrthonormalBasis`)**:
+the diagonal sum over the smooth orthonormal frame at any nbhd point `b`
+equals the diagonal sum over `stdOrthonormalBasis ℝ (T_bM)`. Parametric
+version of `sum_diagonal_smoothOrthoFrame_eq_std`. -/
+theorem sum_diagonal_smoothOrthoFrame_at_nbhd_eq_std
+    {W : Type*} [AddCommGroup W] [Module ℝ W]
+    (α : M) {b : M}
+    (hb : b ∈ smoothOrthoFrameNbhd (I := I) (M := M) α)
+    (B : TangentSpace I b →ₗ[ℝ] TangentSpace I b →ₗ[ℝ] W) :
+    ∑ i, B (smoothOrthoFrame (I := I) hm.metric α i b)
+            (smoothOrthoFrame (I := I) hm.metric α i b) =
+      ∑ i, B ((stdOrthonormalBasis ℝ (TangentSpace I b)) i)
+              ((stdOrthonormalBasis ℝ (TangentSpace I b)) i) := by
+  have h := OrthonormalBasis.sum_apply_diagonal_invariant
+    (smoothOrthoFrameOrthonormalBasis_at_nbhd (I := I) α hb)
+    (stdOrthonormalBasis ℝ (TangentSpace I b)) B
+  simp only [smoothOrthoFrameOrthonormalBasis_at_nbhd_apply] at h
+  exact h
+
 end Tensor
 end Riemannian
 

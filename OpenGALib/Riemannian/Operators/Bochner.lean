@@ -786,6 +786,37 @@ theorem heart_curvature_orthonormal_sum_eq_ricci
         show ricci WV GV x = ricci GV WV x
         exact ricci_symm WV GV x h_interior
 
+/-- **Hessian-frame trace = Laplacian, locally**: on a neighbourhood of `x`,
+$$\sum_i \mathrm{Hess}\,f(b)(B_i b, B_i b) \;=\; \Delta_g f(b),$$
+where `B_i = smoothOrthoFrame g x i`.
+
+Strategy:
+1. On `smoothOrthoFrameNbhd x`, `(B_i b)_i` is `g_b`-orthonormal at each `b`
+   (via `smoothOrthoFrame_orthonormal`).
+2. Apply `Tensor.sum_diagonal_smoothOrthoFrame_at_nbhd_eq_std` to swap
+   the diagonal trace of `hessianBilin f b` over `(B_i b)` to the diagonal
+   trace over `stdOrthonormalBasis ℝ (T_bM)`.
+3. The latter equals `laplacian (hessianBilin f) b = scalarLaplacian f b
+   = Δ_g f b` by definition + `scalarLaplacian_eq_laplacian_hessianBilin`. -/
+theorem sum_hessianBilin_smoothOrthoFrame_eventuallyEq_laplacian
+    (f : M → ℝ) (x : M) :
+    (fun b => ∑ i, hessianBilin (I := I) f b
+                    (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i b)
+                    (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i b))
+      =ᶠ[𝓝 x] (Δ_g[I] f : M → ℝ) := by
+  filter_upwards [Riemannian.Tensor.smoothOrthoFrameNbhd_mem_nhds (I := I) (M := M) x]
+    with b hb
+  -- At b ∈ nbhd, basis-invariance of trace of `hessianBilin f b`.
+  rw [Riemannian.Tensor.sum_diagonal_smoothOrthoFrame_at_nbhd_eq_std
+        (I := I) x hb (hessianBilin (I := I) f b)]
+  -- Identify the std-basis trace with `Δ_g f b`.
+  show ∑ i, hessianBilin (I := I) f b
+            ((stdOrthonormalBasis ℝ (TangentSpace I b)) i)
+            ((stdOrthonormalBasis ℝ (TangentSpace I b)) i)
+       = scalarLaplacian (I := I) f b
+  rw [scalarLaplacian_eq_laplacian_hessianBilin]
+  rfl
+
 /-- **Conditional inner-form reduction.** Given the inner-product form
 of the heart-of-Bochner sum identity against every test direction $w$
 (against the smooth orthonormal frame `smoothOrthoFrame g x · x`), the
