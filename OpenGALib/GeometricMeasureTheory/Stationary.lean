@@ -165,10 +165,10 @@ type parameters are restricted to `Type` (universe 0) to avoid the
 universe-inference issue when `IsStationary V` is used as a structure
 field; this matches the standard $\mathbb{R}$-finite-dim convention. -/
 def IsStationary (V : Varifold M) : Prop :=
-  ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
-    [CompleteSpace E]
+  ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [CompleteSpace E]
     {H : Type} [TopologicalSpace H]
-    {I : ModelWithCorners ℝ E H}
+    {I : ModelWithCorners ℝ E H} [I.Boundaryless]
     [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
     [Riemannian.HasMetric I M]

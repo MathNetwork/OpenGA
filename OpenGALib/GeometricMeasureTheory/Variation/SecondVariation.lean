@@ -69,9 +69,9 @@ Riemannian curvature operators).
 **Ground truth**: Simon 1983 §49; Schoen-Simon 1981 §1; Wic14 §2. -/
 noncomputable def secondVariationFull
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
-    [FiniteDimensional ℝ E]
+    [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
     {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners ℝ E H)
+    (I : ModelWithCorners ℝ E H) [I.Boundaryless]
     [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
     [Riemannian.HasMetric I M]

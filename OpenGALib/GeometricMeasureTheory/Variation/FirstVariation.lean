@@ -53,10 +53,10 @@ $\langle\cdot, \cdot\rangle_g$ is the framework-owned `metricInner`
 **Ground truth**: Pitts 1981 §38; Simon 1983 §38 (codim-1 first
 variation). -/
 noncomputable def normalCorrection
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
-    [FiniteDimensional ℝ E]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
+    [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
     {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners ℝ E H)
+    (I : ModelWithCorners ℝ E H) [I.Boundaryless]
     [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
     [hm : HasMetric I M]
@@ -79,10 +79,10 @@ of $\delta V(X) = \int \mathrm{div}_S X\, dV(x, S)$.
 
 For paper §6 codim-1 use, this is the paper-faithful first variation. -/
 noncomputable def firstVariationFull
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
-    [FiniteDimensional ℝ E]
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
+    [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
     {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners ℝ E H)
+    (I : ModelWithCorners ℝ E H) [I.Boundaryless]
     [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
     [hm : HasMetric I M]

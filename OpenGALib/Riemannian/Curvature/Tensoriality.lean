@@ -58,10 +58,11 @@ open scoped ContDiff Manifold Bundle Riemannian Topology
 
 namespace Riemannian
 
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
-  [FiniteDimensional ℝ E]
-  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [InnerProductSpace ℝ E] [CompleteSpace E]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H} [I.Boundaryless]
+  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] [T2Space M]
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 

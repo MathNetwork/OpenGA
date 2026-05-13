@@ -51,9 +51,9 @@ because `sing I V` requires it and `secondVariationFull` requires the
 HasNormal-Bridge cascade. -/
 def IsStable
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
-    [CompleteSpace E] [FiniteDimensional ℝ E]
+    [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
     {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners ℝ E H)
+    (I : ModelWithCorners ℝ E H) [I.Boundaryless]
     [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
     [Riemannian.HasMetric I M]
@@ -68,9 +68,9 @@ second variation.
 matching `IsStable`'s migration. -/
 def IsUnstable
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
-    [CompleteSpace E] [FiniteDimensional ℝ E]
+    [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
     {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners ℝ E H)
+    (I : ModelWithCorners ℝ E H) [I.Boundaryless]
     [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
     [Riemannian.HasMetric I M]

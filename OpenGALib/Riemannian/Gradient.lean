@@ -1,4 +1,5 @@
 import OpenGALib.Riemannian.Connection
+import OpenGALib.Riemannian.Tensor.MusicalIso
 
 /-!
 # Manifold gradient
@@ -54,6 +55,7 @@ theorem manifoldGradient_inner_eq
     metricInner x (grad_g[I] f x) v = (mfderiv I 𝓘(ℝ, ℝ) f x) v :=
   metricRiesz_inner x (mfderiv I 𝓘(ℝ, ℝ) f x) v
 
+omit [CompleteSpace E] in
 /-- **Gradient smoothness propagation**: if a scalar function `g : M → ℝ`
 is $C^\infty$, then its manifold gradient $\nabla^M g$ is $C^\infty$ as a
 tangent bundle section.
@@ -65,18 +67,33 @@ smooth). Used to discharge the automatic-by-textbook smoothness of the
 gradient in headline theorems such as the Bochner–Weitzenböck identity
 (`OpenGALib.Riemannian.Operators.Bochner`).
 
-**Sorry: PRE-PAPER**. Closure path: write
-`metricRiesz_section_smoothAt` against `Bundle.ContMDiffRiemannianMetric`
-via chart-pullback unwrapping of the Riesz isomorphism, then compose
-with `ContMDiff` of `mfderiv g` (which holds because `g` is $C^\infty$).
-Same root primitive as `koszulCovDeriv_const_smoothAt` (Connection.lean:1387)
-— both go through the inverse-metric-matrix (chart Gram matrix)
-machinery. Once that primitive lands, this lemma is a one-line
-composition. -/
+Closed via `Riemannian.Tensor.metricRiesz_section_contMDiffAt` (the framework
+primitive from `Riemannian/Tensor/MusicalIso.lean`) applied at each point
+with $\Phi := \mathrm{d}g$. The covector-section hypothesis (`mfderiv g y`
+applied to chart-basis vectors is smooth on the base set) is discharged by
+`Riemannian.Tensor.mfderiv_chartBasisVec_apply_contMDiffOn`, which uses the
+chart-pullback identity $\mathrm{d}g(e_j) = \partial_j (g \circ \varphi^{-1}) \circ \varphi$
+together with `[I.Boundaryless]` to make the smoothness domain equal the chart
+base set (without `[I.Boundaryless]`, the identity holds only on the strict
+interior of the chart target). -/
 theorem manifoldGradient_smooth_of_smooth
+    [InnerProductSpace ℝ E] [I.Boundaryless] [NeZero (Module.finrank ℝ E)]
     (g : M → ℝ) (hg : ContMDiff I 𝓘(ℝ, ℝ) ∞ g) :
     ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
       (fun y => (⟨y, manifoldGradient (I := I) g y⟩ : TangentBundle I M)) := by
-  sorry
+  intro x
+  have hx_base : x ∈ (trivializationAt E (TangentSpace I) x).baseSet := by
+    rw [TangentBundle.trivializationAt_baseSet (𝕜 := ℝ) (I := I) x]
+    exact mem_chart_source H x
+  have hΦ : ∀ j : Fin (Module.finrank ℝ E),
+      ContMDiffOn I 𝓘(ℝ) ∞
+        (fun y => (mfderiv I 𝓘(ℝ, ℝ) g y)
+          (Riemannian.Tensor.chartBasisVecFiber (I := I) x j y))
+        (trivializationAt E (TangentSpace I) x).baseSet := by
+    intro j
+    exact Riemannian.Tensor.mfderiv_chartBasisVec_apply_contMDiffOn
+      (I := I) x hg j
+  exact Riemannian.Tensor.metricRiesz_section_contMDiffAt
+    (I := I) hm.metric x hx_base (Φ := fun y => mfderiv I 𝓘(ℝ, ℝ) g y) hΦ
 
 end Riemannian

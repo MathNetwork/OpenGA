@@ -5,6 +5,7 @@ import Mathlib.Geometry.Manifold.VectorBundle.Tensoriality
 import Mathlib.Geometry.Manifold.VectorField.LieBracket
 import OpenGALib.Riemannian.Manifold
 import OpenGALib.Riemannian.TangentBundle
+import OpenGALib.Riemannian.Tensor.MusicalIso
 import OpenGALib.Util.Attributes
 
 /-!
@@ -963,10 +964,10 @@ theorem koszulCotangentCLM_smoothAt
 
 /-! ## from `Connection.lean` (LeviCivita section) -/
 
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
-  [FiniteDimensional ℝ E]
-  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
+  [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H} [I.Boundaryless]
+  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] [T2Space M]
   [hm : HasMetric I M]
 
 /-! ## Riesz extraction: explicit Levi-Civita via Koszul
@@ -1376,25 +1377,255 @@ generalisation is "free" from the underlying repair plan: closing
 `metricRiesz_section_smoothAt` in full generality (for any smooth
 linear-functional section, not just the constant case) closes both forms.
 
-**PRE-PAPER gap**: the original closure used `metricRiesz_section_smoothAt`
-— smoothness of the Riesz section `y ↦ metricRiesz y (φ y)` for a smooth
-linear-functional section `φ`. Post-Path-B, that helper has not been
-re-proved against `Bundle.ContMDiffRiemannianMetric`'s bundle-section
-smoothness witness (same shape gap as `metricTensor_apply_contMDiff` above).
-Repair plan: write `metricRiesz_section_smoothAt` against the new API
-using chart-pullback unwrapping of the Riesz isomorphism, then restore the
-original Riesz-uniqueness proof. Self-build follow-up. -/
+**Closure architecture** (post-Phase 4.7 + MusicalIso machinery):
+1. Riesz uniqueness identifies `koszulCovDeriv X.toFun Y.toFun y _ _` with
+   `metricRiesz y (Φ y)`, where `Φ y := TensorialAt.mkHom _ y
+   (koszulFunctional_tensorialAt X.toFun Y.toFun y _ _)`.
+2. Smoothness of `y ↦ metricRiesz y (Φ y)` at `x` reduces via
+   `metricRiesz_section_contMDiffAt_of_within` (MusicalIso.lean primitive) to
+   per-chart-basis-index `ContMDiffWithinAt` of `y ↦ Φ y (e_j y)` at `x`.
+3. The chart-basis-index ContMDiffWithinAt follows from a bumped global
+   extension `Z̃_j := chartBumpAt x • chartBasisVec x j` of the
+   chartBasisVec section to a SmoothVectorField, on the bump's = 1
+   neighbourhood. Each of the 6 koszulFunctional terms is then globally
+   smooth via `mfderiv_apply_section_contMDiff` (3 directional derivative
+   terms) and Mathlib's `ContMDiff.mlieBracket_vectorField` + metricInner
+   smoothness (3 bracket terms). `koszulFunctional_local` transfers from
+   the bumped global form to the original chartBasisVec form on a
+   neighbourhood of `x`. -/
 private theorem koszulCovDeriv_smoothVF_smoothAt
-    [IsLocallyConstantChartedSpace H M]
+    [IsLocallyConstantChartedSpace H M] [T2Space M]
     (X Y : SmoothVectorField I M) (x : M) :
     TangentSmoothAt
       (fun y : M => koszulCovDeriv X.toFun Y.toFun y
-        (X.smoothAt y) (Y.smoothAt y)) x :=
-  sorry
+        (X.smoothAt y) (Y.smoothAt y)) x := by
+  classical
+  -- Step 1: Identify `koszulCovDeriv X Y y h h = metricRiesz y (Φ y)` via Riesz uniqueness.
+  set Φ : (y : M) → TangentSpace I y →L[ℝ] ℝ := fun y =>
+    TensorialAt.mkHom _ y
+      (koszulFunctional_tensorialAt X.toFun Y.toFun y
+        (X.smoothAt y) (Y.smoothAt y))
+  have hRiesz : ∀ y : M,
+      koszulCovDeriv X.toFun Y.toFun y (X.smoothAt y) (Y.smoothAt y)
+        = metricRiesz y (Φ y) := by
+    intro y
+    refine metricRiesz_unique y _ (Φ y) ?_
+    intro W
+    -- Reduce to evaluating at a smooth extension of W via `FiberBundle.extend`.
+    set V : Π z : M, TangentSpace I z := FiberBundle.extend E W
+    have hV_smooth : TangentSmoothAt V y :=
+      FiberBundle.mdifferentiableAt_extend I E W
+    have hVy : V y = W := FiberBundle.extend_apply_self _ _
+    rw [← hVy]
+    rw [koszulCovDeriv_inner_eq X.toFun Y.toFun V y
+      (X.smoothAt y) (Y.smoothAt y) hV_smooth]
+    exact (TensorialAt.mkHom_apply
+      (koszulFunctional_tensorialAt X.toFun Y.toFun y
+        (X.smoothAt y) (Y.smoothAt y)) hV_smooth).symm
+  -- Rewrite the goal via `hRiesz`.
+  have h_eq : (fun y : M =>
+        koszulCovDeriv X.toFun Y.toFun y (X.smoothAt y) (Y.smoothAt y))
+      = (fun y : M => metricRiesz y (Φ y)) := funext hRiesz
+  rw [h_eq]
+  -- Step 2: apply `metricRiesz_section_contMDiffAt_of_within` with α := x.
+  have hx_base : x ∈ (trivializationAt E (TangentSpace I) x).baseSet := by
+    rw [TangentBundle.trivializationAt_baseSet (𝕜 := ℝ) (I := I) x]
+    exact mem_chart_source H x
+  refine TangentSmoothAt.mk
+    ((Riemannian.Tensor.metricRiesz_section_contMDiffAt_of_within
+      (g := hm.metric) (α := x) hx_base (Φ := Φ) ?_).mdifferentiableAt
+      (by simp : (∞ : ℕ∞ω) ≠ 0))
+  -- Step 3: per-j ContMDiffWithinAt for `y ↦ Φ y (chartBasisVecFiber x j y)` at `x`.
+  -- Bump-extension approach: build a SmoothVectorField `Z̃ j` agreeing with
+  -- `chartBasisVecFiber x j` on a neighbourhood of x. The koszulFunctional applied
+  -- to globally-smooth `(X, Y, Z̃ j)` is globally smooth. On the agreement
+  -- neighbourhood it equals the chartBasisVec version (via `koszulFunctional_local`).
+  intro j
+  -- Bump function at x.
+  obtain ⟨bump⟩ : Nonempty (SmoothBumpFunction I x) := inferInstance
+  -- Bumped global section: equal to `chartBasisVecFiber x j` near x, zero off
+  -- `tsupport bump ⊆ (chartAt H x).source`.
+  set chartBV : Π y : M, TangentSpace I y :=
+    fun y => Riemannian.Tensor.chartBasisVecFiber (I := I) x j y with hchartBV_def
+  set Ztilde : Π y : M, TangentSpace I y := fun y => bump y • chartBV y with hZtilde_def
+  -- Smoothness of `Ztilde` as bundle section via `smul_section_of_tsupport`.
+  have htsupp : tsupport bump ⊆ (chartAt H x).source :=
+    bump.tsupport_subset_chartAt_source
+  have htriv_base : (trivializationAt E (TangentSpace I) x).baseSet =
+      (chartAt H x).source :=
+    TangentBundle.trivializationAt_baseSet (𝕜 := ℝ) (I := I) x
+  have hbump_smoothOn :
+      ContMDiffOn I 𝓘(ℝ) ∞ (fun y => bump y) (chartAt H x).source :=
+    bump.contMDiff.contMDiffOn
+  have hchartBV_smooth_on : ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞
+      (fun y => (TotalSpace.mk' E y (chartBV y) :
+        TotalSpace E (TangentSpace I : M → Type _)))
+      (chartAt H x).source := by
+    have := Riemannian.Tensor.chartBasisVec_contMDiffOn (I := I) x j
+    rw [htriv_base] at this
+    exact this
+  have hZtilde_smooth : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+      (fun y => (TotalSpace.mk' E y (Ztilde y) :
+        TotalSpace E (TangentSpace I : M → Type _))) := by
+    have hkey := ContMDiffOn.smul_section_of_tsupport (𝕜 := ℝ) (n := ∞)
+      (s := chartBV) (ψ := fun y => bump y) (u := (chartAt H x).source)
+      hbump_smoothOn (chartAt H x).open_source htsupp hchartBV_smooth_on
+    -- `(ψ • s) y = bump y • chartBV y = Ztilde y` by `Pi.smul_apply'`.
+    exact hkey
+  -- Build `Z̃` as a SmoothVectorField.
+  let Ztilde_VF : SmoothVectorField I M := ⟨Ztilde, hZtilde_smooth⟩
+  -- On the open set `U := interior {b = 1}`, `Ztilde y = chartBV y`.
+  let U : Set M := interior {y : M | bump y = 1}
+  have hU_open : IsOpen U := isOpen_interior
+  have hx_U : x ∈ U := by
+    have hb1 : bump =ᶠ[nhds x] 1 := bump.eventuallyEq_one
+    have hsub : {y | bump y = 1} ∈ nhds x := by
+      filter_upwards [hb1] with y hy
+      exact hy
+    exact mem_interior_iff_mem_nhds.mpr hsub
+  have hU_subset_base : U ⊆ (trivializationAt E (TangentSpace I) x).baseSet := by
+    rw [htriv_base]
+    refine subset_trans interior_subset ?_
+    intro y hy
+    have hy_eq : bump y = 1 := hy
+    have hy_supp : y ∈ Function.support (fun z => bump z) := by
+      simp only [Function.mem_support]; rw [hy_eq]; norm_num
+    have : y ∈ tsupport bump := subset_tsupport _ hy_supp
+    exact htsupp this
+  have hbumpOne_in_nhd : ∀ y ∈ U, {z : M | bump z = 1} ∈ nhds y := by
+    intro y hy
+    exact mem_interior_iff_mem_nhds.mp hy
+  -- Locality of koszulFunctional: on `U`, `koszulFunctional X Y Ztilde = koszulFunctional X Y chartBV`.
+  have hZtilde_local : ∀ y ∈ U,
+      koszulFunctional X.toFun Y.toFun Ztilde y
+        = koszulFunctional X.toFun Y.toFun chartBV y := by
+    intro y hy
+    refine koszulFunctional_local X.toFun Y.toFun Ztilde chartBV y ?_
+    filter_upwards [hbumpOne_in_nhd y hy] with z hz
+    show bump z • chartBV z = chartBV z
+    rw [show bump z = 1 from hz, one_smul]
+  -- Smoothness of `y ↦ (1/2) * koszulFunctional X.toFun Y.toFun Ztilde y` globally.
+  -- 6 koszul terms, each globally `ContMDiff` because X, Y, Z̃ are all SmoothVectorFields.
+  -- (i) Inner-product smoothness for ⟨Y, Z̃⟩, ⟨Z̃, X⟩, ⟨X, Y⟩.
+  have h_YZtilde_inner : ContMDiff I 𝓘(ℝ, ℝ) ∞
+      (fun y' => hm.metric.metricInner y' (Y.toFun y') (Ztilde y')) :=
+    metricInner_contMDiff Y.smooth hZtilde_smooth
+  have h_ZtildeX_inner : ContMDiff I 𝓘(ℝ, ℝ) ∞
+      (fun y' => hm.metric.metricInner y' (Ztilde y') (X.toFun y')) :=
+    metricInner_contMDiff hZtilde_smooth X.smooth
+  have h_XY_inner : ContMDiff I 𝓘(ℝ, ℝ) ∞
+      (fun y' => hm.metric.metricInner y' (X.toFun y') (Y.toFun y')) :=
+    metricInner_contMDiff X.smooth Y.smooth
+  -- (ii) Three directional derivative terms via `mfderiv_apply_section_contMDiff`.
+  have hT1_smooth : ContMDiff I 𝓘(ℝ, ℝ) ∞
+      (fun y => directionalDeriv (fun y' => metricInner y' (Y.toFun y') (Ztilde y')) y
+        (X.toFun y)) := by
+    unfold directionalDeriv
+    exact Riemannian.Tensor.mfderiv_apply_section_contMDiff (I := I)
+      h_YZtilde_inner X.smooth
+  have hT2_smooth : ContMDiff I 𝓘(ℝ, ℝ) ∞
+      (fun y => directionalDeriv (fun y' => metricInner y' (Ztilde y') (X.toFun y')) y
+        (Y.toFun y)) := by
+    unfold directionalDeriv
+    exact Riemannian.Tensor.mfderiv_apply_section_contMDiff (I := I)
+      h_ZtildeX_inner Y.smooth
+  have hT3_smooth : ContMDiff I 𝓘(ℝ, ℝ) ∞
+      (fun y => directionalDeriv (fun y' => metricInner y' (X.toFun y') (Y.toFun y')) y
+        (Ztilde y)) := by
+    unfold directionalDeriv
+    exact Riemannian.Tensor.mfderiv_apply_section_contMDiff (I := I)
+      h_XY_inner hZtilde_smooth
+  -- (iii) Three Lie bracket terms via Mathlib `ContMDiffAt.mlieBracket_vectorField`.
+  -- Need `IsManifold I (minSmoothness ℝ 2) M` and `IsManifold I (∞ + 1) M`
+  -- (both reduce to `IsManifold I ∞ M`) for the bracket smoothness lemma.
+  haveI : IsManifold I (minSmoothness ℝ 2) M := by
+    rw [minSmoothness_of_isRCLikeNormedField]
+    infer_instance
+  haveI hIM_succ : IsManifold I ((∞ : ℕ∞ω) + 1) M := by
+    have h_eq : (∞ : ℕ∞ω) + 1 = ∞ := by
+      change ((⊤ : ℕ∞) : ℕ∞ω) + (1 : ℕ∞ω) = ((⊤ : ℕ∞) : ℕ∞ω)
+      rfl
+    rw [h_eq]
+    infer_instance
+  have h_brXY_smooth : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+      (fun y => (TotalSpace.mk' E y (mlieBracket I X.toFun Y.toFun y) :
+        TotalSpace E (TangentSpace I : M → Type _))) := by
+    intro y
+    exact X.smooth.contMDiffAt.mlieBracket_vectorField Y.smooth.contMDiffAt (by simp)
+  have h_brYZtilde_smooth : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+      (fun y => (TotalSpace.mk' E y (mlieBracket I Y.toFun Ztilde y) :
+        TotalSpace E (TangentSpace I : M → Type _))) := by
+    intro y
+    exact Y.smooth.contMDiffAt.mlieBracket_vectorField hZtilde_smooth.contMDiffAt (by simp)
+  have h_brXZtilde_smooth : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+      (fun y => (TotalSpace.mk' E y (mlieBracket I X.toFun Ztilde y) :
+        TotalSpace E (TangentSpace I : M → Type _))) := by
+    intro y
+    exact X.smooth.contMDiffAt.mlieBracket_vectorField hZtilde_smooth.contMDiffAt (by simp)
+  have hT4_smooth : ContMDiff I 𝓘(ℝ, ℝ) ∞
+      (fun y => metricInner y (mlieBracket I X.toFun Y.toFun y) (Ztilde y)) :=
+    metricInner_contMDiff h_brXY_smooth hZtilde_smooth
+  have hT5_smooth : ContMDiff I 𝓘(ℝ, ℝ) ∞
+      (fun y => metricInner y (mlieBracket I Y.toFun Ztilde y) (X.toFun y)) :=
+    metricInner_contMDiff h_brYZtilde_smooth X.smooth
+  have hT6_smooth : ContMDiff I 𝓘(ℝ, ℝ) ∞
+      (fun y => metricInner y (mlieBracket I X.toFun Ztilde y) (Y.toFun y)) :=
+    metricInner_contMDiff h_brXZtilde_smooth Y.smooth
+  -- Sum: koszulFunctional X.toFun Y.toFun Ztilde y is globally ContMDiff.
+  have hKoszul_Ztilde_smooth : ContMDiff I 𝓘(ℝ, ℝ) ∞
+      (fun y => koszulFunctional X.toFun Y.toFun Ztilde y) := by
+    show ContMDiff I 𝓘(ℝ, ℝ) ∞ (fun y =>
+      directionalDeriv (fun y' => metricInner y' (Y.toFun y') (Ztilde y')) y (X.toFun y)
+      + directionalDeriv (fun y' => metricInner y' (Ztilde y') (X.toFun y')) y (Y.toFun y)
+      - directionalDeriv (fun y' => metricInner y' (X.toFun y') (Y.toFun y')) y (Ztilde y)
+      + metricInner y (mlieBracket I X.toFun Y.toFun y) (Ztilde y)
+      - metricInner y (mlieBracket I Y.toFun Ztilde y) (X.toFun y)
+      - metricInner y (mlieBracket I X.toFun Ztilde y) (Y.toFun y))
+    exact ((((hT1_smooth.add hT2_smooth).sub hT3_smooth).add hT4_smooth).sub
+      hT5_smooth).sub hT6_smooth
+  -- ContMDiffOn on U for the chartBV version (via koszulFunctional_local).
+  have hKoszul_chartBV_on_U :
+      ContMDiffOn I 𝓘(ℝ, ℝ) ∞
+        (fun y => (1 / 2 : ℝ) * koszulFunctional X.toFun Y.toFun chartBV y) U := by
+    have hKoszulZtilde_half : ContMDiffOn I 𝓘(ℝ, ℝ) ∞
+        (fun y => (1 / 2 : ℝ) * koszulFunctional X.toFun Y.toFun Ztilde y) U :=
+      (contMDiffOn_const.mul hKoszul_Ztilde_smooth.contMDiffOn)
+    refine hKoszulZtilde_half.congr ?_
+    intro y hy
+    rw [hZtilde_local y hy]
+  -- Lift to ContMDiffAt at x.
+  have hKoszul_chartBV_at_x :
+      ContMDiffAt I 𝓘(ℝ, ℝ) ∞
+        (fun y => (1 / 2 : ℝ) * koszulFunctional X.toFun Y.toFun chartBV y) x :=
+    (hKoszul_chartBV_on_U x hx_U).contMDiffAt (hU_open.mem_nhds hx_U)
+  -- Identify with `Φ y (chartBasisVecFiber x j y)` on baseSet via TensorialAt.mkHom.
+  have hbaseSet_open : IsOpen (trivializationAt E (TangentSpace I) x).baseSet :=
+    (trivializationAt E (TangentSpace I) x).open_baseSet
+  have hPhi_eq : ∀ y ∈ (trivializationAt E (TangentSpace I) x).baseSet,
+      Φ y (chartBV y)
+        = (1 / 2 : ℝ) * koszulFunctional X.toFun Y.toFun chartBV y := by
+    intro y hy
+    have hy_chart : y ∈ (chartAt H x).source := by rw [← htriv_base]; exact hy
+    -- chartBasisVec x j is TangentSmoothAt at y (since y ∈ baseSet).
+    have hchartBV_smoothAt : TangentSmoothAt chartBV y := by
+      refine TangentSmoothAt.mk ?_
+      exact (hchartBV_smooth_on.contMDiffAt
+        ((chartAt H x).open_source.mem_nhds hy_chart)).mdifferentiableAt
+        (by simp : (∞ : ℕ∞ω) ≠ 0)
+    exact TensorialAt.mkHom_apply
+      (koszulFunctional_tensorialAt X.toFun Y.toFun y
+        (X.smoothAt y) (Y.smoothAt y)) hchartBV_smoothAt
+  -- Conclude ContMDiffWithinAt at x for `Φ y (chartBasisVecFiber x j y)`.
+  have hPhi_chartBV_at : ContMDiffAt I 𝓘(ℝ, ℝ) ∞
+      (fun y => Φ y (chartBV y)) x := by
+    refine hKoszul_chartBV_at_x.congr_of_eventuallyEq ?_
+    filter_upwards [hbaseSet_open.mem_nhds hx_base] with y hy
+    exact hPhi_eq y hy
+  exact hPhi_chartBV_at.contMDiffWithinAt
 
 /-- Constant-direction specialisation of `koszulCovDeriv_smoothVF_smoothAt`. -/
 private theorem koszulCovDeriv_const_smoothAt
-    [IsLocallyConstantChartedSpace H M]
+    [IsLocallyConstantChartedSpace H M] [T2Space M]
     (v : E) (Y : SmoothVectorField I M) (x : M) :
     TangentSmoothAt
       (fun y : M => koszulCovDeriv (fun _ : M => v) Y.toFun y
@@ -1427,7 +1658,7 @@ invariant "zero existence axioms in the Riemannian package" preserved.
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 (existence + uniqueness via
 the Koszul formula); Lee 2018 Prop. 4.26 (smoothness of covariant
 derivative on smooth manifolds). -/
-theorem leviCivitaConnection_exists [IsLocallyConstantChartedSpace H M] :
+theorem leviCivitaConnection_exists [IsLocallyConstantChartedSpace H M] [T2Space M] :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       cov.torsion = 0 ∧
       (∀ (X Y Z : Π x : M, TangentSpace I x) (x : M)
@@ -1499,13 +1730,13 @@ satisfies `leviCivitaConnection.torsion = 0` (see
 **Used by**: `Riemannian.Curvature`, `Riemannian.SecondFundamentalForm`,
 `Riemannian.Gradient`. -/
 noncomputable def leviCivitaConnection
-    [IsLocallyConstantChartedSpace H M] :
+    [IsLocallyConstantChartedSpace H M] [T2Space M] :
     CovariantDerivative I E (fun x : M => TangentSpace I x) :=
   Classical.choose (leviCivitaConnection_exists (I := I) (M := M))
 
 /-- The Levi-Civita connection is torsion-free. -/
 theorem leviCivitaConnection_torsion_zero
-    [IsLocallyConstantChartedSpace H M] :
+    [IsLocallyConstantChartedSpace H M] [T2Space M] :
     (leviCivitaConnection : CovariantDerivative I E
       (fun x : M => TangentSpace I x)).torsion = 0 :=
   (Classical.choose_spec leviCivitaConnection_exists).1
@@ -1774,10 +2005,11 @@ private theorem covDeriv_congr_eventuallyEq_middle
 
 /-! ## from `Connection.lean` (Bianchi section) -/
 
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
-  [FiniteDimensional ℝ E]
-  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
+  [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H} [I.Boundaryless]
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+  [T2Space M]
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
@@ -2143,10 +2375,10 @@ theorem bianchi_first
 
 /-! ## from `Connection.lean` (smoothness section) -/
 
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
-  [FiniteDimensional ℝ E]
-  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
+  [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H} [I.Boundaryless]
+  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] [T2Space M]
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
