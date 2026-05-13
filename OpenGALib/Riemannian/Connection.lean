@@ -6,6 +6,7 @@ import Mathlib.Geometry.Manifold.VectorField.LieBracket
 import OpenGALib.Riemannian.Manifold
 import OpenGALib.Riemannian.TangentBundle
 import OpenGALib.Riemannian.Tensor.MusicalIso
+import OpenGALib.Riemannian.Connection.TangentHelpers
 import OpenGALib.Util.Attributes
 
 /-!
@@ -526,147 +527,10 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
-/-! ## Helpers: flat-typed smoothness of `SmoothVectorField` and `metricInner` -/
-
-omit [CompleteSpace E] [FiniteDimensional ℝ E] [hm : HasMetric I M] in
-set_option backward.isDefEq.respectTransparency false in
-/-- **Eng.** A `SmoothVectorField`'s underlying `Y.toFun : Π y : M, T_yM`
-viewed as `M → E` (via `T_yM = E` def-eq) is globally `ContMDiff` under
-`IsLocallyConstantChartedSpace`. Bundle-section ↔ function-form bridge. -/
-private theorem SmoothVectorField.contMDiff_E (Y : SmoothVectorField I M) :
-    ContMDiff I 𝓘(ℝ, E) ∞ Y.toFun := by
-  intro x
-  set e := trivializationAt E (TangentSpace I) x with he_def
-  -- Bundle-section smoothness gives chart-coord smoothness via Trivialization.contMDiffAt_iff.
-  have h_he : (Bundle.TotalSpace.mk x (Y.toFun x) : TangentBundle I M) ∈ e.source := by
-    rw [Bundle.Trivialization.mem_source]
-    exact FiberBundle.mem_baseSet_trivializationAt' (F := E) x
-  have h_iff := Bundle.Trivialization.contMDiffAt_iff (IM := I) (IB := I) (e := e)
-    (f := fun y : M => (Bundle.TotalSpace.mk y (Y.toFun y) : TangentBundle I M))
-    (n := ∞) h_he
-  have h_chart_coord : ContMDiffAt I 𝓘(ℝ, E) ∞ (fun y : M => (e ⟨y, Y.toFun y⟩).2) x :=
-    (h_iff.mp (Y.smooth x)).2
-  -- On baseSet, (e ⟨y, V y⟩).2 = e.continuousLinearMapAt R y (V y).
-  -- Under IsLocallyConstantChartedSpace, e.cLMA R y = id near x, so equals V y.
-  apply h_chart_coord.congr_of_eventuallyEq
-  have h_baseSet : e.baseSet ∈ 𝓝 x :=
-    e.open_baseSet.mem_nhds (FiberBundle.mem_baseSet_trivializationAt' x)
-  have h_chart_eq : ∀ᶠ y in 𝓝 x, chartAt H y = chartAt H x :=
-    chartAt_eventually_eq_of_locallyConstant x
-  have h_chart_src : (chartAt H x).source ∈ 𝓝 x :=
-    (chartAt H x).open_source.mem_nhds (mem_chart_source H x)
-  filter_upwards [h_baseSet, h_chart_eq, h_chart_src] with y hy_base hy_eq hy_src
-  show Y.toFun y = (e ⟨y, Y.toFun y⟩).2
-  -- (e ⟨y, V y⟩).2 = e.continuousLinearMapAt R y (V y).
-  rw [← Bundle.Trivialization.continuousLinearMapAt_apply_of_mem (R := ℝ) e hy_base]
-  -- e.continuousLinearMapAt R y = id near x via continuousLinearMapAtFlat = id (locally).
-  show (Y.toFun y : E) = e.continuousLinearMapAt ℝ y (Y.toFun y)
-  show (Y.toFun y : E) =
-      TangentBundle.continuousLinearMapAtFlat (I := I) (M := M) x y (Y.toFun y)
-  -- continuousLinearMapAtFlat x y = id near x (locally constant chart).
-  have h_id : TangentBundle.continuousLinearMapAtFlat (I := I) (M := M) x y
-      = ContinuousLinearMap.id ℝ E := by
-    show (trivializationAt E (TangentSpace I) x).continuousLinearMapAt ℝ y
-        = ContinuousLinearMap.id ℝ E
-    rw [TangentBundle.continuousLinearMapAt_trivializationAt_eq_core hy_src]
-    have h_achart_eq : achart H y = achart H x := Subtype.ext hy_eq
-    rw [h_achart_eq]
-    ext v
-    exact (tangentBundleCore I M).coordChange_self (achart H x) y
-      (by simpa [tangentBundleCore_baseSet] using hy_src) v
-  rw [h_id]
-  rfl
-
+-- Bundle ↔ function-form / componentwise CLM / mlieBracket smoothness
+-- helpers live in `Connection/TangentHelpers.lean` (Foundation module).
 -- Smoothness of `metricInner` on bundle sections lives in `Manifold.lean`
 -- as the public `Riemannian.metricInner_contMDiff` (parametric over `n`).
-
-omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M]
-  [IsLocallyConstantChartedSpace H M] [hm : HasMetric I M] in
-/-- **Eng.** Componentwise lift to CLM-valued: if each component
-`(fun y => T y (basis i)) : M → F₂` is `MDifferentiableAt` at `x`, then the
-CLM-valued section `T : M → (F₁ →L[ℝ] F₂)` is `MDifferentiableAt` at `x`.
-Decomposes `T y = ∑ i (basis.coord i).toCLM.smulRight (T y (basis i))`. -/
-private theorem mdifferentiableAt_clm_of_components
-    {F₁ : Type*} [NormedAddCommGroup F₁] [NormedSpace ℝ F₁] [FiniteDimensional ℝ F₁]
-    {F₂ : Type*} [NormedAddCommGroup F₂] [NormedSpace ℝ F₂]
-    (T : M → F₁ →L[ℝ] F₂) {ι : Type} [Fintype ι]
-    (basis : Module.Basis ι ℝ F₁) {x : M}
-    (h_components : ∀ i : ι, MDifferentiableAt I 𝓘(ℝ, F₂)
-      (fun y : M => T y (basis i)) x) :
-    MDifferentiableAt I 𝓘(ℝ, F₁ →L[ℝ] F₂) T x := by
-  classical
-  have h_decomp : T = fun y =>
-      ∑ i, (basis.coord i).toContinuousLinearMap.smulRight (T y (basis i)) := by
-    funext y
-    ext v
-    rw [ContinuousLinearMap.sum_apply]
-    have hv : v = ∑ i, basis.repr v i • basis i := by simp
-    conv_lhs => rw [hv]
-    rw [map_sum]
-    refine Finset.sum_congr rfl ?_
-    intro i _
-    simp [ContinuousLinearMap.smulRight_apply,
-      LinearMap.coe_toContinuousLinearMap', Module.Basis.coord_apply,
-      (T y).map_smul]
-  rw [h_decomp]
-  -- Convert (fun y => ∑ i, f i y) to (∑ i, fun y => f i y) for MDifferentiableAt.sum.
-  have h_swap : (fun y : M => ∑ i,
-      (basis.coord i).toContinuousLinearMap.smulRight (T y (basis i)))
-      = (∑ i, fun y : M =>
-          (basis.coord i).toContinuousLinearMap.smulRight (T y (basis i))) := by
-    funext y
-    rw [Finset.sum_apply]
-  rw [h_swap]
-  apply MDifferentiableAt.sum
-  intro i _
-  -- Each summand: smulRight applied to scalar component.
-  -- (basis.coord i).toCLM.smulRight : F₂ →L (F₁ →L F₂) is a CLM, hence smooth.
-  have h_smulRightL : ContMDiff 𝓘(ℝ, F₂) 𝓘(ℝ, F₁ →L[ℝ] F₂) ∞
-      (fun w : F₂ => (basis.coord i).toContinuousLinearMap.smulRight w) := by
-    have h_eq : (fun w : F₂ => (basis.coord i).toContinuousLinearMap.smulRight w)
-        = ContinuousLinearMap.smulRightL ℝ F₁ F₂ (basis.coord i).toContinuousLinearMap := by
-      funext w; rfl
-    rw [h_eq]
-    exact (ContinuousLinearMap.smulRightL ℝ F₁ F₂
-      (basis.coord i).toContinuousLinearMap).contMDiff
-  -- Apply MDifferentiableAt.comp
-  have h_smulRightL_at :
-      MDifferentiableAt 𝓘(ℝ, F₂) 𝓘(ℝ, F₁ →L[ℝ] F₂)
-        (fun w => (basis.coord i).toContinuousLinearMap.smulRight w) (T x (basis i)) :=
-    (h_smulRightL (T x (basis i))).mdifferentiableAt (by decide)
-  exact h_smulRightL_at.comp x (h_components i)
-
-omit [FiniteDimensional ℝ E] [IsLocallyConstantChartedSpace H M] hm in
-/-- **Eng.** `mlieBracket` of two `ContMDiff` bundle sections is `TangentSmoothAt`.
-Wrapper around Mathlib `ContMDiffAt.mlieBracket_vectorField` giving the
-framework's MDifferentiableAt-form predicate. -/
-theorem mlieBracket_tangentSmoothAt
-    {U V : (y : M) → TangentSpace I y} {x : M}
-    (hU : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞ (fun y => (⟨y, U y⟩ : TangentBundle I M)))
-    (hV : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞ (fun y => (⟨y, V y⟩ : TangentBundle I M))) :
-    TangentSmoothAt (mlieBracket I U V) x := by
-  -- IsManifold I a M auto-inferred from IsManifold I ∞ M + LEInfty a (Mathlib instance).
-  haveI : IsManifold I (3 : ℕ∞ω) M := inferInstance
-  haveI : IsManifold I (2 : ℕ∞ω) M := inferInstance
-  haveI hM_2plus1 : IsManifold I (((2 : ℕ∞) : ℕ∞ω) + 1) M := by
-    show IsManifold I (3 : ℕ∞ω) M
-    infer_instance
-  haveI : IsManifold I ((minSmoothness ℝ 2 : ℕ∞ω)) M := by
-    rw [minSmoothness_of_isRCLikeNormedField]
-    infer_instance
-  have h_min : minSmoothness ℝ ((1 : ℕ∞) + 1) ≤ (2 : ℕ∞) := by
-    rw [minSmoothness_of_isRCLikeNormedField]
-    norm_num
-  have hU2 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) ((2 : ℕ∞) : ℕ∞ω)
-      (fun y => (⟨y, U y⟩ : TangentBundle I M)) x :=
-    (hU x).of_le (by exact_mod_cast le_top)
-  have hV2 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) ((2 : ℕ∞) : ℕ∞ω)
-      (fun y => (⟨y, V y⟩ : TangentBundle I M)) x :=
-    (hV x).of_le (by exact_mod_cast le_top)
-  have h_mlb1 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) ((1 : ℕ∞) : ℕ∞ω)
-      (fun y => (⟨y, mlieBracket I U V y⟩ : TangentBundle I M)) x :=
-    hU2.mlieBracket_vectorField hV2 h_min
-  exact h_mlb1.mdifferentiableAt (by decide)
 
 /-- **Mixed.** Half-Koszul scalar value $\tfrac12\,K(v_{\text{const}}, Y, w_{\text{const}})(y)$
 on constant lifts of `v, w : E`. Math: the Koszul half-factor that
