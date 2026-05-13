@@ -75,15 +75,20 @@ A passing build is day zero, not done. The criteria below apply to every declara
 
 ### Math / Eng / Mixed tagging
 
-Tag every declaration in its docstring:
+Tag every declaration at the start of its docstring:
 
 ```lean
-/-! ## Math — paper-side definition of [concept]. -/
-/-! ## Eng — type-theoretic glue, no paper analogue. -/
-/-! ## Mixed — Math: [statement]. Eng: [glue carried in the proof]. -/
+/-- **Math.** Paper-side definition of [concept]. ... -/
+/-- **Eng.** Type-theoretic glue, no paper analogue. ... -/
+/-- **Mixed.** Math: [statement]. Eng: [glue carried in the proof]. ... -/
 ```
 
-Without explicit tagging, decisions about which helpers to extract, inline, or rename lack any criterion. Engineering tax becomes invisible to casual reading.
+Criteria:
+- **Math** — directly corresponds to a paper / textbook concept; rename map is `s/_/ /` reading test
+- **Eng** — basepoint mismatches, index translations, chart helpers, bound-carrying boilerplate, simp-normal-form bridges
+- **Mixed** — math statement on top of an engineering proof body
+
+Without explicit tagging, decisions about which helpers to extract, inline, or rename lack any criterion. Engineering tax becomes invisible to casual reading. Tags are greppable: `Grep "\*\*Eng\.\*\*"` lists the engineering surface.
 
 ### Natural-language reading test
 

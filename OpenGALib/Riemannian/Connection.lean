@@ -56,15 +56,15 @@ compatibility) used downstream for Riesz extraction.
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6.
 -/
 
-/-- Directional derivative of a scalar function `f : M → ℝ` at `x` in
-direction `v : TangentSpace I x`. Thin wrapper around `mfderiv` typed
-to `ℝ` to avoid `TangentSpace 𝓘(ℝ, ℝ) (f x)` basepoint mismatches when
-composing Koszul-functional terms. -/
+/-- **Eng.** Directional derivative of a scalar function `f : M → ℝ` at
+`x` in direction `v : TangentSpace I x`. Thin wrapper around `mfderiv`
+typed to `ℝ` to avoid `TangentSpace 𝓘(ℝ, ℝ) (f x)` basepoint mismatches
+when composing Koszul-functional terms. -/
 private noncomputable def directionalDeriv
     (f : M → ℝ) (x : M) (v : TangentSpace I x) : ℝ :=
   mfderiv I 𝓘(ℝ, ℝ) f x v
 
-/-- The **Koszul functional** $K(X, Y; Z) : M \to \mathbb{R}$:
+/-- **Math.** The **Koszul functional** $K(X, Y; Z) : M \to \mathbb{R}$:
 $$K(X, Y; Z)(x) \;=\; X\langle Y, Z\rangle\,(x) + Y\langle Z, X\rangle\,(x)
   - Z\langle X, Y\rangle\,(x) + \langle [X, Y], Z\rangle\,(x)
   - \langle [Y, Z], X\rangle\,(x) - \langle [X, Z], Y\rangle\,(x).$$
@@ -87,7 +87,7 @@ private noncomputable def koszulFunctional
   - metricInner x (mlieBracket I X Z x) (Y x)
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] in
-/-- **Koszul antisymmetry identity**:
+/-- **Math.** **Koszul antisymmetry identity**:
 $$K(X, Y; Z)(x) - K(Y, X; Z)(x) \;=\; 2\,\langle [X, Y], Z\rangle(x).$$
 
 Foundation of the torsion-free property (LC1): under Riesz, $\nabla_X Y$
@@ -118,7 +118,7 @@ private theorem koszul_antisymm
   ring
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] in
-/-- **Koszul metric-compatibility sum identity**:
+/-- **Math.** **Koszul metric-compatibility sum identity**:
 $$K(X, Y; Z)(x) + K(X, Z; Y)(x) \;=\; 2\,X\langle Y, Z\rangle(x).$$
 
 Foundation of metric-compatibility (LC2): under Riesz,
@@ -164,10 +164,9 @@ in $Z$ but not in $X$.
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M]
   [hm : HasMetric I M] in
-/-- **Helper**: Leibniz product rule for `directionalDeriv` on $\mathbb{R}$-valued
+/-- **Eng.** Leibniz product rule for `directionalDeriv` on $\mathbb{R}$-valued
 functions: $X(f \cdot g)(x) = f(x) \cdot X(g)(x) + g(x) \cdot X(f)(x)$.
-
-Wraps Mathlib's `HasMFDerivAt.mul` for the framework's `directionalDeriv` helper. -/
+Wraps Mathlib's `HasMFDerivAt.mul` for the framework wrapper. -/
 private lemma directionalDeriv_mul
     (f g : M → ℝ) (x : M) (v : TangentSpace I x)
     (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
@@ -181,10 +180,8 @@ private lemma directionalDeriv_mul
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M]
   [hm : HasMetric I M] in
-/-- **Helper**: linearity of `directionalDeriv` in the tangent vector argument:
-$X_{a \cdot v}(f) = a \cdot X_v(f)$.
-
-Wraps `ContinuousLinearMap.map_smul` for `mfderiv` viewed as a linear map. -/
+/-- **Eng.** Linearity of `directionalDeriv` in the tangent vector argument:
+$X_{a \cdot v}(f) = a \cdot X_v(f)$. Wraps `ContinuousLinearMap.map_smul`. -/
 private lemma directionalDeriv_smul_arg
     (g : M → ℝ) (x : M) (a : ℝ) (v : TangentSpace I x) :
     directionalDeriv g x (a • v) = a * directionalDeriv g x v := by
@@ -193,10 +190,8 @@ private lemma directionalDeriv_smul_arg
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M]
   [hm : HasMetric I M] in
-/-- **Helper**: additivity of `directionalDeriv` in the function argument:
-$X(f + g)(x) = X(f)(x) + X(g)(x)$.
-
-Wraps `mfderiv_add` for the framework's `directionalDeriv` helper. -/
+/-- **Eng.** Additivity of `directionalDeriv` in the function argument:
+$X(f + g)(x) = X(f)(x) + X(g)(x)$. Wraps `mfderiv_add`. -/
 private lemma directionalDeriv_add_fun
     (f g : M → ℝ) (x : M) (v : TangentSpace I x)
     (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
@@ -210,10 +205,8 @@ private lemma directionalDeriv_add_fun
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M]
   [hm : HasMetric I M] in
-/-- **Helper**: additivity of `directionalDeriv` in the tangent vector argument:
-$X_{v_1 + v_2}(f) = X_{v_1}(f) + X_{v_2}(f)$.
-
-Wraps `ContinuousLinearMap.map_add` for `mfderiv` viewed as a linear map. -/
+/-- **Eng.** Additivity of `directionalDeriv` in the tangent vector argument:
+$X_{v_1 + v_2}(f) = X_{v_1}(f) + X_{v_2}(f)$. Wraps `map_add`. -/
 private lemma directionalDeriv_add_arg
     (f : M → ℝ) (x : M) (v₁ v₂ : TangentSpace I x) :
     directionalDeriv f x (v₁ + v₂)
@@ -222,7 +215,7 @@ private lemma directionalDeriv_add_arg
   exact (mfderiv I 𝓘(ℝ, ℝ) f x).map_add v₁ v₂
 
 omit [FiniteDimensional ℝ E] in
-/-- **Koszul $C^\infty(M)$-linearity in $Z$**:
+/-- **Math.** **Koszul $C^\infty(M)$-linearity in $Z$**:
 $$K(X, Y; f \cdot Z)(x) = f(x) \cdot K(X, Y; Z)(x).$$
 
 Foundation of Riesz extraction: $\tfrac12 K(X, Y; \cdot)(x)$ is a
@@ -293,7 +286,7 @@ $C^\infty(M)$-linearity in the X and Y axes (Z-axis already covered by
 Levi-Civita connection structural property (additivity, Leibniz). -/
 
 omit [FiniteDimensional ℝ E] in
-/-- **Koszul Z-additivity**: $K(X, Y; Z_1 + Z_2) = K(X, Y; Z_1) + K(X, Y; Z_2)$.
+/-- **Math.** **Koszul Z-additivity**: $K(X, Y; Z_1 + Z_2) = K(X, Y; Z_1) + K(X, Y; Z_2)$.
 
 Each Koszul term is linear in $Z$ (via `metricInner_add_right`/`left`,
 `mfderiv_add`, `mlieBracket_add_right`). -/
@@ -333,7 +326,7 @@ private theorem koszul_add_right
   ring
 
 omit [FiniteDimensional ℝ E] in
-/-- **Koszul X-additivity**: $K(X_1 + X_2, Y; Z) = K(X_1, Y; Z) + K(X_2, Y; Z)$. -/
+/-- **Math.** **Koszul X-additivity**: $K(X_1 + X_2, Y; Z) = K(X_1, Y; Z) + K(X_2, Y; Z)$. -/
 private theorem koszul_add_left
     (X₁ X₂ Y Z : Π x : M, TangentSpace I x) (x : M)
     (h_ZX₁ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Z y) (X₁ y)) x)
@@ -372,7 +365,7 @@ private theorem koszul_add_left
   ring
 
 omit [FiniteDimensional ℝ E] in
-/-- **Koszul Y-additivity**: $K(X, Y_1 + Y_2; Z) = K(X, Y_1; Z) + K(X, Y_2; Z)$. -/
+/-- **Math.** **Koszul Y-additivity**: $K(X, Y_1 + Y_2; Z) = K(X, Y_1; Z) + K(X, Y_2; Z)$. -/
 private theorem koszul_add_middle
     (X Y₁ Y₂ Z : Π x : M, TangentSpace I x) (x : M)
     (h_Y₁Z : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y₁ y) (Z y)) x)
@@ -411,7 +404,7 @@ private theorem koszul_add_middle
   ring
 
 omit [FiniteDimensional ℝ E] in
-/-- **Koszul X-axis $C^\infty(M)$-linearity**:
+/-- **Math.** **Koszul X-axis $C^\infty(M)$-linearity**:
 $K(f \cdot X, Y; Z)(x) = f(x) \cdot K(X, Y; Z)(x)$.
 
 Mirror of `koszul_smul_right` on the X axis. Same algebraic
@@ -467,7 +460,7 @@ private theorem koszul_smul_left
   ring
 
 omit [FiniteDimensional ℝ E] in
-/-- **Koszul Y-axis Leibniz**:
+/-- **Math.** **Koszul Y-axis Leibniz**:
 $K(X, f \cdot Y; Z)(x) = f(x) \cdot K(X, Y; Z)(x) + 2 \cdot X(f)(x) \cdot \langle Y, Z\rangle(x)$.
 
 Different from `koszul_smul_right`/`left`: $X(f)$ terms do NOT cancel — they
@@ -537,9 +530,9 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] [hm : HasMetric I M] in
 set_option backward.isDefEq.respectTransparency false in
-/-- A `SmoothVectorField`'s underlying `Y.toFun : Π y : M, T_yM` viewed as
-`M → E` (via `T_yM = E` def-eq) is globally `ContMDiff` under
-`IsLocallyConstantChartedSpace`. -/
+/-- **Eng.** A `SmoothVectorField`'s underlying `Y.toFun : Π y : M, T_yM`
+viewed as `M → E` (via `T_yM = E` def-eq) is globally `ContMDiff` under
+`IsLocallyConstantChartedSpace`. Bundle-section ↔ function-form bridge. -/
 private theorem SmoothVectorField.contMDiff_E (Y : SmoothVectorField I M) :
     ContMDiff I 𝓘(ℝ, E) ∞ Y.toFun := by
   intro x
@@ -589,13 +582,10 @@ private theorem SmoothVectorField.contMDiff_E (Y : SmoothVectorField I M) :
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M]
   [IsLocallyConstantChartedSpace H M] [hm : HasMetric I M] in
-/-- **MDifferentiableAt componentwise lift to CLM-valued**: if each component
+/-- **Eng.** Componentwise lift to CLM-valued: if each component
 `(fun y => T y (basis i)) : M → F₂` is `MDifferentiableAt` at `x`, then the
 CLM-valued section `T : M → (F₁ →L[ℝ] F₂)` is `MDifferentiableAt` at `x`.
-
-Proof: decompose `T y = ∑ i, (basis.coord i).toCLM.smulRight (T y (basis i))`,
-each summand `MDifferentiableAt` via `clm_apply` of constant CLM `smulRightL`
-with smooth scalar component, sum via `MDifferentiableAt.add`. -/
+Decomposes `T y = ∑ i (basis.coord i).toCLM.smulRight (T y (basis i))`. -/
 private theorem mdifferentiableAt_clm_of_components
     {F₁ : Type*} [NormedAddCommGroup F₁] [NormedSpace ℝ F₁] [FiniteDimensional ℝ F₁]
     {F₂ : Type*} [NormedAddCommGroup F₂] [NormedSpace ℝ F₂]
@@ -647,9 +637,9 @@ private theorem mdifferentiableAt_clm_of_components
   exact h_smulRightL_at.comp x (h_components i)
 
 omit [FiniteDimensional ℝ E] [IsLocallyConstantChartedSpace H M] hm in
-/-- **`mlieBracket` of two `ContMDiff` bundle sections is a smooth bundle section**.
-Wrapper around Mathlib `ContMDiffAt.mlieBracket_vectorField` giving
-`TangentSmoothAt` (framework's MDifferentiableAt-form predicate). -/
+/-- **Eng.** `mlieBracket` of two `ContMDiff` bundle sections is `TangentSmoothAt`.
+Wrapper around Mathlib `ContMDiffAt.mlieBracket_vectorField` giving the
+framework's MDifferentiableAt-form predicate. -/
 theorem mlieBracket_tangentSmoothAt
     {U V : (y : M) → TangentSpace I y} {x : M}
     (hU : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞ (fun y => (⟨y, U y⟩ : TangentBundle I M)))
@@ -678,13 +668,18 @@ theorem mlieBracket_tangentSmoothAt
     hU2.mlieBracket_vectorField hV2 h_min
   exact h_mlb1.mdifferentiableAt (by decide)
 
-/-- **Half-Koszul scalar value** $\tfrac12\,K(v_{\text{const}}, Y, w_{\text{const}})(y)$. -/
+/-- **Mixed.** Half-Koszul scalar value $\tfrac12\,K(v_{\text{const}}, Y, w_{\text{const}})(y)$
+on constant lifts of `v, w : E`. Math: the Koszul half-factor that
+feeds Riesz uniqueness. Eng: paired with `koszulCotangentCLM` to expose
+the linearity in `w` to Riesz via a constant-lift wrapper. -/
 noncomputable def koszulCotangentScalar
     (v : E) (Y : SmoothVectorField I M) (w : E) (y : M) : ℝ :=
   (1/2 : ℝ) * koszulFunctional (fun _ : M => v) Y.toFun (fun _ : M => w) y
 
-/-- **Half-Koszul cotangent CLM** $w \mapsto \tfrac12\,K(v, Y; w)(y)$ as
-`E →L[ℝ] ℝ`. Linearity in `w` via `koszul_smul_right` + `koszul_add_right`. -/
+/-- **Mixed.** Half-Koszul cotangent CLM $w \mapsto \tfrac12\,K(v, Y; w)(y)$
+as `E →L[ℝ] ℝ`. Math: bounded linear functional that Riesz represents
+as $\nabla_v Y(y)$. Eng: linearity packaged via `koszul_smul_right` +
+`koszul_add_right`. -/
 noncomputable def koszulCotangentCLM
     (v : E) (Y : SmoothVectorField I M) (y : M) : E →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap
@@ -761,20 +756,17 @@ noncomputable def koszulCotangentCLM
         simp
         ring }
 
+/-- **Eng.** `koszulCotangentCLM` evaluated equals `koszulCotangentScalar`. -/
 @[simp]
 lemma koszulCotangentCLM_apply (v : E) (Y : SmoothVectorField I M) (y : M) (w : E) :
     koszulCotangentCLM v Y y w = koszulCotangentScalar v Y w y := rfl
 
 omit [FiniteDimensional ℝ E] in
 set_option backward.isDefEq.respectTransparency false in
-/-- **Scalar smoothness of `koszulCotangentScalar v Y w` in `y`** at every `x`.
-
-Decomposes into 6 koszul-term smoothness checks:
-* 3 directional-derivative terms via `mfderiv_const_dir_smoothAt` /
-  `mfderiv_smoothDir_smoothAt`.
-* 3 mlieBracket-with-metric-inner terms via `mlieBracket_tangentSmoothAt` +
-  `metricInner_mdifferentiableAt`.
-Sum via `MDifferentiableAt.add` / `.sub` / `.const_mul`. -/
+/-- **Eng.** Scalar smoothness of `koszulCotangentScalar v Y w` in `y`,
+decomposed across the 6 Koszul terms (3 directional-derivative + 3
+mlieBracket-with-metric-inner). Used to lift `koszulCotangentCLM` to a
+smooth section. -/
 private theorem koszulCotangentScalar_mdifferentiableAt
     (v : E) (Y : SmoothVectorField I M) (w : E) (x : M) :
     MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y : M => koszulCotangentScalar v Y w y) x := by
@@ -849,9 +841,9 @@ private theorem koszulCotangentScalar_mdifferentiableAt
   -- Goal: MDifferentiableAt of `fun y => (1/2) * (T1 + T2 - T3 + T4 - T5 - T6)` at x.
   exact ((((((hT1.add hT2).sub hT3).add hT4).sub hT5).sub hT6).const_smul (1/2 : ℝ))
 
-/-- **Smoothness of the koszul cotangent CLM section** as `M → (E →L[ℝ] ℝ)`.
-Componentwise lift of `koszulCotangentScalar_mdifferentiableAt` via
-`mdifferentiableAt_clm_of_components` with `Module.finBasis ℝ E`. -/
+/-- **Eng.** Smoothness of the koszul cotangent CLM section as
+`M → (E →L[ℝ] ℝ)`. Componentwise lift of `koszulCotangentScalar_mdifferentiableAt`
+via `mdifferentiableAt_clm_of_components`. -/
 theorem koszulCotangentCLM_smoothAt
     (v : E) (Y : SmoothVectorField I M) (x : M) :
     MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] ℝ)
@@ -890,19 +882,12 @@ for all smooth $Z$. Riesz uses the framework-owned `metricRiesz`. -/
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] [InnerProductSpace ℝ E]
   [NeZero (Module.finrank ℝ E)] [I.Boundaryless] [T2Space M] in
-/-- **Locality of the Koszul functional in $Z$**: if two smooth vector
-fields $Z_1, Z_2$ agree on a neighborhood of $x$, then
-$K(X, Y; Z_1)(x) = K(X, Y; Z_2)(x)$.
+/-- **Math.** **Locality of the Koszul functional in $Z$**: if $Z_1, Z_2$
+agree on a neighborhood of $x$, then $K(X, Y; Z_1)(x) = K(X, Y; Z_2)(x)$.
 
-Foundation lemma for extension-independence: combined with bump function
-decomposition, this gives well-definedness of the linear functional in
-`koszulLinearFunctional_exists`.
-
-The 6 Koszul terms localize via:
-* `directionalDeriv` terms: `Filter.EventuallyEq.mfderiv_eq` (Mathlib).
-* `metricInner (mlieBracket _ _ _) _` terms with $Z$ in mlieBracket:
-  `Filter.EventuallyEq.mlieBracket_vectorField_eq` (Mathlib).
-* Pointwise inner-product terms: equality at $x$ from `h.self_of_nhds`. -/
+Foundation for extension-independence: combined with bump decomposition,
+gives well-definedness of the linear functional in
+`koszulLinearFunctional_exists`. -/
 private theorem koszulFunctional_local
     (X Y Z₁ Z₂ : Π x : M, TangentSpace I x) (x : M)
     (h : Z₁ =ᶠ[nhds x] Z₂) :
@@ -924,18 +909,12 @@ private theorem koszulFunctional_local
 
 omit [FiniteDimensional ℝ E] [CompleteSpace E] [InnerProductSpace ℝ E]
   [NeZero (Module.finrank ℝ E)] [I.Boundaryless] [T2Space M] in
-/-- **Tensoriality at $x$ of the half-Koszul functional in the third argument.**
-
-
-For smooth $X, Y$ at $x$, the operation
-$Z \mapsto \tfrac12 K(X, Y; Z)(x)$ on smooth tangent-bundle sections
-is tensorial at $x$: it respects $C^\infty(M)$-scalar multiplication
-(via `koszul_smul_right`) and addition (via `koszul_add_right`).
-
-The scalar smoothness hypotheses of `koszul_smul_right` /
-`koszul_add_right` (`hYZ`, `hZX`, `h_YZ₁/₂`, `h_Z₁/₂X`) are derived
-from the bundle-section smoothness of $X, Y, Z$ via
-`metricInner_mdifferentiableAt`. -/
+/-- **Mixed.** Tensoriality at $x$ of the half-Koszul functional in the
+third argument. Math: $Z \mapsto \tfrac12 K(X, Y; Z)(x)$ respects
+$C^\infty(M)$-scalar multiplication and addition. Eng: packaged as
+`TensorialAt` so `TensorialAt.mkHom` can extract the bounded linear
+functional; scalar smoothness side-hypotheses are derived from the
+bundle-section smoothness of $X, Y, Z$. -/
 private theorem koszulFunctional_tensorialAt
     [FiniteDimensional ℝ E]
     [IsLocallyConstantChartedSpace H M]
@@ -968,17 +947,11 @@ private theorem koszulFunctional_tensorialAt
 
 omit [CompleteSpace E] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)]
   [I.Boundaryless] [T2Space M] in
-/-- **Existence theorem for Riesz extraction**: given smoothness of $X$
-and $Y$ at $x$, the half-Koszul functional $Z \mapsto \tfrac12 K(X, Y; Z)(x)$
+/-- **Math.** **Riesz extraction existence**: under smoothness of $X, Y$
+at $x$, the half-Koszul functional $Z \mapsto \tfrac12 K(X, Y; Z)(x)$
 admits a unique tangent-space representative for smooth $Z$.
 
-Proof: `TensorialAt.mkHom` applied to `koszulFunctional_tensorialAt`
-(tensoriality from `koszul_smul_right` + `koszul_add_right`) +
-`TensorialAt.mkHom_apply` for the defining identity. Smoothness of $X, Y$
-is needed to derive scalar smoothness of $\langle Y, Z \rangle$ and
-$\langle Z, X \rangle$ via `metricInner_smoothAt`; smoothness of $Z$ is
-required because $K(X, Y; Z)(x)$ depends on $Z$'s behaviour near $x$
-via `mfderiv` and `mlieBracket`.
+Closed via `TensorialAt.mkHom` on `koszulFunctional_tensorialAt`.
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 existence proof, Step 3. -/
 private theorem koszulLinearFunctional_exists
@@ -995,6 +968,9 @@ private theorem koszulLinearFunctional_exists
 
 omit [CompleteSpace E] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)]
   [I.Boundaryless] [T2Space M] in
+/-- **Math.** Riesz-extracted tangent vector `v ∈ T_xM` satisfying
+$\langle v, Z(x)\rangle = \tfrac12 K(X, Y; Z)(x)$ for all smooth $Z$.
+The Levi-Civita value $\nabla_X Y(x)$. -/
 private theorem koszulCovDeriv_exists
     [IsLocallyConstantChartedSpace H M]
     (X Y : Π x : M, TangentSpace I x) (x : M)
@@ -1007,14 +983,11 @@ private theorem koszulCovDeriv_exists
   rw [metricRiesz_inner]
   exact hφ Z hZ
 
-/-- **Levi-Civita via Koszul + Riesz** (explicit construction):
+/-- **Math.** **Levi-Civita via Koszul + Riesz** (explicit construction):
 $\nabla_X Y(x) \in T_xM$ is the unique vector with
 $$\langle \nabla_X Y(x), Z(x)\rangle = \tfrac12 K(X, Y; Z)(x)$$
-for all smooth $Z$, extracted via Riesz from `koszulCovDeriv_exists`.
-The metric is the framework-owned `metricInner`.
-
-When both $X$ and $Y$ are smooth at $x$, returns the Riesz representative
-via `Classical.choose` over `koszulCovDeriv_exists`. -/
+for all smooth $Z$, extracted via Riesz over the framework-owned
+`metricInner`. -/
 private noncomputable def koszulCovDeriv
     [IsLocallyConstantChartedSpace H M]
     (X Y : Π x : M, TangentSpace I x) (x : M)
@@ -1023,11 +996,9 @@ private noncomputable def koszulCovDeriv
 
 omit [CompleteSpace E] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)]
   [I.Boundaryless] [T2Space M] in
-/-- **Riesz defining property**: $\langle \nabla_X Y(x), Z(x)\rangle =
-\tfrac12 K(X, Y; Z)(x)$ for smooth $X, Y, Z$, with `metricInner` as the
-framework-owned inner product.
-
-Direct extraction via `Classical.choose_spec` from `koszulCovDeriv_exists`. -/
+/-- **Math.** **Riesz defining property**:
+$\langle \nabla_X Y(x), Z(x)\rangle = \tfrac12 K(X, Y; Z)(x)$ for smooth
+$X, Y, Z$, with `metricInner` as the framework-owned inner product. -/
 private theorem koszulCovDeriv_inner_eq
     [IsLocallyConstantChartedSpace H M]
     (X Y Z : Π x : M, TangentSpace I x) (x : M)
@@ -1065,10 +1036,10 @@ Build the `CovariantDerivative` via:
    `koszul_smul_middle` via Riesz uniqueness.
 -/
 
-/-- Smoothness-erased version of `koszulCovDeriv` in the `X` argument:
-returns `koszulCovDeriv X Y x hX hY` for smooth `X`, `0` otherwise.
-Needed because Mathlib's `TensorialAt` requires `Φ` to be defined on
-**all** sections, not just smooth ones. -/
+/-- **Eng.** Smoothness-erased version of `koszulCovDeriv` in the `X`
+argument: returns `koszulCovDeriv X Y x hX hY` for smooth `X`, `0`
+otherwise. Required because Mathlib's `TensorialAt` quantifies over all
+sections, not just smooth ones. -/
 private noncomputable def koszulCovDerivAux
     [IsLocallyConstantChartedSpace H M]
     (Y : Π y : M, TangentSpace I y) (x : M) (hY : TangentSmoothAt Y x)
@@ -1078,11 +1049,10 @@ private noncomputable def koszulCovDerivAux
 
 omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless]
   [T2Space M] in
-/-- Tensorality of `koszulCovDerivAux Y x hY` in the `X` argument: for
-smooth `X`, `f`, `koszulCovDerivAux` respects scalar multiplication and
-addition. Uses `koszul_smul_left` / `koszul_add_left` together with
-Riesz uniqueness (`metricInner_eq_iff_eq` against an arbitrary
-extended test vector). -/
+/-- **Mixed.** Tensoriality of `koszulCovDerivAux Y x hY` in the `X`
+argument. Math: $\nabla_\cdot Y$ is $C^\infty(M)$-linear in $X$ (`koszul_smul_left`,
+`koszul_add_left`). Eng: lifted from `koszulFunctional` to `koszulCovDeriv`
+through `metricInner_eq_iff_eq` against extended test vectors. -/
 private theorem koszulCovDerivAux_tensorialAt
     [IsLocallyConstantChartedSpace H M]
     (Y : Π y : M, TangentSpace I y) (x : M) (hY : TangentSmoothAt Y x) :
@@ -1148,19 +1118,13 @@ private theorem koszulCovDerivAux_tensorialAt
 
 omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless]
   [T2Space M] in
-/-- **Levi-Civita `CovariantDerivative` existence.**
-
-A `CovariantDerivative` whose `toFun` extends the pointwise
-`koszulCovDeriv` value for smooth $(X, Y)$. Construction:
-
-* `toFun Y x` is `TensorialAt.mkHom (koszulCovDerivAux Y x hY) x ...`
-  for smooth `Y`, `0` otherwise.
-* `IsCovariantDerivativeOn.add` follows from `koszul_add_middle` +
-  Riesz uniqueness.
-* `IsCovariantDerivativeOn.leibniz` follows from `koszul_smul_middle` +
-  Riesz uniqueness; the extra `2 * X(g) * ⟨Y, Z⟩` term in
-  `koszul_smul_middle` is exactly the `(extDerivFun g x).smulRight (Y x)`
-  term in the Leibniz field after the `1/2` factor cancels. -/
+/-- **Math.** **Levi-Civita `CovariantDerivative` existence.** Builds a
+`CovariantDerivative` whose `toFun` extends `koszulCovDeriv` for smooth
+$(X, Y)$. `IsCovariantDerivativeOn.add` follows from `koszul_add_middle`
+via Riesz uniqueness; `IsCovariantDerivativeOn.leibniz` from
+`koszul_smul_middle` (the $2 \cdot X(g) \cdot \langle Y, Z\rangle$ term
+matches `(extDerivFun g x).smulRight (Y x)` after the $\tfrac12$ factor
+cancels). -/
 private theorem koszulLeviCivita_exists [IsLocallyConstantChartedSpace H M] :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       ∀ (X Y : Π x : M, TangentSpace I x) (x : M)
@@ -1285,16 +1249,14 @@ private theorem koszulLeviCivita_exists [IsLocallyConstantChartedSpace H M] :
 /-! ### Bridge: smoothness of `koszulCovDeriv X.toFun Y.toFun y` at `x` -/
 
 set_option backward.isDefEq.respectTransparency false in
-/-- For `X, Y : SmoothVectorField I M`, the section
-`y ↦ koszulCovDeriv X.toFun Y.toFun y` is `TangentSmoothAt` at every `x`.
+/-- **Mixed.** For `X, Y : SmoothVectorField I M`, the section
+`y ↦ koszulCovDeriv X.toFun Y.toFun y` is `TangentSmoothAt` everywhere.
 
-Smooth-VF-direction strengthening of `koszulCovDeriv_const_smoothAt`;
-the constant case is recovered by `X := SmoothVectorField.const v`. The
-proof identifies `koszulCovDeriv` with `metricRiesz y (Φ y)` via Riesz
-uniqueness, then reduces smoothness through
-`metricRiesz_section_contMDiffAt_of_within` to per-chart-basis-index
-ContMDiffWithinAt of the six Koszul terms, transferred from a bumped
-global extension via `koszulFunctional_local`. -/
+Math: smoothness of the Levi-Civita section under smooth inputs.
+Eng: identifies `koszulCovDeriv` with `metricRiesz y (Φ y)` via Riesz
+uniqueness, then reduces through `metricRiesz_section_contMDiffAt_of_within`
+to per-chart-basis-index ContMDiffWithinAt of the six Koszul terms
+transferred from a bumped global extension via `koszulFunctional_local`. -/
 private theorem koszulCovDeriv_smoothVF_smoothAt
     [IsLocallyConstantChartedSpace H M]
     (X Y : SmoothVectorField I M) (x : M) :
@@ -1525,7 +1487,8 @@ private theorem koszulCovDeriv_smoothVF_smoothAt
     exact hPhi_eq y hy
   exact hPhi_chartBV_at.contMDiffWithinAt
 
-/-- Constant-direction specialisation of `koszulCovDeriv_smoothVF_smoothAt`. -/
+/-- **Eng.** Constant-direction specialisation of
+`koszulCovDeriv_smoothVF_smoothAt` via `SmoothVectorField.const v`. -/
 private theorem koszulCovDeriv_const_smoothAt
     [IsLocallyConstantChartedSpace H M]
     (v : E) (Y : SmoothVectorField I M) (x : M) :
@@ -1535,7 +1498,7 @@ private theorem koszulCovDeriv_const_smoothAt
         (Y.smoothAt y)) x :=
   koszulCovDeriv_smoothVF_smoothAt (SmoothVectorField.const v) Y x
 
-/-- **Existence theorem for the Levi-Civita connection.**
+/-- **Math.** **Existence theorem for the Levi-Civita connection.**
 
 On a Riemannian manifold there exists a covariant derivative on the
 tangent bundle that is torsion-free, metric-compatible (for smooth
@@ -1605,38 +1568,30 @@ theorem leviCivitaConnection_exists [IsLocallyConstantChartedSpace H M] :
     rw [h_eq]
     exact koszulCovDeriv_smoothVF_smoothAt X Y x
 
-/-- The **Levi-Civita connection** $\nabla$ on the tangent bundle of a
-Riemannian manifold $M$: the unique torsion-free, metric-compatible
-covariant derivative.
+/-- **Math.** The **Levi-Civita connection** $\nabla$ on the tangent
+bundle of a Riemannian manifold: the unique torsion-free,
+metric-compatible covariant derivative. Real `noncomputable def` via
+`Classical.choose` over `leviCivitaConnection_exists`.
 
-Real `noncomputable def` via `Classical.choose` over the now-closed
-`leviCivitaConnection_exists`. The chosen value
-satisfies `leviCivitaConnection.torsion = 0` (see
-`leviCivitaConnection_torsion_zero`).
-
-**Ground truth**: do Carmo 1992 §2; Koszul formula gives uniqueness.
-
-**Used by**: `Riemannian.Curvature`, `Riemannian.SecondFundamentalForm`,
-`Riemannian.Gradient`. -/
+**Ground truth**: do Carmo 1992 §2 (Koszul formula gives uniqueness). -/
 noncomputable def leviCivitaConnection
     [IsLocallyConstantChartedSpace H M] :
     CovariantDerivative I E (fun x : M => TangentSpace I x) :=
   Classical.choose (leviCivitaConnection_exists (I := I) (M := M))
 
-/-- The Levi-Civita connection is torsion-free. -/
+/-- **Math.** The Levi-Civita connection is torsion-free. -/
 theorem leviCivitaConnection_torsion_zero
     [IsLocallyConstantChartedSpace H M] :
     (leviCivitaConnection : CovariantDerivative I E
       (fun x : M => TangentSpace I x)).torsion = 0 :=
   (Classical.choose_spec leviCivitaConnection_exists).1
 
-/-- The Levi-Civita connection is **metric-compatible** for smooth
-vector fields: for $X, Y, Z$ smooth at $x$,
+/-- **Math.** The Levi-Civita connection is **metric-compatible** for
+smooth $X, Y, Z$ at $x$:
 $$\nabla_X \langle Y, Z \rangle (x) =
   \langle \nabla_X Y, Z \rangle (x) + \langle Y, \nabla_X Z \rangle (x).$$
-
-The metric is the framework-owned `metricInner`. Smoothness hypotheses
-on $X, Y, Z$ match do Carmo 1992 §2 Theorem 3.6's textbook setup. -/
+Metric is the framework-owned `metricInner`. Smoothness hypotheses match
+do Carmo 1992 §2 Theorem 3.6. -/
 theorem leviCivitaConnection_metric_compatible
     [IsLocallyConstantChartedSpace H M]
     (X Y Z : Π x : M, TangentSpace I x) (x : M)
@@ -1648,16 +1603,10 @@ theorem leviCivitaConnection_metric_compatible
         ((leviCivitaConnection (I := I) (M := M)).toFun Z x (X x)) :=
   (Classical.choose_spec leviCivitaConnection_exists).2.1 X Y Z x hX hY hZ
 
-/-- **Smoothness of the Levi-Civita connection along a smooth vector
-field direction**: for `X, Y : SmoothVectorField I M`, the section
-`y ↦ ∇_{X(y)} Y(y) = leviCivitaConnection.toFun Y.toFun y (X.toFun y)`
-is smooth at every point.
-
-Direct projection from the 3rd conjunct of `leviCivitaConnection_exists`'s
-strengthened existential. The smoothness clause itself is currently
-`sorry` (PRE-PAPER) inside the existence proof; downstream consumers
-(`Riemannian.Curvature`, `Riemannian.Operators.Bochner` smoothness
-witnesses) depend on this accessor. -/
+/-- **Math.** Smoothness of the Levi-Civita connection along a smooth
+direction: for `X, Y : SmoothVectorField I M`, the section
+`y ↦ ∇_{X(y)} Y(y)` is smooth at every point. Direct projection from
+the 3rd conjunct of `leviCivitaConnection_exists`. -/
 theorem leviCivitaConnection_smoothAt_smoothVF_dir
     [IsLocallyConstantChartedSpace H M]
     (X Y : SmoothVectorField I M) (x : M) :
@@ -1666,11 +1615,11 @@ theorem leviCivitaConnection_smoothAt_smoothVF_dir
         (X.toFun y)) x :=
   (Classical.choose_spec leviCivitaConnection_exists).2.2 X Y x
 
-/-- **Constant-direction specialisation**: for `v : E` constant and
-`Y : SmoothVectorField I M`, the section
-`y ↦ ∇ Y y v = leviCivitaConnection.toFun Y.toFun y v` is smooth at every
-point. Backward-compatible projection from
-`leviCivitaConnection_smoothAt_smoothVF_dir` with `X := const v`. -/
+/-- **Mixed.** Constant-direction specialisation: for `v : E` and
+`Y : SmoothVectorField I M`, the section `y ↦ ∇ Y y v` is smooth.
+Math: smoothness of `∇Y` is symmetric in direction. Eng: backward-
+compatible accessor over `leviCivitaConnection_smoothAt_smoothVF_dir`
+with `X := SmoothVectorField.const v`. -/
 theorem leviCivitaConnection_smoothAt_const_dir
     [IsLocallyConstantChartedSpace H M]
     (Y : SmoothVectorField I M) (v : E) (x : M) :
@@ -1679,11 +1628,10 @@ theorem leviCivitaConnection_smoothAt_const_dir
   leviCivitaConnection_smoothAt_smoothVF_dir
     (SmoothVectorField.const v) Y x
 
-/-- **Covariant derivative of one vector field along another**:
+/-- **Math.** **Covariant derivative of one vector field along another**:
 $(\nabla_X Y)(x) := \nabla\,Y\,x\,(X\,x)$, where $\nabla$ is the
-Levi-Civita connection. Torsion-free and metric-compatible with respect
-to `metricInner` (see `leviCivitaConnection_torsion_zero`,
-`leviCivitaConnection_metric_compatible`).
+Levi-Civita connection. Torsion-free and metric-compatible w.r.t.
+`metricInner`.
 
 **Ground truth**: do Carmo 1992 §2 Definition 2.1. -/
 noncomputable def covDeriv
@@ -1692,29 +1640,26 @@ noncomputable def covDeriv
     TangentSpace I x :=
   ((leviCivitaConnection (I := I) (M := M)).toFun Y x) (X x)
 
-/-- The covariant derivative `∇[X] Y` as a section. Pointwise:
-`(∇[X] Y)(x) = (∇_X Y)(x) = covDeriv X Y x`. -/
+/-- **Math.** Notation `∇[X] Y` for `covDeriv X Y`. -/
 scoped[Riemannian] notation:max "∇[" X "] " Y:max => covDeriv X Y
 
-/-- The manifold Lie bracket `⟦X, Y⟧` as a section. Model `I` inferred
-from the section types. Pointwise: `(⟦X, Y⟧)(x) = mlieBracket _ X Y x`. -/
+/-- **Math.** Notation `⟦X, Y⟧` for the manifold Lie bracket
+`mlieBracket _ X Y` (model `I` inferred from section types). -/
 scoped[Riemannian] notation:max "⟦" X ", " Y "⟧" =>
   VectorField.mlieBracket _ X Y
 
-/-- The **covariant derivative at a point** as a CLM in the direction slot:
-$\nabla\,Y|_x : T_xM \to_L T_xM$, $v \mapsto (\nabla_v Y)(x)$. Decouples
-linearity in the direction from the section-level `covDeriv`:
-`covDeriv X Y x = covDerivAt Y x (X x)`, so any "linear in $X$ at $x$"
-identity reduces to standard CLM lemmas (`map_add`, `map_smul`,
-`map_zero`, `.comp`) on `covDerivAt Y x`. -/
+/-- **Mixed.** Covariant derivative at a point as a CLM in the direction
+slot: $\nabla\,Y|_x : T_xM \to_L T_xM$, $v \mapsto (\nabla_v Y)(x)$.
+Math: pointwise linearity in direction. Eng: decouples direction-linearity
+from section-level `covDeriv` so identities reduce to standard CLM lemmas. -/
 noncomputable def covDerivAt
     [IsLocallyConstantChartedSpace H M]
     (Y : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x →L[ℝ] TangentSpace I x :=
   (leviCivitaConnection (I := I) (M := M)).toFun Y x
 
-/-- `covDeriv X Y x = covDerivAt Y x (X x)`: section-level `covDeriv`
-factors through the pointwise CLM `covDerivAt`. -/
+/-- **Eng.** `covDeriv X Y x = covDerivAt Y x (X x)`: section-level
+`covDeriv` factors through the pointwise CLM `covDerivAt`. -/
 @[simp]
 theorem covDeriv_eq_covDerivAt
     [IsLocallyConstantChartedSpace H M]
@@ -1722,9 +1667,8 @@ theorem covDeriv_eq_covDerivAt
     covDeriv X Y x = covDerivAt Y x (X x) :=
   rfl
 
-/-- Constant-section specialization: `covDeriv (fun _ => v) Y x =
-covDerivAt Y x v`. Used when only the value of the direction at $x$
-matters (tensoriality of $\nabla_X Y$ in $X$). -/
+/-- **Eng.** Constant-section specialization:
+`covDeriv (fun _ => v) Y x = covDerivAt Y x v`. -/
 @[simp]
 theorem covDeriv_const_eq_covDerivAt
     [IsLocallyConstantChartedSpace H M]
@@ -1732,13 +1676,11 @@ theorem covDeriv_const_eq_covDerivAt
     covDeriv (fun _ : M => v) Y x = covDerivAt Y x v :=
   rfl
 
-/-- **Riesz formula for the covariant derivative**: for smooth $X, Y, Z$,
+/-- **Math.** **Riesz formula for the covariant derivative**: for smooth
+$X, Y, Z$,
 $$\langle \nabla_X Y, Z\rangle_g(x) = \tfrac12 K(X, Y; Z)(x).$$
-
-Standard Levi-Civita derivation: cycling the metric-compat identity over
-$(X, Y, Z)$, $(Y, Z, X)$, $(Z, X, Y)$ and substituting torsion-freeness
-$\nabla_Y X = \nabla_X Y - [X, Y]$ etc. isolates
-$\langle \nabla_X Y, Z\rangle$. -/
+Cycling metric-compat over $(X, Y, Z)$, $(Y, Z, X)$, $(Z, X, Y)$ and
+substituting torsion-freeness isolates $\langle \nabla_X Y, Z\rangle$. -/
 private theorem covDeriv_inner_eq_half_koszul
     [IsLocallyConstantChartedSpace H M]
     (X Y Z : Π x : M, TangentSpace I x) (x : M)
@@ -1822,15 +1764,8 @@ uniqueness). -/
 omit [CompleteSpace E] [FiniteDimensional ℝ E] in
 omit [CompleteSpace E] [FiniteDimensional ℝ E] [InnerProductSpace ℝ E]
   [NeZero (Module.finrank ℝ E)] [I.Boundaryless] [T2Space M] in
-/-- **Locality of `koszulFunctional` in the middle argument**: if
-$Y_1 =ᶠ[𝓝 x] Y_2$, then $K(X, Y_1; Z)(x) = K(X, Y_2; Z)(x)$.
-
-All 6 terms are local at `x`:
-* 3 directional derivative terms: 2 functions depend on $Y$ via metric
-  inner products (use `Filter.EventuallyEq.mfderiv_eq`); 1 uses $Y(x)$ as
-  the direction (constant from `EventuallyEq` evaluated at `x`).
-* 3 Lie-bracket inner-product terms: the bracket
-  `mlieBracket I · Y ·` is local in `Y` at `x`. -/
+/-- **Math.** **Locality of `koszulFunctional` in the middle argument**:
+if $Y_1 =ᶠ[𝓝 x] Y_2$, then $K(X, Y_1; Z)(x) = K(X, Y_2; Z)(x)$. -/
 private theorem koszulFunctional_eventuallyEq_middle
     (X Y₁ Y₂ Z : Π x : M, TangentSpace I x) (x : M)
     (h : ∀ᶠ y in 𝓝 x, Y₁ y = Y₂ y) :
@@ -1856,9 +1791,9 @@ private theorem koszulFunctional_eventuallyEq_middle
   rw [h_metYZ.mfderiv_eq, h_metXY.mfderiv_eq, hx, h_brXY, h_brYZ]
   rfl
 
-/-- **Locality of `covDeriv` in the middle argument** (Riesz uniqueness):
-if $Y_1 =ᶠ[𝓝 x] Y_2$ and both are smooth at $x$, then for smooth $X$,
-$\nabla_X Y_1(x) = \nabla_X Y_2(x)$. -/
+/-- **Math.** **Locality of `covDeriv` in the middle argument** (Riesz
+uniqueness): if $Y_1 =ᶠ[𝓝 x] Y_2$ and both are smooth at $x$, then for
+smooth $X$, $\nabla_X Y_1(x) = \nabla_X Y_2(x)$. -/
 private theorem covDeriv_congr_eventuallyEq_middle
     [IsLocallyConstantChartedSpace H M]
     (X Y₁ Y₂ : Π x : M, TangentSpace I x) (x : M)
@@ -1897,7 +1832,7 @@ Three pointwise lemmas exposed from the Levi-Civita connection's
 `CovariantDerivative` structure: torsion-freeness, additivity in the
 differentiated field, and subtractivity (corollary). -/
 
-/-- **Pointwise torsion-freeness** of the Levi-Civita connection:
+/-- **Math.** Pointwise torsion-freeness of the Levi-Civita connection:
 $\nabla_X Y - \nabla_Y X = [X, Y]$ at any point where $X, Y$ are
 differentiable as bundle sections. -/
 theorem covDeriv_sub_swap_eq_mlieBracket
@@ -1908,12 +1843,9 @@ theorem covDeriv_sub_swap_eq_mlieBracket
     (cov := leviCivitaConnection (I := I) (M := M))).mp
     leviCivitaConnection_torsion_zero hX hY
 
-/-- **Additivity of `covDeriv` in the differentiated field**:
-$\nabla_X (Y_1 + Y_2)(x) = \nabla_X Y_1(x) + \nabla_X Y_2(x)$ when
-$Y_1, Y_2$ are `TangentSmoothAt` at $x$.
-
-Direct from `IsCovariantDerivativeOn.add` applied to
-`leviCivitaConnection.isCovariantDerivativeOnUniv`, evaluated at $X(x)$. -/
+/-- **Math.** Additivity of `covDeriv` in the differentiated field:
+$\nabla_X (Y_1 + Y_2)(x) = \nabla_X Y_1(x) + \nabla_X Y_2(x)$ for
+$Y_1, Y_2$ smooth at $x$. -/
 theorem covDeriv_add_field
     (X Y₁ Y₂ : Π x : M, TangentSpace I x) (x : M)
     (hY₁ : TangentSmoothAt Y₁ x) (hY₂ : TangentSmoothAt Y₂ x) :
@@ -1925,14 +1857,10 @@ theorem covDeriv_add_field
   rw [h]
   rfl
 
-/-- **Locality of `covDeriv` in the differentiated field**: if
+/-- **Math.** Locality of `covDeriv` in the differentiated field: if
 $Y_1 =ᶠ[𝓝 x] Y_2$ and both are smooth at $x$, then
-$\nabla_X Y_1(x) = \nabla_X Y_2(x)$.
-
-Direct application of `IsCovariantDerivativeOn.congr_of_eventuallyEq` to the
-Levi-Civita connection. Smoothness of the direction `X` is not required:
-the section-level connection `leviCivitaConnection.toFun Y x` is a CLM in
-the direction slot, so the value at `X x` depends only on `Y` near `x`. -/
+$\nabla_X Y_1(x) = \nabla_X Y_2(x)$. Smoothness of $X$ is not required
+(the connection is CLM in the direction slot). -/
 theorem covDeriv_congr_eventuallyEq_field
     (X Y₁ Y₂ : Π x : M, TangentSpace I x) (x : M)
     (hY₁ : TangentSmoothAt Y₁ x) (hY₂ : TangentSmoothAt Y₂ x)
@@ -1943,10 +1871,8 @@ theorem covDeriv_congr_eventuallyEq_field
   rw [leviCivitaConnection.isCovariantDerivativeOnUniv.congr_of_eventuallyEq
         hY₁ hY₂ Filter.univ_mem h]
 
-/-- **`covDeriv` of a constant scalar multiple in the differentiated field**:
-$\nabla_X (a \cdot Y)(x) = a \cdot \nabla_X Y(x)$ for $a : \mathbb{R}$.
-
-Direct from `IsCovariantDerivativeOn.smul_const`. -/
+/-- **Math.** `covDeriv` of a constant scalar multiple:
+$\nabla_X (a \cdot Y)(x) = a \cdot \nabla_X Y(x)$ for $a : \mathbb{R}$. -/
 theorem covDeriv_smul_const_field
     (X Y : Π x : M, TangentSpace I x) (x : M) (a : ℝ)
     (hY : TangentSmoothAt Y x) :
@@ -1958,10 +1884,8 @@ theorem covDeriv_smul_const_field
   rw [h]
   rfl
 
-/-- **Subtractivity of `covDeriv` in the differentiated field**:
-$\nabla_X (Y_1 - Y_2)(x) = \nabla_X Y_1(x) - \nabla_X Y_2(x)$.
-
-Derived from additivity + `smul_const a := -1`. -/
+/-- **Math.** Subtractivity of `covDeriv` in the differentiated field:
+$\nabla_X (Y_1 - Y_2)(x) = \nabla_X Y_1(x) - \nabla_X Y_2(x)$. -/
 theorem covDeriv_sub_field
     (X Y₁ Y₂ : Π x : M, TangentSpace I x) (x : M)
     (hY₁ : TangentSmoothAt Y₁ x) (hY₂ : TangentSmoothAt Y₂ x) :
@@ -1985,15 +1909,9 @@ theorem covDeriv_sub_field
   show covDeriv X Y₁ x + (-1 : ℝ) • covDeriv X Y₂ x = covDeriv X Y₁ x - covDeriv X Y₂ x
   rw [neg_one_smul, sub_eq_add_neg]
 
-/-- **Leibniz rule (`C^∞`-linearity in differentiated section): the connection
-acts as a derivation in the scalar factor of `g • Y`**:
-$$\nabla_X (g \cdot Y)(x) = g(x) \cdot \nabla_X Y(x) + (\mathrm{d}g \cdot X)(x) \cdot Y(x).$$
-
-Directly lifted from Mathlib's `IsCovariantDerivativeOn.leibniz` applied to
-`leviCivitaConnection.isCovariantDerivativeOnUniv`, then projected onto the
-direction `X(x)`. The `extDerivFun g x v = mfderiv g x v` reduction is
-definitional via `NormedSpace.fromTangentSpace` (the identity bridge on the
-scalar tangent space `TangentSpace 𝓘(ℝ, ℝ) (g x) ≃L ℝ`). -/
+/-- **Math.** Leibniz rule: the connection acts as a derivation in the
+scalar factor of `g • Y`:
+$$\nabla_X (g \cdot Y)(x) = g(x) \cdot \nabla_X Y(x) + (\mathrm{d}g \cdot X)(x) \cdot Y(x).$$ -/
 theorem covDeriv_smul_scalar_field
     (X : Π y : M, TangentSpace I y)
     (g : M → ℝ) (Y : Π y : M, TangentSpace I y) (x : M)
@@ -2025,12 +1943,11 @@ connection-level layer so Bianchi I can reference it without circular
 import. Metric-dependent extensions (Ricci as trace, full $(0,4)$-symmetry,
 sectional curvature) live in `Riemannian.Curvature`. -/
 
-/-- The **Riemann curvature tensor**:
+/-- **Math.** The **Riemann curvature tensor**:
 $R(X, Y)Z := \nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X, Y]} Z$.
-
-Connection-level definition: only `covDeriv` (Levi-Civita) and `mlieBracket`
-appear. Metric-dependent properties (full antisymmetry, Ricci as trace,
-sectional curvature) belong in `Riemannian.Curvature`.
+Connection-level definition (no metric). Metric-dependent extensions
+(full antisymmetry, Ricci as trace, sectional curvature) live in
+`Riemannian.Curvature`.
 
 **Ground truth**: do Carmo 1992 §4 Definition 2.1. -/
 noncomputable def riemannCurvature
@@ -2038,8 +1955,7 @@ noncomputable def riemannCurvature
   covDeriv X (covDeriv Y Z) x - covDeriv Y (covDeriv X Z) x
     - covDeriv (mlieBracket I X Y) Z x
 
-/-- The Riemann curvature `Riem(X, Y) Z` as a section. Pointwise:
-`(Riem(X, Y) Z)(x) = R(X, Y) Z(x) = riemannCurvature X Y Z x`. -/
+/-- **Math.** Notation `Riem(X, Y) Z` for `riemannCurvature X Y Z`. -/
 scoped[Riemannian] notation:max "Riem(" X ", " Y ") " Z:max =>
   riemannCurvature X Y Z
 
@@ -2050,14 +1966,9 @@ Riemann curvature operator built from the framework's `covDeriv`. Together
 with `abel` they discharge the algebraic identities of `riemannCurvature`
 without exposing the underlying connection plumbing. -/
 
-/-- **Definitional unfold** of `riemannCurvature` to its
-$\nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X, Y]} Z$ form.
-Pure rewrite — no smoothness hypotheses.
-
-LHS uses `riemannCurvature` literal: this lemma lives in Bianchi, where
-the post-Bianchi `Riem(X, Y) Z` notation (in `Util/Notation/Curvature`)
-is not yet declared. RHS uses `covDeriv X Y` and `VectorField.mlieBracket I X Y` (pre-Bianchi tier,
-imported from `Util/Notation/Connection`). -/
+/-- **Eng.** Definitional unfold of `riemannCurvature` to its
+$\nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X, Y]} Z$ form
+for the `riem_simp` simp set. Pure rewrite — no hypotheses. -/
 @[riem_simp]
 theorem riemannCurvature_def
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
@@ -2065,14 +1976,9 @@ theorem riemannCurvature_def
       = covDeriv X (covDeriv Y Z) x - covDeriv Y (covDeriv X Z) x
         - covDeriv (VectorField.mlieBracket I X Y) Z x := rfl
 
-/-- **Lie-bracket antisymmetry pulled through the connection's direction
-argument**: $\nabla_{[Y,X]} Z = -\nabla_{[X,Y]} Z$ pointwise. Combines
-`VectorField.mlieBracket_swap_apply` with the ℝ-linearity of
-`leviCivitaConnection.toFun Z x` (a CLM, so it commutes with negation).
-Pure rewrite — no smoothness hypotheses.
-
-Used as an explicit `rw` step (not in `riem_simp`): the rewrite is
-symmetric in `X ↔ Y`, so adding it to a simp set causes loop. -/
+/-- **Math.** Lie-bracket antisymmetry through the direction slot:
+$\nabla_{[Y,X]} Z = -\nabla_{[X,Y]} Z$ pointwise. Used as explicit `rw`
+step (kept out of `riem_simp` to avoid the $X \leftrightarrow Y$ loop). -/
 theorem covDeriv_mlieBracket_swap_apply
     (X Y Z : Π x : M, TangentSpace I x) (x : M) :
     covDeriv (VectorField.mlieBracket I Y X) Z x
@@ -2100,8 +2006,9 @@ substitution directly.
 
 The two derivations needed at section level: -/
 
-/-- **Section-level torsion-freeness**: under global smoothness, the
-torsion-free pointwise identity becomes a Π-equality. -/
+/-- **Eng.** Section-level torsion-freeness: under global smoothness, the
+pointwise torsion-free identity lifts to a Π-equality, enabling direct
+substitution under `covDeriv X (·) x`. -/
 theorem covDeriv_section_eq_swap_add_mlieBracket
     (Y Z : Π x : M, TangentSpace I x)
     (hY : ∀ y, TangentSmoothAt Y y) (hZ : ∀ y, TangentSmoothAt Z y) :
@@ -2113,21 +2020,12 @@ theorem covDeriv_section_eq_swap_add_mlieBracket
   show covDeriv Y Z y = covDeriv Z Y y + mlieBracket I Y Z y
   rw [← h]; abel
 
-/-- **Algebraic (first) Bianchi identity** for the Levi-Civita connection:
-
+/-- **Math.** **Algebraic (first) Bianchi identity** for the Levi-Civita
+connection:
 $$R(X, Y)Z + R(Y, Z)X + R(Z, X)Y = 0.$$
-
-Smoothness hypotheses (all `TangentSmoothAt` at `x`):
-  * `X, Y, Z` — the three input fields,
-  * `∇_Y Z, ∇_Z Y, ∇_Z X, ∇_X Z, ∇_X Y, ∇_Y X` — six first-derivative
-    fields appearing in the $\nabla \nabla$ terms,
-  * `[X, Y], [Y, Z], [Z, X]` — three Lie brackets appearing in the
-    $\nabla_{[\cdot, \cdot]}$ terms.
-
-These match the standard textbook setup ($X, Y, Z$ are $C^2$ smooth,
-which makes all derived fields $C^1$ and hence differentiable). The
-explicit-hypothesis form lets the lemma fire pointwise without a global
-$C^2$ premise.
+The explicit smoothness hypotheses on $X, Y, Z$, their first
+covariant derivatives, and their pairwise Lie brackets match the
+standard $C^2$ textbook setup but fire pointwise.
 
 **Ground truth**: do Carmo 1992 §4 Proposition 2.5 (ii). -/
 theorem bianchi_first
@@ -2260,19 +2158,17 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
-/-- $\nabla_{\,\mathrm{const}\,v}\, Y$ is smooth at every $x$ for any
-`SmoothVectorField Y` and any chart-frame constant direction $v$. -/
+/-- **Math.** $\nabla_{\,\mathrm{const}\,v}\, Y$ is smooth at every $x$
+for any `SmoothVectorField Y` and any constant direction $v : E$. -/
 theorem covDeriv_const_smoothVF_smoothAt
     (v : E) (Y : SmoothVectorField I M) (x : M) :
     TangentSmoothAt
       (fun y : M => covDeriv (fun _ : M => v) Y.toFun y) x :=
   Riemannian.leviCivitaConnection_smoothAt_const_dir Y v x
 
-/-- $\nabla_X Y$ is smooth at every $x$ for any smooth vector fields
-`X, Y : SmoothVectorField I M`. Smooth-VF-direction strengthening of
-`covDeriv_const_smoothVF_smoothAt`; primary infrastructure consumer is
-the Bochner–Weitzenböck heart-of-Bochner chain
-(`Riemannian.Operators.Bochner`). -/
+/-- **Math.** $\nabla_X Y$ is smooth at every $x$ for any smooth vector
+fields `X, Y : SmoothVectorField I M`. Smooth-VF-direction strengthening
+of `covDeriv_const_smoothVF_smoothAt`. -/
 theorem covDeriv_smoothVF_smoothAt
     (X Y : SmoothVectorField I M) (x : M) :
     TangentSmoothAt
