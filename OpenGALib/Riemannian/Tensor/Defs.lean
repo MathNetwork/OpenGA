@@ -7,44 +7,12 @@ import Mathlib.LinearAlgebra.Multilinear.FiniteDimensional
 /-!
 # Riemannian (r,s)-tensor bundle: definitions
 
-Model fibers + point-wise fibers for covariant and mixed tensor bundles on
-smooth manifolds. The (0,s) covariant tensor bundle is defined as a
-`Bundle.continuousMultilinearMap` applied to the tangent bundle.
-# Tensor Definitions and Bundle Instances
-
-We define the model fibers and point-wise fibers for covariant and mixed tensor bundles
-on smooth manifolds. The (0,s) covariant tensor bundle is defined as a
-`Bundle.continuousMultilinearMap` applied to the tangent bundle, inheriting its smooth
-vector bundle structure. The (r,s) tensor bundle is defined using
-`Bundle.ContinuousLinearMap` between (0,r)- and (0,s)-tensor bundles.
-
-## Main Definitions
-
-* `Tensor0SModel s 𝕜 E` : the model fiber for the (0,s) covariant tensor bundle;
-  continuous multilinear maps from `s` copies of `E` to `𝕜`.
-* `TensorRSModel r s 𝕜 E` : the model fiber for the (r,s) tensor bundle;
-  continuous linear maps from `Tensor0SModel r` to `Tensor0SModel s`.
-* `Tensor0SSpace s I x` : the fiber of the (0,s) covariant tensor bundle at `x ∈ M`;
-  defined as `Bundle.continuousMultilinearMap 𝕜 s E (TangentSpace I) x`.
-* `CotangentSpace I x` : the cotangent space at `x`, i.e. `Tensor0SSpace 1 I x`.
-* `TensorRSSpace r s I x` : the fiber of the (r,s) tensor bundle at `x`;
-  continuous linear maps from (0,r)-tensors to (0,s)-tensors.
-* `tensor0S_curry s x` : the currying equivalence
-  `Tensor0SSpace (s+1) I x ≃L[𝕜] (TangentSpace I x →L[𝕜] Tensor0SSpace s I x)`.
-
-## Bundle Instances
-
-* `tensor0SBundle_fiber s` : the (0,s)-tensor bundle is a fiber bundle.
-* `tensor0SBundle_vector s` : the (0,s)-tensor bundle is a vector bundle.
-* `tensor0SBundle_smooth s` : the (0,s)-tensor bundle is a smooth vector bundle.
-* `tensorRSBundle_topology r s` : topology on the (r,s)-tensor bundle total space.
-* `tensorRSBundle_fiber r s` : the (r,s)-tensor bundle is a fiber bundle.
-* `tensorRSBundle_vector r s` : the (r,s)-tensor bundle is a vector bundle.
-* `tensorRSBundle_smooth r s` : the (r,s)-tensor bundle is a smooth vector bundle.
-
-## Tags
-
-tensor, covariant tensor, smooth manifold, differential geometry, vector bundle
+Model fibers and point-wise fibers for covariant and mixed tensor
+bundles on smooth manifolds. The (0,s) covariant tensor bundle is
+`Bundle.continuousMultilinearMap` applied to the tangent bundle; the
+(r,s) tensor bundle is `Bundle.ContinuousLinearMap` between (0,r)- and
+(0,s)-tensor bundles. Each carries fiber-bundle / vector-bundle /
+smooth-vector-bundle structure inherited from the tangent bundle.
 -/
 
 namespace Tensor0SBundle

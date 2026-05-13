@@ -31,61 +31,13 @@ import OpenGALib.Tensor.Product.Section
 Tensor algebra over arbitrary `C^n` vector bundles: continuous multilinear
 maps, alternating forms, tensor products, differential forms.
 
-This namespace is **independent of `OpenGALib/Riemannian/`**. Riemannian
-specialisations (lower indices via metric, inner product on `(r,s)`-sections)
-live under `Riemannian/Tensor/` and consume this layer.
-
-## Layering
+Independent of `OpenGALib/Riemannian/`. Riemannian specialisations (lower
+indices via metric, inner product on `(r,s)`-sections) live under
+`Riemannian/Tensor/` and consume this layer.
 
 ```
-Algebraic/Auxiliary  ← combinatorial / linear-algebra primitives
-       ↑
-Tensor/Multilinear   ← continuous multilinear-map vector bundle
-       ↑
-Tensor/Alternating   ← antisymmetric maps + wedge product
-       ↑
-Tensor/Product       ← tensor-product vector bundle
-       ↑
-Tensor/DifferentialForm  ← smooth differential n-forms
-       ↑
-(consumers)
+Algebraic/Auxiliary  ←  Tensor/Multilinear  ←  Tensor/Alternating
+                                            ←  Tensor/Product
+                                            ←  Tensor/DifferentialForm
 ```
-
-## Sub-modules
-
-### `Tensor/Multilinear/` — continuous multilinear-map bundle
-
-* `Bundle` — vector bundle of continuous multilinear maps
-  `Bundle.continuousMultilinearMap 𝕜 s F E`. Smooth vector bundle when `E`
-  is `C^n`.
-* `Comp` — pre-composition smoothness `compContinuousLinearMapL_diag_contDiff`,
-  diamond-resolved via `cpolynomial` route.
-* `Basis` — finite-dimensionality + explicit basis indexed by `Fin s → Fin d`.
-* `Fiber` — fibre-level normed instances + CLE to model fibre.
-* `Field` — `C^n` smooth sections of the multilinear bundle.
-* `Flip` — argument-flip equivalences.
-* `Curry` — currying isometry `Fin (r+r')` ↔ `Fin r`-of-`Fin r'`.
-
-### `Tensor/Alternating/` — alternating-map bundle + wedge product
-
-* `Bundle`, `Comp`, `Congr`, `FDeriv`, `Flip` — bundle structure + composition
-  + index reordering + Fréchet derivative + flip.
-* `Curry` — uncurryFin / curryFin / uncurrySum (uncurry over shuffles).
-* `Basis` — elementary k-covectors via dual basis.
-* `Wedge` — wedge product, bilinearity, sign, associativity, graded Leibniz,
-  basis expansion.
-
-### `Tensor/Product/` — tensor-product vector bundle
-
-* `HomEquiv` — tensor-hom equivalence + induced normed structure.
-* `Defs` — `TensorProduct.mapL` / `mapLBilinear` + alternating tensor product.
-* `Pretrivialization`, `Bundle`, `Fiber`, `Section`, `Basis` — pretriv +
-  vector-bundle structure + fibre + smooth sections + basis.
-
-### `Tensor/DifferentialForm/` — smooth differential forms
-
-* `Defs` — `DifferentialForm n E F` structure + algebra instances + notation
-  `Ω^n⟮E, F⟯`. **On normed space `E`, not yet on manifold.**
-* `Congr`, `Rough`, `Basic` — index reordering + computational layer +
-  polished API.
 -/

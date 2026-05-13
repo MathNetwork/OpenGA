@@ -8,46 +8,17 @@ import Mathlib.LinearAlgebra.Basis.Defs
 /-!
 # Tensoriality of the Riemann curvature tensor — full 3-slot
 
-`R(X, Y) Z(x)` depends only on the values `X(x), Y(x), Z(x)` (and not on
-the germs of the smooth sections), modulo the existing smoothness
-hypotheses. Each slot admits scalar Leibniz, additivity, locality
-(eventually-equal sections give equal value at `x`), vanishing at zero,
+`R(X, Y) Z(x)` depends only on the pointwise values `X(x), Y(x), Z(x)`
+(not on the section germs), under existing smoothness hypotheses. Each
+slot admits scalar Leibniz, additivity, locality, vanishing at zero,
 and pointwise-equality lemmas. The three-slot pointwise dependence is
 bundled in `riemannCurvature_eq_of_pointwise_eq`.
 
-## Main results
-
-* **Z-slot** (3rd-slot, the differentiated section):
-  - `riemannCurvature_smul_third_scalar_field`: scalar Leibniz
-    `R(X, Y)(f • Z) x = f x • R(X, Y) Z x` (chart-interior hypothesis required;
-    the cross-derivative residual closes via the manifold scalar Hessian-Lie
-    identity).
-  - `riemannCurvature_eq_of_Z_eventuallyEq`: locality.
-  - `riemannCurvature_eq_zero_of_Z_eq_zero_field`: vanishing at `Z x = 0`.
-  - `riemannCurvature_eq_of_Z_eq_at`: pointwise dependence.
-
-* **X-slot** (1st-slot, the outer direction):
-  - `riemannCurvature_smul_first_scalar_field`: clean scalar Leibniz
-    `R(f • X, Y) Z x = f x • R(X, Y) Z x` (no chart-interior hypothesis;
-    the boundary terms cancel symmetrically between covDeriv-Leibniz and
-    Lie-bracket-Leibniz).
-  - `riemannCurvature_add_first`: additivity.
-  - `riemannCurvature_eq_of_X_eventuallyEq`: locality (short — direction enters
-    pointwise at `x`).
-  - `riemannCurvature_eq_zero_of_X_eq_zero_field`: vanishing at `X x = 0`.
-  - `riemannCurvature_eq_of_X_eq_at`: pointwise dependence.
-
-* **Y-slot** (2nd-slot, the inner direction):
-  - `riemannCurvature_eq_of_Y_eq_at`: pointwise dependence via antisymmetry
-    of the first pair (`R(X, Y) = -R(Y, X)`) and X-slot pointwise dependence.
-
-* **Three-slot bundling**:
-  - `riemannCurvature_eq_of_pointwise_eq`: if `(X, Y, Z)` and `(X', Y', Z')`
-    are smooth global sections agreeing pointwise at `x`, then
-    `R(X, Y) Z(x) = R(X', Y') Z'(x)`.
-
-Downstream consumer: the heart-of-Bochner outer assembly in
-`OpenGALib.Riemannian.Operators.Bochner`. -/
+Z-slot Leibniz needs a chart-interior hypothesis (cross-derivative
+residual closes via manifold scalar Hessian-Lie identity); X-slot
+Leibniz does not (covDeriv-Leibniz and Lie-bracket-Leibniz cancel
+symmetrically); Y-slot pointwise dependence follows from X-slot via
+antisymmetry `R(X, Y) = -R(Y, X)`. -/
 
 noncomputable section
 

@@ -12,48 +12,16 @@ import Mathlib.Topology.VectorBundle.Riemannian
 /-!
 # Pointwise-evaluation continuity of variable-base trivialization actions
 
-For a smooth manifold `M` modelled on `(E, H)` with model `I`, the trivialization
-of the tangent bundle at a fixed central point `α : M` provides, for each base
-point `b` in the chart source at `α`, a continuous linear map
-`(trivializationAt α).continuousLinearMapAt ℝ b : TangentSpace I b →L[ℝ] E`
-together with its inverse `(trivializationAt α).symmL ℝ b`.
+For a fixed central point `α : M` and a fixed model-fibre vector `v : E`,
+the maps `b ↦ (trivializationAt α).continuousLinearMapAt ℝ b v` and
+`b ↦ (trivializationAt α).symmL ℝ b v` are continuous on the chart
+source at `α`. Same for the `(0,s)`- and `(r,s)`-tensor bundles inherited
+through multilinear / hom constructions.
 
-When evaluated at a fixed model-fibre vector `v : E` (interpreted in
-`TangentSpace I b = E` via the canonical type-synonym definitional equality), both
-yield `M → E`-valued functions. We establish that these pointwise-evaluation
-functions are continuous on the chart source at `α`.
-
-The same statements are derived for the `(0,s)`- and `(r,s)`-tensor bundles
-through the multilinear and hom constructions inherited from the tangent bundle.
-
-## Strategy
-
-Two infrastructure pieces are used:
-
-1. The coordinate-change-applied continuity lemma `continuousOn_coordChangeL_apply`
-   (continuity of `b ↦ (e_β.coordChangeL ℝ e_α b) v` on
-   `chart β source ∩ chart α source`), proved from Mathlib's
-   `contMDiffOn_coordChangeL`. By the trivialization-inverse identity, this
-   wrapped-form value equals `e_α.continuousLinearMapAt ℝ b · (e_β.symmL ℝ b · v)`.
-
-2. The smooth local-frame section `b ↦ e_β.symmL ℝ b · v`, which is a smooth
-   section of the tangent bundle on `chart β source` (Mathlib's
-   `contMDiffOn_localFrame_baseSet` extended to general `v` by linearity), with
-   value `v` at `b = β` (centre identity).
-
-Combining these over a neighbourhood cover of `chart α source` by sets
-`chart β source ∩ chart α source`, together with the centre identities
-`(e_β.symmL ℝ β) = id` and `(e_β.continuousLinearMapAt ℝ β) = id`, we recover
-the pointwise bare continuity.
-
-## Main statements
-
-* `tangent_continuousOn_apply_continuousLinearMapAt`
-* `tangent_continuousOn_apply_symmL`
-* `tensor0S_continuousOn_apply_continuousLinearMapAt`
-* `tensor0S_continuousOn_apply_symmL`
-* `tensorRS_continuousOn_apply_continuousLinearMapAt`
-* `tensorRS_continuousOn_apply_symmL`
+The proof routes through the coordinate-change-applied continuity lemma
+on `chart β source ∩ chart α source` (from `contMDiffOn_coordChangeL`)
+combined with the centre identity `(e_β.symmL ℝ β) = id` over a
+neighbourhood cover of `chart α source`.
 -/
 
 noncomputable section

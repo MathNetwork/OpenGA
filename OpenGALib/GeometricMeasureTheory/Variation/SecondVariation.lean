@@ -8,34 +8,19 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 /-!
 # GMT.Variation.SecondVariation
 
-Full-form second variation $\delta^2 V(\varphi)$ for codim-1 varifolds
-in the Jacobi form.
-
-## Form
-
-The full GMT second-variation Jacobi formula for a varifold $V$ with
-codim-1 support and unit normal $\nu$, ambient Riemannian manifold $M$:
+Full-form second variation in Jacobi form for codim-1 varifolds with
+unit normal $\nu$ in an ambient Riemannian manifold $M$:
 $$\delta^2 V(\varphi) = \int_M
-    \big(|\nabla^M \varphi|^2 -
+    \big(\|\nabla^M \varphi\|^2 -
          (|A|^2 + \mathrm{Ric}(\nu, \nu)) \varphi^2\big)\, d\|V\|.$$
 
-Where:
-  * $|\nabla^M \varphi|^2$ — squared norm of the manifold gradient
-    (polymorphic `‖grad_g[I] φ‖²_g`);
-  * $|A|^2$ — squared norm of the second fundamental form
-    (`Riemannian.secondFundamentalFormSqNorm`);
-  * $\mathrm{Ric}(\nu, \nu)$ — Ricci curvature in the normal direction
-    (`Riemannian.ricci`).
+Composes `‖grad_g[I] φ‖²_g`, `secondFundamentalFormSqNorm`, and `ricci`.
 
-## Relationship to existing `secondVariation`
-
-The kinetic-only `secondVariation` in `SecondVariation.lean` placeholders
-the curvature term as 0. The full form here, `secondVariationFull`,
-restores the curvature contribution by composing
-`Riemannian.secondFundamentalFormSqNorm + Riemannian.ricci`. Both
-bodies depend on `Classical.choose` over existence axioms (PRE-PAPER);
-the curvature contribution is non-vacuous when those existence axioms
-are replaced with constructive defs.
+Distinct from the kinetic-only `secondVariation` in `SecondVariation.lean`
+(curvature placeholdered as 0): `secondVariationFull` restores the
+curvature contribution. Bodies use `Classical.choose` over existence
+axioms (PRE-PAPER); curvature contribution becomes non-vacuous when
+those axioms are replaced with constructive defs.
 
 **Ground truth**: Simon 1983 §49 (Jacobi formula); Schoen-Simon 1981
 §1 (stable hypersurfaces); Wickramasekera 2014 §2.

@@ -5,33 +5,15 @@ import Mathlib.Algebra.Order.Ring.Defs
 /-!
 # Bilinear forms — algebraic core (field-generic)
 
-A field-generic, fully computable algebraic core for symmetric
-positive-definite bilinear forms. This is the foundation upon which
-the Riemannian metric API (`OpenGALib/Riemannian/Metric/`) is built when the
-field happens to be `ℝ` and smoothness is required; on a computable
-field like `ℚ`, the same operations evaluate to actual numbers.
+Field-generic, fully computable core for symmetric positive-definite
+bilinear forms: `B : V →ₗ[𝕜] V →ₗ[𝕜] 𝕜` with computable `inner`,
+`IsSymm`, `IsPosDef` predicates. Avoids continuous linear maps,
+smoothness, and any non-computable Mathlib infrastructure.
 
-## Design
-
-This file deliberately avoids:
-- Continuous linear maps (which require topology + `RCLike`)
-- Smoothness / `ContMDiff` (which require `ℝ` or `ℂ`)
-- Any non-computable Mathlib infrastructure
-
-What remains is pure linear algebra: a bilinear form is a
-`B : V →ₗ[𝕜] V →ₗ[𝕜] 𝕜`, with computable `inner`, `IsSymm`, and
-`IsPosDef` predicates.
-
-## Reusability
-
-The bilinear-form algebra layer is reusable across:
-- Riemannian metrics (when 𝕜 = ℝ, with smoothness added)
-- Hermitian forms (when 𝕜 = ℂ)
-- Quadratic forms in algebra
-- Positive-definite forms in optimization
-- Matrix calculus over arbitrary fields
-
-**Ground truth**: standard linear algebra of bilinear forms.
+Specialises to Riemannian metrics when `𝕜 = ℝ` + smoothness; the
+algebraic operations evaluate to actual numbers on a computable field
+like `ℚ`. Also reusable for Hermitian forms (`𝕜 = ℂ`), quadratic forms,
+positive-definite forms in optimisation, matrix calculus.
 -/
 
 namespace BilinearForm

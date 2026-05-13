@@ -7,35 +7,17 @@ import Mathlib.LinearAlgebra.Matrix.DotProduct
 /-!
 # Concrete instance: rational vectors
 
-A concrete, fully `#eval`-able instance of the algebraic core
-`BilinearForm` on `Fin n → ℚ`. Demonstrates that the
-field-generic algebraic core, once instantiated to `ℚ`, produces
-genuine numerical computation: `#eval` outputs actual rational numbers.
+A fully `#eval`-able `BilinearForm` on `Fin n → ℚ`. `#eval inner`
+produces a `Rat`; `native_decide` closes concrete equalities like
+`inner ![1,2,3] ![4,5,6] = 32`. The same operations on the abstract
+`Form ℚ V` API give the same numerical results, demonstrating
+algebraic-core ↔ concrete-instance consistency.
 
-This is the **first executable demonstration** in the framework that
-"math is program" is not a metaphor — concrete inner products on
-$\mathbb{Q}^n$ run as a program at compile time and produce numbers.
+Specialising to `𝕜 = ℝ` + smoothness reproduces the Riemannian module's
+`metricInner` (with the usual `noncomputable` cascade).
 
-## What works
-
-- `#eval` on `inner` produces a `Rat`.
-- `native_decide` closes equalities like
-  `inner ![1,2,3] ![4,5,6] = 32`.
-- The same operations on the abstract `Form ℚ V` API yield the same
-  numerical results, demonstrating algebraic-core ↔ concrete-instance
-  consistency.
-
-## Bridge to the Riemannian framework
-
-The Riemannian module's `metricInner` is the same algebraic operation
-specialised to `𝕜 = ℝ` plus smoothness. When the concrete instance is
-`Fin n → ℝ` rather than `Fin n → ℚ`, the smoothness assumption kicks in
-and the `noncomputable` cascade returns. This file is the "ℚ-side
-demonstration", showing the algebraic-only path that's normally
-overshadowed by the analytic apparatus.
-
-**Ground truth**: standard inner product on $\mathbb{Q}^n$,
-$\langle v, w \rangle = \sum_i v_i w_i$.
+**Ground truth**: $\langle v, w \rangle = \sum_i v_i w_i$ on
+$\mathbb{Q}^n$.
 -/
 
 namespace RatVector

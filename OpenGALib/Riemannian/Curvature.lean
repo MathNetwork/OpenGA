@@ -14,33 +14,18 @@ import Mathlib.Analysis.Calculus.FDeriv.Symmetric
 /-!
 # Riemann curvature, Ricci, and scalar curvature
 
-For a Riemannian manifold $(M, g)$ with Levi-Civita connection $\nabla$:
+For $(M, g)$ with Levi-Civita connection $\nabla$:
 
-* The **Riemann curvature tensor** is the trilinear map on vector fields
-  $$R(X, Y) Z := \nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X, Y]} Z.$$
-* The **Ricci curvature** is the trace of the curvature endomorphism
-  $z \mapsto R(z, X) Y$ on $T_xM$:
-  $$\mathrm{Ric}(X, Y)(x) := \mathrm{tr}\bigl(z \mapsto R(z, X) Y(x)\bigr).$$
-* The **scalar curvature** is the metric trace of the Ricci tensor
-  $$\mathrm{scal}(x) := \mathrm{tr}_g \mathrm{Ric}(x) = \mathrm{tr}(\mathrm{Ric}^{\sharp}_x).$$
+* **Riemann curvature**:
+  $R(X, Y) Z := \nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X, Y]} Z.$
+* **Ricci curvature**: trace of $z \mapsto R(z, X) Y$ on $T_xM$,
+  $\mathrm{Ric}(X, Y)(x) := \mathrm{tr}\bigl(z \mapsto R(z, X) Y(x)\bigr).$
+* **Scalar curvature**: metric trace of the Ricci tensor,
+  $\mathrm{scal}(x) := \mathrm{tr}_g \mathrm{Ric}(x).$
 
-`riemannCurvature` itself lives in `Riemannian.Connection.Bianchi` (it is
-connection-level, not metric). This file collects the antisymmetry corollary
+`riemannCurvature` itself lives in `Riemannian.Connection` as connection
+data, not metric data. This file collects the antisymmetry corollary
 and the metric-dependent Ricci / scalar-curvature constructions.
-
-## Main definitions
-
-* `curvatureEndo X Y x` — the endomorphism $z \mapsto R(z, X) Y(x)$ on $T_xM$.
-* `ricci X Y x` — the Ricci scalar $\mathrm{Ric}(X, Y)(x)$ as $\mathrm{tr}(\mathrm{curvatureEndo}\,X\,Y\,x)$.
-* `ricciTensor x` — the Ricci tensor at $x$ as a bilinear form on $T_xM$.
-* `ricciSharp x` — the Ricci endomorphism $\mathrm{Ric}^{\sharp}_x$ via metric raising.
-* `scalarCurvature x` — the scalar curvature $\mathrm{scal}(x) = \mathrm{tr}(\mathrm{ricciSharp}\,x)$.
-
-## Main results
-
-* `riemannCurvature_antisymm` — $R(X, Y) Z = -R(Y, X) Z$.
-* `riemannCurvature_inner_self_zero` — $\langle R(X, Y) Z, Z \rangle_g = 0$.
-* `ricci_symm` — $\mathrm{Ric}(X, Y) = \mathrm{Ric}(Y, X)$.
 
 Reference: do Carmo 1992 §4.
 -/

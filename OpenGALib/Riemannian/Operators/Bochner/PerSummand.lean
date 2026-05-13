@@ -3,35 +3,20 @@ import OpenGALib.Riemannian.Operators.Bochner
 /-!
 # Per-summand chain of the heart-of-Bochner identity
 
-This file ports the per-summand chain that drives the unconditional
-discharge of the heart-of-Bochner inner-product identity
-(`hInner_discharge` in external `differential-geometry`).
+The per-summand chain driving the heart-of-Bochner inner-product
+identity. For smooth `f : M → ℝ`, smooth `B, W : SmoothVectorField I M`,
+and `x` in the strict interior of `range I`, `bochner_per_summand_swap`
+is the Hess-sym swap form (step (d) of the textbook derivation):
+$$g_x(\nabla_{B} \nabla_B \nabla f, W) - g_x(\nabla_{\nabla_B B} \nabla f, W)
+   = g_x(\nabla_{B} \nabla_W \nabla f, B) - g_x(\nabla_{\nabla_B W} \nabla f, B).$$
 
-For a smooth scalar `f : M → ℝ`, smooth `B, W : SmoothVectorField I M`,
-and `x : M` in the strict interior of `range I`:
+Closed via two applications of `leviCivitaConnection_metric_compatible`
+combined with `hessianBilin_section_eventually_symm_of_strict_interior`
+and pointwise `hessianBilin_symm`. The section-level Hess-sym is stated
+as `=ᶠ[𝓝 x]` (via strict-interior nbhd propagation) rather than the
+global `=` form (which would need `[I.Boundaryless]`).
 
-* `bochner_per_summand_swap` — Hess-sym swap form (step (d) of the textbook
-  derivation):
-  $$g_x(\nabla_{B} \nabla_B \nabla f, W) - g_x(\nabla_{\nabla_B B} \nabla f, W)
-     = g_x(\nabla_{B} \nabla_W \nabla f, B) - g_x(\nabla_{\nabla_B W} \nabla f, B).$$
-
-Closure path: two applications of `leviCivitaConnection_metric_compatible`
-on the section pairs `(Q := ∇_B ∇f, W)` and `(P := ∇_W ∇f, B)` along the
-direction `B x`, combined with the section-level Hessian symmetry
-`hessianBilin_section_eventually_symm_of_strict_interior` to equate
-the two mfderiv values at `x`, and pointwise `hessianBilin_symm` at `x`
-to identify the cross-Christoffel terms.
-
-This is the OpenGALib analog of external's `bochner_per_summand_swap`
-(lines 2828–2966 of `external/differential-geometry/.../Bochner.lean`).
-The structural difference is that the section-level Hess-sym is stated
-as `=ᶠ[𝓝 x]` (relying on strict-interior nbhd propagation from
-`extChartAt_self_eventually_mem_closure_interior_range`) rather than
-the global `=` form (which requires `[I.Boundaryless]`).
-
-## References
-* Petersen, *Riemannian Geometry*, Ch. 7 §1 Proposition 33
-* do Carmo, *Riemannian Geometry*, §6 (curvature commutators)
+Reference: Petersen Ch. 7 §1 Prop 33; do Carmo §6.
 -/
 
 noncomputable section

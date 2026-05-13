@@ -4,41 +4,25 @@ import Mathlib.MeasureTheory.Measure.Haar.OfBasis
 /-!
 # GeometricMeasureTheory.Isoperimetric.Coarea
 
-The **coarea formula** (Maggi 2012 Theorem 18.1; Federer 1969 §3.2.22).
-
-For a BV function $u : E \to \mathbb{R}$, the total variation $\|Du\|(E)$
-equals the integral of the perimeters of the super-level sets:
+The **coarea formula** (Maggi 18.1; Federer §3.2.22): for a BV function
+$u : E \to \mathbb{R}$,
 $$\|Du\|(E) \;=\; \int_{\mathbb{R}} \mathrm{Per}(\{u > t\})\,dt.$$
 
-This is the foundational tool for converting BV-functional inequalities
-into level-set perimeter inequalities. Downstream Sobolev–Poincaré /
-Federer–Fleming consumers depend on it directly.
+Foundational tool for converting BV-functional inequalities into
+level-set perimeter inequalities; downstream Sobolev–Poincaré /
+Federer–Fleming statements consume it directly.
 
-## Form
+Stated as an equality of `ℝ≥0∞` quantities under `lintegral` against
+the Lebesgue measure on $\mathbb{R}$ — paper-faithful equation, not a
+vacuous existential. `BVFunction.totalVariation` and
+`FinitePerimeter.perimMeasure Set.univ` provide the two sides.
 
-The `BVFunction` primitive provides
-`Isoperimetric.totalVariation u : ℝ≥0∞`. The framework's
-`FinitePerimeter` exposes the perimeter as the measure-on-the-whole-
-space `Ω.perimMeasure Set.univ : ℝ≥0∞` (matching Maggi's
-$|D\chi_\Omega|(E) = \mathrm{Per}(\Omega)$ identity from
-`totalVariation_ofFinitePerimeter`). The coarea formula is therefore
-stated as the equality of two `ℝ≥0∞` quantities under
-`MeasureTheory.lintegral` against the Lebesgue measure on $\mathbb{R}$
-— **not** a vacuous existential, but a real paper-faithful equation.
+Both `levelSet_finitePerimeter_exists` and `coarea_formula` are
+PRE-PAPER existence axioms; closure is framework self-build of
+Federer's slicing argument (~250 LOC, needs `BVDistributionalDerivative`)
+or Mathlib upstream.
 
-## Sorry status
-
-Both core results are PRE-PAPER existence axioms:
-  * `levelSet_finitePerimeter_exists` — Maggi 2012 Proposition 13.1
-  * `coarea_formula` — Maggi 2012 Theorem 18.1
-
-Repair plan: framework self-build of Federer's slicing argument
-(Federer 1969 §3.2.22; ~250 LOC including the BV-derivative-via-
-finite-difference quotient) once a `BVDistributionalDerivative`
-primitive lands, or wait for Mathlib upstream.
-
-**Ground truth**: Maggi 2012 Theorem 18.1; Federer 1969 §3.2.22;
-Federer 1959 (original).
+**Ground truth**: Maggi 18.1; Federer §3.2.22; Federer 1959.
 -/
 
 open MeasureTheory

@@ -709,24 +709,14 @@ for constant lifts of $v, w, z$ at $x$,
 $$\langle (\nabla^2 \nabla f)(v, w),\, z\rangle_g(x)
   = \langle (\nabla^2 \nabla f)(v, z),\, w\rangle_g(x).$$
 
-The proof routes through metric-compatibility at $x$ on
-$(V, \partial_W \nabla f, Z)$ (and similarly with $W \leftrightarrow Z$),
-which converts each $\langle (\nabla^2 \nabla f)(v, \cdot),\, \cdot\rangle_g$
-expression into an `mfderiv` of `hessianBilin f y \cdot \cdot` at $x$ in
-direction $v$, plus Christoffel-correction `hessianBilin` terms at $x$.
+Routes through metric-compatibility at $x$ on $(V, \partial_W \nabla f, Z)$
+to convert each side into an `mfderiv` of `hessianBilin f y _ _` at $x$ plus
+Christoffel-correction terms. The (w ↔ z) swap closes via the neighbourhood
+Hessian-symmetry hypothesis `h_eventual_sym` (lifted through V-derivative
+by `EventuallyEq.mfderiv_eq`) and pointwise `hessianBilin_symm` for the
+Christoffel terms.
 
-The (w ↔ z) swap then closes via two ingredients:
-* `h_eventual_sym`: the nbhd-Hessian-symmetry hypothesis equating
-  $y \mapsto \mathrm{hessianBilin}\,f\,y\,w\,z$ and the (w ↔ z) swap on a
-  nbhd of $x$. Its V-derivative bridge is `EventuallyEq.mfderiv_eq`.
-* `hessianBilin_symm` at $x$ for the Christoffel-correction cross terms,
-  applied to arbitrary tangent-space arguments (Γvw, z) and (Γvz, w).
-
-The `h_eventual_sym` hypothesis is discharged in the downstream assembly
-by combining pointwise `hessianBilin_symm` at each $y$ in a nbhd of $x$
-with nbhd-`h_interior` propagation (available under
-`IsLocallyConstantChartedSpace H M` and strict-interior `h_interior` at
-$x$). Ported from do Carmo §6 / Petersen Ch 7 §1 Prop 33. -/
+Ported from do Carmo §6 / Petersen Ch 7 §1 Prop 33. -/
 theorem metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym
     [IsManifold I 2 M]
     (f : M → ℝ) (x : M) (v w z : TangentSpace I x)
@@ -968,25 +958,17 @@ theorem heart_of_bochner_curvature_term
   linarith
 
 /-- **Ricci sum identity** (heart-of-Bochner Step 3): the curvature trace
-over the smooth orthonormal frame at `x` against `(W, ∇f, B_i)` equals
-the Ricci bilinear evaluated at `(∇f x, W x)`:
+over the smooth orthonormal frame at `x` against `(W, ∇f, B_i)` equals the
+Ricci bilinear evaluated at `(∇f x, W x)`:
 $$\sum_i g_x\bigl(R(B_i, W)\,\nabla f,\, B_i\bigr) \;=\;
-  \mathrm{Ric}_g(\nabla f, W)(x),$$
-where `B_i = smoothOrthoFrame g x i`.
+  \mathrm{Ric}_g(\nabla f, W)(x).$$
 
-Strategy:
-1. Per `i`, `riemannCurvature_eq_of_pointwise_eq` replaces the three
-   smooth-section arguments of `R` with their constant lifts at `x`
-   (`Bi i x`, `W x`, `∇f x`). The values at `x` agree by definition.
-2. The bilinear form `Φ(v, w) := g_x(curvatureEndo (const Wx) (const ∇fx) x v, w)`
-   has diagonal sum `∑ i Φ(Bi i x, Bi i x)` equal to the LHS, and by
-   `Tensor.sum_diagonal_smoothOrthoFrame_eq_std` (Stage 7 basis-invariance)
-   equal to `∑ i Φ(stdBasis i, stdBasis i)`.
-3. `ricciTensor_eq_sum_inner_orthonormal` identifies the std-basis sum
-   with `Ric_g(W x, ∇f x) x`; `ricci_symm` swaps to `Ric_g(∇f x, W x) x`.
-
-External reference: `heart_curvature_orthonormal_sum_eq_ricci` in
-`differential-geometry/.../Bochner.lean:2013`. -/
+Replaces the three smooth-section arguments of $R$ with their constant
+lifts at $x$, then identifies the diagonal sum of
+$\Phi(v, w) := g_x(R(v, W)\,\nabla f,\, w)$ over `smoothOrthoFrame` with
+the same sum over `stdBasis` via `sum_diagonal_smoothOrthoFrame_eq_std`,
+then with $\mathrm{Ric}_g(W, \nabla f)$ via
+`ricciTensor_eq_sum_inner_orthonormal` (and `ricci_symm` for the swap). -/
 theorem heart_curvature_orthonormal_sum_eq_ricci
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (W : SmoothVectorField I M) (x : M)
@@ -1174,20 +1156,15 @@ theorem smoothOrthoFrame_cov_skew
   exact hmc.symm
 
 /-- **Hessian × cov-frame antisym-symm sum vanishes** (heart-of-Bochner Step 4):
-for smooth scalar `f` (C∞), `W : SmoothVectorField`, and `x` in the strict
-interior with smooth `∇f`,
+for smooth $f$, `W : SmoothVectorField`, and $x$ in the strict interior with
+smooth $\nabla f$,
 $$\sum_i \mathrm{Hess}\,f(x)(B_i x,\, \nabla_{W(x)} B_i) \;=\; 0,$$
-where `B_i = smoothOrthoFrame g x i` and `∇_{W(x)} B_i = covDeriv W B_i (x)`.
+where $B_i = $`smoothOrthoFrame g x i`.
 
-Strategy:
-1. Expand `∇_{W(x)} B_i = ∑_j ⟨∇_{W(x)} B_i, B_j x⟩ • B_j x` (orthonormal Riesz).
-2. By bilinearity, `Hess f(B_i, ∇_W B_i) = ∑_j ⟨∇_{W(x)} B_i, B_j⟩ • Hess f(B_i, B_j)`.
-3. The matrix `a_{ij} := ⟨∇_{W(x)} B_i, B_j x⟩` is antisymmetric in (i, j) by
-   `smoothOrthoFrame_cov_skew` + `metricInner_comm`.
-4. The Hessian matrix `h_{ij} := Hess f(B_i, B_j)` is symmetric in (i, j) by
-   `hessianBilin_symm` (needs `h_interior` + `f` C^2 + ∇f smooth).
-5. `∑_{i,j} a_{ij} • h_{ij}` with antisym × symm = 0 (`Finset.sum_apply_diagonal_invariant`-style
-   cancellation, or direct `Finset.sum_swap`-symmetry argument). -/
+Expands $\nabla_{W(x)} B_i$ in the orthonormal frame, factoring the sum into
+$\sum_{i,j} a_{ij} h_{ij}$ with $a_{ij} := \langle\nabla_{W(x)} B_i, B_j\rangle$
+antisymmetric (by `smoothOrthoFrame_cov_skew`) and $h_{ij} :=$
+`hessianBilin f x B_i B_j` symmetric (by `hessianBilin_symm`). -/
 theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (W : SmoothVectorField I M) (x : M)
@@ -1310,21 +1287,16 @@ theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
   -- s = -s ⇒ s = 0.
   linarith
 
-/-- **Conditional inner-form reduction.** Given the inner-product form
-of the heart-of-Bochner sum identity against every test direction $w$
-(against the smooth orthonormal frame `smoothOrthoFrame g x · x`), the
-scalar form paired specifically against $\nabla f x$ follows by
-Riesz-style specialisation plus pulling the sum out of the metric inner
-product (bilinearity).
+/-- **Conditional inner-form reduction.** Given the inner-product form of
+the heart-of-Bochner sum identity against every test direction $w$, the
+scalar form paired against $\nabla f x$ follows by Riesz-style
+specialisation plus bilinearity of the metric inner product.
 
-This is the OpenGALib analog of external's
-`heart_of_bochner_smoothOrthoFrame_of_inner_form` (Item 8 of
-`RicciIdentity.lean`). The inner-form hypothesis is the natural product
-of the 4-step algebraic chain (Step 1 Hess-sym swap, Step 2 D.3, Step 3
-Ric identification, Step 4 smooth-trace identification) when each step
-is proven against an arbitrary test direction $w$. Specialising
-afterwards at $w = \nabla f x$ recovers the scalar form needed by the
-downstream Bochner-Weitzenböck assembly. -/
+The inner-form hypothesis is the natural output of the four-step
+algebraic chain (Hess-sym swap, D.3, Ricci identification, smooth-trace
+identification) when each step is proven against an arbitrary test
+direction $w$; specialising at $w = \nabla f x$ recovers the scalar form
+needed by the Bochner-Weitzenböck assembly. -/
 theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_of_inner_form
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (x : M)

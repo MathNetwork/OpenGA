@@ -4,34 +4,23 @@ import OpenGALib.GeometricMeasureTheory.Isoperimetric.Relative
 # GeometricMeasureTheory.Isoperimetric.BVFunction
 
 A function $u : E \to \mathbb{R}$ is **BV (bounded variation)** if its
-distributional gradient $Du$ is a vector-valued Radon measure of finite
+distributional gradient is a vector-valued Radon measure of finite
 total variation:
 $$\|Du\|(E) = \sup\left\{\int u \, \mathrm{div}\,\varphi \, dx :
   \varphi \in C^1_c(E; E),\; \|\varphi\|_\infty \le 1\right\} < \infty.$$
 
-The framework's `BVFunction` bundles the underlying measurable function
-together with its total-variation witness as a single algebraic
-object — paper-faithful to Maggi 2012 §13 where BV functions are
-introduced as the natural domain for the coarea formula and the
-Sobolev–Poincaré inequality.
+`BVFunction` bundles the measurable function with its total-variation
+witness as a single algebraic object (Maggi §13). Foundational
+primitive for the downstream coarea formula and Sobolev–Poincaré /
+Federer–Fleming statements — without `totalVariation`, those would
+degenerate to vacuous existence quantifiers.
 
-This file is the **foundational primitive** for the downstream coarea
-formula and Sobolev–Poincaré / Federer–Fleming statements. Without
-`BVFunction.totalVariation`, those would degenerate to vacuous
-existence quantifiers; with it they carry the actual mathematical
-content $\|u\|_{L^p}$ and $\|Du\|$.
+A **bridge primitive** in the spirit of `InnerProductBridge`: a thin
+algebraic carrier whose introduction unblocks multiple downstream
+statements, since Mathlib's BV infrastructure on metric measure spaces
+is not yet sufficient.
 
-## Bridge investment
-
-`BVFunction` is a **bridge primitive** in the same spirit as
-`InnerProductBridge`: a thin algebraic carrier whose introduction
-unblocks multiple downstream production-grade statements. Mathlib's
-BV infrastructure on metric measure spaces is not yet sufficient to
-import directly; the framework self-builds.
-
-**Ground truth**: Maggi 2012 *Sets of Finite Perimeter and Geometric
-Variational Problems*, Chapter 13; De Giorgi 1954 (BV functions);
-Federer 1969 §3 (general theory).
+**Ground truth**: Maggi 2012 Ch. 13; De Giorgi 1954; Federer 1969 §3.
 -/
 
 namespace GeometricMeasureTheory

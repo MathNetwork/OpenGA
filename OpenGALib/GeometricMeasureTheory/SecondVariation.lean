@@ -71,26 +71,16 @@ $$\delta^2 V(\varphi, \varphi)
   = \int_\Sigma \big(|\nabla \varphi|^2 - (|A|^2 + \mathrm{Ric}(\nu, \nu))
                  \varphi^2\big)\, d\|V\|.$$
 
-**Current grounding**: the kinetic term $|\nabla \varphi|^2$ is real
-(`gradientNormSqM`, chart-pullback of `fderiv ℝ φ`); the curvature term
-$|A|^2 + \mathrm{Ric}(\nu, \nu)$ is set to **0** (placeholder).
-
-**Curvature placeholder gap**:
-  * **Second fundamental form $|A|^2$**: requires the normal bundle of
-    $\mathrm{spt}\, V$ inside $M$ + the Riemannian connection. The
-    mass-only `Varifold` carries no normal-field data; promoting
-    requires `Varifold` refinement.
-  * **Ambient Ricci $\mathrm{Ric}$**: Mathlib's
-    `Geometry/Manifold/Riemannian/` has the metric tensor but no
-    `Ricci` operator at this level.
+**Current grounding**: kinetic term $|\nabla \varphi|^2$ real
+(`gradientNormSqM`, chart-pullback of `fderiv ℝ φ`); curvature term
+$|A|^2 + \mathrm{Ric}(\nu, \nu)$ set to **0** placeholder. The mass-only
+`Varifold` carries no normal-field data, and Mathlib's Riemannian layer
+lacks a usable Ricci operator at this level, so a non-vacuous curvature
+contribution awaits a `Varifold` refinement carrying the normal bundle.
 
 Chain proofs use `IsStable V` (`∀ φ, 0 ≤ secondVariation V φ`) as a
-black-box hypothesis. They never inspect the specific value of
-`secondVariation V φ`, so the curvature placeholder does not propagate
-into chain-proof correctness. The `firstVariation` precedent (commit
-1acef9f) shows the same pattern: kinetic ambient form grounded with
-documented codim-1 caveat, full GMT form deferred to future Varifold
-refinement.
+black-box hypothesis and never inspect the specific value, so the
+placeholder does not propagate.
 
 **Ground truth**: Simon 1983 §49 (Jacobi field setup, second variation
 formula for stationary integral varifolds); Schoen–Simon 1981 §1

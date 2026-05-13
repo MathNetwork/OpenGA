@@ -15,51 +15,24 @@ import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
 /-!
 # Smoothness of the musical isomorphism
 
-For a smooth Riemannian metric $g$ on the tangent bundle of a smooth manifold
-$M$, the musical isomorphism $\sharp_g : T^*M \to TM$ at each point $x$ sends a
-covector $\varphi \in T_x^*M$ to the unique tangent vector $V$ with
-$g_x(V, W) = \varphi(W)$ for all $W$. This is `g.metricRiesz x φ` in OpenGALib.
+For a smooth Riemannian metric $g$, the musical isomorphism
+$\sharp_g : T^*M \to TM$ at $x$ sends $\varphi \in T_x^*M$ to the unique
+tangent vector $V$ with $g_x(V, W) = \varphi(W)$ for all $W$. This is
+`g.metricRiesz x φ` in OpenGALib.
 
-This file establishes smoothness of the section
-$$x \mapsto \sharp_g\,\varphi(x), \qquad \varphi \in \Gamma^\infty(T^*M),$$
-via the chart-local representation
+This file establishes smoothness of $x \mapsto \sharp_g\,\varphi(x)$ via
+the chart-local representation
 $$\sharp_g\,\varphi(x) = \sum_{i,j} G^{ij}(x)\,\varphi_j(x)\,e_i(x),$$
-where:
+where $e_i$ is the chart-basis frame, $G_{ij} = g_x(e_i, e_j)$ is the
+chart Gram matrix, and $G^{ij}$ is its entrywise inverse. The Gram matrix
+is symmetric positive-definite on the trivialization base set, so its
+determinant is strictly positive and its inverse is smooth via the
+cofactor / adjugate formula.
 
-* $e_i(x) = \mathrm{chartBasisVecFiber}\,\alpha\,i\,x$ is the chart-basis
-  frame at $\alpha$ (`SmoothOrthoFrame.lean`).
-* $G_{ij}(x) = g_x(e_i(x), e_j(x))$ is the chart Gram matrix.
-* $G^{ij}(x)$ is its entrywise matrix inverse.
-* $\varphi_j(x) = \varphi(x)(e_j(x))$ is the $j$-th chart-frame coefficient of
-  $\varphi$.
-
-The Gram matrix is symmetric positive-definite on the trivialization base set,
-so its determinant is strictly positive and its entrywise inverse is smooth via
-the cofactor / adjugate formula.
-
-## Main definitions
-
-* `chartGramMatrix g α x` : the Gram matrix at $x$ of `chartBasisVecFiber α · x`
-  under `g.inner x`.
-* `chartInvGramMatrix g α x` : the matrix inverse of `chartGramMatrix g α x`.
-
-## Main results
-
-* `chartGramMatrix_isHermitian` — symmetry.
-* `chartGramMatrix_posDef` — positive-definiteness on the trivialization base
-  set.
-* `chartGramMatrix_det_pos` — strictly positive determinant on the base set.
-* `chartGramMatrix_entry_contMDiffOn`, `chartGramMatrix_det_contMDiffOn`,
-  `chartGramMatrix_adjugate_entry_contMDiffOn`,
-  `chartInvGramMatrix_entry_contMDiffOn` — smoothness of the Gram-matrix
-  entries, determinant, adjugate, and entrywise inverse on the base set.
-* `metricRiesz_section_smoothAt` — smoothness of the musical section
-  `y ↦ g.metricRiesz y (φ y)` given a smooth covector section `φ` (planned).
-
-**Ground truth**: do Carmo §3 ex. 8 (Riesz duality on a Riemannian manifold);
-Lee 2018 §13 (musical isomorphisms); external `differential-geometry` library
-`Integral/Measure/ChartDensity.lean` + `Geometry/Gradient.lean` (the
-chart-Gram-matrix machinery ported here).
+**Ground truth**: do Carmo §3 ex. 8 (Riesz duality); Lee 2018 §13
+(musical isomorphisms). The chart-Gram-matrix machinery is ported from
+the `differential-geometry` external library (`Integral/Measure/ChartDensity`,
+`Geometry/Gradient`).
 -/
 
 noncomputable section

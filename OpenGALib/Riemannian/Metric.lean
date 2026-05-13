@@ -16,32 +16,18 @@ import OpenGALib.Util.Attributes
 /-!
 # Riemannian metric
 
-A **Riemannian metric** on a smooth manifold $M$ is a smooth, symmetric,
-positive-definite tensor field $g$ assigning an inner product
-$g_x : T_xM \times T_xM \to \mathbb{R}$ to each tangent space.
+A smooth, symmetric, positive-definite tensor field $g$ on $M$ assigning
+an inner product $g_x : T_xM \times T_xM \to \mathbb{R}$. In OpenGALib,
+`RiemannianMetric I M` aliases Mathlib's
+`Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I)` — i.e., *data*
+(structure inhabitant), not a typeclass. Operators take `g` as an
+explicit argument; multiple metrics on the same manifold coexist.
 
-In OpenGALib, `RiemannianMetric I M` is an `abbrev` for Mathlib's
-`Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I)` — that is,
-the metric is *data* (an inhabitant of a structure), not a typeclass
-attribute. Operators take a metric `g : RiemannianMetric I M` as an
-explicit argument; multiple metrics on the same manifold coexist as
-different inhabitants.
+Provides `g.metricInner` (bilinear-form algebra), `g.metricRiesz` (Riesz
+duality $(T_xM)^* \to T_xM$), their smoothness, and bridge instances on
+`TangentSpace I x` (NACG, IPS, FiniteDim, Complete).
 
-This file provides:
-
-1. The `RiemannianMetric` abbreviation.
-2. The metric inner product `g.metricInner` and its bilinear-form algebra.
-3. Riesz duality `g.metricRiesz : (T_xM)^* \to T_xM`.
-4. Smoothness of `g.metricInner` and of the Riesz section.
-5. Bridge instances on `TangentSpace I x` (NACG, IPS, FiniteDim, Complete).
-
-## Main definitions
-
-* `RiemannianMetric I M` — alias for the Mathlib bundled metric.
-* `g.metricInner x V W = g_x(V, W)` — the inner product.
-* `g.metricRiesz x φ` — the unique vector $V$ with $g_x(V, \cdot) = \varphi$.
-
-Reference: do Carmo, *Riemannian Geometry*, §1.2; Lee, *Smooth Manifolds*, Ch. 13.
+Reference: do Carmo §1.2; Lee, *Smooth Manifolds*, Ch. 13.
 Mathlib upstream: `Mathlib.Geometry.Manifold.VectorBundle.Riemannian`.
 -/
 

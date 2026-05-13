@@ -13,51 +13,21 @@ import Mathlib.LinearAlgebra.Dimension.Free
 /-!
 # Smoothness of chart-Jacobian matrix entries
 
-For a smooth manifold `M` modelled on `(E, H)` with model `I`, and a base point
-`α : M`, the trivialisation of the tangent bundle at `α` provides fibrewise
-continuous linear maps `(triv α).symmL ℝ b : E →L[ℝ] TangentSpace I b` and
-`(triv α).continuousLinearMapAt ℝ b : TangentSpace I b →L[ℝ] E`.
+For a smooth manifold `M` and base point `α : M`, the trivialisation of
+the tangent bundle at `α` gives fibrewise CLMs `(triv α).symmL ℝ b` and
+`(triv α).continuousLinearMapAt ℝ b`. Scalar matrix entries are obtained
+by applying these CLMs to a model-basis vector and projecting onto a
+model-basis coordinate.
 
-This file establishes smoothness of scalar matrix-entry expressions associated
-with these CLMs. The matrix entries are obtained by:
+This file proves smoothness of the **wrapped** form (a second
+trivialisation centred at a reference point `β` corrects the
+chart-at-`b`-variable issue) on `(chart α).source ∩ (chart β).source`.
+At `β = b₀ ∈ (chart α).source`, the wrapped form agrees with the bare
+form at `b = b₀`, which is enough for downstream pointwise matrix-entry
+smoothness.
 
-* applying the CLM to the `i`-th model-basis vector;
-* projecting the result onto the `j`-th model-basis coordinate.
-
-The wrapped form, in which a second trivialisation centred at a reference point
-`β : M` corrects the chart-at-`b`-variable issue, is smooth on
-`(chart α).source ∩ (chart β).source` and is the form delivered as the public
-theorems in this file.
-
-When `β = b₀` for `b₀ ∈ (chart α).source`, the centre identity makes the
-wrapped form equal the bare form at `b = b₀`. This connection feeds into
-downstream constructions where pointwise matrix-entry smoothness is sufficient.
-
-## Main statements
-
-* `chartJinvMatrix_wrapped_entry_contMDiffOn`: smoothness of the wrapped
-  matrix entry `(basis.coord j) ((triv β).clmAt ℝ b ((triv α).symmL ℝ b ((basis i))))`
-  on `(chart α).source ∩ (chart β).source`.
-* `chartJMatrix_wrapped_entry_contMDiffOn`: forward analogue, with the
-  wrapping by `(triv β).symmL` on the source side.
-
-## Strategy
-
-The proof identifies the wrapped composition with Mathlib's bundle-coord-change
-CLM `(triv α).coordChangeL ℝ (triv β) b`, which is smooth as `M → (E →L[ℝ] E)`
-on the intersection of base sets by `contMDiffOn_coordChangeL`. Applying to
-`(basis i)` and projecting via `coord j` yields the smooth scalar entry.
-
-## Note on the bare-form smoothness
-
-The "bare" matrix entry `(basis.coord j) ((triv α).symmL ℝ b ((basis i)))`
-treats `(triv α).symmL ℝ b ((basis i))` as an element of `E` via the canonical
-type-synonym definitional equality `TangentSpace I b = E`. The smoothness of
-this scalar function on `(chart α).source` involves the chart-at-`b` selector
-of the manifold's `ChartedSpace` instance — which Mathlib does not constrain
-beyond pointwise membership. The wrapped form delivered here is the natural
-formulation that captures matrix-entry smoothness via the bundle's smooth
-coordinate-change structure, and is the form used downstream.
+The proof identifies the wrapped composition with Mathlib's
+`(triv α).coordChangeL ℝ (triv β) b`, smooth via `contMDiffOn_coordChangeL`.
 -/
 
 noncomputable section

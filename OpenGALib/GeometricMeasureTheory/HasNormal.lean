@@ -10,33 +10,22 @@ open Riemannian (HasMetric)
 # GMT.HasNormal
 
 The `Varifold.HasNormal` typeclass: a varifold carries a unit normal
-field on its support. This is the codim-1 hypothesis built into a
-typeclass, used by the full-form first and second variation operators
-(`Variation.firstVariation`, `Variation.secondVariation`) which integrate
-the codim-1 normal correction term $\langle\nu, \nabla_\nu X\rangle$
-and the curvature term $|A|^2 + \mathrm{Ric}(\nu,\nu)$.
+field on its support — the codim-1 hypothesis. Used by the full-form
+first and second variation operators which integrate
+$\langle\nu, \nabla_\nu X\rangle$ and $|A|^2 + \mathrm{Ric}(\nu,\nu)$.
 
-## Form
+The class carries a section `unitNormal : (x : M) → TangentSpace I x`;
+unitness is implicit in the name and imposed as a side hypothesis where
+needed.
 
-`HasNormal` is a `class` carrying:
-  * `unitNormal : (x : M) → TangentSpace I x` — the section,
-  * (no `‖unitNormal‖ = 1` constraint here — the unitness is implicit
-    in the name; downstream use cases impose it as a side hypothesis
-    when needed).
-
-Instances are provided for:
+Instances:
   * `Varifold.ofBoundary Ω` — via the BV gradient direction (De Giorgi
-    structure theorem). Currently uses `Classical.choose` over an
-    existence axiom (PRE-PAPER), repair via Mathlib's eventual BV
-    gradient operator on charted manifolds.
-  * `Varifold.tangentCone I V Z` — via `Classical.choose` over the
-    existence axiom (PRE-PAPER), repair via the chart-rescale weak
-    limit's normal field once weak-convergence-of-measures
-    infrastructure matures in Mathlib.
+    structure theorem, currently PRE-PAPER via `Classical.choose`).
+  * `Varifold.tangentCone I V Z` — via the chart-rescale weak limit's
+    normal field (PRE-PAPER until weak-convergence-of-measures matures
+    upstream).
 
-**Ground truth**: Simon 1983 §27 (oriented finite-perimeter sets carry
-unit normal via BV gradient direction); Allard 1972 §3 (codim-1
-hypersurface convention).
+**Ground truth**: Simon §27; Allard §3.
 -/
 
 open scoped ContDiff Manifold Bundle

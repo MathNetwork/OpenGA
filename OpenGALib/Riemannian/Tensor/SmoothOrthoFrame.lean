@@ -16,41 +16,27 @@ import OpenGALib.Riemannian.TangentBundle
 /-!
 # Smooth orthonormal local frame from the chart frame
 
-For a smooth Riemannian manifold $(M, g)$ and a base point $\alpha : M$,
-this file constructs:
+For a Riemannian manifold $(M, g)$ and a base point $\alpha : M$:
 
 * `chartBasisVecFiber α i b` — the $i$-th tangent vector at $b$ obtained
-  by transporting the $i$-th model-space basis vector through the inverse
-  of the tangent trivialization centred at $\alpha$ (smooth on the
-  trivialization base set, junk off it);
-* `chartFrameNormFiber g α b i` — the fiberwise $g$-Gram-Schmidt
-  orthonormalisation of the chart-basis family
-  `chartBasisVecFiber α · b`, by well-founded recursion on `i.val`;
-* `smoothOrthoFrame g α i` — a globally-smooth tangent-bundle section,
+  by transporting the $i$-th model-space basis vector through the
+  inverse of the tangent trivialization centred at $\alpha$ (smooth on
+  the trivialization base set, junk off it).
+* `chartFrameNormFiber g α b i` — fiberwise $g$-Gram-Schmidt
+  orthonormalisation of `chartBasisVecFiber α · b`.
+* `smoothOrthoFrame g α i` — globally-smooth tangent-bundle section
   obtained by multiplying `chartFrameNorm g α i` by a smooth bump
-  function `chartBumpAt α` whose support lies in the chart source.
+  function whose support lies in the chart source; identically zero off
+  the chart source, equal to the un-bumped Gram-Schmidt frame on
+  `smoothOrthoFrameNbhd α`.
 
-The output `smoothOrthoFrame g α i` is identically zero off the chart
-source and equals the un-bumped Gram-Schmidt frame on the smaller
-neighbourhood `smoothOrthoFrameNbhd α` where `chartBumpAt α = 1`.
+Used downstream by the heart-of-Bochner sum identity, where the smooth
+orthonormal frame is the basis along which $\nabla^2(\nabla f)$'s trace
+becomes $\Delta_g f$.
 
-Downstream consumer: heart-of-Bochner sum identity, where the smooth
-orthonormal frame plays the role of the basis along which the trace
-of $\nabla^2(\nabla f)$ is identified with $\Delta_g f$.
-
-## Sub-phase scope (Phase A.2)
-
-This file ports Stages 1–2 of
-`external/differential-geometry/.../RicciIdentitySmoothFrame.lean`:
-the construction itself plus the `smoothOrthoFrameNbhd` set and basic
-membership facts. Orthonormality at base-set points (Stage 3) and
-smoothness of the global section (Stage 6) are deferred to follow-up
-sub-phases — they are mechanical strong-induction proofs over `i.val`
-totalling several hundred LOC each.
-
-**Ground truth**: external's `smoothOrthoFrame` construction; do Carmo
-§1 (chart-frame trivialization); Lee §3 (smooth bump functions);
-Petersen §1 (Gram-Schmidt on a Riemannian frame).
+**Ground truth**: do Carmo §1 (chart-frame trivialization); Lee §3
+(smooth bump functions); Petersen §1 (Gram-Schmidt). The construction
+follows an external `differential-geometry` lib analog.
 -/
 
 noncomputable section

@@ -5,40 +5,20 @@ import OpenGALib.GeometricMeasureTheory.Isoperimetric.Euclidean
 # GeometricMeasureTheory.Isoperimetric.Relative
 
 The **relative isoperimetric inequality** on a closed Riemannian
-manifold (Maggi 2012 Proposition 12.37; Federer 1969 §3.2.43).
-
-For a Caccioppoli set $\Omega \subseteq M^{n+1}$ and a geodesic ball
-$B_\rho(p)$ of radius $\rho$ less than a critical scale $r_1$,
+manifold (Maggi 12.37; Federer §3.2.43). For a Caccioppoli set
+$\Omega \subseteq M^{n+1}$ and a geodesic ball $B_\rho(p)$ with
+$\rho < r_1$,
 $$\min\bigl(|\Omega \cap B_\rho(p)|,\, |B_\rho(p) \setminus \Omega|\bigr)^{n/(n+1)}
    \;\le\; C_I \cdot \mathrm{Per}(\Omega, B_\rho(p)),$$
 where $r_1, C_I > 0$ depend only on $(M, g, n)$.
 
-This is the **paper §2 Proposition `prop:relative-isoperimetric`** —
-verbatim Maggi 12.37 transcribed into the Lean framework.
+Constants and inequality are bundled into a single existence theorem
+`relative_isoperimetric_inequality_exists` (paper §2's bundled form,
+avoiding leakage of Riemannian-geometric quantities like injectivity
+radius or sectional-curvature bound to consumers). Body is PRE-PAPER
+existence axiom; closure is framework self-build or Mathlib upstream.
 
-## Form
-
-The constants $r_1, C_I$ and the inequality are bundled into a single
-existence theorem `relative_isoperimetric_inequality_exists` (paper
-formulation: "There exist constants $r_1 > 0$ and $C_I > 0$ such that
-…"). The inequality body is `sorry` (PRE-PAPER existence axiom);
-constructive proof via Federer 1969 §3.2.43 + Maggi 12.37 covering
-argument is deferred to framework long-term work or Mathlib upstream.
-
-## Why bundled-existence form
-
-Paper §2 explicitly bundles the constants into the existence statement
-to avoid leaking Riemannian-geometric quantities (injectivity radius,
-sectional curvature bound) into downstream consumers. The framework
-mirrors this exactly: callers receive the inequality as a black-box
-fact, threading no manifold-geometry details.
-
-**Ground truth**: Maggi 2012 *Sets of Finite Perimeter and Geometric
-Variational Problems*, Proposition 12.37; Federer 1969 §3.2.43.
-
-**Paper alignment**: paper §2 Proposition `prop:relative-isoperimetric`
-(Section "Preliminaries", `chapters/part2/2-preliminaries.tex` lines
-22–27, eq. `eq:rel-isop`).
+**Ground truth**: Maggi 2012 Prop 12.37; Federer 1969 §3.2.43.
 -/
 
 namespace GeometricMeasureTheory

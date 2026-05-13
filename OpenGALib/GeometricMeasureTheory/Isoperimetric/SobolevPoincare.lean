@@ -4,40 +4,24 @@ import Mathlib.MeasureTheory.Function.LpSeminorm.Defs
 /-!
 # GeometricMeasureTheory.Isoperimetric.SobolevPoincare
 
-The **Sobolev–Poincaré inequality (BV form)** and the **Federer–Fleming
-theorem** (Maggi 2012 Chapter 30; Federer–Fleming 1960; Sobolev 1938).
+**Sobolev–Poincaré inequality (BV form)** and **Federer–Fleming theorem**
+(Maggi Ch. 30; Federer–Fleming 1960; Sobolev 1938).
 
-For a BV function $u : \mathbb{R}^n \to \mathbb{R}$ ($n \ge 2$) with
-$\int u = 0$,
+For BV $u : \mathbb{R}^n \to \mathbb{R}$ ($n \ge 2$) with $\int u = 0$,
 $$\|u\|_{L^{n/(n-1)}(\mathbb{R}^n)} \;\le\; c_n^{\mathrm{SP}}\;\|Du\|(\mathbb{R}^n).$$
-The Federer–Fleming theorem identifies the optimal Sobolev–Poincaré
-constant with the inverse of the optimal isoperimetric constant:
-$$c_n^{\mathrm{SP}} \;=\; \bigl(c_n^{\mathrm{iso}}\bigr)^{-1}.$$
+Federer–Fleming identifies the optimal constant with the inverse of the
+optimal isoperimetric constant: $c_n^{\mathrm{SP}} = (c_n^{\mathrm{iso}})^{-1}$.
 
-## Form
+Composes `BVFunction.totalVariation`, the `coarea_formula` bridge, and
+Mathlib's `eLpNorm` into a paper-faithful, **non-vacuous** statement.
+Exponent and constant are real `noncomputable def`s with real-derived
+positivity. `sobolev_poincare_inequality` itself is a single PRE-PAPER
+existence axiom; closure is framework self-build via the truncation
+argument over `coarea_formula` (~150 LOC) once `lpNorm`-vs-truncation
+lemmas land.
 
-Composes `BVFunction.totalVariation`, the `coarea_formula` bridge,
-and Mathlib's `MeasureTheory.eLpNorm` into a paper-faithful,
-**non-vacuous** Sobolev–Poincaré statement. The Sobolev exponent and
-the Sobolev–Poincaré constant are real `noncomputable def`s with
-real-derived positivity.
-
-## Sorry status
-
-  * `sobolevExponent`, `sobolevPoincareConstant`, `lpNorm` — real defs
-    (no `sorry`); positivity / definitional equations derivable.
-  * `sobolevExponent_pos`, `sobolevExponent_gt_one`,
-    `sobolevPoincareConstant_pos`, `federer_fleming_equivalence` —
-    real proofs (no `sorry`).
-  * `sobolev_poincare_inequality` — single PRE-PAPER existence axiom
-    (Maggi 2012 Theorem 30.1). Repair plan: framework self-build via
-    the truncation argument over `coarea_formula` (Maggi Ch. 30
-    proof, ~150 LOC) once `lpNorm`-vs-truncation lemmas land.
-
-**Ground truth**: Maggi 2012 *Sets of Finite Perimeter and Geometric
-Variational Problems*, Theorem 30.1 (Sobolev–Poincaré BV form),
-Theorem 30.4 (Federer–Fleming equivalence); Federer–Fleming 1960
-(original); Sobolev 1938 (original $W^{1,p}$ form).
+**Ground truth**: Maggi Thm 30.1 (BV form), Thm 30.4 (Federer–Fleming);
+Federer–Fleming 1960; Sobolev 1938.
 -/
 
 namespace GeometricMeasureTheory

@@ -9,40 +9,20 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 /-!
 # Hessian on a Riemannian manifold
 
-For a smooth scalar $f : M \to \mathbb{R}$ on a Riemannian manifold $(M, g)$,
-the **Hessian** is the symmetric $(0,2)$-tensor given by the second covariant
-derivative of $f$. Pointwise:
-$$\operatorname{Hess} f(x)(X, Y) = \langle \nabla_X (\nabla^M f), Y \rangle_g(x).$$
-Equivalently $\operatorname{Hess} f(X, Y) = X(Y(f)) - (\nabla_X Y)(f)$.
+For smooth $f : M \to \mathbb{R}$ on $(M, g)$, the **Hessian** is the
+symmetric $(0,2)$-tensor
+$$\operatorname{Hess} f(x)(X, Y) = \langle \nabla_X (\nabla^M f), Y \rangle_g(x)
+  = X(Y(f)) - (\nabla_X Y)(f).$$
 
-This file provides:
+This file provides the vector-field bilinear form `hessian f X Y x` plus
+an abstract pointwise bilinear-form carrier `Bilin I M` carrying the
+linear-algebra trace–Frobenius Cauchy-Schwarz inequality
+$\bigl(\sum_i B(b_i, b_i)\bigr)^2 \le n \cdot \sum_{i,j} B(b_i, b_j)^2$,
+used downstream to bound $(\Delta f)^2 \le n \cdot |\mathrm{Hess}\,f|^2$
+after Bochner.
 
-1. The vector-field bilinear form `hessian f X Y x`, defined directly via
-   `covDeriv`, `manifoldGradient`, `metricInner`.
-2. An abstract pointwise bilinear-form carrier `Bilin I M` and the
-   pure-linear-algebra trace–Frobenius Cauchy-Schwarz inequality
-   $$\bigl(\sum_i B(b_i, b_i)\bigr)^2 \le n \cdot \sum_{i,j} B(b_i, b_j)^2,$$
-   the inequality used to bound $(\Delta f)^2 \le n \cdot |\operatorname{Hess} f|^2$
-   downstream of the Bochner identity.
-
-The chart-Christoffel formula and the smoothness of the Hessian as a section
-of the $(0,2)$-bundle live with the chart machinery and are out of scope here.
-
-## Main definitions
-
-* `hessian f X Y x` — the Hessian on vector fields.
-* `Bilin I M` — pointwise bilinear-form carrier on $TM$.
-* `IsPointwiseSymm B` — pointwise symmetry predicate.
-* `frobeniusSq B x` — the Frobenius norm squared of `B` against a $g$-orthonormal frame.
-* `trace B x` — the trace of `B` against the canonical basis.
-
-## Main results
-
-* `bilinForm_trace_sq_le_card_mul_frobenius_sq` — the linear-algebra
-  Cauchy-Schwarz bound for any indexing type.
-* `trace_sq_le_dim_mul_frobeniusSq` — pointwise specialisation:
-  $(\operatorname{trace} B(x))^2 \le n \cdot \operatorname{frobeniusSq} B(x)$.
-* `trace_sq_div_dim_le_frobeniusSq` — quotient form.
+The chart-Christoffel formula and the smoothness of the Hessian as a
+section of the $(0,2)$-bundle are out of scope here.
 
 Reference: do Carmo §6 ex. 12.
 -/

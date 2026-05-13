@@ -16,43 +16,20 @@ import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
 /-!
 # Tangent bundle smoothness API
 
-Smoothness of tangent vector fields and chart-frame derivatives.
+Smoothness of tangent vector fields and chart-frame derivatives. The
+file collects:
 
-This file is the single verifiable-object presentation of the framework's
-tangent-bundle smoothness layer:
+* `IsLocallyConstantChartedSpace` — chart-coherence typeclass needed for
+  parametric chart-mfderiv smoothness.
+* `TangentSmoothAt` + closure under the $C^\infty(M)$-module operations,
+  plus the `tangent_smooth` tactic.
+* Flat-codomain chart-frame trivializations `symmLFlat`,
+  `continuousLinearMapAtFlat` and their basepoint smoothness.
+* Bundled smooth vector fields `SmoothVectorField`.
+* Chart-frame `mfderiv` smoothness in constant and smoothly-varying
+  directions.
 
-1. Chart-coherence typeclass `IsLocallyConstantChartedSpace`.
-2. Smoothness predicate `TangentSmoothAt` and its closure under the
-   $C^\infty(M)$-module operations, plus the `tangent_smooth` tactic.
-3. Chart-frame inverse/forward trivialization in flat-codomain form
-   (`symmLFlat`, `continuousLinearMapAtFlat`) and their smoothness.
-4. Bundled smooth vector fields `SmoothVectorField`.
-5. Chart-frame `mfderiv` smoothness theorems.
-
-## Main definitions
-
-* `IsLocallyConstantChartedSpace H M` — typeclass: `chartAt H` is locally
-  constant. Required for parametric chart-mfderiv smoothness.
-* `TangentSmoothAt V x` — smoothness of a tangent section at a point.
-* `TangentBundle.symmLFlat x y : E →L[ℝ] E` — flat-typed chart-inverse.
-* `TangentBundle.continuousLinearMapAtFlat x y : E →L[ℝ] E` — flat-typed
-  chart-forward.
-* `Riemannian.SmoothVectorField I M` — bundled smooth tangent section.
-
-## Main results
-
-* `TangentSmoothAt.{zero, add, neg, sub, smul}` — algebra closure.
-* `tangent_smooth` tactic — discharges goals of the form
-  `TangentSmoothAt V x` for `V` built from smooth-section algebra.
-* `TangentBundle.symmLFlat_mdifferentiableAt`,
-  `TangentBundle.continuousLinearMapAtFlat_contMDiffAt` — flat chart
-  derivatives are smooth in the basepoint.
-* `mfderiv_const_dir_smoothAt`, `mfderiv_smoothDir_smoothAt` — for a
-  smooth scalar $f$ and (constant or smoothly-varying) direction $V$,
-  $y \mapsto \mathrm{d}f_y(V(y))$ is smooth.
-
-Reference: Lee, *Smooth Manifolds*, Ch. 8 (smooth vector fields) and
-Ch. 11 (chart-derivative smoothness).
+Reference: Lee, *Smooth Manifolds*, Ch. 8 and Ch. 11.
 -/
 
 open scoped ContDiff Manifold Topology

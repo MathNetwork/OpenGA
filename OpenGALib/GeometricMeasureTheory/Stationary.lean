@@ -11,40 +11,23 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 /-!
 # GMT.Stationary
 
-Stationary varifolds.
-
 A varifold $V$ is stationary iff its first variation $\delta V$ vanishes
-for every compactly supported smooth vector field on $M$. Stationarity
-has two key consequences used throughout the paper:
-  * the **monotonicity formula** (Proposition 2.10): the rescaled mass
-    $r \mapsto \|V\|(B_r(p))/r^n$ is monotone non-decreasing in $r$, so
-    the density $\Theta(\|V\|, p)$ exists pointwise.
-  * the **rectifiability theorem** (Proposition 2.12, in
-    `GMT.Rectifiability`).
+on every compactly supported smooth vector field. Stationarity drives
+the monotonicity formula ($r \mapsto \|V\|(B_r(p))/r^n$ non-decreasing,
+giving pointwise density $\Theta(\|V\|, p)$) and the rectifiability
+theorem (in `GMT.Rectifiability`).
 
-## Definition style
+`IsStationary` is an explicit `def` universally quantified over test
+vector fields; `TestVectorField` is a smooth, compactly-supported
+section of the tangent bundle.
 
-`IsStationary` is an explicit `def` — universally quantified over all
-test vector fields — so the structure of "first variation vanishes on
-every test field" is visible to the Lean kernel.
-
-`TestVectorField` is a paper-faithful structure carrying a smooth
-section of the tangent bundle with compact support.
-
-`firstVariation` is grounded in the **ambient-divergence form**:
-$\delta V(X) = \int_M \mathrm{div}_M X\, d\|V\|$. The computation uses
-`fderiv`-of-chart-pullback + `LinearMap.trace` to realize the divergence,
-mirroring Mathlib's `VectorField.lieBracket` chart-pullback pattern.
-
-For the paper §4-6 codim-1 use, the GMT-paper formula
-$\delta V(X) = \int \mathrm{div}_S X\, dV(x, S)$ differs from the
-ambient form by a normal-direction correction
-$\langle\nu, \nabla_\nu X\rangle$. Capturing this correction would
-require upgrading `Varifold` to carry a unit normal field — a refinement
-deferred to a future round. Chain proofs use `IsStationary V` as a
-black-box hypothesis and do not inspect the specific value of
-`firstVariation V X`, so the codim-1 gap does not propagate into the
-chain.
+`firstVariation` is grounded in the **ambient-divergence form**
+$\delta V(X) = \int_M \mathrm{div}_M X\, d\|V\|$ (chart-pullback `fderiv`
++ `LinearMap.trace`, mirroring Mathlib's `VectorField.lieBracket` chart
+pattern). The paper's codim-1 form differs by a normal-direction
+correction $\langle\nu, \nabla_\nu X\rangle$, which would require
+upgrading `Varifold` to carry a unit normal field. Chain proofs treat
+`IsStationary V` as black-box, so the codim-1 gap does not propagate.
 -/
 
 open scoped ContDiff Manifold

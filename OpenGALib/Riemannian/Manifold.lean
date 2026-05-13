@@ -5,53 +5,26 @@ import OpenGALib.Util.Attributes
 # Smooth and Riemannian manifolds — bundled typeclass
 
 A pure-math user reasons about a Riemannian manifold as the data
-$(M, g)$. The Mathlib machinery $(E, H, I, \text{ChartedSpace}, \text{IsManifold})$
-is implementation detail, invisible at the math layer. The typeclasses
-in this file expose that layering directly:
+$(M, g)$; the Mathlib machinery $(E, H, I, \text{ChartedSpace},
+\text{IsManifold})$ is implementation detail. The typeclasses here
+bundle that machinery:
 
-  * `[SmoothManifold M]` — bundles $(E, H, I)$ + chart machinery + smooth
-    structure. One typeclass parameter replaces five.
+  * `[SmoothManifold M]` — $(E, H, I)$ + chart machinery + smooth
+    structure (one typeclass replaces five parameters).
   * `[RiemannianManifold M]` — extends `[SmoothManifold M]` with a
-    Riemannian metric. One typeclass parameter replaces six.
+    Riemannian metric (one typeclass replaces six).
 
-Operators downstream (`metricInner`, `manifoldGradient`, `Δ_g`, `Ric`,
-...) take `[RiemannianManifold M]` and recover everything they need.
+Downstream operators (`metricInner`, `manifoldGradient`, `Δ_g`, `Ric`)
+take `[RiemannianManifold M]` and recover everything they need. The
+metric lives on the typeclass as a `RiemannianMetric modelI M` field
+(data, not nested typeclass), so polymorphic notation can pull it
+without `[I]`-bracket workarounds.
 
-## Why bundle
+Other geometric structures (Lorentzian, Kähler, symplectic, contact)
+extend `SmoothManifold M` analogously and provide bridge instances to
+their structure-specific typeclasses.
 
-* **Math-first surface**: `class RiemannianManifold M` reads "M is a
-  Riemannian manifold" — the same sentence a textbook opens with.
-  Notation built on it (`‖∇f‖²_g`, `Δ_g f`, `Ric(X, Y)`) carries no
-  Lean-machinery sub/superscripts.
-* **AI-co-governance**: typeclass synthesis cannot stick on `M ↛ I`
-  (the issue that forced `[I]`-bracket workarounds elsewhere).
-  `[RiemannianManifold M]` makes `M` determine all the data.
-* **Extension contract**: new geometric structures (Lorentzian, Kähler,
-  symplectic, contact) extend `SmoothManifold M` the same way; the
-  framework's typeclass family is uniform.
-
-## Metric access
-
-A `[RiemannianManifold M]` carries the metric as a regular field
-`(metric : RiemannianMetric modelI M)` — `RiemannianMetric` is now
-Mathlib's `Bundle.ContMDiffRiemannianMetric` aliased, i.e. data, not a
-typeclass. Operators access `(RiemannianManifold.metric).metricInner x V W`
-or use polymorphic notation that pulls the metric from the typeclass.
-
-## Extension policy
-
-To add a new geometric structure on smooth manifolds:
-
-1. `class XManifold (M : Type*) [TopologicalSpace M] extends SmoothManifold M where ...`
-2. Bundle the structural data fields (e.g. `pseudoMetric` for
-   Lorentzian, `complexStructure` for almost-complex/Kähler).
-3. Provide bridge instances to existing structure-specific typeclasses
-   if the new structure is a refinement (e.g. Kähler → Riemannian).
-4. Document in `docs/RIEMANNIAN_FRAMEWORK_SPEC.md` (the spec lists all
-   manifold typeclasses in the framework and their bridges).
-
-**Ground truth**: do Carmo, *Riemannian Geometry*, §1.1 ("Riemannian
-manifolds and Riemannian metrics"). Lee, *Smooth Manifolds*, Ch. 1, 13.
+**Ground truth**: do Carmo §1.1; Lee, *Smooth Manifolds*, Ch. 1, 13.
 -/
 
 open Bundle
