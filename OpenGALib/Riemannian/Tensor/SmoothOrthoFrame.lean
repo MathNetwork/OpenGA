@@ -57,21 +57,16 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
 /-! ## Stage 1: chart-basis tangent sections -/
 
-/-- The $i$-th pointwise tangent vector of the chart-local frame attached
-to $\alpha$. For $b$ in the trivialization base set, this is the image
-of the $i$-th model-space basis vector under
-`(trivializationAt E (TangentSpace I) α).symm b`; off that set it is a
-default (junk) value still well-typed in the fiber.
-
-Smooth on `(trivializationAt E (TangentSpace I) α).baseSet` (=
-`(chartAt H α).source`); see `chartBasisVec_contMDiffOn`. -/
+/-- **Math.** The $i$-th pointwise tangent vector of the chart-local
+frame attached to $\alpha$: image of the $i$-th model-space basis vector
+under `(trivializationAt E (TangentSpace I) α).symm b` on the base set,
+junk off it. Smooth on `(chartAt H α).source`. -/
 def chartBasisVecFiber (α : M) (i : Fin (Module.finrank ℝ E)) (b : M) :
     TangentSpace I b :=
   (trivializationAt E (TangentSpace I) α).symm b ((Module.finBasis ℝ E) i)
 
-/-- The $i$-th tangent-bundle section form of the chart-local frame
-attached to $\alpha$, packaged as a function `M → TotalSpace E _`.
-Smooth on the trivialization base set. -/
+/-- **Eng.** Section-form packaging of `chartBasisVecFiber α i` as
+`M → TotalSpace E _`. -/
 def chartBasisVec (α : M) (i : Fin (Module.finrank ℝ E)) :
     M → TotalSpace E (TangentSpace I : M → Type _) :=
   fun b => TotalSpace.mk' E b (chartBasisVecFiber (I := I) α i b)
@@ -84,9 +79,8 @@ def chartBasisVec (α : M) (i : Fin (Module.finrank ℝ E)) :
     (α : M) (i : Fin (Module.finrank ℝ E)) (b : M) :
     (chartBasisVec (I := I) α i b).2 = chartBasisVecFiber (I := I) α i b := rfl
 
-/-- On the base set of the trivialization at $\alpha$, applying the
-trivialization to the chart-basis vector recovers the constant
-model-basis vector. -/
+/-- **Eng.** On the base set, the trivialization sends the chart-basis
+vector to the constant model-basis vector. -/
 lemma trivializationAt_chartBasisVec_snd
     (α : M) (i : Fin (Module.finrank ℝ E)) {b : M}
     (hb : b ∈ (trivializationAt E (TangentSpace I) α).baseSet) :
@@ -97,8 +91,8 @@ lemma trivializationAt_chartBasisVec_snd
     ((Module.finBasis ℝ E) i)
   simpa [chartBasisVecFiber] using congrArg Prod.snd h
 
-/-- The chart-basis tangent-bundle section is smooth on the base set of
-the trivialization at $\alpha$. -/
+/-- **Math.** The chart-basis tangent-bundle section is smooth on the
+base set of the trivialization at $\alpha$. -/
 lemma chartBasisVec_contMDiffOn
     (α : M) (i : Fin (Module.finrank ℝ E)) :
     ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞ (chartBasisVec (I := I) α i)
@@ -115,10 +109,9 @@ lemma chartBasisVec_contMDiffOn
   intro b hb
   exact (trivializationAt_chartBasisVec_snd (I := I) α i hb)
 
-/-- The chart-basis family at a point $b \in \mathrm{baseSet}$ is a
+/-- **Math.** The chart-basis family at $b \in \mathrm{baseSet}$ is a
 basis of `TangentSpace I b`, obtained by transporting the fixed
-model-space basis through the continuous linear equivalence given by
-the trivialization. -/
+model-space basis through the trivialization. -/
 def chartBasisFamily (α : M) {b : M}
     (hb : b ∈ (trivializationAt E (TangentSpace I) α).baseSet) :
     Module.Basis (Fin (Module.finrank ℝ E)) ℝ (TangentSpace I b) :=
@@ -135,8 +128,8 @@ lemma chartBasisFamily_apply (α : M) {b : M}
   rw [Module.Basis.map_apply]
   rfl
 
-/-- The chart-basis family is linearly independent at each base-set
-point. -/
+/-- **Math.** The chart-basis family is linearly independent at each
+base-set point. -/
 lemma chartBasisFamily_linearIndependent (α : M) {b : M}
     (hb : b ∈ (trivializationAt E (TangentSpace I) α).baseSet) :
     LinearIndependent ℝ
@@ -161,7 +154,7 @@ The recursion uses Lean's well-founded recursion on `i.val`: each step
 references earlier fiber-values, and termination is by strict decrease
 of the index. -/
 
-/-- The normalised Gram-Schmidt vector for the chart frame, in a fixed
+/-- **Math.** The normalised Gram-Schmidt vector for the chart frame, in a fixed
 fiber $b$. Defined by well-founded recursion on `i.val`. -/
 private noncomputable def chartFrameNormFiber
     (g : RiemannianMetric I M) (α : M) (b : M)
@@ -178,14 +171,14 @@ private noncomputable def chartFrameNormFiber
 termination_by i.val
 decreasing_by exact j.isLt
 
-/-- The normalised Gram-Schmidt vector for the chart frame as a section
+/-- **Eng.** Section-form packaging of `chartFrameNormFiber`
 in $b$: `chartFrameNorm g α i b ∈ T_bM`. -/
 noncomputable def chartFrameNorm
     (g : RiemannianMetric I M) (α : M)
     (i : Fin (Module.finrank ℝ E)) (b : M) : TangentSpace I b :=
   chartFrameNormFiber (I := I) g α b i
 
-/-- The unnormalised Gram-Schmidt vector at index $i$, in a fixed fiber
+/-- **Math.** The unnormalised Gram-Schmidt vector at index $i$, in a fixed fiber
 $b$:
 $$\mathrm{raw}_i(b) := v_i(b) - \sum_{j < i} \langle v_i(b), e_j(b)\rangle_g \, e_j(b),$$
 where $v_i(b) = \mathrm{chartBasisVecFiber}\,\alpha\,i\,b$ and
@@ -201,7 +194,7 @@ private noncomputable def chartFrameRawFiber
         chartFrameNormFiber (I := I) g α b
           ⟨j.val, lt_trans j.isLt i.isLt⟩
 
-/-- Recursive expansion of `chartFrameNormFiber`: at index $i$, the
+/-- **Eng.** Recursive expansion of `chartFrameNormFiber` at index $i$.
 normalised vector is `(Real.sqrt (g.inner b raw raw))⁻¹ • raw`. -/
 private lemma chartFrameNormFiber_eq
     (g : RiemannianMetric I M) (α : M) (b : M)
@@ -214,7 +207,7 @@ private lemma chartFrameNormFiber_eq
   unfold chartFrameNormFiber chartFrameRawFiber
   rfl
 
-/-- At the zeroth index, the unnormalised Gram-Schmidt vector reduces to
+/-- **Eng.** At the zeroth index, the unnormalised Gram-Schmidt vector reduces to
 the chart-basis vector itself (the empty sum vanishes). -/
 private lemma chartFrameRawFiber_at_zero
     (g : RiemannianMetric I M) (α : M) (b : M) :
@@ -223,7 +216,7 @@ private lemma chartFrameRawFiber_at_zero
   unfold chartFrameRawFiber
   simp
 
-/-- At the zeroth index, the normalised Gram-Schmidt vector is the
+/-- **Eng.** At the zeroth index, the normalised Gram-Schmidt vector is the
 chart-basis vector divided by its $g$-norm. -/
 private lemma chartFrameNormFiber_at_zero
     (g : RiemannianMetric I M) (α : M) (b : M) :
@@ -235,7 +228,7 @@ private lemma chartFrameNormFiber_at_zero
         chartBasisVecFiber (I := I) α ⟨0, NeZero.pos _⟩ b := by
   rw [chartFrameNormFiber_eq, chartFrameRawFiber_at_zero]
 
-/-- Generic normalisation calculation: for a vector $v$ in a fiber
+/-- **Eng.** Generic normalisation calculation: for a vector $v$ in a fiber
 with positive $g$-self-inner-product $N$, scaling $v$ by
 $(\sqrt N)^{-1}$ gives a unit-norm vector. Pure CLM/ring algebra in
 the inner-product slot; isolated as a helper to keep
@@ -264,7 +257,7 @@ private lemma g_inner_normalised
     _ = (g.inner b v v)⁻¹ * g.inner b v v := by rw [hs_sq]
     _ = 1 := inv_mul_cancel₀ hpos.ne'
 
-/-- At a base-set point and at the zeroth index, the normalised
+/-- **Math.** At a base-set point and at the zeroth index, the normalised
 Gram-Schmidt vector is $g$-unit-norm. -/
 lemma chartFrameNormFiber_at_zero_norm
     (g : RiemannianMetric I M) (α : M) {b : M}
@@ -291,7 +284,7 @@ of the chart-basis family (`chartBasisFamily_linearIndependent`) and
 the inductive span identity
 $e_0, \ldots, e_{i-1} \in \mathrm{span}(v_0, \ldots, v_{i-1})$. -/
 
-/-- Bilinear distribution of `g.inner b u (·)` over a finite sum. -/
+/-- **Eng.** Bilinear distribution of `g.inner b u (·)` over a finite sum. -/
 private lemma g_inner_sum_right
     (g : RiemannianMetric I M) (b : M) (v : TangentSpace I b)
     {ι : Type*} (s : Finset ι) (w : ι → TangentSpace I b)
@@ -309,7 +302,7 @@ private lemma g_inner_sum_right
       rw [map_smul]; rfl]
     rw [ih]
 
-/-- Bilinear distribution of `g.inner b (·) w` over a finite sum. -/
+/-- **Eng.** Bilinear distribution of `g.inner b (·) w` over a finite sum. -/
 private lemma g_inner_sum_left
     (g : RiemannianMetric I M) (b : M)
     {ι : Type*} (s : Finset ι) (v : ι → TangentSpace I b)
@@ -328,7 +321,7 @@ private lemma g_inner_sum_left
       rw [map_smul]; rfl]
     rw [ih]
 
-/-- Generic normalisation: scaling a positive-norm vector by
+/-- **Eng.** Generic normalisation: scaling a positive-norm vector by
 $(\sqrt{\langle v, v\rangle})^{-1}$ in the **second** slot equals the
 analogous left-slot scaling, factored through the same helper. Used
 twice (orthogonality + unit-norm) in the strong-induction succ step,
@@ -338,7 +331,7 @@ private lemma g_inner_smul_right_normalised
     g.inner b u (s⁻¹ • v) = s⁻¹ * g.inner b u v := by
   rw [map_smul]; rfl
 
-/-- **Span identity** (recursion-structural): for every $m$ with
+/-- **Math.** **Span identity** (recursion-structural): for every $m$ with
 $m.\mathrm{val} < i.\mathrm{val}$, the normalised Gram-Schmidt vector
 $e_m(b) = \mathrm{chartFrameNormFiber}\,g\,\alpha\,b\,m$ lies in the
 $\mathbb{R}$-span of the chart-basis vectors $v_0(b), \ldots,
@@ -388,7 +381,7 @@ private lemma chartFrameNormFiber_mem_span_chartBasis
           lt_trans hj_in_fin i.isLt
         exact ih_kk ⟨j.val, hj_lt_total⟩ hj_le_kk hj_in_fin
 
-/-- **Non-degeneracy of the unnormalised Gram-Schmidt step**: at any
+/-- **Math.** **Non-degeneracy of the unnormalised Gram-Schmidt step**: at any
 base-set point, $\mathrm{raw}_i \ne 0$.
 
 Argument: if $\mathrm{raw}_i = 0$, then $v_i$ equals its projection
@@ -456,7 +449,7 @@ private lemma chartFrameRawFiber_ne_zero
     simp [Set.mem_setOf_eq]
   exact hLI.notMem_span_image hi_notin hvi_in_span
 
-/-- **Orthogonality of `raw_i` to each previous `e_j`**, given that
+/-- **Math.** **Orthogonality of `raw_i` to each previous `e_j`**, given that
 $\{e_0, \ldots, e_{i-1}\}$ is already $g$-orthonormal at $b$.
 
 Bilinear unfold of $\mathrm{raw}_i = v_i - \sum_{m < i} \langle v_i,
@@ -534,7 +527,7 @@ private lemma chartFrameRawFiber_orth_to_orthonormal_prefix
     rw [hej_eq]
   rw [hc_eq, g.symm]; ring
 
-/-- The strong-induction package for the orthonormality of
+/-- **Eng.** The strong-induction package for the orthonormality of
 `chartFrameNormFiber`. The conclusion bundles three facts at every
 $i \le k$:
 
@@ -636,7 +629,7 @@ private theorem chartFrameNormFiber_orth_strong_aux
         exact g_inner_normalised (I := I) g b
           (chartFrameRawFiber (I := I) g α b i) hgpos
 
-/-- **Inductive orthonormality** of `chartFrameNormFiber` on the
+/-- **Math.** **Inductive orthonormality** of `chartFrameNormFiber` on the
 trivialization base set. For $b \in \mathrm{baseSet}$ and indices
 $i, j$, the inner product
 $g.\mathrm{inner}\,b\,(e_i\,b)\,(e_j\,b)$ equals $1$ if $i = j$, and
@@ -664,7 +657,7 @@ theorem chartFrameNormFiber_orthonormal
     rw [if_neg hne, g.symm]
     exact horth_ji
 
-/-- **Orthonormality** of `chartFrameNorm` (the section form) on the
+/-- **Math.** **Orthonormality** of `chartFrameNorm` (the section form) on the
 trivialization base set. -/
 theorem chartFrameNorm_orthonormal
     (g : RiemannianMetric I M) (α : M) {b : M}
@@ -683,14 +676,14 @@ source. To produce a globally smooth tangent-bundle section, we
 multiply by a smooth bump function centred at $\alpha$ whose support
 lies inside the chart source. -/
 
-/-- A canonical smooth bump function centred at $\alpha$. It is $1$ on
+/-- **Eng.** A canonical smooth bump function centred at $\alpha$. It is $1$ on
 a neighbourhood of $\alpha$ and supported in `(chartAt H α).source`
 (the trivialization base set at $\alpha$). The existence is guaranteed
 by `SmoothBumpFunction.instNonempty`. -/
 private noncomputable def chartBumpAt (α : M) : SmoothBumpFunction I α :=
   Classical.arbitrary (SmoothBumpFunction I α)
 
-/-- **Smooth orthonormal frame**. The $i$-th tangent-bundle section of a
+/-- **Math.** **Smooth orthonormal frame**. The $i$-th tangent-bundle section of a
 smooth $g$-orthonormal local frame attached to the base point $\alpha$.
 On the neighbourhood of $\alpha$ where the chart bump function
 `chartBumpAt α` equals $1$, this section equals the $g$-Gram-Schmidt
@@ -706,26 +699,26 @@ noncomputable def smoothOrthoFrame
   fun b => (chartBumpAt (I := I) (M := M) α : M → ℝ) b •
     chartFrameNorm (I := I) g α i b
 
-/-- The open subset of $M$ on which `smoothOrthoFrame g α` is guaranteed
+/-- **Math.** The open subset of $M$ on which `smoothOrthoFrame g α` is guaranteed
 to be a $g$-orthonormal smooth basis: the (open) set where the chart
 bump function equals $1$. -/
 noncomputable def smoothOrthoFrameNbhd (α : M) : Set M :=
   {b : M | (chartBumpAt (I := I) (M := M) α : M → ℝ) b = 1}
 
-/-- The neighbourhood `smoothOrthoFrameNbhd α` is in the filter `𝓝 α`. -/
+/-- **Math.** The neighbourhood `smoothOrthoFrameNbhd α` is in `𝓝 α`. -/
 lemma smoothOrthoFrameNbhd_mem_nhds (α : M) :
     smoothOrthoFrameNbhd (I := I) (M := M) α ∈ 𝓝 α := by
   classical
   exact (chartBumpAt (I := I) (M := M) α).eventuallyEq_one
 
-/-- The centre $\alpha$ belongs to `smoothOrthoFrameNbhd α`. -/
+/-- **Math.** The centre $\alpha$ belongs to `smoothOrthoFrameNbhd α`. -/
 lemma mem_smoothOrthoFrameNbhd_self (α : M) :
     α ∈ smoothOrthoFrameNbhd (I := I) (M := M) α := by
   classical
   change (chartBumpAt (I := I) (M := M) α : M → ℝ) α = 1
   exact (chartBumpAt (I := I) (M := M) α).eq_one
 
-/-- On the neighbourhood `smoothOrthoFrameNbhd α`, the smooth orthonormal
+/-- **Math.** On `smoothOrthoFrameNbhd α`, the smooth orthonormal
 frame agrees with the un-bumped Gram-Schmidt step. -/
 lemma smoothOrthoFrame_eq_on_nbhd
     (g : RiemannianMetric I M) (α : M)
@@ -738,7 +731,7 @@ lemma smoothOrthoFrame_eq_on_nbhd
   have hb1 : (chartBumpAt (I := I) (M := M) α : M → ℝ) b = 1 := hb
   rw [hb1, one_smul]
 
-/-- The neighbourhood `smoothOrthoFrameNbhd α` is contained in the chart
+/-- **Eng.** `smoothOrthoFrameNbhd α` is contained in the chart
 source `(chartAt H α).source`. -/
 lemma smoothOrthoFrameNbhd_subset_chartAt_source (α : M) :
     smoothOrthoFrameNbhd (I := I) (M := M) α ⊆ (chartAt H α).source := by
@@ -750,7 +743,7 @@ lemma smoothOrthoFrameNbhd_subset_chartAt_source (α : M) :
     rw [hb1]; exact one_ne_zero
   exact (chartBumpAt (I := I) (M := M) α).support_subset_source hsupp
 
-/-- The neighbourhood `smoothOrthoFrameNbhd α` is contained in the
+/-- **Eng.** `smoothOrthoFrameNbhd α` is contained in the
 trivialization base set
 `(trivializationAt E (TangentSpace I) α).baseSet`. -/
 lemma smoothOrthoFrameNbhd_subset_baseSet (α : M) :
@@ -769,7 +762,7 @@ yields orthonormality of `smoothOrthoFrame g α` on
 `smoothOrthoFrameNbhd α`, and (via $\alpha \in \mathrm{Nbhd}\,\alpha$)
 at the centre $\alpha$ itself. -/
 
-/-- **Orthonormality of `smoothOrthoFrame` on the bump-equals-1
+/-- **Math.** **Orthonormality of `smoothOrthoFrame` on the bump-equals-1
 neighbourhood.** For $b \in \mathrm{smoothOrthoFrameNbhd}\,\alpha$,
 the smooth orthonormal frame at $b$ is $g$-orthonormal. -/
 theorem smoothOrthoFrame_orthonormal
@@ -785,7 +778,7 @@ theorem smoothOrthoFrame_orthonormal
   exact chartFrameNorm_orthonormal (I := I) g α
     (smoothOrthoFrameNbhd_subset_baseSet (I := I) (M := M) α hb) i j
 
-/-- **Orthonormality of `smoothOrthoFrame` at the centre.** The frame
+/-- **Math.** **Orthonormality of `smoothOrthoFrame` at the centre.** The frame
 `smoothOrthoFrame g α` is $g_\alpha$-orthonormal. Direct corollary of
 `smoothOrthoFrame_orthonormal` at $\alpha$, since
 $\alpha \in \mathrm{smoothOrthoFrameNbhd}\,\alpha$. -/
@@ -823,7 +816,7 @@ tangent-bundle section on $M$. The argument has three layers:
    together with `tsupport_subset_chartAt_source` extends the local
    smoothness to a global $C^\infty$ tangent section. -/
 
-/-- **Step 1 of Stage 6.** The fiberwise inner product of two
+/-- **Eng.** Stage 6 Step 1. The fiberwise inner product of two
 $C^\infty$ tangent-bundle sections is a $C^\infty$ scalar function on
 the same set `s ⊆ M`. -/
 private lemma g_inner_contMDiffOn_of_sections
@@ -849,7 +842,7 @@ private lemma g_inner_contMDiffOn_of_sections
   rw [Bundle.contMDiffWithinAt_totalSpace] at hpx
   exact hpx.2
 
-/-- **Step 1' of Stage 6.** `T%`-form repackaging of
+/-- **Eng.** Stage 6 Step 1'. `T%`-form repackaging of
 `chartBasisVec_contMDiffOn`: the chart-basis tangent section is
 $C^\infty$ on the trivialization base set, stated in the `T%` form
 expected by Mathlib's section-level API
@@ -861,7 +854,7 @@ private lemma chartBasisVec_contMDiffOn_section
         (trivializationAt E (TangentSpace I) α).baseSet :=
   chartBasisVec_contMDiffOn (I := I) α i
 
-/-- **Step 2 helper (generic normalisation).** Given a smooth tangent
+/-- **Eng.** Stage 6 Step 2 helper (generic normalisation). Given a smooth tangent
 section `Y` that is nonvanishing on `s`, the normalised section
 $b \mapsto (\sqrt{g_b(Y_b, Y_b)})^{-1} \cdot Y_b$ is $C^\infty$ on `s`.
 
@@ -898,7 +891,7 @@ private lemma chartFrame_normalise_section_contMDiffOn
     fun b hb => (h_sqrt b hb).inv₀ (h_sqrt_ne b hb)
   exact ContMDiffOn.smul_section h_inv hY
 
-/-- **Step 2 helper (succ step).** Given that
+/-- **Eng.** Stage 6 Step 2 helper (succ step). Given that
 `chartFrameNormFiber g α b j` is $C^\infty$ as a section on the
 trivialization base set for every `j` with `j.val < i.val`, the
 unnormalised Gram-Schmidt vector `chartFrameRawFiber g α b i` is
@@ -973,7 +966,7 @@ private lemma chartFrameRawFiber_succ_section_contMDiffOn
   rw [hT_eq]
   exact h_sub
 
-/-- **Step 2 of Stage 6 (joint smoothness).** By strong induction on
+/-- **Eng.** Stage 6 Step 2 (joint smoothness). By strong induction on
 `i.val`, both `chartFrameRawFiber g α b i` and
 `chartFrameNormFiber g α b i` define $C^\infty$ sections on the
 trivialization base set. Thin wrapper around
@@ -1051,7 +1044,7 @@ private theorem chartFrameNormFiber_contMDiffOn_strong
       refine ⟨h_raw, ?_⟩
       rw [hT_eq]; exact h_norm
 
-/-- **Step 2 of Stage 6 (section form).** `chartFrameNorm g α i b` is
+/-- **Math.** Stage 6 Step 2 (section form). `chartFrameNorm g α i b` is
 $C^\infty$ as a tangent-bundle section in `b`, on the trivialization
 base set. -/
 lemma chartFrameNorm_contMDiffOn
@@ -1064,7 +1057,7 @@ lemma chartFrameNorm_contMDiffOn
   exact (chartFrameNormFiber_contMDiffOn_strong (I := I) g α i.val i
     (le_refl _)).2
 
-/-- **Step 3 of Stage 6 — global smoothness of the smooth orthonormal
+/-- **Math.** Stage 6 Step 3 — global smoothness of the smooth orthonormal
 frame.** Each component `smoothOrthoFrame g α i` is $C^\infty$ as a
 tangent-bundle section on $M$. The bump function `chartBumpAt α` is
 $C^\infty$ globally; its tsupport sits inside the chart source where
@@ -1132,7 +1125,7 @@ variable [hm : HasMetric I M]
 
 open scoped InnerProductSpace
 
-/-- Orthonormality of `smoothOrthoFrame hm.metric α · α` in the
+/-- **Math.** Orthonormality of `smoothOrthoFrame hm.metric α · α` in the
 `InnerProductSpace ℝ` sense (via `⟪·, ·⟫_ℝ` rather than
 `hm.metric.inner α`). Direct from
 `smoothOrthoFrame_orthonormal_at_center` and the def-eq
@@ -1148,7 +1141,7 @@ theorem smoothOrthoFrame_inner_at_center (α : M)
   show hm.metric.inner α _ _ = _
   exact smoothOrthoFrame_orthonormal_at_center (I := I) hm.metric α i j
 
-/-- `smoothOrthoFrame hm.metric α · α` is an `Orthonormal` family in
+/-- **Math.** `smoothOrthoFrame hm.metric α · α` is an `Orthonormal` family in
 `TangentSpace I α`. -/
 theorem smoothOrthoFrame_orthonormal_family (α : M) :
     Orthonormal ℝ
@@ -1159,7 +1152,7 @@ theorem smoothOrthoFrame_orthonormal_family (α : M) :
   intro i j
   exact smoothOrthoFrame_inner_at_center (I := I) α i j
 
-/-- **`smoothOrthoFrame` packaged as an `OrthonormalBasis` at $\alpha$**.
+/-- **Math.** **`smoothOrthoFrame` packaged as an `OrthonormalBasis` at $\alpha$**.
 The smooth orthonormal frame evaluated at the centre $\alpha$, indexed
 by `Fin (Module.finrank ℝ E)`, with the canonical orthonormality from
 `smoothOrthoFrame_orthonormal_family`. Constructed via
@@ -1188,7 +1181,7 @@ noncomputable def smoothOrthoFrameOrthonormalBasis (α : M) :
     (coe_basisOfOrthonormalOfCardEqFinrank
       (smoothOrthoFrame_orthonormal_family (I := I) α) _) i
 
-/-- **Basis-change bridge at $\alpha$**: for any bilinear
+/-- **Math.** **Basis-change bridge at $\alpha$**: for any bilinear
 $B : T_\alpha M \to_\ell T_\alpha M \to_\ell W$ and any
 `OrthonormalBasis b` of `TangentSpace I α`, the diagonal sum over
 the smooth orthonormal frame equals the diagonal sum over $b$.
@@ -1212,7 +1205,7 @@ theorem sum_diagonal_smoothOrthoFrame_eq_orthonormalBasis
   simp only [smoothOrthoFrameOrthonormalBasis_apply] at h
   exact h
 
-/-- **Basis-change bridge to `stdOrthonormalBasis`**: specialization of
+/-- **Math.** **Basis-change bridge to `stdOrthonormalBasis`**: specialization of
 `sum_diagonal_smoothOrthoFrame_eq_orthonormalBasis` with
 $b = \mathrm{stdOrthonormalBasis}\,\mathbb{R}\,(T_\alpha M)$ — the
 basis used by `connectionLaplacian` / `scalarLaplacian` / the
@@ -1234,7 +1227,7 @@ At any `b ∈ smoothOrthoFrameNbhd α`, the frame `(smoothOrthoFrame hm.metric �
 forms a `g_b`-orthonormal basis of `T_bM`. Same construction as
 `smoothOrthoFrameOrthonormalBasis α` but parameterised by the nbhd point. -/
 
-/-- Inner-product (IPS) form of `smoothOrthoFrame_orthonormal` at `b ∈ nbhd α`,
+/-- **Math.** Inner-product (IPS) form of `smoothOrthoFrame_orthonormal` at `b ∈ nbhd α`,
 routed through `HasMetric I M` → `InnerProductSpace ℝ (TangentSpace I b)`. -/
 theorem smoothOrthoFrame_inner_at_nbhd (α : M) {b : M}
     (hb : b ∈ smoothOrthoFrameNbhd (I := I) (M := M) α)
@@ -1245,7 +1238,7 @@ theorem smoothOrthoFrame_inner_at_nbhd (α : M) {b : M}
   show hm.metric.inner b _ _ = _
   exact smoothOrthoFrame_orthonormal (I := I) hm.metric α hb i j
 
-/-- `smoothOrthoFrame hm.metric α · b` is an `Orthonormal` family in `T_bM`. -/
+/-- **Math.** `smoothOrthoFrame hm.metric α · b` is an `Orthonormal` family in `T_bM`. -/
 theorem smoothOrthoFrame_orthonormal_family_at_nbhd (α : M) {b : M}
     (hb : b ∈ smoothOrthoFrameNbhd (I := I) (M := M) α) :
     Orthonormal ℝ
@@ -1256,7 +1249,7 @@ theorem smoothOrthoFrame_orthonormal_family_at_nbhd (α : M) {b : M}
   intro i j
   exact smoothOrthoFrame_inner_at_nbhd (I := I) α hb i j
 
-/-- **`smoothOrthoFrame` packaged as an `OrthonormalBasis` at `b ∈ nbhd α`**.
+/-- **Math.** **`smoothOrthoFrame` packaged as an `OrthonormalBasis` at `b ∈ nbhd α`**.
 Parametric in the nbhd point. -/
 noncomputable def smoothOrthoFrameOrthonormalBasis_at_nbhd (α : M) {b : M}
     (hb : b ∈ smoothOrthoFrameNbhd (I := I) (M := M) α) :
@@ -1280,7 +1273,7 @@ noncomputable def smoothOrthoFrameOrthonormalBasis_at_nbhd (α : M) {b : M}
     (coe_basisOfOrthonormalOfCardEqFinrank
       (smoothOrthoFrame_orthonormal_family_at_nbhd (I := I) α hb) _) i
 
-/-- **Basis-change bridge at `b ∈ nbhd α` (to `stdOrthonormalBasis`)**:
+/-- **Math.** **Basis-change bridge at `b ∈ nbhd α` (to `stdOrthonormalBasis`)**:
 the diagonal sum over the smooth orthonormal frame at any nbhd point `b`
 equals the diagonal sum over `stdOrthonormalBasis ℝ (T_bM)`. Parametric
 version of `sum_diagonal_smoothOrthoFrame_eq_std`. -/
