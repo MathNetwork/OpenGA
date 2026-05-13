@@ -1097,28 +1097,47 @@ both are diagonal sums of the same bilinear map indexed over an
 orthonormal basis of $T_xM$, and the diagonal sum is basis-invariant.
 
 The `smoothOrthoFrame`-form is the natural target for the per-summand +
-outer-assembly chain. **Per-summand layer landed** (`Bochner/PerSummand.lean`):
+outer-assembly chain.
 
-* `bochner_per_summand_swap` (step d) — Hess-sym swap form;
-* `bochner_per_summand_riemann_form` (step e) — torsion-free curvature
-  expansion;
-* `bochner_per_summand_assembled` (step f) — combined per-summand identity
+**Outer-assembly helper layer LANDED (Tasks 1–10)**:
+
+* `bochner_per_summand_assembled` (step f, `Bochner/PerSummand.lean`):
   $g(\nabla_B \nabla_B \nabla f, W) - g(\nabla_{\nabla_B B} \nabla f, W)
   = g(R(B, W)\,\nabla f, B) + \mathrm{d}(b \mapsto \mathrm{Hess}\,f(B, B))(x)\cdot W
   - 2\,\mathrm{Hess}\,f(B, \nabla_W B)(x)$.
+* `Curvature/Tensoriality.lean`: full 3-slot tensoriality (Z/X/Y-slot
+  Leibniz + add + locality + vanishing + eq_at) + `pointwise_eq` bundling.
+* `heart_curvature_orthonormal_sum_eq_ricci`: $\sum_i g(R(B_i, W) \nabla f, B_i) = \mathrm{Ric}(\nabla f, W)$.
+* `sum_hessianBilin_smoothOrthoFrame_eventuallyEq_laplacian`: $\sum_i \mathrm{Hess}\,f(B_i, B_i) =^\mathrm{nbhd} \Delta_g f$.
+* `sum_hessianBilin_smoothOrthoFrame_cov_eq_zero`: $\sum_i \mathrm{Hess}\,f(B_i, \nabla_W B_i) = 0$.
+* `mfderiv_finset_sum_apply`: mfderiv distributes over `Finset.sum`.
 
-**Outer-assembly layer outstanding** (~400 LOC):
-1. Full 3-slot tensoriality of `riemannCurvature` (Z-slot Leibniz
-   `riemannCurvature_smul_third_scalar_field` landed; Z-slot vanishing
-   via chart frame + bump, X/Y-slot mirrors, pointwise-eq bundling all TODO).
-2. `heart_curvature_orthonormal_sum_eq_ricci` analog:
-   $\sum_i g(R(B_i, W) \nabla f, B_i) = \mathrm{Ric}(\nabla f, W)$.
-3. `sum_hessianBilin_smoothOrthoFrame_eventuallyEq_laplacian`:
-   $\sum_i \mathrm{Hess}\,f(B_i, B_i) =^\mathrm{nbhd} \Delta_g f$ via Stage 5+7.
-4. `sum_hessianBilin_smoothOrthoFrame_cov_eq_zero`:
-   $\sum_i \mathrm{Hess}\,f(B_i, \nabla_W B_i) = 0$ via antisymm-symm cancel.
-5. mfderiv distributes over `Finset.sum`.
-6. Final assembly into this narrowed sorry.
+**Remaining work (Task #11 — final assembly bridge)**:
+
+The bochner_per_summand_assembled LHS uses the smooth-section form
+$g(\nabla_B \nabla_B \nabla f, W) - g(\nabla_{\nabla_B B} \nabla f, W)$,
+while this narrowed sorry's LHS uses the constant-extension form
+$g(\mathrm{secondCovDerivAt}\,\nabla f\,x\,(B_i x)\,(B_i x), \nabla f\,x)$.
+
+Connecting the two requires a **tensoriality bridge**:
+$g(\mathrm{secondCovDerivAt}\,\nabla f\,x\,(V x)\,(W x), \cdot)
+   \;=\; g(\mathrm{covDeriv}\,V\,(\mathrm{covDeriv}\,V\,\nabla f)\,x
+            - \mathrm{covDerivAt}\,\nabla f\,x\,(\mathrm{covDeriv}\,V\,W\,x), \cdot)$
+for smooth `V, W` with $V(x), W(x)$ matching the constant extension's
+direction vectors. The bridge is the Leibniz/product rule for the
+connection on the Hom bundle $T^*M \otimes TM$ — Mathlib's framework
+exposes this implicitly via `MDifferentiableAt.clm_bundle_apply` but
+OpenGALib's `CovariantDerivative` API does not yet expose the
+covariant-derivative Hom-section operator at the level needed here.
+
+Once the bridge lands, the assembly is mechanical:
+* Apply `bochner_per_summand_assembled` per i (with B = smoothOrthoFrame, W = ∇f section).
+* Sum over i; distribute via `mfderiv_finset_sum_apply` + `Finset.sum_add_distrib`.
+* Identify the R-sum via `heart_curvature_orthonormal_sum_eq_ricci` ⇒ Ric.
+* Identify the mfderiv-Hess-sum via `sum_hessianBilin_smoothOrthoFrame_eventuallyEq_laplacian`
+  + `Filter.EventuallyEq.mfderiv_eq` ⇒ d(Δ_g f)(x)(∇f x) = g(∇(Δf), ∇f)
+  (via gradient/mfderiv duality).
+* Discharge the cov-Hess-sum via `sum_hessianBilin_smoothOrthoFrame_cov_eq_zero` ⇒ 0.
 
 References: Petersen Ch 7 §1 Prop 33; do Carmo §6; external
 `hInner_discharge` (`Bochner.lean:3257`). -/
