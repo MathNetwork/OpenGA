@@ -2,6 +2,7 @@ import OpenGALib.Riemannian.Operators.ConnectionLaplacian
 import OpenGALib.Riemannian.Operators.Hessian
 import OpenGALib.Riemannian.Operators.Laplacian
 import OpenGALib.Riemannian.Curvature
+import OpenGALib.Riemannian.Curvature.Tensoriality
 import OpenGALib.Riemannian.Gradient
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
 import OpenGALib.Util.Notation
@@ -648,6 +649,113 @@ theorem heart_of_bochner_curvature_term
       - metricInner x (manifoldGradient (I := I) f x)
           (riemannCurvature B w B x) := by
   linarith
+
+/-- **Ricci sum identity** (heart-of-Bochner Step 3): the curvature trace
+over the smooth orthonormal frame at `x` against `(W, ∇f, B_i)` equals
+the Ricci bilinear evaluated at `(∇f x, W x)`:
+$$\sum_i g_x\bigl(R(B_i, W)\,\nabla f,\, B_i\bigr) \;=\;
+  \mathrm{Ric}_g(\nabla f, W)(x),$$
+where `B_i = smoothOrthoFrame g x i`.
+
+Strategy:
+1. Per `i`, `riemannCurvature_eq_of_pointwise_eq` replaces the three
+   smooth-section arguments of `R` with their constant lifts at `x`
+   (`Bi i x`, `W x`, `∇f x`). The values at `x` agree by definition.
+2. The bilinear form `Φ(v, w) := g_x(curvatureEndo (const Wx) (const ∇fx) x v, w)`
+   has diagonal sum `∑ i Φ(Bi i x, Bi i x)` equal to the LHS, and by
+   `Tensor.sum_diagonal_smoothOrthoFrame_eq_std` (Stage 7 basis-invariance)
+   equal to `∑ i Φ(stdBasis i, stdBasis i)`.
+3. `ricciTensor_eq_sum_inner_orthonormal` identifies the std-basis sum
+   with `Ric_g(W x, ∇f x) x`; `ricci_symm` swaps to `Ric_g(∇f x, W x) x`.
+
+External reference: `heart_curvature_orthonormal_sum_eq_ricci` in
+`differential-geometry/.../Bochner.lean:2013`. -/
+theorem heart_curvature_orthonormal_sum_eq_ricci
+    [IsManifold I 2 M] [T2Space M]
+    (f : M → ℝ) (W : SmoothVectorField I M) (x : M)
+    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
+    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    ∑ i, metricInner x
+        (riemannCurvature
+          (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i)
+          W.toFun (manifoldGradient (I := I) f) x)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
+      = Ric_g(manifoldGradient (I := I) f x, W.toFun x) x := by
+  classical
+  -- Wrap `∇f`, frame, and the constant lifts of `(W x, ∇f x)` as `SmoothVectorField`.
+  let gradF : SmoothVectorField I M :=
+    { toFun := manifoldGradient (I := I) f, smooth := h_grad }
+  let Bi : Fin (Module.finrank ℝ E) → SmoothVectorField I M := fun i =>
+    { toFun := Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i
+      smooth := Riemannian.Tensor.smoothOrthoFrame_smooth (I := I) hm.metric x i }
+  let WV : SmoothVectorField I M :=
+    SmoothVectorField.const (I := I) (M := M) (W.toFun x : E)
+  let GV : SmoothVectorField I M :=
+    SmoothVectorField.const (I := I) (M := M) (gradF.toFun x : E)
+  -- Bilinear form `Φ(v, w) := g_x(curvatureEndo WV GV x v, w)`.
+  set Φ : TangentSpace I x →ₗ[ℝ] TangentSpace I x →ₗ[ℝ] ℝ :=
+    LinearMap.mk₂ ℝ
+      (fun v w => metricInner x (curvatureEndo WV GV x v) w)
+      (fun v₁ v₂ w => by
+        show metricInner x (curvatureEndo WV GV x (v₁ + v₂)) w
+          = metricInner x (curvatureEndo WV GV x v₁) w
+            + metricInner x (curvatureEndo WV GV x v₂) w
+        rw [(curvatureEndo WV GV x).map_add, metricInner_add_left])
+      (fun c v w => by
+        show metricInner x (curvatureEndo WV GV x (c • v)) w
+          = c • metricInner x (curvatureEndo WV GV x v) w
+        rw [(curvatureEndo WV GV x).map_smul, metricInner_smul_left]; rfl)
+      (fun v w₁ w₂ => by
+        show metricInner x (curvatureEndo WV GV x v) (w₁ + w₂)
+          = metricInner x (curvatureEndo WV GV x v) w₁
+            + metricInner x (curvatureEndo WV GV x v) w₂
+        rw [metricInner_add_right])
+      (fun c v w => by
+        show metricInner x (curvatureEndo WV GV x v) (c • w)
+          = c • metricInner x (curvatureEndo WV GV x v) w
+        rw [metricInner_smul_right]; rfl) with hΦ_def
+  -- Step 1: per-`i` pointwise-eq reduction.
+  have h_per_i : ∀ i,
+      metricInner x
+          (riemannCurvature (Bi i).toFun W.toFun gradF.toFun x) ((Bi i).toFun x)
+        = Φ ((Bi i).toFun x) ((Bi i).toFun x) := by
+    intro i
+    have hR_eq : riemannCurvature (Bi i).toFun W.toFun gradF.toFun x
+        = curvatureEndo WV GV x ((Bi i).toFun x) := by
+      show riemannCurvature (Bi i).toFun W.toFun gradF.toFun x
+        = riemannCurvature
+            (fun _ : M => ((Bi i).toFun x : TangentSpace I x))
+            WV.toFun GV.toFun x
+      exact riemannCurvature_eq_of_pointwise_eq
+        (Bi i) (SmoothVectorField.const ((Bi i).toFun x : E))
+        W WV gradF GV x h_interior rfl rfl rfl
+    rw [hR_eq]; rfl
+  -- Step 2 + 3 + 4: rewrite via h_per_i, Stage 7, identify with Ric, ricci_symm.
+  calc ∑ i, metricInner x
+        (riemannCurvature (Bi i).toFun W.toFun gradF.toFun x) ((Bi i).toFun x)
+      = ∑ i, Φ ((Bi i).toFun x) ((Bi i).toFun x) :=
+        Finset.sum_congr rfl (fun i _ => h_per_i i)
+    _ = ∑ i, Φ ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)
+                ((stdOrthonormalBasis ℝ (TangentSpace I x)) i) :=
+        Riemannian.Tensor.sum_diagonal_smoothOrthoFrame_eq_std (I := I) x Φ
+    _ = Ric_g(W.toFun x, gradF.toFun x) x := by
+        rw [ricciTensor_eq_sum_inner_orthonormal x (W.toFun x) (gradF.toFun x)]
+        apply Finset.sum_congr rfl
+        intro i _
+        -- Φ v v = metricInner (curvatureEndo WV GV x v) v
+        --       = ⟪curvatureEndo WV GV x v, v⟫_ℝ (def-eq)
+        --       = ⟪v, curvatureEndo WV GV x v⟫_ℝ (real_inner_comm).
+        show ⟪curvatureEndo WV GV x ((stdOrthonormalBasis ℝ (TangentSpace I x)) i),
+                (stdOrthonormalBasis ℝ (TangentSpace I x)) i⟫_ℝ
+            = ⟪(stdOrthonormalBasis ℝ (TangentSpace I x)) i,
+                curvatureEndo WV GV x ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)⟫_ℝ
+        exact real_inner_comm _ _
+    _ = Ric_g(gradF.toFun x, W.toFun x) x := by
+        show ricciTensor x (W.toFun x) (gradF.toFun x)
+          = ricciTensor x (gradF.toFun x) (W.toFun x)
+        show ricci WV GV x = ricci GV WV x
+        exact ricci_symm WV GV x h_interior
 
 /-- **Conditional inner-form reduction.** Given the inner-product form
 of the heart-of-Bochner sum identity against every test direction $w$
