@@ -37,7 +37,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
-/-- **Smoothness of `y ↦ mfderiv f y (V y)` as a scalar function** for
+/-- **Eng.** Smoothness of `y ↦ mfderiv f y (V y)` as a scalar function for
 smooth scalar `f` and smooth tangent section `V`. The directional
 derivative `V(f)` is C∞.
 
@@ -60,7 +60,7 @@ theorem mfderiv_apply_smoothVF_contMDiff
   exact fun y => hm.metric.metricInner_contMDiffAt
     (n := ∞) (manifoldGradient_smooth_of_smooth (I := I) f hf y) (V.smooth y)
 
-/-- **3rd-slot (Z-slot) C∞-linearity of `riemannCurvature`**:
+/-- **Math.** **3rd-slot (Z-slot) C∞-linearity of `riemannCurvature`**:
 $$R(X, Y)(f \cdot Z)(x) = f(x) \cdot R(X, Y)\,Z(x).$$
 
 External reference: `riemannSec_smul_third` in
@@ -220,7 +220,7 @@ satisfies a covariant-derivative locality identity in `Z`:
   evaluate the outer `covDeriv` via the same field-locality lemma.
 * `covDeriv [X, Y] Z x` reduces directly. -/
 
-/-- **Z-slot locality of `riemannCurvature`**: if `Z =ᶠ[𝓝 x] Z'`, then
+/-- **Math.** **Z-slot locality of `riemannCurvature`**: if `Z =ᶠ[𝓝 x] Z'`, then
 `R(X, Y) Z(x) = R(X, Y) Z'(x)`. External reference: `riemannSec_eq_of_Z_eventuallyEq`
 (`differential-geometry/.../CurvatureBundling.lean:227`). -/
 theorem riemannCurvature_eq_of_Z_eventuallyEq
@@ -304,7 +304,7 @@ and additivity (`riemannCurvature_add_third`) inductively to each summand.
 External reference: `riemannSec_eq_zero_of_Z_eq_zero`
 (`differential-geometry/.../CurvatureBundling.lean:436`). -/
 
-/-- **Z-slot vanishing**: $Z(x) = 0 \Rightarrow R(X, Y) Z(x) = 0$ for smooth
+/-- **Math.** **Z-slot vanishing**: $Z(x) = 0 \Rightarrow R(X, Y) Z(x) = 0$ for smooth
 global sections `X, Y, Z`. -/
 theorem riemannCurvature_eq_zero_of_Z_eq_zero_field
     [IsManifold I 2 M] [T2Space M]
@@ -483,7 +483,7 @@ theorem riemannCurvature_eq_zero_of_Z_eq_zero_field
 if `Z x = Z' x`, then `R(X, Y) Z(x) = R(X, Y) Z'(x)`. Derived from
 Z-slot vanishing on `τ := Z - Z'` combined with Z-slot additivity. -/
 
-/-- **Z-slot pointwise dependence**: `Z x = Z' x ⇒ R(X, Y) Z(x) = R(X, Y) Z'(x)`. -/
+/-- **Math.** **Z-slot pointwise dependence**: `Z x = Z' x ⇒ R(X, Y) Z(x) = R(X, Y) Z'(x)`. -/
 theorem riemannCurvature_eq_of_Z_eq_at
     [IsManifold I 2 M] [T2Space M]
     (X Y Z Z' : SmoothVectorField I M) (x : M)
@@ -518,7 +518,7 @@ Lie-bracket Leibniz, leaving no curvature correction.
 External reference: `riemannSec_smul_left` and `riemannSec_add_left` in
 `differential-geometry/.../Curvature.lean`. -/
 
-/-- **First-slot scalar Leibniz** for `riemannCurvature`:
+/-- **Math.** **First-slot scalar Leibniz** for `riemannCurvature`:
 $$R(f \cdot X, Y) Z(x) = f(x) \cdot R(X, Y) Z(x).$$
 Clean cancellation: the cross-derivative residual from the inner `covDeriv`
 Leibniz pairs against the Lie-bracket smul-Leibniz with opposite sign.
@@ -590,7 +590,7 @@ theorem riemannCurvature_smul_first_scalar_field
   simp only [neg_smul]
   abel
 
-/-- **First-slot additivity** for `riemannCurvature`: $R(X + X', Y) Z = R(X, Y) Z + R(X', Y) Z$. -/
+/-- **Math.** **First-slot additivity** for `riemannCurvature`: $R(X + X', Y) Z = R(X, Y) Z + R(X', Y) Z$. -/
 theorem riemannCurvature_add_first
     (X X' Y Z : SmoothVectorField I M) (x : M) :
     riemannCurvature (X + X').toFun Y.toFun Z.toFun x
@@ -650,7 +650,7 @@ theorem riemannCurvature_add_first
   rw [riemannCurvature_def, hT1, hT2, hT3, riemannCurvature_def, riemannCurvature_def]
   abel
 
-/-- **X-slot locality of `riemannCurvature`**: if `X =ᶠ[𝓝 x] X'`, then
+/-- **Math.** **X-slot locality of `riemannCurvature`**: if `X =ᶠ[𝓝 x] X'`, then
 `R(X, Y) Z(x) = R(X', Y) Z(x)`. Compared to Z-slot locality, the X-slot
 proof is short — terms T1 and T3 depend on `X` only pointwise at `x`
 (since the direction enters as `(lc.toFun ... x)(X x)`), and T2 reduces
@@ -710,7 +710,7 @@ The structure is parallel to `riemannCurvature_eq_zero_of_Z_eq_zero_field`,
 but the per-summand Leibniz uses `riemannCurvature_smul_first_scalar_field`
 (no `h_interior` required) and `riemannCurvature_add_first`. -/
 
-/-- **X-slot vanishing**: $X(x) = 0 \Rightarrow R(X, Y) Z(x) = 0$ for smooth
+/-- **Math.** **X-slot vanishing**: $X(x) = 0 \Rightarrow R(X, Y) Z(x) = 0$ for smooth
 global sections `X, Y, Z`. -/
 theorem riemannCurvature_eq_zero_of_X_eq_zero_field
     [IsManifold I 2 M] [T2Space M]
@@ -870,7 +870,7 @@ theorem riemannCurvature_eq_zero_of_X_eq_zero_field
         (g j) (s' j) Y Z x (hg_smooth j)
     rw [h_add, h_smul, IH, Finset.sum_insert hjs]
 
-/-- **X-slot pointwise dependence**: `X x = X' x ⇒ R(X, Y) Z(x) = R(X', Y) Z(x)`. -/
+/-- **Math.** **X-slot pointwise dependence**: `X x = X' x ⇒ R(X, Y) Z(x) = R(X', Y) Z(x)`. -/
 theorem riemannCurvature_eq_of_X_eq_at
     [IsManifold I 2 M] [T2Space M]
     (X X' Y Z : SmoothVectorField I M) (x : M)
@@ -891,7 +891,7 @@ theorem riemannCurvature_eq_of_X_eq_at
   rw [h_pi] at h_add
   rw [h_add, hτ_vanish, add_zero]
 
-/-- **Y-slot pointwise dependence**: `Y x = Y' x ⇒ R(X, Y) Z(x) = R(X, Y') Z(x)`.
+/-- **Math.** **Y-slot pointwise dependence**: `Y x = Y' x ⇒ R(X, Y) Z(x) = R(X, Y') Z(x)`.
 Reduces to X-slot pointwise dependence via antisymmetry of the first pair. -/
 theorem riemannCurvature_eq_of_Y_eq_at
     [IsManifold I 2 M] [T2Space M]
@@ -904,7 +904,7 @@ theorem riemannCurvature_eq_of_Y_eq_at
       riemannCurvature_eq_of_X_eq_at Y Y' X Z x hYY',
       ← riemannCurvature_antisymm X.toFun Y'.toFun Z.toFun x]
 
-/-- **Pointwise well-definedness of `riemannCurvature` on smooth global sections**:
+/-- **Math.** **Pointwise well-definedness of `riemannCurvature` on smooth global sections**:
 given two triples `(X, Y, Z)` and `(X', Y', Z')` of smooth global sections
 agreeing pointwise at `x`, the values of `riemannCurvature` at `x` coincide.
 

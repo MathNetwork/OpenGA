@@ -44,8 +44,8 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] [T2Space M]
   [hm : HasMetric I M]
 
-/-- The **Laplace–Beltrami operator** $\Delta_g$ acting on a pointwise Hessian
-bilinear form $B$:
+/-- **Math.** The **Laplace–Beltrami operator** $\Delta_g$ acting on a
+pointwise Hessian bilinear form $B$:
 $$\Delta_g B(x) = \sum_i B(x)(e_i, e_i).$$ -/
 noncomputable def laplacian
     (B : Bilin (M := M) I) (x : M) : ℝ :=
@@ -55,7 +55,7 @@ noncomputable def laplacian
     (B : Bilin (M := M) I) (x : M) :
     laplacian (I := I) (M := M) B x = trace B x := rfl
 
-/-- $\Delta_g (B + C) = \Delta_g B + \Delta_g C$. -/
+/-- **Math.** $\Delta_g (B + C) = \Delta_g B + \Delta_g C$. -/
 theorem laplacian_add
     (B C : Bilin (M := M) I) (x : M) :
     laplacian (I := I) (M := M) (B + C) x =
@@ -66,7 +66,7 @@ theorem laplacian_add
   show (B x + C x) _ _ = B x _ _ + C x _ _
   rfl
 
-/-- $\Delta_g (c \cdot B) = c \cdot \Delta_g B$. -/
+/-- **Math.** $\Delta_g (c \cdot B) = c \cdot \Delta_g B$. -/
 theorem laplacian_smul
     (c : ℝ) (B : Bilin (M := M) I) (x : M) :
     laplacian (I := I) (M := M) (c • B) x =
@@ -77,8 +77,8 @@ theorem laplacian_smul
   show (c • B x) _ _ = c * B x _ _
   simp [LinearMap.smul_apply]
 
-/-- $(\Delta_g B(x))^2 \le n \cdot \operatorname{frobeniusSq} B(x)$, the
-Cauchy-Schwarz bound used downstream of the Bochner identity. -/
+/-- **Math.** $(\Delta_g B(x))^2 \le n \cdot \operatorname{frobeniusSq} B(x)$,
+the Cauchy-Schwarz bound used downstream of the Bochner identity. -/
 theorem laplacian_sq_le_dim_mul_frobeniusSq
     (B : Bilin (M := M) I) (x : M) :
     (laplacian (I := I) (M := M) B x)^2 ≤
@@ -93,12 +93,10 @@ as the trace of the Hessian. Used in the Bochner identity. -/
 variable [IsLocallyConstantChartedSpace H M]
 
 set_option backward.isDefEq.respectTransparency false in
-/-- The **scalar Laplacian** $\Delta_g f(x)$ of a smooth function
-$f : M \to \mathbb{R}$ at $x$: the **geometric trace** of the Hessian,
-$\Delta_g f(x) = \sum_i \operatorname{Hess} f(x)(\varepsilon_i, \varepsilon_i)$,
-where $\{\varepsilon_i\}$ is the $g$-orthonormal frame `stdOrthonormalBasis`
-on $T_x M$. Basis-independent (any $g$-orthonormal frame gives the same
-trace), and required for the Bochner–Weitzenböck identity. -/
+/-- **Math.** The **scalar Laplacian** $\Delta_g f(x)$ of a smooth function
+$f : M \to \mathbb{R}$ at $x$, the geometric trace of the Hessian:
+$\Delta_g f(x) = \sum_i \operatorname{Hess} f(x)(\varepsilon_i, \varepsilon_i)$
+in the $g$-orthonormal frame `stdOrthonormalBasis`. Basis-independent. -/
 noncomputable def scalarLaplacian (f : M → ℝ) (x : M) : ℝ :=
   let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
     stdOrthonormalBasis ℝ (TangentSpace I x)
@@ -107,12 +105,13 @@ noncomputable def scalarLaplacian (f : M → ℝ) (x : M) : ℝ :=
     (fun (_ : M) => (e i : TangentSpace I x))
     x
 
-/-- The scalar Laplacian `Δ_g[I] f : M → ℝ` ($= \mathrm{tr}_g(\mathrm{Hess}\,f)$).
-`I` is bracketed because `f : M → ℝ` does not expose the model with corners. -/
+/-- **Math.** Notation `Δ_g[I] f` for the scalar Laplacian
+$\mathrm{tr}_g(\mathrm{Hess}\,f)$. `I` bracketed since `f : M → ℝ` hides
+the model with corners. -/
 scoped[Riemannian] notation:max "Δ_g[" I "] " f:max =>
   Operators.scalarLaplacian (I := I) f
 
-/-- **Bridge**: the function-form scalar Laplacian equals the `Bilin`-form
+/-- **Mixed.** Bridge: the function-form scalar Laplacian equals the `Bilin`-form
 trace of the Hessian section. Both unfold to
 $\sum_i \langle \nabla_{\varepsilon_i} \nabla f, \varepsilon_i\rangle_g$ in the
 same $g$-orthonormal frame `stdOrthonormalBasis`; the only definitional gap is

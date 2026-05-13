@@ -35,37 +35,30 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [hm : HasMetric I M]
 
-/-- The **manifold gradient** $\nabla^M f(x) \in T_xM$, defined via Riesz duality
-on the tangent space: the unique $v$ with $\langle v, w \rangle_g = (\mathrm{d}f)_x(w)$
+/-- **Math.** The **manifold gradient** $\nabla^M f(x) \in T_xM$ via
+Riesz duality: the unique $v$ with $\langle v, w \rangle_g = (\mathrm{d}f)_x(w)$
 for all $w$. -/
 noncomputable def manifoldGradient
     (f : M → ℝ) (x : M) : TangentSpace I x :=
   metricRiesz x (mfderiv I 𝓘(ℝ, ℝ) f x)
 
-/-- The manifold gradient `grad_g[I] f` as a section `x ↦ ∇^M f(x)`.
+/-- **Math.** Notation `grad_g[I] f` for the manifold gradient section.
 `I` is bracketed because `f : M → ℝ` does not expose the model with
 corners to typeclass synthesis. -/
 scoped[Riemannian] notation:max "grad_g[" I "] " f:max =>
   manifoldGradient (I := I) f
 
 omit [CompleteSpace E] in
-/-- $\langle \nabla^M f(x), v \rangle_g = (\mathrm{d}f)_x(v)$. -/
+/-- **Math.** $\langle \nabla^M f(x), v \rangle_g = (\mathrm{d}f)_x(v)$. -/
 theorem manifoldGradient_inner_eq
     (f : M → ℝ) (x : M) (v : TangentSpace I x) :
     metricInner x (grad_g[I] f x) v = (mfderiv I 𝓘(ℝ, ℝ) f x) v :=
   metricRiesz_inner x (mfderiv I 𝓘(ℝ, ℝ) f x) v
 
 omit [CompleteSpace E] in
-/-- **Gradient smoothness propagation**: if a scalar function `g : M → ℝ`
-is $C^\infty$, then its manifold gradient $\nabla^M g$ is $C^\infty$ as a
-tangent bundle section.
-
-Mathematically trivial in standard differential geometry — the gradient
-is the composition of the smooth differential `mfderiv g` with the
-smooth Riesz isomorphism (smooth because the Riemannian metric itself is
-smooth). Used to discharge the automatic-by-textbook smoothness of the
-gradient in headline theorems such as the Bochner–Weitzenböck identity
-(`OpenGALib.Riemannian.Operators.Bochner`).
+/-- **Math.** **Gradient smoothness propagation**: $C^\infty$ scalar $g$
+gives $C^\infty$ manifold gradient $\nabla^M g$. The gradient is the
+composition of `mfderiv g` with the smooth Riesz isomorphism.
 
 Closed via `Riemannian.Tensor.metricRiesz_section_contMDiffAt` (the framework
 primitive from `Riemannian/Tensor/MusicalIso.lean`) applied at each point

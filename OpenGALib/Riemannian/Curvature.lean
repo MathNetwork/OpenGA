@@ -42,13 +42,13 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
-/-- Constant smooth vector field at a tangent vector. Hides
+/-- **Eng.** Constant smooth vector field at a tangent vector. Hides
 `SmoothVectorField.const (I := I) (M := M) V` boilerplate inside this file. -/
 local notation "cF[" V "]" => SmoothVectorField.const (I := I) (M := M) V
 
 /-! ## Math API -/
 
-/-- $R(X, Y) Z = -R(Y, X) Z$.
+/-- **Math.** $R(X, Y) Z = -R(Y, X) Z$.
 
 Reference: do Carmo §4 Proposition 2.5 (i). -/
 theorem riemannCurvature_antisymm
@@ -58,7 +58,7 @@ theorem riemannCurvature_antisymm
   rw [covDeriv_mlieBracket_swap_apply]
   abel
 
-/-- The endomorphism $z \mapsto R(z, X) Y(x)$ on $T_xM$ (with $z$ extended to
+/-- **Math.** The endomorphism $z \mapsto R(z, X) Y(x)$ on $T_xM$ (with $z$ extended to
 the constant section). Trace of this is the Ricci tensor at $x$. -/
 noncomputable def curvatureEndo
     [IsManifold I 2 M]
@@ -201,7 +201,7 @@ noncomputable def curvatureEndo
     -- Goal: c • A - c • B - c • C = c • (A - B - C)
     rw [smul_sub, smul_sub]
 
-/-- The **Ricci curvature** $\mathrm{Ric}(X, Y) \in \mathbb{R}$ at $x$:
+/-- **Math.** The **Ricci curvature** $\mathrm{Ric}(X, Y) \in \mathbb{R}$ at $x$:
 $$\mathrm{Ric}(X, Y)(x) := \mathrm{tr}(\mathrm{curvatureEndo}\,X\,Y\,x).$$
 
 Reference: do Carmo §4 ex. 1. -/
@@ -209,7 +209,7 @@ noncomputable def ricci
     (X Y : SmoothVectorField I M) (x : M) : ℝ :=
   LinearMap.trace ℝ (TangentSpace I x) (curvatureEndo X Y x)
 
-/-- The Ricci curvature as a scalar function on the manifold:
+/-- **Math.** The Ricci curvature as a scalar function on the manifold:
 `(Ric(X, Y))(x) = ricci X Y x`. -/
 scoped[Riemannian] notation:max "Ric(" X ", " Y ")" => ricci X Y
 
@@ -224,7 +224,7 @@ of $f := g(Z, Z)$; the Hessian–Lie identity
 (`mfderiv_iterate_sub_eq_mlieBracket_apply`) collapses
 $X(Y(f)) - Y(X(f)) - [X,Y](f) = 0$, closing the chain. -/
 
-/-- **Diagonal metric-compat identity**: at every point $y \in M$ with
+/-- **Math.** **Diagonal metric-compat identity**: at every point $y \in M$ with
 the direction $V$ smooth, metric compatibility gives
 $$D_V (g(Z, Z))(y) = 2\,\langle \nabla_V Z, Z\rangle_g(y).$$
 Stated using `mDirDeriv` (the `ℝ`-typed `mfderiv` wrapper) on the LHS
@@ -253,7 +253,7 @@ private lemma mDirDeriv_self_eq_two_metricInner_leviCivita_self
     h
   rw [h_ℝ]; ring
 
-/-- Function-equality form: at every $y$, the directional derivative of
+/-- **Eng.** Function-equality form: at every $y$, the directional derivative of
 $y \mapsto g(Z, Z)(y)$ along the smooth vector field $V$ equals
 $2\,g(\nabla_V Z, Z)(y)$. -/
 private lemma fun_mDirDeriv_self_eq_two_metricInner_leviCivita_self
@@ -265,7 +265,7 @@ private lemma fun_mDirDeriv_self_eq_two_metricInner_leviCivita_self
   funext y'
   exact mDirDeriv_self_eq_two_metricInner_leviCivita_self V.toFun Z y' (V.smoothAt y')
 
-/-- **Iterated metric-compat identity at $x$**: differentiating the
+/-- **Math.** **Iterated metric-compat identity at $x$**: differentiating the
 diagonal identity once more at $x$ in direction $W(x)$ and applying
 metric-compat at $x$ yields
 $$\tfrac12\,W\!\left(V (g(Z, Z))\right)(x)
@@ -395,7 +395,7 @@ private lemma half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv
     h_compat
   rw [h_compat_ℝ]; ring
 
-/-- $\langle R(X, Y) Z, Z \rangle_g(x) = 0$ for smooth vector fields
+/-- **Math.** $\langle R(X, Y) Z, Z \rangle_g(x) = 0$ for smooth vector fields
 $X, Y, Z$, with $x$ in the closure of the interior of $\mathrm{range}\,I$
 (required by the Hessian–Lie identity for boundary-aware models).
 
@@ -499,7 +499,7 @@ Polarisation of `riemannCurvature_inner_self_zero` on $Z + W$ yields the
 classical metric-skew identity
 $\langle R(X, Y) Z, W\rangle_g + \langle R(X, Y) W, Z\rangle_g = 0$. -/
 
-/-- **Additivity of `riemannCurvature` in the differentiated (3rd) slot**:
+/-- **Math.** **Additivity of `riemannCurvature` in the differentiated (3rd) slot**:
 $R(X, Y)(Z_1 + Z_2)(x) = R(X, Y) Z_1(x) + R(X, Y) Z_2(x)$ for $X, Y, Z_i$
 smooth vector fields. Direct from `covDeriv_add_field` applied at $x$
 (outer) and at every $y$ (inner section sum) plus `funext`.
@@ -554,7 +554,7 @@ theorem riemannCurvature_add_third
         Z₁.toFun Z₂.toFun x (Z₁.smoothAt x) (Z₂.smoothAt x)]
   abel
 
-/-- **Metric-skew of the Riemann curvature in the (3rd, 4th) slot**:
+/-- **Math.** **Metric-skew of the Riemann curvature in the (3rd, 4th) slot**:
 $$\langle R(X, Y) Z, W\rangle_g(x) + \langle R(X, Y) W, Z\rangle_g(x) = 0.$$
 
 Derived by polarising `riemannCurvature_inner_self_zero` on $Z + W$:
@@ -590,7 +590,7 @@ $\nabla_{[X, Y]} Z$ term drops because $[\mathrm{const}\,v, \mathrm{const}\,w] =
 as a global section (`mlieBracket_const_const_apply_zero`), so the connection
 evaluates `leviCivitaConnection.toFun Z x` at the zero vector. -/
 
-/-- **No-bracket form of `riemannCurvature` for constant directions**. -/
+/-- **Eng.** **No-bracket form of `riemannCurvature` for constant directions**. -/
 theorem riemannCurvature_const_const_eq_commutator
     (v w : E) (Z : Π y : M, TangentSpace I y) (x : M) :
     riemannCurvature (fun _ : M => v) (fun _ : M => w) Z x
@@ -620,7 +620,7 @@ $$R(\mathrm{const}\,v, X)\,Y - R(\mathrm{const}\,v, Y)\,X
    = -R(X, Y)(\mathrm{const}\,v).$$
 This is the per-basis-vector algebraic identity that drives `ricci_symm`. -/
 
-/-- **Constant-direction Bianchi swap**. Bianchi I on $(\mathrm{const}\,v, X, Y)$
+/-- **Math.** **Constant-direction Bianchi swap**. Bianchi I on $(\mathrm{const}\,v, X, Y)$
 together with first-pair antisymmetry of $R$ rearranges to the form needed
 for the Ricci-symmetry trace argument. -/
 private lemma riemannCurvature_const_first_swap_eq_neg
@@ -713,7 +713,7 @@ private lemma riemannCurvature_const_first_swap_eq_neg
             + -riemannCurvature (fun _ : M => v) Y.toFun X.toFun x from by abel]
   exact h_bianchi
 
-/-- $\mathrm{Ric}(X, Y) = \mathrm{Ric}(Y, X)$.
+/-- **Math.** $\mathrm{Ric}(X, Y) = \mathrm{Ric}(Y, X)$.
 
 Reference: do Carmo §4 ex. 1.
 
@@ -760,7 +760,7 @@ theorem ricci_symm
   exact riemannCurvature_inner_self_zero X Y
     (SmoothVectorField.const (I := I) (M := M) (b i : E)) x h_interior
 
-/-- The **Ricci tensor** at $x$ as a bilinear form $T_xM \times T_xM \to \mathbb{R}$,
+/-- **Math.** The **Ricci tensor** at $x$ as a bilinear form $T_xM \times T_xM \to \mathbb{R}$,
 $(V, W) \mapsto \mathrm{Ric}(V, W)(x)$ with $V, W$ extended to constant sections.
 Bundled as a `LinearMap → LinearMap → ℝ` for downstream metric raising. -/
 noncomputable def ricciTensor (x : M) :
@@ -1221,7 +1221,7 @@ noncomputable def ricciTensor (x : M) :
     rw [hT1]
     rw [smul_sub, smul_sub]
 
-/-- The **Ricci endomorphism** $\mathrm{Ric}^{\sharp}_x : T_xM \to T_xM$ defined
+/-- **Math.** The **Ricci endomorphism** $\mathrm{Ric}^{\sharp}_x : T_xM \to T_xM$ defined
 by metric raising of the Ricci tensor:
 $\langle \mathrm{Ric}^{\sharp}_x V, W \rangle_g = \mathrm{Ric}(V, W)(x)$. -/
 noncomputable def ricciSharp (x : M) :
@@ -1258,7 +1258,7 @@ noncomputable def ricciSharp (x : M) :
         LinearMap.toContinuousLinearMap.map_smul _ _]
     exact (metricToDualEquiv x).symm.map_smul c _
 
-/-- The **scalar curvature** $\mathrm{scal}(x) := \mathrm{tr}_g \mathrm{Ric}(x)
+/-- **Math.** The **scalar curvature** $\mathrm{scal}(x) := \mathrm{tr}_g \mathrm{Ric}(x)
 = \mathrm{tr}(\mathrm{Ric}^{\sharp}_x)$.
 
 Basis-free definition: trace of the Ricci endomorphism. Equals $\sum_i \mathrm{Ric}(e_i, e_i)$
@@ -1266,11 +1266,11 @@ for any $g$-orthonormal basis $\{e_i\}$ of $T_xM$. -/
 noncomputable def scalarCurvature (x : M) : ℝ :=
   LinearMap.trace ℝ (TangentSpace I x) (ricciSharp (I := I) (M := M) x)
 
-/-- The scalar curvature `scal_g[I]`. `I` is bracketed because
+/-- **Math.** Notation `scal_g[I]` for the scalar curvature. `I` is bracketed because
 `x : M` does not expose the model with corners. -/
 scoped[Riemannian] notation:max "scal_g[" I "]" => scalarCurvature (I := I)
 
-/-- Pointwise Ricci tensor on tangent vectors: `Ric_g(v, w) x = ricciTensor x v w`. -/
+/-- **Math.** Notation `Ric_g(v, w) x` for `ricciTensor x v w`. -/
 scoped[Riemannian] notation:max "Ric_g(" v ", " w ") " x:max => ricciTensor x v w
 
 end Riemannian

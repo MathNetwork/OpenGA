@@ -46,21 +46,14 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
-/-- The **second covariant derivative** of a tangent vector field $Z$ at
-$x$, evaluated on a pair of directions $v, w \in T_x M$:
+/-- **Math.** The **second covariant derivative** of $Z$ at $x$ on
+directions $v, w \in T_x M$:
 $$(\nabla^2 Z)(v, w)_x \;=\; \nabla_v(\nabla_w Z)|_x \;-\; \nabla_{(\nabla_v w)} Z|_x.$$
-The convention follows Lee §4 and do Carmo §2: $v$ is the **outer**
-differentiation direction, $w$ the inner one. Both directions are extended
-as constant chart-frame sections (under `[IsLocallyConstantChartedSpace H M]`,
-$T_y M = E$ definitionally on all of $M$), and the formula's "Christoffel
-correction" $\nabla_{(\nabla_v w)} Z$ uses the chart-frame extension of $w$.
-
-The expression depends only on $v, w$ at $x$ (tensoriality), but the proof
-of tensoriality requires smoothness propagation of $Z$ and is deferred.
-
-The connection Laplacian is the metric trace of this tensor:
-$\Delta_\nabla Z = \sum_i (\nabla^2 Z)(\varepsilon_i, \varepsilon_i)$ —
-see `connectionLaplacian_eq_sum_secondCovDerivAt` below. -/
+$v$ is the outer differentiation direction, $w$ the inner one (Lee §4 /
+do Carmo §2). Both are extended as constant chart-frame sections; the
+Christoffel-correction term uses the chart-frame extension of $w$. The
+connection Laplacian is the metric trace,
+$\Delta_\nabla Z = \sum_i (\nabla^2 Z)(\varepsilon_i, \varepsilon_i)$. -/
 noncomputable def secondCovDerivAt
     (Z : Π x : M, TangentSpace I x) (x : M)
     (v w : TangentSpace I x) : TangentSpace I x :=
@@ -76,9 +69,8 @@ noncomputable def secondCovDerivAt
             (covDerivAt (fun _ : M => (w : TangentSpace I x)) x v) :=
   rfl
 
-/-- $(\nabla^2 Z)(0, w) = 0$: the second covariant derivative vanishes when
-the outer direction is zero. Pure CLM linearity in the outer direction slot;
-no smoothness hypothesis. -/
+/-- **Math.** $(\nabla^2 Z)(0, w) = 0$. Pure CLM linearity in the outer
+direction slot. -/
 @[simp] theorem secondCovDerivAt_zero_left
     (Z : Π x : M, TangentSpace I x) (x : M) (w : TangentSpace I x) :
     secondCovDerivAt (I := I) (M := M) Z x 0 w = 0 := by
@@ -88,8 +80,7 @@ no smoothness hypothesis. -/
       (covDerivAt Z x).map_zero]
   abel
 
-/-- $(\nabla^2 Z)(v_1 + v_2, w) = (\nabla^2 Z)(v_1, w) + (\nabla^2 Z)(v_2, w)$.
-Pure CLM linearity in the outer direction slot; no smoothness hypothesis. -/
+/-- **Math.** $(\nabla^2 Z)(v_1 + v_2, w) = (\nabla^2 Z)(v_1, w) + (\nabla^2 Z)(v_2, w)$. -/
 theorem secondCovDerivAt_add_left
     (Z : Π x : M, TangentSpace I x) (x : M) (v₁ v₂ w : TangentSpace I x) :
     secondCovDerivAt (I := I) (M := M) Z x (v₁ + v₂) w =
@@ -100,8 +91,7 @@ theorem secondCovDerivAt_add_left
       (covDerivAt Z x).map_add]
   abel
 
-/-- $(\nabla^2 Z)(c \cdot v, w) = c \cdot (\nabla^2 Z)(v, w)$.
-Pure CLM linearity in the outer direction slot; no smoothness hypothesis. -/
+/-- **Math.** $(\nabla^2 Z)(c \cdot v, w) = c \cdot (\nabla^2 Z)(v, w)$. -/
 theorem secondCovDerivAt_smul_left
     (Z : Π x : M, TangentSpace I x) (x : M)
     (c : ℝ) (v w : TangentSpace I x) :
@@ -130,7 +120,7 @@ right-slot lemmas with this smoothness as an explicit hypothesis,
 so they are usable for any `Z` whose connection-on-constant-direction
 sections are smooth at $x$ — including the heart-of-Bochner setting. -/
 
-/-- Pi-level additivity of the section `y ↦ covDerivAt Z y w` in the
+/-- **Eng.** Pi-level additivity of the section `y ↦ covDerivAt Z y w` in the
 constant direction $w$. Pure CLM additivity, no smoothness needed:
 $\nabla_y$ is a CLM in its second arg, so the sum splits pointwise. -/
 private lemma covDerivAt_const_dir_section_add
@@ -140,7 +130,7 @@ private lemma covDerivAt_const_dir_section_add
   funext y
   exact (covDerivAt Z y).map_add w₁ w₂
 
-/-- Pi-level scalar multiplication of the section
+/-- **Eng.** Pi-level scalar multiplication of the section
 `y ↦ covDerivAt Z y w` in the constant direction $w$. -/
 private lemma covDerivAt_const_dir_section_smul
     (Z : Π x : M, TangentSpace I x) (x : M) (c : ℝ) (w : TangentSpace I x) :
@@ -149,7 +139,7 @@ private lemma covDerivAt_const_dir_section_smul
   funext y
   exact (covDerivAt Z y).map_smul c w
 
-/-- $(\nabla^2 Z)(v, 0) = 0$: the second covariant derivative vanishes
+/-- **Math.** $(\nabla^2 Z)(v, 0) = 0$: the second covariant derivative vanishes
 when the inner direction is zero. Inner CLM-zero in both occurrences
 of $w$. No smoothness hypothesis. -/
 @[simp] theorem secondCovDerivAt_zero_right
@@ -169,7 +159,7 @@ of $w$. No smoothness hypothesis. -/
   rw [hZero, (covDerivAt Z x).map_zero]
   abel
 
-/-- $(\nabla^2 Z)(v, w_1 + w_2) = (\nabla^2 Z)(v, w_1) + (\nabla^2 Z)(v, w_2)$,
+/-- **Math.** $(\nabla^2 Z)(v, w_1 + w_2) = (\nabla^2 Z)(v, w_1) + (\nabla^2 Z)(v, w_2)$,
 under smoothness of $y \mapsto \nabla_y Z(w_i)$ at $x$ for each
 $w \in \{w_1, w_2\}$.
 
@@ -224,7 +214,7 @@ theorem secondCovDerivAt_add_right
   rw [h_inner_dir, (covDerivAt Z x).map_add]
   abel
 
-/-- $(\nabla^2 Z)(v, c \cdot w) = c \cdot (\nabla^2 Z)(v, w)$, under
+/-- **Math.** $(\nabla^2 Z)(v, c \cdot w) = c \cdot (\nabla^2 Z)(v, w)$, under
 the same smoothness hypothesis as `secondCovDerivAt_add_right`. -/
 theorem secondCovDerivAt_smul_right
     (Z : Π x : M, TangentSpace I x) (x : M)
@@ -272,7 +262,7 @@ between section and constant forms, technically blocked by Lean's
 The placement downstream allows `connectionLaplacian` to use
 `smoothOrthoFrame` directly without import inversion. -/
 
-/-- $(\nabla^2\,0)(v, w) = 0$: the second covariant derivative of the zero
+/-- **Math.** $(\nabla^2\,0)(v, w) = 0$: the second covariant derivative of the zero
 vector field vanishes identically. -/
 @[simp] theorem secondCovDerivAt_zero
     (x : M) (v w : TangentSpace I x) :
@@ -294,7 +284,7 @@ vector field vanishes identically. -/
     rw [CovariantDerivative.zero]; rfl
   rw [h0a, h0b, sub_zero]
 
-/-- **Ricci identity at chart-frame constant directions** (the heart of the
+/-- **Math.** **Ricci identity at chart-frame constant directions** (the heart of the
 heart-of-Bochner identity):
 $$(\nabla^2 Z)(v, w) - (\nabla^2 Z)(w, v) \;=\; R(\tilde v, \tilde w) Z,$$
 where $\tilde v, \tilde w$ are the chart-frame constant extensions of $v, w$.
@@ -340,7 +330,7 @@ theorem secondCovDerivAt_sub_swap_eq_riemannCurvature
   rw [← h_lifted]
   abel
 
-/-- **Swap form of the Ricci identity at chart-frame constant directions**:
+/-- **Math.** **Swap form of the Ricci identity at chart-frame constant directions**:
 $$(\nabla^2 Z)(w, v) \;=\; (\nabla^2 Z)(v, w) \;-\; R(\tilde v, \tilde w) Z.$$
 Direct corollary of `secondCovDerivAt_sub_swap_eq_riemannCurvature`. -/
 theorem secondCovDerivAt_swap_eq
@@ -365,7 +355,7 @@ section-form analog `secondCovDerivSection Z V W x` where `V, W` are
 smooth tangent fields. The chart-frame constant case recovers
 `secondCovDerivAt` definitionally. -/
 
-/-- **Smooth-section second covariant derivative** at $x$:
+/-- **Math.** **Smooth-section second covariant derivative** at $x$:
 $$(\nabla^2 Z)(V, W)(x) \;=\;
   \nabla_V (\nabla_W Z)\,x \;-\; \nabla_{(\nabla_V W)}\,Z\,x.$$
 
@@ -377,7 +367,7 @@ noncomputable def secondCovDerivSection
   covDerivAt (fun y : M => covDerivAt Z y (W y)) x (V x)
     - covDerivAt Z x (covDerivAt W x (V x))
 
-/-- Bridge: chart-frame constant lifts of $v, w$ recover `secondCovDerivAt`. -/
+/-- **Eng.** Bridge: chart-frame constant lifts of $v, w$ recover `secondCovDerivAt`. -/
 theorem secondCovDerivSection_const_const
     (Z : Π x : M, TangentSpace I x) (x : M) (v w : TangentSpace I x) :
     secondCovDerivSection (I := I) (M := M) Z
@@ -385,7 +375,7 @@ theorem secondCovDerivSection_const_const
         (fun _ : M => (w : TangentSpace I x)) x
       = secondCovDerivAt (I := I) (M := M) Z x v w := rfl
 
-/-- **D.3 — Smooth-frame Ricci identity**: for smooth tangent fields $V, W$
+/-- **Math.** **D.3 — Smooth-frame Ricci identity**: for smooth tangent fields $V, W$
 at $x$ and any tangent field $Z$,
 $$(\nabla^2 Z)(V, W)(x) \;-\; (\nabla^2 Z)(W, V)(x) \;=\; R(V, W)\,Z\,(x).$$
 
@@ -420,7 +410,7 @@ theorem secondCovDerivSection_sub_swap_eq_riemannCurvature
   rw [← h_lifted]
   abel
 
-/-- **Swap form of D.3** (smooth-frame Ricci identity, swap orientation):
+/-- **Math.** **Swap form of D.3** (smooth-frame Ricci identity, swap orientation):
 $$(\nabla^2 Z)(W, V)(x) \;=\; (\nabla^2 Z)(V, W)(x) \;-\; R(V, W)\,Z\,(x).$$
 Direct corollary of `secondCovDerivSection_sub_swap_eq_riemannCurvature`. -/
 theorem secondCovDerivSection_swap_eq

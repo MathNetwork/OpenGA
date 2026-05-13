@@ -45,7 +45,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
 
 /-! ## Vector-field Hessian -/
 
-/-- The **Hessian** of a smooth scalar `f` on vector fields:
+/-- **Math.** The **Hessian** of a smooth scalar `f` on vector fields:
 $$\operatorname{Hess} f(X, Y)(x) = \langle \nabla_X (\nabla^M f), Y \rangle_g(x).$$ -/
 noncomputable def hessian
     [IsLocallyConstantChartedSpace H M]
@@ -55,12 +55,12 @@ noncomputable def hessian
 /-! ## Pointwise bilinear-form carrier -/
 
 variable (I) in
-/-- Pointwise real-valued bilinear form on the tangent bundle of $M$. Clients
-plug a concrete chart-Hessian (or any `(0,2)`-tensor) into this carrier. -/
+/-- **Eng.** Pointwise real-valued bilinear form on the tangent bundle of
+$M$, the abstract carrier for concrete `(0,2)`-tensors. -/
 abbrev Bilin :=
   ∀ x : M, TangentSpace I x →ₗ[ℝ] TangentSpace I x →ₗ[ℝ] ℝ
 
-/-- Pointwise symmetry: $B(x)(v, w) = B(x)(w, v)$ for all $x, v, w$. -/
+/-- **Math.** Pointwise symmetry: $B(x)(v, w) = B(x)(w, v)$ for all $x, v, w$. -/
 def IsPointwiseSymm (B : Bilin (M := M) I) : Prop :=
   ∀ x : M, ∀ v w : TangentSpace I x, B x v w = B x w v
 
@@ -74,8 +74,8 @@ Hilbert-Schmidt norm and trace of $B$ at $x$ (basis-independent among
 $g$-orthonormal frames). -/
 
 set_option backward.isDefEq.respectTransparency false in
-/-- Frobenius squared norm $\sum_{i,j} B(x)(\varepsilon_i, \varepsilon_j)^2$ in
-the $g$-orthonormal frame `stdOrthonormalBasis ℝ (TangentSpace I x)`. -/
+/-- **Math.** Frobenius squared norm $\sum_{i,j} B(x)(\varepsilon_i, \varepsilon_j)^2$
+in the $g$-orthonormal frame. -/
 def frobeniusSq (B : Bilin (M := M) I) (x : M) : ℝ :=
   let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
     stdOrthonormalBasis ℝ (TangentSpace I x)
@@ -89,8 +89,8 @@ def frobeniusSq (B : Bilin (M := M) I) (x : M) : ℝ :=
   rfl
 
 set_option backward.isDefEq.respectTransparency false in
-/-- Trace $\sum_i B(x)(\varepsilon_i, \varepsilon_i)$ in the $g$-orthonormal
-frame `stdOrthonormalBasis ℝ (TangentSpace I x)`. -/
+/-- **Math.** Trace $\sum_i B(x)(\varepsilon_i, \varepsilon_i)$ in the
+$g$-orthonormal frame. -/
 def trace (B : Bilin (M := M) I) (x : M) : ℝ :=
   let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
     stdOrthonormalBasis ℝ (TangentSpace I x)
@@ -110,7 +110,7 @@ lemma frobeniusSq_nonneg (B : Bilin (M := M) I) (x : M) :
 
 /-! ## Trace–Frobenius Cauchy-Schwarz -/
 
-/-- $\bigl(\sum_i B(v_i, v_i)\bigr)^2 \le |\iota| \cdot \sum_{i,j} B(v_i, v_j)^2$. -/
+/-- **Math.** $\bigl(\sum_i B(v_i, v_i)\bigr)^2 \le |\iota| \cdot \sum_{i,j} B(v_i, v_j)^2$. -/
 theorem bilinForm_trace_sq_le_card_mul_frobenius_sq
     {V : Type*} [AddCommGroup V] [Module ℝ V]
     {ι : Type*} [Fintype ι]
@@ -138,7 +138,7 @@ theorem bilinForm_trace_sq_le_card_mul_frobenius_sq
     _ ≤ (Fintype.card ι : ℝ) * ∑ i : ι, ∑ j : ι, (B (v i) (v j))^2 :=
         mul_le_mul_of_nonneg_left h_sum h_card_nonneg
 
-/-- Specialisation to the canonical basis `Module.finBasis ℝ V`. -/
+/-- **Math.** Specialisation to the canonical basis `Module.finBasis ℝ V`. -/
 theorem bilinForm_trace_sq_le_dim_mul_frobenius_sq
     {V : Type*} [AddCommGroup V] [Module ℝ V] [Module.Finite ℝ V]
     (B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ) (b : Module.Basis (Fin (Module.finrank ℝ V)) ℝ V) :
@@ -150,9 +150,8 @@ theorem bilinForm_trace_sq_le_dim_mul_frobenius_sq
     (ι := Fin (Module.finrank ℝ V)) B (fun i => b i)
   simpa [Fintype.card_fin] using h
 
-/-- $(\operatorname{trace}_g B(x))^2 \le n \cdot \operatorname{frobeniusSq}_g B(x)$,
-where $n = \dim_\mathbb{R} E$. Pure linear-algebra Cauchy-Schwarz; specialised
-to the $g$-orthonormal frame `stdOrthonormalBasis`. -/
+/-- **Math.** $(\operatorname{trace}_g B(x))^2 \le n \cdot \operatorname{frobeniusSq}_g B(x)$
+with $n = \dim_\mathbb{R} E$. Cauchy-Schwarz in the $g$-orthonormal frame. -/
 theorem trace_sq_le_dim_mul_frobeniusSq
     (B : Bilin (M := M) I) (x : M) :
     (trace (I := I) (M := M) B x)^2 ≤
@@ -163,12 +162,10 @@ theorem trace_sq_le_dim_mul_frobeniusSq
   simp only [OrthonormalBasis.coe_toBasis] at h
   exact h
 
-/-- The **Hessian as a `Bilin` section**: at each point $x$,
+/-- **Math.** The **Hessian as a `Bilin` section**: at each point $x$,
 $\operatorname{Hess} f(x)(v, w) = \langle \nabla_{(\text{const }v)}\,\nabla^M f,\,
-w\rangle_g(x)$. Tensoriality (independence of the choice of vector-field
-extension of $v, w$) is built in: the constant extension $\tilde v(y) := v$
-suffices because the Levi-Civita connection is C∞-linear in its first slot
-and the second slot is just evaluated. -/
+w\rangle_g(x)$. Tensoriality is built in: the constant extension suffices
+since the Levi-Civita connection is C∞-linear in its first slot. -/
 noncomputable def hessianBilin
     [IsLocallyConstantChartedSpace H M]
     (f : M → ℝ) : Bilin (M := M) I := fun x =>
@@ -191,14 +188,13 @@ noncomputable def hessianBilin
           = c • metricInner x (covDerivAt (manifoldGradient (I := I) f) x v) w
       rw [metricInner_smul_right]; rfl)
 
-/-- The Hessian as a `(0,2)`-tensor section `hess_g[I] f`. `I` is
-bracketed because `f : M → ℝ` does not expose the model with corners.
-For the Frobenius squared norm `|∇²f|²_g`, use polymorphic
-`‖hess_g[I] f‖²_g` (the Bilin-section instance of `‖·‖²_g`). -/
+/-- **Math.** Notation `hess_g[I] f` for the Hessian as a `(0,2)`-tensor
+section. `I` is bracketed because `f : M → ℝ` does not expose the model.
+For the Frobenius squared norm use `‖hess_g[I] f‖²_g`. -/
 scoped[Riemannian] notation:max "hess_g[" I "] " f:max =>
   Operators.hessianBilin (I := I) f
 
-/-- $(\operatorname{trace} B(x))^2 / n \le \operatorname{frobeniusSq} B(x)$. -/
+/-- **Math.** $(\operatorname{trace} B(x))^2 / n \le \operatorname{frobeniusSq} B(x)$. -/
 theorem trace_sq_div_dim_le_frobeniusSq
     (B : Bilin (M := M) I) (x : M) :
     (trace (I := I) (M := M) B x)^2 / (Module.finrank ℝ E : ℝ) ≤
@@ -213,7 +209,7 @@ theorem trace_sq_div_dim_le_frobeniusSq
 
 variable [IsLocallyConstantChartedSpace H M]
 
-/-- **Bridge: scalar Hessian as iterated `mDirDeriv` minus Christoffel correction.**
+/-- **Mixed.** Bridge: scalar Hessian as iterated `mDirDeriv` minus Christoffel correction.
 
 For a smooth scalar function $g : M \to \mathbb{R}$ with $\nabla^M g$
 smooth at $x$, the connection Hessian admits the textbook decomposition
@@ -279,7 +275,7 @@ theorem hessian_eq_mDirDeriv_iterate_sub_chris
 /-! ## Symmetry of the Hessian on scalar functions -/
 
 set_option backward.isDefEq.respectTransparency false in
-/-- **Hessian symmetry on scalar functions** (covariant Schwarz / Clairaut):
+/-- **Math.** **Hessian symmetry on scalar functions** (covariant Schwarz / Clairaut):
 $$\mathrm{Hess}\,f(x)(v, w) \;=\; \mathrm{Hess}\,f(x)(w, v).$$
 For $f \in C^2$ near $x$, with $\nabla^M f$ smooth at $x$ as a tangent
 bundle section. The chart-interior hypothesis `h_interior` enables the
@@ -407,7 +403,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] [T2Space M]
   [HasMetric I M]
 
-/-- Frobenius squared norm on `(0,2)`-tensor sections, w.r.t. a $g$-orthonormal
+/-- **Math.** Frobenius squared norm on `(0,2)`-tensor sections, w.r.t. a $g$-orthonormal
 frame: `‖B‖²_g x = ∑_{ij} B(x)(εᵢ, εⱼ)²` where $\{\varepsilon_i\}$ is the
 `stdOrthonormalBasis` of $T_x M$ (geometric Hilbert-Schmidt norm). -/
 noncomputable instance instMetricNormSqBilin :

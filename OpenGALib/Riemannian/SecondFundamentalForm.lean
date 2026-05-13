@@ -40,19 +40,20 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteS
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
-/-- $A(X, Y)(x) = \langle \nabla^M_X Y(x),\, \nu(x)\rangle$. -/
+/-- **Math.** $A(X, Y)(x) = \langle \nabla^M_X Y(x),\, \nu(x)\rangle$. -/
 noncomputable def secondFundamentalFormScalar
     (ν X Y : Π x : M, TangentSpace I x) (x : M) : ℝ :=
   metricInner x (covDeriv X Y x) (ν x)
 
-/-- The codim-1 second fundamental form scalar `II(X, Y) : M → ℝ`,
-relative to the implicit unit normal `ν` from context. -/
+/-- **Math.** Notation `II(X, Y)` for the codim-1 second fundamental form
+scalar, with the unit normal `ν` from context. -/
 scoped[Riemannian] notation:max "II(" X ", " Y ")" =>
   secondFundamentalFormScalar X Y
 
 set_option backward.isDefEq.respectTransparency false in
-/-- $|A|^2(x) = \sum_{i,j} A(e_i, e_j)^2$ over the standard orthonormal
-basis of `TangentSpace I x`. Basis-independent for orthonormal frames. -/
+/-- **Math.** $|A|^2(x) = \sum_{i,j} A(e_i, e_j)^2$ over the standard
+orthonormal basis of `TangentSpace I x`. Basis-independent for
+orthonormal frames. -/
 noncomputable def secondFundamentalFormSqNorm
     (ν : Π x : M, TangentSpace I x) (x : M) : ℝ :=
   let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
@@ -69,7 +70,7 @@ theorem secondFundamentalFormSqNorm_nonneg
   positivity
 
 set_option backward.isDefEq.respectTransparency false in
-/-- $H(x) = \mathrm{tr}_g A(x) = \sum_i A(e_i, e_i)(x)$. -/
+/-- **Math.** $H(x) = \mathrm{tr}_g A(x) = \sum_i A(e_i, e_i)(x)$. -/
 noncomputable def meanCurvature
     (ν : Π x : M, TangentSpace I x) (x : M) : ℝ :=
   let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
@@ -78,8 +79,8 @@ noncomputable def meanCurvature
     (fun (_ : M) => (e i : TangentSpace I x))
     (fun (_ : M) => (e i : TangentSpace I x)) x
 
-/-- The mean curvature `H_g[I] ν : M → ℝ` of a hypersurface oriented by
-unit normal `ν`. -/
+/-- **Math.** Notation `H_g[I] ν` for the mean curvature of a hypersurface
+oriented by unit normal `ν`. -/
 scoped[Riemannian] notation:max "H_g[" I "]" => meanCurvature (I := I)
 
 end Riemannian
