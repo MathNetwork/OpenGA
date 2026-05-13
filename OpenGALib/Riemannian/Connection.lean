@@ -979,7 +979,8 @@ characterises $\nabla_X Y(x)$ as the unique vector with
 $$\langle \nabla_X Y(x), Z(x)\rangle = \tfrac12 K(X, Y; Z)(x)$$
 for all smooth $Z$. Riesz uses the framework-owned `metricRiesz`. -/
 
-omit [CompleteSpace E] [FiniteDimensional ℝ E] in
+omit [CompleteSpace E] [FiniteDimensional ℝ E] [InnerProductSpace ℝ E]
+  [NeZero (Module.finrank ℝ E)] [I.Boundaryless] [T2Space M] in
 /-- **Locality of the Koszul functional in $Z$**: if two smooth vector
 fields $Z_1, Z_2$ agree on a neighborhood of $x$, then
 $K(X, Y; Z_1)(x) = K(X, Y; Z_2)(x)$.
@@ -1012,7 +1013,8 @@ private theorem koszulFunctional_local
   rw [hT1.mfderiv_eq, hT2.mfderiv_eq, hZx, hT5, hT6]
   rfl
 
-omit [FiniteDimensional ℝ E] [CompleteSpace E] in
+omit [FiniteDimensional ℝ E] [CompleteSpace E] [InnerProductSpace ℝ E]
+  [NeZero (Module.finrank ℝ E)] [I.Boundaryless] [T2Space M] in
 /-- **Tensoriality at $x$ of the half-Koszul functional in the third argument.**
 
 
@@ -1055,7 +1057,8 @@ private theorem koszulFunctional_tensorialAt
     rw [koszul_add_right X Y σ σ' x h_YZ₁ h_YZ₂ h_Z₁X h_Z₂X hσ hσ']
     ring
 
-omit [CompleteSpace E] in
+omit [CompleteSpace E] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)]
+  [I.Boundaryless] [T2Space M] in
 /-- **Existence theorem for Riesz extraction**: given smoothness of $X$
 and $Y$ at $x$, the half-Koszul functional $Z \mapsto \tfrac12 K(X, Y; Z)(x)$
 admits a unique tangent-space representative for smooth $Z$.
@@ -1081,7 +1084,8 @@ private theorem koszulLinearFunctional_exists
           fun Z hZ => ?_⟩
   exact TensorialAt.mkHom_apply (koszulFunctional_tensorialAt X Y x hX hY) hZ
 
-omit [CompleteSpace E] in
+omit [CompleteSpace E] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)]
+  [I.Boundaryless] [T2Space M] in
 private theorem koszulCovDeriv_exists
     [IsLocallyConstantChartedSpace H M]
     (X Y : Π x : M, TangentSpace I x) (x : M)
@@ -1108,7 +1112,8 @@ private noncomputable def koszulCovDeriv
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x) : TangentSpace I x :=
   Classical.choose (koszulCovDeriv_exists X Y x hX hY)
 
-omit [CompleteSpace E] in
+omit [CompleteSpace E] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)]
+  [I.Boundaryless] [T2Space M] in
 /-- **Riesz defining property**: $\langle \nabla_X Y(x), Z(x)\rangle =
 \tfrac12 K(X, Y; Z)(x)$ for smooth $X, Y, Z$, with `metricInner` as the
 framework-owned inner product.
@@ -1162,6 +1167,8 @@ private noncomputable def koszulCovDerivAux
   classical
   exact if hX : TangentSmoothAt X x then koszulCovDeriv X Y x hX hY else 0
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless]
+  [T2Space M] in
 /-- Tensorality of `koszulCovDerivAux Y x hY` in the `X` argument: for
 smooth `X`, `f`, `koszulCovDerivAux` respects scalar multiplication and
 addition. Uses `koszul_smul_left` / `koszul_add_left` together with
@@ -1230,6 +1237,8 @@ private theorem koszulCovDerivAux_tensorialAt
         koszulCovDeriv_inner_eq X' Y Z x hX' hY hZ_smooth]
     ring
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless]
+  [T2Space M] in
 /-- **Levi-Civita `CovariantDerivative` existence.**
 
 A `CovariantDerivative` whose `toFun` extends the pointwise
@@ -1394,7 +1403,7 @@ linear-functional section, not just the constant case) closes both forms.
    the bumped global form to the original chartBasisVec form on a
    neighbourhood of `x`. -/
 private theorem koszulCovDeriv_smoothVF_smoothAt
-    [IsLocallyConstantChartedSpace H M] [T2Space M]
+    [IsLocallyConstantChartedSpace H M]
     (X Y : SmoothVectorField I M) (x : M) :
     TangentSmoothAt
       (fun y : M => koszulCovDeriv X.toFun Y.toFun y
@@ -1625,7 +1634,7 @@ private theorem koszulCovDeriv_smoothVF_smoothAt
 
 /-- Constant-direction specialisation of `koszulCovDeriv_smoothVF_smoothAt`. -/
 private theorem koszulCovDeriv_const_smoothAt
-    [IsLocallyConstantChartedSpace H M] [T2Space M]
+    [IsLocallyConstantChartedSpace H M]
     (v : E) (Y : SmoothVectorField I M) (x : M) :
     TangentSmoothAt
       (fun y : M => koszulCovDeriv (fun _ : M => v) Y.toFun y
@@ -1658,7 +1667,7 @@ invariant "zero existence axioms in the Riemannian package" preserved.
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 (existence + uniqueness via
 the Koszul formula); Lee 2018 Prop. 4.26 (smoothness of covariant
 derivative on smooth manifolds). -/
-theorem leviCivitaConnection_exists [IsLocallyConstantChartedSpace H M] [T2Space M] :
+theorem leviCivitaConnection_exists [IsLocallyConstantChartedSpace H M] :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       cov.torsion = 0 ∧
       (∀ (X Y Z : Π x : M, TangentSpace I x) (x : M)
@@ -1730,13 +1739,13 @@ satisfies `leviCivitaConnection.torsion = 0` (see
 **Used by**: `Riemannian.Curvature`, `Riemannian.SecondFundamentalForm`,
 `Riemannian.Gradient`. -/
 noncomputable def leviCivitaConnection
-    [IsLocallyConstantChartedSpace H M] [T2Space M] :
+    [IsLocallyConstantChartedSpace H M] :
     CovariantDerivative I E (fun x : M => TangentSpace I x) :=
   Classical.choose (leviCivitaConnection_exists (I := I) (M := M))
 
 /-- The Levi-Civita connection is torsion-free. -/
 theorem leviCivitaConnection_torsion_zero
-    [IsLocallyConstantChartedSpace H M] [T2Space M] :
+    [IsLocallyConstantChartedSpace H M] :
     (leviCivitaConnection : CovariantDerivative I E
       (fun x : M => TangentSpace I x)).torsion = 0 :=
   (Classical.choose_spec leviCivitaConnection_exists).1
@@ -1944,6 +1953,8 @@ agree, and consequently their Levi-Civita derivatives at `x` agree (Riesz
 uniqueness). -/
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] in
+omit [CompleteSpace E] [FiniteDimensional ℝ E] [InnerProductSpace ℝ E]
+  [NeZero (Module.finrank ℝ E)] [I.Boundaryless] [T2Space M] in
 /-- **Locality of `koszulFunctional` in the middle argument**: if
 $Y_1 =ᶠ[𝓝 x] Y_2$, then $K(X, Y_1; Z)(x) = K(X, Y_2; Z)(x)$.
 
