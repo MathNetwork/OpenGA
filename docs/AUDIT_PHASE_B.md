@@ -6,7 +6,7 @@ before Phase C (substantive consolidation).
 ## Scope
 
 Audit of the relationship between Phase A ported content and pre-port lib
-core (Algebraic / Riemannian / GeometricMeasureTheory / Regularity).
+core (Algebraic / Riemannian / GeometricMeasureTheory).
 
 ## Method
 

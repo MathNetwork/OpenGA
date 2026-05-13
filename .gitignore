@@ -35,8 +35,3 @@ lake-packages/
 # never enter our git history.
 external/
 
-# Paper-specific downstream application: kept local, not part of public release.
-# OpenGALib core (Algebraic, Riemannian, GeometricMeasureTheory, Tensor) is the
-# public lib; Regularity is paper-specific consumer of that lib.
-OpenGALib/Regularity/
-OpenGALib/Regularity.lean

@@ -6,8 +6,8 @@ import OpenGALib.GeometricMeasureTheory
 /-!
 # OpenGALib — Open Geometric Analysis Library
 
-A Lean 4 library of algebraic, tensor, Riemannian-geometry,
-geometric-measure-theory, and regularity primitives. Layered:
+A Lean 4 library of algebraic, tensor, Riemannian-geometry, and
+geometric-measure-theory primitives. Layered:
 
 ```
 Algebraic ← Tensor ← Riemannian ← GeometricMeasureTheory
@@ -33,9 +33,6 @@ as a separate sub-project (`require OpenGALib from ".."`).
                               operators, `(r,s)`-tensor bundle types.
 * `GeometricMeasureTheory`  — finite-perimeter, varifolds, stationary,
                               tangent cones, rectifiability, isoperimetric.
-
-The `Regularity` sub-namespace (Wickramasekera 𝒮_α + smooth regularity)
-is paper-specific downstream content kept local — see `.gitignore`.
 
 ## Phase status
 

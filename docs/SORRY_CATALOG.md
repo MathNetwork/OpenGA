@@ -6,10 +6,8 @@ count; new sorry additions require updating this file.
 
 ## Scope
 
-This catalog covers the **public library content**: `Algebraic`, `Tensor`,
-`Riemannian`, `GeometricMeasureTheory`. `Regularity/` is gitignored
-(paper-specific consumer) and tracked locally; its sorrys are not in the
-public count.
+This catalog covers `Algebraic`, `Tensor`, `Riemannian`, and
+`GeometricMeasureTheory`.
 
 ## Classification
 
@@ -30,9 +28,7 @@ public count.
 | **Total** | **19** | **10** | **29** |
 
 CI workflow `.github/workflows/ci.yml` asserts the total equals 29
-(`EXPECTED=29`). CI runs on the checked-out repo, which excludes
-`Regularity/` (gitignored, paper-specific consumer), so its 3 sorrys
-do not count in CI even though local `grep` will see 32.
+(`EXPECTED=29`).
 
 ## Algebraic (5)
 

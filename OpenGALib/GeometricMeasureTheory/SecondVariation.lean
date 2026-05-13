@@ -15,12 +15,6 @@ $$\delta^2 V(\varphi, \varphi)
   = \int_\Sigma \big(|\nabla \varphi|^2 - (|A|^2 + \mathrm{Ric}(\nu, \nu))
                  \varphi^2\big)\, d\mathcal{H}^n.$$
 
-This is the GMT primitive used to express:
-  * Stability — paper §4 Definition 4.1 (S2)
-    (`Regularity.AlphaStructural`)
-  * Local stability of varifolds — paper §7.1
-    (`Regularity.StabilityVerification`)
-
 ## Definition style
 
 `secondVariation` is grounded with the **kinetic term real, curvature
@@ -101,10 +95,7 @@ refinement.
 
 **Ground truth**: Simon 1983 §49 (Jacobi field setup, second variation
 formula for stationary integral varifolds); Schoen–Simon 1981 §1
-(stable hypersurfaces); Wickramasekera 2014 §2 (codim-1 form).
-
-**Used by**: `Varifold.IsStable` (`OpenGALib/Regularity/AlphaStructural.lean`),
-`Varifold.LocallyStable` (`OpenGALib/Regularity/StabilityVerification.lean`). -/
+(stable hypersurfaces); Wickramasekera 2014 §2 (codim-1 form). -/
 noncomputable def secondVariation
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H]

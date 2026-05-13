@@ -12,9 +12,9 @@ merged contributions but liberally relaxable for sketches / WIP / drafts.
   serves.
 
 * **Chain depth over breadth.** OpenGA targets proof depth on the
-  Riemannian → GMT → regularity chain rather than broad parity with
-  Mathlib's full differential geometry. If a theorem isn't on the
-  chain, we don't pre-port it; pull when needed.
+  Riemannian → GMT chain rather than broad parity with Mathlib's full
+  differential geometry. If a theorem isn't on the chain, we don't
+  pre-port it; pull when needed.
 
 * **Self-build when Mathlib lacks a primitive.** When Mathlib has a
   gap blocking the chain (e.g., the framework-owned `RiemannianMetric`
@@ -91,8 +91,8 @@ mis-organized.
   `docs/EXTERNAL_INTEGRATION_PLAN.md`).
 * `paper §X` / project-specific cross-references in `Algebraic/`,
   `Tensor/`, `Riemannian/`, `GeometricMeasureTheory/` — these
-  namespaces must be paper-agnostic (regularity work referencing
-  specific papers lives in downstream consumer repos).
+  namespaces must be paper-agnostic; paper-specific work lives in
+  downstream consumer repos.
 * Self-tests / UX tests as `example` blocks at end of file — these
   are documentation pretending to be test; we keep the real math
   in the body and let LSP + `lake build` catch regressions.

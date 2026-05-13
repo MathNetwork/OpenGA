@@ -15,7 +15,7 @@ the convention for porting.
 ### Skip
 
 Out of scope for OpenGALib's current focus (geometric analysis lib for
-GMT / Riemannian / regularity work):
+GMT / Riemannian work):
 
 | Their subdir | Files | Reason to skip |
 |--------------|-------|----------------|
@@ -69,8 +69,8 @@ Geometry/VossWeyl        →  OpenGALib/Riemannian/Operators/VossWeyl.lean
 * Riemannian-specific tensor structure (lower indices via metric,
   Riemannian inner product on `(r,s)`-tensor sections) lives in
   `Riemannian/Tensor/` — they consume the general tensor framework.
-* Future GMT / Regularity sub-packages can use `OpenGALib/Tensor/`
-  without pulling in the Riemannian metric layer.
+* Future GMT sub-packages can use `OpenGALib/Tensor/` without pulling
+  in the Riemannian metric layer.
 
 **`Tensor/Auxiliary/` is math, not engineering Util.** Files like
 `Fin.lean`, `Perm.lean`, `ShuffleDecomposition.lean` are linear

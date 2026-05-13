@@ -37,8 +37,6 @@ Mathlib                      ← upstream
 Riemannian                   ← THIS package
        ↑
 GeometricMeasureTheory       ← consumer (Variation/, Stable.lean)
-       ↑
-Regularity                   ← consumer
 ```
 
 ## Files

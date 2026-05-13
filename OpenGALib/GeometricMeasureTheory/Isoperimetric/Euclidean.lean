@@ -32,15 +32,6 @@ current scope. Repair plan: framework self-build of Brunn–Minkowski
 + symmetrization (~400 LOC, Phase 4 long-term work) or wait for
 Mathlib upstream.
 
-## Used by
-
-- §6 paper regularity arguments do not formally consume this in the
-  current chain proof — the Maggi 14.1 inequality is part of the
-  background convention but not threaded through `main_theorem_*`
-  (paper §5 cancellation argument is commented-out at the formal level).
-- Future framework consumers (relative isoperimetric inequality,
-  Allard density bounds, Caffarelli compactness) will consume these
-  primitives.
 -/
 
 open Real MeasureTheory

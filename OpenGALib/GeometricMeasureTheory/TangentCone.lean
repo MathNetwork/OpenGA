@@ -13,13 +13,9 @@ at a point $Z$.
 ## Layout
 
 This file provides the GMT primitive `tangentCone` along with its
-defining predicate `IsTangentConeAt` (Layer B C-6 真填). The
-junction-cone configuration (a stationary cone supported on $N \ge 3$
-half-hyperplanes meeting along a common edge), which is the
-configuration excluded by the Wickramasekera $\alpha$-structural
-hypothesis, lives in the regularity-theory package
-(`Regularity.AlphaStructural`) since it is a regularity-theory-specific
-concept rather than a general GMT primitive.
+defining predicate `IsTangentConeAt`. Regularity-theory-specific
+configurations (junction cones, $\alpha$-structural hypotheses) are
+out of scope here and belong in downstream consumers.
 
 ## Grounding (Layer B C-6)
 
@@ -125,12 +121,8 @@ chart-pullback precedent; this commit applies the same path here):
   * `tangentCone`: real `Varifold M` via `Classical.choice` on the
     existence of a tangent cone, falling back to the zero varifold.
 
-For chain-proof correctness this is sufficient: chain proofs only use
-`tangentCone V Z` as black-box input to `IsJunctionCone` (opaque), so
-the existence-axiom-via-`Classical.choice` form does not propagate.
-
-**Used by**: `Regularity.HasJunction` def
-(`OpenGALib/Regularity/AlphaStructural.lean`). -/
+Chain proofs use `tangentCone V Z` as black-box input only, so the
+existence-axiom-via-`Classical.choice` form does not propagate. -/
 noncomputable def tangentCone
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [MeasurableSpace E] [BorelSpace E]
