@@ -1,5 +1,6 @@
 import OpenGALib.Riemannian.Connection
 import OpenGALib.Riemannian.Tensor.MusicalIso
+import OpenGALib.Riemannian.Tensor.MfderivApplySection
 
 /-!
 # Manifold gradient
