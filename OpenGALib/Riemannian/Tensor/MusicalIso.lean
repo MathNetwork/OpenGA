@@ -53,8 +53,8 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
 /-! ## Stage 1: the chart Gram matrix -/
 
-/-- The Gram matrix of the chart-basis family `chartBasisVecFiber α · x` at
-$x$ under the inner product `g.inner x`. -/
+/-- **Math.** The Gram matrix of the chart-basis family
+`chartBasisVecFiber α · x` at $x$ under the inner product `g.inner x`. -/
 def chartGramMatrix (g : RiemannianMetric I M) (α : M) (x : M) :
     Matrix (Fin (Module.finrank ℝ E)) (Fin (Module.finrank ℝ E)) ℝ :=
   Matrix.of fun i j =>
@@ -70,7 +70,7 @@ def chartGramMatrix (g : RiemannianMetric I M) (α : M) (x : M) :
         (chartBasisVecFiber (I := I) α i x)
         (chartBasisVecFiber (I := I) α j x) := rfl
 
-/-- The Gram matrix is Hermitian (symmetric for real entries). -/
+/-- **Math.** The Gram matrix is Hermitian (symmetric, real entries). -/
 lemma chartGramMatrix_isHermitian
     (g : RiemannianMetric I M) (α : M) (x : M) :
     (chartGramMatrix (I := I) g α x).IsHermitian := by
@@ -85,9 +85,8 @@ lemma chartGramMatrix_isHermitian
 
 /-! ## Stage 2: positive-definiteness on the base set -/
 
-/-- The Gram-matrix quadratic form equals the metric-inner-product squared norm
-of the corresponding linear combination of chart-basis vectors. Tangent-space
-analog of `Matrix.star_dotProduct_gram_mulVec`. -/
+/-- **Math.** The Gram-matrix quadratic form equals the metric-inner-product
+squared norm of the corresponding linear combination of chart-basis vectors. -/
 lemma chartGramMatrix_dotProduct_mulVec
     (g : RiemannianMetric I M) (α : M) (x : M)
     (c : Fin (Module.finrank ℝ E) → ℝ) :
@@ -139,8 +138,8 @@ lemma chartGramMatrix_dotProduct_mulVec
   intro j _
   ring
 
-/-- The Gram matrix of the chart-basis family is positive-definite on the
-trivialization base set. -/
+/-- **Math.** The Gram matrix of the chart-basis family is positive-definite
+on the trivialization base set. -/
 lemma chartGramMatrix_posDef
     (g : RiemannianMetric I M) (α : M) {x : M}
     (hx : x ∈ (trivializationAt E (TangentSpace I) α).baseSet) :
@@ -160,8 +159,8 @@ lemma chartGramMatrix_posDef
     exact hc this
   exact g.pos x w hwnz
 
-/-- The determinant of the Gram matrix is strictly positive on the
-trivialization base set. -/
+/-- **Math.** The determinant of the Gram matrix is strictly positive on
+the trivialization base set. -/
 lemma chartGramMatrix_det_pos
     (g : RiemannianMetric I M) (α : M) {x : M}
     (hx : x ∈ (trivializationAt E (TangentSpace I) α).baseSet) :
@@ -170,10 +169,8 @@ lemma chartGramMatrix_det_pos
 
 /-! ## Stage 3: smoothness of Gram-matrix entries -/
 
-/-- Each Gram-matrix entry is smooth on the trivialization base set: the inner
-product evaluated at two smooth chart-basis sections is smooth via
-`ContMDiffOn.clm_bundle_apply₂` applied to `g.contMDiff` and two copies of
-`chartBasisVec`. -/
+/-- **Eng.** Each Gram-matrix entry is smooth on the trivialization base set,
+via `ContMDiffOn.clm_bundle_apply₂` on `g.contMDiff` and two `chartBasisVec`. -/
 lemma chartGramMatrix_entry_contMDiffOn
     (g : RiemannianMetric I M) (α : M)
     (i j : Fin (Module.finrank ℝ E)) :
@@ -203,10 +200,9 @@ lemma chartGramMatrix_entry_contMDiffOn
   rw [Bundle.contMDiffWithinAt_totalSpace] at hpx
   exact hpx.2
 
-/-- The determinant of the Gram matrix is smooth on the trivialization base
-set. Proof: expand `Matrix.det` into a finite sum over permutations of finite
-products of entries, then chain `contMDiffOn_finset_sum` +
-`contMDiffOn_finset_prod` with the entry smoothness. -/
+/-- **Eng.** The determinant of the Gram matrix is smooth on the
+trivialization base set. Expands `Matrix.det` as a finite sum of
+finite products and chains entry smoothness. -/
 lemma chartGramMatrix_det_contMDiffOn
     (g : RiemannianMetric I M) (α : M) :
     ContMDiffOn I 𝓘(ℝ) ∞
@@ -231,10 +227,9 @@ lemma chartGramMatrix_det_contMDiffOn
 
 /-! ## Stage 4: smoothness of the adjugate entries -/
 
-/-- Each adjugate entry of the Gram matrix is smooth on the trivialization base
-set. The adjugate entry is the determinant of an updated submatrix (`updateRow`
-of the Gram matrix with `Pi.single i 1`), hence a polynomial expression in the
-(smooth) Gram-matrix entries. -/
+/-- **Eng.** Each adjugate entry of the Gram matrix is smooth on the
+trivialization base set: a polynomial in the smooth Gram-matrix entries
+via `Matrix.adjugate_apply` + `updateRow`. -/
 lemma chartGramMatrix_adjugate_entry_contMDiffOn
     (g : RiemannianMetric I M) (α : M)
     (i j : Fin (Module.finrank ℝ E)) :
@@ -285,14 +280,13 @@ lemma chartGramMatrix_adjugate_entry_contMDiffOn
 
 /-! ## Stage 5: the inverse Gram matrix and its smoothness -/
 
-/-- The inverse Gram matrix at `(α, x)`. On the chart base set this is the
-matrix inverse of the (positive-definite) Gram matrix; off the base set it
-is a default value. -/
+/-- **Math.** The inverse Gram matrix at $(\alpha, x)$. On the chart base
+set, the matrix inverse of the (positive-definite) Gram matrix. -/
 def chartInvGramMatrix (g : RiemannianMetric I M) (α : M) (x : M) :
     Matrix (Fin (Module.finrank ℝ E)) (Fin (Module.finrank ℝ E)) ℝ :=
   (chartGramMatrix (I := I) g α x)⁻¹
 
-/-- On the chart base set, the inverse Gram matrix is a one-sided inverse. -/
+/-- **Math.** On the chart base set, the inverse Gram matrix is a one-sided inverse. -/
 lemma chartInvGramMatrix_mul_chartGramMatrix
     (g : RiemannianMetric I M) (α : M) {x : M}
     (hx : x ∈ (trivializationAt E (TangentSpace I) α).baseSet) :
@@ -303,7 +297,7 @@ lemma chartInvGramMatrix_mul_chartGramMatrix
   unfold chartInvGramMatrix
   exact Matrix.nonsing_inv_mul _ hdet_unit
 
-/-- Symmetric form: Gram · inverse Gram = 1 on the base set. -/
+/-- **Math.** Symmetric form: Gram · inverse Gram = 1 on the base set. -/
 lemma chartGramMatrix_mul_chartInvGramMatrix
     (g : RiemannianMetric I M) (α : M) {x : M}
     (hx : x ∈ (trivializationAt E (TangentSpace I) α).baseSet) :
@@ -314,7 +308,8 @@ lemma chartGramMatrix_mul_chartInvGramMatrix
   unfold chartInvGramMatrix
   exact Matrix.mul_nonsing_inv _ hdet_unit
 
-/-- Each entry of the inverse Gram matrix is smooth on the chart base set. -/
+/-- **Eng.** Each entry of the inverse Gram matrix is smooth on the chart
+base set, via the cofactor / adjugate formula. -/
 lemma chartInvGramMatrix_entry_contMDiffOn
     (g : RiemannianMetric I M) (α : M)
     (i j : Fin (Module.finrank ℝ E)) :
@@ -480,7 +475,7 @@ private lemma metricRiesz_chart_form_inner_e
     intro i _
     rw [map_smul]
 
-/-- **Chart-coordinate form of the Riesz dual** at a base-set point $x$. -/
+/-- **Math.** **Chart-coordinate form of the Riesz dual** at a base-set point $x$. -/
 private theorem metricRiesz_chart_form
     (g : RiemannianMetric I M) (α : M) {x : M}
     (hx : x ∈ (trivializationAt E (TangentSpace I) α).baseSet)
@@ -510,7 +505,7 @@ private theorem metricRiesz_chart_form
 
 /-! ## Stage 7: chart-local smoothness and the musical-iso section primitive -/
 
-/-- **Chart-local smoothness** of the Riesz-section in chart-frame form.
+/-- **Eng.** **Chart-local smoothness** of the Riesz-section in chart-frame form.
 Given a covector field $\Phi$ whose action on each chart-basis vector
 $\Phi(y)(e_j(y))$ is smooth on the trivialization base set, the
 chart-local linear combination
@@ -590,13 +585,11 @@ lemma metricRiesz_chartLocal_total_contMDiffOn
     exact (hcoef i).smul (contMDiffOn_const (c := (Module.finBasis ℝ E i : E)))
   exact hRHS_smooth.congr (fun y hy => hsnd_eq y hy)
 
-/-- **Smoothness of the musical isomorphism section** at a base-set point.
-Given a covector field $\Phi$ whose action on each chart-basis vector is
-smooth on the trivialization base set at $\alpha$, the Riesz section
-$y \mapsto \sharp_g\,\Phi(y)$ is smooth at any point of the base set.
-
-This is the framework primitive consumed by gradient and Koszul-covariant-
-derivative smoothness. -/
+/-- **Math.** **Smoothness of the musical isomorphism section** at a
+base-set point. Given $\Phi$ whose chart-basis evaluations are smooth on
+the trivialization base set, $y \mapsto \sharp_g\,\Phi(y)$ is smooth.
+Framework primitive consumed by gradient + Koszul-covariant-derivative
+smoothness. -/
 theorem metricRiesz_section_contMDiffAt
     (g : RiemannianMetric I M) (α : M) {x : M}
     (hx : x ∈ (trivializationAt E (TangentSpace I) α).baseSet)
@@ -630,12 +623,11 @@ theorem metricRiesz_section_contMDiffAt
     (trivializationAt E (TangentSpace I) α).open_baseSet
   exact (hMR x hx).contMDiffAt (hopen.mem_nhds hx)
 
-/-- **Per-point variant** of `metricRiesz_section_contMDiffAt`: replaces the
-global `ContMDiffOn baseSet` hypothesis on the covector-section action with
-`ContMDiffWithinAt baseSet x` per chart-basis index. Easier to discharge
-when the covector field $\Phi$ involves locally-defined data (e.g.,
-`koszulFunctional`-style expressions whose smoothness is proved via
-bump-function extensions near the target point). -/
+/-- **Mixed.** Per-point variant of `metricRiesz_section_contMDiffAt`.
+Math: same conclusion (Riesz section smooth at $x$). Eng: input hypothesis
+relaxed to `ContMDiffWithinAt baseSet x` per chart-basis index, easier
+to discharge for `koszulFunctional`-style covectors with bump-function
+extensions. -/
 theorem metricRiesz_section_contMDiffAt_of_within
     (g : RiemannianMetric I M) (α : M) {x : M}
     (hx : x ∈ (trivializationAt E (TangentSpace I) α).baseSet)
@@ -727,17 +719,17 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
-/-- The pullback of `f : M → ℝ` through the inverse extended chart at `α`,
+/-- **Eng.** The pullback of `f : M → ℝ` through the inverse extended chart at `α`,
 viewed as a scalar function on `E`. -/
 private def scalarOnE (α : M) (f : M → ℝ) : E → ℝ :=
   fun y => f ((extChartAt I α).symm y)
 
-/-- The directional derivative of `u : E → ℝ` at `y` along the `i`-th
+/-- **Eng.** The directional derivative of `u : E → ℝ` at `y` along the `i`-th
 model-basis vector. -/
 private def partialDerivE (i : Fin (Module.finrank ℝ E)) (u : E → ℝ) (y : E) : ℝ :=
   fderiv ℝ u y ((Module.finBasis ℝ E) i)
 
-/-- The chart-pullback `scalarOnE α f` of a smooth function `f` is $C^\infty$
+/-- **Eng.** The chart-pullback `scalarOnE α f` of a smooth function `f` is $C^\infty$
 on the extended-chart target. -/
 private lemma scalarOnE_contDiffOn (α : M) {f : M → ℝ}
     (hf : ContMDiff I 𝓘(ℝ) ∞ f) :
@@ -750,7 +742,7 @@ private lemma scalarOnE_contDiffOn (α : M) {f : M → ℝ}
     hf_on.comp hsymm (fun _ _ => Set.mem_univ _)
   exact hcomp.contDiffOn
 
-/-- The partial derivative of the chart-pullback is $C^\infty$ on the interior
+/-- **Eng.** The partial derivative of the chart-pullback is $C^\infty$ on the interior
 of the extended-chart target. -/
 private lemma partialDerivE_scalarOnE_contDiffOn_interior
     (α : M) {f : M → ℝ} (hf : ContMDiff I 𝓘(ℝ) ∞ f)
@@ -770,7 +762,7 @@ private lemma partialDerivE_scalarOnE_contDiffOn_interior
       (interior (extChartAt I α).target) := contDiffOn_const
   exact hfderiv.clm_apply hconst
 
-/-- The partial derivative of the chart-pullback, composed with the extended
+/-- **Eng.** The partial derivative of the chart-pullback, composed with the extended
 chart, is `ContMDiffOn` on the chart base set under `[I.Boundaryless]` (where
 the chart target is open and hence equals its interior). -/
 private lemma partialDerivE_scalarOnE_comp_extChartAt_contMDiffOn
@@ -807,7 +799,7 @@ private lemma partialDerivE_scalarOnE_comp_extChartAt_contMDiffOn
     rw [extChartAt_source]; exact hx
   exact (extChartAt I α).map_source hxsrc
 
-/-- **Chart-basis evaluation of `mfderiv`**: under `[I.Boundaryless]`, the
+/-- **Mixed.** Chart-basis evaluation of `mfderiv`: under `[I.Boundaryless]`, the
 directional derivative of a smooth scalar `f` along the `i`-th chart-basis
 vector equals the `i`-th partial derivative of the chart pullback, evaluated
 at the chart image of the base point.
@@ -897,7 +889,7 @@ private lemma mfderiv_chartBasisVecFiber_eq_partialDerivE
   rw [hmfderiv_chartBasis]
   rfl
 
-/-- Smoothness of the directional derivative `y ↦ mfderiv f y (V y)` on the
+/-- **Eng.** Smoothness of the directional derivative `y ↦ mfderiv f y (V y)` on the
 trivialization base set at $\alpha$, for a smooth scalar function $f$ and a
 smooth tangent-bundle section $V$, under `[I.Boundaryless]`.
 
@@ -1032,7 +1024,7 @@ lemma mfderiv_apply_section_contMDiffOn
       (fderiv ℝ (scalarOnE (I := I) α f) (φ y)) ((triv ⟨y, V y⟩).2)
   rw [hmfderiv_eq]
 
-/-- Global version of `mfderiv_apply_section_contMDiffOn`: under `[I.Boundaryless]`,
+/-- **Eng.** Global version of `mfderiv_apply_section_contMDiffOn`: under `[I.Boundaryless]`,
 the directional derivative of a smooth scalar along a smooth tangent section is
 smooth on all of $M$. -/
 lemma mfderiv_apply_section_contMDiff
@@ -1053,7 +1045,7 @@ lemma mfderiv_apply_section_contMDiff
     (trivializationAt E (TangentSpace I) y).open_baseSet
   exact (hOn y hy_base).contMDiffAt (hopen.mem_nhds hy_base)
 
-/-- Smoothness of the directional derivative `y ↦ mfderiv f y (chartBasisVecFiber α j y)`
+/-- **Eng.** Smoothness of the directional derivative `y ↦ mfderiv f y (chartBasisVecFiber α j y)`
 on the trivialization base set, under `[I.Boundaryless]`. Used to discharge the
 covector-section hypothesis of `metricRiesz_section_contMDiffAt` for the
 gradient consumer. -/
