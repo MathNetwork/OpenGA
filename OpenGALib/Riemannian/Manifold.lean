@@ -101,8 +101,9 @@ instance : NeZero (Module.finrank ℝ rm.E) := rm.neZero_finrank_E
 
 /-- **Eng.** The metric carried by `[RiemannianManifold M]` induces a
 global `Bundle.RiemannianBundle (TangentSpace modelI : M → Type _)`,
-activating Mathlib's scoped `NACG` / `InnerProductSpace ℝ` on each
-fibre. Single NACG/IPS source — sidesteps the lean4#13063 NACG diamond. -/
+activating Mathlib's scoped `NormedAddCommGroup` / `InnerProductSpace ℝ` on each
+fibre. Single `NormedAddCommGroup` / `InnerProductSpace` source — sidesteps the
+lean4#13063 `NormedAddCommGroup` diamond. -/
 noncomputable instance instRiemannianBundleOfRiemannianManifold :
     Bundle.RiemannianBundle (TangentSpace rm.modelI : M → Type _) :=
   ⟨rm.metric.toRiemannianMetric⟩
@@ -226,7 +227,7 @@ section RieszSection
 
 variable [FiniteDimensional ℝ E]
 
-/-- **Math.** The **metric-to-dual** CLM $V \mapsto g_x(V, \cdot)$. -/
+/-- **Math.** The **metric-to-dual** continuous linear map $V \mapsto g_x(V, \cdot)$. -/
 noncomputable abbrev metricToDual (x : M) :
     TangentSpace I x →L[ℝ] (TangentSpace I x →L[ℝ] ℝ) :=
   hm.metric.metricToDual x

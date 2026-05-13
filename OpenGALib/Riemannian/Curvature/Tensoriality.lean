@@ -536,7 +536,7 @@ theorem riemannCurvature_smul_first_scalar_field
     (hf x).mdifferentiableAt (by simp)
   -- Directional derivative `Yf(x)`.
   set Yf_x : ℝ := (show ℝ from mfderiv I 𝓘(ℝ, ℝ) f x (Y.toFun x)) with hYf_def
-  -- T1: covDeriv (f • X) (∇_Y Z) x = f x • covDeriv X (∇_Y Z) x via direction CLM.
+  -- T1: covDeriv (f • X) (∇_Y Z) x = f x • covDeriv X (∇_Y Z) x via direction continuous linear map.
   have hT1 : covDeriv (f • X.toFun) (fun y => covDeriv Y.toFun Z.toFun y) x
       = f x • covDeriv X.toFun (fun y => covDeriv Y.toFun Z.toFun y) x := by
     show (leviCivitaConnection.toFun (fun y => covDeriv Y.toFun Z.toFun y) x)
@@ -571,7 +571,7 @@ theorem riemannCurvature_smul_first_scalar_field
       = -(show ℝ from mfderiv I 𝓘(ℝ, ℝ) f x (Y.toFun x)) • X.toFun x
         + f x • VectorField.mlieBracket I X.toFun Y.toFun x
     convert h using 2
-  -- T3: covDeriv [f • X, Y] Z x = -Yf_x • cov X Z x + f x • cov [X, Y] Z x via CLM.
+  -- T3: covDeriv [f • X, Y] Z x = -Yf_x • cov X Z x + f x • cov [X, Y] Z x via continuous linear map.
   have hT3 :
       covDeriv (VectorField.mlieBracket I (f • X.toFun) Y.toFun) Z.toFun x
         = -Yf_x • covDeriv X.toFun Z.toFun x
@@ -599,7 +599,7 @@ theorem riemannCurvature_add_first
   classical
   -- Pi-add unfolds.
   have h_pi_add : (X + X').toFun = X.toFun + X'.toFun := by funext y; rfl
-  -- T1: cov (X + X') (∇_Y Z) x = cov X (∇_Y Z) x + cov X' (∇_Y Z) x via direction CLM add.
+  -- T1: cov (X + X') (∇_Y Z) x = cov X (∇_Y Z) x + cov X' (∇_Y Z) x via direction continuous linear map add.
   have hT1 : covDeriv (X + X').toFun (fun y => covDeriv Y.toFun Z.toFun y) x
       = covDeriv X.toFun (fun y => covDeriv Y.toFun Z.toFun y) x
         + covDeriv X'.toFun (fun y => covDeriv Y.toFun Z.toFun y) x := by
@@ -608,7 +608,7 @@ theorem riemannCurvature_add_first
        = (leviCivitaConnection.toFun (fun y => covDeriv Y.toFun Z.toFun y) x) (X.toFun x)
        + (leviCivitaConnection.toFun (fun y => covDeriv Y.toFun Z.toFun y) x) (X'.toFun x)
     rw [show (X + X').toFun x = X.toFun x + X'.toFun x from rfl, map_add]
-  -- Inner section: cov (X + X') Z = cov X Z + cov X' Z via direction CLM add.
+  -- Inner section: cov (X + X') Z = cov X Z + cov X' Z via direction continuous linear map add.
   have h_inner :
       (fun y => covDeriv (X + X').toFun Z.toFun y)
         = (fun y => covDeriv X.toFun Z.toFun y) + (fun y => covDeriv X'.toFun Z.toFun y) := by
@@ -635,7 +635,7 @@ theorem riemannCurvature_add_first
     rw [h_pi_add]
     exact VectorField.mlieBracket_add_left (I := I) (V := X.toFun) (V₁ := X'.toFun)
       (W := Y.toFun) (x := x) (X.smoothAt x) (X'.smoothAt x)
-  -- T3: cov [X+X', Y] Z x = cov [X, Y] Z x + cov [X', Y] Z x via CLM add.
+  -- T3: cov [X+X', Y] Z x = cov [X, Y] Z x + cov [X', Y] Z x via continuous linear map add.
   have hT3 :
       covDeriv (VectorField.mlieBracket I (X + X').toFun Y.toFun) Z.toFun x
         = covDeriv (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x
@@ -662,7 +662,7 @@ theorem riemannCurvature_eq_of_X_eventuallyEq
       = riemannCurvature X'.toFun Y.toFun Z.toFun x := by
   classical
   have hXx : X.toFun x = X'.toFun x := hXX'.self_of_nhds
-  -- T1: direction CLM application — only `X x` matters.
+  -- T1: direction continuous linear map application — only `X x` matters.
   have hT1 : covDeriv X.toFun (fun y => covDeriv Y.toFun Z.toFun y) x
       = covDeriv X'.toFun (fun y => covDeriv Y.toFun Z.toFun y) x := by
     show (leviCivitaConnection.toFun (fun y => covDeriv Y.toFun Z.toFun y) x)
@@ -671,7 +671,7 @@ theorem riemannCurvature_eq_of_X_eventuallyEq
           (X'.toFun x)
     rw [hXx]
   -- T2: inner section locality + outer covDeriv field-locality.
-  --   `covDeriv X Z =ᶠ covDeriv X' Z` near x via X-pointwise direction CLM.
+  --   `covDeriv X Z =ᶠ covDeriv X' Z` near x via X-pointwise direction continuous linear map.
   have h_inner_ev : ∀ᶠ y in 𝓝 x,
       (fun y => covDeriv X.toFun Z.toFun y) y = (fun y => covDeriv X'.toFun Z.toFun y) y := by
     filter_upwards [hXX'] with y hy
@@ -800,7 +800,7 @@ theorem riemannCurvature_eq_zero_of_X_eq_zero_field
     -- The zero-section identification (Pi-zero).
     have h_zero_pi :
         (fun _ : M => (0 : TangentSpace I _)) = (0 : Π b : M, TangentSpace I b) := rfl
-    -- T1: outer cov at direction `0` = `0` (map_zero of CLM in direction).
+    -- T1: outer cov at direction `0` = `0` (map_zero of continuous linear map in direction).
     have hT1 : covDeriv (fun _ : M => (0 : TangentSpace I _))
                 (fun y => covDeriv Y.toFun Z.toFun y) x = 0 := by
       show (leviCivitaConnection.toFun (fun y => covDeriv Y.toFun Z.toFun y) x)

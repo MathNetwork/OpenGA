@@ -82,7 +82,7 @@ noncomputable def curvatureEndo
     -- Π-equality for adding constant sections.
     have h_const_add : ((fun _ : M => z₁ + z₂) : (y : M) → TangentSpace I y)
         = (fun _ => z₁) + (fun _ => z₂) := by funext y; rfl
-    -- Term 1: covDeriv (fun _ => z) F x = lev.toFun F x z is CLM-linear in z.
+    -- Term 1: covDeriv (fun _ => z) F x = lev.toFun F x z is continuous linear map-linear in z.
     have hT1 : covDeriv (fun _ : M => z₁ + z₂) (fun y => covDeriv X.toFun Y.toFun y) x
         = covDeriv (fun _ => z₁) (fun y => covDeriv X.toFun Y.toFun y) x
         + covDeriv (fun _ => z₂) (fun y => covDeriv X.toFun Y.toFun y) x := by
@@ -91,7 +91,7 @@ noncomputable def curvatureEndo
           + (leviCivitaConnection.toFun (fun y => covDeriv X.toFun Y.toFun y) x) z₂
       exact map_add _ _ _
     -- Term 2: inner field `fun y => covDeriv (fun _ => z) Y y = lev.toFun Y y z`.
-    -- CLM-linear in z, so the inner field is the pointwise sum.
+    -- continuous linear map-linear in z, so the inner field is the pointwise sum.
     have h_inner_add : (fun y => covDeriv (fun _ : M => z₁ + z₂) Y.toFun y)
         = (fun y => covDeriv (fun _ => z₁) Y.toFun y)
           + (fun y => covDeriv (fun _ => z₂) Y.toFun y) := by
@@ -134,7 +134,7 @@ noncomputable def curvatureEndo
         + covDeriv (fun y => mlieBracket I (fun _ => z₂) X.toFun y) Y.toFun x := by
       rw [h_lieBr_add]
       -- For the OUTER covDeriv, the field A vs A+B issue: covDeriv is
-      -- linear in the FIRST (direction) argument via CLM, since
+      -- linear in the FIRST (direction) argument via continuous linear map, since
       -- covDeriv F G x = lev.toFun G x (F x), and `(F + G) x = F x + G x`.
       show (leviCivitaConnection.toFun Y.toFun x)
           ((fun y => mlieBracket I (fun _ => z₁) X.toFun y) x
@@ -160,7 +160,7 @@ noncomputable def curvatureEndo
     have h_const_z_smooth : ∀ y, TangentSmoothAt (fun _ : M => z) y :=
       fun y => (cF[z]).smoothAt y
     have hY_smooth := Y.smoothAt
-    -- Term 1: CLM map_smul.
+    -- Term 1: continuous linear map map_smul.
     have hT1 : covDeriv (fun _ : M => c • z) (fun y => covDeriv X.toFun Y.toFun y) x
         = c • covDeriv (fun _ => z) (fun y => covDeriv X.toFun Y.toFun y) x := by
       show (leviCivitaConnection.toFun (fun y => covDeriv X.toFun Y.toFun y) x) (c • z)
@@ -321,7 +321,7 @@ private lemma half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv
     have h := hm.metric.metricInner_mdifferentiableAt
       (v := fun y' => covDeriv V.toFun Z.toFun y') (w := Z.toFun) hcovVZ (Z.smoothAt x)
     exact h
-  -- Avoid CLM-smul issues by writing `2 * h = h + h` and using `mfderiv_add`.
+  -- Avoid continuous linear map-smul issues by writing `2 * h = h + h` and using `mfderiv_add`.
   have h_two_add : (fun y' : M => (2 : ℝ) * metricInner y'
         ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
         (Z y'))
@@ -349,7 +349,7 @@ private lemma half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv
           (Z y')) := rfl
   rw [h_pi_add]
   -- `mfderiv (f + g) x v = mfderiv f x v + mfderiv g x v`.
-  -- Compute the CLM add via `mfderiv_add` then evaluate at `W.toFun x`.
+  -- Compute the continuous linear map add via `mfderiv_add` then evaluate at `W.toFun x`.
   have h_clm_add :
       mfderiv I 𝓘(ℝ, ℝ) ((fun y' : M => metricInner y'
           ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
@@ -364,7 +364,7 @@ private lemma half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv
               ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
               (Z y')) x :=
     mfderiv_add h_inner_mdiff h_inner_mdiff
-  -- Apply both sides to (W.toFun x) and use CLM-add evaluation.
+  -- Apply both sides to (W.toFun x) and use continuous linear map-add evaluation.
   have h_val_add : mDirDeriv ((fun y' : M => metricInner y'
           ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y' (V.toFun y'))
           (Z y'))
@@ -603,7 +603,7 @@ theorem riemannCurvature_const_const_eq_commutator
   have h_br : VectorField.mlieBracket I (fun _ : M => v) (fun _ : M => w) x = 0 :=
     mlieBracket_const_const_apply_zero v w x
   -- `covDeriv U Z x = leviCivitaConnection.toFun Z x (U x)`; with `U x = 0`,
-  -- CLM linearity gives zero.
+  -- continuous linear map linearity gives zero.
   have h_third :
       covDeriv (VectorField.mlieBracket I (fun _ : M => v) (fun _ : M => w)) Z x = 0 := by
     show (leviCivitaConnection (I := I) (M := M)).toFun Z x
@@ -1057,7 +1057,7 @@ noncomputable def ricciTensor (x : M) :
                 (fun _ : M => W) y) x
             - covDeriv (fun y => mlieBracket I (fun _ => z) (fun _ : M => V₂) y)
                 (fun _ : M => W) x)
-    -- Term 1 inner: direction-CLM-linearity of covDeriv.
+    -- Term 1 inner: direction-continuous linear map-linearity of covDeriv.
     have h_inner_T1 :
         ((fun y => covDeriv (fun _ : M => V₁ + V₂) (fun _ : M => W) y) :
           (y : M) → TangentSpace I y)
@@ -1069,7 +1069,7 @@ noncomputable def ricciTensor (x : M) :
             + (leviCivitaConnection.toFun (fun _ : M => W) y) V₂
       exact map_add _ _ _
     rw [h_inner_T1]
-    -- Term 2: outer covDeriv direction (V₁+V₂) at section-level via CLM.
+    -- Term 2: outer covDeriv direction (V₁+V₂) at section-level via continuous linear map.
     -- Stash the differentiated section so its type is fully determined.
     set Fz : (y : M) → TangentSpace I y :=
       fun y => covDeriv (fun _ : M => z) (fun _ : M => W) y with hFz

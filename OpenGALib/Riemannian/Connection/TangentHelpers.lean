@@ -80,11 +80,11 @@ theorem SmoothVectorField.contMDiff_E (Y : SmoothVectorField I M) :
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] [IsManifold I ∞ M]
   [IsLocallyConstantChartedSpace H M] in
-/-- **Eng.** Componentwise lift to CLM-valued: if each component
+/-- **Eng.** Componentwise lift to continuous linear map-valued: if each component
 `(fun y => T y (basis i)) : M → F₂` is `MDifferentiableAt` at `x`, then the
-CLM-valued section `T : M → (F₁ →L[ℝ] F₂)` is `MDifferentiableAt` at `x`.
-Decomposes `T y = ∑ i (basis.coord i).toCLM.smulRight (T y (basis i))`. -/
-theorem mdifferentiableAt_clm_of_components
+continuous linear map-valued section `T : M → (F₁ →L[ℝ] F₂)` is `MDifferentiableAt` at `x`.
+Decomposes `T y = ∑ i (basis.coord i).toContinuousLinearMap.smulRight (T y (basis i))`. -/
+theorem mdifferentiableAt_continuousLinearMap_of_components
     {F₁ : Type*} [NormedAddCommGroup F₁] [NormedSpace ℝ F₁] [FiniteDimensional ℝ F₁]
     {F₂ : Type*} [NormedAddCommGroup F₂] [NormedSpace ℝ F₂]
     (T : M → F₁ →L[ℝ] F₂) {ι : Type} [Fintype ι]
@@ -118,7 +118,7 @@ theorem mdifferentiableAt_clm_of_components
   apply MDifferentiableAt.sum
   intro i _
   -- Each summand: smulRight applied to scalar component.
-  -- (basis.coord i).toCLM.smulRight : F₂ →L (F₁ →L F₂) is a CLM, hence smooth.
+  -- (basis.coord i).toContinuousLinearMap.smulRight : F₂ →L (F₁ →L F₂) is a continuous linear map, hence smooth.
   have h_smulRightL : ContMDiff 𝓘(ℝ, F₂) 𝓘(ℝ, F₁ →L[ℝ] F₂) ∞
       (fun w : F₂ => (basis.coord i).toContinuousLinearMap.smulRight w) := by
     have h_eq : (fun w : F₂ => (basis.coord i).toContinuousLinearMap.smulRight w)

@@ -25,7 +25,7 @@ $Z \mapsto K(X, Y; Z)$ together with Riesz extraction yields a unique
 vector $\nabla_X Y(x) \in T_xM$ satisfying the formula.
 
 The Koszul construction (`koszulFunctional`, algebraic identities,
-chart-pullback cotangent CLM, Riesz extraction `koszulCovDeriv`) is
+chart-pullback cotangent continuous linear map, Riesz extraction `koszulCovDeriv`) is
 engineering scaffolding under `private`; the mathematical surface is
 `leviCivitaConnection`, `covDeriv`, `riemannCurvature`.
 
@@ -527,24 +527,24 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
--- Bundle ↔ function-form / componentwise CLM / mlieBracket smoothness
+-- Bundle ↔ function-form / componentwise continuous linear map / mlieBracket smoothness
 -- helpers live in `Connection/TangentHelpers.lean` (Foundation module).
 -- Smoothness of `metricInner` on bundle sections lives in `Manifold.lean`
 -- as the public `Riemannian.metricInner_contMDiff` (parametric over `n`).
 
 /-- **Mixed.** Half-Koszul scalar value $\tfrac12\,K(v_{\text{const}}, Y, w_{\text{const}})(y)$
 on constant lifts of `v, w : E`. Math: the Koszul half-factor that
-feeds Riesz uniqueness. Eng: paired with `koszulCotangentCLM` to expose
+feeds Riesz uniqueness. Eng: paired with `koszulCotangentFunctional` to expose
 the linearity in `w` to Riesz via a constant-lift wrapper. -/
 noncomputable def koszulCotangentScalar
     (v : E) (Y : SmoothVectorField I M) (w : E) (y : M) : ℝ :=
   (1/2 : ℝ) * koszulFunctional (fun _ : M => v) Y.toFun (fun _ : M => w) y
 
-/-- **Mixed.** Half-Koszul cotangent CLM $w \mapsto \tfrac12\,K(v, Y; w)(y)$
+/-- **Mixed.** Half-Koszul cotangent continuous linear map $w \mapsto \tfrac12\,K(v, Y; w)(y)$
 as `E →L[ℝ] ℝ`. Math: bounded linear functional that Riesz represents
 as $\nabla_v Y(y)$. Eng: linearity packaged via `koszul_smul_right` +
 `koszul_add_right`. -/
-noncomputable def koszulCotangentCLM
+noncomputable def koszulCotangentFunctional
     (v : E) (Y : SmoothVectorField I M) (y : M) : E →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap
     { toFun := fun w => koszulCotangentScalar v Y w y
@@ -620,16 +620,16 @@ noncomputable def koszulCotangentCLM
         simp
         ring }
 
-/-- **Eng.** `koszulCotangentCLM` evaluated equals `koszulCotangentScalar`. -/
+/-- **Eng.** `koszulCotangentFunctional` evaluated equals `koszulCotangentScalar`. -/
 @[simp]
-lemma koszulCotangentCLM_apply (v : E) (Y : SmoothVectorField I M) (y : M) (w : E) :
-    koszulCotangentCLM v Y y w = koszulCotangentScalar v Y w y := rfl
+lemma koszulCotangentFunctional_apply (v : E) (Y : SmoothVectorField I M) (y : M) (w : E) :
+    koszulCotangentFunctional v Y y w = koszulCotangentScalar v Y w y := rfl
 
 omit [FiniteDimensional ℝ E] in
 set_option backward.isDefEq.respectTransparency false in
 /-- **Eng.** Scalar smoothness of `koszulCotangentScalar v Y w` in `y`,
 decomposed across the 6 Koszul terms (3 directional-derivative + 3
-mlieBracket-with-metric-inner). Used to lift `koszulCotangentCLM` to a
+mlieBracket-with-metric-inner). Used to lift `koszulCotangentFunctional` to a
 smooth section. -/
 private theorem koszulCotangentScalar_mdifferentiableAt
     (v : E) (Y : SmoothVectorField I M) (w : E) (x : M) :
@@ -705,25 +705,25 @@ private theorem koszulCotangentScalar_mdifferentiableAt
   -- Goal: MDifferentiableAt of `fun y => (1/2) * (T1 + T2 - T3 + T4 - T5 - T6)` at x.
   exact ((((((hT1.add hT2).sub hT3).add hT4).sub hT5).sub hT6).const_smul (1/2 : ℝ))
 
-/-- **Eng.** Smoothness of the koszul cotangent CLM section as
+/-- **Eng.** Smoothness of the koszul cotangent continuous linear map section as
 `M → (E →L[ℝ] ℝ)`. Componentwise lift of `koszulCotangentScalar_mdifferentiableAt`
-via `mdifferentiableAt_clm_of_components`. -/
-theorem koszulCotangentCLM_smoothAt
+via `mdifferentiableAt_continuousLinearMap_of_components`. -/
+theorem koszulCotangentFunctional_smoothAt
     (v : E) (Y : SmoothVectorField I M) (x : M) :
     MDifferentiableAt I 𝓘(ℝ, E →L[ℝ] ℝ)
-      (fun y : M => koszulCotangentCLM v Y y) x := by
+      (fun y : M => koszulCotangentFunctional v Y y) x := by
   -- Componentwise lift: for each basis element b_i, the scalar
-  -- (fun y => koszulCotangentCLM v Y y (b_i)) = (fun y => koszulCotangentScalar v Y b_i y)
+  -- (fun y => koszulCotangentFunctional v Y y (b_i)) = (fun y => koszulCotangentScalar v Y b_i y)
   -- is MDifferentiableAt at x by koszulCotangentScalar_mdifferentiableAt.
-  -- Lift to CLM via mdifferentiableAt_clm_of_components.
+  -- Lift to continuous linear map via mdifferentiableAt_continuousLinearMap_of_components.
   set basis : Module.Basis (Fin (Module.finrank ℝ E)) ℝ E := Module.finBasis ℝ E
-  apply mdifferentiableAt_clm_of_components _ basis
+  apply mdifferentiableAt_continuousLinearMap_of_components _ basis
   intro i
-  show MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y : M => koszulCotangentCLM v Y y (basis i)) x
-  have h_eq : (fun y : M => koszulCotangentCLM v Y y (basis i))
+  show MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y : M => koszulCotangentFunctional v Y y (basis i)) x
+  have h_eq : (fun y : M => koszulCotangentFunctional v Y y (basis i))
       = (fun y : M => koszulCotangentScalar v Y (basis i) y) := by
     funext y
-    exact koszulCotangentCLM_apply v Y y (basis i)
+    exact koszulCotangentFunctional_apply v Y y (basis i)
   rw [h_eq]
   exact koszulCotangentScalar_mdifferentiableAt v Y (basis i) x
 
@@ -895,7 +895,7 @@ Build the `CovariantDerivative` via:
 2. `koszulCovDerivAux_tensorialAt` — tensorality in `X` (the
    `C^∞`-linearity of $\nabla_\cdot Y$ at $x$), via `koszul_smul_left` /
    `koszul_add_left` + Riesz uniqueness.
-3. `TensorialAt.mkHom` to obtain the CLM `T_xM →L[ℝ] T_xM`.
+3. `TensorialAt.mkHom` to obtain the continuous linear map `T_xM →L[ℝ] T_xM`.
 4. `IsCovariantDerivativeOn` add / leibniz from `koszul_add_middle` /
    `koszul_smul_middle` via Riesz uniqueness.
 -/
@@ -995,7 +995,7 @@ private theorem koszulLeviCivita_exists [IsLocallyConstantChartedSpace H M] :
         (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x),
         cov.toFun Y x (X x) = koszulCovDeriv X Y x hX hY := by
   classical
-  -- Step 1: build cov.toFun Y x as the mkHom CLM for smooth Y, else 0.
+  -- Step 1: build cov.toFun Y x as the mkHom continuous linear map for smooth Y, else 0.
   let toFun : (Π y : M, TangentSpace I y) →
       (Π y : M, TangentSpace I y →L[ℝ] TangentSpace I y) :=
     fun Y x =>
@@ -1512,10 +1512,10 @@ scoped[Riemannian] notation:max "∇[" X "] " Y:max => covDeriv X Y
 scoped[Riemannian] notation:max "⟦" X ", " Y "⟧" =>
   VectorField.mlieBracket _ X Y
 
-/-- **Mixed.** Covariant derivative at a point as a CLM in the direction
+/-- **Mixed.** Covariant derivative at a point as a continuous linear map in the direction
 slot: $\nabla\,Y|_x : T_xM \to_L T_xM$, $v \mapsto (\nabla_v Y)(x)$.
 Math: pointwise linearity in direction. Eng: decouples direction-linearity
-from section-level `covDeriv` so identities reduce to standard CLM lemmas. -/
+from section-level `covDeriv` so identities reduce to standard continuous linear map lemmas. -/
 noncomputable def covDerivAt
     [IsLocallyConstantChartedSpace H M]
     (Y : Π x : M, TangentSpace I x) (x : M) :
@@ -1523,7 +1523,7 @@ noncomputable def covDerivAt
   (leviCivitaConnection (I := I) (M := M)).toFun Y x
 
 /-- **Eng.** `covDeriv X Y x = covDerivAt Y x (X x)`: section-level
-`covDeriv` factors through the pointwise CLM `covDerivAt`. -/
+`covDeriv` factors through the pointwise continuous linear map `covDerivAt`. -/
 @[simp]
 theorem covDeriv_eq_covDerivAt
     [IsLocallyConstantChartedSpace H M]
@@ -1724,7 +1724,7 @@ theorem covDeriv_add_field
 /-- **Math.** Locality of `covDeriv` in the differentiated field: if
 $Y_1 =ᶠ[𝓝 x] Y_2$ and both are smooth at $x$, then
 $\nabla_X Y_1(x) = \nabla_X Y_2(x)$. Smoothness of $X$ is not required
-(the connection is CLM in the direction slot). -/
+(the connection is continuous linear map in the direction slot). -/
 theorem covDeriv_congr_eventuallyEq_field
     (X Y₁ Y₂ : Π x : M, TangentSpace I x) (x : M)
     (hY₁ : TangentSmoothAt Y₁ x) (hY₂ : TangentSmoothAt Y₂ x)

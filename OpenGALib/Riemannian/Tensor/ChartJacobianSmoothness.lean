@@ -14,9 +14,9 @@ import Mathlib.LinearAlgebra.Dimension.Free
 # Smoothness of chart-Jacobian matrix entries
 
 For a smooth manifold `M` and base point `α : M`, the trivialisation of
-the tangent bundle at `α` gives fibrewise CLMs `(triv α).symmL ℝ b` and
+the tangent bundle at `α` gives fibrewise continuous linear maps `(triv α).symmL ℝ b` and
 `(triv α).continuousLinearMapAt ℝ b`. Scalar matrix entries are obtained
-by applying these CLMs to a model-basis vector and projecting onto a
+by applying these continuous linear maps to a model-basis vector and projecting onto a
 model-basis coordinate.
 
 This file proves smoothness of the **wrapped** form (a second
@@ -68,7 +68,7 @@ private lemma tangent_clmAt_self_eq_one (α : M) :
   exact (tangentBundleCore I M).coordChange_self (achart H α) α
     (by rw [tangentBundleCore_baseSet, coe_achart]; exact mem_chart_source H α) v
 
-/-! ## Wrapped CLM smoothness via `contMDiffOn_coordChangeL` -/
+/-! ## Wrapped continuous linear map smoothness via `contMDiffOn_coordChangeL` -/
 
 private lemma contMDiffOn_coordChangeL_tangent (α β : M) :
     ContMDiffOn I 𝓘(ℝ, E →L[ℝ] E) ∞
@@ -106,12 +106,12 @@ private lemma coordChangeL_apply_eq_clmAt_symmL
 
 /-! ## Matrix-entry scalar function and its smoothness -/
 
-/-- **Eng.** The model-basis-coordinate linear functional, viewed as a CLM `E →L[ℝ] ℝ`. -/
-private noncomputable def basisCoordCLM (j : Fin (Module.finrank ℝ E)) : E →L[ℝ] ℝ :=
+/-- **Eng.** The model-basis-coordinate linear functional, viewed as a continuous linear map `E →L[ℝ] ℝ`. -/
+private noncomputable def basisCoordContinuousLinearMap (j : Fin (Module.finrank ℝ E)) : E →L[ℝ] ℝ :=
   ((Module.finBasis ℝ E).coord j).toContinuousLinearMap
 
-@[simp] private lemma basisCoordCLM_apply (j : Fin (Module.finrank ℝ E)) (v : E) :
-    basisCoordCLM (E := E) j v = (Module.finBasis ℝ E).coord j v := rfl
+@[simp] private lemma basisCoordContinuousLinearMap_apply (j : Fin (Module.finrank ℝ E)) (v : E) :
+    basisCoordContinuousLinearMap (E := E) j v = (Module.finBasis ℝ E).coord j v := rfl
 
 /-! ### Smoothness of the wrapped scalar matrix entry -/
 
@@ -142,10 +142,10 @@ theorem chartJinvMatrix_wrapped_entry_contMDiffOn
           ((Module.finBasis ℝ E) i))
       ((chartAt H α).source ∩ (chartAt H β).source) :=
     hcoord.clm_apply contMDiffOn_const
-  have hcoordj : ContMDiff 𝓘(ℝ, E) 𝓘(ℝ, ℝ) ∞ (basisCoordCLM (E := E) j) :=
-    (basisCoordCLM (E := E) j).contMDiff
+  have hcoordj : ContMDiff 𝓘(ℝ, E) 𝓘(ℝ, ℝ) ∞ (basisCoordContinuousLinearMap (E := E) j) :=
+    (basisCoordContinuousLinearMap (E := E) j).contMDiff
   have hwrapped : ContMDiffOn I 𝓘(ℝ, ℝ) ∞
-      (fun b : M => (basisCoordCLM (E := E) j)
+      (fun b : M => (basisCoordContinuousLinearMap (E := E) j)
         (((trivializationAt E (TangentSpace I) α).coordChangeL ℝ
           (trivializationAt E (TangentSpace I) β) b : E →L[ℝ] E)
             ((Module.finBasis ℝ E) i)))
@@ -154,7 +154,7 @@ theorem chartJinvMatrix_wrapped_entry_contMDiffOn
     exact (hcoordj _).contMDiffWithinAt.comp _ (hcoord_app _ hb) (mapsTo_univ _ _)
   refine hwrapped.congr ?_
   intro b ⟨hbα, hbβ⟩
-  rw [basisCoordCLM_apply]
+  rw [basisCoordContinuousLinearMap_apply]
   exact (congrArg ((Module.finBasis ℝ E).coord j)
     (coordChangeL_apply_eq_clmAt_symmL (I := I) α β hbα hbβ
       ((Module.finBasis ℝ E) i))).symm
@@ -190,14 +190,14 @@ the `(j, i)` entry of the matrix of `(triv α).symmL ℝ b`, viewed as
 `TangentSpace I b = E`. We show it is smooth on `(chart α).source` by
 combining:
 
-* the smoothness of the wrapped CLM `(triv b₀).clmAt ℝ b ∘L (triv α).symmL ℝ b`
+* the smoothness of the wrapped continuous linear map `(triv b₀).clmAt ℝ b ∘L (triv α).symmL ℝ b`
   at `b = b₀` (provided by `chartJinv_pre_clm_contMDiffAt`);
 * the centre identity `(triv b₀).clmAt ℝ b₀ = (1 : E →L[ℝ] E)`, which makes
-  the wrapped CLM evaluated at `b = b₀` equal `(triv α).symmL ℝ b₀`.
+  the wrapped continuous linear map evaluated at `b = b₀` equal `(triv α).symmL ℝ b₀`.
 
 The smoothness at `b₀` of the bare matrix entry follows from the smoothness of
-the wrapped CLM at `b₀`, applied to `(basis i)` and projected via
-`basisCoordCLM j`. -/
+the wrapped continuous linear map at `b₀`, applied to `(basis i)` and projected via
+`basisCoordContinuousLinearMap j`. -/
 
 /-- **Eng.** Pointwise smoothness of the bare chart-Jacobian-inverse matrix entry,
 recovered from the wrapped form at `b₀ ∈ (chart α).source`. -/

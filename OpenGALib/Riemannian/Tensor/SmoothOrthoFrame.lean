@@ -230,9 +230,9 @@ private lemma chartFrameNormFiber_at_zero
 
 /-- **Eng.** Generic normalisation calculation: for a vector $v$ in a fiber
 with positive $g$-self-inner-product $N$, scaling $v$ by
-$(\sqrt N)^{-1}$ gives a unit-norm vector. Pure CLM/ring algebra in
+$(\sqrt N)^{-1}$ gives a unit-norm vector. Pure continuous linear map/ring algebra in
 the inner-product slot; isolated as a helper to keep
-`chartFrameNormFiber_at_zero_norm` from re-elaborating CLM types
+`chartFrameNormFiber_at_zero_norm` from re-elaborating continuous linear map types
 inside `set`-chains. -/
 private lemma g_inner_normalised
     (g : RiemannianMetric I M) (b : M) (v : TangentSpace I b)
@@ -242,8 +242,8 @@ private lemma g_inner_normalised
   set s : ℝ := Real.sqrt (g.inner b v v) with hs_def
   have hs_sq : s * s = g.inner b v v := Real.mul_self_sqrt hpos.le
   -- Bilinearity of `g.inner b`: pull `s⁻¹` out of each slot via `map_smul`
-  -- on the appropriate CLM. The first-slot pull yields a CLM equality
-  -- (smul of CLMs); evaluating at `s⁻¹ • v` then re-applies smul to extract
+  -- on the appropriate continuous linear map. The first-slot pull yields a continuous linear map equality
+  -- (smul of continuous linear maps); evaluating at `s⁻¹ • v` then re-applies smul to extract
   -- the second factor. Final shape: `s⁻¹ * (s⁻¹ * g.inner b v v)`.
   have h_left : g.inner b (s⁻¹ • v) = s⁻¹ • g.inner b v := map_smul _ _ _
   have h_right : g.inner b v (s⁻¹ • v) = s⁻¹ * g.inner b v v := by
@@ -1109,7 +1109,7 @@ diagonal sums indexed by `stdOrthonormalBasis ℝ (TangentSpace I α)`
 (the basis used in the existing `connectionLaplacian` /
 `scalarLaplacian` API). The values $b_i = \mathrm{smoothOrthoFrame}\,
 \mathrm{hm.metric}\,\alpha\,i\,\alpha \in T_\alpha M$ form an
-orthonormal family at $\alpha$ (in the IPS sense, via the
+orthonormal family at $\alpha$ (in the InnerProductSpace sense, via the
 `HasMetric I M` typeclass bridge), and so can be packaged as an
 `OrthonormalBasis`. Combined with
 `OrthonormalBasis.sum_apply_diagonal_invariant`, this gives
@@ -1117,7 +1117,7 @@ basis-invariance of $\sum_i B(b_i)(b_i)$ for any bilinear
 $B : T_\alpha M \to_\ell T_\alpha M \to_\ell W$.
 
 This stage uses `[HasMetric I M]` and instantiates the construction at
-the canonical metric `hm.metric`; the IPS inner product
+the canonical metric `hm.metric`; the InnerProductSpace inner product
 `⟪·, ·⟫_ℝ` on `TangentSpace I α` is then definitionally
 `hm.metric.inner α`. -/
 
@@ -1136,7 +1136,7 @@ theorem smoothOrthoFrame_inner_at_center (α : M)
     ⟪smoothOrthoFrame (I := I) hm.metric α i α,
         smoothOrthoFrame (I := I) hm.metric α j α⟫_ℝ =
       if i = j then 1 else 0 := by
-  -- The IPS inner product on `TangentSpace I α` (via `HasMetric I M` →
+  -- The InnerProductSpace inner product on `TangentSpace I α` (via `HasMetric I M` →
   -- `RiemannianBundle (TangentSpace I)`) is definitionally `hm.metric.inner α`.
   show hm.metric.inner α _ _ = _
   exact smoothOrthoFrame_orthonormal_at_center (I := I) hm.metric α i j
@@ -1227,7 +1227,7 @@ At any `b ∈ smoothOrthoFrameNbhd α`, the frame `(smoothOrthoFrame hm.metric �
 forms a `g_b`-orthonormal basis of `T_bM`. Same construction as
 `smoothOrthoFrameOrthonormalBasis α` but parameterised by the nbhd point. -/
 
-/-- **Math.** Inner-product (IPS) form of `smoothOrthoFrame_orthonormal` at `b ∈ nbhd α`,
+/-- **Math.** `InnerProductSpace` form of `smoothOrthoFrame_orthonormal` at `b ∈ nbhd α`,
 routed through `HasMetric I M` → `InnerProductSpace ℝ (TangentSpace I b)`. -/
 theorem smoothOrthoFrame_inner_at_nbhd (α : M) {b : M}
     (hb : b ∈ smoothOrthoFrameNbhd (I := I) (M := M) α)

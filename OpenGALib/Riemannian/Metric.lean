@@ -25,7 +25,7 @@ explicit argument; multiple metrics on the same manifold coexist.
 
 Provides `g.metricInner` (bilinear-form algebra), `g.metricRiesz` (Riesz
 duality $(T_xM)^* \to T_xM$), their smoothness, and bridge instances on
-`TangentSpace I x` (NACG, IPS, FiniteDim, Complete).
+`TangentSpace I x` (NormedAddCommGroup, InnerProductSpace, FiniteDimensional, CompleteSpace).
 
 Reference: do Carmo §1.2; Lee, *Smooth Manifolds*, Ch. 13.
 Mathlib upstream: `Mathlib.Geometry.Manifold.VectorBundle.Riemannian`.
@@ -64,7 +64,7 @@ class HasMetric {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 /-- **Eng.** Bridge: `[HasMetric I M]` induces a global
 `Bundle.RiemannianBundle (TangentSpace I : M → Type _)`, activating
 Mathlib's scoped `NormedAddCommGroup` and `InnerProductSpace ℝ`
-instances on each fibre. Single NACG/IPS source. -/
+instances on each fibre. Single `NormedAddCommGroup` / `InnerProductSpace` source. -/
 noncomputable instance instRiemannianBundleOfHasMetric
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
@@ -192,10 +192,10 @@ instances, which become active once a `RiemannianBundle E` is in scope
 (e.g., via the global instance on `[RiemannianManifold M]`, or via a
 local `letI`). Routing through `RiemannianBundle` ensures that the
 inner product the Mathlib `inner` projection lands on is *exactly*
-`g.inner b · ·`, sidestepping the lean4#13063 NACG diamond.
+`g.inner b · ·`, sidestepping the lean4#13063 `NormedAddCommGroup` diamond.
 
 The non-metric fibre instances `FiniteDimensional` and `CompleteSpace`
-are orthogonal to the NACG/IPS chain and are transported here via the
+are orthogonal to the `NormedAddCommGroup` / `InnerProductSpace` chain and are transported here via the
 `TangentSpace I x = E` def-eq. -/
 
 namespace Riemannian

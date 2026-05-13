@@ -24,7 +24,7 @@ The flat-typed wrappers retype the dependent codomain
 def-eq bridge.
 
 Most helpers are `private` (Layer 1-4 framework infrastructure for
-constant-section smoothness, finite-dim CLM lift, and chart-inverse
+constant-section smoothness, finite-dim continuous linear map lift, and chart-inverse
 smoothness via `inverse` composition). The four public theorems are
 `continuousLinearMapAtFlat_contMDiffAt`, `symmLFlat_mdifferentiableAt`,
 `contMDiff_constSection_TangentSpace` (used by `SmoothVectorField.const`).
@@ -65,10 +65,10 @@ private noncomputable def mfderivWithinFlat
 
 /-! ### Layer 1 — constant-section smoothness for the tangent bundle -/
 
-/-- **Eng.** Forward chart-mfderiv as a CLM-valued function of basepoint, smooth
+/-- **Eng.** Forward chart-mfderiv as a continuous linear map-valued function of basepoint, smooth
 at `b₀`. With `IsLocallyConstantChartedSpace`, locally constant on
 `chartAt H b₀ = chartAt H b₀`'s neighborhood and equals the identity
-CLM via `coordChange_self`. -/
+continuous linear map via `coordChange_self`. -/
 theorem continuousLinearMapAtFlat_contMDiffAt
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
@@ -149,7 +149,7 @@ theorem contMDiff_constSection_TangentSpace
   exact (mfderiv_extChartAt_apply_smoothAt (I := I) (M := M) b₀ v).congr_of_eventuallyEq
     h_eqOn
 
-/-! ### Layer 2 — finite-dim CLM lift -/
+/-! ### Layer 2 — finite-dim continuous linear map lift -/
 
 private theorem _root_.ContMDiffOn.add_normed
     {𝕜 : Type*} [NontriviallyNormedField 𝕜]
@@ -185,9 +185,9 @@ private theorem _root_.ContMDiffOn.finset_sum_normed
     refine (h i (Finset.mem_insert_self _ _)).add_normed
       (IH (fun j hj => h j (Finset.mem_insert_of_mem hj)))
 
-/-- **Eng.** Componentwise smoothness `(y ↦ T y bᵢ) : M → F₂` lifts to CLM-valued
+/-- **Eng.** Componentwise smoothness `(y ↦ T y bᵢ) : M → F₂` lifts to continuous linear map-valued
 smoothness `T : M → (F₁ →L[𝕜] F₂)` via basis decomposition. -/
-private theorem contMDiffOn_clm_of_components
+private theorem contMDiffOn_continuousLinearMap_of_components
     {𝕜 : Type*} [NontriviallyNormedField 𝕜] [CompleteSpace 𝕜]
     {EM : Type*} [NormedAddCommGroup EM] [NormedSpace 𝕜 EM]
     {HM : Type*} [TopologicalSpace HM] {IM : ModelWithCorners 𝕜 EM HM}
@@ -262,7 +262,7 @@ private theorem contMDiffOn_continuousLinearMapAtFlat
       (trivializationAt E (TangentSpace I) x₀).baseSet := by
   set basis : Module.Basis (Fin (Module.finrank ℝ E)) ℝ E :=
     Module.finBasis ℝ E with h_basis
-  apply contMDiffOn_clm_of_components
+  apply contMDiffOn_continuousLinearMap_of_components
     (continuousLinearMapAtFlat (I := I) (M := M) x₀)
     basis _
   intro i

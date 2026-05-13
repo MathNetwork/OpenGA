@@ -349,7 +349,7 @@ theorem bochner_per_summand_assembled
     h_hess_sym _ _
   -- Compose h_swap (LHS = swap RHS) and h_riem (swap RHS = riemann RHS):
   -- LHS = g(R(B, W) ∇f, B x) + g(LC Q x (W x), B x) - g(LC Gf x (LC B x (W x))) (B x)
-  -- where `LC Q x (W x) = covDeriv W Q x` (a CLM eval at W x of the section ∇_Q),
+  -- where `LC Q x (W x) = covDeriv W Q x` (a continuous linear map eval at W x of the section ∇_Q),
   -- but actually here it's `lcc.toFun Q x (W x)` = `covDeriv W.toFun (fun y => covDeriv B.toFun ∇f y) x`.
   rw [h_swap, h_riem]
   -- Now goal:

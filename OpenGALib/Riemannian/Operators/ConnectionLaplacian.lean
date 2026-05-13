@@ -69,7 +69,7 @@ noncomputable def secondCovDerivAt
             (covDerivAt (fun _ : M => (w : TangentSpace I x)) x v) :=
   rfl
 
-/-- **Math.** $(\nabla^2 Z)(0, w) = 0$. Pure CLM linearity in the outer
+/-- **Math.** $(\nabla^2 Z)(0, w) = 0$. Pure continuous linear map linearity in the outer
 direction slot. -/
 @[simp] theorem secondCovDerivAt_zero_left
     (Z : Π x : M, TangentSpace I x) (x : M) (w : TangentSpace I x) :
@@ -105,7 +105,7 @@ theorem secondCovDerivAt_smul_left
 
 /-! ### Right-slot bilinearity
 
-Right-slot (inner direction) bilinearity is **not** automatic from CLM
+Right-slot (inner direction) bilinearity is **not** automatic from continuous linear map
 properties of $\nabla_v$: the inner $w$ appears inside the section
 `fun y => covDerivAt Z y w`, and to commute the section sum past the
 outer `covDerivAt (·) x v` we need `covDeriv_add_field` /
@@ -121,8 +121,8 @@ so they are usable for any `Z` whose connection-on-constant-direction
 sections are smooth at $x$ — including the heart-of-Bochner setting. -/
 
 /-- **Eng.** Pi-level additivity of the section `y ↦ covDerivAt Z y w` in the
-constant direction $w$. Pure CLM additivity, no smoothness needed:
-$\nabla_y$ is a CLM in its second arg, so the sum splits pointwise. -/
+constant direction $w$. Pure continuous linear map additivity, no smoothness needed:
+$\nabla_y$ is a continuous linear map in its second arg, so the sum splits pointwise. -/
 private lemma covDerivAt_const_dir_section_add
     (Z : Π x : M, TangentSpace I x) (x : M) (w₁ w₂ : TangentSpace I x) :
     (fun y : M => covDerivAt Z y (w₁ + w₂))
@@ -140,13 +140,13 @@ private lemma covDerivAt_const_dir_section_smul
   exact (covDerivAt Z y).map_smul c w
 
 /-- **Math.** $(\nabla^2 Z)(v, 0) = 0$: the second covariant derivative vanishes
-when the inner direction is zero. Inner CLM-zero in both occurrences
+when the inner direction is zero. Inner continuous linear map-zero in both occurrences
 of $w$. No smoothness hypothesis. -/
 @[simp] theorem secondCovDerivAt_zero_right
     (Z : Π x : M, TangentSpace I x) (x : M) (v : TangentSpace I x) :
     secondCovDerivAt (I := I) (M := M) Z x v 0 = 0 := by
   unfold secondCovDerivAt
-  -- (fun y => covDerivAt Z y 0) = 0 (Pi-zero, by CLM map_zero pointwise).
+  -- (fun y => covDerivAt Z y 0) = 0 (Pi-zero, by continuous linear map map_zero pointwise).
   have h1 : (fun y : M => covDerivAt Z y (0 : TangentSpace I x))
       = (fun _ : M => (0 : TangentSpace I x)) := by
     funext y; exact (covDerivAt Z y).map_zero
@@ -190,7 +190,7 @@ theorem secondCovDerivAt_add_right
     exact h
   rw [h_outer]
   -- Inner-direction term: const(w₁+w₂) = const w₁ + const w₂ pointwise,
-  -- and covDerivAt (constant section) is CLM in the inner argument.
+  -- and covDerivAt (constant section) is continuous linear map in the inner argument.
   -- (fun _ => w₁ + w₂) = (fun _ => w₁) + (fun _ => w₂) (pointwise sum of consts).
   have h_const_add : (fun _ : M => (w₁ + w₂ : TangentSpace I x))
       = (fun _ : M => (w₁ : TangentSpace I x))
@@ -295,7 +295,7 @@ derivative is exactly the Riemann curvature.
 
 Proof sketch: combines (i) torsion-freeness of Levi-Civita
 (`covDeriv_sub_swap_eq_mlieBracket`) applied to the smooth-everywhere constant
-sections $\tilde v, \tilde w$, and (ii) ℝ-linearity of `covDerivAt Z x` (a CLM)
+sections $\tilde v, \tilde w$, and (ii) ℝ-linearity of `covDerivAt Z x` (a continuous linear map)
 to lift the bracket through the inner derivative.
 
 **Ground truth**: do Carmo §4 Proposition 2.5 (ii); Lee §11. -/
@@ -315,7 +315,7 @@ theorem secondCovDerivAt_sub_swap_eq_riemannCurvature
   -- Torsion-free identity at x for the constant chart-frame sections
   have h_tor : (∇[V] W) x - (∇[W] V) x = (⟦V, W⟧) x :=
     covDeriv_sub_swap_eq_mlieBracket V W x hVsm hWsm
-  -- Lift through covDerivAt Z x (a CLM, hence ℝ-linear)
+  -- Lift through covDerivAt Z x (a continuous linear map, hence ℝ-linear)
   have h_lifted : covDerivAt Z x ((∇[V] W) x) - covDerivAt Z x ((∇[W] V) x)
       = covDerivAt Z x ((⟦V, W⟧) x) := by
     rw [← (covDerivAt Z x).map_sub, h_tor]
@@ -382,7 +382,7 @@ $$(\nabla^2 Z)(V, W)(x) \;-\; (\nabla^2 Z)(W, V)(x) \;=\; R(V, W)\,Z\,(x).$$
 Generalises `secondCovDerivAt_sub_swap_eq_riemannCurvature` (D.2): the
 constant lifts $\tilde v, \tilde w$ are replaced by arbitrary smooth $V, W$.
 The proof is the same algebraic chain — torsion-freeness
-(`covDeriv_sub_swap_eq_mlieBracket`) on $V, W$, lifted through the CLM
+(`covDeriv_sub_swap_eq_mlieBracket`) on $V, W$, lifted through the continuous linear map
 $\nabla_\bullet Z$ at $x$, then matched against `riemannCurvature_def`.
 
 **Ground truth**: do Carmo §4 Prop 2.5; Lee §11. -/
@@ -395,7 +395,7 @@ theorem secondCovDerivSection_sub_swap_eq_riemannCurvature
   -- Torsion-free identity at x for V, W
   have h_tor : (∇[V] W) x - (∇[W] V) x = (⟦V, W⟧) x :=
     covDeriv_sub_swap_eq_mlieBracket V W x hV hW
-  -- Lift through covDerivAt Z x (a CLM, hence ℝ-linear)
+  -- Lift through covDerivAt Z x (a continuous linear map, hence ℝ-linear)
   have h_lifted : covDerivAt Z x ((∇[V] W) x) - covDerivAt Z x ((∇[W] V) x)
       = covDerivAt Z x ((⟦V, W⟧) x) := by
     rw [← (covDerivAt Z x).map_sub, h_tor]

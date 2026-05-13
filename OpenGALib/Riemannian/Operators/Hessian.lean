@@ -380,7 +380,7 @@ theorem hessianBilin_symm
         = hessianBilin (I := I) f x w v := rfl
   rw [h_hess_lhs] at h_compat_vw
   rw [h_hess_rhs] at h_compat_wv
-  -- The bracket-correction terms via torsion-free + CLM linearity
+  -- The bracket-correction terms via torsion-free + continuous linear map linearity
   have h_inner_diff :
       metricInner x (manifoldGradient (I := I) f x)
           ((leviCivitaConnection (I := I) (M := M)).toFun W x v)
