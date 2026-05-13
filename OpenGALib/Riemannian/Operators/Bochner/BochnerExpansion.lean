@@ -5,15 +5,16 @@ import OpenGALib.Riemannian.Curvature
 import OpenGALib.Riemannian.Curvature.Tensoriality
 import OpenGALib.Riemannian.Gradient
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
+import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.Smoothness
 import OpenGALib.Util.Notation
 import Mathlib.Analysis.InnerProductSpace.Trace
 
 /-!
-# Bochner anchor — heart-of-Bochner conditional infrastructure
+# Bochner expansion: Ricci-identity-driven chain
 
-The four-step algebraic chain that drives the heart-of-Bochner identity
-$\langle \Delta_\nabla \nabla f, \nabla f\rangle_g
-   = \langle \nabla f, \nabla(\Delta_g f)\rangle_g + \mathrm{Ric}(\nabla f, \nabla f)$:
+Algebraic expansion of $\langle \Delta_\nabla \nabla f, \nabla f\rangle_g$
+into $\langle \nabla f, \nabla(\Delta_g f)\rangle_g + \mathrm{Ric}(\nabla f, \nabla f)$,
+realised as a four-step chain on the second covariant derivative:
 
 * Hess-sym swap of `(∇² ∇f)`'s inner-product partner
 * D.2 inner-form swap of the outer pair (Ricci identity)
@@ -21,10 +22,13 @@ $\langle \Delta_\nabla \nabla f, \nabla f\rangle_g
 * Smooth-trace identification (Hessian trace = `Δ_g f` locally; cov-skew
   cancellation of cross-Christoffel)
 
-Plus the conditional-inner-form reduction `sum_inner_secondCovDerivAt_grad_
-smoothOrthoFrame_of_inner_form` packaging the four steps into the form
-consumed by `Bochner/PerSummand.lean`'s
+The packaged result
+`sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_of_inner_form` exposes the
+four steps in the form consumed by `Bochner/PerSummand.lean`'s
 `connectionLaplacian_grad_eq_grad_laplacian_add_ricci`.
+
+Parallel to `Bochner/HessianExpansion.lean`, which expands $\mathrm{Hess}(|\nabla f|^2)$
+on the gradient side.
 -/
 
 noncomputable section

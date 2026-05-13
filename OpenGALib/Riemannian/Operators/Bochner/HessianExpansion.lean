@@ -5,6 +5,7 @@ import OpenGALib.Riemannian.Curvature
 import OpenGALib.Riemannian.Curvature.Tensoriality
 import OpenGALib.Riemannian.Gradient
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
+import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.Smoothness
 import OpenGALib.Util.Notation
 import Mathlib.Analysis.InnerProductSpace.Trace
 
@@ -18,8 +19,8 @@ and its second-order specialisations to chart-frame constant lifts and
 to smooth vector fields.
 
 Anchor `Bochner.lean` imports this file and feeds the Hessian expansion
-into `leibniz_trace_reduction`, which combines with the heart-of-Bochner
-reduction (`Bochner/HeartOfBochner.lean`) to give the final identity.
+into `leibniz_trace_reduction`, which combines with the Ricci-identity
+chain (`Bochner/BochnerExpansion.lean`) to give the final identity.
 -/
 
 noncomputable section

@@ -5,8 +5,9 @@ import OpenGALib.Riemannian.Curvature
 import OpenGALib.Riemannian.Curvature.Tensoriality
 import OpenGALib.Riemannian.Gradient
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
+import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.Smoothness
 import OpenGALib.Riemannian.Operators.Bochner.HessianExpansion
-import OpenGALib.Riemannian.Operators.Bochner.HeartOfBochner
+import OpenGALib.Riemannian.Operators.Bochner.BochnerExpansion
 import OpenGALib.Util.Notation
 import Mathlib.Analysis.InnerProductSpace.Trace
 
