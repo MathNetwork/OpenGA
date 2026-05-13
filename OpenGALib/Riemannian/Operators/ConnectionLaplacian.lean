@@ -253,126 +253,24 @@ theorem secondCovDerivAt_smul_right
       (fun _ : M => (w : TangentSpace I x)) x c h_const_w_smooth
   rw [h_inner_smul, (covDerivAt Z x).map_smul, smul_sub]
 
-set_option backward.isDefEq.respectTransparency false in
-/-- The **connection Laplacian** $\Delta_\nabla Z$ on a tangent vector
-field $Z : \Pi x : M, T_x M$, computed against the $g$-orthonormal frame
-`stdOrthonormalBasis ℝ (TangentSpace I x)` extended as a constant
-chart-frame section:
-$$(\Delta_\nabla Z)(x) \;=\; \sum_i \bigl(\nabla_{\varepsilon_i}
-   \nabla_{\varepsilon_i} Z - \nabla_{(\nabla_{\varepsilon_i}\varepsilon_i)} Z\bigr)(x).$$
+/-! ### Note on `connectionLaplacian`
 
-The constant chart-frame extension is $g$-orthonormal at $x$ (where
-`stdOrthonormalBasis` is constructed); in general it is *not* $g$-orthonormal
-at other points, but the trace identification at $x$ depends only on the
-frame at $x$, so this gives the correct geometric trace of $\nabla\nabla Z$
-at $x$ — basis-independent among $g$-orthonormal frames of $T_xM$.
+The definition of `connectionLaplacian` itself lives downstream in
+`OpenGALib/Riemannian/Operators/Bochner.lean`, in **section form** using
+the smooth $g$-orthonormal frame `smoothOrthoFrame g α` (centered at the
+evaluation point $α$):
+$$(\Delta_\nabla Z)(α) \;=\; \sum_i (\nabla^2 Z)(B_i, B_i)(α),
+   \qquad B_i := \mathrm{smoothOrthoFrame}\,g\,α\,i.$$
 
-**Ground truth**: Petersen, *Riemannian Geometry*, Ch. 7 §1 Proposition 33
-(Bochner identity); do Carmo §6 ex. 12. -/
-noncomputable def connectionLaplacian
-    (Z : Π x : M, TangentSpace I x) (x : M) : TangentSpace I x :=
-  let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
-    stdOrthonormalBasis ℝ (TangentSpace I x)
-  ∑ i, (covDerivAt (fun y : M => covDerivAt Z y (e i : TangentSpace I x)) x
-          (e i : TangentSpace I x)
-        - covDerivAt Z x
-            (covDerivAt (fun _ : M => (e i : TangentSpace I x)) x
-              (e i : TangentSpace I x)))
+Section form is chosen (per Mathlib LC PR #36845 and the external
+`differential-geometry` library convention) to allow direct composition
+with `bochner_per_summand_assembled` — the section-form output of the
+per-summand chain. Const-form would force a Hom-bundle Leibniz bridge
+between section and constant forms, technically blocked by Lean's
+`TangentSpace I x = E` non-reducibility.
 
-@[simp] lemma connectionLaplacian_def
-    (Z : Π x : M, TangentSpace I x) (x : M) :
-    connectionLaplacian (I := I) (M := M) Z x =
-      ∑ i, (covDerivAt (fun y : M =>
-                covDerivAt Z y
-                  ((stdOrthonormalBasis ℝ (TangentSpace I x)) i
-                    : TangentSpace I x)) x
-              ((stdOrthonormalBasis ℝ (TangentSpace I x)) i : TangentSpace I x)
-            - covDerivAt Z x
-                (covDerivAt (fun _ : M =>
-                  ((stdOrthonormalBasis ℝ (TangentSpace I x)) i
-                    : TangentSpace I x)) x
-                  ((stdOrthonormalBasis ℝ (TangentSpace I x)) i
-                    : TangentSpace I x))) :=
-  rfl
-
-/-- Splits `connectionLaplacian` into its two trace pieces:
-the sum of pure second-covariant-derivative terms
-$\sum_i \nabla_{\varepsilon_i}\nabla_{\varepsilon_i} Z$, minus the sum of
-Christoffel-correction terms $\sum_i \nabla_{(\nabla_{\varepsilon_i}\varepsilon_i)} Z$. -/
-theorem connectionLaplacian_eq_sum_sub
-    (Z : Π x : M, TangentSpace I x) (x : M) :
-    connectionLaplacian (I := I) (M := M) Z x =
-      (∑ i, covDerivAt (fun y : M =>
-              covDerivAt Z y
-                ((stdOrthonormalBasis ℝ (TangentSpace I x)) i
-                  : TangentSpace I x)) x
-              ((stdOrthonormalBasis ℝ (TangentSpace I x)) i : TangentSpace I x))
-        - ∑ i, covDerivAt Z x
-                (covDerivAt (fun _ : M =>
-                  ((stdOrthonormalBasis ℝ (TangentSpace I x)) i
-                    : TangentSpace I x)) x
-                  ((stdOrthonormalBasis ℝ (TangentSpace I x)) i
-                    : TangentSpace I x)) := by
-  simp only [connectionLaplacian_def, Finset.sum_sub_distrib]
-
-/-- The connection Laplacian on the zero vector field is zero:
-$\Delta_\nabla 0 = 0$. -/
-@[simp] theorem connectionLaplacian_zero (x : M) :
-    connectionLaplacian (I := I) (M := M)
-        (0 : Π x : M, TangentSpace I x) x = 0 := by
-  rw [connectionLaplacian_eq_sum_sub]
-  -- inner section `fun y => covDerivAt 0 y v` = `fun _ => 0`
-  have h_inner : ∀ v : TangentSpace I x,
-      (fun y : M => covDerivAt (0 : Π x : M, TangentSpace I x) y v)
-        = (fun _ : M => (0 : TangentSpace I x)) := by
-    intro v
-    funext y
-    show ((leviCivitaConnection (I := I) (M := M)).toFun 0 y) v = 0
-    rw [CovariantDerivative.zero]; rfl
-  -- LHS sum: each term is covDerivAt (fun _ => 0) x (e i) = 0
-  have h_lhs :
-      ∑ i, covDerivAt (fun y : M =>
-              covDerivAt (0 : Π x : M, TangentSpace I x) y
-                ((stdOrthonormalBasis ℝ (TangentSpace I x)) i
-                  : TangentSpace I x)) x
-              ((stdOrthonormalBasis ℝ (TangentSpace I x)) i
-                : TangentSpace I x) = 0 := by
-    refine Finset.sum_eq_zero ?_
-    intro i _
-    rw [h_inner]
-    show ((leviCivitaConnection (I := I) (M := M)).toFun 0 x) _ = 0
-    rw [CovariantDerivative.zero]; rfl
-  -- RHS sum: each term is covDerivAt 0 x (...) = 0
-  have h_rhs :
-      ∑ i, covDerivAt (0 : Π x : M, TangentSpace I x) x
-              (covDerivAt (fun _ : M =>
-                ((stdOrthonormalBasis ℝ (TangentSpace I x)) i
-                  : TangentSpace I x)) x
-                ((stdOrthonormalBasis ℝ (TangentSpace I x)) i
-                  : TangentSpace I x)) = 0 := by
-    refine Finset.sum_eq_zero ?_
-    intro i _
-    show ((leviCivitaConnection (I := I) (M := M)).toFun 0 x) _ = 0
-    rw [CovariantDerivative.zero]; rfl
-  rw [h_lhs, h_rhs, sub_zero]
-
-/-- **Connection Laplacian as the trace of the second covariant derivative**:
-$$\Delta_\nabla Z \;=\; \sum_i (\nabla^2 Z)(\varepsilon_i, \varepsilon_i),$$
-where $\{\varepsilon_i\} = \mathrm{stdOrthonormalBasis}\,\mathbb{R}\,(T_xM)$.
-
-This is the textbook identification $\Delta_\nabla = \mathrm{tr}_g(\nabla^2)$.
-The two definitions unfold to the same expression — `rfl` holds modulo the
-definitional unfolding of both sides. -/
-theorem connectionLaplacian_eq_sum_secondCovDerivAt
-    (Z : Π x : M, TangentSpace I x) (x : M) :
-    connectionLaplacian (I := I) (M := M) Z x =
-      ∑ i, secondCovDerivAt (I := I) (M := M) Z x
-        ((stdOrthonormalBasis ℝ (TangentSpace I x)) i : TangentSpace I x)
-        ((stdOrthonormalBasis ℝ (TangentSpace I x)) i : TangentSpace I x) := by
-  rw [connectionLaplacian_def]
-  refine Finset.sum_congr rfl ?_
-  intro i _
-  rfl
+The placement downstream allows `connectionLaplacian` to use
+`smoothOrthoFrame` directly without import inversion. -/
 
 /-- $(\nabla^2\,0)(v, w) = 0$: the second covariant derivative of the zero
 vector field vanishes identically. -/

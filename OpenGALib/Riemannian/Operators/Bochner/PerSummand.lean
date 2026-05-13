@@ -466,198 +466,60 @@ theorem bochner_per_summand_assembled
   -- Goal: R + (mfderiv - Hess(B, ∇_W B)) - Hess(B, ∇_W B) = R + mfderiv - 2 * Hess(B, ∇_W B)
   ring
 
-/-! ### Diagonal tensoriality bridge (Hadamard)
+/-! ## Heart-of-Bochner reduction (section form, unconditional)
 
-For `Z, V : SmoothVectorField I M`, the section-form $(\nabla^2 Z)(V, V)(x)$
-equals the constant-form $(\nabla^2 Z)(V x, V x)$. Proof via Hadamard
-decomposition `V - const(V x) = ∑_j u_j • const e_j` with `u_j(x) = 0`. -/
+Section-form architecture: the trace of $\nabla^2 \nabla f$ along the smooth
+$g$-orthonormal frame `smoothOrthoFrame g x` directly composes with
+`bochner_per_summand_assembled` (which produces section-form output), yielding
+the heart-of-Bochner reduction
+$$\langle \Delta_\nabla \nabla f, \nabla f\rangle_g
+   = \langle \nabla f, \nabla(\Delta_g f)\rangle_g + \mathrm{Ric}(\nabla f, \nabla f)$$
+without any Hom-bundle Leibniz bridge. -/
 
-/-- `TangentSmoothAt` propagates over `Finset.sum`. -/
-private lemma tangentSmoothAt_finset_sum
-    {ι : Type*} (s : Finset ι) {x : M}
-    (Y : ι → Π b : M, TangentSpace I b)
-    (hY : ∀ i ∈ s, TangentSmoothAt (Y i) x) :
-    TangentSmoothAt (fun b : M => ∑ i ∈ s, Y i b) x := by
-  classical
-  induction s using Finset.induction with
-  | empty =>
-    show TangentSmoothAt (fun _ : M => (0 : TangentSpace I x)) x
-    exact (SmoothVectorField.const (I := I) (M := M) (0 : E)).smoothAt x
-  | insert j t hjt ih =>
-    have hYj : TangentSmoothAt (Y j) x := hY j (Finset.mem_insert_self j t)
-    have hYrest : ∀ i ∈ t, TangentSmoothAt (Y i) x :=
-      fun i hi => hY i (Finset.mem_insert_of_mem hi)
-    have hrest : TangentSmoothAt (fun b : M => ∑ i ∈ t, Y i b) x := ih hYrest
-    have h_eq : (fun b : M => ∑ i ∈ insert j t, Y i b)
-        = (fun b : M => Y j b + ∑ i ∈ t, Y i b) := by
-      funext b; rw [Finset.sum_insert hjt]
-    rw [h_eq]; exact hYj.add hrest
+/-- Smoothness of the section-form Hessian summand
+`b ↦ ⟨covDerivAt ∇f b (B b), B b⟩_g` at `x`, via composition of
+`leviCivitaConnection_smoothAt_smoothVF_dir` (smoothness of `∇_B ∇f`) with
+`metricInner_mdifferentiableAt_of_tangentSmoothAt`. -/
+private lemma hessianBilin_smoothVF_diag_mdifferentiableAt
+    (f : M → ℝ) (B : SmoothVectorField I M) (x : M)
+    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
+              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    MDifferentiableAt I 𝓘(ℝ, ℝ)
+      (fun y : M => hessianBilin (I := I) f y (B.toFun y) (B.toFun y)) x := by
+  let gradF : SmoothVectorField I M := ⟨manifoldGradient (I := I) f, h_grad⟩
+  -- Smoothness of `b ↦ covDerivAt ∇f b (B b) = (lcc).toFun ∇f b (B b)`.
+  have h_covAt : TangentSmoothAt
+      (fun y : M => (leviCivitaConnection (I := I) (M := M)).toFun
+        gradF.toFun y (B.toFun y)) x :=
+    leviCivitaConnection_smoothAt_smoothVF_dir B gradF x
+  -- Smoothness of `b ↦ B b` (just B.smoothAt).
+  have h_B : TangentSmoothAt B.toFun x := B.smoothAt x
+  -- `hessianBilin f y v w = metricInner y (covDerivAt ∇f y v) w` (def).
+  -- So the diagonal is `metricInner y (covDerivAt ∇f y (B y)) (B y)`.
+  exact metricInner_mdifferentiableAt_of_tangentSmoothAt h_covAt h_B
 
-/-- `covDeriv` distributes over `Finset.sum` in the differentiated field. -/
-private lemma covDeriv_finset_sum_field
-    {ι : Type*} (s : Finset ι)
-    (X : Π b : M, TangentSpace I b)
-    (Y : ι → Π b : M, TangentSpace I b) (x : M)
-    (hY : ∀ i ∈ s, TangentSmoothAt (Y i) x) :
-    (∇[X] (fun b => ∑ i ∈ s, Y i b)) x = ∑ i ∈ s, (∇[X] (Y i)) x := by
-  classical
-  induction s using Finset.induction with
-  | empty =>
-    show ((leviCivitaConnection (I := I) (M := M)).toFun
-            (fun b : M => ∑ i ∈ (∅ : Finset ι), Y i b)) x (X x) = 0
-    have h_zero : (fun b : M => ∑ i ∈ (∅ : Finset ι), Y i b)
-        = (0 : Π b : M, TangentSpace I b) := by
-      funext b; simp
-    rw [h_zero, CovariantDerivative.zero]; rfl
-  | insert j t hjt ih =>
-    have hYj : TangentSmoothAt (Y j) x := hY j (Finset.mem_insert_self j t)
-    have hYrest : ∀ i ∈ t, TangentSmoothAt (Y i) x :=
-      fun i hi => hY i (Finset.mem_insert_of_mem hi)
-    have hrest_smooth : TangentSmoothAt (fun b : M => ∑ i ∈ t, Y i b) x :=
-      tangentSmoothAt_finset_sum t Y hYrest
-    have h_pi_eq : (fun b : M => ∑ i ∈ insert j t, Y i b)
-        = ((Y j) + (fun b : M => ∑ i ∈ t, Y i b)) := by
-      funext b
-      show ∑ i ∈ insert j t, Y i b = Y j b + ∑ i ∈ t, Y i b
-      rw [Finset.sum_insert hjt]
-    rw [h_pi_eq,
-        covDeriv_add_field X (Y j) (fun b => ∑ i ∈ t, Y i b) x hYj hrest_smooth,
-        ih hYrest, Finset.sum_insert hjt]
+/-- **G — heart-of-Bochner reduction (section form, unconditional)**:
+$$\langle \Delta_\nabla \nabla f, \nabla f\rangle_g
+   = \langle \nabla f, \nabla(\Delta_g f)\rangle_g
+   + \mathrm{Ric}(\nabla f, \nabla f).$$
 
-/-- **Hadamard bridge** at a vanishing section: for `Z, U : SmoothVectorField I M`
-with `U x = 0`, $\nabla_v (b \mapsto \nabla_{U(b)} Z(b))(x) = \nabla_{(\nabla_v U)} Z(x)$.
+Direct composition of `bochner_per_summand_assembled` (section-form
+per-summand identity) with the section-form `connectionLaplacian` definition.
+Requires strict-interior `h_strict` for the Hess-symmetry-on-nbhd used
+inside `bochner_per_summand_swap`.
 
-Proof via Hadamard expansion `U b = ∑_j u_j b • basis j` against
-`stdOrthonormalBasis ℝ E`; scalar coefficients vanish at `x` so Leibniz
-products lose their first term. -/
-private theorem covDeriv_apply_smooth_section_at_zero
-    [IsManifold I 2 M]
-    (Z U : SmoothVectorField I M) (x : M) (v : E)
-    (hU0 : U.toFun x = (0 : TangentSpace I x)) :
-    covDerivAt (I := I) (M := M)
-        (fun b : M => covDerivAt (I := I) (M := M) Z.toFun b (U.toFun b)) x v
-      = covDerivAt (I := I) (M := M) Z.toFun x
-          (covDerivAt (I := I) (M := M) U.toFun x v) := by
-  sorry
-
-/-- **Diagonal tensoriality bridge**: for `Z, V : SmoothVectorField I M`,
-$(\nabla^2 Z)(V, V)(x) = (\nabla^2 Z)(V x, V x)$ at `x`. -/
-private theorem secondCovDerivSection_diagonal_eq_secondCovDerivAt
-    [IsManifold I 2 M]
-    (Z V : SmoothVectorField I M) (x : M) :
-    secondCovDerivSection (I := I) (M := M) Z.toFun V.toFun V.toFun x
-      = secondCovDerivAt (I := I) (M := M) Z.toFun x (V.toFun x) (V.toFun x) := by
-  let constV : SmoothVectorField I M :=
-    SmoothVectorField.const (I := I) (M := M) (V.toFun x : E)
-  let U : SmoothVectorField I M := V - constV
-  have hU0 : U.toFun x = (0 : TangentSpace I x) := by
-    show V.toFun x - constV.toFun x = (0 : TangentSpace I x)
-    have h_constV : constV.toFun x = V.toFun x := rfl
-    rw [h_constV]; exact sub_self _
-  have hV_smooth : TangentSmoothAt V.toFun x := V.smoothAt x
-  have hConstV_smooth : TangentSmoothAt constV.toFun x := constV.smoothAt x
-  have hZV_smooth : TangentSmoothAt
-      (fun b : M => covDerivAt (I := I) (M := M) Z.toFun b (V.toFun b)) x :=
-    leviCivitaConnection_smoothAt_smoothVF_dir V Z x
-  have hZv_smooth : TangentSmoothAt
-      (fun b : M => covDerivAt (I := I) (M := M) Z.toFun b (constV.toFun b)) x :=
-    leviCivitaConnection_smoothAt_smoothVF_dir constV Z x
-  have h_bridge :=
-    covDeriv_apply_smooth_section_at_zero (I := I) (M := M) Z U x (V.toFun x : E) hU0
-  have h_pi_section :
-      ((fun b : M => covDerivAt Z.toFun b (V.toFun b))
-        - (fun b : M => covDerivAt Z.toFun b (constV.toFun b)))
-        = (fun b : M => covDerivAt Z.toFun b (U.toFun b)) := by
-    funext b
-    show covDerivAt Z.toFun b (V.toFun b) - covDerivAt Z.toFun b (constV.toFun b)
-        = covDerivAt Z.toFun b (U.toFun b)
-    rw [show U.toFun b = V.toFun b - constV.toFun b from rfl,
-        (covDerivAt Z.toFun b).map_sub]
-  have h_pi_U : V.toFun - constV.toFun = U.toFun := by
-    funext b; rfl
-  have h_section_diff :
-      covDerivAt (fun b : M => covDerivAt Z.toFun b (V.toFun b)) x (V.toFun x)
-        - covDerivAt (fun b : M => covDerivAt Z.toFun b (constV.toFun b)) x
-            (V.toFun x)
-        = covDerivAt (fun b : M => covDerivAt Z.toFun b (U.toFun b)) x
-            (V.toFun x) := by
-    have h := covDeriv_sub_field (fun _ : M => V.toFun x)
-      (fun b : M => covDerivAt Z.toFun b (V.toFun b))
-      (fun b : M => covDerivAt Z.toFun b (constV.toFun b)) x
-      hZV_smooth hZv_smooth
-    rw [h_pi_section] at h
-    exact h.symm
-  have h_dir_diff :
-      covDerivAt V.toFun x (V.toFun x) - covDerivAt constV.toFun x (V.toFun x)
-        = covDerivAt U.toFun x (V.toFun x) := by
-    have h := covDeriv_sub_field (fun _ : M => V.toFun x) V.toFun constV.toFun x
-      hV_smooth hConstV_smooth
-    rw [h_pi_U] at h
-    exact h.symm
-  have hCLM_sub :
-      covDerivAt Z.toFun x (covDerivAt V.toFun x (V.toFun x))
-        - covDerivAt Z.toFun x (covDerivAt constV.toFun x (V.toFun x))
-        = covDerivAt Z.toFun x (covDerivAt U.toFun x (V.toFun x)) := by
-    rw [← (covDerivAt Z.toFun x).map_sub, h_dir_diff]
-  show covDerivAt (fun b : M => covDerivAt Z.toFun b (V.toFun b)) x (V.toFun x)
-        - covDerivAt Z.toFun x (covDerivAt V.toFun x (V.toFun x))
-      = covDerivAt (fun b : M => covDerivAt Z.toFun b (constV.toFun b)) x
-            (V.toFun x)
-        - covDerivAt Z.toFun x (covDerivAt constV.toFun x (V.toFun x))
-  have h_zero :
-      covDerivAt (fun b : M => covDerivAt Z.toFun b (U.toFun b)) x (V.toFun x)
-        - covDerivAt Z.toFun x (covDerivAt U.toFun x (V.toFun x)) = 0 := by
-    rw [h_bridge]; exact sub_self _
-  have key :
-      (covDerivAt (fun b : M => covDerivAt Z.toFun b (V.toFun b)) x (V.toFun x)
-          - covDerivAt Z.toFun x (covDerivAt V.toFun x (V.toFun x)))
-      - (covDerivAt (fun b : M => covDerivAt Z.toFun b (constV.toFun b)) x
-            (V.toFun x)
-          - covDerivAt Z.toFun x (covDerivAt constV.toFun x (V.toFun x))) = 0 := by
-    have h_rearrange :
-        (covDerivAt (fun b : M => covDerivAt Z.toFun b (V.toFun b)) x (V.toFun x)
-            - covDerivAt Z.toFun x (covDerivAt V.toFun x (V.toFun x)))
-        - (covDerivAt (fun b : M => covDerivAt Z.toFun b (constV.toFun b)) x
-              (V.toFun x)
-            - covDerivAt Z.toFun x (covDerivAt constV.toFun x (V.toFun x)))
-        = (covDerivAt (fun b : M => covDerivAt Z.toFun b (V.toFun b)) x (V.toFun x)
-            - covDerivAt (fun b : M => covDerivAt Z.toFun b (constV.toFun b)) x
-                (V.toFun x))
-          - (covDerivAt Z.toFun x (covDerivAt V.toFun x (V.toFun x))
-            - covDerivAt Z.toFun x (covDerivAt constV.toFun x (V.toFun x))) := by
-      abel
-    rw [h_rearrange, h_section_diff, hCLM_sub]; exact h_zero
-  exact sub_eq_zero.mp key
-
-/-! ### Heart-of-Bochner sum identity (final assembly)
-
-Closes the narrowed PRE-PAPER sorry `sum_inner_secondCovDerivAt_grad_smoothOrthoFrame`
-in `Bochner.lean` (downstream version with `h_strict` hypothesis), via:
-* diagonal bridge → `secondCovDerivSection` form,
-* per-summand assembled identity (`bochner_per_summand_assembled`),
-* sum over `i` distributing into R-term (Ricci), mfderiv-Hess-term
-  (gradient of the scalar Laplacian), and cov-Hess-term (vanishes). -/
-
-/-- **Heart-of-Bochner sum identity** (unconditional, requires strict
-interior). Diagonal of the second covariant derivative against
-`smoothOrthoFrame · x`, contracted with `∇f`, equals
-`g(∇f, ∇(Δ_g f)) + Ric(∇f, ∇f)`. -/
-theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_unconditional
+Architecture: section form throughout (matches Mathlib LC PR #36845 + external
+`differential-geometry` convention), no Hom-bundle Leibniz bridge needed. -/
+theorem connectionLaplacian_grad_eq_grad_laplacian_add_ricci
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (x : M)
     (h_strict : extChartAt I x x ∈ interior (Set.range I))
     (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
     (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
               (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
-    ∑ i, metricInner x
-        (secondCovDerivAt (I := I) (M := M) (manifoldGradient (I := I) f) x
-          (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
-          (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
-        (manifoldGradient (I := I) f x)
-      = metricInner x (manifoldGradient (I := I) f x)
-            (manifoldGradient (I := I) (Δ_g[I] f) x)
-        + Ric_g((manifoldGradient (I := I) f x),
-                (manifoldGradient (I := I) f x)) x := by
+    ⟪connectionLaplacian (grad_g[I] f) x, (grad_g[I] f) x⟫_g
+      = ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
+        + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
   classical
   let gradF : SmoothVectorField I M :=
     { toFun := manifoldGradient (I := I) f, smooth := h_grad }
@@ -666,7 +528,7 @@ theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_unconditional
       smooth := Riemannian.Tensor.smoothOrthoFrame_smooth (I := I) hm.metric x i }
   have h_interior : extChartAt I x x ∈ closure (interior (Set.range I)) :=
     subset_closure h_strict
-  -- Abbreviations.
+  -- Per-summand quantities.
   set Rterm : Fin (Module.finrank ℝ E) → ℝ := fun i =>
     metricInner x
       (riemannCurvature (Bi i).toFun gradF.toFun gradF.toFun x)
@@ -678,16 +540,14 @@ theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_unconditional
   set Hterm : Fin (Module.finrank ℝ E) → ℝ := fun i =>
     hessianBilin (I := I) f x ((Bi i).toFun x)
       (covDeriv gradF.toFun (Bi i).toFun x) with hHterm_def
-  -- Per-summand: bridge → secondCovDerivSection → bochner_per_summand_assembled.
+  -- Per-summand: `g(secondCovDerivSection ∇f Bi Bi x, ∇f x) = R + M - 2 H`.
   have h_per_summand : ∀ i,
       metricInner x
-          (secondCovDerivAt gradF.toFun x ((Bi i).toFun x) ((Bi i).toFun x))
+          (secondCovDerivSection (I := I) (M := M)
+            gradF.toFun (Bi i).toFun (Bi i).toFun x)
           (gradF.toFun x)
         = Rterm i + Mterm i - 2 * Hterm i := by
     intro i
-    rw [show (secondCovDerivAt gradF.toFun x ((Bi i).toFun x) ((Bi i).toFun x))
-        = secondCovDerivSection gradF.toFun (Bi i).toFun (Bi i).toFun x from
-        (secondCovDerivSection_diagonal_eq_secondCovDerivAt gradF (Bi i) x).symm]
     show metricInner x
           (covDeriv (Bi i).toFun (covDeriv (Bi i).toFun gradF.toFun) x
             - covDerivAt gradF.toFun x (covDeriv (Bi i).toFun (Bi i).toFun x))
@@ -696,38 +556,48 @@ theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_unconditional
     show _ = Rterm i + Mterm i - 2 * Hterm i
     rw [hRterm_def, hMterm_def, hHterm_def]
     exact bochner_per_summand_assembled (I := I) f (Bi i) gradF x h_strict hf h_grad
-  -- Sum the per-summand identity.
-  have h_sum_eq :
-      (∑ i, metricInner x
-          (secondCovDerivAt gradF.toFun x ((Bi i).toFun x) ((Bi i).toFun x))
-          (gradF.toFun x))
-        = (∑ i, Rterm i) + (∑ i, Mterm i) - 2 * (∑ i, Hterm i) := by
-    calc (∑ i, metricInner x
-            (secondCovDerivAt gradF.toFun x ((Bi i).toFun x) ((Bi i).toFun x))
-            (gradF.toFun x))
-        = ∑ i, (Rterm i + Mterm i - 2 * Hterm i) :=
-          Finset.sum_congr rfl (fun i _ => h_per_summand i)
-      _ = (∑ i, (Rterm i + Mterm i)) - ∑ i, (2 * Hterm i) := by
-          rw [Finset.sum_sub_distrib]
-      _ = ((∑ i, Rterm i) + ∑ i, Mterm i) - ∑ i, (2 * Hterm i) := by
-          rw [Finset.sum_add_distrib]
-      _ = ((∑ i, Rterm i) + ∑ i, Mterm i) - 2 * (∑ i, Hterm i) := by
-          rw [← Finset.mul_sum]
-  rw [h_sum_eq]
-  -- Identify ∑ Rterm = Ric.
-  have h_R_eq : (∑ i, Rterm i) = Ric_g(manifoldGradient (I := I) f x, gradF.toFun x) x :=
+  -- Main: unfold `connectionLaplacian`, sum_inner pull-out, per_summand, sum-distribute.
+  show metricInner x
+        (connectionLaplacian (I := I) (M := M) (manifoldGradient (I := I) f) x)
+        (manifoldGradient (I := I) f x)
+      = metricInner x (manifoldGradient (I := I) f x)
+          (manifoldGradient (I := I) (Δ_g[I] f) x)
+        + Ric_g((manifoldGradient (I := I) f x),
+                (manifoldGradient (I := I) f x)) x
+  rw [connectionLaplacian_def]
+  -- Pull sum out via `sum_inner`.
+  have h_pull :
+      metricInner x
+          (∑ i, secondCovDerivSection (I := I) (M := M)
+            gradF.toFun (Bi i).toFun (Bi i).toFun x)
+          (gradF.toFun x)
+        = ∑ i, metricInner x
+            (secondCovDerivSection (I := I) (M := M)
+              gradF.toFun (Bi i).toFun (Bi i).toFun x)
+            (gradF.toFun x) :=
+    sum_inner Finset.univ
+      (fun i => secondCovDerivSection (I := I) (M := M)
+        gradF.toFun (Bi i).toFun (Bi i).toFun x)
+      (gradF.toFun x)
+  rw [h_pull]
+  rw [Finset.sum_congr rfl (fun i _ => h_per_summand i)]
+  -- Distribute: ∑ (R + M - 2H) = ∑ R + ∑ M - 2 ∑ H.
+  rw [Finset.sum_sub_distrib, Finset.sum_add_distrib, ← Finset.mul_sum]
+  -- (1) ∑ R-term = Ric(∇f, ∇f).
+  have h_R_eq : (∑ i, Rterm i) =
+      Ric_g(manifoldGradient (I := I) f x, gradF.toFun x) x :=
     heart_curvature_orthonormal_sum_eq_ricci (I := I) f gradF x h_interior h_grad
-  -- Identify ∑ Hterm = 0.
+  -- (2) ∑ H-term = 0.
   have h_H_eq : (∑ i, Hterm i) = 0 :=
     sum_hessianBilin_smoothOrthoFrame_cov_eq_zero (I := I) f gradF x
       h_interior hf h_grad
-  -- Identify ∑ Mterm = mfderiv (Δ_g f) x (∇f x) = g(∇(Δ_g f), ∇f x).
-  -- Smoothness of each summand `b ↦ Hess f(Bᵢ b, Bᵢ b)` at x.
+  -- (3) ∑ M-term: factor mfderiv outside, identify inner sum as Δ_g f via Stage 7.
   have h_each_hess_smooth : ∀ i,
       MDifferentiableAt I 𝓘(ℝ, ℝ)
           (fun y : M => hessianBilin (I := I) f y ((Bi i).toFun y)
             ((Bi i).toFun y)) x := by
-    intro i; sorry
+    intro i
+    exact hessianBilin_smoothVF_diag_mdifferentiableAt f (Bi i) x h_grad
   have h_M_factor :
       (∑ i, Mterm i)
         = (mfderiv I 𝓘(ℝ, ℝ)
@@ -749,7 +619,6 @@ theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_unconditional
         = (mfderiv I 𝓘(ℝ, ℝ) (Δ_g[I] f : M → ℝ) x (gradF.toFun x) : ℝ) := by
     congr 1
     exact Filter.EventuallyEq.mfderiv_eq h_eventuallyEq
-  -- Gradient-mfderiv duality: `mfderiv g x v = ⟨∇g x, v⟩_g`.
   have h_grad_dual :
       (mfderiv I 𝓘(ℝ, ℝ) (Δ_g[I] f : M → ℝ) x (gradF.toFun x) : ℝ)
         = metricInner x (manifoldGradient (I := I) (Δ_g[I] f) x) (gradF.toFun x) :=
@@ -759,142 +628,18 @@ theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_unconditional
       metricInner_comm x (manifoldGradient (I := I) (Δ_g[I] f) x)]
   ring
 
-/-- **G — heart-of-Bochner reduction (unconditional, strict interior)**:
-$\langle \Delta_\nabla \nabla f, \nabla f\rangle_g
-= \langle \nabla f, \nabla(\Delta_g f)\rangle_g + \mathrm{Ric}(\nabla f, \nabla f)$.
-
-Unconditional version of `connectionLaplacian_grad_eq_grad_laplacian_add_ricci`
-(which is conditional on the narrowed PRE-PAPER sorry in `Bochner.lean`),
-proved via `sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_unconditional`
-+ existing outer assembly. Requires strict interior (vs closure interior). -/
-theorem connectionLaplacian_grad_eq_grad_laplacian_add_ricci_unconditional
-    [IsManifold I 2 M] [T2Space M]
-    (f : M → ℝ) (x : M)
-    (h_strict : extChartAt I x x ∈ interior (Set.range I))
-    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
-    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
-              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
-    ⟪connectionLaplacian (grad_g[I] f) x, (grad_g[I] f) x⟫_g
-      = ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
-        + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
-  have h_interior : extChartAt I x x ∈ closure (interior (Set.range I)) :=
-    subset_closure h_strict
-  show metricInner x
-        (connectionLaplacian (I := I) (M := M) (manifoldGradient (I := I) f) x)
-        (manifoldGradient (I := I) f x)
-      = metricInner x (manifoldGradient (I := I) f x)
-          (manifoldGradient (I := I) (Δ_g[I] f) x)
-        + Ric_g((manifoldGradient (I := I) f x),
-                (manifoldGradient (I := I) f x)) x
-  rw [connectionLaplacian_eq_sum_secondCovDerivAt]
-  -- The trace identification at `x` only depends on the basis at `x`, and
-  -- `smoothOrthoFrame · x` is g-orthonormal at `x` (Stage 5). Use the
-  -- stored bilinear form `B` to apply `Tensor.sum_diagonal_smoothOrthoFrame_eq_std`.
-  let h_const_dir : ∀ w : TangentSpace I x,
-      TangentSmoothAt
-        (fun y : M => covDerivAt (manifoldGradient (I := I) f) y w) x :=
-    fun w => leviCivitaConnection_smoothAt_const_dir
-      ⟨manifoldGradient (I := I) f, h_grad⟩ (w : E) x
-  set B' : TangentSpace I x →ₗ[ℝ] TangentSpace I x →ₗ[ℝ] ℝ :=
-    LinearMap.mk₂ ℝ
-      (fun v w => metricInner x
-        (secondCovDerivAt (I := I) (M := M)
-          (manifoldGradient (I := I) f) x v w)
-        (manifoldGradient (I := I) f x))
-      (fun v₁ v₂ w => by
-        show metricInner x
-            (secondCovDerivAt (manifoldGradient (I := I) f) x (v₁ + v₂) w)
-            (manifoldGradient (I := I) f x)
-          = metricInner x
-              (secondCovDerivAt (manifoldGradient (I := I) f) x v₁ w)
-              (manifoldGradient (I := I) f x)
-            + metricInner x
-                (secondCovDerivAt (manifoldGradient (I := I) f) x v₂ w)
-                (manifoldGradient (I := I) f x)
-        rw [secondCovDerivAt_add_left, metricInner_add_left])
-      (fun c v w => by
-        show metricInner x
-            (secondCovDerivAt (manifoldGradient (I := I) f) x (c • v) w)
-            (manifoldGradient (I := I) f x)
-          = c • metricInner x
-              (secondCovDerivAt (manifoldGradient (I := I) f) x v w)
-              (manifoldGradient (I := I) f x)
-        rw [secondCovDerivAt_smul_left, metricInner_smul_left]; rfl)
-      (fun v w₁ w₂ => by
-        show metricInner x
-            (secondCovDerivAt (manifoldGradient (I := I) f) x v (w₁ + w₂))
-            (manifoldGradient (I := I) f x)
-          = metricInner x
-              (secondCovDerivAt (manifoldGradient (I := I) f) x v w₁)
-              (manifoldGradient (I := I) f x)
-            + metricInner x
-                (secondCovDerivAt (manifoldGradient (I := I) f) x v w₂)
-                (manifoldGradient (I := I) f x)
-        rw [secondCovDerivAt_add_right (h_smooth_dir := h_const_dir),
-            metricInner_add_left])
-      (fun c v w => by
-        show metricInner x
-            (secondCovDerivAt (manifoldGradient (I := I) f) x v (c • w))
-            (manifoldGradient (I := I) f x)
-          = c • metricInner x
-              (secondCovDerivAt (manifoldGradient (I := I) f) x v w)
-              (manifoldGradient (I := I) f x)
-        rw [secondCovDerivAt_smul_right
-              (h_smooth_dir := h_const_dir w),
-            metricInner_smul_left]; rfl) with hB'_def
-  have h_basis_swap :=
-    Riemannian.Tensor.sum_diagonal_smoothOrthoFrame_eq_std (I := I) x B'
-  rw [hB'_def] at h_basis_swap
-  simp only [LinearMap.mk₂_apply] at h_basis_swap
-  -- `h_basis_swap : ∑_i metricInner x (secondCovDerivAt ... (smoothOrthoFrame i x))
-  --                                    ... ∇f x
-  --              = ∑_i metricInner x (secondCovDerivAt ... (e_std i)) ... ∇f x`.
-  -- Pull sum out of `metricInner` (= `⟪·,·⟫_ℝ` def-eq + `sum_inner`).
-  have h_pull :
-      metricInner x
-          (∑ i, secondCovDerivAt (I := I) (M := M)
-            (manifoldGradient (I := I) f) x
-            ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)
-            ((stdOrthonormalBasis ℝ (TangentSpace I x)) i))
-          (manifoldGradient (I := I) f x)
-        = ∑ i, metricInner x
-            (secondCovDerivAt (I := I) (M := M)
-              (manifoldGradient (I := I) f) x
-              ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)
-              ((stdOrthonormalBasis ℝ (TangentSpace I x)) i))
-            (manifoldGradient (I := I) f x) := by
-    exact sum_inner Finset.univ
-      (fun i => secondCovDerivAt (I := I) (M := M)
-        (manifoldGradient (I := I) f) x
-        ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)
-        ((stdOrthonormalBasis ℝ (TangentSpace I x)) i))
-      (manifoldGradient (I := I) f x)
-  -- Convert goal from `⟪·,·⟫_g` notation to `metricInner` form, then apply `h_pull`.
-  show metricInner x
-        (∑ i, secondCovDerivAt (I := I) (M := M)
-          (manifoldGradient (I := I) f) x
-          ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)
-          ((stdOrthonormalBasis ℝ (TangentSpace I x)) i))
-        (manifoldGradient (I := I) f x)
-      = metricInner x (manifoldGradient (I := I) f x)
-          (manifoldGradient (I := I) (Δ_g[I] f) x)
-        + Ric_g((manifoldGradient (I := I) f x),
-                (manifoldGradient (I := I) f x)) x
-  rw [h_pull]
-  -- Convert `∑_i ... e_std i ...` to `∑_i ... smoothOrthoFrame i x ...`.
-  rw [← h_basis_swap]
-  exact sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_unconditional
-    f x h_strict hf h_grad
-
-/-- **Bochner–Weitzenböck identity (unconditional, strict interior)**.
-Unconditional version of `bochner_weitzenboeck` in `Bochner.lean`
-(which is conditional on the narrowed PRE-PAPER sorry).
-
+/-- **Bochner–Weitzenböck identity** (section form, unconditional, strict
+interior). Combines `leibniz_trace_reduction` (E) and
+`connectionLaplacian_grad_eq_grad_laplacian_add_ricci` (G):
 $$\tfrac{1}{2}\,\Delta_g\,|\nabla f|_g^2
   = |\nabla^2 f|_g^2
     + \langle \nabla f, \nabla\,\Delta_g f\rangle_g
-    + \mathrm{Ric}(\nabla f, \nabla f).$$ -/
-theorem bochner_weitzenboeck_unconditional
+    + \mathrm{Ric}(\nabla f, \nabla f).$$
+
+Reference: Petersen, *Riemannian Geometry*, Ch. 7 §1 Proposition 33;
+do Carmo §6 (curvature commutators); Schoen-Simon 1981 §1 (variational
+application). -/
+theorem bochner_weitzenboeck
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (x : M)
     (h_strict : extChartAt I x x ∈ interior (Set.range I))
@@ -906,8 +651,7 @@ theorem bochner_weitzenboeck_unconditional
       + ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
       + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
   rw [leibniz_trace_reduction f x h_grad,
-      connectionLaplacian_grad_eq_grad_laplacian_add_ricci_unconditional
-        f x h_strict hf h_grad]
+      connectionLaplacian_grad_eq_grad_laplacian_add_ricci f x h_strict hf h_grad]
   abel
 
 end Operators
