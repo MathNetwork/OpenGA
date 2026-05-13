@@ -39,6 +39,35 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
+/-! ## `mfderiv` distribution over `Finset.sum` -/
+
+/-- **`mfderiv` distributes over `Finset.sum`** (evaluated at a tangent vector):
+for a finite family of scalar functions `g : ι → M → ℝ` each
+`MDifferentiableAt` at `x`,
+$$\mathrm{d}\Bigl(\sum_{i \in s} g_i\Bigr)(x)(v)
+   \;=\; \sum_{i \in s} \mathrm{d}(g_i)(x)(v).$$
+
+Direct application of Mathlib's `HasMFDerivAt.sum` (which combines per-summand
+`HasMFDerivAt` witnesses additively); `.mfderiv` extraction lifts the
+section-level equality of CLMs to evaluation at `v`. -/
+theorem mfderiv_finset_sum_apply
+    {ι : Type} (s : Finset ι) (g : ι → M → ℝ) (x : M) (v : TangentSpace I x)
+    (hg : ∀ i ∈ s, MDifferentiableAt I 𝓘(ℝ, ℝ) (g i) x) :
+    (mfderiv I 𝓘(ℝ, ℝ) (fun y => ∑ i ∈ s, g i y) x v : ℝ)
+      = ∑ i ∈ s, (mfderiv I 𝓘(ℝ, ℝ) (g i) x v : ℝ) := by
+  classical
+  have h : HasMFDerivAt I 𝓘(ℝ, ℝ) (∑ i ∈ s, g i) x
+      (∑ i ∈ s, mfderiv I 𝓘(ℝ, ℝ) (g i) x) :=
+    HasMFDerivAt.sum (fun i hi => (hg i hi).hasMFDerivAt)
+  have h' : HasMFDerivAt I 𝓘(ℝ, ℝ) (fun y => ∑ i ∈ s, g i y) x
+      (∑ i ∈ s, mfderiv I 𝓘(ℝ, ℝ) (g i) x) := by
+    convert h using 1
+    funext y
+    exact (Finset.sum_apply y s g).symm
+  rw [h'.mfderiv]
+  -- `(∑ i, F i) v = ∑ i, F i v` via Mathlib `ContinuousLinearMap.sum_apply`.
+  exact ContinuousLinearMap.sum_apply s _ v
+
 /-! ## Building block: Ricci as g-orthonormal trace -/
 
 /-- **F — Ricci as a g-orthonormal trace** (`ricciTensor` unwound via
