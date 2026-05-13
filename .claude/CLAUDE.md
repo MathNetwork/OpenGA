@@ -109,7 +109,11 @@ When a mathematical object has multiple natural type-theoretic presentations (bu
 
 ### Engineering tax encapsulation
 
-Engineering tax (bound-carrying boilerplate, index translations, case analyses on small numerics) is unavoidable, but its location is chosen. Push it into named Foundation modules so the mathematical layer reads as math. `MusicalIso.lean` (chart-Gram-matrix machinery for the Bochner stack) is the template — name states content, not a generic "infrastructure" label.
+Engineering tax (bound-carrying boilerplate, index translations, chart-pullback wrappers, basepoint-mismatch wrappers, simp-normal-form bridges) is unavoidable, but its location is chosen. Push it out of the math-anchor file into named Foundation sub-modules so the mathematical layer reads as math.
+
+Foundation sub-modules co-locate with their anchor: anchor `X.lean` has companion directory `X/` for its Foundation sub-modules (e.g., `Connection/TangentHelpers.lean`, `TangentBundle/FlatChartDerivs.lean`, `Tensor/Defs/Coercions.lean`). General-purpose Eng that serves multiple anchors stays as a peer file with a content-based name — `Tensor/MusicalIso.lean` is the template (musical-iso machinery for any consumer, not Bochner-specific).
+
+Name sub-modules by content (`MusicalIso`, `LocallyConstant`, `Coercions`, `PerSummand`), never by role: no `Foundation`, `Helpers`, `Util`, `Base` suffixes unless paired with a domain qualifier (`TangentHelpers` OK; `Helpers` alone not).
 
 ### Signature-reads-as-paper criterion
 
