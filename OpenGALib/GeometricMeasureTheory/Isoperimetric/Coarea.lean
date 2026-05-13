@@ -11,12 +11,12 @@ equals the integral of the perimeters of the super-level sets:
 $$\|Du\|(E) \;=\; \int_{\mathbb{R}} \mathrm{Per}(\{u > t\})\,dt.$$
 
 This is the foundational tool for converting BV-functional inequalities
-into level-set perimeter inequalities. Phase 3.6 (Sobolev–Poincaré +
-Federer–Fleming) consumes the coarea formula directly.
+into level-set perimeter inequalities. Downstream Sobolev–Poincaré /
+Federer–Fleming consumers depend on it directly.
 
 ## Form
 
-The Phase 3.4 (revised) `BVFunction` primitive provides
+The `BVFunction` primitive provides
 `Isoperimetric.totalVariation u : ℝ≥0∞`. The framework's
 `FinitePerimeter` exposes the perimeter as the measure-on-the-whole-
 space `Ω.perimMeasure Set.univ : ℝ≥0∞` (matching Maggi's
@@ -117,10 +117,7 @@ theorem coarea_formula (u : BVFunction E) :
   sorry
 
 /-- **Coarea-derived finiteness**: the level-set-perimeter integral is
-finite, since it equals the (finite) BV total variation.
-
-Phase 3.4 BV finiteness `totalVariation_lt_top'` combined with
-`coarea_formula` gives the lintegral finiteness directly. -/
+finite, since it equals the (finite) BV total variation. -/
 @[simp] theorem coarea_formula_finite (u : BVFunction E) :
     ∫⁻ t, (levelSet u t).perimMeasure Set.univ ∂(MeasureTheory.volume : Measure ℝ) < ⊤ := by
   rw [← coarea_formula u]

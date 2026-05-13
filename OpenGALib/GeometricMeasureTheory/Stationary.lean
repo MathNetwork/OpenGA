@@ -29,7 +29,7 @@ test vector fields — so the structure of "first variation vanishes on
 every test field" is visible to the Lean kernel.
 
 `TestVectorField` is a paper-faithful structure carrying a smooth
-section of the tangent bundle with compact support (Layer B C-2).
+section of the tangent bundle with compact support.
 
 `firstVariation` is grounded in the **ambient-divergence form**:
 $\delta V(X) = \int_M \mathrm{div}_M X\, d\|V\|$. The computation uses
@@ -53,11 +53,6 @@ open VectorField
 namespace GeometricMeasureTheory
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
-
--- `TestVectorField` was moved to `HasNormal.lean` (Phase 1.7) to break the
--- import cycle with `Variation/FirstVariation.lean`. It remains available
--- via the open `GeometricMeasureTheory` namespace inherited via the
--- `HasNormal` import below.
 
 namespace Varifold
 
@@ -148,15 +143,14 @@ Defined explicitly as a universally-quantified vanishing statement so
 the structure "$\delta V = 0$ on every test field" is visible to the
 Lean kernel.
 
-**Phase 1.7 body migration** (post Phase 1.6 Bridge unblock): the body
-now uses `Variation.firstVariationFull` (paper-faithful codim-1 form
-with $\langle\nu, \nabla_\nu X\rangle$ correction) instead of the
-ambient `firstVariation` (codim-1 caveat). The `[HasNormal I V]`
-typeclass is universally quantified inside the `∀`, matching the
-"for all smooth-manifold structures and for all unit-normal-field
-choices" form. Framework's `HasNormal` instances for `ofBoundary` /
-`tangentCone` (Phase 1.6 commit `bdc6d4f`) auto-resolve at chain
-consumption sites where `V` comes from a concrete varifold construction.
+The body uses `Variation.firstVariationFull` (paper-faithful codim-1
+form with $\langle\nu, \nabla_\nu X\rangle$ correction) rather than the
+ambient `firstVariation`. The `[HasNormal I V]` typeclass is universally
+quantified inside the `∀`, matching the "for all smooth-manifold
+structures and for all unit-normal-field choices" form. Framework's
+`HasNormal` instances for `ofBoundary` / `tangentCone` auto-resolve at
+chain consumption sites where `V` comes from a concrete varifold
+construction.
 
 Universally quantifies over the smooth-manifold structure on $M$ so the
 predicate `IsStationary V` does not need to thread the

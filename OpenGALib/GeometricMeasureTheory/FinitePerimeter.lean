@@ -67,16 +67,14 @@ perimeter measure $D\chi_\Omega$ is concentrated.
 set $S$ which is a subset of the topological closure $\overline{\Omega}$
 **and** captures all of the perimeter measure (its complement carries
 zero perimeter). Full $(n-1)$-rectifiability of $S$ — Maggi 15.9 (iii) —
-requires `IsHRectifiable` infrastructure not in scope here; deferred to
-Phase 4 framework long-term work via a strengthened existence axiom.
+requires `IsHRectifiable` infrastructure not in scope here; deferred via
+a strengthened existence axiom.
 
 **Sorry status**: PRE-PAPER. Repair plan: when framework's
 `IsHRectifiable` matures and connects to `BVFunction`-style derivative
 infrastructure, replace with a constructive De Giorgi blow-up
 construction. Alternatively, when Mathlib upstream gains finite-perimeter
-+ De Giorgi, deprecate.
-
-**Used by**: `reducedBoundary` real def. -/
++ De Giorgi, deprecate. -/
 theorem deGiorgi_reducedBoundary_exists (Ω : FinitePerimeter M) :
     ∃ S : Set M, S ⊆ Ω.topClosure ∧
       ∀ A : Set M, MeasurableSet A → Ω.perimMeasure A = Ω.perimMeasure (A ∩ S) := by
@@ -92,11 +90,6 @@ Real `noncomputable def` via `Classical.choose` over the De Giorgi
 structure existence axiom (`deGiorgi_reducedBoundary_exists`). -/
 noncomputable def reducedBoundary (Ω : FinitePerimeter M) : Set M :=
   Classical.choose (deGiorgi_reducedBoundary_exists Ω)
-
-/-- Backwards-compatibility alias. The old `rbdy` name is retained for
-chain-proof consumers; new code should use `reducedBoundary`. -/
-@[deprecated reducedBoundary (since := "Phase 3.1")]
-noncomputable def rbdy (Ω : FinitePerimeter M) : Set M := reducedBoundary Ω
 
 /-- The reduced boundary is contained in the topological closure
 (De Giorgi structure theorem, part of the existence statement). -/

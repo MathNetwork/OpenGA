@@ -70,8 +70,8 @@ to the relevant intersections; perimeter uses `FinitePerimeter.perimOn`
 
 **Sorry status**: PRE-PAPER existence axiom. Repair plan: framework
 self-build of Federer 1969 §3.2.43 + Maggi 12.37 covering argument
-(~200 LOC, Phase 4 long-term work) or wait for Mathlib upstream's
-relative-isoperimetric library.
+(~200 LOC) or wait for Mathlib upstream's relative-isoperimetric
+library.
 
 **Ground truth**: Maggi 2012 Proposition 12.37; Federer 1969 §3.2.43.
 

@@ -29,13 +29,13 @@ Where:
 
 ## Relationship to existing `secondVariation`
 
-The pre-Phase-1.5 `secondVariation` in `SecondVariation.lean` uses
-the kinetic-only form (curvature term placeholdered as 0). The full
-form here, `secondVariationFull`, restores the curvature contribution
-by composing `Riemannian.secondFundamentalFormSqNorm + Riemannian.ricci`.
-Both bodies depend on `Classical.choose` over existence axioms (PRE-PAPER);
+The kinetic-only `secondVariation` in `SecondVariation.lean` placeholders
+the curvature term as 0. The full form here, `secondVariationFull`,
+restores the curvature contribution by composing
+`Riemannian.secondFundamentalFormSqNorm + Riemannian.ricci`. Both
+bodies depend on `Classical.choose` over existence axioms (PRE-PAPER);
 the curvature contribution is non-vacuous when those existence axioms
-are replaced with constructive defs (Phase 4 repair trigger).
+are replaced with constructive defs.
 
 **Ground truth**: Simon 1983 §49 (Jacobi formula); Schoen-Simon 1981
 §1 (stable hypersurfaces); Wickramasekera 2014 §2.
@@ -60,11 +60,10 @@ Requires:
   * `[Varifold.HasNormal I V]` providing the unit normal field.
 
 The kinetic term is the polymorphic `‖grad_g[I] φ‖²_g`; the curvature
-term combines `secondFundamentalFormSqNorm` and `ricci`. All three primitives
-currently use `Classical.choose` over existence axioms (PRE-PAPER); the
-real values come online when their existence axioms are replaced with
-constructive defs (Phase 4 catch-up event with Mathlib's eventual
-Riemannian curvature operators).
+term combines `secondFundamentalFormSqNorm` and `ricci`. All three
+primitives currently use `Classical.choose` over existence axioms
+(PRE-PAPER); the real values come online when those existence axioms
+are replaced with constructive defs.
 
 **Ground truth**: Simon 1983 §49; Schoen-Simon 1981 §1; Wic14 §2. -/
 noncomputable def secondVariationFull
@@ -77,11 +76,10 @@ noncomputable def secondVariationFull
     [Riemannian.HasMetric I M]
     (V : Varifold M) [hN : Varifold.HasNormal I V]
     (φ : M → ℝ) : ℝ :=
-  -- PRE-PAPER: `ricci` was refactored to take `SmoothVectorField` (commit
-  -- 473cdb3). `Varifold.HasNormal.unitNormal` is currently raw
+  -- PRE-PAPER: `Varifold.HasNormal.unitNormal` is raw
   -- `(x : M) → TangentSpace I x` without smoothness witness. Wrap with
   -- `sorry` for the smoothness fields until `HasNormal` is upgraded
-  -- (Phase 1.7 GMT-side refactor: add `unitNormal_smooth` field).
+  -- with a `unitNormal_smooth` field.
   let νSmooth : SmoothVectorField I M :=
     ⟨hN.unitNormal, sorry⟩
   ∫ x, (‖grad_g[I] φ‖²_g x -

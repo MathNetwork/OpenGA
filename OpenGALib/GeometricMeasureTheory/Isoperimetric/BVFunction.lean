@@ -15,19 +15,19 @@ object — paper-faithful to Maggi 2012 §13 where BV functions are
 introduced as the natural domain for the coarea formula and the
 Sobolev–Poincaré inequality.
 
-This file is the **foundational primitive** for downstream Phase 3.5
-(coarea formula) and Phase 3.6 (Sobolev–Poincaré + Federer–Fleming).
-Without `BVFunction.totalVariation`, those statements would degenerate
-to vacuous existence quantifiers; with it they carry the actual
-mathematical content $\|u\|_{L^p}$ and $\|Du\|$.
+This file is the **foundational primitive** for the downstream coarea
+formula and Sobolev–Poincaré / Federer–Fleming statements. Without
+`BVFunction.totalVariation`, those would degenerate to vacuous
+existence quantifiers; with it they carry the actual mathematical
+content $\|u\|_{L^p}$ and $\|Du\|$.
 
 ## Bridge investment
 
-Phase 3.4 (revised) treats `BVFunction` as a **bridge primitive** in
-the same spirit as Phase 1.6's `InnerProductBridge`: a thin algebraic
-carrier whose introduction unblocks multiple downstream production-
-grade statements. Mathlib's BV infrastructure on metric measure spaces
-is not yet sufficient to import directly; the framework self-builds.
+`BVFunction` is a **bridge primitive** in the same spirit as
+`InnerProductBridge`: a thin algebraic carrier whose introduction
+unblocks multiple downstream production-grade statements. Mathlib's
+BV infrastructure on metric measure spaces is not yet sufficient to
+import directly; the framework self-builds.
 
 **Ground truth**: Maggi 2012 *Sets of Finite Perimeter and Geometric
 Variational Problems*, Chapter 13; De Giorgi 1954 (BV functions);

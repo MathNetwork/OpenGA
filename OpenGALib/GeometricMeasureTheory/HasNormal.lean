@@ -54,12 +54,9 @@ in the base.
 **Ground truth**: standard smooth-manifold concept; Simon 1983 §38
 ("smooth vector fields with compact support on $M$"); Allard 1972 §3.
 
-Located in `HasNormal.lean` (Phase 1.7) as a foundation file shared
-by `Stationary.lean` and `Variation/FirstVariation.lean` — avoids the
-cycle where `Stationary` would otherwise import `Variation` for the
-full-form body migration.
-
-**Used by**: `Varifold.IsStationary` def; `Variation.firstVariationFull`. -/
+Located in `HasNormal.lean` as a foundation file shared by
+`Stationary.lean` and `Variation/FirstVariation.lean` to avoid an
+import cycle. -/
 structure TestVectorField
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H]

@@ -10,25 +10,20 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 Tangent cone of a varifold: the blow-up limit of $V$ under rescaling
 at a point $Z$.
 
-## Layout
-
-This file provides the GMT primitive `tangentCone` along with its
-defining predicate `IsTangentConeAt`. Regularity-theory-specific
-configurations (junction cones, $\alpha$-structural hypotheses) are
-out of scope here and belong in downstream consumers.
-
-## Grounding (Layer B C-6)
-
 `tangentCone` is grounded as a real `noncomputable def` via
 `Classical.choice` over the predicate `IsTangentConeAt`. The predicate
-is a real `def` capturing "$T$ is a weak limit (in the chart at $Z$) of
-chart-rescalings of $V$ at $Z$".
+captures "$T$ is a weak limit (in the chart at $Z$) of chart-rescalings
+of $V$ at $Z$".
 
 The chart-rescaling operates in the model space $E$: pull
 $V$.massMeasure forward to $E$ via `extChartAt I Z`, then dilate by
 $y \mapsto r^{-1} \cdot (y - \phi(Z))$. Weak convergence is expressed
 via `Filter.Tendsto` on integration against compactly supported
 continuous test functions on $E$, mirroring `VarifoldConverge`.
+
+Regularity-theory-specific configurations (junction cones,
+$\alpha$-structural hypotheses) are out of scope and belong in
+downstream consumers.
 -/
 
 open scoped ContDiff Manifold Classical
@@ -111,8 +106,7 @@ falls back to the zero varifold (`Classical.choice instNonempty`).
 **Ground truth**: Simon 1983 §42 (varifold tangents); Allard 1972
 §3.4–§3.6.
 
-**Layer B C-6 grounding** (commits 1acef9f, 5f952a6 set the
-chart-pullback precedent; this commit applies the same path here):
+Grounding:
   * `chartRescaleMeasure`: real `Measure E` via `Measure.map` chained
     twice (chart push + dilation).
   * `IsTangentConeAt`: real `Prop` via `Filter.Tendsto` against

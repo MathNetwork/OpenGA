@@ -9,13 +9,9 @@ import Mathlib.LinearAlgebra.Trace
 
 Ambient divergence operator on the model normed space and the manifold.
 
-This file collects the divergence operators previously living in
-`Stationary.lean`. Phase 1.5 refactor: variation operators (divergence,
-first variation, second variation) live under the `Variation/`
-sub-namespace; the old `Stationary.lean` / `SecondVariation.lean` re-export
-for backward compatibility.
-
-**Used by**: `Variation.FirstVariation`, `Variation.SecondVariation`.
+Variation operators (divergence, first variation, second variation)
+live under the `Variation/` sub-namespace; the older `Stationary.lean`
+/ `SecondVariation.lean` re-export for backward compatibility.
 -/
 
 open scoped ContDiff Manifold

@@ -71,9 +71,8 @@ $$\delta^2 V(\varphi, \varphi)
   = \int_\Sigma \big(|\nabla \varphi|^2 - (|A|^2 + \mathrm{Ric}(\nu, \nu))
                  \varphi^2\big)\, d\|V\|.$$
 
-**Current grounding** (Layer B C-3, post-firstVariation precedent):
-the kinetic term $|\nabla \varphi|^2$ is real (`gradientNormSqM`,
-chart-pullback of `fderiv ℝ φ`); the curvature term
+**Current grounding**: the kinetic term $|\nabla \varphi|^2$ is real
+(`gradientNormSqM`, chart-pullback of `fderiv ℝ φ`); the curvature term
 $|A|^2 + \mathrm{Ric}(\nu, \nu)$ is set to **0** (placeholder).
 
 **Curvature placeholder gap**:

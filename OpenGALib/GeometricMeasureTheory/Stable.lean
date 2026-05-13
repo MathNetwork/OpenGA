@@ -39,9 +39,8 @@ namespace Varifold
 $\delta^2 V(\varphi, \varphi) \ge 0$ for every smooth scalar normal
 deformation $\varphi$ compactly supported away from $\mathrm{sing}\,V$.
 
-**Phase 1.7 body migration**: body uses `Variation.secondVariationFull`
-(full Jacobi form: kinetic $|\nabla\varphi|^2$ + curvature
-$|A|^2 + \mathrm{Ric}(\nu,\nu)$ contribution, post Phase 1.6 Bridge).
+Body uses `Variation.secondVariationFull` (full Jacobi form: kinetic
+$|\nabla\varphi|^2$ + curvature $|A|^2 + \mathrm{Ric}(\nu,\nu)$).
 Requires `[Varifold.HasNormal I V]` for the unit normal field.
 
 Carries the smooth-manifold typeclass cascade
@@ -62,10 +61,7 @@ def IsStable
     0 ≤ Variation.secondVariationFull I V φ
 
 /-- $V$ is **unstable**: there exists a test direction with negative
-second variation.
-
-**Phase 1.7 body migration**: body uses `Variation.secondVariationFull`,
-matching `IsStable`'s migration. -/
+second variation. -/
 def IsUnstable
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]

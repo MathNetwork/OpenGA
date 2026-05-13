@@ -1386,7 +1386,7 @@ generalisation is "free" from the underlying repair plan: closing
 `metricRiesz_section_smoothAt` in full generality (for any smooth
 linear-functional section, not just the constant case) closes both forms.
 
-**Closure architecture** (post-Phase 4.7 + MusicalIso machinery):
+**Closure architecture**:
 1. Riesz uniqueness identifies `koszulCovDeriv X.toFun Y.toFun y _ _` with
    `metricRiesz y (Φ y)`, where `Φ y := TensorialAt.mkHom _ y
    (koszulFunctional_tensorialAt X.toFun Y.toFun y _ _)`.
@@ -1660,9 +1660,9 @@ case is recovered as `leviCivitaConnection_smoothAt_const_dir` via
 `SmoothVectorField.const v`.
 
 Closed via `hcov` eq spec + `koszulCovDeriv_smoothVF_smoothAt` (itself
-PRE-PAPER, closed via Riesz uniqueness through `koszulCotangentCLM_smoothAt`
-— the **single remaining PRE-PAPER sub-sorry** in the chain). Phase 1.6
-invariant "zero existence axioms in the Riemannian package" preserved.
+PRE-PAPER, closed via Riesz uniqueness through `koszulCotangentCLM_smoothAt`).
+The "zero existence axioms in the Riemannian package" invariant is
+preserved.
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 (existence + uniqueness via
 the Koszul formula); Lee 2018 Prop. 4.26 (smoothness of covariant

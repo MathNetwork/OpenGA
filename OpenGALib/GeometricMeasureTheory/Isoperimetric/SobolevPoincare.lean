@@ -16,13 +16,11 @@ $$c_n^{\mathrm{SP}} \;=\; \bigl(c_n^{\mathrm{iso}}\bigr)^{-1}.$$
 
 ## Form
 
-This file is the **Phase 3 capstone**: it composes the Phase 3.4
-`BVFunction.totalVariation` primitive, the Phase 3.5 `coarea_formula`
-bridge, and Mathlib's `MeasureTheory.eLpNorm` into a paper-faithful,
+Composes `BVFunction.totalVariation`, the `coarea_formula` bridge,
+and Mathlib's `MeasureTheory.eLpNorm` into a paper-faithful,
 **non-vacuous** Sobolev–Poincaré statement. The Sobolev exponent and
 the Sobolev–Poincaré constant are real `noncomputable def`s with
-real-derived positivity (matching the Phase 3.2
-`isoperimetricConstant_pos` standard).
+real-derived positivity.
 
 ## Sorry status
 
@@ -136,14 +134,13 @@ $\int u\,d\mu = 0$,
 $$\|u\|_{L^{n/(n-1)}(E)} \;\le\; c_n^{\mathrm{SP}} \cdot \|Du\|(E).$$
 
 Stated in Lean using the framework's `lpNorm` (real def via Mathlib
-`eLpNorm`) on the LHS and `Isoperimetric.totalVariation u` (Phase 3.4
-BV primitive) on the RHS — paper-faithful Maggi 30.1, **not** a
-vacuous existential.
+`eLpNorm`) on the LHS and `Isoperimetric.totalVariation u` on the RHS
+— paper-faithful Maggi 30.1, **not** a vacuous existential.
 
 **Sorry status**: PRE-PAPER existence axiom. Repair plan: framework
-self-build via the truncation argument over `coarea_formula`
-(Phase 3.5) — Maggi Ch. 30 proof template, ~150 LOC once Phase 4
-`Real.rpow` + `lintegral` truncation lemmas connect.
+self-build via the truncation argument over `coarea_formula` (Maggi
+Ch. 30 proof template, ~150 LOC) once `Real.rpow` + `lintegral`
+truncation lemmas connect.
 
 **Ground truth**: Maggi 2012 Theorem 30.1; Federer–Fleming 1960;
 Sobolev 1938. -/

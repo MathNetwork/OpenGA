@@ -9,10 +9,10 @@ Structural properties of the **reduced boundary** $\partial^*\Omega$
 of a finite-perimeter set $\Omega \subseteq M$ (Maggi 2012 Chapter 15;
 De Giorgi 1955).
 
-Phase 3.1 introduced `FinitePerimeter.reducedBoundary` and
-`Varifold.bvGradientDirection` as real `noncomputable def`s via
-`Classical.choose` over De Giorgi existence axioms. This file extends
-that surface with the structural characterizations from Maggi Ch. 15:
+`FinitePerimeter.reducedBoundary` and `Varifold.bvGradientDirection`
+are real `noncomputable def`s via `Classical.choose` over De Giorgi
+existence axioms. This file extends that surface with the structural
+characterizations from Maggi Ch. 15:
 
   * Outer-unit-normal **blow-up characterization** (Theorem 15.5):
     $\nu_\Omega(x) = -\lim_{r \to 0} \frac{D\chi_\Omega(B_r(x))}{|D\chi_\Omega|(B_r(x))}.$
@@ -24,11 +24,10 @@ that surface with the structural characterizations from Maggi Ch. 15:
 ## Form
 
 All three structural properties are stated as existence/equational
-axioms. The framework's Phase 3.1 `bvGradientDirection` already
-wraps the De Giorgi existence; this file exposes the additional
-properties. Constructive bodies are deferred to framework long-term
-work (Phase 4 De Giorgi blow-up self-build, ~80–120 LOC) or to
-Mathlib upstream when its BV / De Giorgi structure theorem matures.
+axioms. `bvGradientDirection` wraps the De Giorgi existence; this file
+exposes the additional properties. Constructive bodies are deferred to
+framework self-build of De Giorgi blow-up (~80–120 LOC) or to Mathlib
+upstream when its BV / De Giorgi structure theorem matures.
 
 **Ground truth**: Maggi 2012 *Sets of Finite Perimeter and Geometric
 Variational Problems*, Theorems 15.5, 15.9; De Giorgi 1955.
@@ -52,17 +51,17 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
 /-- **Outer unit normal blow-up characterization** (Maggi Theorem 15.5).
 
-The framework's `Varifold.bvGradientDirection` (Phase 3.1) provides the
-`noncomputable def` that *would* be characterized as the blow-up limit
+`Varifold.bvGradientDirection` is the `noncomputable def` that *would*
+be characterized as the blow-up limit
 $\nu_\Omega(x) = -\lim_{r \to 0} \frac{D\chi_\Omega(B_r(x))}{|D\chi_\Omega|(B_r(x))}.$
-The unit-norm property on the reduced boundary (Phase 3.1 lemma
-`Varifold.bvGradientDirection_unit_on_reducedBoundary`) is the
-strongest property currently exposed; the explicit blow-up-limit
-equation is deferred to a `noncomputable def` body migration once the
-framework gains a BV-blow-up primitive.
+The unit-norm property
+`Varifold.bvGradientDirection_unit_on_reducedBoundary` is the strongest
+currently exposed; the explicit blow-up-limit equation is deferred to
+a `noncomputable def` body migration once the framework gains a
+BV-blow-up primitive.
 
-Re-export of the Phase 3.1 unit-norm property for convenience under
-the `Isoperimetric` namespace.
+Re-export of the unit-norm property for convenience under the
+`Isoperimetric` namespace.
 
 **Ground truth**: Maggi 2012 Theorem 15.5. -/
 theorem outerNormal_unit_on_reducedBoundary
@@ -130,13 +129,13 @@ $$T_x(\partial^*\Omega) = \{v \in T_xM : \langle v, \nu_\Omega(x)\rangle_g = 0\}
 
 Stated as the equality of the tangent-hyperplane subspace with the
 orthogonal complement of the line spanned by the BV gradient
-direction, with the framework-owned `metricInner` (Phase 4.7.2)
-on the LHS. The RHS uses Mathlib's `Submodule.orthogonal` (`ᗮ`),
-which is well-defined via the bridge instance
+direction, with the framework-owned `metricInner` on the LHS. The RHS
+uses Mathlib's `Submodule.orthogonal` (`ᗮ`), which is well-defined via
+the bridge instance
 `Riemannian.InnerProductBridge.instInnerProductSpaceTangentSpace`.
-The biconditional is mathematically valid when the Mathlib inner and
-the framework `metricInner` agree (which they do under the
-single-canonical-metric design of Phase 4.7).
+The biconditional is mathematically valid because the Mathlib inner
+and the framework `metricInner` agree under the single-canonical-metric
+design.
 
 **Sorry status**: PRE-PAPER existence axiom. Repair plan: framework
 self-build of the tangent-blow-up to a hyperplane in the De Giorgi

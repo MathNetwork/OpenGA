@@ -29,8 +29,7 @@ The inequality and equality case are stated as **existence axioms**
 Brunn–Minkowski / Steiner symmetrization (Maggi Ch. 9, Ch. 14), which
 require BV symmetrization infrastructure beyond the framework's
 current scope. Repair plan: framework self-build of Brunn–Minkowski
-+ symmetrization (~400 LOC, Phase 4 long-term work) or wait for
-Mathlib upstream.
++ symmetrization (~400 LOC) or wait for Mathlib upstream.
 
 -/
 

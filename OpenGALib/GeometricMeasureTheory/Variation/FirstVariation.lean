@@ -45,10 +45,8 @@ of the first variation, evaluated via the framework's `metricInner` and
 For a unit normal $\nu$ and a test vector field $X$, returns
 $$\mathrm{normalCorrection}(I, X, \nu)(x) =
    \langle \nu(x), \nabla_{\nu(x)} X(x) \rangle_g$$
-where $\nabla$ is the Levi-Civita connection (Phase 4.5.A) and
-$\langle\cdot, \cdot\rangle_g$ is the framework-owned `metricInner`
-(Phase 4.7.2). Replaces the pre-Phase-4.7 placeholder
-`normalCorrection_exists` (vacuous existence over `True`).
+where $\nabla$ is the Levi-Civita connection and
+$\langle\cdot, \cdot\rangle_g$ is the framework-owned `metricInner`.
 
 **Ground truth**: Pitts 1981 §38; Simon 1983 §38 (codim-1 first
 variation). -/
@@ -70,8 +68,7 @@ $$\delta V(X) = \int (\mathrm{div}_M X - \langle \nu, \nabla_\nu X \rangle_g)\, 
 Requires:
   * `[CompleteSpace E]`, `[FiniteDimensional ℝ E]` for the underlying
     `divergenceM` and Levi-Civita connection;
-  * `[Riemannian.HasMetric I M]` providing the framework metric
-    (Phase 4.7);
+  * `[Riemannian.HasMetric I M]` providing the framework metric;
   * `[Varifold.HasNormal I V]` providing the unit normal field.
 
 **Ground truth**: Pitts 1981 §38; Simon 1983 §38; codim-1 specialization
