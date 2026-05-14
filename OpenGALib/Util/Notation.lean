@@ -1,7 +1,7 @@
-import OpenGALib.Riemannian.Connection
-import OpenGALib.Riemannian.Curvature
-import OpenGALib.Riemannian.Gradient
-import OpenGALib.Riemannian.SecondFundamentalForm
+import OpenGALib.Riemannian.Connection.LeviCivita
+import OpenGALib.Riemannian.Curvature.RiemannCurvature
+import OpenGALib.Riemannian.Operators.Gradient
+import OpenGALib.Riemannian.Operators.SecondFundamentalForm
 import OpenGALib.Riemannian.Operators.Hessian
 import OpenGALib.Riemannian.Operators.Laplacian
 

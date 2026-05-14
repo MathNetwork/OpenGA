@@ -1,11 +1,11 @@
-import OpenGALib.Riemannian.Connection
-import OpenGALib.Riemannian.Connection
-import OpenGALib.Riemannian.TangentBundle
-import OpenGALib.Riemannian.HessianLie
+import OpenGALib.Riemannian.Connection.LeviCivita
+import OpenGALib.Riemannian.Connection.LeviCivita
+import OpenGALib.Riemannian.TangentBundle.TangentSmooth
+import OpenGALib.Riemannian.Operators.HessianLie
 import OpenGALib.Riemannian.Util.MetricInnerSmoothness
 -- `Riem(X, Y) Z` notation is now defined inline in `Connection.lean`
 -- alongside `riemannCurvature`; it transitively reaches us via the
--- `import OpenGALib.Riemannian.Connection` above.
+-- `import OpenGALib.Riemannian.Connection.LeviCivita` above.
 import Mathlib.LinearAlgebra.Trace
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.InnerProductSpace.Trace

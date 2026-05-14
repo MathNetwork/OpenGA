@@ -1,4 +1,4 @@
-import OpenGALib.Riemannian.Connection
+import OpenGALib.Riemannian.Connection.LeviCivita
 import OpenGALib.Riemannian.Tensor.MusicalIso
 import OpenGALib.Riemannian.Util.MfderivApplySection
 

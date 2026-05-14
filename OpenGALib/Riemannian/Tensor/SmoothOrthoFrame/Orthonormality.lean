@@ -1,5 +1,5 @@
 import Mathlib.Analysis.InnerProductSpace.Orthonormal
-import OpenGALib.Riemannian.Metric
+import OpenGALib.Riemannian.Metric.RiemannianMetric
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.ChartBasis
 
 /-!

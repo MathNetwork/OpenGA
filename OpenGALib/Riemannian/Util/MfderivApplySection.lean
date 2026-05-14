@@ -2,7 +2,7 @@ import Mathlib.Analysis.Calculus.FDeriv.Basic
 import Mathlib.Geometry.Manifold.IsManifold.ExtChartAt
 import Mathlib.Geometry.Manifold.MFDeriv.Atlas
 import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import OpenGALib.Riemannian.TangentBundle
+import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.ChartBasis
 
 /-!

@@ -2,8 +2,8 @@ import Mathlib.Geometry.Manifold.BumpFunction
 import Mathlib.Geometry.Manifold.VectorBundle.SmoothSection
 import Mathlib.Geometry.Manifold.ContMDiff.NormedSpace
 import Mathlib.Analysis.SpecialFunctions.Sqrt
-import OpenGALib.Riemannian.Metric
-import OpenGALib.Riemannian.TangentBundle
+import OpenGALib.Riemannian.Metric.RiemannianMetric
+import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
 
 /-!

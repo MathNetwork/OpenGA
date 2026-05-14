@@ -3,8 +3,8 @@ import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Basic
 import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Torsion
 import Mathlib.Geometry.Manifold.VectorBundle.Tensoriality
 import Mathlib.Geometry.Manifold.VectorField.LieBracket
-import OpenGALib.Riemannian.Manifold
-import OpenGALib.Riemannian.TangentBundle
+import OpenGALib.Riemannian.Manifold.SmoothManifold
+import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 import OpenGALib.Riemannian.Tensor.MusicalIso
 import OpenGALib.Riemannian.Util.TangentHelpers
 import OpenGALib.Riemannian.Connection.Koszul

@@ -1,4 +1,4 @@
-import OpenGALib.Riemannian.Connection
+import OpenGALib.Riemannian.Connection.LeviCivita
 
 /-!
 # `covDeriv` / `covDerivAt` simp bridges

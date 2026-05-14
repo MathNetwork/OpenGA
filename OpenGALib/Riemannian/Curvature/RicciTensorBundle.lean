@@ -1,4 +1,4 @@
-import OpenGALib.Riemannian.Curvature
+import OpenGALib.Riemannian.Curvature.RiemannCurvature
 
 /-!
 # Ricci tensor / Ricci endomorphism / scalar curvature bundles

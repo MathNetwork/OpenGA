@@ -3,7 +3,7 @@ import Mathlib.Geometry.Manifold.MFDeriv.Atlas
 import Mathlib.Geometry.Manifold.MFDeriv.NormedSpace
 import Mathlib.Geometry.Manifold.VectorField.LieBracket
 import Mathlib.Geometry.Manifold.VectorField.Pullback
-import OpenGALib.Riemannian.TangentBundle
+import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 
 /-!
 # Scalar Hessian–Lie identity

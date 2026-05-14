@@ -1,4 +1,4 @@
-import OpenGALib.Riemannian.Metric
+import OpenGALib.Riemannian.Metric.RiemannianMetric
 import OpenGALib.Util.Attributes
 
 /-!

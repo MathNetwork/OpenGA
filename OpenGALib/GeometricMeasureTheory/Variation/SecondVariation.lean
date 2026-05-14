@@ -1,7 +1,7 @@
 import OpenGALib.GeometricMeasureTheory.HasNormal
-import OpenGALib.Riemannian.Curvature
-import OpenGALib.Riemannian.SecondFundamentalForm
-import OpenGALib.Riemannian.Gradient
+import OpenGALib.Riemannian.Curvature.RiemannCurvature
+import OpenGALib.Riemannian.Operators.SecondFundamentalForm
+import OpenGALib.Riemannian.Operators.Gradient
 import OpenGALib.Util.Notation
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 

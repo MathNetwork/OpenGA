@@ -1,14 +1,14 @@
-import OpenGALib.Riemannian.BumpFunction
-import OpenGALib.Riemannian.Connection
-import OpenGALib.Riemannian.Curvature
+import OpenGALib.Riemannian.Manifold.BumpFunction
+import OpenGALib.Riemannian.Connection.LeviCivita
+import OpenGALib.Riemannian.Curvature.RiemannCurvature
 import OpenGALib.Util.Notation
 import OpenGALib.Util.Tactic
-import OpenGALib.Riemannian.Gradient
-import OpenGALib.Riemannian.Metric
+import OpenGALib.Riemannian.Operators.Gradient
+import OpenGALib.Riemannian.Metric.RiemannianMetric
 import OpenGALib.Riemannian.Operators.ConnectionLaplacian
 import OpenGALib.Riemannian.Operators.Hessian
 import OpenGALib.Riemannian.Operators.Laplacian
-import OpenGALib.Riemannian.SecondFundamentalForm
+import OpenGALib.Riemannian.Operators.SecondFundamentalForm
 import OpenGALib.Riemannian.Tensor.BundleSectionContinuity
 import OpenGALib.Riemannian.Util.ChartJacobianSmooth
 import OpenGALib.Riemannian.Util.ChartJacobianSmoothness
@@ -16,7 +16,7 @@ import OpenGALib.Riemannian.Util.CovDerivBridges
 import OpenGALib.Riemannian.Util.DivergenceSimp
 import OpenGALib.Riemannian.Util.MetricInnerSmoothness
 import OpenGALib.Riemannian.Tensor.Defs
-import OpenGALib.Riemannian.TangentBundle
+import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 import OpenGALib.Riemannian.Instances.EuclideanSpace
 
 /-!

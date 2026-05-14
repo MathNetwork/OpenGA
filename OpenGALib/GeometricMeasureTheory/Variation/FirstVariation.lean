@@ -1,6 +1,6 @@
 import OpenGALib.GeometricMeasureTheory.Variation.Divergence
 import OpenGALib.GeometricMeasureTheory.HasNormal
-import OpenGALib.Riemannian.Connection
+import OpenGALib.Riemannian.Connection.LeviCivita
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 
 /-!

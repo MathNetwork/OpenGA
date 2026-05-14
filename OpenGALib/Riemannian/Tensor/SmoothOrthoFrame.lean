@@ -10,8 +10,8 @@ import Mathlib.Analysis.InnerProductSpace.Orthonormal
 import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.LinearAlgebra.Dimension.Free
 import OpenGALib.Algebraic.Auxiliary.OrthonormalBasisDiagonal
-import OpenGALib.Riemannian.Metric
-import OpenGALib.Riemannian.TangentBundle
+import OpenGALib.Riemannian.Metric.RiemannianMetric
+import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.ChartBasis
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.Orthonormality
 

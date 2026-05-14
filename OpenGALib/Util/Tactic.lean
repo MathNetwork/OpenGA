@@ -1,5 +1,5 @@
 import OpenGALib.Util.Attributes
-import OpenGALib.Riemannian.Metric
+import OpenGALib.Riemannian.Metric.RiemannianMetric
 
 /-!
 # Riemannian tactic infrastructure

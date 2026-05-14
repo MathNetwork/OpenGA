@@ -1,7 +1,7 @@
 import Mathlib.Analysis.InnerProductSpace.LinearMap
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Geometry.Manifold.Riemannian.Basic
-import OpenGALib.Riemannian.Manifold
+import OpenGALib.Riemannian.Manifold.SmoothManifold
 
 /-!
 # Standard Riemannian metric on inner product spaces

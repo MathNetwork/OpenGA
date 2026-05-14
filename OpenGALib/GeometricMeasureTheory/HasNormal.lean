@@ -2,7 +2,7 @@ import OpenGALib.GeometricMeasureTheory.Varifold
 import OpenGALib.GeometricMeasureTheory.TangentCone
 import Mathlib.Geometry.Manifold.IsManifold.Basic
 import Mathlib.Geometry.Manifold.ContMDiff.Basic
-import OpenGALib.Riemannian.Metric
+import OpenGALib.Riemannian.Metric.RiemannianMetric
 
 open Riemannian (HasMetric)
 

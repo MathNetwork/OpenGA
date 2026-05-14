@@ -1,4 +1,4 @@
-import OpenGALib.Riemannian.Connection
+import OpenGALib.Riemannian.Connection.LeviCivita
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!

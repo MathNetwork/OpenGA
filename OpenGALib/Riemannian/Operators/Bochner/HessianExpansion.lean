@@ -1,9 +1,9 @@
 import OpenGALib.Riemannian.Operators.ConnectionLaplacian
 import OpenGALib.Riemannian.Operators.Hessian
 import OpenGALib.Riemannian.Operators.Laplacian
-import OpenGALib.Riemannian.Curvature
+import OpenGALib.Riemannian.Curvature.RiemannCurvature
 import OpenGALib.Riemannian.Curvature.Tensoriality
-import OpenGALib.Riemannian.Gradient
+import OpenGALib.Riemannian.Operators.Gradient
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.Smoothness
 import OpenGALib.Riemannian.Util.MetricInnerSmoothness

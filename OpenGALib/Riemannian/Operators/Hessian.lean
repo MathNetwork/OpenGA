@@ -1,6 +1,6 @@
-import OpenGALib.Riemannian.Connection
-import OpenGALib.Riemannian.Gradient
-import OpenGALib.Riemannian.HessianLie
+import OpenGALib.Riemannian.Connection.LeviCivita
+import OpenGALib.Riemannian.Operators.Gradient
+import OpenGALib.Riemannian.Operators.HessianLie
 import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.LinearAlgebra.Dimension.Free
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
