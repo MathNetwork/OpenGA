@@ -78,5 +78,53 @@ jobs:
         run: lake exe cache get
         continue-on-error: true
 
-      - name: Build OpenGALib
-        run: lake build
+      - name: Force fresh OpenGALib elaboration (preserves Mathlib cache)
+        # Lean linters only fire during elaboration; cached `.olean` files
+        # skip them. Removing OpenGALib's build outputs forces re-elaboration
+        # so all linter warnings reach `/tmp/build.log` for the baseline check.
+        # Mathlib outputs in `.lake/build/lib/lean/Mathlib/…` are untouched.
+        run: rm -rf .lake/build/lib/lean/OpenGALib .lake/build/ir/OpenGALib
+
+      - name: Build OpenGALib (capture linter output)
+        run: |
+          set -o pipefail
+          lake build 2>&1 | tee /tmp/build.log
+
+      - name: Enforce linter baselines
+        run: |
+          # Each Lean linter emits a distinct warning prefix; grep + count.
+          MATH_TAG=$(grep -c "docstring should start with" /tmp/build.log 2>/dev/null || echo 0)
+          ANCHOR_PURITY=$(grep -c "in an anchor file" /tmp/build.log 2>/dev/null || echo 0)
+          NAMING=$(grep -c "forbidden initialism" /tmp/build.log 2>/dev/null || echo 0)
+
+          EXPECTED_MATH_TAG=0
+          # AnchorPurity current debt: 18 declarations sitting in anchors /
+          # companion sub-modules that earlier extraction batches left in
+          # place (cycle prevention, tight content coupling). Reduce over
+          # time; never grow.
+          EXPECTED_ANCHOR_PURITY=20
+          EXPECTED_NAMING=0
+
+          echo "Linter baselines:"
+          echo "  MathTag:        $MATH_TAG (expected $EXPECTED_MATH_TAG)"
+          echo "  AnchorPurity:   $ANCHOR_PURITY (expected ≤ $EXPECTED_ANCHOR_PURITY; gradually reduce)"
+          echo "  Naming:         $NAMING (expected $EXPECTED_NAMING)"
+
+          FAIL=0
+          if [ "$MATH_TAG" -gt "$EXPECTED_MATH_TAG" ]; then
+            echo "::error::MathTag linter regression: $MATH_TAG > $EXPECTED_MATH_TAG"
+            echo "Every declaration with a docstring must begin with **Math.**, **Eng.**, or **Mixed.**"
+            FAIL=1
+          fi
+          if [ "$ANCHOR_PURITY" -gt "$EXPECTED_ANCHOR_PURITY" ]; then
+            echo "::error::AnchorPurity linter regression: $ANCHOR_PURITY > $EXPECTED_ANCHOR_PURITY"
+            echo "Move the new Eng/Mixed declaration into the layer's Util/ sub-module,"
+            echo "or update EXPECTED_ANCHOR_PURITY only when intentionally reducing the count."
+            FAIL=1
+          fi
+          if [ "$NAMING" -gt "$EXPECTED_NAMING" ]; then
+            echo "::error::Naming linter regression: $NAMING > $EXPECTED_NAMING"
+            echo "Expand the initialism in the declaration name (CLM → ContinuousLinearMap, etc.)."
+            FAIL=1
+          fi
+          exit $FAIL
