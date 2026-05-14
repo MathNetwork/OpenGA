@@ -847,6 +847,18 @@ noncomputable def sectionalCurvature
 scoped[Riemannian] notation:max "K_g[" I "](" X ", " Y ")" =>
   sectionalCurvature (I := I) X Y
 
+/-- **Math.** **Tangent-vector form** of sectional curvature: same
+formula as `sectionalCurvature` but consuming the pointwise tangent
+vectors $v, w \in T_xM$ directly via constant-section lifts. Useful when
+$K$ is invoked on tangent vectors (paper notation $K(v, w)$) rather than
+on vector fields. By $C^\infty(M)$-tensoriality of `riemannCurvature`,
+the value depends only on $X(x), Y(x)$, so this is the canonical
+pointwise function. -/
+noncomputable def sectionalCurvatureAt
+    (x : M) (v w : TangentSpace I x) : ℝ :=
+  sectionalCurvature (I := I) (M := M)
+    (fun _ : M => v) (fun _ : M => w) x
+
 /-- **Math.** **Sectional curvature is symmetric in $X, Y$**:
 $K_g(X, Y)(x) = K_g(Y, X)(x)$.
 
