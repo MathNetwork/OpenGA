@@ -7,7 +7,6 @@ import OpenGALib.Tensor.Alternating.Comp
 import OpenGALib.Tensor.Alternating.Curry
 import OpenGALib.Tensor.Product.Defs
 import OpenGALib.Tensor.Alternating.Basis
-import OpenGALib.Algebraic.Auxiliary.ShuffleDeriv
 
 /-
 d(Sum_J ω_J dx^J) := Sum dω_J ∧ dx^J

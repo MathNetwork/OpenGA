@@ -1,7 +1,5 @@
 import OpenGALib.GeometricMeasureTheory.Isoperimetric.Basic
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
 
 /-!
 # GeometricMeasureTheory.Isoperimetric.Euclidean

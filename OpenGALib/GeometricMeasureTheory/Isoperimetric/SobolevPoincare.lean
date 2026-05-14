@@ -1,5 +1,5 @@
-import OpenGALib.GeometricMeasureTheory.Isoperimetric.Coarea
 import Mathlib.MeasureTheory.Function.LpSeminorm.Defs
+import OpenGALib.GeometricMeasureTheory.Isoperimetric.BVFunction
 
 /-!
 # GeometricMeasureTheory.Isoperimetric.SobolevPoincare

@@ -1,6 +1,6 @@
 import OpenGALib.Tensor.Product.Defs
-import Mathlib.Geometry.Manifold.VectorBundle.Hom
 import Mathlib.Topology.FiberBundle.Basic
+import Mathlib.Geometry.Manifold.VectorBundle.Basic
 
 /-!
 # Pretrivialization for tensor-product bundles

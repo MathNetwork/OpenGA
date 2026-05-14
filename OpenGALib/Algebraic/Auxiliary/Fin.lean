@@ -1,8 +1,6 @@
 import Mathlib.Algebra.Group.Nat.Defs
 import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.Order.WellFounded
-import Mathlib.Order.Hom.PowersetCard
 
 /-!
 # Equivalences and index-juggling lemmas for `Fin n`

@@ -1,9 +1,4 @@
-import OpenGALib.Riemannian.Util.ChartJacobianSmooth
 import Mathlib.Geometry.Manifold.VectorBundle.Tangent
-import Mathlib.Geometry.Manifold.ContMDiffMFDeriv
-import Mathlib.Geometry.Manifold.MFDeriv.Atlas
-import Mathlib.Geometry.Manifold.MFDeriv.Tangent
-import Mathlib.Geometry.Manifold.MFDeriv.UniqueDifferential
 import Mathlib.Geometry.Manifold.ContMDiff.Atlas
 import Mathlib.Geometry.Manifold.ContMDiff.NormedSpace
 import Mathlib.Analysis.Calculus.ContDiff.Operations

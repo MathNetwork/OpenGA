@@ -1,5 +1,6 @@
-import Mathlib.Analysis.Normed.Module.Alternating.Basic
 import Mathlib.LinearAlgebra.Alternating.Basic
+import Mathlib.Analysis.Normed.Module.Basic
+import Mathlib.Topology.Algebra.Module.Alternating.Basic
 
 /-!
 # `domDomCongr` for continuous alternating maps

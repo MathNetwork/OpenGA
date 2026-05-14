@@ -1,6 +1,5 @@
 import Mathlib.Topology.MetricSpace.Defs
 import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
-import Mathlib.Tactic
 import Mathlib.MeasureTheory.Measure.Typeclasses.Finite
 
 /-!

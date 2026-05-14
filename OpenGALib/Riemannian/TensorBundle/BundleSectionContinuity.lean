@@ -1,13 +1,5 @@
-import OpenGALib.Riemannian.TensorBundle.Defs
-import Mathlib.Geometry.Manifold.MFDeriv.Atlas
-import Mathlib.Geometry.Manifold.MFDeriv.Tangent
-import Mathlib.Geometry.Manifold.ContMDiffMFDeriv
 import Mathlib.Geometry.Manifold.VectorBundle.Tangent
-import Mathlib.Geometry.Manifold.VectorBundle.Hom
-import Mathlib.Geometry.Manifold.VectorBundle.LocalFrame
 import Mathlib.Topology.VectorBundle.Basic
-import Mathlib.Topology.VectorBundle.Hom
-import Mathlib.Topology.VectorBundle.Riemannian
 
 /-!
 # Pointwise-evaluation continuity of variable-base trivialization actions

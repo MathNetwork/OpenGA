@@ -1,6 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.SmoothTransition
 import Mathlib.Geometry.Manifold.BumpFunction
-import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 
 /-!
 # Bump functions

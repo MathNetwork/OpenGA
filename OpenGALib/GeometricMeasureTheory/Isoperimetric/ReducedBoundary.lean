@@ -1,4 +1,3 @@
-import OpenGALib.GeometricMeasureTheory.Isoperimetric.Basic
 import OpenGALib.GeometricMeasureTheory.HasNormal
 import OpenGALib.Riemannian.Manifold.SmoothManifold
 

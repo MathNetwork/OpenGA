@@ -1,6 +1,4 @@
 import Mathlib.Analysis.Normed.Module.Multilinear.Basic
-import Mathlib.Analysis.Normed.Operator.BoundedLinearMaps
-import Mathlib.Analysis.Normed.Operator.Mul
 
 /-!
 # Flip operations for continuous multilinear maps

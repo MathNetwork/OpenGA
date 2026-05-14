@@ -1,6 +1,6 @@
 import Mathlib.GroupTheory.Perm.Fin
 import OpenGALib.Algebraic.Auxiliary.Fin
-import OpenGALib.Algebraic.Auxiliary.ShuffleDecomposition
+import Mathlib.LinearAlgebra.Alternating.DomCoprod
 
 /-!
 # Shuffle-derivative bijection

@@ -1,6 +1,4 @@
 import OpenGALib.Riemannian.Connection.Koszul
-import OpenGALib.Riemannian.Util.CotangentFunctional
-import OpenGALib.Riemannian.Util.TangentHelpers
 
 /-!
 # Riesz extraction of the Levi-Civita pointwise value

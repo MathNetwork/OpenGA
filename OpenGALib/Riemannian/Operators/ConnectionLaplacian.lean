@@ -1,6 +1,5 @@
 import OpenGALib.Riemannian.Connection.LeviCivita
 import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame
-import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame.Smoothness
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!

@@ -1,7 +1,5 @@
 import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.Geometry.Manifold.VectorBundle.Tensoriality
 import Mathlib.Geometry.Manifold.VectorField.LieBracket
-import OpenGALib.Riemannian.Manifold.SmoothManifold
 import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 
 /-!

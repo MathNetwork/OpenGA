@@ -1,4 +1,5 @@
 import Mathlib.LinearAlgebra.Alternating.DomCoprod
+import Mathlib.Order.Hom.PowersetCard
 import OpenGALib.Algebraic.Auxiliary.Fin
 
 /-!

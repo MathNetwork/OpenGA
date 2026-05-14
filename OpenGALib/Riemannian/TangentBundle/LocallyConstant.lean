@@ -1,5 +1,4 @@
-import Mathlib.Geometry.Manifold.MFDeriv.Atlas
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
+import Mathlib.Geometry.Manifold.IsManifold.ExtChartAt
 
 /-!
 # Locally constant charted space

@@ -1,5 +1,6 @@
 import OpenGALib.Tensor.Product.HomEquiv
-import OpenGALib.Tensor.Alternating.Curry
+import OpenGALib.Tensor.Alternating.Flip
+import OpenGALib.Tensor.Alternating.Comp
 
 /-!
 # `TensorProduct.mapL` and tensor products of alternating maps

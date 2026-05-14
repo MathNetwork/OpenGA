@@ -8,7 +8,6 @@ import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 import OpenGALib.Riemannian.TensorBundle.MusicalIso
 import OpenGALib.Riemannian.Util.TangentHelpers
 import OpenGALib.Riemannian.Connection.Koszul
-import OpenGALib.Riemannian.Util.CotangentFunctional
 import OpenGALib.Riemannian.Connection.RieszExtraction
 import OpenGALib.Riemannian.Util.CovDerivSmoothness
 import OpenGALib.Riemannian.Util.MetricInnerSmoothness
