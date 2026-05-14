@@ -210,7 +210,7 @@ theorem metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym
   -- ⇒ A - hA = (P - hB') - hA = (Q - hB) - hA' = (B + hA' - hB) - hA' = B - hB ✓
   linear_combination -h_compat_W + h_compat_Z + h_eq_at_v + h_sym_zΓvw - h_sym_wΓvz
 
-/-- **Eng.** Discharge of `h_eventual_sym` from `[I.Boundaryless]`.
+/-- **Math.** Discharge of `h_eventual_sym` from `[I.Boundaryless]`.
 Propagates the strict-interior fact (vacuous under `[I.Boundaryless]`) to
 a nbhd via `extChartAt_self_eventually_mem_closure_interior_range` and
 applies pointwise `hessianBilin_symm` to feed
@@ -624,7 +624,7 @@ theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
   -- s = -s ⇒ s = 0.
   linarith
 
-/-- **Mixed.** Conditional inner-form reduction. Math: Given the
+/-- **Math.** Conditional inner-form reduction. Math: Given the
 heart-of-Bochner identity against every test direction $w$, the scalar
 form paired against $\nabla f x$ follows.
 Eng: Riesz-style specialisation plus bilinearity packages the four-step

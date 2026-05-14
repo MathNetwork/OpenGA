@@ -49,7 +49,7 @@ abbrev RiemannianMetric
     [IsManifold I ∞ M] : Type _ :=
   Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I : M → Type _)
 
-/-- **Eng.** **`[HasMetric I M]` typeclass**: thin wrapper around
+/-- **Math.** **`[HasMetric I M]` typeclass**: thin wrapper around
 `RiemannianMetric I M` to make the metric instance-bindable when
 downstream code binds `{I : ModelWithCorners ...}` independently of
 the manifold's bundled `modelI`. Single-field class; bridged from

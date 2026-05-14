@@ -623,7 +623,7 @@ theorem metricRiesz_section_contMDiffAt
     (trivializationAt E (TangentSpace I) α).open_baseSet
   exact (hMR x hx).contMDiffAt (hopen.mem_nhds hx)
 
-/-- **Mixed.** Per-point variant of `metricRiesz_section_contMDiffAt`.
+/-- **Math.** Per-point variant of `metricRiesz_section_contMDiffAt`.
 Math: same conclusion (Riesz section smooth at $x$). Eng: input hypothesis
 relaxed to `ContMDiffWithinAt baseSet x` per chart-basis index, easier
 to discharge for `koszulFunctional`-style covectors with bump-function

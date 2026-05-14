@@ -57,7 +57,7 @@ def chartBasisVecFiber (α : M) (i : Fin (Module.finrank ℝ E)) (b : M) :
     TangentSpace I b :=
   (trivializationAt E (TangentSpace I) α).symm b ((Module.finBasis ℝ E) i)
 
-/-- **Eng.** Section-form packaging of `chartBasisVecFiber α i` as
+/-- **Math.** Section-form packaging of `chartBasisVecFiber α i` as
 `M → TotalSpace E _`. -/
 def chartBasisVec (α : M) (i : Fin (Module.finrank ℝ E)) :
     M → TotalSpace E (TangentSpace I : M → Type _) :=
@@ -163,7 +163,7 @@ noncomputable def chartFrameNormFiber
 termination_by i.val
 decreasing_by exact j.isLt
 
-/-- **Eng.** Section-form packaging of `chartFrameNormFiber`
+/-- **Math.** Section-form packaging of `chartFrameNormFiber`
 in $b$: `chartFrameNorm g α i b ∈ T_bM`. -/
 noncomputable def chartFrameNorm
     (g : RiemannianMetric I M) (α : M)

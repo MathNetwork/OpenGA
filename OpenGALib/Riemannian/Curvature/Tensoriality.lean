@@ -38,7 +38,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
-/-- **Eng.** Smoothness of `y ↦ mfderiv f y (V y)` as a scalar function for
+/-- **Math.** Smoothness of `y ↦ mfderiv f y (V y)` as a scalar function for
 smooth scalar `f` and smooth tangent section `V`. The directional
 derivative `V(f)` is C∞.
 

@@ -147,7 +147,7 @@ theorem bvGradientDirection_unit_on_reducedBoundary
     ‖bvGradientDirection I Ω x‖ = 1 :=
   Classical.choose_spec (ofBoundary_unitNormal_exists I Ω) x hx
 
-/-- **Eng.** `HasNormal` instance for `ofBoundary Ω`: the BV gradient direction
+/-- **Math.** `HasNormal` instance for `ofBoundary Ω`: the BV gradient direction
 $\nu_\Omega := D\chi_\Omega / |D\chi_\Omega|$.
 
 **Ground truth**: De Giorgi structure theorem (Maggi 2012 Ch. 15);
@@ -181,7 +181,7 @@ theorem tangentCone_unitNormal_exists
     ∃ _ν : (x : M) → TangentSpace I x, True :=
   ⟨fun _ => 0, trivial⟩
 
-/-- **Eng.** `HasNormal` instance for `tangentCone I V Z`. -/
+/-- **Math.** `HasNormal` instance for `tangentCone I V Z`. -/
 noncomputable instance instHasNormalTangentCone
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [MeasurableSpace E] [BorelSpace E]

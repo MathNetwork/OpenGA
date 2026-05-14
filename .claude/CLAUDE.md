@@ -155,7 +155,7 @@ Background: Neal Ford et al., *Building Evolutionary Architectures* (2017) — c
 Current linters:
 
 - **`Util/Linter/MathTag.lean`** (`linter.openGAMathTag`, default `true`, baseline `0`) — every declaration's docstring must begin with `**Math.**`, `**Eng.**`, or `**Mixed.**`.
-- **`Util/Linter/AnchorPurity.lean`** (`linter.openGAAnchorPurity`, default `true`, baseline `20`) — `**Eng.**` / `**Mixed.**` declarations forbidden outside `Util/` directories. Baseline is current debt; CI fails if count grows.
+- **`Util/Linter/AnchorPurity.lean`** (`linter.openGAAnchorPurity`, default `true`, baseline `0`) — `**Eng.**` / `**Mixed.**` declarations forbidden outside `Util/` directories. Two principled exemptions reflect the rule's true scope (anchor's *exposed* math API, not internal/synthesis plumbing): typeclass `instance` declarations (Lean synthesis requires co-location with the type) and `private` declarations (not part of the anchor's exposed API).
 - **`Util/Linter/Naming.lean`** (`linter.openGANaming`, default `true`, baseline `0`) — forbid bare initialisms `CLM`, `NACG`, `IPS` in declaration names; require Mathlib-style full names (`ContinuousLinearMap`, `NormedAddCommGroup`, `InnerProductSpace`).
 
 Smoke tests live alongside each linter (`MathTagTest.lean`, `NamingTest.lean`) and document both directions: correctly tagged decls pass silently, deliberate violations are silenced locally via `set_option linter.X false in` so the test build stays clean.

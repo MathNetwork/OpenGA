@@ -703,7 +703,7 @@ substitution directly.
 
 The two derivations needed at section level: -/
 
-/-- **Eng.** Section-level torsion-freeness: under global smoothness, the
+/-- **Math.** Section-level torsion-freeness: under global smoothness, the
 pointwise torsion-free identity lifts to a Π-equality, enabling direct
 substitution under `covDeriv X (·) x`. -/
 theorem covDeriv_section_eq_swap_add_mlieBracket

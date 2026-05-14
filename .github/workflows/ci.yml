@@ -98,11 +98,7 @@ jobs:
           NAMING=$(grep -c "forbidden initialism" /tmp/build.log 2>/dev/null || echo 0)
 
           EXPECTED_MATH_TAG=0
-          # AnchorPurity current debt: 18 declarations sitting in anchors /
-          # companion sub-modules that earlier extraction batches left in
-          # place (cycle prevention, tight content coupling). Reduce over
-          # time; never grow.
-          EXPECTED_ANCHOR_PURITY=20
+          EXPECTED_ANCHOR_PURITY=0
           EXPECTED_NAMING=0
 
           echo "Linter baselines:"

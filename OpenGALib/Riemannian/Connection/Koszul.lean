@@ -50,7 +50,7 @@ compatibility) used downstream for Riesz extraction.
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6.
 -/
 
-/-- **Eng.** Directional derivative of a scalar function `f : M → ℝ` at
+/-- **Math.** Directional derivative of a scalar function `f : M → ℝ` at
 `x` in direction `v : TangentSpace I x`. Thin wrapper around `mfderiv`
 typed to `ℝ` to avoid `TangentSpace 𝓘(ℝ, ℝ) (f x)` basepoint mismatches
 when composing Koszul-functional terms. -/

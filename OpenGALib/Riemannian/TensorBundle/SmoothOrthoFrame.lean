@@ -65,7 +65,7 @@ source. To produce a globally smooth tangent-bundle section, we
 multiply by a smooth bump function centred at $\alpha$ whose support
 lies inside the chart source. -/
 
-/-- **Eng.** A canonical smooth bump function centred at $\alpha$. It is $1$ on
+/-- **Math.** A canonical smooth bump function centred at $\alpha$. It is $1$ on
 a neighbourhood of $\alpha$ and supported in `(chartAt H α).source`
 (the trivialization base set at $\alpha$). The existence is guaranteed
 by `SmoothBumpFunction.instNonempty`. -/
