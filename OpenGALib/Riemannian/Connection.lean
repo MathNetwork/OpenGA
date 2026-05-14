@@ -328,15 +328,6 @@ noncomputable def covDeriv
 /-- **Math.** Notation `∇[X] Y` for `covDeriv X Y`. -/
 scoped[Riemannian] notation:max "∇[" X "] " Y:max => covDeriv X Y
 
-/-- **Eng.** Bridge: `(leviCivitaConnection.toFun Y x) (X x) = (∇[X] Y) x` by
-definition. Tagged `@[simp]` so that proofs working with the raw structural
-form get rewritten into the `∇` notation form automatically; this keeps
-downstream proof bodies aligned with the notation-form headline statements
-(e.g. `leviCivitaConnection_metric_compatible`). -/
-@[simp] theorem leviCivitaConnection_toFun_eq_covDeriv
-    (X Y : VectorFieldSection I M) (x : M) :
-    (leviCivitaConnection (I := I) (M := M)).toFun Y x (X x) = (∇[X] Y) x := rfl
-
 /-- **Math.** Notation `⟦X, Y⟧` for the manifold Lie bracket
 `mlieBracket _ X Y` (model `I` inferred from section types). -/
 scoped[Riemannian] notation:max "⟦" X ", " Y "⟧" =>
@@ -371,41 +362,14 @@ theorem leviCivitaConnection_smoothAt_smoothVF_dir
     TangentSmoothAt (fun y : M => (∇[X] Y) y) x :=
   (Classical.choose_spec leviCivitaConnection_exists).2.2 X Y x
 
-/-- **Mixed.** Constant-direction specialisation: for `v : E` and
-`Y : SmoothVectorField I M`, the section `y ↦ ∇ Y y v` is smooth.
-Math: smoothness of `∇Y` is symmetric in direction. Eng: backward-
-compatible accessor over `leviCivitaConnection_smoothAt_smoothVF_dir`
-with `X := SmoothVectorField.const v`. -/
-theorem leviCivitaConnection_smoothAt_const_dir
-    (Y : SmoothVectorField I M) (v : E) (x : M) :
-    TangentSmoothAt (fun y : M => (∇[fun _ : M => v] Y) y) x :=
-  leviCivitaConnection_smoothAt_smoothVF_dir
-    (SmoothVectorField.const v) Y x
-
-/-- **Mixed.** Covariant derivative at a point as a continuous linear map in the direction
-slot: $\nabla\,Y|_x : T_xM \to_L T_xM$, $v \mapsto (\nabla_v Y)(x)$.
-Math: pointwise linearity in direction. Eng: decouples direction-linearity
-from section-level `covDeriv` so identities reduce to standard continuous linear map lemmas. -/
+/-- **Math.** Covariant derivative at a point as a continuous linear map
+in the direction slot: $\nabla\,Y|_x : T_xM \to_L T_xM$,
+$v \mapsto (\nabla_v Y)(x)$. Pointwise linearity in direction lets
+identities involving the direction slot reduce to standard CLM lemmas. -/
 noncomputable def covDerivAt
     (Y : VectorFieldSection I M) (x : M) :
     TangentSpace I x →L[ℝ] TangentSpace I x :=
   (leviCivitaConnection (I := I) (M := M)).toFun Y x
-
-/-- **Eng.** `covDeriv X Y x = covDerivAt Y x (X x)`: section-level
-`covDeriv` factors through the pointwise continuous linear map `covDerivAt`. -/
-@[simp]
-theorem covDeriv_eq_covDerivAt
-    (X Y : VectorFieldSection I M) (x : M) :
-    covDeriv X Y x = covDerivAt Y x (X x) :=
-  rfl
-
-/-- **Eng.** Constant-section specialization:
-`covDeriv (fun _ => v) Y x = covDerivAt Y x v`. -/
-@[simp]
-theorem covDeriv_const_eq_covDerivAt
-    (v : E) (Y : VectorFieldSection I M) (x : M) :
-    covDeriv (fun _ : M => v) Y x = covDerivAt Y x v :=
-  rfl
 
 /-- **Math.** **Riesz formula for the covariant derivative**: for smooth
 $X, Y, Z$,
@@ -760,7 +724,8 @@ for any `SmoothVectorField Y` and any constant direction $v : E$. -/
 theorem covDeriv_const_smoothVF_smoothAt
     (v : E) (Y : SmoothVectorField I M) (x : M) :
     TangentSmoothAt (fun y : M => (∇[fun _ : M => v] Y) y) x :=
-  Riemannian.leviCivitaConnection_smoothAt_const_dir Y v x
+  leviCivitaConnection_smoothAt_smoothVF_dir
+    (SmoothVectorField.const v) Y x
 
 /-- **Math.** $\nabla_X Y$ is smooth at every $x$ for any smooth vector
 fields `X, Y : SmoothVectorField I M`. Smooth-VF-direction strengthening

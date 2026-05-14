@@ -9,6 +9,7 @@ import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.Smoothness
 import OpenGALib.Riemannian.Util.MetricInnerSmoothness
 import OpenGALib.Util.Notation
 import Mathlib.Analysis.InnerProductSpace.Trace
+import OpenGALib.Riemannian.Util.CovDerivBridges
 
 /-!
 # Bochner anchor — Hessian expansion of `|∇f|²`
@@ -271,7 +272,8 @@ theorem hessian_gradientNormSq_apply_chartFrame
       (fun y : M =>
         (leviCivitaConnection (I := I) (M := M)).toFun
           (manifoldGradient (I := I) f) y (v : TangentSpace I x)) x :=
-    leviCivitaConnection_smoothAt_const_dir gradSV (v : E) x
+    leviCivitaConnection_smoothAt_smoothVF_dir
+      (SmoothVectorField.const (I := I) (M := M) (v : E)) gradSV x
   have h_bridge := Riemannian.Operators.hessian_eq_mDirDeriv_iterate_sub_chris
     (‖grad_g[I] f‖²_g) (fun _ : M => (v : TangentSpace I x))
     (fun _ : M => (v : TangentSpace I x)) x

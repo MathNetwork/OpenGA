@@ -5,6 +5,7 @@ import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.LinearAlgebra.Dimension.Free
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Analysis.InnerProductSpace.PiL2
+import OpenGALib.Riemannian.Util.CovDerivBridges
 
 /-!
 # Hessian on a Riemannian manifold

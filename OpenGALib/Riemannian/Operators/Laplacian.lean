@@ -1,5 +1,6 @@
 import OpenGALib.Riemannian.Operators.Hessian
 import Mathlib.Analysis.InnerProductSpace.PiL2
+import OpenGALib.Riemannian.Util.CovDerivBridges
 
 /-!
 # Laplace–Beltrami operator

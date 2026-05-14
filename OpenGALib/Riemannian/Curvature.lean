@@ -11,6 +11,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.InnerProductSpace.Trace
 import Mathlib.Geometry.Manifold.VectorField.LieBracket
 import Mathlib.Analysis.Calculus.FDeriv.Symmetric
+import OpenGALib.Riemannian.Util.CovDerivBridges
 
 /-!
 # Riemann curvature, Ricci, and scalar curvature

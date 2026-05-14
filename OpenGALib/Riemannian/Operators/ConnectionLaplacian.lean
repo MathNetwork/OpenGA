@@ -116,7 +116,7 @@ the section at $x$.
 
 For $Z = \nabla f$ with smooth gradient, the relevant sections
 `y ↦ covDerivAt Z y w` are smooth at $x$ via
-`leviCivitaConnection_smoothAt_const_dir` on the
+`covDeriv_const_smoothVF_smoothAt` on the
 `SmoothVectorField` wrapper around $\nabla f$. We expose the
 right-slot lemmas with this smoothness as an explicit hypothesis,
 so they are usable for any `Z` whose connection-on-constant-direction
@@ -167,7 +167,7 @@ $w \in \{w_1, w_2\}$.
 
 The smoothness hypothesis is the natural condition for $Z$ in the
 heart-of-Bochner setting: for $Z = \nabla f$ with smooth gradient,
-`leviCivitaConnection_smoothAt_const_dir` on the `SmoothVectorField`
+`covDeriv_const_smoothVF_smoothAt` on the `SmoothVectorField`
 wrapper supplies it. -/
 theorem secondCovDerivAt_add_right
     (Z : VectorFieldSection I M) (x : M) (v w₁ w₂ : TangentSpace I x)
