@@ -27,6 +27,28 @@ Layer separation: each layer must not reference paper-specific concepts. Each la
 
 Namespaces and package names are concept-level, not person-level. No `Wickramasekera`, no `AlmgrenPitts` as top-level. People appear in citations and docstrings, not in namespace structure.
 
+### Folder organization
+
+Within each layer, every math concept gets its own folder. Concept folders use **content-named anchor files** (`Connection/LeviCivita.lean`, `Curvature/RiemannCurvature.lean`, `Metric/RiemannianMetric.lean`), never role-named (no `Basic.lean`, `Defs.lean`, `Foundation.lean`). Folder name carries domain meaning ("screaming architecture", Robert C. Martin); anchor name carries the specific math concept.
+
+Standalone concepts (single file, no sub-modules) live inside the layer's relevant folder: `Riemannian/Operators/Gradient.lean`, `Riemannian/Instances/EuclideanSpace.lean`. No top-level scattered files alongside concept folders.
+
+There is one role-named folder, `Util/`. Two-tier layout: top-level `OpenGALib/Util/` for cross-layer Eng (notation, attributes, Mathlib-extension lemmas); per-layer `OpenGALib/<Layer>/Util/` for layer-scoped Eng (`Riemannian/Util/MusicalIso.lean`, `Riemannian/Util/MetricInnerSmoothness.lean`). Files inside `Util/` are content-named — the folder carries the role.
+
+### Software-engineering principles applied
+
+Folder organization, anchor purity, and the Math/Eng/Mixed split stand on well-known software-design principles. References for further reading when redesign questions arise:
+
+- **Information hiding** (Parnas 1972, *On the Criteria to Be Used in Decomposing Systems into Modules*) — each module hides a single design decision. `Util/` sub-modules hide "Mathlib API form mismatches", "chart-pullback glue", "simp normal-form bridges".
+- **Package by feature, not layer** — folders correspond to math concepts (Connection, Curvature), not framework roles (Defs, Lemmas, Helpers). Avoids "shotgun surgery" — one math change touching many role folders.
+- **Screaming architecture** (Robert C. Martin) — folder names shout the domain (Riemannian geometry), not the framework (Lean 4 / Mathlib).
+- **Common Closure Principle** — files that coevolve live in the same folder. Koszul, RieszExtraction, LeviCivita ⇒ `Connection/`.
+- **Deep modules** (Ousterhout 2018, *A Philosophy of Software Design*) — anchor files have simple Math interfaces hiding complex proofs; `Util/` files hide engineering tax.
+- **Stable Dependencies Principle** — `Algebraic ≺ Tensor ≺ Riemannian ≺ GMT`. `Util/` sits below everything in its layer (most stable, most depended-on).
+- **Miller 1956 (7 ± 2)** — keep folder fan-out ≤ ~9 entries per level.
+
+These principles motivate, but do not override, project-specific conventions. When they conflict with explicit OpenGALib rules (e.g. `Util/` is role-named, against package-by-feature purity), the explicit rule wins.
+
 ## Working stance
 
 ### Self-build is the default
@@ -123,6 +145,22 @@ Files inside `Util/` are content-named, never role-named: `MusicalIso.lean`, `Co
 ### Signature-reads-as-paper criterion
 
 Headline lemmas (`bochner_weitzenboeck`, `leviCivitaConnection_exists`, `firstVariation_*`) are stable when their Lean signature reads as the textbook sentence with no engineering tax exposed. If side-condition predicates and index translations sit inline alongside the mathematical content in the signature, the structural pass is incomplete. UX optimizations (`@[simp]` / `@[ext]` / `@[simps]` / `abbrev` / naming polish) apply only past this point — premature polish on evolving interfaces gets discarded by the next refactor.
+
+## Fitness functions
+
+Architectural rules are enforced by Lean-native linters in `OpenGALib/Util/*Linter.lean`. They fire during elaboration (LSP shows inline warnings; `lake build` emits them) and gate every push / pull request via GitHub Actions.
+
+Background: Neal Ford et al., *Building Evolutionary Architectures* (2017) — coined "fitness functions" for executable architectural tests. OpenGALib adapts the pattern to Lean.
+
+Current linters (in `OpenGALib/Util/`):
+
+- **`MathTagLinter`** (`linter.openGAMathTag`, default `true`, baseline `0`) — every declaration's docstring must begin with `**Math.**`, `**Eng.**`, or `**Mixed.**`.
+- **`AnchorPurityLinter`** (`linter.openGAAnchorPurity`, default `true`, baseline `20`) — `**Eng.**` / `**Mixed.**` declarations forbidden outside `Util/` directories. Baseline is current debt; CI fails if count grows.
+- **`NamingLinter`** (`linter.openGANaming`, default `true`, baseline `0`) — forbid bare initialisms `CLM`, `NACG`, `IPS` in declaration names; require Mathlib-style full names (`ContinuousLinearMap`, `NormedAddCommGroup`, `InnerProductSpace`).
+
+CI implementation (`.github/workflows/ci.yml`): the build job greps `lake build` output for each linter's warning prefix, fails if count exceeds the hardcoded baseline. Baselines only ever decrease; never grow without explicit justification (same discipline as the sorry count gate).
+
+Adding a new linter: drop `OpenGALib/Util/<Name>Linter.lean`, register the import in `Util/Attributes.lean`, add the baseline check in `ci.yml`. Template pattern: `MathTagLinter.lean`.
 
 ## Sorry discipline
 
