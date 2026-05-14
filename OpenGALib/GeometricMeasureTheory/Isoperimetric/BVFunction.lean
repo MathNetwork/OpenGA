@@ -1,4 +1,4 @@
-import OpenGALib.GeometricMeasureTheory.Isoperimetric.Relative
+import OpenGALib.GeometricMeasureTheory.FinitePerimeter
 
 /-!
 # GeometricMeasureTheory.Isoperimetric.BVFunction

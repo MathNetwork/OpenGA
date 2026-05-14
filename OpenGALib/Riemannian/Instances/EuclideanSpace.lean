@@ -1,5 +1,6 @@
 import Mathlib.Analysis.InnerProductSpace.LinearMap
 import OpenGALib.Riemannian.Metric.RiemannianMetric
+import OpenGALib.Riemannian.Metric.RiemannianMetric
 
 /-!
 # Standard Riemannian metric on inner product spaces
