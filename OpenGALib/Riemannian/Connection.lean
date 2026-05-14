@@ -62,6 +62,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H} [I.Boundaryless]
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] [T2Space M]
+  [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
 /-! ## Riesz extraction stack (`Connection/RieszExtraction.lean`)
@@ -111,7 +112,7 @@ via Riesz uniqueness; `IsCovariantDerivativeOn.leibniz` from
 `koszul_smul_middle` (the $2 \cdot X(g) \cdot \langle Y, Z\rangle$ term
 matches `(extDerivFun g x).smulRight (Y x)` after the $\tfrac12$ factor
 cancels). -/
-private theorem koszulLeviCivita_exists [IsLocallyConstantChartedSpace H M] :
+private theorem koszulLeviCivita_exists :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       ∀ (X Y : Π x : M, TangentSpace I x) (x : M)
         (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x),
@@ -244,7 +245,7 @@ required by downstream curvature identities (Bochner stack).
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 (existence + uniqueness
 via the Koszul formula); Lee 2018 Prop. 4.26 (smoothness on smooth
 manifolds). -/
-theorem leviCivitaConnection_exists [IsLocallyConstantChartedSpace H M] :
+theorem leviCivitaConnection_exists :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       cov.torsion = 0 ∧
       (∀ (X Y Z : Π x : M, TangentSpace I x) (x : M)
@@ -308,14 +309,12 @@ metric-compatible covariant derivative. Real `noncomputable def` via
 `Classical.choose` over `leviCivitaConnection_exists`.
 
 **Ground truth**: do Carmo 1992 §2 (Koszul formula gives uniqueness). -/
-noncomputable def leviCivitaConnection
-    [IsLocallyConstantChartedSpace H M] :
+noncomputable def leviCivitaConnection :
     CovariantDerivative I E (fun x : M => TangentSpace I x) :=
   Classical.choose (leviCivitaConnection_exists (I := I) (M := M))
 
 /-- **Math.** The Levi-Civita connection is torsion-free. -/
-theorem leviCivitaConnection_torsion_zero
-    [IsLocallyConstantChartedSpace H M] :
+theorem leviCivitaConnection_torsion_zero :
     (leviCivitaConnection : CovariantDerivative I E
       (fun x : M => TangentSpace I x)).torsion = 0 :=
   (Classical.choose_spec leviCivitaConnection_exists).1
@@ -327,7 +326,6 @@ $$\nabla_X \langle Y, Z \rangle (x) =
 Metric is the framework-owned `metricInner`. Smoothness hypotheses match
 do Carmo 1992 §2 Theorem 3.6. -/
 theorem leviCivitaConnection_metric_compatible
-    [IsLocallyConstantChartedSpace H M]
     (X Y Z : Π x : M, TangentSpace I x) (x : M)
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x)
     (hZ : TangentSmoothAt Z x) :
@@ -342,7 +340,6 @@ direction: for `X, Y : SmoothVectorField I M`, the section
 `y ↦ ∇_{X(y)} Y(y)` is smooth at every point. Direct projection from
 the 3rd conjunct of `leviCivitaConnection_exists`. -/
 theorem leviCivitaConnection_smoothAt_smoothVF_dir
-    [IsLocallyConstantChartedSpace H M]
     (X Y : SmoothVectorField I M) (x : M) :
     TangentSmoothAt
       (fun y : M => (leviCivitaConnection (I := I) (M := M)).toFun Y.toFun y
@@ -355,7 +352,6 @@ Math: smoothness of `∇Y` is symmetric in direction. Eng: backward-
 compatible accessor over `leviCivitaConnection_smoothAt_smoothVF_dir`
 with `X := SmoothVectorField.const v`. -/
 theorem leviCivitaConnection_smoothAt_const_dir
-    [IsLocallyConstantChartedSpace H M]
     (Y : SmoothVectorField I M) (v : E) (x : M) :
     TangentSmoothAt
       (fun y : M => (leviCivitaConnection (I := I) (M := M)).toFun Y.toFun y v) x :=
@@ -369,7 +365,6 @@ Levi-Civita connection. Torsion-free and metric-compatible w.r.t.
 
 **Ground truth**: do Carmo 1992 §2 Definition 2.1. -/
 noncomputable def covDeriv
-    [IsLocallyConstantChartedSpace H M]
     (X Y : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x :=
   ((leviCivitaConnection (I := I) (M := M)).toFun Y x) (X x)
@@ -387,7 +382,6 @@ slot: $\nabla\,Y|_x : T_xM \to_L T_xM$, $v \mapsto (\nabla_v Y)(x)$.
 Math: pointwise linearity in direction. Eng: decouples direction-linearity
 from section-level `covDeriv` so identities reduce to standard continuous linear map lemmas. -/
 noncomputable def covDerivAt
-    [IsLocallyConstantChartedSpace H M]
     (Y : Π x : M, TangentSpace I x) (x : M) :
     TangentSpace I x →L[ℝ] TangentSpace I x :=
   (leviCivitaConnection (I := I) (M := M)).toFun Y x
@@ -396,7 +390,6 @@ noncomputable def covDerivAt
 `covDeriv` factors through the pointwise continuous linear map `covDerivAt`. -/
 @[simp]
 theorem covDeriv_eq_covDerivAt
-    [IsLocallyConstantChartedSpace H M]
     (X Y : Π x : M, TangentSpace I x) (x : M) :
     covDeriv X Y x = covDerivAt Y x (X x) :=
   rfl
@@ -405,7 +398,6 @@ theorem covDeriv_eq_covDerivAt
 `covDeriv (fun _ => v) Y x = covDerivAt Y x v`. -/
 @[simp]
 theorem covDeriv_const_eq_covDerivAt
-    [IsLocallyConstantChartedSpace H M]
     (v : E) (Y : Π x : M, TangentSpace I x) (x : M) :
     covDeriv (fun _ : M => v) Y x = covDerivAt Y x v :=
   rfl
@@ -416,7 +408,6 @@ $$\langle \nabla_X Y, Z\rangle_g(x) = \tfrac12 K(X, Y; Z)(x).$$
 Cycling metric-compat over $(X, Y, Z)$, $(Y, Z, X)$, $(Z, X, Y)$ and
 substituting torsion-freeness isolates $\langle \nabla_X Y, Z\rangle$. -/
 private theorem covDeriv_inner_eq_half_koszul
-    [IsLocallyConstantChartedSpace H M]
     (X Y Z : Π x : M, TangentSpace I x) (x : M)
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x)
     (hZ : TangentSmoothAt Z x) :
@@ -497,7 +488,8 @@ uniqueness). -/
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] in
 omit [CompleteSpace E] [FiniteDimensional ℝ E] [InnerProductSpace ℝ E]
-  [NeZero (Module.finrank ℝ E)] [I.Boundaryless] [T2Space M] in
+  [NeZero (Module.finrank ℝ E)] [I.Boundaryless] [T2Space M]
+  [IsLocallyConstantChartedSpace H M] in
 /-- **Math.** **Locality of `koszulFunctional` in the middle argument**:
 if $Y_1 =ᶠ[𝓝 x] Y_2$, then $K(X, Y_1; Z)(x) = K(X, Y_2; Z)(x)$. -/
 private theorem koszulFunctional_eventuallyEq_middle
@@ -529,7 +521,6 @@ private theorem koszulFunctional_eventuallyEq_middle
 uniqueness): if $Y_1 =ᶠ[𝓝 x] Y_2$ and both are smooth at $x$, then for
 smooth $X$, $\nabla_X Y_1(x) = \nabla_X Y_2(x)$. -/
 private theorem covDeriv_congr_eventuallyEq_middle
-    [IsLocallyConstantChartedSpace H M]
     (X Y₁ Y₂ : Π x : M, TangentSpace I x) (x : M)
     (hX : TangentSmoothAt X x)
     (hY₁ : TangentSmoothAt Y₁ x) (hY₂ : TangentSmoothAt Y₂ x)
@@ -754,143 +745,7 @@ theorem covDeriv_section_eq_swap_add_mlieBracket
   show covDeriv Y Z y = covDeriv Z Y y + mlieBracket I Y Z y
   rw [← h]; abel
 
-/-- **Math.** **Algebraic (first) Bianchi identity** for the Levi-Civita
-connection:
-$$R(X, Y)Z + R(Y, Z)X + R(Z, X)Y = 0.$$
-The explicit smoothness hypotheses on $X, Y, Z$, their first
-covariant derivatives, and their pairwise Lie brackets match the
-standard $C^2$ textbook setup but fire pointwise.
-
-**Ground truth**: do Carmo 1992 §4 Proposition 2.5 (ii). -/
-theorem bianchi_first
-    (X Y Z : Π x : M, TangentSpace I x) (x : M)
-    (hX : ∀ y, TangentSmoothAt X y) (hY : ∀ y, TangentSmoothAt Y y)
-    (hZ : ∀ y, TangentSmoothAt Z y)
-    (h_dXZ : ∀ y, TangentSmoothAt (fun y' => covDeriv X Z y') y)
-    (h_dYX : ∀ y, TangentSmoothAt (fun y' => covDeriv Y X y') y)
-    (h_dZY : ∀ y, TangentSmoothAt (fun y' => covDeriv Z Y y') y)
-    (h_XY : ∀ y, TangentSmoothAt (fun y' => mlieBracket I X Y y') y)
-    (h_YX : ∀ y, TangentSmoothAt (fun y' => mlieBracket I Y X y') y)
-    (h_YZ : ∀ y, TangentSmoothAt (fun y' => mlieBracket I Y Z y') y)
-    (h_ZX : ∀ y, TangentSmoothAt (fun y' => mlieBracket I Z X y') y)
-    (h_XZ : ∀ y, TangentSmoothAt (fun y' => mlieBracket I X Z y') y)
-    (h_jac : mlieBracket I X (mlieBracket I Y Z) x
-              = mlieBracket I (mlieBracket I X Y) Z x
-                + mlieBracket I Y (mlieBracket I X Z) x) :
-    riemannCurvature X Y Z x + riemannCurvature Y Z X x + riemannCurvature Z X Y x = 0 := by
-  -- Step 1: section-level torsion-freeness (Π-equalities, via global smoothness).
-  have eq_YZ : (fun y => covDeriv Y Z y) = (fun y => covDeriv Z Y y)
-                  + (fun y => mlieBracket I Y Z y) :=
-    covDeriv_section_eq_swap_add_mlieBracket Y Z hY hZ
-  have eq_ZX : (fun y => covDeriv Z X y) = (fun y => covDeriv X Z y)
-                  + (fun y => mlieBracket I Z X y) :=
-    covDeriv_section_eq_swap_add_mlieBracket Z X hZ hX
-  have eq_XY : (fun y => covDeriv X Y y) = (fun y => covDeriv Y X y)
-                  + (fun y => mlieBracket I X Y y) :=
-    covDeriv_section_eq_swap_add_mlieBracket X Y hX hY
-  -- Step 2: unfold riemannCurvature, substitute section equalities, split via add_field.
-  show covDeriv X (fun y => covDeriv Y Z y) x
-        - covDeriv Y (fun y => covDeriv X Z y) x
-        - covDeriv (fun y => mlieBracket I X Y y) Z x
-      + (covDeriv Y (fun y => covDeriv Z X y) x
-        - covDeriv Z (fun y => covDeriv Y X y) x
-        - covDeriv (fun y => mlieBracket I Y Z y) X x)
-      + (covDeriv Z (fun y => covDeriv X Y y) x
-        - covDeriv X (fun y => covDeriv Z Y y) x
-        - covDeriv (fun y => mlieBracket I Z X y) Y x) = 0
-  rw [eq_YZ, eq_ZX, eq_XY]
-  rw [covDeriv_add_field X (fun y => covDeriv Z Y y) (fun y => mlieBracket I Y Z y) x
-        (h_dZY x) (h_YZ x),
-      covDeriv_add_field Y (fun y => covDeriv X Z y) (fun y => mlieBracket I Z X y) x
-        (h_dXZ x) (h_ZX x),
-      covDeriv_add_field Z (fun y => covDeriv Y X y) (fun y => mlieBracket I X Y y) x
-        (h_dYX x) (h_XY x)]
-  -- Step 3: pointwise torsion-free pairings (∇_A B - ∇_B A = [A,B]):
-  have pair_X : covDeriv X (fun y => mlieBracket I Y Z y) x
-                  - covDeriv (fun y => mlieBracket I Y Z y) X x
-                = mlieBracket I X (mlieBracket I Y Z) x :=
-    covDeriv_sub_swap_eq_mlieBracket X (fun y => mlieBracket I Y Z y) x (hX x) (h_YZ x)
-  have pair_Y : covDeriv Y (fun y => mlieBracket I Z X y) x
-                  - covDeriv (fun y => mlieBracket I Z X y) Y x
-                = mlieBracket I Y (mlieBracket I Z X) x :=
-    covDeriv_sub_swap_eq_mlieBracket Y (fun y => mlieBracket I Z X y) x (hY x) (h_ZX x)
-  have pair_Z : covDeriv Z (fun y => mlieBracket I X Y y) x
-                  - covDeriv (fun y => mlieBracket I X Y y) Z x
-                = mlieBracket I Z (mlieBracket I X Y) x :=
-    covDeriv_sub_swap_eq_mlieBracket Z (fun y => mlieBracket I X Y y) x (hZ x) (h_XY x)
-  -- Step 4: rearrange so abel collapses all 12 cov-terms via pair_X/Y/Z.
-  -- The goal after rewrites is (with shorthand):
-  --   (∇_X∇_Z Y + ∇_X[Y,Z]) - ∇_Y∇_X Z - ∇_{[X,Y]} Z
-  --   + (∇_Y∇_X Z + ∇_Y[Z,X]) - ∇_Z∇_Y X - ∇_{[Y,Z]} X
-  --   + (∇_Z∇_Y X + ∇_Z[X,Y]) - ∇_X∇_Z Y - ∇_{[Z,X]} Y = 0
-  -- Three pairs of mixed ∇∇ terms cancel; remaining 6 terms group via pair_X/Y/Z to:
-  --   [X,[Y,Z]] + [Y,[Z,X]] + [Z,[X,Y]] = 0   (Jacobi).
-  -- We rewrite using pair_X/Y/Z by isolating the LHS shapes.
-  -- pair_X gives ∇_X[Y,Z] = pair_X.lhs.lhs ↦ … — to use pair_X as a substitution,
-  -- we set up the equations as A = mlie + B and rewrite ∇_X[Y,Z] = mlie + ∇_{[Y,Z]} X:
-  have h_subX : covDeriv X (fun y => mlieBracket I Y Z y) x
-                  = mlieBracket I X (mlieBracket I Y Z) x
-                    + covDeriv (fun y => mlieBracket I Y Z y) X x := by
-    rw [← pair_X]; abel
-  have h_subY : covDeriv Y (fun y => mlieBracket I Z X y) x
-                  = mlieBracket I Y (mlieBracket I Z X) x
-                    + covDeriv (fun y => mlieBracket I Z X y) Y x := by
-    rw [← pair_Y]; abel
-  have h_subZ : covDeriv Z (fun y => mlieBracket I X Y y) x
-                  = mlieBracket I Z (mlieBracket I X Y) x
-                    + covDeriv (fun y => mlieBracket I X Y y) Z x := by
-    rw [← pair_Z]; abel
-  rw [h_subX, h_subY, h_subZ]
-  -- Goal now has 3 outer-bracket terms + 6 ∇_·_ terms; three pairs of ∇_{[·,·]} ·
-  -- match (positive in subX/Y/Z, negative in 3 outer ∇_{[·,·]} · slots) — abel kills.
-  -- 3 pairs of mixed ∇∇ terms also cancel (∇_X∇_Z Y, ∇_Y∇_X Z, ∇_Z∇_Y X).
-  -- Result: [X,[Y,Z]] + [Y,[Z,X]] + [Z,[X,Y]] = 0.
-  -- Step 5: convert [Y,[Z,X]] and [Z,[X,Y]] into Jacobi-compatible forms via antisymm.
-  -- Section-level antisymm:
-  have sec_ZX : (fun y => mlieBracket I Z X y) = -(fun y => mlieBracket I X Z y) := by
-    funext y; exact VectorField.mlieBracket_swap_apply
-  have sec_XY : (fun y => mlieBracket I X Y y) = -(fun y => mlieBracket I Y X y) := by
-    funext y; exact VectorField.mlieBracket_swap_apply
-  -- Use Mathlib `mlieBracket_const_smul_right` (with c = -1) to pull negation out.
-  have h_YZX : mlieBracket I Y (mlieBracket I Z X) x
-                = -mlieBracket I Y (mlieBracket I X Z) x := by
-    have h_eq : (mlieBracket I Z X : Π y : M, TangentSpace I y)
-              = (-1 : ℝ) • mlieBracket I X Z := by
-      funext y
-      show mlieBracket I Z X y = (-1 : ℝ) • mlieBracket I X Z y
-      rw [neg_one_smul]
-      exact VectorField.mlieBracket_swap_apply
-    rw [h_eq, VectorField.mlieBracket_const_smul_right (h_XZ x), neg_one_smul]
-  have h_ZXY : mlieBracket I Z (mlieBracket I X Y) x
-                = -mlieBracket I Z (mlieBracket I Y X) x := by
-    have h_eq : (mlieBracket I X Y : Π y : M, TangentSpace I y)
-              = (-1 : ℝ) • mlieBracket I Y X := by
-      funext y
-      show mlieBracket I X Y y = (-1 : ℝ) • mlieBracket I Y X y
-      rw [neg_one_smul]
-      exact VectorField.mlieBracket_swap_apply
-    rw [h_eq, VectorField.mlieBracket_const_smul_right (h_YX x), neg_one_smul]
-  -- Outer antisymm: [[X,Y], Z] x = -[Z, [X,Y]] x
-  have asym_outer : mlieBracket I (mlieBracket I X Y) Z x
-                  = -mlieBracket I Z (mlieBracket I X Y) x :=
-    VectorField.mlieBracket_swap_apply
-  -- Now: goal (after abel-cancels) reduces to:
-  --   [X,[Y,Z]] x + [Y,[Z,X]] x + [Z,[X,Y]] x = 0
-  -- = ([[X,Y],Z] + [Y,[X,Z]]) + (-[Y,[X,Z]]) + [Z,[X,Y]]    (h_jac, h_YZX)
-  -- = [[X,Y],Z] + [Z,[X,Y]]
-  -- = -[Z,[X,Y]] + [Z,[X,Y]] = 0                              (asym_outer)
-  -- We chain these into the goal via abel.
-  rw [h_jac, h_YZX, asym_outer]
-  abel
-
-/-! ## from `Connection.lean` (smoothness section) -/
-
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
-  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H} [I.Boundaryless]
-  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] [T2Space M]
-  [IsLocallyConstantChartedSpace H M]
-  [hm : HasMetric I M]
+/-! ## Smoothness wrappers on `covDeriv` -/
 
 /-- **Math.** $\nabla_{\,\mathrm{const}\,v}\, Y$ is smooth at every $x$
 for any `SmoothVectorField Y` and any constant direction $v : E$. -/
@@ -908,5 +763,147 @@ theorem covDeriv_smoothVF_smoothAt
     TangentSmoothAt
       (fun y : M => covDeriv X.toFun Y.toFun y) x :=
   Riemannian.leviCivitaConnection_smoothAt_smoothVF_dir X Y x
+
+/-- **Math.** **Algebraic (first) Bianchi identity** for the Levi-Civita
+connection:
+$$R(X, Y)Z + R(Y, Z)X + R(Z, X)Y = 0.$$
+The explicit smoothness hypotheses on $X, Y, Z$, their first
+covariant derivatives, and their pairwise Lie brackets match the
+standard $C^2$ textbook setup but fire pointwise.
+
+**Ground truth**: do Carmo 1992 §4 Proposition 2.5 (ii). -/
+theorem bianchi_first
+    (X Y Z : SmoothVectorField I M) (x : M)
+    (h_jac : mlieBracket I X.toFun (mlieBracket I Y.toFun Z.toFun) x
+              = mlieBracket I (mlieBracket I X.toFun Y.toFun) Z.toFun x
+                + mlieBracket I Y.toFun (mlieBracket I X.toFun Z.toFun) x) :
+    riemannCurvature X.toFun Y.toFun Z.toFun x
+      + riemannCurvature Y.toFun Z.toFun X.toFun x
+      + riemannCurvature Z.toFun X.toFun Y.toFun x = 0 := by
+  -- Derive all 11 smoothness hypotheses internally from `X.smooth`, `Y.smooth`,
+  -- `Z.smooth` via `covDeriv_smoothVF_smoothAt` and `mlieBracket_tangentSmoothAt`.
+  have hX : ∀ y, TangentSmoothAt X.toFun y := X.smoothAt
+  have hY : ∀ y, TangentSmoothAt Y.toFun y := Y.smoothAt
+  have hZ : ∀ y, TangentSmoothAt Z.toFun y := Z.smoothAt
+  have h_dXZ : ∀ y, TangentSmoothAt (fun y' => covDeriv X.toFun Z.toFun y') y :=
+    fun y => covDeriv_smoothVF_smoothAt X Z y
+  have h_dYX : ∀ y, TangentSmoothAt (fun y' => covDeriv Y.toFun X.toFun y') y :=
+    fun y => covDeriv_smoothVF_smoothAt Y X y
+  have h_dZY : ∀ y, TangentSmoothAt (fun y' => covDeriv Z.toFun Y.toFun y') y :=
+    fun y => covDeriv_smoothVF_smoothAt Z Y y
+  have h_XY : ∀ y, TangentSmoothAt (fun y' => mlieBracket I X.toFun Y.toFun y') y :=
+    fun _ => mlieBracket_tangentSmoothAt X.smooth Y.smooth
+  have h_YX : ∀ y, TangentSmoothAt (fun y' => mlieBracket I Y.toFun X.toFun y') y :=
+    fun _ => mlieBracket_tangentSmoothAt Y.smooth X.smooth
+  have h_YZ : ∀ y, TangentSmoothAt (fun y' => mlieBracket I Y.toFun Z.toFun y') y :=
+    fun _ => mlieBracket_tangentSmoothAt Y.smooth Z.smooth
+  have h_ZX : ∀ y, TangentSmoothAt (fun y' => mlieBracket I Z.toFun X.toFun y') y :=
+    fun _ => mlieBracket_tangentSmoothAt Z.smooth X.smooth
+  have h_XZ : ∀ y, TangentSmoothAt (fun y' => mlieBracket I X.toFun Z.toFun y') y :=
+    fun _ => mlieBracket_tangentSmoothAt X.smooth Z.smooth
+  -- Step 1: section-level torsion-freeness (Π-equalities, via global smoothness).
+  have eq_YZ : (fun y => covDeriv Y.toFun Z.toFun y) = (fun y => covDeriv Z.toFun Y.toFun y)
+                  + (fun y => mlieBracket I Y.toFun Z.toFun y) :=
+    covDeriv_section_eq_swap_add_mlieBracket Y.toFun Z.toFun hY hZ
+  have eq_ZX : (fun y => covDeriv Z.toFun X.toFun y) = (fun y => covDeriv X.toFun Z.toFun y)
+                  + (fun y => mlieBracket I Z.toFun X.toFun y) :=
+    covDeriv_section_eq_swap_add_mlieBracket Z.toFun X.toFun hZ hX
+  have eq_XY : (fun y => covDeriv X.toFun Y.toFun y) = (fun y => covDeriv Y.toFun X.toFun y)
+                  + (fun y => mlieBracket I X.toFun Y.toFun y) :=
+    covDeriv_section_eq_swap_add_mlieBracket X.toFun Y.toFun hX hY
+  -- Step 2: unfold riemannCurvature, substitute section equalities, split via add_field.
+  show covDeriv X.toFun (fun y => covDeriv Y.toFun Z.toFun y) x
+        - covDeriv Y.toFun (fun y => covDeriv X.toFun Z.toFun y) x
+        - covDeriv (fun y => mlieBracket I X.toFun Y.toFun y) Z.toFun x
+      + (covDeriv Y.toFun (fun y => covDeriv Z.toFun X.toFun y) x
+        - covDeriv Z.toFun (fun y => covDeriv Y.toFun X.toFun y) x
+        - covDeriv (fun y => mlieBracket I Y.toFun Z.toFun y) X.toFun x)
+      + (covDeriv Z.toFun (fun y => covDeriv X.toFun Y.toFun y) x
+        - covDeriv X.toFun (fun y => covDeriv Z.toFun Y.toFun y) x
+        - covDeriv (fun y => mlieBracket I Z.toFun X.toFun y) Y.toFun x) = 0
+  rw [eq_YZ, eq_ZX, eq_XY]
+  rw [covDeriv_add_field X.toFun (fun y => covDeriv Z.toFun Y.toFun y) (fun y => mlieBracket I Y.toFun Z.toFun y) x
+        (h_dZY x) (h_YZ x),
+      covDeriv_add_field Y.toFun (fun y => covDeriv X.toFun Z.toFun y) (fun y => mlieBracket I Z.toFun X.toFun y) x
+        (h_dXZ x) (h_ZX x),
+      covDeriv_add_field Z.toFun (fun y => covDeriv Y.toFun X.toFun y) (fun y => mlieBracket I X.toFun Y.toFun y) x
+        (h_dYX x) (h_XY x)]
+  -- Step 3: pointwise torsion-free pairings (∇_A B - ∇_B A = [A,B]):
+  have pair_X : covDeriv X.toFun (fun y => mlieBracket I Y.toFun Z.toFun y) x
+                  - covDeriv (fun y => mlieBracket I Y.toFun Z.toFun y) X.toFun x
+                = mlieBracket I X.toFun (mlieBracket I Y.toFun Z.toFun) x :=
+    covDeriv_sub_swap_eq_mlieBracket X.toFun (fun y => mlieBracket I Y.toFun Z.toFun y) x (hX x) (h_YZ x)
+  have pair_Y : covDeriv Y.toFun (fun y => mlieBracket I Z.toFun X.toFun y) x
+                  - covDeriv (fun y => mlieBracket I Z.toFun X.toFun y) Y.toFun x
+                = mlieBracket I Y.toFun (mlieBracket I Z.toFun X.toFun) x :=
+    covDeriv_sub_swap_eq_mlieBracket Y.toFun (fun y => mlieBracket I Z.toFun X.toFun y) x (hY x) (h_ZX x)
+  have pair_Z : covDeriv Z.toFun (fun y => mlieBracket I X.toFun Y.toFun y) x
+                  - covDeriv (fun y => mlieBracket I X.toFun Y.toFun y) Z.toFun x
+                = mlieBracket I Z.toFun (mlieBracket I X.toFun Y.toFun) x :=
+    covDeriv_sub_swap_eq_mlieBracket Z.toFun (fun y => mlieBracket I X.toFun Y.toFun y) x (hZ x) (h_XY x)
+  -- Step 4: rearrange so abel collapses all 12 cov-terms via pair_X/Y/Z.
+  -- The goal after rewrites is (with shorthand):
+  --   (∇_X∇_Z Y + ∇_X[Y,Z]) - ∇_Y∇_X Z - ∇_{[X,Y]} Z
+  --   + (∇_Y∇_X Z + ∇_Y[Z,X]) - ∇_Z∇_Y X - ∇_{[Y,Z]} X
+  --   + (∇_Z∇_Y X + ∇_Z[X,Y]) - ∇_X∇_Z Y - ∇_{[Z,X]} Y = 0
+  -- Three pairs of mixed ∇∇ terms cancel; remaining 6 terms group via pair_X/Y/Z to:
+  --   [X,[Y,Z]] + [Y,[Z,X]] + [Z,[X,Y]] = 0   (Jacobi).
+  -- We rewrite using pair_X/Y/Z by isolating the LHS shapes.
+  -- pair_X gives ∇_X[Y,Z] = pair_X.lhs.lhs ↦ … — to use pair_X as a substitution,
+  -- we set up the equations as A = mlie + B and rewrite ∇_X[Y,Z] = mlie + ∇_{[Y,Z]} X:
+  have h_subX : covDeriv X.toFun (fun y => mlieBracket I Y.toFun Z.toFun y) x
+                  = mlieBracket I X.toFun (mlieBracket I Y.toFun Z.toFun) x
+                    + covDeriv (fun y => mlieBracket I Y.toFun Z.toFun y) X.toFun x := by
+    rw [← pair_X]; abel
+  have h_subY : covDeriv Y.toFun (fun y => mlieBracket I Z.toFun X.toFun y) x
+                  = mlieBracket I Y.toFun (mlieBracket I Z.toFun X.toFun) x
+                    + covDeriv (fun y => mlieBracket I Z.toFun X.toFun y) Y.toFun x := by
+    rw [← pair_Y]; abel
+  have h_subZ : covDeriv Z.toFun (fun y => mlieBracket I X.toFun Y.toFun y) x
+                  = mlieBracket I Z.toFun (mlieBracket I X.toFun Y.toFun) x
+                    + covDeriv (fun y => mlieBracket I X.toFun Y.toFun y) Z.toFun x := by
+    rw [← pair_Z]; abel
+  rw [h_subX, h_subY, h_subZ]
+  -- Goal now has 3 outer-bracket terms + 6 ∇_·_ terms; three pairs of ∇_{[·,·]} ·
+  -- match (positive in subX/Y/Z, negative in 3 outer ∇_{[·,·]} · slots) — abel kills.
+  -- 3 pairs of mixed ∇∇ terms also cancel (∇_X∇_Z Y, ∇_Y∇_X Z, ∇_Z∇_Y X).
+  -- Result: [X,[Y,Z]] + [Y,[Z,X]] + [Z,[X,Y]] = 0.
+  -- Step 5: convert [Y,[Z,X]] and [Z,[X,Y]] into Jacobi-compatible forms via antisymm.
+  -- Section-level antisymm:
+  have sec_ZX : (fun y => mlieBracket I Z.toFun X.toFun y) = -(fun y => mlieBracket I X.toFun Z.toFun y) := by
+    funext y; exact VectorField.mlieBracket_swap_apply
+  have sec_XY : (fun y => mlieBracket I X.toFun Y.toFun y) = -(fun y => mlieBracket I Y.toFun X.toFun y) := by
+    funext y; exact VectorField.mlieBracket_swap_apply
+  -- Use Mathlib `mlieBracket_const_smul_right` (with c = -1) to pull negation out.
+  have h_YZX : mlieBracket I Y.toFun (mlieBracket I Z.toFun X.toFun) x
+                = -mlieBracket I Y.toFun (mlieBracket I X.toFun Z.toFun) x := by
+    have h_eq : (mlieBracket I Z.toFun X.toFun : Π y : M, TangentSpace I y)
+              = (-1 : ℝ) • mlieBracket I X.toFun Z.toFun := by
+      funext y
+      show mlieBracket I Z.toFun X.toFun y = (-1 : ℝ) • mlieBracket I X.toFun Z.toFun y
+      rw [neg_one_smul]
+      exact VectorField.mlieBracket_swap_apply
+    rw [h_eq, VectorField.mlieBracket_const_smul_right (h_XZ x), neg_one_smul]
+  have h_ZXY : mlieBracket I Z.toFun (mlieBracket I X.toFun Y.toFun) x
+                = -mlieBracket I Z.toFun (mlieBracket I Y.toFun X.toFun) x := by
+    have h_eq : (mlieBracket I X.toFun Y.toFun : Π y : M, TangentSpace I y)
+              = (-1 : ℝ) • mlieBracket I Y.toFun X.toFun := by
+      funext y
+      show mlieBracket I X.toFun Y.toFun y = (-1 : ℝ) • mlieBracket I Y.toFun X.toFun y
+      rw [neg_one_smul]
+      exact VectorField.mlieBracket_swap_apply
+    rw [h_eq, VectorField.mlieBracket_const_smul_right (h_YX x), neg_one_smul]
+  -- Outer antisymm: [[X,Y], Z] x = -[Z, [X,Y]] x
+  have asym_outer : mlieBracket I (mlieBracket I X.toFun Y.toFun) Z.toFun x
+                  = -mlieBracket I Z.toFun (mlieBracket I X.toFun Y.toFun) x :=
+    VectorField.mlieBracket_swap_apply
+  -- Now: goal (after abel-cancels) reduces to:
+  --   [X,[Y,Z]] x + [Y,[Z,X]] x + [Z,[X,Y]] x = 0
+  -- = ([[X,Y],Z] + [Y,[X,Z]]) + (-[Y,[X,Z]]) + [Z,[X,Y]]    (h_jac, h_YZX)
+  -- = [[X,Y],Z] + [Z,[X,Y]]
+  -- = -[Z,[X,Y]] + [Z,[X,Y]] = 0                              (asym_outer)
+  -- We chain these into the goal via abel.
+  rw [h_jac, h_YZX, asym_outer]
+  abel
 
 end Riemannian

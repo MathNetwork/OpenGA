@@ -631,40 +631,10 @@ private lemma riemannCurvature_const_first_swap_eq_neg
       = -riemannCurvature X.toFun Y.toFun (fun _ : M => v) x := by
   classical
   set V : SmoothVectorField I M := SmoothVectorField.const (I := I) (M := M) v with hV_def
-  -- Pointwise smoothness witnesses for V, X, Y.
-  have hV_smooth : ∀ y, TangentSmoothAt (fun _ : M => v) y := V.smoothAt
-  have hX_smooth : ∀ y, TangentSmoothAt X.toFun y := X.smoothAt
-  have hY_smooth : ∀ y, TangentSmoothAt Y.toFun y := Y.smoothAt
-  -- First-derivative sections smooth.
-  have h_dVY : ∀ y, TangentSmoothAt
-      (fun y' => covDeriv (fun _ : M => v) Y.toFun y') y :=
-    fun y => covDeriv_const_smoothVF_smoothAt v Y y
-  have h_dXV : ∀ y, TangentSmoothAt
-      (fun y' => covDeriv X.toFun (fun _ : M => v) y') y :=
-    fun y => covDeriv_smoothVF_smoothAt X V y
-  have h_dYX : ∀ y, TangentSmoothAt
-      (fun y' => covDeriv Y.toFun X.toFun y') y :=
-    fun y => covDeriv_smoothVF_smoothAt Y X y
-  -- Lie-bracket sections smooth.
-  have h_VX_br : ∀ y, TangentSmoothAt
-      (fun y' => mlieBracket I (fun _ : M => v) X.toFun y') y :=
-    fun y => mlieBracket_tangentSmoothAt V.smooth X.smooth
-  have h_XV_br : ∀ y, TangentSmoothAt
-      (fun y' => mlieBracket I X.toFun (fun _ : M => v) y') y :=
-    fun y => mlieBracket_tangentSmoothAt X.smooth V.smooth
-  have h_XY_br : ∀ y, TangentSmoothAt
-      (fun y' => mlieBracket I X.toFun Y.toFun y') y :=
-    fun y => mlieBracket_tangentSmoothAt X.smooth Y.smooth
-  have h_YV_br : ∀ y, TangentSmoothAt
-      (fun y' => mlieBracket I Y.toFun (fun _ : M => v) y') y :=
-    fun y => mlieBracket_tangentSmoothAt Y.smooth V.smooth
-  have h_VY_br : ∀ y, TangentSmoothAt
-      (fun y' => mlieBracket I (fun _ : M => v) Y.toFun y') y :=
-    fun y => mlieBracket_tangentSmoothAt V.smooth Y.smooth
-  -- Jacobi identity at x from Mathlib (`leibniz_identity_mlieBracket_apply`).
-  -- Smoothness witnesses at level `minSmoothness ℝ 2`, downgraded from ∞.
+  -- Jacobi identity at x from Mathlib (`leibniz_identity_mlieBracket_apply`),
+  -- with smoothness witnesses at level `minSmoothness ℝ 2` (downgraded from ∞).
   have hV_2 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) (minSmoothness ℝ 2)
-      (fun y => (⟨y, (fun _ : M => v) y⟩ : TangentBundle I M)) x := by
+      (fun y => (⟨y, V.toFun y⟩ : TangentBundle I M)) x := by
     rw [minSmoothness_of_isRCLikeNormedField]
     exact (V.smooth x).of_le (by
       show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
@@ -681,19 +651,17 @@ private lemma riemannCurvature_const_first_swap_eq_neg
     exact (Y.smooth x).of_le (by
       show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
       exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
-  -- `leibniz_identity_mlieBracket_apply` needs `IsManifold I (minSmoothness ℝ 3) M`;
-  -- provide it from `IsManifold I ∞ M` (`LEInfty` cascade on `ℕ∞ω`).
   haveI hM3 : IsManifold I (minSmoothness ℝ 3) M := by
     rw [minSmoothness_of_isRCLikeNormedField]; infer_instance
   have h_jac := VectorField.leibniz_identity_mlieBracket_apply
-    (I := I) (M := M) (U := fun _ : M => v) (V := X.toFun) (W := Y.toFun)
+    (I := I) (M := M) (U := V.toFun) (V := X.toFun) (W := Y.toFun)
     hV_2 hX_2 hY_2
-  -- Bianchi I with (X', Y', Z') = (const v, X.toFun, Y.toFun).
-  have h_bianchi := bianchi_first (fun _ : M => v) X.toFun Y.toFun x
-    hV_smooth hX_smooth hY_smooth
-    h_dVY h_dXV h_dYX
-    h_VX_br h_XV_br h_XY_br h_YV_br h_VY_br
-    h_jac
+  -- Bianchi I with (X', Y', Z') = (V, X, Y). Use the unfolded `V.toFun = fun _ => v`
+  -- form so the rewrite by `h_antisym` (using the `fun _ => v` shape) fires.
+  have h_bianchi : riemannCurvature (fun _ : M => v) X.toFun Y.toFun x
+        + riemannCurvature X.toFun Y.toFun (fun _ : M => v) x
+        + riemannCurvature Y.toFun (fun _ : M => v) X.toFun x = 0 :=
+    bianchi_first V X Y x h_jac
   -- First-pair antisymmetry on the 3rd Bianchi summand.
   have h_antisym :
       riemannCurvature Y.toFun (fun _ : M => v) X.toFun x
