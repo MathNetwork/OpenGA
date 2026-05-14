@@ -56,8 +56,8 @@ noncomputable def hessian
 /-! ## Pointwise bilinear-form carrier -/
 
 variable (I) in
-/-- **Eng.** Pointwise real-valued bilinear form on the tangent bundle of
-$M$, the abstract carrier for concrete `(0,2)`-tensors. -/
+/-- **Math.** Pointwise real-valued bilinear form on the tangent bundle
+of $M$ — the abstract carrier for concrete $(0,2)$-tensors. -/
 abbrev Bilin :=
   ∀ x : M, TangentSpace I x →ₗ[ℝ] TangentSpace I x →ₗ[ℝ] ℝ
 
@@ -210,27 +210,13 @@ theorem trace_sq_div_dim_le_frobeniusSq
 
 variable [IsLocallyConstantChartedSpace H M]
 
-/-- **Mixed.** Bridge: scalar Hessian as iterated `mDirDeriv` minus Christoffel correction.
-
-For a smooth scalar function $g : M \to \mathbb{R}$ with $\nabla^M g$
-smooth at $x$, the connection Hessian admits the textbook decomposition
+/-- **Math.** **Scalar Hessian as iterated `mDirDeriv` minus Christoffel
+correction**. For a smooth scalar $g \colon M \to \mathbb{R}$ with
+$\nabla^M g$ smooth at $x$, the connection Hessian admits the textbook
+decomposition
 $$\mathrm{Hess}\,g(X, Y)(x) \;=\; X(Y(g))(x) \;-\; (\nabla_X Y)(g)(x),$$
 i.e. iterated directional differentiation of $g$ along $Y$ then $X$,
-minus the Christoffel correction $\nabla_X Y$ acting on $g$.
-
-In framework notation (using `mDirDeriv g y v = (\mathrm{d}g)_y(v)` and
-`covDeriv X Y x = (\nabla_X Y)(x)`):
-
-`hessian g X Y x = mDirDeriv (fun y ↦ mDirDeriv g y (Y y)) x (X x) - mDirDeriv g x (covDeriv X Y x)`.
-
-Bridges the framework's `metricInner ∘ covDerivAt ∘ ∇g` form (the
-`hessian` def) and the textbook iterated-action-of-vector-fields form,
-via metric-compatibility on $(X, \nabla g, Y)$ plus gradient duality
-`manifoldGradient_inner_eq`.
-
-**Used by**: `OpenGALib.Riemannian.Operators.Bochner` (`bochner_leibniz_trace_reduction`,
-which applies this for $g = |\nabla f|_g^2$ and $X = Y =$ chart-frame
-constants $\varepsilon_i$). -/
+minus the Christoffel correction $\nabla_X Y$ acting on $g$. -/
 theorem hessian_eq_mDirDeriv_iterate_sub_chris
     (g : M → ℝ) (X Y : VectorFieldSection I M) (x : M)
     (h_grad_g : TangentSmoothAt (manifoldGradient (I := I) g) x)

@@ -92,8 +92,9 @@ abbrev manifoldBump (c : M) : Type _ := SmoothBumpFunction I c
 
 variable [FiniteDimensional ℝ E]
 
-/-- **Eng.** Canonical bump at `c`, extracted from Mathlib's `Nonempty`
-instance. Used when a specific radius is not required. -/
+/-- **Math.** A canonical smooth bump function centred at $c$,
+choice-extracted from the `Nonempty` instance. Used when a specific
+radius is not required. -/
 noncomputable def someBump (c : M) : SmoothBumpFunction I c :=
   Classical.choice inferInstance
 

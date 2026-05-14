@@ -55,8 +55,9 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
-/-- **Eng.** The tangent section `y ↦ ⟨y, V y⟩` is `MDifferentiableAt` at `x`
-as a map `M → TangentBundle I M`. -/
+/-- **Math.** The section $V \colon M \to TM$ is **smooth at $x$**:
+$y \mapsto \langle y, V(y)\rangle$ is `MDifferentiableAt` at $x$ as a
+map $M \to TM$. -/
 def TangentSmoothAt (V : (y : M) → TangentSpace I y) (x : M) : Prop :=
   MDifferentiableAt I (I.prod 𝓘(ℝ, E))
     (fun y => (⟨y, V y⟩ : TangentBundle I M)) x
