@@ -39,7 +39,7 @@ variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [Measure
 
 namespace Varifold
 
-/-- **Ambient divergence on a normed space**:
+/-- **Math.** **Ambient divergence on a normed space**:
 $\mathrm{div}\,V(y) := \mathrm{tr}(\mathrm{D}V(y))$
 where $\mathrm{D}V(y) : E \to E$ is the Fréchet derivative of
 $V : E \to E$. Implemented via `LinearMap.trace ℝ E ∘ fderiv ℝ V`.
@@ -56,7 +56,7 @@ noncomputable def divergenceFlat
     (V : E → E) (y : E) : ℝ :=
   LinearMap.trace ℝ E (fderiv ℝ V y).toLinearMap
 
-/-- **Ambient divergence of a vector field on the manifold** $M$ at $x$,
+/-- **Math.** **Ambient divergence of a vector field on the manifold** $M$ at $x$,
 computed via chart pullback to the model space $E$.
 
 Concretely: pull back $X$ from $M$ to $E$ via the inverse chart at $x$
@@ -82,7 +82,7 @@ noncomputable def divergenceM
     (mpullbackWithin 𝓘(ℝ, E) I (extChartAt I x).symm X (Set.range I))
     ((extChartAt I x) x)
 
-/-- The **first variation** $\delta V(X) \in \mathbb{R}$ of a varifold
+/-- **Math.** The **first variation** $\delta V(X) \in \mathbb{R}$ of a varifold
 $V$ along a test vector field $X$, in the **ambient-divergence form**:
 $$\delta V(X) := \int_M \mathrm{div}_M X(x)\, d\|V\|(x).$$
 
@@ -119,7 +119,7 @@ noncomputable def firstVariation
     (V : Varifold M) (X : TestVectorField I M) : ℝ :=
   ∫ x, divergenceM I X.toFun x ∂V.massMeasure
 
-/-- $V$ is **stationary** iff its first variation $\delta V(X)$ vanishes
+/-- **Math.** $V$ is **stationary** iff its first variation $\delta V(X)$ vanishes
 on every smooth compactly supported test vector field $X$ on $M$.
 
 Defined explicitly as a universally-quantified vanishing statement so

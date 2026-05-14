@@ -34,7 +34,7 @@ namespace GeometricMeasureTheory
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
-/-- A smooth, compactly supported vector field on a smooth manifold $M$.
+/-- **Math.** A smooth, compactly supported vector field on a smooth manifold $M$.
 
 A test vector field is a section of the tangent bundle $TM$ that is
 $C^\infty$ as a map into the total space and supported on a compact set
@@ -61,7 +61,7 @@ structure TestVectorField
 
 namespace Varifold
 
-/-- $V$ has a **unit normal field** on its support: codim-1 hypothesis
+/-- **Math.** $V$ has a **unit normal field** on its support: codim-1 hypothesis
 encoded as a typeclass.
 
 The field $\nu : (x : M) \to T_xM$ orients the (codim-1) tangent
@@ -84,7 +84,7 @@ class HasNormal
   /-- The unit normal field $\nu(x) \in T_xM$ at each point of $M$. -/
   unitNormal : (x : M) → TangentSpace I x
 
-/-- **Existence axiom for the BV-gradient unit normal direction**
+/-- **Math.** **Existence axiom for the BV-gradient unit normal direction**
 ([Maggi 2012, Definition 15.1, Theorem 15.5]; De Giorgi 1955).
 
 For a finite-perimeter set $\Omega$ on a smooth manifold $M$, there
@@ -113,7 +113,7 @@ theorem ofBoundary_unitNormal_exists
       ∀ x ∈ FinitePerimeter.reducedBoundary Ω, ‖ν x‖ = 1 := by
   sorry
 
-/-- The **BV gradient direction** $\nu_\Omega(x) \in T_xM$ — the outer
+/-- **Math.** The **BV gradient direction** $\nu_\Omega(x) \in T_xM$ — the outer
 unit normal to the reduced boundary $\partial^*\Omega$, defined paper-
 faithfully via the blow-up limit
 $\nu_\Omega(x) = \lim_{r \to 0^+} D\chi_\Omega(B_r(x)) / |D\chi_\Omega(B_r(x))|$.
@@ -133,7 +133,7 @@ noncomputable def bvGradientDirection
     (Ω : FinitePerimeter M) (x : M) : TangentSpace I x :=
   Classical.choose (ofBoundary_unitNormal_exists I Ω) x
 
-/-- **Unit norm of BV gradient direction on the reduced boundary**.
+/-- **Math.** **Unit norm of BV gradient direction on the reduced boundary**.
 
 For any $x \in \partial^*\Omega$, $\|\nu_\Omega(x)\| = 1$. Extracted
 from `ofBoundary_unitNormal_exists` via `Classical.choose_spec`. -/
@@ -147,7 +147,7 @@ theorem bvGradientDirection_unit_on_reducedBoundary
     ‖bvGradientDirection I Ω x‖ = 1 :=
   Classical.choose_spec (ofBoundary_unitNormal_exists I Ω) x hx
 
-/-- `HasNormal` instance for `ofBoundary Ω`: the BV gradient direction
+/-- **Eng.** `HasNormal` instance for `ofBoundary Ω`: the BV gradient direction
 $\nu_\Omega := D\chi_\Omega / |D\chi_\Omega|$.
 
 **Ground truth**: De Giorgi structure theorem (Maggi 2012 Ch. 15);
@@ -181,7 +181,7 @@ theorem tangentCone_unitNormal_exists
     ∃ _ν : (x : M) → TangentSpace I x, True :=
   ⟨fun _ => 0, trivial⟩
 
-/-- `HasNormal` instance for `tangentCone I V Z`. -/
+/-- **Eng.** `HasNormal` instance for `tangentCone I V Z`. -/
 noncomputable instance instHasNormalTangentCone
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [MeasurableSpace E] [BorelSpace E]

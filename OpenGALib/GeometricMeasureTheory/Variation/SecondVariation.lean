@@ -34,7 +34,7 @@ namespace GeometricMeasureTheory.Variation
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
   [MeasureTheory.MeasureSpace M]
 
-/-- **Full-form second variation** $\delta^2 V(\varphi)$ in the Jacobi
+/-- **Math.** **Full-form second variation** $\delta^2 V(\varphi)$ in the Jacobi
 form for a codim-1 varifold:
 $$\delta^2 V(\varphi) = \int (|\nabla^M \varphi|^2 -
     (|A|^2 + \mathrm{Ric}(\nu, \nu)) \varphi^2)\, d\|V\|.$$

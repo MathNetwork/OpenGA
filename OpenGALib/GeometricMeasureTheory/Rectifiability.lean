@@ -27,7 +27,7 @@ namespace GeometricMeasureTheory
 
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M] [MeasureTheory.MeasureSpace M]
 
-/-- A subset $S \subseteq M$ is **$\mathcal{H}^n$-rectifiable** iff
+/-- **Math.** A subset $S \subseteq M$ is **$\mathcal{H}^n$-rectifiable** iff
 $$ S \subseteq \left( \bigcup_{i \in \mathbb{N}} f_i(A_i) \right) \cup N $$
 where each $A_i \subseteq \mathbb{R}^n$ is bounded, each $f_i : \mathbb{R}^n
 \to M$ is Lipschitz on $A_i$, and $\mathcal{H}^n(N) = 0$.
@@ -48,7 +48,7 @@ def IsHRectifiable (S : Set M) (n : ℕ) : Prop :=
 
 namespace Varifold
 
-/-- $V$ is **rectifiable** iff its mass measure $\|V\|$ is concentrated
+/-- **Math.** $V$ is **rectifiable** iff its mass measure $\|V\|$ is concentrated
 on an $\mathcal{H}^{V.dim}$-rectifiable subset of $M$.
 
 Defined explicitly as an existential over a rectifiable carrier $S$
@@ -57,7 +57,7 @@ with $\|V\|(S^c) = 0$, using the varifold's intrinsic dimension
 def IsRectifiable (V : Varifold M) : Prop :=
   ∃ S : Set M, IsHRectifiable S V.dim ∧ V.massMeasure Sᶜ = 0
 
-/-- **Rectifiability theorem** ([Allard 1972, Theorem 5.5(1)];
+/-- **Math.** **Rectifiability theorem** ([Allard 1972, Theorem 5.5(1)];
 [Simon 1984, Theorem 42.4]; reproduced as paper §2 Proposition
 `prop:allard-rectifiability`).
 

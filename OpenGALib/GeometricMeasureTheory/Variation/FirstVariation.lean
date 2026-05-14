@@ -38,7 +38,7 @@ namespace GeometricMeasureTheory.Variation
 variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
   [MeasureTheory.MeasureSpace M]
 
-/-- **Codim-1 normal correction term** $\langle \nu(x), \nabla_\nu X(x) \rangle$
+/-- **Math.** **Codim-1 normal correction term** $\langle \nu(x), \nabla_\nu X(x) \rangle$
 of the first variation, evaluated via the framework's `metricInner` and
 `covDeriv` (Levi-Civita).
 
@@ -62,7 +62,7 @@ noncomputable def normalCorrection
     (ν : (x : M) → TangentSpace I x) (x : M) : ℝ :=
   metricInner x (ν x) (covDeriv ν X.toFun x)
 
-/-- **Full-form first variation** $\delta V(X)$ for a codim-1 varifold:
+/-- **Math.** **Full-form first variation** $\delta V(X)$ for a codim-1 varifold:
 $$\delta V(X) = \int (\mathrm{div}_M X - \langle \nu, \nabla_\nu X \rangle_g)\, d\|V\|.$$
 
 Requires:

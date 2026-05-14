@@ -49,7 +49,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
   [ChartedSpace H M] [IsManifold I ∞ M] [Riemannian.HasMetric I M]
 
-/-- **Outer unit normal blow-up characterization** (Maggi Theorem 15.5).
+/-- **Math.** **Outer unit normal blow-up characterization** (Maggi Theorem 15.5).
 
 `Varifold.bvGradientDirection` is the `noncomputable def` that *would*
 be characterized as the blow-up limit
@@ -70,7 +70,7 @@ theorem outerNormal_unit_on_reducedBoundary
     ‖Varifold.bvGradientDirection I Ω x‖ = 1 :=
   Varifold.bvGradientDirection_unit_on_reducedBoundary I Ω x hx
 
-/-- **Outer unit normal is well-defined on the reduced boundary**:
+/-- **Math.** **Outer unit normal is well-defined on the reduced boundary**:
 the framework's `bvGradientDirection` extends to all of $M$ but is
 characterized only on $\partial^*\Omega$. This wrapper records the
 existence in `Isoperimetric` form, mirroring Maggi Theorem 15.5. -/
@@ -85,7 +85,7 @@ end OuterNormal
 
 /-! ## Density-1/2 property (Maggi Theorem 15.9) -/
 
-/-- **Density-1/2 at reduced boundary points** (Maggi Theorem 15.9).
+/-- **Math.** **Density-1/2 at reduced boundary points** (Maggi Theorem 15.9).
 
 For a finite-perimeter set $\Omega \subseteq M$ and any point
 $x \in \partial^*\Omega$, the volume density of $\Omega$ at $x$
@@ -120,7 +120,7 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [ChartedSpace H M] [IsManifold I ∞ M]
   [Riemannian.HasMetric I M]
 
-/-- **Tangent hyperplane at reduced boundary** (Maggi Theorem 15.5).
+/-- **Math.** **Tangent hyperplane at reduced boundary** (Maggi Theorem 15.5).
 
 At every point $x$ of the reduced boundary, the tangent space to
 $\partial^*\Omega$ is the orthogonal complement of the outer unit

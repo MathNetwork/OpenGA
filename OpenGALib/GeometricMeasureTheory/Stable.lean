@@ -35,7 +35,7 @@ variable {M : Type*} [MetricSpace M] [MeasurableSpace M] [BorelSpace M]
 
 namespace Varifold
 
-/-- $V$ is **stable** (paper §4 Definition 4.1 (S2)):
+/-- **Math.** $V$ is **stable** (paper §4 Definition 4.1 (S2)):
 $\delta^2 V(\varphi, \varphi) \ge 0$ for every smooth scalar normal
 deformation $\varphi$ compactly supported away from $\mathrm{sing}\,V$.
 
@@ -60,7 +60,7 @@ def IsStable
   ∀ φ : M → ℝ, Function.support φ ⊆ (sing I V)ᶜ →
     0 ≤ Variation.secondVariationFull I V φ
 
-/-- $V$ is **unstable**: there exists a test direction with negative
+/-- **Math.** $V$ is **unstable**: there exists a test direction with negative
 second variation. -/
 def IsUnstable
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
@@ -75,7 +75,7 @@ def IsUnstable
     Function.support φ ⊆ (sing I V)ᶜ ∧
     Variation.secondVariationFull I V φ < 0
 
-/-- The **Morse index** of $V$: dimension of the negative eigenspace
+/-- **Math.** The **Morse index** of $V$: dimension of the negative eigenspace
 of the Jacobi operator (stub).
 
 **Ground truth**: Simon 1983 §49 (eigenvalue problem for the Jacobi
