@@ -104,7 +104,7 @@ Reference: <do Carmo §X / Simon §Y / Pitts §Z / etc.>
 **Removed** (avoid these in module docstrings):
 
 * `Inspired by ...` / `Adapted from ...` — attribution belongs in the project
-  `NOTICE.md` or `docs/AUDIT_PHASE_B.md` if relevant.
+  `NOTICE.md` if relevant.
 * `## Form` — use `## Main definitions` instead.
 * `## Sorry status` — `sorry`s carry per-theorem closure-path comments.
 * `## Ground truth` — replace with one-line `Reference:` per theorem.

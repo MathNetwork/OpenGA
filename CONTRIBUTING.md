@@ -37,9 +37,7 @@ merged contributions but liberally relaxable for sketches / WIP / drafts.
    `Tensor/`.
 4. **External references** — `external/` (git-ignored) contains the
    `qinz1yang/differential-geometry` reference repo we draw from.
-   See `docs/EXTERNAL_INTEGRATION_PLAN.md` for what's been re-implemented
-   here, what's planned, and what's skipped. We **re-implement** in our
-   conventions — never copy.
+   We **re-implement** in our conventions — never copy.
 
 ## PR workflow
 
@@ -87,8 +85,7 @@ mis-organized.
   (we strip on release).
 * `Inspired by <repo>` / `Adapted from <author>` attribution in
   source files — attribution belongs in commit history, not in
-  code or docstrings (we own our content per
-  `docs/EXTERNAL_INTEGRATION_PLAN.md`).
+  code or docstrings.
 * `paper §X` / project-specific cross-references in `Algebraic/`,
   `Tensor/`, `Riemannian/`, `GeometricMeasureTheory/` — these
   namespaces must be paper-agnostic; paper-specific work lives in

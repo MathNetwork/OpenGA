@@ -35,3 +35,6 @@ lake-packages/
 # never enter our git history.
 external/
 
+# Charter manifesto (kept in separate Overleaf project, not part of lib history)
+manifesto/
+
