@@ -3,6 +3,7 @@ import OpenGALib.Riemannian.Operators.Bochner.BochnerExpansion
 import OpenGALib.Riemannian.Operators.ConnectionLaplacian
 import OpenGALib.Riemannian.Util.ConnectionLaplacianSimp
 import OpenGALib.Util.MFDeriv
+import OpenGALib.Riemannian.Util.MetricInnerSmoothness
 
 /-!
 # Per-summand chain of the heart-of-Bochner identity

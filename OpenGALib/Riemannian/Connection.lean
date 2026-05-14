@@ -11,6 +11,7 @@ import OpenGALib.Riemannian.Connection.Koszul
 import OpenGALib.Riemannian.Util.CotangentFunctional
 import OpenGALib.Riemannian.Connection.RieszExtraction
 import OpenGALib.Riemannian.Util.CovDerivSmoothness
+import OpenGALib.Riemannian.Util.MetricInnerSmoothness
 import OpenGALib.Util.Attributes
 
 /-!

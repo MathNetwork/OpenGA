@@ -1,6 +1,6 @@
 import OpenGALib.Riemannian.Connection.Koszul
 import OpenGALib.Riemannian.Connection.TangentHelpers
-
+import OpenGALib.Riemannian.Util.MetricInnerSmoothness
 /-!
 # Half-Koszul cotangent functional
 

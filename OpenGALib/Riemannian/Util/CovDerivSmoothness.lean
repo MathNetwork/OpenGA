@@ -1,6 +1,7 @@
 import Mathlib.Geometry.Manifold.VectorBundle.Tensoriality
 import Mathlib.Geometry.Manifold.VectorField.LieBracket
 import OpenGALib.Riemannian.Manifold
+import OpenGALib.Riemannian.Util.MetricInnerSmoothness
 import OpenGALib.Riemannian.TangentBundle
 import OpenGALib.Riemannian.Tensor.MusicalIso
 import OpenGALib.Riemannian.Util.MfderivApplySection

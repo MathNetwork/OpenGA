@@ -12,6 +12,7 @@ import OpenGALib.Riemannian.SecondFundamentalForm
 import OpenGALib.Riemannian.Tensor.BundleSectionContinuity
 import OpenGALib.Riemannian.Util.ChartJacobianSmooth
 import OpenGALib.Riemannian.Util.ChartJacobianSmoothness
+import OpenGALib.Riemannian.Util.MetricInnerSmoothness
 import OpenGALib.Riemannian.Tensor.Defs
 import OpenGALib.Riemannian.TangentBundle
 import OpenGALib.Riemannian.Instances.EuclideanSpace

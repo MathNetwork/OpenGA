@@ -325,23 +325,12 @@ end Riesz
 
 end Riemannian.RiemannianMetric
 
-/-! ## Smoothness of the metric inner product
+/-! ## Smoothness of the metric inner product — Math headline
 
-Given a Riemannian metric `g` on `M` and two smooth tangent-bundle
-sections `Y, Z : ∀ y, TangentSpace I y`, the scalar function
-`y ↦ g_y(Y y, Z y) : M → ℝ` is smooth. Below is the full 8-variant
-parity API with Mathlib's `MDifferentiable*.inner_bundle` and
-`ContMDiff*.inner_bundle` families:
-
-* `metricInner_{mdifferentiable, mdifferentiableAt, mdifferentiableOn,
-  mdifferentiableWithinAt}` — differentiability.
-* `metricInner_{contMDiff, contMDiffAt, contMDiffOn, contMDiffWithinAt}`
-  — smoothness of any order `n ≤ ∞`.
-
-Each variant is parametric over the basepoint map `b : N → M` so the
-sections may live over a general parameter space. All variants reduce
-to Mathlib's `inner_bundle` after locally injecting a
-`Bundle.RiemannianBundle (TangentSpace I)` from `g.toRiemannianMetric`. -/
+`g_y(v(y), w(y))` is `ContMDiffWithinAt` whenever the tangent-bundle
+sections `v, w` are. The pointwise / set / global parity variants and
+the first-order `MDifferentiable*` analog family live in
+`Riemannian/Util/MetricInnerSmoothness.lean`. -/
 
 namespace Riemannian.RiemannianMetric
 
@@ -351,8 +340,6 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   {v w : ∀ x : M, TangentSpace I x} {s : Set M} {x : M}
-
-/-! ### `ContMDiff` family — smoothness order `n ≤ ∞` -/
 
 variable {n : ℕ∞ω} [hLE : ENat.LEInfty n]
 
@@ -371,89 +358,6 @@ theorem metricInner_contMDiffWithinAt
   exact ContMDiffWithinAt.inner_bundle (IB := I) (F := E)
     (E := (TangentSpace I : M → Type _)) (b := fun y => y)
     (v := v) (w := w) (IM := I) hv hw
-
-/-- **Eng.** Pointwise variant. -/
-theorem metricInner_contMDiffAt
-    (g : RiemannianMetric I M)
-    (hv : ContMDiffAt I (I.prod 𝓘(ℝ, E)) n
-      (fun y => (⟨y, v y⟩ : TangentBundle I M)) x)
-    (hw : ContMDiffAt I (I.prod 𝓘(ℝ, E)) n
-      (fun y => (⟨y, w y⟩ : TangentBundle I M)) x) :
-    ContMDiffAt I 𝓘(ℝ, ℝ) n
-      (fun y => g.metricInner y (v y) (w y)) x :=
-  g.metricInner_contMDiffWithinAt hv hw
-
-/-- **Eng.** Set-form variant. -/
-theorem metricInner_contMDiffOn
-    (g : RiemannianMetric I M)
-    (hv : ContMDiffOn I (I.prod 𝓘(ℝ, E)) n
-      (fun y => (⟨y, v y⟩ : TangentBundle I M)) s)
-    (hw : ContMDiffOn I (I.prod 𝓘(ℝ, E)) n
-      (fun y => (⟨y, w y⟩ : TangentBundle I M)) s) :
-    ContMDiffOn I 𝓘(ℝ, ℝ) n
-      (fun y => g.metricInner y (v y) (w y)) s :=
-  fun y hy => g.metricInner_contMDiffWithinAt (hv y hy) (hw y hy)
-
-/-- **Eng.** Global variant. -/
-theorem metricInner_contMDiff
-    (g : RiemannianMetric I M)
-    (hv : ContMDiff I (I.prod 𝓘(ℝ, E)) n
-      (fun y => (⟨y, v y⟩ : TangentBundle I M)))
-    (hw : ContMDiff I (I.prod 𝓘(ℝ, E)) n
-      (fun y => (⟨y, w y⟩ : TangentBundle I M))) :
-    ContMDiff I 𝓘(ℝ, ℝ) n
-      (fun y => g.metricInner y (v y) (w y)) :=
-  fun y => g.metricInner_contMDiffAt (hv y) (hw y)
-
-/-! ### `MDifferentiable` family — first-order differentiability -/
-
-/-- **Eng.** Differentiable-within-at variant. -/
-theorem metricInner_mdifferentiableWithinAt
-    (g : RiemannianMetric I M)
-    (hv : MDifferentiableWithinAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, v y⟩ : TangentBundle I M)) s x)
-    (hw : MDifferentiableWithinAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, w y⟩ : TangentBundle I M)) s x) :
-    MDifferentiableWithinAt I 𝓘(ℝ, ℝ)
-      (fun y => g.metricInner y (v y) (w y)) s x := by
-  letI rb : Bundle.RiemannianBundle (TangentSpace I : M → Type _) :=
-    ⟨g.toRiemannianMetric⟩
-  exact MDifferentiableWithinAt.inner_bundle (IB := I) (F := E)
-    (E := (TangentSpace I : M → Type _)) (b := fun y => y)
-    (v := v) (w := w) (IM := I) hv hw
-
-/-- **Eng.** Pointwise differentiability. -/
-theorem metricInner_mdifferentiableAt
-    (g : RiemannianMetric I M)
-    (hv : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, v y⟩ : TangentBundle I M)) x)
-    (hw : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, w y⟩ : TangentBundle I M)) x) :
-    MDifferentiableAt I 𝓘(ℝ, ℝ)
-      (fun y => g.metricInner y (v y) (w y)) x :=
-  g.metricInner_mdifferentiableWithinAt hv hw
-
-/-- **Eng.** Set-form differentiability. -/
-theorem metricInner_mdifferentiableOn
-    (g : RiemannianMetric I M)
-    (hv : MDifferentiableOn I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, v y⟩ : TangentBundle I M)) s)
-    (hw : MDifferentiableOn I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, w y⟩ : TangentBundle I M)) s) :
-    MDifferentiableOn I 𝓘(ℝ, ℝ)
-      (fun y => g.metricInner y (v y) (w y)) s :=
-  fun y hy => g.metricInner_mdifferentiableWithinAt (hv y hy) (hw y hy)
-
-/-- **Eng.** Global differentiability. -/
-theorem metricInner_mdifferentiable
-    (g : RiemannianMetric I M)
-    (hv : MDifferentiable I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, v y⟩ : TangentBundle I M)))
-    (hw : MDifferentiable I (I.prod 𝓘(ℝ, E))
-      (fun y => (⟨y, w y⟩ : TangentBundle I M))) :
-    MDifferentiable I 𝓘(ℝ, ℝ)
-      (fun y => g.metricInner y (v y) (w y)) :=
-  fun y => g.metricInner_mdifferentiableAt (hv y) (hw y)
 
 end Smoothness
 

@@ -6,6 +6,7 @@ import OpenGALib.Riemannian.Curvature.Tensoriality
 import OpenGALib.Riemannian.Gradient
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.Smoothness
+import OpenGALib.Riemannian.Util.MetricInnerSmoothness
 import OpenGALib.Util.Notation
 import Mathlib.Analysis.InnerProductSpace.Trace
 

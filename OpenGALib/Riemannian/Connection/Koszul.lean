@@ -3,7 +3,7 @@ import Mathlib.Geometry.Manifold.VectorBundle.Tensoriality
 import Mathlib.Geometry.Manifold.VectorField.LieBracket
 import OpenGALib.Riemannian.Manifold
 import OpenGALib.Riemannian.TangentBundle
-
+import OpenGALib.Riemannian.Util.MetricInnerSmoothness
 /-!
 # Koszul functional and its algebraic identities
 

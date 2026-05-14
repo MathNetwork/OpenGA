@@ -2,6 +2,7 @@ import OpenGALib.Riemannian.Connection
 import OpenGALib.Riemannian.Connection
 import OpenGALib.Riemannian.TangentBundle
 import OpenGALib.Riemannian.HessianLie
+import OpenGALib.Riemannian.Util.MetricInnerSmoothness
 -- `Riem(X, Y) Z` notation is now defined inline in `Connection.lean`
 -- alongside `riemannCurvature`; it transitively reaches us via the
 -- `import OpenGALib.Riemannian.Connection` above.
