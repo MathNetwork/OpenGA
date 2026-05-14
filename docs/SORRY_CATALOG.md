@@ -23,12 +23,12 @@ This catalog covers `Algebraic`, `Tensor`, `Riemannian`, and
 |--------|-----------|------------------|-------|
 | Algebraic | 5 | 0 | 5 |
 | Tensor | 9 | 0 | 9 |
-| Riemannian | 0 | 0 | 0 |
+| Riemannian | 1 | 0 | 1 |
 | GeometricMeasureTheory | 5 | 10 | 15 |
-| **Total** | **19** | **10** | **29** |
+| **Total** | **20** | **10** | **30** |
 
-CI workflow `.github/workflows/ci.yml` asserts the total equals 29
-(`EXPECTED=29`).
+CI workflow `.github/workflows/ci.yml` asserts the total equals 30
+(`EXPECTED=30`).
 
 ## Algebraic (5)
 
@@ -54,17 +54,14 @@ CI workflow `.github/workflows/ci.yml` asserts the total equals 29
 | `DifferentialForm/Basic.lean:326` | `pullback_ederiv` (outer) | PRE-PAPER | Outer goal of same proof. |
 | `Product/Pretrivialization.lean:281` | `tensorProductCoordChange_contMDiffOn` | PRE-PAPER | Bundle pretrivialization plumbing; Mathlib gap on tensor-product bundle smoothness. |
 
-## Riemannian (0)
+## Riemannian (1)
 
-All Riemannian sorrys closed as of commit `de19ee7` (Bochner stack
-fully unconditional). The closure path went through
-`Riemannian/Tensor/MusicalIso.lean` (chart-Gram-matrix machinery +
-`metricRiesz_section_contMDiffAt[_of_within]` framework primitive),
-which retired `manifoldGradient_smooth_of_smooth` (Gradient.lean) and
-`koszulCovDeriv_smoothVF_smoothAt` (Connection.lean). The earlier
-`sum_inner_secondCovDerivAt_grad_eq_inner_grad_laplacian_add_ricci`
-helper was retired by the section-form Bochner refactor (commit
-`16e24c1`).
+| File:line | Identifier | Classification | Notes |
+|-----------|-----------|---------------|-------|
+| `Connection.lean:956` | `bianchi_second` | PRE-PAPER | Differential Bianchi identity $(\nabla_X R)(Y,Z) W + \text{cyclic} = 0$. Statement-only commit (`a08f02a`). Repair plan (in docstring): expand `riemannCurvature_commutator_form`, distribute `covDeriv_sub_field` to 12 cov-deriv-of-cov-deriv terms, group into 6 pairs via torsion-freeness, close via `bianchi_first` + `SmoothVectorField.mlieBracket_jacobi`. Infrastructure in place; estimated 80-120 LOC. |
+
+The Bochner stack (closed via commit `de19ee7`) remains unconditional;
+this is a *new* statement-only addition. Closure path documented above.
 
 ## GeometricMeasureTheory (15)
 
