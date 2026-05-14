@@ -142,7 +142,7 @@ $$\tfrac{1}{2}\,\Delta_g \, |\nabla f|_g^2 \;=\;
 Combines `hessian_gradientNormSq_apply_chartFrame` summed over
 `stdOrthonormalBasis`, the trace identity for `connectionLaplacian`, and
 `OrthonormalBasis.sum_sq_inner_left` for Frobenius². -/
-theorem leibniz_trace_reduction
+theorem bochner_leibniz_trace_reduction
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
     (1 / 2 : ℝ) * (Δ_g[I] ‖grad_g[I] f‖²_g) x

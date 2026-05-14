@@ -12,14 +12,14 @@ import Mathlib.Analysis.InnerProductSpace.Trace
 /-!
 # Bochner anchor — Hessian expansion of `|∇f|²`
 
-Helpers for `leibniz_trace_reduction` (intermediate E of the
+Helpers for `bochner_leibniz_trace_reduction` (intermediate E of the
 Bochner–Weitzenböck identity). The first-order identity
 $\mathrm{d}(|\nabla f|_g^2)\,v = 2\,\langle \nabla_v \nabla f, \nabla f\rangle_g$
 and its second-order specialisations to chart-frame constant lifts and
 to smooth vector fields.
 
 Anchor `Bochner.lean` imports this file and feeds the Hessian expansion
-into `leibniz_trace_reduction`, which combines with the Ricci-identity
+into `bochner_leibniz_trace_reduction`, which combines with the Ricci-identity
 chain (`Bochner/BochnerExpansion.lean`) to give the final identity.
 -/
 

@@ -227,7 +227,7 @@ Bridges the framework's `metricInner ∘ covDerivAt ∘ ∇g` form (the
 via metric-compatibility on $(X, \nabla g, Y)$ plus gradient duality
 `manifoldGradient_inner_eq`.
 
-**Used by**: `OpenGALib.Riemannian.Operators.Bochner` (`leibniz_trace_reduction`,
+**Used by**: `OpenGALib.Riemannian.Operators.Bochner` (`bochner_leibniz_trace_reduction`,
 which applies this for $g = |\nabla f|_g^2$ and $X = Y =$ chart-frame
 constants $\varepsilon_i$). -/
 theorem hessian_eq_mDirDeriv_iterate_sub_chris

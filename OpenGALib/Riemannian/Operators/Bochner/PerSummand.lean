@@ -575,7 +575,7 @@ $$\tfrac{1}{2}\,\Delta_g\,|\nabla f|_g^2
   = |\nabla^2 f|_g^2
     + \langle \nabla f, \nabla\,\Delta_g f\rangle_g
     + \mathrm{Ric}(\nabla f, \nabla f).$$
-Combines `leibniz_trace_reduction` and
+Combines `bochner_leibniz_trace_reduction` and
 `connectionLaplacian_grad_eq_grad_laplacian_add_ricci`.
 
 Reference: Petersen Ch. 7 §1 Prop 33; do Carmo §6; Schoen–Simon 1981 §1. -/
@@ -586,7 +586,7 @@ theorem bochner_weitzenboeck
       ‖hess_g[I] f‖²_g x
       + ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
       + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
-  rw [leibniz_trace_reduction f hf x,
+  rw [bochner_leibniz_trace_reduction f hf x,
       connectionLaplacian_grad_eq_grad_laplacian_add_ricci f hf x]
   abel
 
