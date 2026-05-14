@@ -112,9 +112,9 @@ theorem metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym
         (manifoldGradient (I := I) f) x v z) w := by
   classical
   -- Constant lifts of v, w, z at x.
-  set V : Π y : M, TangentSpace I y := fun _ => (v : TangentSpace I x) with hV_def
-  set W : Π y : M, TangentSpace I y := fun _ => (w : TangentSpace I x) with hW_def
-  set Z : Π y : M, TangentSpace I y := fun _ => (z : TangentSpace I x) with hZ_def
+  set V : VectorFieldSection I M := fun _ => (v : TangentSpace I x) with hV_def
+  set W : VectorFieldSection I M := fun _ => (w : TangentSpace I x) with hW_def
+  set Z : VectorFieldSection I M := fun _ => (z : TangentSpace I x) with hZ_def
   have hVsm : TangentSmoothAt V x :=
     (SmoothVectorField.const (I := I) (M := M) (v : E)).smoothAt x
   have hWsm : TangentSmoothAt W x :=
@@ -262,7 +262,7 @@ $\mathrm{Hess}\,f\,(X(y), Y(y))(y) = \mathrm{Hess}\,f\,(Y(y), X(y))(y)$. -/
 theorem hessianBilin_section_eventually_symm_of_strict_interior
     [IsManifold I 2 M]
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
-    (X Y : Π y : M, TangentSpace I y) (x : M) :
+    (X Y : VectorFieldSection I M) (x : M) :
     (fun y : M => hessianBilin (I := I) f y (X y) (Y y))
       =ᶠ[𝓝 x] (fun y : M => hessianBilin (I := I) f y (Y y) (X y)) := by
   have h_strict : extChartAt I x x ∈ interior (Set.range I) := by
@@ -315,7 +315,7 @@ $- \langle \nabla f, R(B, w) B\rangle_g$ at $x$.
 The hypothesis is the polarisation of `riemannCurvature_inner_self_zero`. -/
 theorem heart_of_bochner_curvature_term
     (f : M → ℝ)
-    {B w : Π b : M, TangentSpace I b} {x : M}
+    {B w : VectorFieldSection I M} {x : M}
     (h_metric_skew : metricInner x
         (riemannCurvature B w (manifoldGradient (I := I) f) x) (B x)
       + metricInner x (manifoldGradient (I := I) f x)

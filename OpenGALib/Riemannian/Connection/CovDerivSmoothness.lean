@@ -50,8 +50,8 @@ otherwise. Required because Mathlib's `TensorialAt` quantifies over all
 sections, not just smooth ones. -/
 noncomputable def koszulCovDerivAux
     [IsLocallyConstantChartedSpace H M]
-    (Y : Π y : M, TangentSpace I y) (x : M) (hY : TangentSmoothAt Y x)
-    (X : Π y : M, TangentSpace I y) : TangentSpace I x := by
+    (Y : VectorFieldSection I M) (x : M) (hY : TangentSmoothAt Y x)
+    (X : VectorFieldSection I M) : TangentSpace I x := by
   classical
   exact if hX : TangentSmoothAt X x then koszulCovDeriv X Y x hX hY else 0
 
@@ -63,7 +63,7 @@ argument. Math: $\nabla_\cdot Y$ is $C^\infty(M)$-linear in $X$ (`koszul_smul_le
 through `metricInner_eq_iff_eq` against extended test vectors. -/
 theorem koszulCovDerivAux_tensorialAt
     [IsLocallyConstantChartedSpace H M]
-    (Y : Π y : M, TangentSpace I y) (x : M) (hY : TangentSmoothAt Y x) :
+    (Y : VectorFieldSection I M) (x : M) (hY : TangentSmoothAt Y x) :
     TensorialAt I E (koszulCovDerivAux Y x hY) x where
   smul := by
     intro f X hf hX_raw
@@ -74,7 +74,7 @@ theorem koszulCovDerivAux_tensorialAt
     simp only [koszulCovDerivAux, dif_pos hX, dif_pos h_fX]
     apply (metricInner_eq_iff_eq x _ _).mp
     intro Z₀
-    set Z : Π y : M, TangentSpace I y := FiberBundle.extend E Z₀
+    set Z : VectorFieldSection I M := FiberBundle.extend E Z₀
     have hZ_smooth : TangentSmoothAt Z x :=
       FiberBundle.mdifferentiableAt_extend I E Z₀
     have hZx : Z x = Z₀ := FiberBundle.extend_apply_self _ _
@@ -100,7 +100,7 @@ theorem koszulCovDerivAux_tensorialAt
     simp only [koszulCovDerivAux, dif_pos hX, dif_pos hX', dif_pos h_sum]
     apply (metricInner_eq_iff_eq x _ _).mp
     intro Z₀
-    set Z : Π y : M, TangentSpace I y := FiberBundle.extend E Z₀
+    set Z : VectorFieldSection I M := FiberBundle.extend E Z₀
     have hZ_smooth : TangentSmoothAt Z x :=
       FiberBundle.mdifferentiableAt_extend I E Z₀
     have hZx : Z x = Z₀ := FiberBundle.extend_apply_self _ _
@@ -149,7 +149,7 @@ theorem koszulCovDeriv_smoothVF_smoothAt
     intro y
     refine metricRiesz_unique y _ (Φ y) ?_
     intro W
-    set V : Π z : M, TangentSpace I z := FiberBundle.extend E W
+    set V : VectorFieldSection I M := FiberBundle.extend E W
     have hV_smooth : TangentSmoothAt V y :=
       FiberBundle.mdifferentiableAt_extend I E W
     have hVy : V y = W := FiberBundle.extend_apply_self _ _
@@ -174,9 +174,9 @@ theorem koszulCovDeriv_smoothVF_smoothAt
   -- Step 3: per-j ContMDiffWithinAt for `y ↦ Φ y (chartBasisVecFiber x j y)` at `x`.
   intro j
   obtain ⟨bump⟩ : Nonempty (SmoothBumpFunction I x) := inferInstance
-  set chartBV : Π y : M, TangentSpace I y :=
+  set chartBV : VectorFieldSection I M :=
     fun y => Riemannian.Tensor.chartBasisVecFiber (I := I) x j y with hchartBV_def
-  set Ztilde : Π y : M, TangentSpace I y := fun y => bump y • chartBV y with hZtilde_def
+  set Ztilde : VectorFieldSection I M := fun y => bump y • chartBV y with hZtilde_def
   have htsupp : tsupport bump ⊆ (chartAt H x).source :=
     bump.tsupport_subset_chartAt_source
   have htriv_base : (trivializationAt E (TangentSpace I) x).baseSet =

@@ -73,9 +73,9 @@ theorem bochner_per_summand_swap
   let gradF : SmoothVectorField I M :=
     { toFun := manifoldGradient (I := I) f, smooth := h_grad }
   -- Smoothness sections used downstream.
-  set Q : Π y : M, TangentSpace I y :=
+  set Q : VectorFieldSection I M :=
     fun y => covDeriv B.toFun gradF.toFun y with hQ_def
-  set P : Π y : M, TangentSpace I y :=
+  set P : VectorFieldSection I M :=
     fun y => covDeriv W.toFun gradF.toFun y with hP_def
   have hQ_smooth : ∀ y, TangentSmoothAt Q y :=
     fun y => covDeriv_smoothVF_smoothAt B gradF y
@@ -319,7 +319,7 @@ theorem bochner_per_summand_assembled
   -- Wrap ∇f as SmoothVectorField.
   let gradF : SmoothVectorField I M :=
     { toFun := manifoldGradient (I := I) f, smooth := h_grad }
-  set Q : Π y : M, TangentSpace I y :=
+  set Q : VectorFieldSection I M :=
     fun y => covDeriv B.toFun gradF.toFun y with hQ_def
   -- Step 1: chain `bochner_per_summand_swap` + `bochner_per_summand_riemann_form`.
   -- Get LHS = R-term + g(LC Q x (W x), B x) - g(LC Gf x (LC B x (W x))) (B x).

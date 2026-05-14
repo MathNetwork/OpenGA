@@ -42,10 +42,10 @@ Closed via `TensorialAt.mkHom` on `koszulFunctional_tensorialAt`.
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 existence proof, Step 3. -/
 theorem koszulLinearFunctional_exists
     [IsLocallyConstantChartedSpace H M]
-    (X Y : Π x : M, TangentSpace I x) (x : M)
+    (X Y : VectorFieldSection I M) (x : M)
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x) :
     ∃ φ : (TangentSpace I x) →L[ℝ] ℝ,
-      ∀ Z : Π y : M, TangentSpace I y,
+      ∀ Z : VectorFieldSection I M,
         TangentSmoothAt Z x →
         φ (Z x) = (1/2 : ℝ) * koszulFunctional X Y Z x := by
   refine ⟨TensorialAt.mkHom _ x (koszulFunctional_tensorialAt X Y x hX hY),
@@ -59,9 +59,9 @@ $\langle v, Z(x)\rangle = \tfrac12 K(X, Y; Z)(x)$ for all smooth $Z$.
 The Levi-Civita value $\nabla_X Y(x)$. -/
 theorem koszulCovDeriv_exists
     [IsLocallyConstantChartedSpace H M]
-    (X Y : Π x : M, TangentSpace I x) (x : M)
+    (X Y : VectorFieldSection I M) (x : M)
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x) :
-    ∃ v : TangentSpace I x, ∀ Z : Π y : M, TangentSpace I y,
+    ∃ v : TangentSpace I x, ∀ Z : VectorFieldSection I M,
       TangentSmoothAt Z x →
       metricInner x v (Z x) = (1/2 : ℝ) * koszulFunctional X Y Z x := by
   obtain ⟨φ, hφ⟩ := koszulLinearFunctional_exists X Y x hX hY
@@ -76,7 +76,7 @@ for all smooth $Z$, extracted via Riesz over the framework-owned
 `metricInner`. -/
 noncomputable def koszulCovDeriv
     [IsLocallyConstantChartedSpace H M]
-    (X Y : Π x : M, TangentSpace I x) (x : M)
+    (X Y : VectorFieldSection I M) (x : M)
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x) : TangentSpace I x :=
   Classical.choose (koszulCovDeriv_exists X Y x hX hY)
 
@@ -87,7 +87,7 @@ $\langle \nabla_X Y(x), Z(x)\rangle = \tfrac12 K(X, Y; Z)(x)$ for smooth
 $X, Y, Z$, with `metricInner` as the framework-owned inner product. -/
 theorem koszulCovDeriv_inner_eq
     [IsLocallyConstantChartedSpace H M]
-    (X Y Z : Π x : M, TangentSpace I x) (x : M)
+    (X Y Z : VectorFieldSection I M) (x : M)
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x)
     (hZ : TangentSmoothAt Z x) :
     metricInner x (koszulCovDeriv X Y x hX hY) (Z x)

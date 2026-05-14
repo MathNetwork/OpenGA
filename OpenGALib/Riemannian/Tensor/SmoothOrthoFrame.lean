@@ -84,7 +84,7 @@ by the chart-frame normalised Gram-Schmidt step. -/
 noncomputable def smoothOrthoFrame
     (g : RiemannianMetric I M) (α : M)
     (i : Fin (Module.finrank ℝ E)) :
-    Π b : M, TangentSpace I b :=
+    VectorFieldSection I M :=
   fun b => (chartBumpAt (I := I) (M := M) α : M → ℝ) b •
     chartFrameNorm (I := I) g α i b
 

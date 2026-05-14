@@ -119,13 +119,13 @@ theorem riemannCurvature_smul_third_scalar_field
   rw [riemannCurvature_def, riemannCurvature_def, h_inner_Y, h_inner_X]
   -- Pointwise sums need to be split into Π-add form for `covDeriv_add_field`.
   -- The two summands as separate Π-sections.
-  set g1Y : Π y : M, TangentSpace I y :=
+  set g1Y : VectorFieldSection I M :=
     fun y => f y • covDeriv Y.toFun Z.toFun y with hg1Y_def
-  set g2Y : Π y : M, TangentSpace I y :=
+  set g2Y : VectorFieldSection I M :=
     fun y => Yf y • Z.toFun y with hg2Y_def
-  set g1X : Π y : M, TangentSpace I y :=
+  set g1X : VectorFieldSection I M :=
     fun y => f y • covDeriv X.toFun Z.toFun y with hg1X_def
-  set g2X : Π y : M, TangentSpace I y :=
+  set g2X : VectorFieldSection I M :=
     fun y => Xf y • Z.toFun y with hg2X_def
   -- Convert `fun y => g1Y y + g2Y y` to Π-add `g1Y + g2Y` definitionally.
   have h_pi_addY : (fun y : M => g1Y y + g2Y y) = g1Y + g2Y := rfl
@@ -406,7 +406,7 @@ theorem riemannCurvature_eq_zero_of_Z_eq_zero_field
     -- Identify `fun _ : M => (0 : TangentSpace I _)` with the zero global section.
     show riemannCurvature X.toFun Y.toFun (fun _ : M => (0 : TangentSpace I _)) x = 0
     -- Each `covDeriv U (fun _ => 0)` is the zero section pointwise.
-    have h_zero_outer : ∀ U V : Π b : M, TangentSpace I b,
+    have h_zero_outer : ∀ U V : VectorFieldSection I M,
         covDeriv U (fun y : M =>
           covDeriv V (fun _ : M => (0 : TangentSpace I _)) y) x = 0 := by
       intro U V
@@ -799,7 +799,7 @@ theorem riemannCurvature_eq_zero_of_X_eq_zero_field
     rw [riemannCurvature_def]
     -- The zero-section identification (Pi-zero).
     have h_zero_pi :
-        (fun _ : M => (0 : TangentSpace I _)) = (0 : Π b : M, TangentSpace I b) := rfl
+        (fun _ : M => (0 : TangentSpace I _)) = (0 : VectorFieldSection I M) := rfl
     -- T1: outer cov at direction `0` = `0` (map_zero of continuous linear map in direction).
     have hT1 : covDeriv (fun _ : M => (0 : TangentSpace I _))
                 (fun y => covDeriv Y.toFun Z.toFun y) x = 0 := by

@@ -42,7 +42,7 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteS
 
 /-- **Math.** $A(X, Y)(x) = \langle \nabla^M_X Y(x),\, \nu(x)\rangle$. -/
 noncomputable def secondFundamentalFormScalar
-    (ν X Y : Π x : M, TangentSpace I x) (x : M) : ℝ :=
+    (ν X Y : VectorFieldSection I M) (x : M) : ℝ :=
   metricInner x (covDeriv X Y x) (ν x)
 
 /-- **Math.** Notation `II(X, Y)` for the codim-1 second fundamental form
@@ -55,7 +55,7 @@ set_option backward.isDefEq.respectTransparency false in
 orthonormal basis of `TangentSpace I x`. Basis-independent for
 orthonormal frames. -/
 noncomputable def secondFundamentalFormSqNorm
-    (ν : Π x : M, TangentSpace I x) (x : M) : ℝ :=
+    (ν : VectorFieldSection I M) (x : M) : ℝ :=
   let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
     stdOrthonormalBasis ℝ (TangentSpace I x)
   ∑ i, ∑ j, (secondFundamentalFormScalar (I := I) (M := M) ν
@@ -64,7 +64,7 @@ noncomputable def secondFundamentalFormSqNorm
 
 @[simp]
 theorem secondFundamentalFormSqNorm_nonneg
-    (ν : Π x : M, TangentSpace I x) (x : M) :
+    (ν : VectorFieldSection I M) (x : M) :
     0 ≤ secondFundamentalFormSqNorm ν x := by
   unfold secondFundamentalFormSqNorm
   positivity
@@ -72,7 +72,7 @@ theorem secondFundamentalFormSqNorm_nonneg
 set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** $H(x) = \mathrm{tr}_g A(x) = \sum_i A(e_i, e_i)(x)$. -/
 noncomputable def meanCurvature
-    (ν : Π x : M, TangentSpace I x) (x : M) : ℝ :=
+    (ν : VectorFieldSection I M) (x : M) : ℝ :=
   let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
     stdOrthonormalBasis ℝ (TangentSpace I x)
   ∑ i, secondFundamentalFormScalar (I := I) (M := M) ν

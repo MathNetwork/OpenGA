@@ -231,7 +231,7 @@ private theorem mDirDeriv_chart_compose_apply
 variable [IsManifold I 1 M]
 
 private theorem MDifferentiableAt_of_tangent_bundle_section
-    (V : Π y : M, TangentSpace I y) {x : M}
+    (V : VectorFieldSection I M) {x : M}
     (hV : MDifferentiableAt I (I.prod 𝓘(ℝ, E_M))
           (fun y => (⟨y, V y⟩ : TotalSpace E_M (TangentSpace I))) x) :
     MDifferentiableAt I 𝓘(ℝ, E_M) V x := by
@@ -259,7 +259,7 @@ private theorem MDifferentiableAt_of_tangent_bundle_section
   exact hV_chart.congr_of_eventuallyEq h_eq.symm
 
 private theorem DifferentiableWithinAt_chart_pullback_of_section
-    (V : Π y : M, TangentSpace I y) (x : M)
+    (V : VectorFieldSection I M) (x : M)
     (hV : MDifferentiableAt I (I.prod 𝓘(ℝ, E_M))
           (fun y => (⟨y, V y⟩ : TotalSpace E_M (TangentSpace I))) x) :
     DifferentiableWithinAt ℝ (fun e => V ((extChartAt I x).symm e))
@@ -273,7 +273,7 @@ private theorem DifferentiableWithinAt_chart_pullback_of_section
 
 omit [IsManifold I 1 M] in
 private theorem mfderiv_inner_eq_fderivWithin_eventually
-    {f : M → F} {V : Π y : M, TangentSpace I y} {x : M}
+    {f : M → F} {V : VectorFieldSection I M} {x : M}
     (hf_nbhd : ∀ᶠ y in 𝓝 x, MDifferentiableAt I 𝓘(ℝ, F) f y) :
     (fun y => mfderiv I 𝓘(ℝ, F) f y (V y))
     =ᶠ[𝓝 x] (fun y => fderivWithin ℝ (f ∘ (extChartAt I x).symm) (Set.range I)
@@ -296,7 +296,7 @@ private theorem mfderiv_inner_eq_fderivWithin_eventually
   rw [hy_ext]
 
 private theorem mpullbackWithin_extChartAt_symm_eq_eventually
-    (V : Π y : M, TangentSpace I y) (x : M) :
+    (V : VectorFieldSection I M) (x : M) :
     mpullbackWithin 𝓘(ℝ, E_M) I (extChartAt I x).symm V (Set.range I)
     =ᶠ[𝓝[Set.range I] (extChartAt I x x)]
     fun e => V ((extChartAt I x).symm e) := by
@@ -312,7 +312,7 @@ private theorem mpullbackWithin_extChartAt_symm_eq_eventually
   rfl
 
 private theorem mlieBracket_eq_lieBracketWithin_chart_pullback
-    (V W : Π y : M, TangentSpace I y) (x : M) :
+    (V W : VectorFieldSection I M) (x : M) :
     mlieBracket I V W x
     = lieBracketWithin ℝ (fun e => V ((extChartAt I x).symm e))
         (fun e => W ((extChartAt I x).symm e)) (Set.range I) (extChartAt I x x) := by
@@ -347,7 +347,7 @@ Lie bracket. Requires $f$ of class $C^2$, $V, W$ of class $C^1$, and
 $\mathrm{chart}\, x$ in the closure of the interior of $\mathrm{range}\, I$. -/
 theorem mfderiv_iterate_sub_eq_mlieBracket_apply
     [IsManifold I 2 M]
-    (f : M → F) (V W : Π y : M, TangentSpace I y) (x : M)
+    (f : M → F) (V W : VectorFieldSection I M) (x : M)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
     (hf : ContMDiffAt I 𝓘(ℝ, F) 2 f x)
     (hV : ContMDiffAt I (I.prod 𝓘(ℝ, E_M)) 1
@@ -392,7 +392,7 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
   have h_inner_V := mfderiv_inner_eq_fderivWithin_eventually (V := V) (f := f) hf_nbhd
   rw [Filter.EventuallyEq.mfderiv_eq h_inner_W,
       Filter.EventuallyEq.mfderiv_eq h_inner_V]
-  have h_outer (V_aux : Π y : M, TangentSpace I y) :
+  have h_outer (V_aux : VectorFieldSection I M) :
       (fun y => fderivWithin ℝ f_loc s (phi y) (V_aux y))
       =ᶠ[𝓝 x] (fun y => fderivWithin ℝ f_loc s (phi y)
         (V_aux ((extChartAt I x).symm (phi y)))) := by
@@ -415,7 +415,7 @@ theorem mfderiv_iterate_sub_eq_mlieBracket_apply
     h_fderiv_f_loc_diff.clm_apply h_V_loc_diff
   rw [mDirDeriv_chart_compose_apply x _ h_g_chart_W_diff (V x),
       mDirDeriv_chart_compose_apply x _ h_g_chart_V_diff (W x)]
-  have h_VW_at_x (V_aux : Π y : M, TangentSpace I y) :
+  have h_VW_at_x (V_aux : VectorFieldSection I M) :
       V_aux x = (fun e => V_aux ((extChartAt I x).symm e)) (phi x) := by
     show V_aux x = V_aux ((extChartAt I x).symm (phi x))
     rw [(extChartAt I x).left_inv (mem_extChartAt_source x)]

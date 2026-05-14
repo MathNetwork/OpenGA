@@ -51,7 +51,7 @@ $C^\infty$ tangent-bundle sections is a $C^\infty$ scalar function on
 the same set `s ⊆ M`. -/
 private lemma g_inner_contMDiffOn_of_sections
     (g : RiemannianMetric I M)
-    {Y Z : Π b : M, TangentSpace I b} {s : Set M}
+    {Y Z : VectorFieldSection I M} {s : Set M}
     (hY : ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞ (T% Y) s)
     (hZ : ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞ (T% Z) s) :
     ContMDiffOn I 𝓘(ℝ) ∞ (fun b : M => g.inner b (Y b) (Z b)) s := by
@@ -94,7 +94,7 @@ case under default `maxHeartbeats`, replacing the external $20\times$
 bump on the inlined induction. -/
 private lemma chartFrame_normalise_section_contMDiffOn
     (g : RiemannianMetric I M)
-    {Y : Π b : M, TangentSpace I b} {s : Set M}
+    {Y : VectorFieldSection I M} {s : Set M}
     (hY : ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞ (T% Y) s)
     (hY_ne : ∀ b ∈ s, Y b ≠ 0) :
     ContMDiffOn I (I.prod 𝓘(ℝ, E)) ∞

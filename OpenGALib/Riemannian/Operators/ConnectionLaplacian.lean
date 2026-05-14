@@ -55,13 +55,13 @@ Christoffel-correction term uses the chart-frame extension of $w$. The
 connection Laplacian is the metric trace,
 $\Delta_\nabla Z = \sum_i (\nabla^2 Z)(\varepsilon_i, \varepsilon_i)$. -/
 noncomputable def secondCovDerivAt
-    (Z : Π x : M, TangentSpace I x) (x : M)
+    (Z : VectorFieldSection I M) (x : M)
     (v w : TangentSpace I x) : TangentSpace I x :=
   covDerivAt (fun y : M => covDerivAt Z y (w : TangentSpace I x)) x v
     - covDerivAt Z x (covDerivAt (fun _ : M => (w : TangentSpace I x)) x v)
 
 @[simp] lemma secondCovDerivAt_def
-    (Z : Π x : M, TangentSpace I x) (x : M)
+    (Z : VectorFieldSection I M) (x : M)
     (v w : TangentSpace I x) :
     secondCovDerivAt (I := I) (M := M) Z x v w =
       covDerivAt (fun y : M => covDerivAt Z y (w : TangentSpace I x)) x v
@@ -72,7 +72,7 @@ noncomputable def secondCovDerivAt
 /-- **Math.** $(\nabla^2 Z)(0, w) = 0$. Pure continuous linear map linearity in the outer
 direction slot. -/
 @[simp] theorem secondCovDerivAt_zero_left
-    (Z : Π x : M, TangentSpace I x) (x : M) (w : TangentSpace I x) :
+    (Z : VectorFieldSection I M) (x : M) (w : TangentSpace I x) :
     secondCovDerivAt (I := I) (M := M) Z x 0 w = 0 := by
   unfold secondCovDerivAt
   rw [(covDerivAt (fun y : M => covDerivAt Z y w) x).map_zero,
@@ -82,7 +82,7 @@ direction slot. -/
 
 /-- **Math.** $(\nabla^2 Z)(v_1 + v_2, w) = (\nabla^2 Z)(v_1, w) + (\nabla^2 Z)(v_2, w)$. -/
 theorem secondCovDerivAt_add_left
-    (Z : Π x : M, TangentSpace I x) (x : M) (v₁ v₂ w : TangentSpace I x) :
+    (Z : VectorFieldSection I M) (x : M) (v₁ v₂ w : TangentSpace I x) :
     secondCovDerivAt (I := I) (M := M) Z x (v₁ + v₂) w =
       secondCovDerivAt Z x v₁ w + secondCovDerivAt Z x v₂ w := by
   unfold secondCovDerivAt
@@ -93,7 +93,7 @@ theorem secondCovDerivAt_add_left
 
 /-- **Math.** $(\nabla^2 Z)(c \cdot v, w) = c \cdot (\nabla^2 Z)(v, w)$. -/
 theorem secondCovDerivAt_smul_left
-    (Z : Π x : M, TangentSpace I x) (x : M)
+    (Z : VectorFieldSection I M) (x : M)
     (c : ℝ) (v w : TangentSpace I x) :
     secondCovDerivAt (I := I) (M := M) Z x (c • v) w =
       c • secondCovDerivAt Z x v w := by
@@ -124,7 +124,7 @@ sections are smooth at $x$ — including the heart-of-Bochner setting. -/
 constant direction $w$. Pure continuous linear map additivity, no smoothness needed:
 $\nabla_y$ is a continuous linear map in its second arg, so the sum splits pointwise. -/
 private lemma covDerivAt_const_dir_section_add
-    (Z : Π x : M, TangentSpace I x) (x : M) (w₁ w₂ : TangentSpace I x) :
+    (Z : VectorFieldSection I M) (x : M) (w₁ w₂ : TangentSpace I x) :
     (fun y : M => covDerivAt Z y (w₁ + w₂))
       = (fun y : M => covDerivAt Z y w₁) + (fun y : M => covDerivAt Z y w₂) := by
   funext y
@@ -133,7 +133,7 @@ private lemma covDerivAt_const_dir_section_add
 /-- **Eng.** Pi-level scalar multiplication of the section
 `y ↦ covDerivAt Z y w` in the constant direction $w$. -/
 private lemma covDerivAt_const_dir_section_smul
-    (Z : Π x : M, TangentSpace I x) (x : M) (c : ℝ) (w : TangentSpace I x) :
+    (Z : VectorFieldSection I M) (x : M) (c : ℝ) (w : TangentSpace I x) :
     (fun y : M => covDerivAt Z y (c • w))
       = c • (fun y : M => covDerivAt Z y w) := by
   funext y
@@ -143,7 +143,7 @@ private lemma covDerivAt_const_dir_section_smul
 when the inner direction is zero. Inner continuous linear map-zero in both occurrences
 of $w$. No smoothness hypothesis. -/
 @[simp] theorem secondCovDerivAt_zero_right
-    (Z : Π x : M, TangentSpace I x) (x : M) (v : TangentSpace I x) :
+    (Z : VectorFieldSection I M) (x : M) (v : TangentSpace I x) :
     secondCovDerivAt (I := I) (M := M) Z x v 0 = 0 := by
   unfold secondCovDerivAt
   -- (fun y => covDerivAt Z y 0) = 0 (Pi-zero, by continuous linear map map_zero pointwise).
@@ -168,7 +168,7 @@ heart-of-Bochner setting: for $Z = \nabla f$ with smooth gradient,
 `leviCivitaConnection_smoothAt_const_dir` on the `SmoothVectorField`
 wrapper supplies it. -/
 theorem secondCovDerivAt_add_right
-    (Z : Π x : M, TangentSpace I x) (x : M) (v w₁ w₂ : TangentSpace I x)
+    (Z : VectorFieldSection I M) (x : M) (v w₁ w₂ : TangentSpace I x)
     (h_smooth_dir : ∀ w : TangentSpace I x,
       TangentSmoothAt (fun y : M => covDerivAt Z y w) x) :
     secondCovDerivAt (I := I) (M := M) Z x v (w₁ + w₂) =
@@ -217,7 +217,7 @@ theorem secondCovDerivAt_add_right
 /-- **Math.** $(\nabla^2 Z)(v, c \cdot w) = c \cdot (\nabla^2 Z)(v, w)$, under
 the same smoothness hypothesis as `secondCovDerivAt_add_right`. -/
 theorem secondCovDerivAt_smul_right
-    (Z : Π x : M, TangentSpace I x) (x : M)
+    (Z : VectorFieldSection I M) (x : M)
     (c : ℝ) (v w : TangentSpace I x)
     (h_smooth_dir : TangentSmoothAt (fun y : M => covDerivAt Z y w) x) :
     secondCovDerivAt (I := I) (M := M) Z x v (c • w) =
@@ -267,9 +267,9 @@ vector field vanishes identically. -/
 @[simp] theorem secondCovDerivAt_zero
     (x : M) (v w : TangentSpace I x) :
     secondCovDerivAt (I := I) (M := M)
-        (0 : Π x : M, TangentSpace I x) x v w = 0 := by
+        (0 : VectorFieldSection I M) x v w = 0 := by
   unfold secondCovDerivAt
-  have h_inner : (fun y : M => covDerivAt (0 : Π x : M, TangentSpace I x) y w)
+  have h_inner : (fun y : M => covDerivAt (0 : VectorFieldSection I M) y w)
       = (fun _ : M => (0 : TangentSpace I x)) := by
     funext y
     show ((leviCivitaConnection (I := I) (M := M)).toFun 0 y) w = 0
@@ -278,7 +278,7 @@ vector field vanishes identically. -/
   have h0a : covDerivAt (fun _ : M => (0 : TangentSpace I x)) x v = 0 := by
     show ((leviCivitaConnection (I := I) (M := M)).toFun 0 x) v = 0
     rw [CovariantDerivative.zero]; rfl
-  have h0b : covDerivAt (0 : Π x : M, TangentSpace I x) x
+  have h0b : covDerivAt (0 : VectorFieldSection I M) x
       (covDerivAt (fun _ : M => w) x v) = 0 := by
     show ((leviCivitaConnection (I := I) (M := M)).toFun 0 x) _ = 0
     rw [CovariantDerivative.zero]; rfl
@@ -300,14 +300,14 @@ to lift the bracket through the inner derivative.
 
 **Ground truth**: do Carmo §4 Proposition 2.5 (ii); Lee §11. -/
 theorem secondCovDerivAt_sub_swap_eq_riemannCurvature
-    (Z : Π x : M, TangentSpace I x) (x : M) (v w : TangentSpace I x) :
+    (Z : VectorFieldSection I M) (x : M) (v w : TangentSpace I x) :
     secondCovDerivAt (I := I) (M := M) Z x v w
       - secondCovDerivAt (I := I) (M := M) Z x w v
       = riemannCurvature
           (fun _ : M => (v : TangentSpace I x))
           (fun _ : M => (w : TangentSpace I x)) Z x := by
-  set V : Π y : M, TangentSpace I y := fun _ => (v : TangentSpace I x) with hV
-  set W : Π y : M, TangentSpace I y := fun _ => (w : TangentSpace I x) with hW
+  set V : VectorFieldSection I M := fun _ => (v : TangentSpace I x) with hV
+  set W : VectorFieldSection I M := fun _ => (w : TangentSpace I x) with hW
   have hVsm : TangentSmoothAt V x :=
     (SmoothVectorField.const (I := I) (M := M) (v : E)).smoothAt x
   have hWsm : TangentSmoothAt W x :=
@@ -334,7 +334,7 @@ theorem secondCovDerivAt_sub_swap_eq_riemannCurvature
 $$(\nabla^2 Z)(w, v) \;=\; (\nabla^2 Z)(v, w) \;-\; R(\tilde v, \tilde w) Z.$$
 Direct corollary of `secondCovDerivAt_sub_swap_eq_riemannCurvature`. -/
 theorem secondCovDerivAt_swap_eq
-    (Z : Π x : M, TangentSpace I x) (x : M) (v w : TangentSpace I x) :
+    (Z : VectorFieldSection I M) (x : M) (v w : TangentSpace I x) :
     secondCovDerivAt (I := I) (M := M) Z x w v
       = secondCovDerivAt (I := I) (M := M) Z x v w
         - riemannCurvature
@@ -363,13 +363,13 @@ For $V(y) := v$, $W(y) := w$ (chart-frame constant lifts of vectors at
 $x$), this reduces to `secondCovDerivAt Z x v w` definitionally
 (`secondCovDerivSection_const_const` below). -/
 noncomputable def secondCovDerivSection
-    (Z V W : Π x : M, TangentSpace I x) (x : M) : TangentSpace I x :=
+    (Z V W : VectorFieldSection I M) (x : M) : TangentSpace I x :=
   covDerivAt (fun y : M => covDerivAt Z y (W y)) x (V x)
     - covDerivAt Z x (covDerivAt W x (V x))
 
 /-- **Eng.** Bridge: chart-frame constant lifts of $v, w$ recover `secondCovDerivAt`. -/
 theorem secondCovDerivSection_const_const
-    (Z : Π x : M, TangentSpace I x) (x : M) (v w : TangentSpace I x) :
+    (Z : VectorFieldSection I M) (x : M) (v w : TangentSpace I x) :
     secondCovDerivSection (I := I) (M := M) Z
         (fun _ : M => (v : TangentSpace I x))
         (fun _ : M => (w : TangentSpace I x)) x
@@ -387,7 +387,7 @@ $\nabla_\bullet Z$ at $x$, then matched against `riemannCurvature_def`.
 
 **Ground truth**: do Carmo §4 Prop 2.5; Lee §11. -/
 theorem secondCovDerivSection_sub_swap_eq_riemannCurvature
-    (Z V W : Π x : M, TangentSpace I x) (x : M)
+    (Z V W : VectorFieldSection I M) (x : M)
     (hV : TangentSmoothAt V x) (hW : TangentSmoothAt W x) :
     secondCovDerivSection (I := I) (M := M) Z V W x
       - secondCovDerivSection (I := I) (M := M) Z W V x
@@ -414,7 +414,7 @@ theorem secondCovDerivSection_sub_swap_eq_riemannCurvature
 $$(\nabla^2 Z)(W, V)(x) \;=\; (\nabla^2 Z)(V, W)(x) \;-\; R(V, W)\,Z\,(x).$$
 Direct corollary of `secondCovDerivSection_sub_swap_eq_riemannCurvature`. -/
 theorem secondCovDerivSection_swap_eq
-    (Z V W : Π x : M, TangentSpace I x) (x : M)
+    (Z V W : VectorFieldSection I M) (x : M)
     (hV : TangentSmoothAt V x) (hW : TangentSmoothAt W x) :
     secondCovDerivSection (I := I) (M := M) Z W V x
       = secondCovDerivSection (I := I) (M := M) Z V W x

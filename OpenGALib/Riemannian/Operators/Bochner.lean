@@ -90,14 +90,14 @@ where $B_i := \mathrm{smoothOrthoFrame}\,g\,\alpha\,i$.
 
 **Ground truth**: Petersen Ch. 7 §1 Prop 33; do Carmo §6 ex. 12. -/
 noncomputable def connectionLaplacian
-    (Z : Π x : M, TangentSpace I x) (α : M) : TangentSpace I α :=
+    (Z : VectorFieldSection I M) (α : M) : TangentSpace I α :=
   ∑ i, Riemannian.Operators.secondCovDerivSection (I := I) (M := M) Z
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α
 
 /-- **Eng.** Definitional unfolding of `connectionLaplacian`. -/
 @[simp] lemma connectionLaplacian_def
-    (Z : Π x : M, TangentSpace I x) (α : M) :
+    (Z : VectorFieldSection I M) (α : M) :
     connectionLaplacian (I := I) (M := M) Z α =
       ∑ i, Riemannian.Operators.secondCovDerivSection (I := I) (M := M) Z
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
@@ -107,22 +107,22 @@ noncomputable def connectionLaplacian
 /-- **Math.** The connection Laplacian on the zero vector field is zero. -/
 @[simp] theorem connectionLaplacian_zero (α : M) :
     connectionLaplacian (I := I) (M := M)
-        (0 : Π x : M, TangentSpace I x) α = 0 := by
+        (0 : VectorFieldSection I M) α = 0 := by
   rw [connectionLaplacian_def]
   refine Finset.sum_eq_zero ?_
   intro i _
   show secondCovDerivSection (I := I) (M := M)
-        (0 : Π x : M, TangentSpace I x)
+        (0 : VectorFieldSection I M)
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α = 0
   unfold secondCovDerivSection
-  have h_inner_zero : ∀ y v, covDerivAt (0 : Π x : M, TangentSpace I x) y v = 0 := by
+  have h_inner_zero : ∀ y v, covDerivAt (0 : VectorFieldSection I M) y v = 0 := by
     intro y v
     show ((leviCivitaConnection (I := I) (M := M)).toFun 0 y) v = 0
     rw [CovariantDerivative.zero]; rfl
-  have h_section_zero : (fun y : M => covDerivAt (0 : Π x : M, TangentSpace I x) y
+  have h_section_zero : (fun y : M => covDerivAt (0 : VectorFieldSection I M) y
         ((Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) y))
-      = (0 : Π y : M, TangentSpace I y) := by
+      = (0 : VectorFieldSection I M) := by
     funext y; exact h_inner_zero y _
   rw [h_section_zero]
   show ((leviCivitaConnection (I := I) (M := M)).toFun 0 α) _

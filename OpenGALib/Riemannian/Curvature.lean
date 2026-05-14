@@ -52,7 +52,7 @@ local notation "cF[" V "]" => SmoothVectorField.const (I := I) (M := M) V
 
 Reference: do Carmo §4 Proposition 2.5 (i). -/
 theorem riemannCurvature_antisymm
-    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
+    (X Y Z : VectorFieldSection I M) (x : M) :
     Riem(X, Y) Z x = -Riem(Y, X) Z x := by
   simp only [riem_simp]
   rw [covDeriv_mlieBracket_swap_apply]
@@ -231,7 +231,7 @@ Stated using `mDirDeriv` (the `ℝ`-typed `mfderiv` wrapper) on the LHS
 and `leviCivitaConnection.toFun` (definitionally equal to `covDeriv`)
 on the RHS. -/
 private lemma mDirDeriv_self_eq_two_metricInner_leviCivita_self
-    (V : Π y : M, TangentSpace I y) (Z : SmoothVectorField I M) (y : M)
+    (V : VectorFieldSection I M) (Z : SmoothVectorField I M) (y : M)
     (hV : TangentSmoothAt V y) :
     mDirDeriv (fun y' => metricInner y' (Z y') (Z y')) y (V y)
       = 2 * metricInner y
@@ -611,7 +611,7 @@ evaluates `leviCivitaConnection.toFun Z x` at the zero vector. -/
 
 /-- **Eng.** **No-bracket form of `riemannCurvature` for constant directions**. -/
 theorem riemannCurvature_const_const_eq_commutator
-    (v w : E) (Z : Π y : M, TangentSpace I y) (x : M) :
+    (v w : E) (Z : VectorFieldSection I M) (x : M) :
     riemannCurvature (fun _ : M => v) (fun _ : M => w) Z x
       = covDeriv (fun _ : M => v)
           (fun y => covDeriv (fun _ : M => w) Z y) x

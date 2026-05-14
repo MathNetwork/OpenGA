@@ -72,7 +72,7 @@ $X(x)$ at $x$.
 **Ground truth**: do Carmo 1992 §2 (Koszul formula in the proof of
 Theorem 3.6). -/
 noncomputable def koszulFunctional
-    (X Y Z : Π x : M, TangentSpace I x) (x : M) : ℝ :=
+    (X Y Z : VectorFieldSection I M) (x : M) : ℝ :=
   directionalDeriv (fun y => metricInner y (Y y) (Z y)) x (X x)
   + directionalDeriv (fun y => metricInner y (Z y) (X y)) x (Y x)
   - directionalDeriv (fun y => metricInner y (X y) (Y y)) x (Z x)
@@ -91,7 +91,7 @@ holds for all $Z$, hence $\nabla_X Y - \nabla_Y X = [X, Y]$.
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 proof. -/
 theorem koszul_antisymm
-    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
+    (X Y Z : VectorFieldSection I M) (x : M) :
     koszulFunctional X Y Z x - koszulFunctional Y X Z x
       = 2 * metricInner x (mlieBracket I X Y x) (Z x) := by
   unfold koszulFunctional
@@ -122,7 +122,7 @@ X\langle Y, Z\rangle$, i.e., $\nabla_X\langle Y,Z\rangle =
 
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 proof. -/
 theorem koszul_metric_compat_sum
-    (X Y Z : Π x : M, TangentSpace I x) (x : M) :
+    (X Y Z : VectorFieldSection I M) (x : M) :
     koszulFunctional X Y Z x + koszulFunctional X Z Y x
       = 2 * directionalDeriv (fun y => metricInner y (Y y) (Z y)) x (X x) := by
   unfold koszulFunctional
@@ -222,7 +222,7 @@ smoothness of `Y, Z, X` together with smoothness of the metric.
 **Ground truth**: do Carmo 1992 *Riemannian Geometry*, §2 Theorem 3.6
 existence proof, Step 2 (cancellation calculation). -/
 theorem koszul_smul_right
-    (X Y Z : Π x : M, TangentSpace I x) (f : M → ℝ) (x : M)
+    (X Y Z : VectorFieldSection I M) (f : M → ℝ) (x : M)
     (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
     (hYZ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x)
     (hZX : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Z y) (X y)) x)
@@ -237,7 +237,7 @@ theorem koszul_smul_right
                    = fun y => f y * metricInner y (Z y) (X y) := by
     funext y; exact metricInner_smul_left y (f y) (Z y) (X y)
   -- Step 2: convert pointwise smul back to Pi smul for `mlieBracket_smul_right`.
-  have hPi : (fun y : M => f y • Z y) = (f • Z : Π y : M, TangentSpace I y) := rfl
+  have hPi : (fun y : M => f y • Z y) = (f • Z : VectorFieldSection I M) := rfl
   unfold koszulFunctional
   rw [h_inner_YfZ, h_inner_fZX]
   -- Step 3: apply Leibniz product rule to T1, T2 (terms with `f * inner_func`).
@@ -284,7 +284,7 @@ omit [FiniteDimensional ℝ E] in
 Each Koszul term is linear in $Z$ (via `metricInner_add_right`/`left`,
 `mfderiv_add`, `mlieBracket_add_right`). -/
 theorem koszul_add_right
-    (X Y Z₁ Z₂ : Π x : M, TangentSpace I x) (x : M)
+    (X Y Z₁ Z₂ : VectorFieldSection I M) (x : M)
     (h_YZ₁ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z₁ y)) x)
     (h_YZ₂ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z₂ y)) x)
     (h_Z₁X : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Z₁ y) (X y)) x)
@@ -321,7 +321,7 @@ theorem koszul_add_right
 omit [FiniteDimensional ℝ E] in
 /-- **Math.** **Koszul X-additivity**: $K(X_1 + X_2, Y; Z) = K(X_1, Y; Z) + K(X_2, Y; Z)$. -/
 theorem koszul_add_left
-    (X₁ X₂ Y Z : Π x : M, TangentSpace I x) (x : M)
+    (X₁ X₂ Y Z : VectorFieldSection I M) (x : M)
     (h_ZX₁ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Z y) (X₁ y)) x)
     (h_ZX₂ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Z y) (X₂ y)) x)
     (h_X₁Y : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (X₁ y) (Y y)) x)
@@ -360,7 +360,7 @@ theorem koszul_add_left
 omit [FiniteDimensional ℝ E] in
 /-- **Math.** **Koszul Y-additivity**: $K(X, Y_1 + Y_2; Z) = K(X, Y_1; Z) + K(X, Y_2; Z)$. -/
 theorem koszul_add_middle
-    (X Y₁ Y₂ Z : Π x : M, TangentSpace I x) (x : M)
+    (X Y₁ Y₂ Z : VectorFieldSection I M) (x : M)
     (h_Y₁Z : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y₁ y) (Z y)) x)
     (h_Y₂Z : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y₂ y) (Z y)) x)
     (h_XY₁ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (X y) (Y₁ y)) x)
@@ -408,7 +408,7 @@ $Z(f)$ terms cancel via $\langle X, Y\rangle - \langle Y, X\rangle = 0$
 **Smoothness hypotheses**: `hf`, `h_ZX` (for T2 product rule), `h_XY` (for T3
 product rule), `h_X` (for T4, T6 mlieBracket Leibniz). -/
 theorem koszul_smul_left
-    (X Y Z : Π x : M, TangentSpace I x) (f : M → ℝ) (x : M)
+    (X Y Z : VectorFieldSection I M) (f : M → ℝ) (x : M)
     (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
     (h_ZX : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Z y) (X y)) x)
     (h_XY : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (X y) (Y y)) x)
@@ -421,7 +421,7 @@ theorem koszul_smul_left
   have h_inner_fXY : (fun y : M => metricInner y (f y • X y) (Y y))
                    = fun y => f y * metricInner y (X y) (Y y) := by
     funext y; exact metricInner_smul_left y (f y) (X y) (Y y)
-  have hPi : (fun y : M => f y • X y) = (f • X : Π y : M, TangentSpace I y) := rfl
+  have hPi : (fun y : M => f y • X y) = (f • X : VectorFieldSection I M) := rfl
   unfold koszulFunctional
   rw [h_inner_ZfX, h_inner_fXY]
   -- Step 2: T1 — pull `f x` out of the action vector.
@@ -466,7 +466,7 @@ $\nabla_X(fY) = X(f) Y + f \nabla_X Y$ (vs C∞-linear in X, Z).
 
 **Smoothness hypotheses**: `hf`, `h_YZ`, `h_ZX`, `h_XY`, `h_Y`. -/
 theorem koszul_smul_middle
-    (X Y Z : Π x : M, TangentSpace I x) (f : M → ℝ) (x : M)
+    (X Y Z : VectorFieldSection I M) (f : M → ℝ) (x : M)
     (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
     (h_YZ : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x)
     (h_XY : MDifferentiableAt I 𝓘(ℝ, ℝ) (fun y => metricInner y (X y) (Y y)) x)
@@ -481,7 +481,7 @@ theorem koszul_smul_middle
   have h_inner_XfY : (fun y : M => metricInner y (X y) (f y • Y y))
                    = fun y => f y * metricInner y (X y) (Y y) := by
     funext y; exact metricInner_smul_right y (f y) (X y) (Y y)
-  have hPi : (fun y : M => f y • Y y) = (f • Y : Π y : M, TangentSpace I y) := rfl
+  have hPi : (fun y : M => f y • Y y) = (f • Y : VectorFieldSection I M) := rfl
   unfold koszulFunctional
   rw [h_inner_fYZ, h_inner_XfY]
   -- Step 2: T1, T3 — apply Leibniz product rule.
@@ -526,7 +526,7 @@ Foundation for extension-independence: combined with bump decomposition,
 gives well-definedness of the linear functional in
 `koszulLinearFunctional_exists`. -/
 theorem koszulFunctional_local
-    (X Y Z₁ Z₂ : Π x : M, TangentSpace I x) (x : M)
+    (X Y Z₁ Z₂ : VectorFieldSection I M) (x : M)
     (h : Z₁ =ᶠ[nhds x] Z₂) :
     koszulFunctional X Y Z₁ x = koszulFunctional X Y Z₂ x := by
   have hZx : Z₁ x = Z₂ x := h.self_of_nhds
@@ -555,15 +555,15 @@ bundle-section smoothness of $X, Y, Z$. -/
 theorem koszulFunctional_tensorialAt
     [FiniteDimensional ℝ E]
     [IsLocallyConstantChartedSpace H M]
-    (X Y : Π y : M, TangentSpace I y) (x : M)
+    (X Y : VectorFieldSection I M) (x : M)
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x) :
-    TensorialAt I E (fun Z : (Π y : M, TangentSpace I y) =>
+    TensorialAt I E (fun Z : (VectorFieldSection I M) =>
       (1/2 : ℝ) * koszulFunctional X Y Z x) x where
   smul := by
     intro f σ hf hσ
     have hYZ := metricInner_mdifferentiableAt hY hσ
     have hZX := metricInner_mdifferentiableAt hσ hX
-    have heq : (f • σ : Π y : M, TangentSpace I y) = fun y => f y • σ y := rfl
+    have heq : (f • σ : VectorFieldSection I M) = fun y => f y • σ y := rfl
     show (1/2 : ℝ) * koszulFunctional X Y (f • σ) x
         = f x • ((1/2 : ℝ) * koszulFunctional X Y σ x)
     rw [heq, koszul_smul_right X Y σ f x hf hYZ hZX hσ]

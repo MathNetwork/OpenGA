@@ -202,6 +202,15 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
+/-- **Math.** A (not necessarily smooth) section of the tangent bundle:
+the pointwise data assigning a tangent vector to each base point. Thin
+abbreviation over the dependent product `Π y : M, TangentSpace I y` for
+signature readability. `SmoothVectorField` adds a smoothness witness on
+top. -/
+abbrev VectorFieldSection (I : ModelWithCorners ℝ E H) (M : Type*)
+    [TopologicalSpace M] [ChartedSpace H M] : Type _ :=
+  Π y : M, TangentSpace I y
+
 /-- **Math.** A smooth tangent vector field on `M`. -/
 structure SmoothVectorField (I : ModelWithCorners ℝ E H)
     (M : Type*) [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] where

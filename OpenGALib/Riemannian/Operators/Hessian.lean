@@ -49,7 +49,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
 $$\operatorname{Hess} f(X, Y)(x) = \langle \nabla_X (\nabla^M f), Y \rangle_g(x).$$ -/
 noncomputable def hessian
     [IsLocallyConstantChartedSpace H M]
-    (f : M → ℝ) (X Y : Π x : M, TangentSpace I x) (x : M) : ℝ :=
+    (f : M → ℝ) (X Y : VectorFieldSection I M) (x : M) : ℝ :=
   metricInner x (covDeriv X (manifoldGradient f) x) (Y x)
 
 /-! ## Pointwise bilinear-form carrier -/
@@ -231,7 +231,7 @@ via metric-compatibility on $(X, \nabla g, Y)$ plus gradient duality
 which applies this for $g = |\nabla f|_g^2$ and $X = Y =$ chart-frame
 constants $\varepsilon_i$). -/
 theorem hessian_eq_mDirDeriv_iterate_sub_chris
-    (g : M → ℝ) (X Y : Π x : M, TangentSpace I x) (x : M)
+    (g : M → ℝ) (X Y : VectorFieldSection I M) (x : M)
     (h_grad_g : TangentSmoothAt (manifoldGradient (I := I) g) x)
     (hX : TangentSmoothAt X x)
     (hY : TangentSmoothAt Y x) :
@@ -292,8 +292,8 @@ theorem hessianBilin_symm
     (h_grad : TangentSmoothAt (manifoldGradient (I := I) f) x)
     (v w : TangentSpace I x) :
     hessianBilin (I := I) f x v w = hessianBilin (I := I) f x w v := by
-  set V : Π y : M, TangentSpace I y := fun _ => (v : TangentSpace I x) with hV_def
-  set W : Π y : M, TangentSpace I y := fun _ => (w : TangentSpace I x) with hW_def
+  set V : VectorFieldSection I M := fun _ => (v : TangentSpace I x) with hV_def
+  set W : VectorFieldSection I M := fun _ => (w : TangentSpace I x) with hW_def
   have hVsm : TangentSmoothAt V x :=
     (SmoothVectorField.const (I := I) (M := M) (v : E)).smoothAt x
   have hWsm : TangentSmoothAt W x :=
