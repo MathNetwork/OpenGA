@@ -2,6 +2,7 @@ import OpenGALib.Riemannian.Operators.ConnectionLaplacian
 import OpenGALib.Riemannian.Operators.Hessian
 import OpenGALib.Riemannian.Operators.Laplacian
 import OpenGALib.Riemannian.Curvature
+import OpenGALib.Riemannian.Curvature.RicciTensorBundle
 import OpenGALib.Riemannian.Curvature.Tensoriality
 import OpenGALib.Riemannian.Gradient
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
