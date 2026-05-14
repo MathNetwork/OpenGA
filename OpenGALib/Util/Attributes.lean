@@ -1,5 +1,6 @@
 import Mathlib.Tactic.Common
 import OpenGALib.Util.MathTagLinter
+import OpenGALib.Util.AnchorPurityLinter
 
 /-!
 # Riemannian simp attributes — declarations
