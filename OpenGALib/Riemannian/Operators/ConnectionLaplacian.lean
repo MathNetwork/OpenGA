@@ -1,4 +1,6 @@
 import OpenGALib.Riemannian.Connection
+import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
+import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.Smoothness
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
@@ -243,25 +245,6 @@ theorem secondCovDerivAt_smul_right
       (fun _ : M => (w : TangentSpace I x)) x c h_const_w_smooth
   rw [h_inner_smul, (covDerivAt Z x).map_smul, smul_sub]
 
-/-! ### Note on `connectionLaplacian`
-
-The definition of `connectionLaplacian` itself lives downstream in
-`OpenGALib/Riemannian/Operators/Bochner.lean`, in **section form** using
-the smooth $g$-orthonormal frame `smoothOrthoFrame g α` (centered at the
-evaluation point $α$):
-$$(\Delta_\nabla Z)(α) \;=\; \sum_i (\nabla^2 Z)(B_i, B_i)(α),
-   \qquad B_i := \mathrm{smoothOrthoFrame}\,g\,α\,i.$$
-
-Section form is chosen (per Mathlib LC PR #36845 and the external
-`differential-geometry` library convention) to allow direct composition
-with `bochner_per_summand_assembled` — the section-form output of the
-per-summand chain. Const-form would force a Hom-bundle Leibniz bridge
-between section and constant forms, technically blocked by Lean's
-`TangentSpace I x = E` non-reducibility.
-
-The placement downstream allows `connectionLaplacian` to use
-`smoothOrthoFrame` directly without import inversion. -/
-
 /-- **Math.** $(\nabla^2\,0)(v, w) = 0$: the second covariant derivative of the zero
 vector field vanishes identically. -/
 @[simp] theorem secondCovDerivAt_zero
@@ -422,6 +405,55 @@ theorem secondCovDerivSection_swap_eq
   have h := secondCovDerivSection_sub_swap_eq_riemannCurvature
     (I := I) (M := M) Z V W x hV hW
   rw [← h]; abel
+
+/-! ## Connection Laplacian operator
+
+Section-form trace `Δ_∇ Z (α) = ∑ i (∇²Z)(B_i, B_i)(α)` against
+`smoothOrthoFrame g α`. Section form (per Mathlib LC PR #36845 and the
+external `differential-geometry` library convention) directly composes
+with `bochner_per_summand_assembled` — the per-summand chain output —
+without needing a Hom-bundle Leibniz bridge between section and constant
+forms. -/
+
+/-- **Math.** **Connection Laplacian** $\Delta_\nabla Z$ on a tangent
+vector field $Z$, computed against `smoothOrthoFrame g α`:
+$$(\Delta_\nabla Z)(\alpha) \;=\; \sum_i (\nabla^2 Z)(B_i, B_i)(\alpha),$$
+where $B_i := \mathrm{smoothOrthoFrame}\,g\,\alpha\,i$.
+
+**Ground truth**: Petersen Ch. 7 §1 Prop 33; do Carmo §6 ex. 12. -/
+noncomputable def connectionLaplacian
+    (Z : VectorFieldSection I M) (α : M) : TangentSpace I α :=
+  ∑ i, secondCovDerivSection (I := I) (M := M) Z
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α
+
+/-- **Math.** The connection Laplacian on the zero vector field is zero. -/
+@[simp] theorem connectionLaplacian_zero (α : M) :
+    connectionLaplacian (I := I) (M := M)
+        (0 : VectorFieldSection I M) α = 0 := by
+  unfold connectionLaplacian
+  refine Finset.sum_eq_zero ?_
+  intro i _
+  show secondCovDerivSection (I := I) (M := M)
+        (0 : VectorFieldSection I M)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α = 0
+  unfold secondCovDerivSection
+  have h_inner_zero : ∀ y v, covDerivAt (0 : VectorFieldSection I M) y v = 0 := by
+    intro y v
+    show ((leviCivitaConnection (I := I) (M := M)).toFun 0 y) v = 0
+    rw [CovariantDerivative.zero]; rfl
+  have h_section_zero : (fun y : M => covDerivAt (0 : VectorFieldSection I M) y
+        ((Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) y))
+      = (0 : VectorFieldSection I M) := by
+    funext y; exact h_inner_zero y _
+  rw [h_section_zero]
+  show ((leviCivitaConnection (I := I) (M := M)).toFun 0 α) _
+        - ((leviCivitaConnection (I := I) (M := M)).toFun 0 α) _ = 0
+  rw [CovariantDerivative.zero]
+  show (0 : TangentSpace I α →L[ℝ] TangentSpace I α) _
+      - (0 : TangentSpace I α →L[ℝ] TangentSpace I α) _ = 0
+  rw [ContinuousLinearMap.zero_apply, ContinuousLinearMap.zero_apply, sub_zero]
 
 end Operators
 end Riemannian

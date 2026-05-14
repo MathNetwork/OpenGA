@@ -1,5 +1,8 @@
-import OpenGALib.Riemannian.Operators.Bochner
-import OpenGALib.Riemannian.Operators.Bochner.Foundation
+import OpenGALib.Riemannian.Operators.Bochner.HessianExpansion
+import OpenGALib.Riemannian.Operators.Bochner.BochnerExpansion
+import OpenGALib.Riemannian.Operators.ConnectionLaplacian
+import OpenGALib.Riemannian.Operators.ConnectionLaplacian.Foundation
+import OpenGALib.Util.MFDeriv
 
 /-!
 # Per-summand chain of the heart-of-Bochner identity
@@ -570,26 +573,9 @@ theorem bochner_connectionLaplacian_grad_decomposition
       metricInner_comm x (manifoldGradient (I := I) (Δ_g[I] f) x)]
   ring
 
-/-- **Math.** **Bochner–Weitzenböck identity** (unconditional at strict
-interior):
-$$\tfrac{1}{2}\,\Delta_g\,|\nabla f|_g^2
-  = |\nabla^2 f|_g^2
-    + \langle \nabla f, \nabla\,\Delta_g f\rangle_g
-    + \mathrm{Ric}(\nabla f, \nabla f).$$
-Combines `bochner_leibniz_trace_reduction` and
-`bochner_connectionLaplacian_grad_decomposition`.
-
-Reference: Petersen Ch. 7 §1 Prop 33; do Carmo §6; Schoen–Simon 1981 §1. -/
-theorem bochner_weitzenboeck
-    [IsManifold I 2 M] [T2Space M]
-    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
-    (1 / 2 : ℝ) * (Δ_g[I] ‖grad_g[I] f‖²_g) x =
-      ‖hess_g[I] f‖²_g x
-      + ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
-      + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
-  rw [bochner_leibniz_trace_reduction f hf x,
-      bochner_connectionLaplacian_grad_decomposition f hf x]
-  abel
+-- `bochner_weitzenboeck` (the headline) lives in `Operators/Bochner.lean`,
+-- composing this file's `bochner_connectionLaplacian_grad_decomposition`
+-- with the anchor's `bochner_leibniz_trace_reduction`.
 
 end Operators
 end Riemannian

@@ -9,6 +9,7 @@ import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
 import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.Smoothness
 import OpenGALib.Riemannian.Operators.Bochner.HessianExpansion
 import OpenGALib.Riemannian.Operators.Bochner.BochnerExpansion
+import OpenGALib.Riemannian.Operators.Bochner.PerSummand
 import OpenGALib.Util.MFDeriv
 import OpenGALib.Util.Notation
 import Mathlib.Analysis.InnerProductSpace.Trace
@@ -42,65 +43,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
 
-/-! ## `connectionLaplacian` (section-form definition)
-
-Following Mathlib LC PR #36845 (Massot/Rothgang/Macbeth) and the external
-`differential-geometry` library, the connection Laplacian is defined in
-**section form** using the smooth $g$-orthonormal frame
-`smoothOrthoFrame g α` (Gram-Schmidt of chart frame, centered at the
-evaluation point $\alpha$).
-
-Section form avoids the Hom-bundle Leibniz bridge between section and
-constant forms, which is technically blocked by Lean's
-`TangentSpace I x = E` non-reducibility (the same infrastructure issue
-Mathlib LC PR works around with `set_option backward.isDefEq.respectTransparency false`).
-With section form, the trace identifies directly with the section-form
-output of `bochner_per_summand_assembled`, eliminating the bridge entirely. -/
-
-/-- **Math.** **Connection Laplacian** $\Delta_\nabla Z$ on a tangent
-vector field $Z$, computed against `smoothOrthoFrame g α`:
-$$(\Delta_\nabla Z)(\alpha) \;=\; \sum_i (\nabla^2 Z)(B_i, B_i)(\alpha),$$
-where $B_i := \mathrm{smoothOrthoFrame}\,g\,\alpha\,i$.
-
-**Ground truth**: Petersen Ch. 7 §1 Prop 33; do Carmo §6 ex. 12. -/
-noncomputable def connectionLaplacian
-    (Z : VectorFieldSection I M) (α : M) : TangentSpace I α :=
-  ∑ i, Riemannian.Operators.secondCovDerivSection (I := I) (M := M) Z
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α
-
--- `connectionLaplacian_def` (Eng simp-unfold) is in
--- `Operators/Bochner/Foundation.lean` (per CLAUDE.md "infrastructure buffer").
-
-/-- **Math.** The connection Laplacian on the zero vector field is zero. -/
-@[simp] theorem connectionLaplacian_zero (α : M) :
-    connectionLaplacian (I := I) (M := M)
-        (0 : VectorFieldSection I M) α = 0 := by
-  unfold connectionLaplacian
-  refine Finset.sum_eq_zero ?_
-  intro i _
-  show secondCovDerivSection (I := I) (M := M)
-        (0 : VectorFieldSection I M)
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α = 0
-  unfold secondCovDerivSection
-  have h_inner_zero : ∀ y v, covDerivAt (0 : VectorFieldSection I M) y v = 0 := by
-    intro y v
-    show ((leviCivitaConnection (I := I) (M := M)).toFun 0 y) v = 0
-    rw [CovariantDerivative.zero]; rfl
-  have h_section_zero : (fun y : M => covDerivAt (0 : VectorFieldSection I M) y
-        ((Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) y))
-      = (0 : VectorFieldSection I M) := by
-    funext y; exact h_inner_zero y _
-  rw [h_section_zero]
-  show ((leviCivitaConnection (I := I) (M := M)).toFun 0 α) _
-        - ((leviCivitaConnection (I := I) (M := M)).toFun 0 α) _ = 0
-  rw [CovariantDerivative.zero]
-  show (0 : TangentSpace I α →L[ℝ] TangentSpace I α) _
-      - (0 : TangentSpace I α →L[ℝ] TangentSpace I α) _ = 0
-  rw [ContinuousLinearMap.zero_apply, ContinuousLinearMap.zero_apply, sub_zero]
-
-/-! ## Two intermediates (E, G) for the Bochner identity -/
+/-! ## Leibniz trace reduction (the LHS step) -/
 
 /-- **Math.** **Leibniz trace reduction**: the scalar Laplacian of
 $|\nabla f|_g^2$ decomposes as
@@ -261,6 +204,29 @@ theorem bochner_leibniz_trace_reduction
       _ = ∑ j, ⟪v, b j⟫_ℝ ^ 2 := (b.sum_sq_inner_left v).symm
       _ = ∑ j, (metricInner x v (b j)) ^ 2 := rfl
 
+/-! ## The headline identity -/
+
+/-- **Math.** **Bochner–Weitzenböck identity** (unconditional under
+`[I.Boundaryless]`):
+$$\tfrac{1}{2}\,\Delta_g\,|\nabla f|_g^2
+  = |\nabla^2 f|_g^2
+    + \langle \nabla f,\, \nabla\,\Delta_g f\rangle_g
+    + \mathrm{Ric}(\nabla f,\, \nabla f).$$
+Composes `bochner_leibniz_trace_reduction` (LHS step) with
+`bochner_connectionLaplacian_grad_decomposition` (RHS step, from
+`Bochner/PerSummand.lean`).
+
+Reference: Petersen Ch. 7 §1 Prop 33; do Carmo §6; Schoen-Simon 1981 §1. -/
+theorem bochner_weitzenboeck
+    [IsManifold I 2 M]
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
+    (1 / 2 : ℝ) * (Δ_g[I] ‖grad_g[I] f‖²_g) x =
+      ‖hess_g[I] f‖²_g x
+      + ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
+      + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
+  rw [bochner_leibniz_trace_reduction f hf x,
+      bochner_connectionLaplacian_grad_decomposition f hf x]
+  abel
 
 end Operators
 end Riemannian

@@ -1,10 +1,10 @@
-import OpenGALib.Riemannian.Operators.Bochner
+import OpenGALib.Riemannian.Operators.ConnectionLaplacian
 
 /-!
-# Bochner anchor — infrastructure buffer
+# ConnectionLaplacian anchor — infrastructure buffer
 
-Eng / Mixed scaffolding for `Operators/Bochner.lean` that has no
-content-cluster home yet. Transitional buffer per CLAUDE.md
+Eng / Mixed scaffolding for `Operators/ConnectionLaplacian.lean` that
+has no content-cluster home yet. Transitional buffer per CLAUDE.md
 "Infrastructure buffer exception"; items here should migrate into
 content-named sub-modules once a functional pattern accumulates.
 
