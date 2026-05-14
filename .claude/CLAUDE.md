@@ -152,17 +152,19 @@ Architectural rules are enforced by Lean-native linters in `OpenGALib/Util/Linte
 
 Background: Neal Ford et al., *Building Evolutionary Architectures* (2017) — coined "fitness functions" for executable architectural tests. OpenGALib adapts the pattern to Lean.
 
-Current linters:
+Current linters (`OpenGALib/Util/Linter/`):
 
-- **`Util/Linter/MathTag.lean`** (`linter.openGAMathTag`, default `true`, baseline `0`) — every declaration's docstring must begin with `**Math.**`, `**Eng.**`, or `**Mixed.**`.
-- **`Util/Linter/AnchorPurity.lean`** (`linter.openGAAnchorPurity`, default `true`, baseline `0`) — `**Eng.**` / `**Mixed.**` declarations forbidden outside `Util/` directories. Two principled exemptions reflect the rule's true scope (anchor's *exposed* math API, not internal/synthesis plumbing): typeclass `instance` declarations (Lean synthesis requires co-location with the type) and `private` declarations (not part of the anchor's exposed API).
-- **`Util/Linter/Naming.lean`** (`linter.openGANaming`, default `true`, baseline `0`) — forbid bare initialisms `CLM`, `NACG`, `IPS` in declaration names; require Mathlib-style full names (`ContinuousLinearMap`, `NormedAddCommGroup`, `InnerProductSpace`).
+- **`MathTag.lean`** (`linter.openGA.mathTag`, default `true`, baseline `0`) — every declaration's docstring must begin with `**Math.**`, `**Eng.**`, or `**Mixed.**`.
+- **`AnchorPurity.lean`** (`linter.openGA.anchorPurity`, default `true`, baseline `0`) — `**Eng.**` / `**Mixed.**` declarations forbidden outside `Util/` directories. Two principled exemptions reflect the rule's true scope (anchor's *exposed* math API, not internal/synthesis plumbing): typeclass `instance` declarations (Lean synthesis requires co-location with the type) and `private` declarations (not part of the anchor's exposed API).
+- **`Naming.lean`** (`linter.openGA.naming`, default `true`, baseline `0`) — forbid bare initialisms `CLM`, `NACG`, `IPS` in declaration names; require Mathlib-style full names (`ContinuousLinearMap`, `NormedAddCommGroup`, `InnerProductSpace`).
 
-Smoke tests live alongside each linter (`MathTagTest.lean`, `NamingTest.lean`) and document both directions: correctly tagged decls pass silently, deliberate violations are silenced locally via `set_option linter.X false in` so the test build stays clean.
+All three bundled into the linter set `linter.openGA` (defined in `OpenGALib/Util/Linter.lean`). `set_option linter.openGA false` silences the whole set; individual options toggle each linter in isolation.
+
+Unit tests live under `OpenGALib/Tests/Linter/` and use `#guard_msgs (warning) in` to capture the expected warning verbatim — if a linter ever stops firing on its intended trigger, the test build fails. Tests live outside `Util/` so the AnchorPurity path-check actually triggers.
 
 CI implementation (`.github/workflows/ci.yml`): the build job greps `lake build` output for each linter's warning prefix, fails if count exceeds the hardcoded baseline. Baselines only ever decrease; never grow without explicit justification (same discipline as the sorry count gate).
 
-Adding a new linter: drop `OpenGALib/Util/Linter/<Name>.lean`, register the import in `Util/Attributes.lean`, add the baseline check in `ci.yml`. Template pattern: `Util/Linter/MathTag.lean`.
+Adding a new linter: drop `OpenGALib/Util/Linter/<Name>.lean` (template: `MathTag.lean`), add the option to the `register_linter_set` in `Util/Linter.lean`, add a `#guard_msgs` test in `Tests/Linter/<Name>.lean`, add the baseline check in `ci.yml`. The `Util/Linter/README.md` walks the full template.
 
 ## Sorry discipline
 
