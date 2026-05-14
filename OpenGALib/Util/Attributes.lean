@@ -1,4 +1,5 @@
 import Mathlib.Tactic.Common
+import OpenGALib.Util.MathTagLinter
 
 /-!
 # Riemannian simp attributes — declarations
