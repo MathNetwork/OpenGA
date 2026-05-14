@@ -1,4 +1,4 @@
-import OpenGALib.Util.MathTagLinter
+import OpenGALib.Util.Linter.MathTag
 
 /-!
 # Smoke test for `MathTagLinter`

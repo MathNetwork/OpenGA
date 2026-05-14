@@ -1,7 +1,7 @@
 import Mathlib.Tactic.Common
-import OpenGALib.Util.MathTagLinter
-import OpenGALib.Util.AnchorPurityLinter
-import OpenGALib.Util.NamingLinter
+import OpenGALib.Util.Linter.MathTag
+import OpenGALib.Util.Linter.AnchorPurity
+import OpenGALib.Util.Linter.Naming
 
 /-!
 # Riemannian simp attributes — declarations

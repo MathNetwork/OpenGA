@@ -1,4 +1,4 @@
-import OpenGALib.Util.NamingLinter
+import OpenGALib.Util.Linter.Naming
 
 /-!
 # Smoke test for `NamingLinter`

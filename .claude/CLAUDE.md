@@ -148,19 +148,21 @@ Headline lemmas (`bochner_weitzenboeck`, `leviCivitaConnection_exists`, `firstVa
 
 ## Fitness functions
 
-Architectural rules are enforced by Lean-native linters in `OpenGALib/Util/*Linter.lean`. They fire during elaboration (LSP shows inline warnings; `lake build` emits them) and gate every push / pull request via GitHub Actions.
+Architectural rules are enforced by Lean-native linters in `OpenGALib/Util/Linter/`. They fire during elaboration (LSP shows inline warnings; `lake build` emits them) and gate every push / pull request via GitHub Actions.
 
 Background: Neal Ford et al., *Building Evolutionary Architectures* (2017) — coined "fitness functions" for executable architectural tests. OpenGALib adapts the pattern to Lean.
 
-Current linters (in `OpenGALib/Util/`):
+Current linters:
 
-- **`MathTagLinter`** (`linter.openGAMathTag`, default `true`, baseline `0`) — every declaration's docstring must begin with `**Math.**`, `**Eng.**`, or `**Mixed.**`.
-- **`AnchorPurityLinter`** (`linter.openGAAnchorPurity`, default `true`, baseline `20`) — `**Eng.**` / `**Mixed.**` declarations forbidden outside `Util/` directories. Baseline is current debt; CI fails if count grows.
-- **`NamingLinter`** (`linter.openGANaming`, default `true`, baseline `0`) — forbid bare initialisms `CLM`, `NACG`, `IPS` in declaration names; require Mathlib-style full names (`ContinuousLinearMap`, `NormedAddCommGroup`, `InnerProductSpace`).
+- **`Util/Linter/MathTag.lean`** (`linter.openGAMathTag`, default `true`, baseline `0`) — every declaration's docstring must begin with `**Math.**`, `**Eng.**`, or `**Mixed.**`.
+- **`Util/Linter/AnchorPurity.lean`** (`linter.openGAAnchorPurity`, default `true`, baseline `20`) — `**Eng.**` / `**Mixed.**` declarations forbidden outside `Util/` directories. Baseline is current debt; CI fails if count grows.
+- **`Util/Linter/Naming.lean`** (`linter.openGANaming`, default `true`, baseline `0`) — forbid bare initialisms `CLM`, `NACG`, `IPS` in declaration names; require Mathlib-style full names (`ContinuousLinearMap`, `NormedAddCommGroup`, `InnerProductSpace`).
+
+Smoke tests live alongside each linter (`MathTagTest.lean`, `NamingTest.lean`) and document both directions: correctly tagged decls pass silently, deliberate violations are silenced locally via `set_option linter.X false in` so the test build stays clean.
 
 CI implementation (`.github/workflows/ci.yml`): the build job greps `lake build` output for each linter's warning prefix, fails if count exceeds the hardcoded baseline. Baselines only ever decrease; never grow without explicit justification (same discipline as the sorry count gate).
 
-Adding a new linter: drop `OpenGALib/Util/<Name>Linter.lean`, register the import in `Util/Attributes.lean`, add the baseline check in `ci.yml`. Template pattern: `MathTagLinter.lean`.
+Adding a new linter: drop `OpenGALib/Util/Linter/<Name>.lean`, register the import in `Util/Attributes.lean`, add the baseline check in `ci.yml`. Template pattern: `Util/Linter/MathTag.lean`.
 
 ## Sorry discipline
 
