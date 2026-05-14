@@ -556,6 +556,23 @@ scoped[Riemannian] notation:max "scal_g[" I "]" => scalarCurvature (I := I)
 /-- **Math.** Notation `Ric_g(v, w) x` for `ricciTensor x v w`. -/
 scoped[Riemannian] notation:max "Ric_g(" v ", " w ") " x:max => ricciTensor x v w
 
+/-! ## Ricci-flat and Einstein metric predicates -/
+
+/-- **Math.** A Riemannian metric is **Ricci-flat** if the Ricci tensor
+vanishes pointwise. -/
+def IsRicciFlat (_g : RiemannianMetric I M) : Prop :=
+  ∀ (x : M) (V W : TangentSpace I x), Ric_g(V, W) x = 0
+
+/-- **Math.** A Riemannian metric is **Einstein** if the Ricci tensor is
+a constant scalar multiple of the metric:
+$\mathrm{Ric}_g(V, W)(x) = c \cdot g_x(V, W)$ for all $x, V, W$ and a
+fixed real constant $c$ (the *Einstein constant*).
+
+Reference: do Carmo §4 Ex. 6; Petersen Ch. 3 §6. -/
+def IsEinstein (_g : RiemannianMetric I M) : Prop :=
+  ∃ c : ℝ, ∀ (x : M) (V W : TangentSpace I x),
+    Ric_g(V, W) x = c * metricInner x V W
+
 end Riemannian
 
 end

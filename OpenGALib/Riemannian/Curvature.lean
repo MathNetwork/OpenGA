@@ -791,5 +791,80 @@ theorem ricci_symm
     (SmoothVectorField.const (I := I) (M := M) (b i : E)) x h_interior
 
 
+/-! ## Special metric predicates: flat manifold -/
+
+/-- **Math.** A Riemannian metric is **flat** if the Riemann curvature
+tensor vanishes pointwise. -/
+def IsFlat (_g : RiemannianMetric I M) : Prop :=
+  ∀ (X Y Z : VectorFieldSection I M) (x : M), Riem(X, Y) Z x = 0
+
+/-! ## Killing vector fields -/
+
+/-- **Math.** A smooth vector field `X` is a **Killing vector field**
+(for the metric) if the symmetric part of $\nabla X$ vanishes:
+$g(\nabla_U X, W) + g(\nabla_W X, U) = 0$ for all $U, W$ at every point.
+Equivalent to the Lie derivative $\mathcal{L}_X g = 0$ (the flow of $X$
+is by isometries).
+
+Reference: do Carmo §3 Ex. 5; Petersen Ch. 8. -/
+def IsKilling (X : SmoothVectorField I M) : Prop :=
+  ∀ (U W : SmoothVectorField I M) (y : M),
+    metricInner y ((∇[U] X) y) (W y) + metricInner y ((∇[W] X) y) (U y) = 0
+
+/-! ## Sectional curvature
+
+Pointwise sectional curvature
+$$K_g(X, Y)(x) \;=\;
+  \dfrac{g_x(R(X, Y) Y, X)}{\|X\|_g^2 \|Y\|_g^2 - g_x(X, Y)^2}$$
+is the curvature of the 2-plane spanned by $X(x), Y(x)$. Well-defined
+when the spanning is non-degenerate (denominator non-zero, i.e., $X(x),
+Y(x)$ are linearly independent). Symmetric under swap $X \leftrightarrow Y$
+by `riemannCurvature_pair_symm` + (1,2)/(3,4)-antisymmetries.
+
+Reference: do Carmo §4 §3; Petersen Ch. 3 §2. -/
+
+/-- **Math.** The **sectional curvature** of the 2-plane spanned by
+$X(x), Y(x)$ at $x$:
+$$K_g(X, Y)(x) := \dfrac{g_x(R(X, Y) Y, X)}
+                       {g_x(X, X) \cdot g_x(Y, Y) - g_x(X, Y)^2}.$$
+
+The denominator equals $\|X \wedge Y\|_g^2$ (squared area of the
+parallelogram); $K$ is well-defined when the two vectors are linearly
+independent (denominator non-zero). At linearly dependent inputs, the
+formula returns the junk value $0$ via division by zero. -/
+noncomputable def sectionalCurvature
+    (X Y : VectorFieldSection I M) (x : M) : ℝ :=
+  metricInner x (Riem(X, Y) Y x) (X x) /
+    (metricInner x (X x) (X x) * metricInner x (Y x) (Y x)
+      - metricInner x (X x) (Y x) ^ 2)
+
+/-- **Math.** Notation `K_g[I](X, Y)` for `sectionalCurvature X Y`. -/
+scoped[Riemannian] notation:max "K_g[" I "](" X ", " Y ")" =>
+  sectionalCurvature (I := I) X Y
+
+/-- **Math.** **Sectional curvature is symmetric in $X, Y$**:
+$K_g(X, Y)(x) = K_g(Y, X)(x)$.
+
+Numerator: $g(R(X,Y)Y, X) = g(R(Y,X)X, Y)$ via `riemannCurvature_pair_symm`
+on $(X, Y, Y, X) \leftrightarrow (Y, X, X, Y)$, then a sign cancellation
+using `riemannCurvature_antisymm` once in each slot.
+Denominator: symmetric in $X, Y$ via `metricInner_comm`. -/
+theorem sectionalCurvature_symmetric
+    [IsManifold I 2 M]
+    (X Y : SmoothVectorField I M) (x : M) :
+    K_g[I](X, Y) x = K_g[I](Y, X) x := by
+  unfold sectionalCurvature
+  congr 1
+  · -- Numerator: g(R(X,Y) Y, X) = g(R(Y,X) X, Y) via pair-symmetry + double antisym.
+    -- pair-symm: g(R(X,Y) Y, X) = g(R(Y,X) X, Y) by swapping (1,2) ↔ (3,4) slots and
+    -- using R(Y,X) = -R(X,Y), with the Y, X swap on slot 3,4.
+    have h_pair := riemannCurvature_pair_symm X Y Y X x
+    -- h_pair : g(R(X,Y) Y, X) = g(R(Y,X) X, Y).
+    exact h_pair
+  · -- Denominator: g(X,X) g(Y,Y) - g(X,Y)^2 = g(Y,Y) g(X,X) - g(Y,X)^2.
+    have hXY : metricInner x (X x) (Y x) = metricInner x (Y x) (X x) :=
+      metricInner_comm x _ _
+    rw [hXY]; ring
+
 end Riemannian
 
