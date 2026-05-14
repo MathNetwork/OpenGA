@@ -4,7 +4,7 @@ import Mathlib.Geometry.Manifold.ContMDiff.NormedSpace
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import OpenGALib.Riemannian.Metric.RiemannianMetric
 import OpenGALib.Riemannian.TangentBundle.TangentSmooth
-import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
+import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame
 
 /-!
 # Smoothness of the chart-Gram-Schmidt frame and `smoothOrthoFrame`

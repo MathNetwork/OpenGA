@@ -1,4 +1,4 @@
-import OpenGALib.Riemannian.Tensor.Defs
+import OpenGALib.Riemannian.TensorBundle.Defs
 import Mathlib.Geometry.Manifold.MFDeriv.Atlas
 import Mathlib.Geometry.Manifold.MFDeriv.Tangent
 import Mathlib.Geometry.Manifold.ContMDiffMFDeriv

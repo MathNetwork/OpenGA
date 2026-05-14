@@ -1,5 +1,5 @@
 import OpenGALib.Riemannian.Connection.LeviCivita
-import OpenGALib.Riemannian.Tensor.MusicalIso
+import OpenGALib.Riemannian.TensorBundle.MusicalIso
 import OpenGALib.Riemannian.Util.MfderivApplySection
 
 /-!

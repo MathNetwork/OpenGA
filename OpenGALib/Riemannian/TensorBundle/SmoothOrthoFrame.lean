@@ -12,8 +12,8 @@ import Mathlib.LinearAlgebra.Dimension.Free
 import OpenGALib.Algebraic.Auxiliary.OrthonormalBasisDiagonal
 import OpenGALib.Riemannian.Metric.RiemannianMetric
 import OpenGALib.Riemannian.TangentBundle.TangentSmooth
-import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.ChartBasis
-import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.Orthonormality
+import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame.ChartBasis
+import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame.Orthonormality
 
 /-!
 # Smooth orthonormal local frame from the chart frame

@@ -1,4 +1,4 @@
-import OpenGALib.Riemannian.Tensor.Defs
+import OpenGALib.Riemannian.TensorBundle.Defs
 
 /-!
 # Riemannian (r,s)-tensor bundle — fiber-to-model coercion algebra

@@ -1,6 +1,6 @@
 import Mathlib.Analysis.InnerProductSpace.Orthonormal
 import OpenGALib.Riemannian.Metric.RiemannianMetric
-import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.ChartBasis
+import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame.ChartBasis
 
 /-!
 # Orthonormality of the chart-frame Gram-Schmidt

@@ -3,7 +3,7 @@ import Mathlib.Geometry.Manifold.IsManifold.ExtChartAt
 import Mathlib.Geometry.Manifold.MFDeriv.Atlas
 import Mathlib.Geometry.Manifold.MFDeriv.Basic
 import OpenGALib.Riemannian.TangentBundle.TangentSmooth
-import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame.ChartBasis
+import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame.ChartBasis
 
 /-!
 # Smoothness of `mfderiv f` applied to a tangent-bundle section

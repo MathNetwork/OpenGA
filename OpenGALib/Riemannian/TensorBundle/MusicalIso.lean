@@ -10,7 +10,7 @@ import Mathlib.Geometry.Manifold.MFDeriv.Basic
 import Mathlib.LinearAlgebra.Matrix.Adjugate
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.Matrix.PosDef
-import OpenGALib.Riemannian.Tensor.SmoothOrthoFrame
+import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame
 
 /-!
 # Smoothness of the musical isomorphism
