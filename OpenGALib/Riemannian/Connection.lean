@@ -907,4 +907,56 @@ theorem bianchi_first
   rw [h_jac, h_YZX, asym_outer]
   abel
 
+/-! ## Differential (second) Bianchi identity
+
+Covariant derivative of the Riemann curvature tensor (acting as a $(1,3)$
+endomorphism-valued tensor) satisfies a cyclic identity:
+$$(\nabla_X R)(Y, Z) W + (\nabla_Y R)(Z, X) W + (\nabla_Z R)(X, Y) W = 0.$$
+
+The covariant-derivative-of-$R$ pattern follows the standard
+tensor-cov-deriv recipe: $\nabla_X$ acts on each slot of $R$ as a
+derivation, so the action on $R(Y, Z) W$ picks up four terms
+(one for $R(Y, Z) W$ as a section, three for the slots $Y, Z, W$).
+-/
+
+/-- **Math.** **Covariant derivative of the Riemann curvature tensor**
+at $x$:
+$$(\nabla_X R)(Y, Z) W (x) \;=\; \nabla_X (R(Y, Z) W)(x)
+    - R(\nabla_X Y, Z) W(x) - R(Y, \nabla_X Z) W(x) - R(Y, Z)(\nabla_X W)(x).$$
+
+This is the standard $(1,4)$-tensor covariant-derivative pattern: $\nabla$
+acts on each slot of $R$ as a derivation. -/
+noncomputable def covDerivRiemann
+    (X Y Z W : SmoothVectorField I M) (x : M) : TangentSpace I x :=
+  (∇[X] (Riem(Y, Z) W)) x
+    - Riem(∇[X] Y, Z) W x
+    - Riem(Y, ∇[X] Z) W x
+    - Riem(Y, Z) (∇[X] W) x
+
+/-- **Math.** Notation `(∇R)[X](Y, Z) W` for `covDerivRiemann X Y Z W`. -/
+scoped[Riemannian] notation:max "(∇R)[" X "](" Y ", " Z ") " W:max =>
+  covDerivRiemann X Y Z W
+
+/-- **Math.** **Second (differential) Bianchi identity** for the
+Levi-Civita connection:
+$$(\nabla_X R)(Y, Z) W + (\nabla_Y R)(Z, X) W + (\nabla_Z R)(X, Y) W = 0.$$
+
+Reference: do Carmo 1992 §4 Proposition 2.5 (iii); Petersen Ch. 3.
+
+PRE-PAPER: the standard proof composes the commutator-form of `Riem`
+(`riemannCurvature_commutator_form`), distributivity of `covDeriv` in
+its differentiated argument (`covDeriv_add_field`, `covDeriv_sub_field`),
+the first Bianchi identity (`bianchi_first`), and the manifold
+Lie-bracket Jacobi identity (`SmoothVectorField.mlieBracket_jacobi`).
+Adapting the synthetic-DG version (external repo `Connection.lean:348`):
+expand `(∇R)` into 12 `covDeriv∘covDeriv∘covDeriv` terms, group into 6
+pairs via subtractivity of `covDeriv` in the first slot, reduce each
+pair to a `mlieBracket` term via torsion-freeness, and close via Jacobi.
+Estimated 80-120 LOC; repair tracked separately. -/
+theorem bianchi_second
+    [IsManifold I 3 M]
+    (X Y Z W : SmoothVectorField I M) (x : M) :
+    (∇R)[X](Y, Z) W x + (∇R)[Y](Z, X) W x + (∇R)[Z](X, Y) W x = 0 := by
+  sorry
+
 end Riemannian
