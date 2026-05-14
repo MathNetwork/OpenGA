@@ -26,7 +26,7 @@ realised as a four-step chain on the second covariant derivative:
 The packaged result
 `sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_of_inner_form` exposes the
 four steps in the form consumed by `Bochner/PerSummand.lean`'s
-`connectionLaplacian_grad_eq_grad_laplacian_add_ricci`.
+`bochner_connectionLaplacian_grad_decomposition`.
 
 Parallel to `Bochner/HessianExpansion.lean`, which expands $\mathrm{Hess}(|\nabla f|^2)$
 on the gradient side.

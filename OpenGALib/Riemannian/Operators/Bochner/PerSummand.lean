@@ -457,7 +457,7 @@ $$\langle \Delta_\nabla \nabla f, \nabla f\rangle_g
 Composes `bochner_per_summand_assembled` with the section-form
 `connectionLaplacian` definition; strict-interior `h_strict` feeds the
 Hess-symmetry-on-nbhd used inside `bochner_per_summand_swap`. -/
-theorem connectionLaplacian_grad_eq_grad_laplacian_add_ricci
+theorem bochner_connectionLaplacian_grad_decomposition
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
     ⟪connectionLaplacian (grad_g[I] f) x, (grad_g[I] f) x⟫_g
@@ -576,7 +576,7 @@ $$\tfrac{1}{2}\,\Delta_g\,|\nabla f|_g^2
     + \langle \nabla f, \nabla\,\Delta_g f\rangle_g
     + \mathrm{Ric}(\nabla f, \nabla f).$$
 Combines `bochner_leibniz_trace_reduction` and
-`connectionLaplacian_grad_eq_grad_laplacian_add_ricci`.
+`bochner_connectionLaplacian_grad_decomposition`.
 
 Reference: Petersen Ch. 7 §1 Prop 33; do Carmo §6; Schoen–Simon 1981 §1. -/
 theorem bochner_weitzenboeck
@@ -587,7 +587,7 @@ theorem bochner_weitzenboeck
       + ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
       + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
   rw [bochner_leibniz_trace_reduction f hf x,
-      connectionLaplacian_grad_eq_grad_laplacian_add_ricci f hf x]
+      bochner_connectionLaplacian_grad_decomposition f hf x]
   abel
 
 end Operators
