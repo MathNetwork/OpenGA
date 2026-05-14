@@ -144,13 +144,12 @@ Combines `hessian_gradientNormSq_apply_chartFrame` summed over
 `OrthonormalBasis.sum_sq_inner_left` for Frobenius². -/
 theorem leibniz_trace_reduction
     [IsManifold I 2 M] [T2Space M]
-    (f : M → ℝ) (x : M)
-    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
-              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
     (1 / 2 : ℝ) * (Δ_g[I] ‖grad_g[I] f‖²_g) x
       = ⟪connectionLaplacian (grad_g[I] f) x, (grad_g[I] f) x⟫_g
         + ‖hess_g[I] f‖²_g x := by
   classical
+  have h_grad := manifoldGradient_smooth_of_smooth f hf
   show (1 / 2 : ℝ) * Operators.scalarLaplacian (I := I) (M := M) (‖grad_g[I] f‖²_g) x
       = metricInner x
           (connectionLaplacian (I := I) (M := M) (manifoldGradient (I := I) f) x)

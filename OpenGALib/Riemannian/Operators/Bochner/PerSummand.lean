@@ -47,11 +47,8 @@ Combines two `leviCivitaConnection_metric_compatible` applications with
 the cross-Christoffel terms. -/
 theorem bochner_per_summand_swap
     [IsManifold I 2 M]
-    (f : M → ℝ) (B W : SmoothVectorField I M) (x : M)
-    (h_strict : extChartAt I x x ∈ interior (Set.range I))
-    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
-    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
-              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (B W : SmoothVectorField I M) (x : M) :
     metricInner x
         (covDeriv B.toFun
           (fun y => covDeriv B.toFun (manifoldGradient (I := I) f) y) x)
@@ -69,6 +66,9 @@ theorem bochner_per_summand_swap
             (covDeriv B.toFun W.toFun x))
           (B.toFun x) := by
   classical
+  have h_strict : extChartAt I x x ∈ interior (Set.range I) := by
+    rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ]; exact Set.mem_univ _
+  have h_grad := manifoldGradient_smooth_of_smooth f hf
   -- Wrap `manifoldGradient f` as a `SmoothVectorField`.
   let gradF : SmoothVectorField I M :=
     { toFun := manifoldGradient (I := I) f, smooth := h_grad }
@@ -91,7 +91,7 @@ theorem bochner_per_summand_swap
       (fun y : M => metricInner y (Q y) (W.toFun y))
         =ᶠ[𝓝 x] (fun y : M => metricInner y (P y) (B.toFun y)) :=
     hessianBilin_section_eventually_symm_of_strict_interior
-      (I := I) f B.toFun W.toFun x h_strict hf h_grad
+      (I := I) f hf B.toFun W.toFun x
   -- Step (c): metric compat on `(P, B)` along direction `B x` at `x`.
   have h_compat_PB := leviCivitaConnection_metric_compatible
     B.toFun P B.toFun x (B.smoothAt x) (hP_smooth x) (B.smoothAt x)
@@ -279,11 +279,8 @@ $(\nabla_B \nabla f, B)$, with `hessianBilin_symm` collapsing the two
 Christoffel-correction terms. -/
 theorem bochner_per_summand_assembled
     [IsManifold I 2 M]
-    (f : M → ℝ) (B W : SmoothVectorField I M) (x : M)
-    (h_strict : extChartAt I x x ∈ interior (Set.range I))
-    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
-    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
-              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (B W : SmoothVectorField I M) (x : M) :
     metricInner x
         (covDeriv B.toFun
           (fun y => covDeriv B.toFun (manifoldGradient (I := I) f) y) x)
@@ -301,6 +298,9 @@ theorem bochner_per_summand_assembled
       - 2 * hessianBilin (I := I) f x (B.toFun x)
               (covDeriv W.toFun B.toFun x) := by
   classical
+  have h_strict : extChartAt I x x ∈ interior (Set.range I) := by
+    rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ]; exact Set.mem_univ _
+  have h_grad := manifoldGradient_smooth_of_smooth f hf
   -- Wrap ∇f as SmoothVectorField.
   let gradF : SmoothVectorField I M :=
     { toFun := manifoldGradient (I := I) f, smooth := h_grad }
@@ -308,7 +308,7 @@ theorem bochner_per_summand_assembled
     fun y => covDeriv B.toFun gradF.toFun y with hQ_def
   -- Step 1: chain `bochner_per_summand_swap` + `bochner_per_summand_riemann_form`.
   -- Get LHS = R-term + g(LC Q x (W x), B x) - g(LC Gf x (LC B x (W x))) (B x).
-  have h_swap := bochner_per_summand_swap (I := I) f B W x h_strict hf h_grad
+  have h_swap := bochner_per_summand_swap (I := I) f hf B W x
   have h_riem := bochner_per_summand_riemann_form (I := I) f B W x
   -- Step 2: third metric compat on (Q, B) along direction W x at x.
   have hQ_smooth : TangentSmoothAt Q x :=
@@ -429,11 +429,11 @@ without any Hom-bundle Leibniz bridge. -/
 `leviCivitaConnection_smoothAt_smoothVF_dir` with
 `metricInner_mdifferentiableAt_of_tangentSmoothAt`. -/
 private lemma hessianBilin_smoothVF_diag_mdifferentiableAt
-    (f : M → ℝ) (B : SmoothVectorField I M) (x : M)
-    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
-              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (B : SmoothVectorField I M) (x : M) :
     MDifferentiableAt I 𝓘(ℝ, ℝ)
       (fun y : M => hessianBilin (I := I) f y (B.toFun y) (B.toFun y)) x := by
+  have h_grad := manifoldGradient_smooth_of_smooth f hf
   let gradF : SmoothVectorField I M := ⟨manifoldGradient (I := I) f, h_grad⟩
   -- Smoothness of `b ↦ covDerivAt ∇f b (B b) = (lcc).toFun ∇f b (B b)`.
   have h_covAt : TangentSmoothAt
@@ -456,22 +456,17 @@ Composes `bochner_per_summand_assembled` with the section-form
 Hess-symmetry-on-nbhd used inside `bochner_per_summand_swap`. -/
 theorem connectionLaplacian_grad_eq_grad_laplacian_add_ricci
     [IsManifold I 2 M] [T2Space M]
-    (f : M → ℝ) (x : M)
-    (h_strict : extChartAt I x x ∈ interior (Set.range I))
-    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
-    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
-              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
     ⟪connectionLaplacian (grad_g[I] f) x, (grad_g[I] f) x⟫_g
       = ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
         + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
   classical
+  have h_grad := manifoldGradient_smooth_of_smooth f hf
   let gradF : SmoothVectorField I M :=
     { toFun := manifoldGradient (I := I) f, smooth := h_grad }
   let Bi : Fin (Module.finrank ℝ E) → SmoothVectorField I M := fun i =>
     { toFun := Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i
       smooth := Riemannian.Tensor.smoothOrthoFrame_smooth (I := I) hm.metric x i }
-  have h_interior : extChartAt I x x ∈ closure (interior (Set.range I)) :=
-    subset_closure h_strict
   -- Per-summand quantities.
   set Rterm : Fin (Module.finrank ℝ E) → ℝ := fun i =>
     metricInner x
@@ -499,7 +494,7 @@ theorem connectionLaplacian_grad_eq_grad_laplacian_add_ricci
     rw [metricInner_sub_left]
     show _ = Rterm i + Mterm i - 2 * Hterm i
     rw [hRterm_def, hMterm_def, hHterm_def]
-    exact bochner_per_summand_assembled (I := I) f (Bi i) gradF x h_strict hf h_grad
+    exact bochner_per_summand_assembled (I := I) f hf (Bi i) gradF x
   -- Main: unfold `connectionLaplacian`, sum_inner pull-out, per_summand, sum-distribute.
   show metricInner x
         (connectionLaplacian (I := I) (M := M) (manifoldGradient (I := I) f) x)
@@ -530,18 +525,17 @@ theorem connectionLaplacian_grad_eq_grad_laplacian_add_ricci
   -- (1) ∑ R-term = Ric(∇f, ∇f).
   have h_R_eq : (∑ i, Rterm i) =
       Ric_g(manifoldGradient (I := I) f x, gradF.toFun x) x :=
-    heart_curvature_orthonormal_sum_eq_ricci (I := I) f gradF x h_interior h_grad
+    heart_curvature_orthonormal_sum_eq_ricci (I := I) f hf gradF x
   -- (2) ∑ H-term = 0.
   have h_H_eq : (∑ i, Hterm i) = 0 :=
-    sum_hessianBilin_smoothOrthoFrame_cov_eq_zero (I := I) f gradF x
-      h_interior hf h_grad
+    sum_hessianBilin_smoothOrthoFrame_cov_eq_zero (I := I) f hf gradF x
   -- (3) ∑ M-term: factor mfderiv outside, identify inner sum as Δ_g f via Stage 7.
   have h_each_hess_smooth : ∀ i,
       MDifferentiableAt I 𝓘(ℝ, ℝ)
           (fun y : M => hessianBilin (I := I) f y ((Bi i).toFun y)
             ((Bi i).toFun y)) x := by
     intro i
-    exact hessianBilin_smoothVF_diag_mdifferentiableAt f (Bi i) x h_grad
+    exact hessianBilin_smoothVF_diag_mdifferentiableAt f hf (Bi i) x
   have h_M_factor :
       (∑ i, Mterm i)
         = (mfderiv I 𝓘(ℝ, ℝ)
@@ -584,17 +578,13 @@ Combines `leibniz_trace_reduction` and
 Reference: Petersen Ch. 7 §1 Prop 33; do Carmo §6; Schoen–Simon 1981 §1. -/
 theorem bochner_weitzenboeck
     [IsManifold I 2 M] [T2Space M]
-    (f : M → ℝ) (x : M)
-    (h_strict : extChartAt I x x ∈ interior (Set.range I))
-    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
-    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
-              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
     (1 / 2 : ℝ) * (Δ_g[I] ‖grad_g[I] f‖²_g) x =
       ‖hess_g[I] f‖²_g x
       + ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
       + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
-  rw [leibniz_trace_reduction f x h_grad,
-      connectionLaplacian_grad_eq_grad_laplacian_add_ricci f x h_strict hf h_grad]
+  rw [leibniz_trace_reduction f hf x,
+      connectionLaplacian_grad_eq_grad_laplacian_add_ricci f hf x]
   abel
 
 end Operators

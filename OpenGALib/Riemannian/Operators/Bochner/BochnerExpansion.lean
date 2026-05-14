@@ -207,22 +207,20 @@ theorem metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym
   -- ⇒ A - hA = (P - hB') - hA = (Q - hB) - hA' = (B + hA' - hB) - hA' = B - hB ✓
   linear_combination -h_compat_W + h_compat_Z + h_eq_at_v + h_sym_zΓvw - h_sym_wΓvz
 
-/-- **Eng.** Discharge of `h_eventual_sym` from strict interior hypothesis.
-Propagates `h_interior` to a nbhd via
-`extChartAt_self_eventually_mem_closure_interior_range` and applies
-pointwise `hessianBilin_symm` to feed
+/-- **Eng.** Discharge of `h_eventual_sym` from `[I.Boundaryless]`.
+Propagates the strict-interior fact (vacuous under `[I.Boundaryless]`) to
+a nbhd via `extChartAt_self_eventually_mem_closure_interior_range` and
+applies pointwise `hessianBilin_symm` to feed
 `metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym`. -/
 theorem hessianBilin_eventually_symm_of_strict_interior
     [IsManifold I 2 M]
-    (f : M → ℝ) (x : M)
-    (h_strict : extChartAt I x x ∈ interior (Set.range I))
-    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
-    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
-              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M)))
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M)
     (w z : TangentSpace I x) :
     (fun y : M => hessianBilin (I := I) f y w z)
       =ᶠ[𝓝 x] (fun y : M => hessianBilin (I := I) f y z w) := by
-  -- Propagate strict h_strict to closure-interior eventually.
+  have h_strict : extChartAt I x x ∈ interior (Set.range I) := by
+    rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ]; exact Set.mem_univ _
+  have h_grad := manifoldGradient_smooth_of_smooth f hf
   have h_interior_nbhd :=
     extChartAt_self_eventually_mem_closure_interior_range (I := I) (M := M) h_strict
   filter_upwards [h_interior_nbhd] with y hy_interior
@@ -244,13 +242,13 @@ $X, Y$ instead of constant lifts: at every $y$ near $x$,
 $\mathrm{Hess}\,f\,(X(y), Y(y))(y) = \mathrm{Hess}\,f\,(Y(y), X(y))(y)$. -/
 theorem hessianBilin_section_eventually_symm_of_strict_interior
     [IsManifold I 2 M]
-    (f : M → ℝ) (X Y : Π y : M, TangentSpace I y) (x : M)
-    (h_strict : extChartAt I x x ∈ interior (Set.range I))
-    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
-    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
-              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (X Y : Π y : M, TangentSpace I y) (x : M) :
     (fun y : M => hessianBilin (I := I) f y (X y) (Y y))
       =ᶠ[𝓝 x] (fun y : M => hessianBilin (I := I) f y (Y y) (X y)) := by
+  have h_strict : extChartAt I x x ∈ interior (Set.range I) := by
+    rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ]; exact Set.mem_univ _
+  have h_grad := manifoldGradient_smooth_of_smooth f hf
   have h_interior_nbhd :=
     extChartAt_self_eventually_mem_closure_interior_range (I := I) (M := M) h_strict
   filter_upwards [h_interior_nbhd] with y hy_interior
@@ -316,10 +314,8 @@ $$\sum_i g_x\bigl(R(B_i, W)\,\nabla f,\, B_i\bigr) \;=\;
   \mathrm{Ric}_g(\nabla f, W)(x).$$ -/
 theorem heart_curvature_orthonormal_sum_eq_ricci
     [IsManifold I 2 M] [T2Space M]
-    (f : M → ℝ) (W : SmoothVectorField I M) (x : M)
-    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
-    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
-              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (W : SmoothVectorField I M) (x : M) :
     ∑ i, metricInner x
         (riemannCurvature
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i)
@@ -327,6 +323,10 @@ theorem heart_curvature_orthonormal_sum_eq_ricci
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
       = Ric_g(manifoldGradient (I := I) f x, W.toFun x) x := by
   classical
+  have h_interior : extChartAt I x x ∈ closure (interior (Set.range I)) := by
+    rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ, closure_univ]
+    exact Set.mem_univ _
+  have h_grad := manifoldGradient_smooth_of_smooth f hf
   -- Wrap `∇f`, frame, and the constant lifts of `(W x, ∇f x)` as `SmoothVectorField`.
   let gradF : SmoothVectorField I M :=
     { toFun := manifoldGradient (I := I) f, smooth := h_grad }
@@ -500,17 +500,18 @@ $a_{ij}$ antisymmetric (`smoothOrthoFrame_cov_skew`) and $h_{ij}$
 symmetric (`hessianBilin_symm`). -/
 theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
     [IsManifold I 2 M] [T2Space M]
-    (f : M → ℝ) (W : SmoothVectorField I M) (x : M)
-    (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
-    (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
-    (h_grad : ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
-              (fun y => (⟨y, manifoldGradient (I := I) f y⟩ : TangentBundle I M))) :
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
+    (W : SmoothVectorField I M) (x : M) :
     ∑ i, hessianBilin (I := I) f x
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
         ((leviCivitaConnection (I := I) (M := M)).toFun
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x
           (W.toFun x)) = 0 := by
   classical
+  have h_interior : extChartAt I x x ∈ closure (interior (Set.range I)) := by
+    rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ, closure_univ]
+    exact Set.mem_univ _
+  have h_grad := manifoldGradient_smooth_of_smooth f hf
   set bAt : OrthonormalBasis (Fin (Module.finrank ℝ E)) ℝ (TangentSpace I x) :=
     Riemannian.Tensor.smoothOrthoFrameOrthonormalBasis (I := I) x with hbAt_def
   -- Key matrices.
