@@ -791,11 +791,16 @@ theorem ricci_symm
     (SmoothVectorField.const (I := I) (M := M) (b i : E)) x h_interior
 
 
-/-! ## Special metric predicates: flat manifold -/
+/-! ## Special metric predicates: flat manifold
 
-/-- **Math.** A Riemannian metric is **flat** if the Riemann curvature
-tensor vanishes pointwise. -/
-def IsFlat (_g : RiemannianMetric I M) : Prop :=
+These predicates describe properties of the ambient Riemannian metric
+(via `[hm : HasMetric I M]` in scope); they do not take the metric as an
+explicit argument because the underlying notations (`Riem`, `Ric_g`)
+already consume the metric through the typeclass. -/
+
+/-- **Math.** The ambient Riemannian metric is **flat** if its Riemann
+curvature tensor vanishes pointwise. -/
+def IsFlat : Prop :=
   ∀ (X Y Z : VectorFieldSection I M) (x : M), Riem(X, Y) Z x = 0
 
 /-! ## Killing vector fields -/
