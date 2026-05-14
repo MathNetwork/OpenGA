@@ -166,6 +166,14 @@ CI implementation (`.github/workflows/ci.yml`): the build job greps `lake build`
 
 Adding a new linter: drop `OpenGALib/Util/Linter/<Name>.lean` (template: `MathTag.lean`), add the option to the `register_linter_set` in `Util/Linter.lean`, add a `#guard_msgs` test in `Tests/Linter/<Name>.lean`, add the baseline check in `ci.yml`. The `Util/Linter/README.md` walks the full template.
 
+## Unused-import hygiene (`shake`)
+
+`lake exe shake OpenGALib --no-downstream` (from the `batteries` package) detects unused imports and missing transitive-relied-on imports. False positives (tactic / notation / instance side-effect modules) are filtered via `scripts/noshake.json` — Mathlib's universal `ignoreImport` baseline plus OpenGALib-specific side-effect modules.
+
+CI baselines the count (currently `35`); growth fails the build. Cleanup is gradual: each PR either holds the count or reduces it. To reduce, apply shake's suggestion (`remove [old]`, `add [new]`) to the flagged file; if the full build then breaks downstream, add the right explicit imports to the broken consumer file (the Mathlib-standard "make every file declare its actual dependencies" pattern) and re-verify.
+
+Shake's `--fix` flag is known to over-apply (removes more than reported) on our codebase, so manual / scripted apply with full-build verification is the supported workflow.
+
 ## Sorry discipline
 
 Every sorry / opaque / placeholder is categorized:
