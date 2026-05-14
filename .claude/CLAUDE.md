@@ -109,11 +109,15 @@ When a mathematical object has multiple natural type-theoretic presentations (bu
 
 ### Engineering tax encapsulation
 
-Engineering tax (bound-carrying boilerplate, index translations, chart-pullback wrappers, basepoint-mismatch wrappers, simp-normal-form bridges) is unavoidable, but its location is chosen. Push it out of the math-anchor file into named Foundation sub-modules so the mathematical layer reads as math.
+Anchor files expose only `**Math.**`-tagged declarations (paper-side definitions, theorems, notations). All `**Eng.**` and `**Mixed.**` declarations — the "technical infrastructure" supporting proofs — live in companion sub-modules, never inline in the anchor. Mathematical reading of the anchor stays uncluttered; the Eng surface is searchable via the companion directory.
+
+Engineering tax (bound-carrying boilerplate, index translations, chart-pullback wrappers, basepoint-mismatch wrappers, simp-normal-form bridges, `@[simp]` def-unfolds) is unavoidable, but its location is chosen. Push it out of the math-anchor file into companion sub-modules.
 
 Foundation sub-modules co-locate with their anchor: anchor `X.lean` has companion directory `X/` for its Foundation sub-modules (e.g., `Connection/TangentHelpers.lean`, `TangentBundle/FlatChartDerivs.lean`, `Tensor/Defs/Coercions.lean`). General-purpose Eng that serves multiple anchors stays as a peer file with a content-based name — `Tensor/MusicalIso.lean` is the template (musical-iso machinery for any consumer, not Bochner-specific).
 
 Name sub-modules by content (`MusicalIso`, `LocallyConstant`, `Coercions`, `PerSummand`), never by role: no `Foundation`, `Helpers`, `Util`, `Base` suffixes unless paired with a domain qualifier (`TangentHelpers` OK; `Helpers` alone not).
+
+**Infrastructure buffer exception**: when an anchor accumulates only a small number of Eng/Mixed items with no clear content cluster yet, a single role-named buffer file `X/Foundation.lean` is permitted as an interim store. Once enough items accumulate to expose a functional pattern (≥3 items sharing a concept), split into a content-named sub-module and retire the buffer. The buffer is a transitional state, not a destination.
 
 ### Signature-reads-as-paper criterion
 

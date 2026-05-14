@@ -1,4 +1,5 @@
 import OpenGALib.Riemannian.Operators.Bochner
+import OpenGALib.Riemannian.Operators.Bochner.Foundation
 
 /-!
 # Per-summand chain of the heart-of-Bochner identity

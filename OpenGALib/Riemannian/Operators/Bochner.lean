@@ -69,20 +69,14 @@ noncomputable def connectionLaplacian
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α
 
-/-- **Eng.** Definitional unfolding of `connectionLaplacian`. -/
-@[simp] lemma connectionLaplacian_def
-    (Z : VectorFieldSection I M) (α : M) :
-    connectionLaplacian (I := I) (M := M) Z α =
-      ∑ i, Riemannian.Operators.secondCovDerivSection (I := I) (M := M) Z
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α :=
-  rfl
+-- `connectionLaplacian_def` (Eng simp-unfold) is in
+-- `Operators/Bochner/Foundation.lean` (per CLAUDE.md "infrastructure buffer").
 
 /-- **Math.** The connection Laplacian on the zero vector field is zero. -/
 @[simp] theorem connectionLaplacian_zero (α : M) :
     connectionLaplacian (I := I) (M := M)
         (0 : VectorFieldSection I M) α = 0 := by
-  rw [connectionLaplacian_def]
+  unfold connectionLaplacian
   refine Finset.sum_eq_zero ?_
   intro i _
   show secondCovDerivSection (I := I) (M := M)
@@ -176,7 +170,7 @@ theorem bochner_leibniz_trace_reduction
         = metricInner x
             (connectionLaplacian (I := I) (M := M) (manifoldGradient (I := I) f) x)
             (manifoldGradient (I := I) f x)
-    rw [connectionLaplacian_def]
+    unfold connectionLaplacian
     exact (sum_inner Finset.univ
       (fun i => secondCovDerivSection (I := I) (M := M)
         (manifoldGradient (I := I) f) (Bi i).toFun (Bi i).toFun x)
