@@ -56,25 +56,13 @@ theorem mfderiv_gradientNormSq_apply
                                       (manifoldGradient (I := I) f z)) y v = _
   have hVsm : TangentSmoothAt (fun _ : M => (v : TangentSpace I y)) y :=
     (SmoothVectorField.const (I := I) (M := M) (v : E)).smoothAt y
-  -- Pin metric-compat result in `.toFun` form (def-eq to ∇-form statement)
-  -- so the subsequent `rw [h, metricInner_comm ...]` pattern fires on the
-  -- structural shape.
-  have h :
-      mfderiv I 𝓘(ℝ, ℝ)
-          (fun z : M => metricInner z (manifoldGradient (I := I) f z)
-                                       (manifoldGradient (I := I) f z)) y v
-        = metricInner y
-            ((leviCivitaConnection (I := I) (M := M)).toFun
-              (manifoldGradient (I := I) f) y v)
-            (manifoldGradient (I := I) f y)
-          + metricInner y (manifoldGradient (I := I) f y)
-              ((leviCivitaConnection (I := I) (M := M)).toFun
-                (manifoldGradient (I := I) f) y v) :=
-    leviCivitaConnection_metric_compatible
-      (fun _ : M => (v : TangentSpace I y))
-      (manifoldGradient (I := I) f)
-      (manifoldGradient (I := I) f)
-      y hVsm h_grad_y h_grad_y
+  -- Bridge metric-compat ∇ → `.toFun` form for the subsequent `rw [h, metricInner_comm ...]`.
+  have h := leviCivitaConnection_metric_compatible
+    (fun _ : M => (v : TangentSpace I y))
+    (manifoldGradient (I := I) f)
+    (manifoldGradient (I := I) f)
+    y hVsm h_grad_y h_grad_y
+  simp only [← leviCivitaConnection_toFun_eq_covDeriv] at h
   rw [h, metricInner_comm y (manifoldGradient (I := I) f y)
        ((leviCivitaConnection (I := I) (M := M)).toFun
           (manifoldGradient (I := I) f) y v)]

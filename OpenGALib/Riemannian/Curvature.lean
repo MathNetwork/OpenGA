@@ -236,16 +236,10 @@ private lemma mDirDeriv_self_eq_two_metricInner_leviCivita_self
     mDirDeriv (fun y' => metricInner y' (Z y') (Z y')) y (V y)
       = 2 * metricInner y
           ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y (V y)) (Z y) := by
-  -- Re-state metric-compat in `.toFun` form (def-eq to the ∇-form result)
-  -- so the subsequent `rw [hsym]` pattern fires on the structural shape.
-  have h :
-      mfderiv I 𝓘(ℝ, ℝ) (fun y' => metricInner y' (Z y') (Z y')) y (V y)
-        = metricInner y
-            ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y (V y)) (Z y)
-          + metricInner y (Z y)
-              ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y (V y)) :=
-    leviCivitaConnection_metric_compatible V Z.toFun Z.toFun y
-      hV (Z.smoothAt y) (Z.smoothAt y)
+  -- Bridge metric-compat ∇ → `.toFun` form so `rw [hsym]` matches the structural shape.
+  have h := leviCivitaConnection_metric_compatible V Z.toFun Z.toFun y
+    hV (Z.smoothAt y) (Z.smoothAt y)
+  simp only [← leviCivitaConnection_toFun_eq_covDeriv] at h
   have hsym :
       metricInner y (Z y)
           ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun y (V y))
@@ -302,20 +296,11 @@ private lemma half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv
   -- That = 2 * mfderiv (g(∇_V Z, Z)) x (W x), and by metric-compat at x:
   --      = 2 * [g(∇_W ∇_V Z, Z) + g(∇_V Z, ∇_W Z)] x.
   -- So (1/2) * LHS = g(∇_W ∇_V Z, Z) x + g(∇_V Z, ∇_W Z) x.
-  -- Pin the metric-compat result in `.toFun` form (def-eq to ∇ form) so the
-  -- downstream `metricInner_comm` / `linarith` chains pattern-match.
-  have h_compat :
-      mfderiv I 𝓘(ℝ, ℝ)
-          (fun y' => metricInner y' (covDeriv V.toFun Z.toFun y') (Z.toFun y')) x
-          (W.toFun x)
-        = metricInner x
-            ((leviCivitaConnection (I := I) (M := M)).toFun
-              (fun y' => covDeriv V.toFun Z.toFun y') x (W.toFun x)) (Z.toFun x)
-          + metricInner x (covDeriv V.toFun Z.toFun x)
-              ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun x (W.toFun x)) :=
-    leviCivitaConnection_metric_compatible
-      W.toFun (fun y' => covDeriv V.toFun Z.toFun y') Z.toFun x
-      (W.smoothAt x) hcovVZ (Z.smoothAt x)
+  -- Bridge metric-compat ∇ → `.toFun` form for downstream `metricInner_comm` / `linarith`.
+  have h_compat := leviCivitaConnection_metric_compatible
+    W.toFun (fun y' => covDeriv V.toFun Z.toFun y') Z.toFun x
+    (W.smoothAt x) hcovVZ (Z.smoothAt x)
+  simp only [← leviCivitaConnection_toFun_eq_covDeriv] at h_compat
   -- h_compat : mfderiv (fun y' => g(∇_V Z, Z) y') x (W x) =
   --              g(∇_W (∇_V Z), Z) + g(∇_V Z, ∇_W Z)
   -- Rewrite the LHS function via h_fun:

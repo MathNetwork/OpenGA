@@ -314,29 +314,14 @@ theorem hessianBilin_symm
       (leviCivitaConnection (I := I) (M := M)).toFun W x v
         - (leviCivitaConnection (I := I) (M := M)).toFun V x w
       = VectorField.mlieBracket I V W x := h_torsion
-  -- Metric-compatibility, both directions. State results in `.toFun` form
-  -- (def-eq to the ∇-form statement of `_metric_compatible`) so the
-  -- downstream `rw [h_hess_lhs/rhs]` pattern-match on `(LC.toFun ∇f x) v` fires.
-  have h_compat_vw :
-      mfderiv I 𝓘(ℝ, ℝ)
-          (fun y => metricInner y (manifoldGradient (I := I) f y) (W y)) x (V x)
-        = metricInner x
-            ((leviCivitaConnection (I := I) (M := M)).toFun
-              (manifoldGradient (I := I) f) x (V x)) (W x)
-          + metricInner x (manifoldGradient (I := I) f x)
-              ((leviCivitaConnection (I := I) (M := M)).toFun W x (V x)) :=
-    leviCivitaConnection_metric_compatible
-      V (manifoldGradient (I := I) f) W x hVsm h_grad hWsm
-  have h_compat_wv :
-      mfderiv I 𝓘(ℝ, ℝ)
-          (fun y => metricInner y (manifoldGradient (I := I) f y) (V y)) x (W x)
-        = metricInner x
-            ((leviCivitaConnection (I := I) (M := M)).toFun
-              (manifoldGradient (I := I) f) x (W x)) (V x)
-          + metricInner x (manifoldGradient (I := I) f x)
-              ((leviCivitaConnection (I := I) (M := M)).toFun V x (W x)) :=
-    leviCivitaConnection_metric_compatible
-      W (manifoldGradient (I := I) f) V x hWsm h_grad hVsm
+  -- Metric-compatibility, both directions; bridge ∇ → `.toFun` form for
+  -- the downstream `rw [h_hess_lhs/rhs]` matches.
+  have h_compat_vw := leviCivitaConnection_metric_compatible
+    V (manifoldGradient (I := I) f) W x hVsm h_grad hWsm
+  simp only [← leviCivitaConnection_toFun_eq_covDeriv] at h_compat_vw
+  have h_compat_wv := leviCivitaConnection_metric_compatible
+    W (manifoldGradient (I := I) f) V x hWsm h_grad hVsm
+  simp only [← leviCivitaConnection_toFun_eq_covDeriv] at h_compat_wv
   -- Substitute `metricInner _ ∇f _ = mDirDeriv f _` to match HessianLie iterate form.
   -- (Use `mDirDeriv` to strip basepoint-dependent typing on the codomain.)
   have h_repl_W :
