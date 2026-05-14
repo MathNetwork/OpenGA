@@ -343,20 +343,11 @@ $$(\nabla^2 Z)(V, W)(x) \;=\;
   \nabla_V (\nabla_W Z)\,x \;-\; \nabla_{(\nabla_V W)}\,Z\,x.$$
 
 For $V(y) := v$, $W(y) := w$ (chart-frame constant lifts of vectors at
-$x$), this reduces to `secondCovDerivAt Z x v w` definitionally
-(`secondCovDerivSection_const_const` below). -/
+$x$), this reduces to `secondCovDerivAt Z x v w` definitionally. -/
 noncomputable def secondCovDerivSection
     (Z V W : VectorFieldSection I M) (x : M) : TangentSpace I x :=
   covDerivAt (fun y : M => covDerivAt Z y (W y)) x (V x)
     - covDerivAt Z x (covDerivAt W x (V x))
-
-/-- **Eng.** Bridge: chart-frame constant lifts of $v, w$ recover `secondCovDerivAt`. -/
-theorem secondCovDerivSection_const_const
-    (Z : VectorFieldSection I M) (x : M) (v w : TangentSpace I x) :
-    secondCovDerivSection (I := I) (M := M) Z
-        (fun _ : M => (v : TangentSpace I x))
-        (fun _ : M => (w : TangentSpace I x)) x
-      = secondCovDerivAt (I := I) (M := M) Z x v w := rfl
 
 /-- **Math.** **D.3 — Smooth-frame Ricci identity**: for smooth tangent fields $V, W$
 at $x$ and any tangent field $Z$,

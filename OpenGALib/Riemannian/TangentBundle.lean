@@ -23,8 +23,7 @@ file collects:
 
 * `IsLocallyConstantChartedSpace` — chart-coherence typeclass needed for
   parametric chart-mfderiv smoothness.
-* `TangentSmoothAt` + closure under the $C^\infty(M)$-module operations,
-  plus the `tangent_smooth` tactic.
+* `TangentSmoothAt` + closure under the $C^\infty(M)$-module operations.
 * Flat-codomain chart-frame trivializations `symmLFlat`,
   `continuousLinearMapAtFlat` and their basepoint smoothness.
 * Bundled smooth vector fields `SmoothVectorField`.
@@ -165,20 +164,6 @@ theorem smul {f : M → ℝ} {V : (y : M) → TangentSpace I y} {x : M}
   exact ContinuousLinearMap.map_smul _ _ _
 
 end TangentSmoothAt
-
-/-- **Eng.** `tangent_smooth` tactic: closes any `TangentSmoothAt V x` goal where `V` is built from
-hypotheses by zero / add / sub / neg / smul. -/
-syntax "tangent_smooth" : tactic
-
-macro_rules
-  | `(tactic| tangent_smooth) => `(tactic|
-      repeat first
-        | assumption
-        | exact TangentSmoothAt.zero _
-        | apply TangentSmoothAt.add
-        | apply TangentSmoothAt.sub
-        | apply TangentSmoothAt.neg
-        | apply TangentSmoothAt.smul)
 
 end Riemannian
 

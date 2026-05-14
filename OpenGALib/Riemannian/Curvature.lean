@@ -679,28 +679,6 @@ $\nabla_{[X, Y]} Z$ term drops because $[\mathrm{const}\,v, \mathrm{const}\,w] =
 as a global section (`mlieBracket_const_const_apply_zero`), so the connection
 evaluates `leviCivitaConnection.toFun Z x` at the zero vector. -/
 
-/-- **Eng.** **No-bracket form of `riemannCurvature` for constant directions**. -/
-theorem riemannCurvature_const_const_eq_commutator
-    (v w : E) (Z : VectorFieldSection I M) (x : M) :
-    riemannCurvature (fun _ : M => v) (fun _ : M => w) Z x
-      = covDeriv (fun _ : M => v)
-          (fun y => covDeriv (fun _ : M => w) Z y) x
-        - covDeriv (fun _ : M => w)
-          (fun y => covDeriv (fun _ : M => v) Z y) x := by
-  rw [riemannCurvature_commutator_form]
-  -- Third term is `covDeriv (mlieBracket I (const v) (const w)) Z x`. Show it's zero.
-  have h_br : VectorField.mlieBracket I (fun _ : M => v) (fun _ : M => w) x = 0 :=
-    mlieBracket_const_const_apply_zero v w x
-  -- `covDeriv U Z x = leviCivitaConnection.toFun Z x (U x)`; with `U x = 0`,
-  -- continuous linear map linearity gives zero.
-  have h_third :
-      covDeriv (VectorField.mlieBracket I (fun _ : M => v) (fun _ : M => w)) Z x = 0 := by
-    show (leviCivitaConnection (I := I) (M := M)).toFun Z x
-        (VectorField.mlieBracket I (fun _ : M => v) (fun _ : M => w) x) = 0
-    rw [h_br]
-    exact map_zero _
-  rw [h_third, sub_zero]
-
 /-! ### Constant-direction Bianchi swap
 
 Specialisation of `bianchi_first` to the triple $(\mathrm{const}\,v, X, Y)$,

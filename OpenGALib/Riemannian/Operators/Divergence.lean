@@ -61,19 +61,13 @@ noncomputable def divergence
 scoped[Riemannian] notation:max "div_g[" I "]" =>
   Operators.divergence (I := I)
 
-/-- **Eng.** Definitional unfold of `divergence`. -/
-@[simp] lemma divergence_def
-    (X : VectorFieldSection I M) (x : M) :
-    divergence (I := I) (M := M) X x =
-      ∑ i, metricInner x
-        ((∇[Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i] X) x)
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x) :=
-  rfl
-
 /-- **Math.** The divergence of the zero vector field is zero. -/
 @[simp] theorem divergence_zero (x : M) :
     divergence (I := I) (M := M) (0 : VectorFieldSection I M) x = 0 := by
-  rw [divergence_def]
+  show ∑ i, metricInner x
+        ((∇[Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i]
+            (0 : VectorFieldSection I M)) x)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x) = 0
   refine Finset.sum_eq_zero ?_
   intro i _
   -- ∇_{B_i} 0 at x = 0 via continuous linear map-zero of `leviCivitaConnection.toFun 0 x`.
