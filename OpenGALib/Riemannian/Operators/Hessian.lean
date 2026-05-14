@@ -248,26 +248,20 @@ theorem hessian_eq_mDirDeriv_iterate_sub_chris
     funext y
     exact manifoldGradient_inner_eq (I := I) g y (Y y)
   rw [h_lhs] at h_compat
-  -- Replace `⟨∇g x, covDeriv X Y x⟩` by `mDirDeriv g x (covDeriv X Y x)`.
-  -- State in `lcc.toFun` form to match `h_compat`'s pattern.
+  -- Replace `⟨∇g x, ∇_X Y x⟩` by `mDirDeriv g x (covDeriv X Y x)`.
+  -- State in `∇` form to match `h_compat`'s pattern.
   have h_chris_inner :
-      metricInner x (manifoldGradient (I := I) g x)
-          ((leviCivitaConnection (I := I) (M := M)).toFun Y x (X x))
+      metricInner x (manifoldGradient (I := I) g x) ((∇[X] Y) x)
         = mDirDeriv (I := I) g x (covDeriv X Y x) :=
     manifoldGradient_inner_eq (I := I) g x (covDeriv X Y x)
   rw [h_chris_inner] at h_compat
   -- Convert h_compat's `mfderiv` to `mDirDeriv` (definitional)
   change mDirDeriv (I := I) (fun y => mDirDeriv (I := I) g y (Y y)) x (X x)
-       = metricInner x
-            ((leviCivitaConnection (I := I) (M := M)).toFun
-              (manifoldGradient (I := I) g) x (X x)) (Y x)
+       = metricInner x ((∇[X] (manifoldGradient (I := I) g)) x) (Y x)
          + mDirDeriv (I := I) g x (covDeriv X Y x) at h_compat
-  -- Goal in `lcc.toFun` form so linarith matches h_compat's first `metricInner`
-  -- (`hessian g X Y x = metricInner x (covDeriv X ∇g x) (Y x)` def, and
-  -- `covDeriv X ∇g x = (lcc.toFun ∇g) x (X x)` def)
-  show metricInner x
-        ((leviCivitaConnection (I := I) (M := M)).toFun
-            (manifoldGradient (I := I) g) x (X x)) (Y x)
+  -- Goal in `∇` form so linarith matches h_compat's first `metricInner`
+  -- (`hessian g X Y x = metricInner x (∇[X] ∇g x) (Y x)` def).
+  show metricInner x ((∇[X] (manifoldGradient (I := I) g)) x) (Y x)
       = mDirDeriv (I := I) (fun y => mDirDeriv (I := I) g y (Y y)) x (X x)
         - mDirDeriv (I := I) g x (covDeriv X Y x)
   linarith [h_compat]
@@ -320,12 +314,29 @@ theorem hessianBilin_symm
       (leviCivitaConnection (I := I) (M := M)).toFun W x v
         - (leviCivitaConnection (I := I) (M := M)).toFun V x w
       = VectorField.mlieBracket I V W x := h_torsion
-  -- Metric-compatibility, both directions:
-  -- Args are (direction X, first slot Y, second slot Z) of `mfderiv ⟨Y, Z⟩ x · X x`
-  have h_compat_vw := leviCivitaConnection_metric_compatible
-    V (manifoldGradient (I := I) f) W x hVsm h_grad hWsm
-  have h_compat_wv := leviCivitaConnection_metric_compatible
-    W (manifoldGradient (I := I) f) V x hWsm h_grad hVsm
+  -- Metric-compatibility, both directions. State results in `.toFun` form
+  -- (def-eq to the ∇-form statement of `_metric_compatible`) so the
+  -- downstream `rw [h_hess_lhs/rhs]` pattern-match on `(LC.toFun ∇f x) v` fires.
+  have h_compat_vw :
+      mfderiv I 𝓘(ℝ, ℝ)
+          (fun y => metricInner y (manifoldGradient (I := I) f y) (W y)) x (V x)
+        = metricInner x
+            ((leviCivitaConnection (I := I) (M := M)).toFun
+              (manifoldGradient (I := I) f) x (V x)) (W x)
+          + metricInner x (manifoldGradient (I := I) f x)
+              ((leviCivitaConnection (I := I) (M := M)).toFun W x (V x)) :=
+    leviCivitaConnection_metric_compatible
+      V (manifoldGradient (I := I) f) W x hVsm h_grad hWsm
+  have h_compat_wv :
+      mfderiv I 𝓘(ℝ, ℝ)
+          (fun y => metricInner y (manifoldGradient (I := I) f y) (V y)) x (W x)
+        = metricInner x
+            ((leviCivitaConnection (I := I) (M := M)).toFun
+              (manifoldGradient (I := I) f) x (W x)) (V x)
+          + metricInner x (manifoldGradient (I := I) f x)
+              ((leviCivitaConnection (I := I) (M := M)).toFun V x (W x)) :=
+    leviCivitaConnection_metric_compatible
+      W (manifoldGradient (I := I) f) V x hWsm h_grad hVsm
   -- Substitute `metricInner _ ∇f _ = mDirDeriv f _` to match HessianLie iterate form.
   -- (Use `mDirDeriv` to strip basepoint-dependent typing on the codomain.)
   have h_repl_W :

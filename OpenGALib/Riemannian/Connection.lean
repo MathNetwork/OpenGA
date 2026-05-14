@@ -327,6 +327,15 @@ noncomputable def covDeriv
 /-- **Math.** Notation `∇[X] Y` for `covDeriv X Y`. -/
 scoped[Riemannian] notation:max "∇[" X "] " Y:max => covDeriv X Y
 
+/-- **Eng.** Bridge: `(leviCivitaConnection.toFun Y x) (X x) = (∇[X] Y) x` by
+definition. Tagged `@[simp]` so that proofs working with the raw structural
+form get rewritten into the `∇` notation form automatically; this keeps
+downstream proof bodies aligned with the notation-form headline statements
+(e.g. `leviCivitaConnection_metric_compatible`). -/
+@[simp] theorem leviCivitaConnection_toFun_eq_covDeriv
+    (X Y : Π x : M, TangentSpace I x) (x : M) :
+    (leviCivitaConnection (I := I) (M := M)).toFun Y x (X x) = (∇[X] Y) x := rfl
+
 /-- **Math.** Notation `⟦X, Y⟧` for the manifold Lie bracket
 `mlieBracket _ X Y` (model `I` inferred from section types). -/
 scoped[Riemannian] notation:max "⟦" X ", " Y "⟧" =>
@@ -349,9 +358,7 @@ theorem leviCivitaConnection_metric_compatible
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x)
     (hZ : TangentSmoothAt Z x) :
     mfderiv I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x (X x) =
-      metricInner x ((leviCivitaConnection (I := I) (M := M)).toFun Y x (X x)) (Z x) +
-      metricInner x (Y x)
-        ((leviCivitaConnection (I := I) (M := M)).toFun Z x (X x)) :=
+      metricInner x ((∇[X] Y) x) (Z x) + metricInner x (Y x) ((∇[X] Z) x) :=
   (Classical.choose_spec leviCivitaConnection_exists).2.1 X Y Z x hX hY hZ
 
 /-- **Math.** Smoothness of the Levi-Civita connection along a smooth

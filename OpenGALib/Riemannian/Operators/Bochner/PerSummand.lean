@@ -82,8 +82,16 @@ theorem bochner_per_summand_swap
   have hP_smooth : ∀ y, TangentSmoothAt P y :=
     fun y => covDeriv_smoothVF_smoothAt W gradF y
   -- Step (a): metric compat on `(Q, W)` along direction `B x` at `x`.
-  have h_compat_QW := leviCivitaConnection_metric_compatible
-    B.toFun Q W.toFun x (B.smoothAt x) (hQ_smooth x) (W.smoothAt x)
+  -- Pin in `.toFun` form (def-eq to ∇-form statement) for the subsequent
+  -- `rw [← h_compat_QW, ...]` chain.
+  have h_compat_QW :
+      mfderiv I 𝓘(ℝ, ℝ) (fun y : M => metricInner y (Q y) (W.toFun y)) x (B.toFun x)
+        = metricInner x
+            ((leviCivitaConnection (I := I) (M := M)).toFun Q x (B.toFun x)) (W.toFun x)
+          + metricInner x (Q x)
+              ((leviCivitaConnection (I := I) (M := M)).toFun W.toFun x (B.toFun x)) :=
+    leviCivitaConnection_metric_compatible
+      B.toFun Q W.toFun x (B.smoothAt x) (hQ_smooth x) (W.smoothAt x)
   -- Step (b): section-level Hess sym `(b ↦ g(Q b, W b)) =ᶠ (b ↦ g(P b, B b))`.
   -- Equivalent (def-eq) to the section-level form of
   -- `hessianBilin_section_eventually_symm_of_strict_interior` with X := B, Y := W.
@@ -93,8 +101,15 @@ theorem bochner_per_summand_swap
     hessianBilin_section_eventually_symm_of_strict_interior
       (I := I) f hf B.toFun W.toFun x
   -- Step (c): metric compat on `(P, B)` along direction `B x` at `x`.
-  have h_compat_PB := leviCivitaConnection_metric_compatible
-    B.toFun P B.toFun x (B.smoothAt x) (hP_smooth x) (B.smoothAt x)
+  -- Pin in `.toFun` form for downstream `rw`.
+  have h_compat_PB :
+      mfderiv I 𝓘(ℝ, ℝ) (fun y : M => metricInner y (P y) (B.toFun y)) x (B.toFun x)
+        = metricInner x
+            ((leviCivitaConnection (I := I) (M := M)).toFun P x (B.toFun x)) (B.toFun x)
+          + metricInner x (P x)
+              ((leviCivitaConnection (I := I) (M := M)).toFun B.toFun x (B.toFun x)) :=
+    leviCivitaConnection_metric_compatible
+      B.toFun P B.toFun x (B.smoothAt x) (hP_smooth x) (B.smoothAt x)
   -- Step (d): differentiate `h_section_sym` at `x` along `B x` via `EventuallyEq.mfderiv_eq`.
   have h_mfderiv_eq :
       mfderiv I 𝓘(ℝ, ℝ)
@@ -313,8 +328,15 @@ theorem bochner_per_summand_assembled
   -- Step 2: third metric compat on (Q, B) along direction W x at x.
   have hQ_smooth : TangentSmoothAt Q x :=
     covDeriv_smoothVF_smoothAt B gradF x
-  have h_compat_QB := leviCivitaConnection_metric_compatible
-    W.toFun Q B.toFun x (W.smoothAt x) hQ_smooth (B.smoothAt x)
+  -- Pin in `.toFun` form (def-eq to ∇) for downstream `rw [h_QB_section]`.
+  have h_compat_QB :
+      mfderiv I 𝓘(ℝ, ℝ) (fun y : M => metricInner y (Q y) (B.toFun y)) x (W.toFun x)
+        = metricInner x
+            ((leviCivitaConnection (I := I) (M := M)).toFun Q x (W.toFun x)) (B.toFun x)
+          + metricInner x (Q x)
+              ((leviCivitaConnection (I := I) (M := M)).toFun B.toFun x (W.toFun x)) :=
+    leviCivitaConnection_metric_compatible
+      W.toFun Q B.toFun x (W.smoothAt x) hQ_smooth (B.smoothAt x)
   -- Identify `(fun y => metricInner y (Q y) (B y)) = (fun y => hessianBilin f y (B y) (B y))`.
   have h_QB_section :
       (fun y : M => metricInner y (Q y) (B.toFun y))

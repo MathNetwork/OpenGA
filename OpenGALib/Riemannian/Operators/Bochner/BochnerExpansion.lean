@@ -130,13 +130,32 @@ theorem metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym
       mfderiv I 𝓘(ℝ, ℝ) (fun y : M => hessianBilin (I := I) f y w z) x v
       = mfderiv I 𝓘(ℝ, ℝ) (fun y : M => hessianBilin (I := I) f y z w) x v :=
     congrArg (· v) h_eq_mfderiv
-  -- Metric-compatibility at x with (V, ∂_W ∇f, Z) and the swap.
-  have h_compat_W := leviCivitaConnection_metric_compatible
-    V (fun y => covDerivAt (manifoldGradient (I := I) f) y w) Z x
-    hVsm h_grad_const_w hZsm
-  have h_compat_Z := leviCivitaConnection_metric_compatible
-    V (fun y => covDerivAt (manifoldGradient (I := I) f) y z) W x
-    hVsm h_grad_const_z hWsm
+  -- Metric-compatibility at x with (V, ∂_W ∇f, Z) and the swap. Pin in
+  -- `.toFun` form (def-eq to ∇-form) so `rw [h_id_W/Z]` patterns match.
+  have h_compat_W :
+      mfderiv I 𝓘(ℝ, ℝ)
+          (fun y : M =>
+            metricInner y (covDerivAt (manifoldGradient (I := I) f) y w) (Z y)) x (V x)
+        = metricInner x
+            ((leviCivitaConnection (I := I) (M := M)).toFun
+              (fun y => covDerivAt (manifoldGradient (I := I) f) y w) x (V x)) (Z x)
+          + metricInner x (covDerivAt (manifoldGradient (I := I) f) x w)
+              ((leviCivitaConnection (I := I) (M := M)).toFun Z x (V x)) :=
+    leviCivitaConnection_metric_compatible
+      V (fun y => covDerivAt (manifoldGradient (I := I) f) y w) Z x
+      hVsm h_grad_const_w hZsm
+  have h_compat_Z :
+      mfderiv I 𝓘(ℝ, ℝ)
+          (fun y : M =>
+            metricInner y (covDerivAt (manifoldGradient (I := I) f) y z) (W y)) x (V x)
+        = metricInner x
+            ((leviCivitaConnection (I := I) (M := M)).toFun
+              (fun y => covDerivAt (manifoldGradient (I := I) f) y z) x (V x)) (W x)
+          + metricInner x (covDerivAt (manifoldGradient (I := I) f) x z)
+              ((leviCivitaConnection (I := I) (M := M)).toFun W x (V x)) :=
+    leviCivitaConnection_metric_compatible
+      V (fun y => covDerivAt (manifoldGradient (I := I) f) y z) W x
+      hVsm h_grad_const_z hWsm
   -- Rewrite metric-compat LHS into `hessianBilin f y w z` / `f y z w` form.
   have h_hess_W :
       (fun y : M => metricInner y (covDerivAt (manifoldGradient (I := I) f) y w) (Z y))
