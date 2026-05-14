@@ -28,8 +28,6 @@ application).
 
 noncomputable section
 
-set_option linter.unusedSectionVars false
-
 open Bundle
 open scoped ContDiff Manifold Bundle Riemannian InnerProductSpace Topology
 
@@ -45,6 +43,9 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
 
 /-! ## `mfderiv` distribution over `Finset.sum` -/
 
+omit [InnerProductSpace ℝ E] [CompleteSpace E] [FiniteDimensional ℝ E]
+  [NeZero (Module.finrank ℝ E)] [I.Boundaryless] [IsManifold I ∞ M] [T2Space M]
+  [IsLocallyConstantChartedSpace H M] in
 /-- **Eng.** `mfderiv` distributes over `Finset.sum` (evaluated at a
 tangent vector):
 $$\mathrm{d}\Bigl(\sum_{i \in s} g_i\Bigr)(x)(v)
@@ -143,7 +144,7 @@ Combines `hessian_gradientNormSq_apply_chartFrame` summed over
 `stdOrthonormalBasis`, the trace identity for `connectionLaplacian`, and
 `OrthonormalBasis.sum_sq_inner_left` for Frobenius². -/
 theorem bochner_leibniz_trace_reduction
-    [IsManifold I 2 M] [T2Space M]
+    [IsManifold I 2 M]
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
     (1 / 2 : ℝ) * (Δ_g[I] ‖grad_g[I] f‖²_g) x
       = ⟪connectionLaplacian (grad_g[I] f) x, (grad_g[I] f) x⟫_g
