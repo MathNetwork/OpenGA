@@ -695,11 +695,17 @@ Riemann curvature operator built from the framework's `covDeriv`. Together
 with `abel` they discharge the algebraic identities of `riemannCurvature`
 without exposing the underlying connection plumbing. -/
 
-/-- **Eng.** Definitional unfold of `riemannCurvature` to its
-$\nabla_X \nabla_Y Z - \nabla_Y \nabla_X Z - \nabla_{[X, Y]} Z$ form
-for the `riem_simp` simp set. Pure rewrite — no hypotheses. -/
+/-- **Math.** **Commutator form of the Riemann curvature**:
+$$R(X, Y) Z(x)
+   \;=\; \nabla_X \nabla_Y Z(x) - \nabla_Y \nabla_X Z(x) - \nabla_{[X, Y]} Z(x),$$
+realising $R(X, Y)$ as the commutator $[\nabla_X, \nabla_Y]$ corrected by
+$-\nabla_{[X, Y]}$ that measures non-commutativity of the covariant
+derivative. Pure `rfl` from the definition of `riemannCurvature`; tagged
+`@[riem_simp]` for use as a simp lemma.
+
+Reference: do Carmo 1992 §4 Definition 2.1. -/
 @[riem_simp]
-theorem riemannCurvature_def
+theorem riemannCurvature_commutator_form
     (X Y Z : VectorFieldSection I M) (x : M) :
     Riem(X, Y) Z x = (∇[X] (∇[Y] Z)) x - (∇[Y] (∇[X] Z)) x - (∇[⟦X, Y⟧] Z) x := rfl
 

@@ -453,9 +453,9 @@ theorem riemannCurvature_inner_self_zero
       = metricInner x ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun x (Y.toFun x))
           ((leviCivitaConnection (I := I) (M := M)).toFun Z.toFun x (X.toFun x))
     exact metricInner_comm x _ _
-  -- Expand R via riemannCurvature_def + metricInner_sub_left twice.
+  -- Expand R via riemannCurvature_commutator_form + metricInner_sub_left twice.
   show metricInner x (riemannCurvature X.toFun Y.toFun Z.toFun x) (Z x) = 0
-  rw [riemannCurvature_def]
+  rw [riemannCurvature_commutator_form]
   -- Goal: g(∇_X ∇_Y Z - ∇_Y ∇_X Z - ∇_{[X,Y]} Z, Z) x = 0
   rw [show metricInner x (covDeriv X.toFun (fun y => covDeriv Y.toFun Z.toFun y) x
         - covDeriv Y.toFun (fun y => covDeriv X.toFun Z.toFun y) x
@@ -685,7 +685,7 @@ theorem riemannCurvature_const_const_eq_commutator
           (fun y => covDeriv (fun _ : M => w) Z y) x
         - covDeriv (fun _ : M => w)
           (fun y => covDeriv (fun _ : M => v) Z y) x := by
-  rw [riemannCurvature_def]
+  rw [riemannCurvature_commutator_form]
   -- Third term is `covDeriv (mlieBracket I (const v) (const w)) Z x`. Show it's zero.
   have h_br : VectorField.mlieBracket I (fun _ : M => v) (fun _ : M => w) x = 0 :=
     mlieBracket_const_const_apply_zero v w x

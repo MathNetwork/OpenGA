@@ -116,7 +116,7 @@ theorem riemannCurvature_smul_third_scalar_field
     funext y
     exact covDeriv_smul_scalar_field X.toFun f Z.toFun y (hf_at y) (Z.smoothAt y)
   -- Riemann curvature unfold via def.
-  rw [riemannCurvature_def, riemannCurvature_def, h_inner_Y, h_inner_X]
+  rw [riemannCurvature_commutator_form, riemannCurvature_commutator_form, h_inner_Y, h_inner_X]
   -- Pointwise sums need to be split into Π-add form for `covDeriv_add_field`.
   -- The two summands as separate Π-sections.
   set g1Y : VectorFieldSection I M :=
@@ -211,7 +211,7 @@ theorem riemannCurvature_smul_third_scalar_field
 /-! ## Z-slot locality
 
 `riemannCurvature` is local in the Z-slot: if `Z =ᶠ[𝓝 x] Z'`, then
-`R(X, Y) Z(x) = R(X, Y) Z'(x)`. Each of the three terms in `riemannCurvature_def`
+`R(X, Y) Z(x) = R(X, Y) Z'(x)`. Each of the three terms in `riemannCurvature_commutator_form`
 satisfies a covariant-derivative locality identity in `Z`:
 
 * `covDeriv X (covDeriv Y Z) x` and `covDeriv Y (covDeriv X Z) x` use the
@@ -286,8 +286,8 @@ theorem riemannCurvature_eq_of_Z_eventuallyEq
     covDeriv_congr_eventuallyEq_field
       (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun Z'.toFun x
       (Z.smoothAt x) (Z'.smoothAt x) hZZ'_x
-  -- Combine via `riemannCurvature_def`.
-  rw [riemannCurvature_def, riemannCurvature_def, hT1, hT2, hT3]
+  -- Combine via `riemannCurvature_commutator_form`.
+  rw [riemannCurvature_commutator_form, riemannCurvature_commutator_form, hT1, hT2, hT3]
 
 /-! ## Z-slot vanishing
 
@@ -432,7 +432,7 @@ theorem riemannCurvature_eq_zero_of_Z_eq_zero_field
       have h0 : leviCivitaConnection.toFun (fun _ : M => (0 : TangentSpace I _)) x = 0 :=
         leviCivitaConnection.isCovariantDerivativeOnUniv.zero (x := x)
       rw [h0]; rfl
-    rw [riemannCurvature_def, h_zero_outer X.toFun Y.toFun,
+    rw [riemannCurvature_commutator_form, h_zero_outer X.toFun Y.toFun,
         h_zero_outer Y.toFun X.toFun, h_zero_third]
     abel
   | insert j s hjs IH =>
@@ -583,7 +583,7 @@ theorem riemannCurvature_smul_first_scalar_field
                   (VectorField.mlieBracket I X.toFun Y.toFun x)
     rw [h_br, map_add, map_smul, map_smul]
   -- Assemble: 3 terms cancel the `Yf_x` boundary contribution symmetrically.
-  rw [riemannCurvature_def, hT1, hT2, hT3, riemannCurvature_def]
+  rw [riemannCurvature_commutator_form, hT1, hT2, hT3, riemannCurvature_commutator_form]
   rw [smul_sub, smul_sub]
   -- The `Yf_x • cov X Z x` boundary terms cancel: `-Yf_x • c - (-Yf_x) • c = 0`.
   -- Canonicalize the double-negative via `neg_smul`/`neg_neg` so `abel` sees the cancellation.
@@ -647,7 +647,7 @@ theorem riemannCurvature_add_first
        + (leviCivitaConnection.toFun Z.toFun x)
           (VectorField.mlieBracket I X'.toFun Y.toFun x)
     rw [h_br, map_add]
-  rw [riemannCurvature_def, hT1, hT2, hT3, riemannCurvature_def, riemannCurvature_def]
+  rw [riemannCurvature_commutator_form, hT1, hT2, hT3, riemannCurvature_commutator_form, riemannCurvature_commutator_form]
   abel
 
 /-- **Math.** **X-slot locality of `riemannCurvature`**: if `X =ᶠ[𝓝 x] X'`, then
@@ -697,7 +697,7 @@ theorem riemannCurvature_eq_of_X_eventuallyEq
        = (leviCivitaConnection.toFun Z.toFun x)
           (VectorField.mlieBracket I X'.toFun Y.toFun x)
     rw [h_br_x]
-  rw [riemannCurvature_def, riemannCurvature_def, hT1, hT2, hT3]
+  rw [riemannCurvature_commutator_form, riemannCurvature_commutator_form, hT1, hT2, hT3]
 
 /-! ## X-slot vanishing
 
@@ -796,7 +796,7 @@ theorem riemannCurvature_eq_zero_of_X_eq_zero_field
   | empty =>
     simp only [Finset.sum_empty]
     -- Goal: `R(fun _ : M => 0) Y.toFun Z.toFun x = 0`.
-    rw [riemannCurvature_def]
+    rw [riemannCurvature_commutator_form]
     -- The zero-section identification (Pi-zero).
     have h_zero_pi :
         (fun _ : M => (0 : TangentSpace I _)) = (0 : VectorFieldSection I M) := rfl

@@ -227,7 +227,7 @@ theorem bochner_per_summand_riemann_form
             (fun y => covDeriv B.toFun (manifoldGradient (I := I) f) y) x
           - covDeriv (VectorField.mlieBracket I B.toFun W.toFun)
               (manifoldGradient (I := I) f) x :=
-    riemannCurvature_def B.toFun W.toFun (manifoldGradient (I := I) f) x
+    riemannCurvature_commutator_form B.toFun W.toFun (manifoldGradient (I := I) f) x
   -- Torsion-free at x: `[B, W] x = ∇_B W x - ∇_W B x`. Use
   -- `covDeriv_sub_swap_eq_mlieBracket B W x (B.smoothAt x) (W.smoothAt x)`:
   -- (∇_B W) x - (∇_W B) x = [B, W] x.

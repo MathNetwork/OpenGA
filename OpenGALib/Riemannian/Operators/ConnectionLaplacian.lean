@@ -319,7 +319,7 @@ theorem secondCovDerivAt_sub_swap_eq_riemannCurvature
   have h_lifted : covDerivAt Z x ((∇[V] W) x) - covDerivAt Z x ((∇[W] V) x)
       = covDerivAt Z x ((⟦V, W⟧) x) := by
     rw [← (covDerivAt Z x).map_sub, h_tor]
-  rw [riemannCurvature_def]
+  rw [riemannCurvature_commutator_form]
   -- After unfolding: both `secondCovDerivAt` reduce to the covDeriv pattern (rfl)
   show (covDeriv V (covDeriv W Z) x - covDerivAt Z x ((∇[V] W) x))
        - (covDeriv W (covDeriv V Z) x - covDerivAt Z x ((∇[W] V) x))
@@ -383,7 +383,7 @@ Generalises `secondCovDerivAt_sub_swap_eq_riemannCurvature` (D.2): the
 constant lifts $\tilde v, \tilde w$ are replaced by arbitrary smooth $V, W$.
 The proof is the same algebraic chain — torsion-freeness
 (`covDeriv_sub_swap_eq_mlieBracket`) on $V, W$, lifted through the continuous linear map
-$\nabla_\bullet Z$ at $x$, then matched against `riemannCurvature_def`.
+$\nabla_\bullet Z$ at $x$, then matched against `riemannCurvature_commutator_form`.
 
 **Ground truth**: do Carmo §4 Prop 2.5; Lee §11. -/
 theorem secondCovDerivSection_sub_swap_eq_riemannCurvature
@@ -399,7 +399,7 @@ theorem secondCovDerivSection_sub_swap_eq_riemannCurvature
   have h_lifted : covDerivAt Z x ((∇[V] W) x) - covDerivAt Z x ((∇[W] V) x)
       = covDerivAt Z x ((⟦V, W⟧) x) := by
     rw [← (covDerivAt Z x).map_sub, h_tor]
-  rw [riemannCurvature_def]
+  rw [riemannCurvature_commutator_form]
   unfold secondCovDerivSection
   -- After unfolding both `secondCovDerivSection`, both sides are in covDeriv form
   show (covDeriv V (covDeriv W Z) x - covDerivAt Z x ((∇[V] W) x))
