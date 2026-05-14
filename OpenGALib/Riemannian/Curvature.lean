@@ -587,6 +587,89 @@ theorem riemannCurvature_metric_skew
   -- h_ZW : g(R Z, Z) + g(R Z, W) + (g(R W, Z) + g(R W, W)) = 0
   linarith
 
+/-! ### Pair symmetry: $g(R(X,Y)Z, W) = g(R(Z,W)X, Y)$
+
+Standard algebraic corollary of the four-fold Bianchi I sum combined with
+$(1,2)$-antisymmetry and $(3,4)$-antisymmetry. After cyclic Bianchi on the
+triples $(X,Y,Z),\,(Y,Z,W),\,(Z,W,X),\,(W,X,Y)$ paired against the
+respective fourth vector, the antisymmetries cancel 8 of the 12 terms,
+leaving the headline identity. -/
+
+/-- **Math.** **Pair symmetry of the Riemann tensor**:
+$$g_x(R(X,Y)Z, W) \;=\; g_x(R(Z,W)X, Y).$$
+
+Reference: do Carmo §4 Proposition 2.5 (iv); Petersen Ch. 3. -/
+theorem riemannCurvature_pair_symm
+    [IsManifold I 2 M]
+    (X Y Z W : SmoothVectorField I M) (x : M) :
+    metricInner x (Riem(X, Y) Z x) (W x)
+      = metricInner x (Riem(Z, W) X x) (Y x) := by
+  -- Strict-interior hypothesis used by `riemannCurvature_metric_skew`.
+  have h_interior : extChartAt I x x ∈ closure (interior (Set.range I)) := by
+    rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ, closure_univ]
+    exact Set.mem_univ _
+  -- Four cyclic Bianchi I instances, paired with the respective 4th vector.
+  have bianchi_inner : ∀ (A B C D : SmoothVectorField I M),
+      metricInner x (Riem(A, B) C x) (D x)
+        + metricInner x (Riem(B, C) A x) (D x)
+        + metricInner x (Riem(C, A) B x) (D x) = 0 := by
+    intro A B C D
+    have h := bianchi_first A B C x
+    have : metricInner x
+              (Riem(A, B) C x + Riem(B, C) A x + Riem(C, A) B x) (D x)
+            = metricInner x (0 : TangentSpace I x) (D x) := by rw [h]
+    rw [metricInner_add_left, metricInner_add_left] at this
+    -- `metricInner x 0 (D x) = 0`.
+    have h_zero : metricInner x (0 : TangentSpace I x) (D x) = 0 := by
+      show ⟪(0 : TangentSpace I x), D x⟫_ℝ = 0
+      exact inner_zero_left _
+    rw [h_zero] at this
+    linarith
+  have b1 := bianchi_inner X Y Z W
+  have b2 := bianchi_inner Y Z W X
+  have b3 := bianchi_inner Z W X Y
+  have b4 := bianchi_inner W X Y Z
+  -- (1,2)-antisymmetry, scalar form via metricInner congrArg.
+  have antisym12 : ∀ (A B C D : SmoothVectorField I M),
+      metricInner x (Riem(A, B) C x) (D x)
+        = -metricInner x (Riem(B, A) C x) (D x) := by
+    intro A B C D
+    rw [riemannCurvature_antisymm A B C x, metricInner_neg_left]
+  -- (3,4)-antisymmetry from `riemannCurvature_metric_skew`.
+  have antisym34 : ∀ (A B C D : SmoothVectorField I M),
+      metricInner x (Riem(A, B) C x) (D x)
+        = -metricInner x (Riem(A, B) D x) (C x) := by
+    intro A B C D
+    have h := riemannCurvature_metric_skew A B C D x h_interior
+    linarith
+  -- Combine: sum of b1..b4 with the antisymmetries gives 2·σ(X,Y,Z,W) - 2·σ(Z,W,X,Y) = 0.
+  -- Specialise antisym to the 12 σ-instances appearing in b1..b4 and feed to linarith.
+  have a1 := antisym12 X Y Z W
+  have a2 := antisym12 Y Z X W
+  have a3 := antisym12 Z X Y W
+  have a4 := antisym12 Y Z W X
+  have a5 := antisym12 Z W Y X
+  have a6 := antisym12 W Y Z X
+  have a7 := antisym12 Z W X Y
+  have a8 := antisym12 W X Z Y
+  have a9 := antisym12 X Z W Y
+  have a10 := antisym12 W X Y Z
+  have a11 := antisym12 X Y W Z
+  have a12 := antisym12 Y W X Z
+  have c1 := antisym34 X Y Z W
+  have c2 := antisym34 Y Z X W
+  have c3 := antisym34 Z X Y W
+  have c4 := antisym34 Y Z W X
+  have c5 := antisym34 Z W Y X
+  have c6 := antisym34 W Y Z X
+  have c7 := antisym34 Z W X Y
+  have c8 := antisym34 W X Z Y
+  have c9 := antisym34 X Z W Y
+  have c10 := antisym34 W X Y Z
+  have c11 := antisym34 X Y W Z
+  have c12 := antisym34 Y W X Z
+  linarith
+
 /-! ### Constant-direction commutator simplification
 
 `R(const v, const w) Z x = ∇_v ∇_w Z - ∇_w ∇_v Z` at $x$ — the
@@ -635,37 +718,12 @@ private lemma riemannCurvature_const_first_swap_eq_neg
       = -riemannCurvature X.toFun Y.toFun (fun _ : M => v) x := by
   classical
   set V : SmoothVectorField I M := SmoothVectorField.const (I := I) (M := M) v with hV_def
-  -- Jacobi identity at x from Mathlib (`leibniz_identity_mlieBracket_apply`),
-  -- with smoothness witnesses at level `minSmoothness ℝ 2` (downgraded from ∞).
-  have hV_2 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) (minSmoothness ℝ 2)
-      (fun y => (⟨y, V.toFun y⟩ : TangentBundle I M)) x := by
-    rw [minSmoothness_of_isRCLikeNormedField]
-    exact (V.smooth x).of_le (by
-      show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
-      exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
-  have hX_2 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) (minSmoothness ℝ 2)
-      (fun y => (⟨y, X.toFun y⟩ : TangentBundle I M)) x := by
-    rw [minSmoothness_of_isRCLikeNormedField]
-    exact (X.smooth x).of_le (by
-      show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
-      exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
-  have hY_2 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) (minSmoothness ℝ 2)
-      (fun y => (⟨y, Y.toFun y⟩ : TangentBundle I M)) x := by
-    rw [minSmoothness_of_isRCLikeNormedField]
-    exact (Y.smooth x).of_le (by
-      show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
-      exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
-  haveI hM3 : IsManifold I (minSmoothness ℝ 3) M := by
-    rw [minSmoothness_of_isRCLikeNormedField]; infer_instance
-  have h_jac := VectorField.leibniz_identity_mlieBracket_apply
-    (I := I) (M := M) (U := V.toFun) (V := X.toFun) (W := Y.toFun)
-    hV_2 hX_2 hY_2
   -- Bianchi I with (X', Y', Z') = (V, X, Y). Use the unfolded `V.toFun = fun _ => v`
   -- form so the rewrite by `h_antisym` (using the `fun _ => v` shape) fires.
   have h_bianchi : riemannCurvature (fun _ : M => v) X.toFun Y.toFun x
         + riemannCurvature X.toFun Y.toFun (fun _ : M => v) x
         + riemannCurvature Y.toFun (fun _ : M => v) X.toFun x = 0 :=
-    bianchi_first V X Y x h_jac
+    bianchi_first V X Y x
   -- First-pair antisymmetry on the 3rd Bianchi summand.
   have h_antisym :
       riemannCurvature Y.toFun (fun _ : M => v) X.toFun x

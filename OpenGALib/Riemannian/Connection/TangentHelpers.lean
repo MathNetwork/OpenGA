@@ -134,6 +134,48 @@ theorem mdifferentiableAt_continuousLinearMap_of_components
     (h_smulRightL (T x (basis i))).mdifferentiableAt (by decide)
   exact h_smulRightL_at.comp x (h_components i)
 
+/-- **Math.** **Jacobi identity for smooth vector fields**:
+$$\bigl[X,\,[Y, Z]\bigr] = \bigl[[X, Y],\,Z\bigr] + \bigl[Y,\,[X, Z]\bigr].$$
+Wrapper around Mathlib `VectorField.leibniz_identity_mlieBracket_apply`
+taking `SmoothVectorField` inputs, with the `minSmoothness ℝ 2`
+downgrade from `∞` handled internally. Stated in raw
+`VectorField.mlieBracket` form because this file precedes the
+`⟦·,·⟧` notation declaration in `Connection.lean`; consumers can use
+the notation when citing.
+
+**Ground truth**: do Carmo §0, Lee Ch. 8. -/
+theorem SmoothVectorField.mlieBracket_jacobi
+    (X Y Z : SmoothVectorField I M) (x : M) :
+    VectorField.mlieBracket I X.toFun
+        (VectorField.mlieBracket I Y.toFun Z.toFun) x
+      = VectorField.mlieBracket I (VectorField.mlieBracket I X.toFun Y.toFun)
+            Z.toFun x
+        + VectorField.mlieBracket I Y.toFun
+            (VectorField.mlieBracket I X.toFun Z.toFun) x := by
+  haveI hM3 : IsManifold I (minSmoothness ℝ 3) M := by
+    rw [minSmoothness_of_isRCLikeNormedField]; infer_instance
+  have hX_2 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) (minSmoothness ℝ 2)
+      (fun y => (⟨y, X.toFun y⟩ : TangentBundle I M)) x := by
+    rw [minSmoothness_of_isRCLikeNormedField]
+    exact (X.smooth x).of_le (by
+      show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
+      exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
+  have hY_2 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) (minSmoothness ℝ 2)
+      (fun y => (⟨y, Y.toFun y⟩ : TangentBundle I M)) x := by
+    rw [minSmoothness_of_isRCLikeNormedField]
+    exact (Y.smooth x).of_le (by
+      show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
+      exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
+  have hZ_2 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) (minSmoothness ℝ 2)
+      (fun y => (⟨y, Z.toFun y⟩ : TangentBundle I M)) x := by
+    rw [minSmoothness_of_isRCLikeNormedField]
+    exact (Z.smooth x).of_le (by
+      show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
+      exact_mod_cast (le_top : (2 : ℕ∞) ≤ ⊤))
+  exact VectorField.leibniz_identity_mlieBracket_apply
+    (I := I) (M := M) (U := X.toFun) (V := Y.toFun) (W := Z.toFun)
+    hX_2 hY_2 hZ_2
+
 omit [FiniteDimensional ℝ E] [IsLocallyConstantChartedSpace H M] in
 /-- **Eng.** `mlieBracket` of two `ContMDiff` bundle sections is `TangentSmoothAt`.
 Wrapper around Mathlib `ContMDiffAt.mlieBracket_vectorField` giving the

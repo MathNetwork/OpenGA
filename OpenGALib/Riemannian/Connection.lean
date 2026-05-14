@@ -772,9 +772,12 @@ standard $C^2$ textbook setup but fire pointwise.
 
 **Ground truth**: do Carmo 1992 §4 Proposition 2.5 (ii). -/
 theorem bianchi_first
-    (X Y Z : SmoothVectorField I M) (x : M)
-    (h_jac : (⟦X, ⟦Y, Z⟧⟧) x = (⟦⟦X, Y⟧, Z⟧) x + (⟦Y, ⟦X, Z⟧⟧) x) :
+    (X Y Z : SmoothVectorField I M) (x : M) :
     Riem(X, Y) Z x + Riem(Y, Z) X x + Riem(Z, X) Y x = 0 := by
+  -- Jacobi identity via the `SmoothVectorField.mlieBracket_jacobi` framework
+  -- primitive (wraps Mathlib's `leibniz_identity_mlieBracket_apply`).
+  have h_jac : (⟦X, ⟦Y, Z⟧⟧) x = (⟦⟦X, Y⟧, Z⟧) x + (⟦Y, ⟦X, Z⟧⟧) x :=
+    SmoothVectorField.mlieBracket_jacobi X Y Z x
   -- Derive all 11 smoothness hypotheses internally from `X.smooth`, `Y.smooth`,
   -- `Z.smooth` via `covDeriv_smoothVF_smoothAt` and `mlieBracket_tangentSmoothAt`.
   have hX : ∀ y, TangentSmoothAt X.toFun y := X.smoothAt
