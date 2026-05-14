@@ -7,7 +7,7 @@ import OpenGALib.Riemannian.Tensor.MusicalIso
 import OpenGALib.Riemannian.Util.MfderivApplySection
 import OpenGALib.Riemannian.Connection.Koszul
 import OpenGALib.Riemannian.Connection.RieszExtraction
-import OpenGALib.Riemannian.Connection.TangentHelpers
+import OpenGALib.Riemannian.Util.TangentHelpers
 
 /-!
 # Tensoriality + smoothness machinery for `koszulCovDeriv`

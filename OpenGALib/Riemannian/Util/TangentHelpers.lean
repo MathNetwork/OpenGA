@@ -5,17 +5,17 @@ import OpenGALib.Riemannian.Manifold
 import OpenGALib.Riemannian.TangentBundle
 
 /-!
-# Connection foundation — chart-bundle smoothness helpers
+# Tangent helpers — chart-bundle smoothness bridges
 
 Engineering scaffolding for the Levi-Civita / Koszul machinery in
 `Connection.lean`: chart-pullback bridges that convert between
 bundle-section smoothness, function-form `ContMDiff`, and
-`TangentSmoothAt` (the framework's MDifferentiableAt predicate).
+`TangentSmoothAt` (the framework's MDifferentiableAt predicate). Also
+hosts the `SmoothVectorField`-form Jacobi identity wrapping Mathlib's
+`leibniz_identity_mlieBracket_apply`.
 
-These helpers are independent of the Koszul formula itself — they only
-depend on Mathlib's vector-bundle machinery and the framework's
-`IsLocallyConstantChartedSpace` / `TangentBundle` API. Math-layer files
-should treat them as a public Foundation API.
+These helpers depend only on Mathlib's vector-bundle machinery and the
+framework's `IsLocallyConstantChartedSpace` / `TangentBundle` API.
 -/
 
 open Bundle VectorField

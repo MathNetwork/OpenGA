@@ -13,7 +13,7 @@ import Mathlib.LinearAlgebra.Basis.Defs
 import Mathlib.LinearAlgebra.Dimension.Finite
 import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
 import OpenGALib.Riemannian.TangentBundle.LocallyConstant
-import OpenGALib.Riemannian.TangentBundle.FlatChartDerivs
+import OpenGALib.Riemannian.Util.FlatChartDerivs
 
 /-!
 # Tangent bundle smoothness API
@@ -37,9 +37,9 @@ open scoped ContDiff Manifold Topology
 
 -- `IsLocallyConstantChartedSpace` typeclass + chart-constancy lemma +
 -- strict-interior nbhd propagation live in
--- `TangentBundle/LocallyConstant.lean` (Foundation base module).
+-- `TangentBundle/LocallyConstant.lean`.
 -- Flat-codomain chart-derivative wrappers + parametric chart-mfderiv
--- smoothness live in `TangentBundle/FlatChartDerivs.lean`.
+-- smoothness live in `Util/FlatChartDerivs.lean`.
 
 /-! ## Tangent vector field smoothness predicate
 
@@ -170,8 +170,8 @@ end Riemannian
 
 -- Flat-codomain chart-derivative wrappers (`symmLFlat`,
 -- `continuousLinearMapAtFlat`, `mfderivWithinFlat`) and their basepoint
--- smoothness theorems live in `TangentBundle/FlatChartDerivs.lean`
--- (Foundation module). They are reachable through the import above.
+-- smoothness theorems live in `Util/FlatChartDerivs.lean`.
+-- They are reachable through the import above.
 
 
 /-! ## Bundled smooth vector fields
