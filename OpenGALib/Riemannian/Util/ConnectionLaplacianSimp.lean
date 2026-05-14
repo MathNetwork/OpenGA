@@ -1,15 +1,12 @@
 import OpenGALib.Riemannian.Operators.ConnectionLaplacian
 
 /-!
-# ConnectionLaplacian anchor — infrastructure buffer
+# Connection Laplacian — simp def-unfold
 
-Eng / Mixed scaffolding for `Operators/ConnectionLaplacian.lean` that
-has no content-cluster home yet. Transitional buffer per CLAUDE.md
-"Infrastructure buffer exception"; items here should migrate into
-content-named sub-modules once a functional pattern accumulates.
-
-Current contents (1):
-* `connectionLaplacian_def` — `@[simp]` def-unfold for `connectionLaplacian`.
+Engineering simp lemma exposing the definition of `connectionLaplacian`
+as a sum of `secondCovDerivSection` over the smooth $g$-orthonormal
+frame. Imported by callers that need to rewrite at the level of the
+frame sum rather than against the opaque operator name.
 -/
 
 noncomputable section

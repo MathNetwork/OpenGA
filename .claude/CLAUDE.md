@@ -109,15 +109,16 @@ When a mathematical object has multiple natural type-theoretic presentations (bu
 
 ### Engineering tax encapsulation
 
-Anchor files expose only `**Math.**`-tagged declarations (paper-side definitions, theorems, notations). All `**Eng.**` and `**Mixed.**` declarations — the "technical infrastructure" supporting proofs — live in companion sub-modules, never inline in the anchor. Mathematical reading of the anchor stays uncluttered; the Eng surface is searchable via the companion directory.
+Anchor files expose only `**Math.**`-tagged declarations (paper-side definitions, theorems, notations). All `**Eng.**` and `**Mixed.**` declarations — the "technical infrastructure" supporting proofs — live in `Util/` sub-modules, never inline in the anchor. Mathematical reading of the anchor stays uncluttered; the Eng surface is searchable via the `Util/` folder.
 
-Engineering tax (bound-carrying boilerplate, index translations, chart-pullback wrappers, basepoint-mismatch wrappers, simp-normal-form bridges, `@[simp]` def-unfolds) is unavoidable, but its location is chosen. Push it out of the math-anchor file into companion sub-modules.
+Engineering tax (bound-carrying boilerplate, index translations, chart-pullback wrappers, basepoint-mismatch wrappers, simp-normal-form bridges, `@[simp]` def-unfolds) is unavoidable, but its location is chosen. Push it out of the math-anchor file into a `Util/` sub-module.
 
-Foundation sub-modules co-locate with their anchor: anchor `X.lean` has companion directory `X/` for its Foundation sub-modules (e.g., `Connection/TangentHelpers.lean`, `TangentBundle/FlatChartDerivs.lean`, `Tensor/Defs/Coercions.lean`). General-purpose Eng that serves multiple anchors stays as a peer file with a content-based name — `Tensor/MusicalIso.lean` is the template (musical-iso machinery for any consumer, not Bochner-specific).
+Two-tier `Util/` layout, following Mathlib idiom:
 
-Name sub-modules by content (`MusicalIso`, `LocallyConstant`, `Coercions`, `PerSummand`), never by role: no `Foundation`, `Helpers`, `Util`, `Base` suffixes unless paired with a domain qualifier (`TangentHelpers` OK; `Helpers` alone not).
+- **Top-level** `OpenGALib/Util/` — Eng helpers shared across multiple layers (Mathlib-extension `mfderiv` lemmas, notation, tactics, attributes).
+- **Per-layer** `OpenGALib/<Layer>/Util/` — Eng helpers scoped to a single layer (e.g. `Riemannian/Util/CotangentFunctional.lean`, `Riemannian/Util/MusicalIso.lean`). Per-layer `Util/` builds on top-level `Util/`.
 
-**Infrastructure buffer exception**: when an anchor accumulates only a small number of Eng/Mixed items with no clear content cluster yet, a single role-named buffer file `X/Foundation.lean` is permitted as an interim store. Once enough items accumulate to expose a functional pattern (≥3 items sharing a concept), split into a content-named sub-module and retire the buffer. The buffer is a transitional state, not a destination.
+Files inside `Util/` are content-named, never role-named: `MusicalIso.lean`, `CotangentFunctional.lean`, `ChartJacobianSmooth.lean`, `ConnectionLaplacianSimp.lean`. The folder name `Util/` carries the role; individual files describe their content. No `Helpers`, `Base`, `Foundation` suffixes inside `Util/`.
 
 ### Signature-reads-as-paper criterion
 

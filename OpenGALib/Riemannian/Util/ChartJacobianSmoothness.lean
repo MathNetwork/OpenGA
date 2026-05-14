@@ -1,4 +1,4 @@
-import OpenGALib.Riemannian.Tensor.ChartJacobianSmooth
+import OpenGALib.Riemannian.Util.ChartJacobianSmooth
 import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 import Mathlib.Geometry.Manifold.ContMDiffMFDeriv
 import Mathlib.Geometry.Manifold.MFDeriv.Atlas

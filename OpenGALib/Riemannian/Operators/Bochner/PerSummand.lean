@@ -1,7 +1,7 @@
 import OpenGALib.Riemannian.Operators.Bochner.HessianExpansion
 import OpenGALib.Riemannian.Operators.Bochner.BochnerExpansion
 import OpenGALib.Riemannian.Operators.ConnectionLaplacian
-import OpenGALib.Riemannian.Operators.ConnectionLaplacian.Foundation
+import OpenGALib.Riemannian.Util.ConnectionLaplacianSimp
 import OpenGALib.Util.MFDeriv
 
 /-!

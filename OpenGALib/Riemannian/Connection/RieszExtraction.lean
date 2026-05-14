@@ -1,5 +1,5 @@
 import OpenGALib.Riemannian.Connection.Koszul
-import OpenGALib.Riemannian.Connection.CotangentFunctional
+import OpenGALib.Riemannian.Util.CotangentFunctional
 import OpenGALib.Riemannian.Connection.TangentHelpers
 
 /-!

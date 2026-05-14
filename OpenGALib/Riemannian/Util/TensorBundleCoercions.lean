@@ -11,7 +11,7 @@ algebra simp lemmas making the coercion a `→L[𝕜]` and an
 `L`-isomorphism.
 
 These coercions are not used by the bundle structure instances (fiber /
-vector / smooth) in `Defs.lean`; they live here as a separate Foundation
+vector / smooth) in `Defs.lean`; they live here as a separate utility
 module so consumers that need to manipulate fiber elements via their
 model representations can `import` this file directly.
 -/

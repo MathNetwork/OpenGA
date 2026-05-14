@@ -8,9 +8,9 @@ import OpenGALib.Riemannian.TangentBundle
 import OpenGALib.Riemannian.Tensor.MusicalIso
 import OpenGALib.Riemannian.Connection.TangentHelpers
 import OpenGALib.Riemannian.Connection.Koszul
-import OpenGALib.Riemannian.Connection.CotangentFunctional
+import OpenGALib.Riemannian.Util.CotangentFunctional
 import OpenGALib.Riemannian.Connection.RieszExtraction
-import OpenGALib.Riemannian.Connection.CovDerivSmoothness
+import OpenGALib.Riemannian.Util.CovDerivSmoothness
 import OpenGALib.Util.Attributes
 
 /-!

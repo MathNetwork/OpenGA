@@ -3,7 +3,7 @@ import Mathlib.Geometry.Manifold.VectorField.LieBracket
 import OpenGALib.Riemannian.Manifold
 import OpenGALib.Riemannian.TangentBundle
 import OpenGALib.Riemannian.Tensor.MusicalIso
-import OpenGALib.Riemannian.Tensor.MfderivApplySection
+import OpenGALib.Riemannian.Util.MfderivApplySection
 import OpenGALib.Riemannian.Connection.Koszul
 import OpenGALib.Riemannian.Connection.RieszExtraction
 import OpenGALib.Riemannian.Connection.TangentHelpers
