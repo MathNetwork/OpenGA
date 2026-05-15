@@ -25,7 +25,6 @@ B3 invariance theorem `chartLocalMeasure_lintegral_U_eq_of_overlap`.
 
 noncomputable section
 
-set_option linter.unusedSectionVars false
 
 open Bundle Manifold Set MeasureTheory
 open scoped Manifold Topology ContDiff Matrix ENNReal
@@ -43,6 +42,8 @@ private local instance : BorelSpace E := ⟨rfl⟩
 private local instance : MeasurableSpace M := borel M
 private local instance : BorelSpace M := ⟨rfl⟩
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [IsManifold I ∞ M] in
 /-- **Eng.** Image of an open subset of a chart source under `extChartAt`
 is Borel-measurable in `E`. Works without `[I.Boundaryless]`: factors
 through the open image in `H` followed by the closed (hence measurable)
@@ -60,6 +61,8 @@ lemma extChartAt_image_measurableSet_of_open_subset_source (α : M)
   exact I.isClosedEmbedding.measurableEmbedding.measurableSet_image.mpr
     hchart_img.measurableSet
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [IsManifold I ∞ M] in
 /-- **Eng.** The chart-transition map
 `extChartAt I α₁ ∘ (extChartAt I α₀).symm` carries `(extChartAt I α₀) '' U`
 to `(extChartAt I α₁) '' U` when `U` is a subset of both chart sources. -/
@@ -75,6 +78,8 @@ lemma extChartAt_transition_image (α₀ α₁ : M) {U : Set M}
   change extChartAt I α₁ ((extChartAt I α₀).symm (extChartAt I α₀ x)) = _
   rw [(extChartAt I α₀).left_inv hxsrc0]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [IsManifold I ∞ M] in
 /-- **Eng.** Injectivity of the chart-transition map on the overlap image. -/
 lemma extChartAt_transition_injOn_overlap_image
     (α₀ α₁ : M) {U : Set M}
@@ -97,6 +102,7 @@ lemma extChartAt_transition_injOn_overlap_image
   have hab := (extChartAt I α₁).injOn haS1 hbS1 hyz
   rw [hab]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** On the overlap image, the chart-transition map has Fréchet
 derivative `tangentCoordChange I α₀ α₁ x` at `y = extChartAt I α₀ x`,
 within the overlap image itself.

@@ -39,7 +39,6 @@ Ground truth: do Carmo Ch.1; Lee Ch.16.
 
 noncomputable section
 
-set_option linter.unusedSectionVars false
 
 open Bundle Manifold Set
 open scoped Manifold Topology ContDiff Matrix
@@ -130,6 +129,7 @@ analysis: Mathlib's change-of-variables (`MeasureTheory.Measure.map`,
 `|det fderiv|`, and via this bridge our `|det P|` Jacobian factor
 becomes admissible. -/
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** Bridge: the chart-transition matrix at `x` is the matrix of
 the chart-transition derivative `tangentCoordChange I α₁ α₀ x` in the
 model basis of `E`. The index swap (`α₁ α₀` on the RHS vs `α₀ α₁` on the
@@ -197,6 +197,7 @@ theorem transitionMatrix_eq_toMatrix_tangentCoordChange
   rw [h_cBF₁, hgeom]
   rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** Determinant bridge: `det (transitionMatrix α₀ α₁) = det (tangentCoordChange α₁ α₀ x)`. -/
 theorem transitionMatrix_det_eq_tangentCoordChange_det
     (α₀ α₁ : M) {x : M}

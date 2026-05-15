@@ -27,7 +27,6 @@ Ground truth: do Carmo Ch.1 Eq.(5); Lee Ch.16.
 
 noncomputable section
 
-set_option linter.unusedSectionVars false
 
 open Bundle Manifold Set
 open scoped Manifold Topology ContDiff Matrix
@@ -50,10 +49,13 @@ and `chartGramMatrix` need not be positive-definite). -/
 def chartSqrtGramDet (g : RiemannianMetric I M) (α : M) (x : M) : ℝ :=
   Real.sqrt (chartGramMatrix (I := I) g α x).det
 
-@[simp] lemma chartSqrtGramDet_apply
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
+lemma chartSqrtGramDet_apply
     (g : RiemannianMetric I M) (α : M) (x : M) :
     chartSqrtGramDet (I := I) g α x =
       Real.sqrt (chartGramMatrix (I := I) g α x).det := rfl
+
+attribute [simp] chartSqrtGramDet_apply
 
 /-- **Math.** Strict positivity of the volume Jacobian factor on the
 trivialization base set. Follows from `chartGramMatrix_det_pos` and
@@ -64,6 +66,7 @@ lemma chartSqrtGramDet_pos
     0 < chartSqrtGramDet (I := I) g α x :=
   Real.sqrt_pos.mpr (chartGramMatrix_det_pos (I := I) g α hx)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Nonnegativity holds everywhere (from `Real.sqrt_nonneg`). -/
 lemma chartSqrtGramDet_nonneg
     (g : RiemannianMetric I M) (α : M) (x : M) :

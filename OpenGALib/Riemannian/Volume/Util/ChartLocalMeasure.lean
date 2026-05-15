@@ -32,7 +32,6 @@ construction is the standard "pull back Lebesgue along chart, weight by
 
 noncomputable section
 
-set_option linter.unusedSectionVars false
 
 open Bundle Manifold Set MeasureTheory
 open scoped Manifold Topology ContDiff Matrix ENNReal
@@ -106,6 +105,7 @@ noncomputable def chartLocalMeasure
         ENNReal.ofReal
           (chartSqrtGramDet (I := I) g α ((extChartAt I α).symm y))))
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** Unfolding lemma: definitional expansion of `chartLocalMeasure`. -/
 lemma chartLocalMeasure_def
     (g : RiemannianMetric I M) (α : M) :

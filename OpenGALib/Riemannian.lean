@@ -22,6 +22,7 @@ import OpenGALib.Riemannian.Volume.ChartPullback
 import OpenGALib.Riemannian.Volume.Exponential
 import OpenGALib.Riemannian.Volume.Hausdorff
 import OpenGALib.Riemannian.Volume.UniversalProperty
+import OpenGALib.Riemannian.Volume.Util.ChartLocalIntegral
 import OpenGALib.Riemannian.Volume.Util.ChartLocalMeasure
 import OpenGALib.Riemannian.Volume.Util.ChartOverlap
 import OpenGALib.Riemannian.Volume.Util.ChartSqrtGramDet
