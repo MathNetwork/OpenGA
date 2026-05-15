@@ -48,7 +48,6 @@ Statement-level dependencies this theorem forces to be load-bearing:
   the future content of `Comparison/BishopGromov/*` sibling files.
 
 ## Auxiliary definitions
-
 * `snakeFunction K r` — the snake function `s_K(r)` of the space form `M_K^n`
   (`sin / sinh / id` according to the sign of `K`).
 * `spaceFormBallVolume n K r` — the volume of a radius-`r` geodesic ball in
@@ -58,13 +57,19 @@ Statement-level dependencies this theorem forces to be load-bearing:
 * `spaceFormAdmissibleRadii K` — the set `𝒟_K` of admissible radii on which
   the comparison holds: `(0, π/√K)` when `K > 0`, and `(0, +∞)` otherwise.
 
-## Paper-style notation (scoped to `OpenGA.Comparison.BishopGromov`)
+## Paper-style notation
 
+Scoped to `OpenGA.Comparison.BishopGromov` (cross-file):
 * `B(p, r)` — open metric ball (wraps Mathlib `Metric.ball`).
-* `V[K, n, r]` — space-form ball volume (wraps `spaceFormBallVolume n K r`).
-* `𝒟[K]` — admissible radii (wraps `spaceFormAdmissibleRadii K`).
-* `μ.real s` — already in Mathlib (`Measure.real`, gives `(μ s).toReal`).
-* `⟪v, w⟫_g`, `Ric_g(v, w) x` — already in OpenGA Riemannian scope.
+
+Local to the headline's `section` (only valid where `K` is a
+section variable):
+* `V_K^n(r)` — space-form ball volume (wraps `spaceFormBallVolume n K r`).
+* `𝒟_K` — admissible radii (wraps `spaceFormAdmissibleRadii K`).
+
+Inherited from Mathlib / OpenGA scopes:
+* `μ.real s` — `Measure.real`, gives `(μ s).toReal`.
+* `⟪v, w⟫_g`, `Ric_g(v, w) x` — OpenGA Riemannian.
 -/
 
 open scoped Real Manifold InnerProductSpace ENNReal ContDiff Riemannian
@@ -123,15 +128,6 @@ noncomputable def spaceFormAdmissibleRadii (K : ℝ) : Set ℝ :=
 ambient Riemannian manifold (Mathlib `Metric.ball`). -/
 scoped notation:max "B(" p ", " r ")" => Metric.ball p r
 
-/-- **Math.** `V[K, n, r]` — volume of a radius-`r` geodesic ball in the
-`n`-dimensional space form of constant sectional curvature `K`. -/
-scoped notation:max "V[" K:max ", " n:max ", " r:max "]" =>
-  spaceFormBallVolume n K r
-
-/-- **Math.** `𝒟[K]` — the open interval of admissible radii for
-Bishop–Gromov comparison at curvature lower bound `K`. -/
-scoped notation:max "𝒟[" K:max "]" => spaceFormAdmissibleRadii K
-
 end OpenGA.Comparison.BishopGromov
 
 /-! ## Riemannian setup for the headline theorem
@@ -179,6 +175,24 @@ class IsRiemannianVolume (μ : Measure M) : Prop where
 
 open OpenGA.Comparison.BishopGromov
 
+/-! Section-scoped paper notation: `K` becomes an implicit section
+variable, so the local notation expansion captures it cleanly (the
+hygiene barrier that blocks `macro`-based capture is bypassed because
+`K` is parsed as a section variable, not as a free identifier in the
+notation RHS). -/
+section BishopGromovStatement
+
+variable {K : ℝ}
+
+/-- **Math.** `V_K^n(r)` — volume of a radius-`r` geodesic ball in the
+`n`-dimensional space form of constant sectional curvature `K`. -/
+local notation:max "V_K^" n:max "(" r:max ")" =>
+  spaceFormBallVolume n K r
+
+/-- **Math.** `𝒟_K` — the open interval of admissible radii for
+Bishop–Gromov comparison at curvature lower bound `K`. -/
+local notation:max "𝒟_K" => spaceFormAdmissibleRadii K
+
 /-- **Math.** **Bishop–Gromov volume comparison.**
 
 For a complete `n`-dimensional Riemannian manifold `M` whose Ricci curvature
@@ -218,8 +232,10 @@ invoked without `Metric.ball` being the path-infimum ball, which forces
 `IsRiemannianManifold.toLengthSpace` to be 0-sorry. -/
 theorem bishopGromov_volume_comparison
     (μ : Measure M) [IsRiemannianVolume μ]
-    {K : ℝ} (hRic : ∀ x : M, ∀ v : TangentSpace I x,
+    (hRic : ∀ x : M, ∀ v : TangentSpace I x,
       (n_M - 1 : ℝ) * K * ⟪v, v⟫_g ≤ Ric_g(v, v) x)
-    (p : M) {r R : ℝ} (hr : r ∈ 𝒟[K]) (hR : R ∈ 𝒟[K]) (hrR : r ≤ R) :
-    μ.real B(p, R) / V[K, n_M, R] ≤ μ.real B(p, r) / V[K, n_M, r] := by
+    (p : M) {r R : ℝ} (hr : r ∈ 𝒟_K) (hR : R ∈ 𝒟_K) (hrR : r ≤ R) :
+    μ.real B(p, R) / V_K^n_M(R) ≤ μ.real B(p, r) / V_K^n_M(r) := by
   sorry
+
+end BishopGromovStatement
