@@ -1,3 +1,4 @@
+import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.LinearAlgebra.Basis.Defs
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.Symmetric
@@ -64,5 +65,46 @@ theorem gramMatrix_symm {ι : Type*} [Fintype ι]
     (g.gramMatrix x b).IsSymm := by
   ext i j
   exact g.symm x (b j) (b i)
+
+/-- **Math.** The Gram matrix of a Riemannian metric is positive definite
+(symmetric + the quadratic form `y ↦ yᵀ G y` is strictly positive on
+nonzero `y`).
+
+Reduction: `yᵀ G y = g_x(Σ y_i b_i, Σ y_i b_i) = g_x(v, v)` where
+`v = b.repr.symm y`. Since `b` is a basis, `y ≠ 0` iff `v ≠ 0`, and
+positive-definiteness of `g_x` gives `g_x(v, v) > 0`.
+
+PRE-PAPER (Phase 1b). **Repair plan**: the proof unrolls
+`y.sum`-over-Finsupp into the bilinear-form expansion via
+`Finsupp.linearCombination` + bilinearity of `g.inner x` (specifically,
+`ContinuousLinearMap.map_finsupp_sum` applied twice). Standard
+LinearAlgebra; estimated 30-50 LOC. -/
+theorem gramMatrix_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (g : RiemannianMetric I M) (x : M) (b : Module.Basis ι ℝ (TangentSpace I x)) :
+    (g.gramMatrix x b).PosDef := by
+  sorry
+
+/-- **Math.** `det(g_x(b_i, b_j)) > 0` — strict positivity of the Gram
+determinant follows from positive-definiteness via Mathlib's
+`Matrix.PosDef.det_pos`. -/
+theorem gramMatrix_det_pos {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (g : RiemannianMetric I M) (x : M) (b : Module.Basis ι ℝ (TangentSpace I x)) :
+    0 < (g.gramMatrix x b).det :=
+  (g.gramMatrix_posDef x b).det_pos
+
+/-- **Math.** `√det(g_x(b_i, b_j)) ≥ 0` — trivial from `Real.sqrt_nonneg`. -/
+theorem sqrtGramDet_nonneg {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (g : RiemannianMetric I M) (x : M) (b : Module.Basis ι ℝ (TangentSpace I x)) :
+    0 ≤ g.sqrtGramDet x b :=
+  Real.sqrt_nonneg _
+
+/-- **Math.** `√det(g_x(b_i, b_j)) > 0` — strict positivity, from
+positive-definiteness of the Gram matrix via
+`Matrix.PosDef.det_pos` + `Real.sqrt_pos`. This is the **volume Jacobian
+positivity** lemma underlying the chart-pullback formula. -/
+theorem sqrtGramDet_pos {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (g : RiemannianMetric I M) (x : M) (b : Module.Basis ι ℝ (TangentSpace I x)) :
+    0 < g.sqrtGramDet x b :=
+  Real.sqrt_pos.mpr (g.gramMatrix_det_pos x b)
 
 end Riemannian.RiemannianMetric
