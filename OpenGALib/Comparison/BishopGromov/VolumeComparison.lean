@@ -110,7 +110,14 @@ Ground truth: do Carmo, Ch. 10 §2 (formula (5)); Petersen, Ch. 9 §1. -/
 noncomputable def spaceFormBallVolume (n : ℕ) (K r : ℝ) : ℝ :=
   let unitBallVolume : ℝ :=
     (MeasureTheory.volume (Metric.ball (0 : EuclideanSpace ℝ (Fin n)) 1)).toReal
-  (n : ℝ) * unitBallVolume * ∫ t in (0 : ℝ)..r, (snakeFunction K t) ^ (n - 1)
+  -- Clip the snake function to `[0, ∞)` so the integrand stays well-defined
+  -- past the cut radius `π/√K` (where `s_K` would otherwise turn negative)
+  -- and the integral retains its `vol(B(p, r))`-interpretation as a
+  -- monotone, non-negative function of `r` on all of `ℝ`. Within `𝒟_K`
+  -- the clip is a no-op (`s_K(t) ≥ 0` there); outside `𝒟_K` the value is
+  -- the "saturated" volume of the entire space form (constant past the cut).
+  (n : ℝ) * unitBallVolume *
+    ∫ t in (0 : ℝ)..r, max 0 (snakeFunction K t) ^ (n - 1)
 
 /-- **Math.** The set of *admissible radii* `𝒟_K` for Bishop–Gromov
 comparison in the space form `M_K^n`: the open interval `(0, D_K^n)`
@@ -144,7 +151,8 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] [T2Space M]
   [IsLocallyConstantChartedSpace H M]
   [HasMetric I M]
-  [PseudoMetricSpace M] [IsRiemannianManifold I M] [MeasurableSpace M]
+  [PseudoMetricSpace M] [CompleteSpace M] [IsRiemannianManifold I M]
+  [MeasurableSpace M]
 
 /-- Dimension of the Riemannian manifold `M` (the finrank of the model
 space `E`); used in the textbook `(n - 1) K g` form of the Ricci lower
@@ -233,7 +241,7 @@ invoked without `Metric.ball` being the path-infimum ball, which forces
 theorem bishopGromov_volume_comparison
     (μ : Measure M) [IsRiemannianVolume μ]
     (hRic : ∀ x : M, ∀ v : TangentSpace I x,
-      (n_M - 1 : ℝ) * K * ⟪v, v⟫_g ≤ Ric_g(v, v) x)
+      ((n_M : ℝ) - 1) * K * ⟪v, v⟫_g ≤ Ric_g(v, v) x)
     (p : M) {r R : ℝ} (hr : r ∈ 𝒟_K) (hR : R ∈ 𝒟_K) (hrR : r ≤ R) :
     μ.real B(p, R) / V_K^n_M(R) ≤ μ.real B(p, r) / V_K^n_M(r) := by
   sorry

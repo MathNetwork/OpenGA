@@ -76,7 +76,7 @@ this is a *new* statement-only addition. Closure path documented above.
 
 | File:line | Identifier | Classification | Notes |
 |-----------|-----------|---------------|-------|
-| `BishopGromov/VolumeComparison.lean:239` | `bishopGromov_volume_comparison` | PRE-PAPER | **North-star.** Headline Bishop–Gromov volume comparison theorem (do Carmo Ch.10 §2 Thm 2.2 / Petersen Ch.9 Thm 27). Statement landed as the multi-stage driver of OpenGA Layer 1+3a+3b development. Closure path (sketched in the theorem docstring): Riccati comparison → Laplacian comparison → polar-coordinates volume comparison; each step needs Layer 3a infrastructure (smooth radial distance on `M ∖ Cut(p)`, Hessian comparison, polar-coordinates change-of-variables on Riemannian manifolds) that is not yet present. Sibling files in `Comparison/BishopGromov/` will host the chain. The proof, once landed, will also close the `Bridges/RiemannianToLength` `≤` sorry as a side effect. |
+| `BishopGromov/VolumeComparison.lean:241` | `bishopGromov_volume_comparison` | PRE-PAPER | **North-star.** Headline Bishop–Gromov volume comparison theorem (do Carmo Ch.10 §2 Thm 2.2 / Petersen Ch.9 Thm 27). Statement landed as the multi-stage driver of OpenGA Layer 1+3a+3b development. Closure path (sketched in the theorem docstring): Riccati comparison → Laplacian comparison → polar-coordinates volume comparison; each step needs Layer 3a infrastructure (smooth radial distance on `M ∖ Cut(p)`, Hessian comparison, polar-coordinates change-of-variables on Riemannian manifolds) that is not yet present. Sibling files in `Comparison/BishopGromov/` will host the chain. The proof, once landed, will also close the `Bridges/RiemannianToLength` `≤` sorry as a side effect. |
 
 ## GeometricMeasureTheory (15)
 
