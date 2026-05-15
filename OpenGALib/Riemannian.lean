@@ -22,6 +22,7 @@ import OpenGALib.Riemannian.Volume.ChartPullback
 import OpenGALib.Riemannian.Volume.Exponential
 import OpenGALib.Riemannian.Volume.Hausdorff
 import OpenGALib.Riemannian.Volume.UniversalProperty
+import OpenGALib.Riemannian.Volume.Util.GramDeterminant
 import OpenGALib.Riemannian.Volume.VolumeForm
 
 /-!
