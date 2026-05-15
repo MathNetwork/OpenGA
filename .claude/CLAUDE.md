@@ -6,17 +6,20 @@ OpenGALib is a reusable Lean 4 mathematical software library. Paper-specific for
 
 ## Architecture
 
-Single Lake package `OpenGALib`, layered:
+Single Lake package `OpenGALib`. Math layers (dependency order, `≺` reads "is depended on by"):
 
 ```
-Algebraic ≺ Tensor ≺ Riemannian ≺ GeometricMeasureTheory
+Algebraic ≺ Tensor ≺ Riemannian ≺ { Comparison, GeometricMeasureTheory }
+                  MetricGeometry   (Layer-1 parallel; metric-only stack)
 ```
+
+Infrastructure folders: `Util/` (engineering helpers, depended on by all, depends on none), `Bridges/` (one-directional adapters between OpenGA and Mathlib; currently `RiemannianToLength`), `Tests/` (linter `#guard_msgs` regression).
 
 `OpenGALib` is a package name, never a namespace prefix. Use concept-level namespaces (`namespace Riemannian`, `namespace BilinearForm`); Mathlib-extension lemmas live in the Mathlib namespace they extend. Anchor files are content-named (`Connection/LeviCivita.lean`, `Curvature/RiemannCurvature.lean`) — never role-named (no `Basic.lean`, `Defs.lean`, `Foundation.lean`).
 
-The only role-named folder is `Util/`. Two tiers: top-level `OpenGALib/Util/` for cross-layer engineering helpers; per-layer `OpenGALib/<Layer>/Util/` for layer-scoped helpers. Files inside `Util/` are content-named — the folder carries the role.
+`Util/` is the only role-named folder. Two tiers: top-level `OpenGALib/Util/` for cross-layer engineering helpers; per-layer `OpenGALib/<Layer>/Util/` for layer-scoped helpers. Files inside `Util/` are content-named.
 
-Mathlib primitives are used directly in proof bodies but wrapped at the API surface under OpenGA names; no re-export `def`s for renaming. Cross-codebase bridges live in `OpenGALib/Bridges/<X>To<Y>.lean`, one-directional.
+Mathlib primitives are used directly in proof bodies but wrapped at the API surface under OpenGA names; no re-export `def`s for renaming.
 
 ## Working stance
 
