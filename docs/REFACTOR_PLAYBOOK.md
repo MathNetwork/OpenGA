@@ -1,11 +1,6 @@
 # Refactor Playbook
 
-Source of truth for OpenGALib refactor workflows. Sister to `scripts/`
-(reusable codemods) and the project's CLAUDE.md (architectural stance).
-
-The goal: **same operation never costs more than the first time**.
-
----
+Source of truth for OpenGALib refactor workflows. Sister to `scripts/` (reusable codemods) and the project's CLAUDE.md (architectural stance). Goal: **same operation never costs more than the first time**.
 
 ## Decision tree
 
@@ -50,64 +45,6 @@ What's the refactor about?
       redirect downstream imports + delete sub-files.
 ```
 
----
-
-## Pre-flight checklist (always)
-
-1. **`git status` clean.** No uncommitted changes. The bulk operation
-   should be a single revertible step.
-2. **Snapshot commit** of the current good state if there's any pending
-   work: `git commit -am "snapshot before X refactor"`.
-3. **One refactor concern per commit.** Don't bundle "rename + reorganize
-   + add deprecation alias" into one diff. Three separate commits.
-4. **`lake build` after each commit.** Catches silent breakage early
-   when revert is still cheap.
-
-If anything fails: `git reset --hard HEAD~1` and retry. The atomic-commit
-discipline makes rollback one command.
-
----
-
-## Lake script vs bash — when to use which
-
-| Need | Tool | Reason |
-|------|------|--------|
-| File text replacement | bash + sed/perl | Milliseconds, well-understood |
-| Import path rewrite | `scripts/rewrite-import.sh` | Already written |
-| `grep` on Lean source only | `scripts/lean-grep.sh` | Excludes `.lake/`, `.git/` |
-| Rename identifier in code only (skip docstrings) | Lake script | Needs Lean syntax tree |
-| Find all theorems whose statement uses X | Lake script | Needs `Lean.Environment` API |
-| Audit `@[simp]` lemma RHS shapes | Lake script | Needs elaborator |
-| Generate a typeclass dependency graph | Lake script | Needs full elab info |
-| One-off file munging | Inline shell command | Don't bother formalizing |
-
-**Rule of thumb:** if the codemod would need to *understand* Lean
-syntax or semantics, write it in Lean (Lake script). Otherwise bash is
-faster to write and run.
-
-### Lake script template
-
-In `lakefile.lean`:
-
-```lean
-script myCodemod (args : List String) do
-  match args with
-  | [arg1, arg2] =>
-    -- ... do work using IO + Lean APIs ...
-    return 0
-  | _ =>
-    IO.eprintln "Usage: lake script run myCodemod ARG1 ARG2"
-    return 1
-```
-
-Invoke: `lake script run myCodemod foo bar`.
-
-For AST-level work, `import Lean` and use `Lean.Environment`,
-`Lean.Syntax`, `Lean.Elab.*`. Mathlib's `scripts/` directory has good
-examples.
-
----
-
 ## Pitfalls (encountered, in this lib's history)
 
 1. **Text-level sed corrupts docstrings.** `sed 's/X/Y/g'` on `.lean`
@@ -151,24 +88,17 @@ examples.
    reliable and self-explaining. See `/tmp/strip_uxtest.py` style:
    collect target files via `glob`, walk lines, locate start/end, splice.
 
-7. **`.gitkeep` is dead weight in non-empty directories.** It exists to
-   make Git track empty dirs; once the dir has any other file, the
-   `.gitkeep` is a stale signal. Periodic
-   `find . -name .gitkeep -path '*/<existing-dir>/*'` audit catches it.
-
-8. **Bulk attribution-paragraph strip needs paragraph-level matching.**
+7. **Bulk attribution-paragraph strip needs paragraph-level matching.**
    Phase A external ports left `**Inspired by** <repo>/...` paragraphs
    (multi-line, ending at blank line or `-/`). A line-level grep+replace
    only catches one line; you need to walk lines and skip from
    `Inspired by` line through next blank line / `-/` / next `## ` heading.
 
-9. **Force-pushing to remove an oversight is partially effective.**
+8. **Force-pushing to remove an oversight is partially effective.**
    `Co-Authored-By: ...` trailers, once pushed to a public repo,
    remain in GitHub's contributor cache even after the commit is
    force-pushed away. The orphan commit is still server-side. Lesson:
    **don't push to a public repo with a trailer you'd regret**.
-   Memory `feedback_release_repo_attribution.md` enforces this for
-   MathNetwork/OpenGA going forward.
 
 ---
 
@@ -329,16 +259,3 @@ Saves ~30 min vs hand-writing.
   work on macOS BSD sed. Use the Edit tool's `replace_all` mode
   for cross-platform identifier renames within a single file.
 
----
-
-## Adding to this playbook
-
-When a refactor pattern is performed **3+ times** with the same
-manual workaround, lift it into:
-
-* a `scripts/` entry (if shell-tool-shaped), or
-* a `lake script` entry (if AST-aware), and
-* a row in the decision tree above + a Pitfall note if it has a known
-  failure mode.
-
-The playbook is dogfood. Trust accumulates over commits.
