@@ -113,7 +113,7 @@ end OpenGA.Comparison.BishopGromov
 
 /-! ## Riemannian-volume placeholder typeclass -/
 
-namespace Riemannian
+open Riemannian
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
   [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
@@ -202,5 +202,3 @@ theorem bishopGromov_volume_ratio_antitone
         (μ (Metric.ball p r)).toReal / spaceFormBallVolume n K r)
       (Set.Ioo 0 (spaceFormCutDiameter K).toReal) := by
   sorry
-
-end Riemannian
