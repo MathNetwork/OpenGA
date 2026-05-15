@@ -39,9 +39,9 @@ Statement-level dependencies this theorem forces to be load-bearing:
 * **Layer 1** — `IsRiemannianVolume μ` constrains `μ : Measure M` to be the
   canonical Riemannian volume. The class is a placeholder here; its body
   is the responsibility of Layer 3a `Util/RiemannianVolume.lean` (pending).
-* **Layer 3a** — `ricciTensor p` (`Curvature/RicciTensorBundle`) provides
+* **Layer 3a** — `ricciTensor x` (`Curvature/RicciTensorBundle`) provides
   the Ricci `(0,2)`-tensor at each point; the lower bound `(n - 1) K g`
-  is stated against it.
+  is stated against it via the `RicciLowerBound` predicate.
 * **Layer 3b** — the actual proof requires Jacobi-field / Riccati comparison
   (Petersen Ch. 6 §2), Hessian comparison, Laplacian comparison
   (`Δ_g r ≤ (n - 1) s_K'(r) / s_K(r)`), and the coarea identity. These are
@@ -60,7 +60,7 @@ Statement-level dependencies this theorem forces to be load-bearing:
 -/
 
 open scoped Real Manifold InnerProductSpace ENNReal ContDiff Riemannian
-open Bundle MeasureTheory Set
+open Bundle MeasureTheory Riemannian Set
 
 namespace OpenGA.Comparison.BishopGromov
 
@@ -111,9 +111,12 @@ noncomputable def spaceFormCutDiameter (K : ℝ) : ℝ≥0∞ :=
 
 end OpenGA.Comparison.BishopGromov
 
-/-! ## Riemannian-volume placeholder typeclass -/
+/-! ## Riemannian setup for the headline theorem
 
-open Riemannian
+A single file-level variable block fixes the Riemannian-manifold setup so
+that the headline `bishopGromov_volume_ratio_antitone` reads as the
+textbook sentence with no engineering tax exposed (mirrors the discipline
+of `bochner_weitzenboeck` in `Riemannian/Operators/Bochner.lean`). -/
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
   [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
@@ -122,26 +125,32 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] [T2Space M]
   [IsLocallyConstantChartedSpace H M]
   [HasMetric I M]
+  [PseudoMetricSpace M] [IsRiemannianManifold I M] [MeasurableSpace M]
 
-/-- **Math.** The predicate `IsRiemannianVolume μ`: the measure `μ` on the
-Riemannian manifold `(M, g)` is the canonical *Riemannian volume measure*,
-i.e. it agrees in any chart with `√det(g_ij) · Lebesgue`, equivalently with
-the `n`-dimensional Hausdorff measure of the Riemannian distance normalized
-so that the unit ball in any tangent space has the usual Euclidean unit-ball
-volume.
+/-- Dimension of the Riemannian manifold `M` (the finrank of the model
+space `E`); used in the textbook `(n - 1) K g` form of the Ricci lower
+bound and as the `n` argument of `spaceFormBallVolume` / `spaceFormCutDiameter`. -/
+local notation:max "n_M" => Module.finrank ℝ E
+
+/-! ## Riemannian volume — placeholder typeclass
+
+`IsRiemannianVolume μ` asserts that `μ : Measure M` is the canonical
+Riemannian volume on `(M, g)` (in any chart it pulls back to
+`√det(g_ij) · Lebesgue`; equivalently it is the `n`-dimensional Hausdorff
+measure of the Riemannian distance, normalized so the unit tangent ball has
+the Euclidean unit-ball volume).
 
 Ground truth: do Carmo, Ch. 1 (volume form on an oriented Riemannian
 manifold); Petersen, Ch. 7 §1.
 
-**PRE-PAPER placeholder.** For Stage 0 of the Bishop–Gromov development,
-this class is declared with no fields — every measure on a Riemannian
-manifold trivially satisfies the predicate. The actual characterizing
-content (chart-pullback equation, or Hausdorff-measure normalization) is
-the responsibility of Layer 3a `Util/RiemannianVolume.lean` (pending). When
-that file lands, populate this class with the real field and register the
-canonical instance on every `[HasMetric I M]`; the Bishop–Gromov hypothesis
-list does not change. -/
-class IsRiemannianVolume [MeasurableSpace M] (μ : MeasureTheory.Measure M) : Prop where
+**PRE-PAPER placeholder.** For Stage 0 the class is declared with no
+fields — every measure on a Riemannian manifold trivially satisfies the
+predicate. The actual characterizing content is the responsibility of
+Layer 3a `Util/RiemannianVolume.lean` (pending); when that file lands,
+populate this class with the real field and register the canonical
+instance on every `[HasMetric I M]`. The Bishop–Gromov hypothesis list
+does not change. -/
+class IsRiemannianVolume (μ : Measure M) : Prop where
 
 /-! ## The Bishop–Gromov volume comparison theorem -/
 
@@ -149,23 +158,19 @@ open OpenGA.Comparison.BishopGromov
 
 /-- **Math.** **Bishop–Gromov volume comparison.**
 
-Let `(M, g)` be a complete connected `n`-dimensional Riemannian manifold
-whose Ricci curvature satisfies `Ric_g ≥ (n - 1) K g` for some `K ∈ ℝ`.
-Let `μ` be the Riemannian volume measure on `M`, and let `V_K^n` and `D_K^n`
-be the space-form ball-volume and cut-diameter functions of `M_K^n`. Then
-for every `p ∈ M`, the function
-
-$$\Phi_p(r) \;:=\; \frac{\mu(B_g(p, r))}{V_K^n(r)}$$
-
-is non-increasing on `(0, D_K^n)`.
+For a complete `n`-dimensional Riemannian manifold `M` whose Ricci curvature
+satisfies `Ric_g ≥ (n - 1) K · g`, the ratio of the volume of a metric ball
+at any base point to the volume of the corresponding ball in the
+simply-connected `n`-dimensional space form `M_K^n` is non-increasing in the
+radius, on the maximal interval `(0, D_K^n)`.
 
 Ground truth: do Carmo, Ch. 10 §2 Theorem 2.2; Petersen, Ch. 9 §1 Theorem 27;
 Cheeger–Ebin, Theorem 1.93; Burago–Burago–Ivanov, §6.5.
 
-**NORTH-STAR (PRE-PAPER).** This is the headline target driving Stage II
-of OpenGA Layer 1+3a+3b development. The statement is landed at the
-correct signature so that downstream consumers can already invoke it; the
-proof is the multi-stage goal.
+**NORTH-STAR (PRE-PAPER).** This is the headline target driving Stage II of
+OpenGA Layer 1 + Layer 3a + Layer 3b development. The statement is landed
+at the correct signature so that downstream consumers can already invoke it;
+the proof is the multi-stage goal.
 
 **Repair plan** (sketch of the classical proof, do Carmo Ch. 10 §1–2):
 
@@ -182,23 +187,18 @@ proof is the multi-stage goal.
    the radial Jacobian give `∂_r vol(B_g(p, r)) ≤ n · ω_n · s_K(r)^{n-1}`,
    which integrates (via the coarea identity) to the antitone ratio.
 
-Each step in this chain depends on Layer 3a infrastructure that is not
-yet present (smooth radial distance function on `M ∖ Cut(p)`, Hessian
-comparison, polar-coordinates change-of-variables on Riemannian manifolds).
-The chain closes the Layer 1 bridge sorry as a side effect — Bishop–Gromov
-cannot be invoked without `Metric.ball` being the path-infimum ball, which
-forces `IsRiemannianManifold.toLengthSpace` to be 0-sorry. -/
+Each step in this chain depends on Layer 3a infrastructure that is not yet
+present (smooth radial distance function on `M ∖ Cut(p)`, Hessian comparison,
+polar-coordinates change-of-variables on Riemannian manifolds). The chain
+closes the Layer 1 bridge sorry as a side effect — Bishop–Gromov cannot be
+invoked without `Metric.ball` being the path-infimum ball, which forces
+`IsRiemannianManifold.toLengthSpace` to be 0-sorry. -/
 theorem bishopGromov_volume_ratio_antitone
-    [PseudoMetricSpace M] [IsRiemannianManifold I M]
-    [MeasurableSpace M]
-    {n : ℕ} (hdim : Module.finrank ℝ E = n)
-    (μ : MeasureTheory.Measure M) [IsRiemannianVolume μ]
-    (K : ℝ)
-    (hRic : ∀ p : M, ∀ v : TangentSpace I p,
-      ((n : ℝ) - 1) * K * ⟪v, v⟫_ℝ ≤ ricciTensor p v v)
+    (μ : Measure M) [IsRiemannianVolume μ]
+    {K : ℝ} (hRic : ∀ x : M, ∀ v : TangentSpace I x,
+      (n_M - 1 : ℝ) * K * ⟪v, v⟫_g ≤ Ric_g(v, v) x)
     (p : M) :
     AntitoneOn
-      (fun r : ℝ ↦
-        (μ (Metric.ball p r)).toReal / spaceFormBallVolume n K r)
+      (fun r : ℝ ↦ (μ (Metric.ball p r)).toReal / spaceFormBallVolume n_M K r)
       (Set.Ioo 0 (spaceFormCutDiameter K).toReal) := by
   sorry
