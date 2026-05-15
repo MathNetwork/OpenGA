@@ -4,25 +4,18 @@ Lib-wide rules for definitions, theorems, file structure. Goal: code reads like 
 
 ## 1. Object suffixes (definitions)
 
-Use the smallest mathematical-meaning suffix that describes the object's *type*.
+Use the smallest math-meaning suffix that describes the object's *type*.
 
 | Suffix | Meaning | Example |
 |---|---|---|
 | `Endo` | endomorphism `V → V` | `curvatureEndo`, `ricciEndo` |
-| `Tensor` | tensor (typically `(0,k)`-tensor as bilinear form) | `ricciTensor`, `metricTensor` |
+| `Tensor` | tensor (typically `(0,k)` as bilinear form) | `ricciTensor`, `metricTensor` |
 | `Bilin` | bilinear form, when `Tensor` is ambiguous | `koszulBilin` |
-| `Sharp` | musical isomorphism $\sharp$ (raise indices via metric) | `ricciSharp` |
-| `Flat` | musical isomorphism $\flat$ (lower indices via metric) | `gradFlat` |
+| `Sharp` / `Flat` | musical iso $\sharp$ / $\flat$ | `ricciSharp`, `gradFlat` |
 | `Dual` | dual vector / dual operation | `metricDual` |
-| `Form` | when the math name is "X form" | `quadraticForm` (avoid bare `Form` for tensors) |
+| `Form` | when the math name is "X form" | `quadraticForm` |
 
-**Avoid these engineering suffixes**:
-
-* `TraceMap`, `Map`, `Func`, `Fn`, `Function`
-* `At` / `AtPoint` / `Pt` (when the basepoint is just an argument)
-* `Tower`, `Stack`, `Wrapper`, `Aux`, `Bundle` (when not literally a vector bundle)
-
-If the object truly *is* a function, name it like the function (e.g. `gradient`, not `gradientFunc`).
+Avoid engineering suffixes: `Map`, `Func`, `Fn`, `Function`, `At` / `AtPoint` / `Pt` (when basepoint is just an argument), `Tower`, `Stack`, `Wrapper`, `Aux`, `Bundle` (when not literally a vector bundle). If the object truly *is* a function, name it like one (`gradient`, not `gradientFunc`).
 
 ## 2. Theorem suffixes (Mathlib convention)
 
