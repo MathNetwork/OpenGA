@@ -105,27 +105,27 @@ theorem metricInner_self_pos (g : RiemannianMetric I M)
     0 < g.metricInner x V V :=
   g.pos x V hV
 
-@[metric_simp]
+@[simp, metric_simp]
 theorem metricInner_add_left (g : RiemannianMetric I M)
     (x : M) (V₁ V₂ W : TangentSpace I x) :
     g.metricInner x (V₁ + V₂) W = g.metricInner x V₁ W + g.metricInner x V₂ W := by
   show g.inner x (V₁ + V₂) W = g.inner x V₁ W + g.inner x V₂ W
   rw [(g.inner x).map_add]; rfl
 
-@[metric_simp]
+@[simp, metric_simp]
 theorem metricInner_add_right (g : RiemannianMetric I M)
     (x : M) (V W₁ W₂ : TangentSpace I x) :
     g.metricInner x V (W₁ + W₂) = g.metricInner x V W₁ + g.metricInner x V W₂ :=
   (g.inner x V).map_add W₁ W₂
 
-@[metric_simp]
+@[simp, metric_simp]
 theorem metricInner_smul_left (g : RiemannianMetric I M)
     (x : M) (c : ℝ) (V W : TangentSpace I x) :
     g.metricInner x (c • V) W = c * g.metricInner x V W := by
   show g.inner x (c • V) W = c * g.inner x V W
   rw [(g.inner x).map_smul]; rfl
 
-@[metric_simp]
+@[simp, metric_simp]
 theorem metricInner_smul_right (g : RiemannianMetric I M)
     (x : M) (c : ℝ) (V W : TangentSpace I x) :
     g.metricInner x V (c • W) = c * g.metricInner x V W := by
@@ -180,6 +180,62 @@ theorem metricInner_self_nonneg (g : RiemannianMetric I M)
   · rw [hV, g.metricInner_zero_left]
   · exact le_of_lt (g.metricInner_self_pos x V hV)
 
+/-! ## Squared norm and section-form wrappers
+
+These wrappers provide the explicit-`g` analogues of the `‖V‖²_g`
+(pointwise) and `⟪V, W⟫_g` / `‖V‖²_g` (section) notations: methods on
+`g : RiemannianMetric I M` whose arguments are first-class terms. -/
+
+/-- **Math.** Squared $g$-norm of a tangent vector: $\|V\|^2_g = g_x(V, V)$. -/
+noncomputable def metricNormSq (g : RiemannianMetric I M)
+    (x : M) (V : TangentSpace I x) : ℝ :=
+  g.metricInner x V V
+
+@[simp, metric_simp]
+theorem metricNormSq_eq (g : RiemannianMetric I M)
+    (x : M) (V : TangentSpace I x) :
+    g.metricNormSq x V = g.metricInner x V V := rfl
+
+@[simp, metric_simp]
+theorem metricNormSq_nonneg (g : RiemannianMetric I M)
+    (x : M) (V : TangentSpace I x) :
+    0 ≤ g.metricNormSq x V :=
+  g.metricInner_self_nonneg x V
+
+/-- **Math.** Strict positivity of $\|V\|^2_g$ on nonzero vectors. -/
+theorem metricNormSq_pos (g : RiemannianMetric I M)
+    (x : M) (V : TangentSpace I x) (hV : V ≠ 0) :
+    0 < g.metricNormSq x V :=
+  g.metricInner_self_pos x V hV
+
+/-- **Math.** Section-form $g$-inner product: pair of vector fields ↦ scalar
+field `y ↦ g_y(V y, W y)`. -/
+noncomputable def metricInnerSection (g : RiemannianMetric I M)
+    (V W : (y : M) → TangentSpace I y) : M → ℝ :=
+  fun y => g.metricInner y (V y) (W y)
+
+@[simp, metric_simp]
+theorem metricInnerSection_apply (g : RiemannianMetric I M)
+    (V W : (y : M) → TangentSpace I y) (y : M) :
+    g.metricInnerSection V W y = g.metricInner y (V y) (W y) := rfl
+
+/-- **Math.** Section-form squared $g$-norm: vector field ↦ scalar field
+`y ↦ g_y(V y, V y)`. -/
+noncomputable def metricNormSqSection (g : RiemannianMetric I M)
+    (V : (y : M) → TangentSpace I y) : M → ℝ :=
+  fun y => g.metricInner y (V y) (V y)
+
+@[simp, metric_simp]
+theorem metricNormSqSection_apply (g : RiemannianMetric I M)
+    (V : (y : M) → TangentSpace I y) (y : M) :
+    g.metricNormSqSection V y = g.metricInner y (V y) (V y) := rfl
+
+@[simp, metric_simp]
+theorem metricNormSqSection_nonneg (g : RiemannianMetric I M)
+    (V : (y : M) → TangentSpace I y) (y : M) :
+    0 ≤ g.metricNormSqSection V y :=
+  g.metricInner_self_nonneg y (V y)
+
 end Riemannian.RiemannianMetric
 
 /-! ## TangentSpace fibre instances
@@ -205,6 +261,16 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
 
+-- Mathlib defines `TangentSpace I x := E` as a `def` (not `abbrev`), so it
+-- does not unfold under default reducible-only transparency. Lean 4's strict
+-- `isDefEq` (the `backward.isDefEq.respectTransparency true` default) then
+-- refuses to identify `FiniteDimensional ℝ (TangentSpace I x)` with
+-- `FiniteDimensional ℝ E` during instance synthesis, even though they are
+-- definitionally equal. Disabling transparency-respect here forces aggressive
+-- unfolding for this one synthesis, matching the workaround used throughout
+-- Mathlib (see `Mathlib/Tactic/DefEqAbuse.lean` for diagnosis tooling).
+-- Remove once Mathlib's TangentSpace gets `@[reducible]` or once strict
+-- isDefEq learns to unfold it through whnf.
 set_option backward.isDefEq.respectTransparency false in
 instance instFiniteDimensionalTangent [FiniteDimensional ℝ E] (x : M) :
     FiniteDimensional ℝ (TangentSpace I x) :=
