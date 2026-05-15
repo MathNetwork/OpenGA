@@ -6,8 +6,8 @@ count; new sorry additions require updating this file.
 
 ## Scope
 
-This catalog covers `Algebraic`, `Tensor`, `Riemannian`, and
-`GeometricMeasureTheory`.
+This catalog covers `Algebraic`, `Tensor`, `Core`, `Riemannian`, `Bridges`,
+and `GeometricMeasureTheory`.
 
 ## Classification
 
@@ -23,12 +23,14 @@ This catalog covers `Algebraic`, `Tensor`, `Riemannian`, and
 |--------|-----------|------------------|-------|
 | Algebraic | 5 | 0 | 5 |
 | Tensor | 9 | 0 | 9 |
+| Core | 0 | 0 | 0 |
 | Riemannian | 1 | 0 | 1 |
+| Bridges | 1 | 0 | 1 |
 | GeometricMeasureTheory | 5 | 10 | 15 |
-| **Total** | **20** | **10** | **30** |
+| **Total** | **21** | **10** | **31** |
 
-CI workflow `.github/workflows/ci.yml` asserts the total equals 30
-(`EXPECTED=30`).
+CI workflow `.github/workflows/ci.yml` asserts the total equals 31
+(`EXPECTED=31`).
 
 ## Algebraic (5)
 
@@ -62,6 +64,12 @@ CI workflow `.github/workflows/ci.yml` asserts the total equals 30
 
 The Bochner stack (closed via commit `de19ee7`) remains unconditional;
 this is a *new* statement-only addition. Closure path documented above.
+
+## Bridges (1)
+
+| File:line | Identifier | Classification | Notes |
+|-----------|-----------|---------------|-------|
+| `RiemannianToLength.lean:101` | `IsRiemannianManifold.toLengthSpace` (`≤` direction) | PRE-PAPER | The bound `pathLength γ_continuous ≤ Manifold.pathELength I γ_smooth 0 1` for the `Path` constructed from a Mathlib smooth `γ : ℝ → M`. Closure path: partition-telescoping via `IsRiemannianManifold.out`, `Manifold.riemannianEDist_le_pathELength`, `Manifold.pathELength_add`, `Manifold.pathELength_mono` (~60–100 LOC). Repair trigger: first downstream consumer that destructures the `iInf` equation. See module docstring for the full repair plan. |
 
 ## GeometricMeasureTheory (15)
 

@@ -49,6 +49,21 @@ Folder organization, anchor purity, and the Math/Eng/Mixed split stand on well-k
 
 These principles motivate, but do not override, project-specific conventions. When they conflict with explicit OpenGALib rules (e.g. `Util/` is role-named, against package-by-feature purity), the explicit rule wins.
 
+### Layer autonomy
+
+Each Layer is OpenGA-owned: types, classes, headline statements, and conventions are chosen for OpenGA's purposes. Layers are not constrained to match upstream Mathlib formulations even where Mathlib has a similar primitive. Mathlib tools are consumed directly when available, but always through an OpenGA-namespace wrapper that fixes the OpenGA-side signature.
+
+The policy:
+
+- **Use Mathlib primitives in proof bodies** — `eVariationOn`, `hausdorffMeasure`, `IsRiemannianManifold`, `riemannianEDist`, `Manifold.pathELength`, etc. are invoked directly. We do not re-implement what already exists.
+- **Wrap them under OpenGA names at the API surface** — `OpenGA.pathLength` wraps `eVariationOn` even though the two are definitionally equal. The OpenGA-side name is what the rest of OpenGA references; the Mathlib name is an implementation detail.
+- **No re-export aliases, no copying of infrastructure** — adding a `def` whose only purpose is to expose a Mathlib symbol under a different name is rejected. The wrapper exists because the OpenGA signature differs in arguments / hypotheses / target conventions, not merely in name.
+- **Bridges connect, they do not subsume** — when a layer needs a Mathlib-side concept (Riemannian, GMT), the connection lives in `OpenGALib/Bridges/<X>To<Y>.lean` as a `def` or `instance`; the bridge is one-directional and does not absorb Mathlib's API into OpenGA's namespace.
+
+The first concrete instance is **Layer 1**: `OpenGALib/Core/` — `MetricMeasureSpace`, `LengthSpace`, `GeodesicSpace`. Each is OpenGA-defined, with Mathlib's `eVariationOn` / `MeasureTheory.Measure` / `IsRiemannianManifold` reached through wrappers (`pathLength`) or bridges (`Bridges/RiemannianToLength`). Subsequent layers (Layer 2 Geometric Conditions, Layer 3a Riemannian extensions, Layer 3c GMT) follow the same pattern.
+
+Ground truth: manifesto §5.1 (relation to Mathlib) and §5.4 (metric measure space as foundational type).
+
 ## Working stance
 
 ### Self-build is the default

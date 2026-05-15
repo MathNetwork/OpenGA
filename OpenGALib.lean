@@ -1,6 +1,8 @@
 import OpenGALib.Algebraic
 import OpenGALib.Tensor
+import OpenGALib.Core
 import OpenGALib.Riemannian
+import OpenGALib.Bridges
 import OpenGALib.GeometricMeasureTheory
 
 /-!

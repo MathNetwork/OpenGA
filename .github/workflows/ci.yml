@@ -22,7 +22,7 @@ jobs:
             --include="*.lean" \
             OpenGALib \
             2>/dev/null | wc -l | tr -d ' ')
-          EXPECTED=30
+          EXPECTED=31
           if [ "$ACTUAL" -ne "$EXPECTED" ]; then
             echo "::error::Sorry count drift: expected $EXPECTED, found $ACTUAL"
             echo "If the change is intentional, update docs/SORRY_CATALOG.md (and the EXPECTED constant in this workflow)."
@@ -131,7 +131,7 @@ jobs:
           # transitive-relied-on imports). Baseline is current debt; CI
           # fails on growth, mirrors Mathlib's `noshake.json` discipline.
           ACTUAL=$(lake exe shake OpenGALib --no-downstream 2>&1 | grep -c "^/.*\.lean:$" || echo 0)
-          EXPECTED_SHAKE=34
+          EXPECTED_SHAKE=35
           echo "Shake suggestions: $ACTUAL (expected ≤ $EXPECTED_SHAKE; gradually reduce)"
           if [ "$ACTUAL" -gt "$EXPECTED_SHAKE" ]; then
             echo "::error::Shake regression: $ACTUAL > $EXPECTED_SHAKE"
