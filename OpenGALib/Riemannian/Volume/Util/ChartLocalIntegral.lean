@@ -1,3 +1,4 @@
+import Mathlib.MeasureTheory.Function.Jacobian
 import Mathlib.MeasureTheory.Integral.Lebesgue.Map
 import OpenGALib.Riemannian.Volume.Util.ChartOverlap
 
@@ -226,5 +227,134 @@ theorem chartLocalMeasure_lintegral_U_eq_setLIntegral_image
     (measurableSet_extChartAt_target α)
     (fun y _ => hpt y)]
   exact setLIntegral_target_eq_setLIntegral_image (I := I) α hUopen hUsub _
+
+/-! ## Chart-overlap invariance (B3 main theorem) -/
+
+/-- **Math.** `chartSqrtGramDet` pullback in `tangentCoordChange` language:
+`chartSqrtGramDet g α₁ x = |det(tangentCoordChange α₁ α₀ x)| · chartSqrtGramDet g α₀ x`.
+Combines the abstract `chartSqrtGramDet_pullback` (via `transitionMatrix`)
+with the analysis-side bridge `transitionMatrix_det_eq_tangentCoordChange_det`. -/
+theorem chartSqrtGramDet_pullback_tangentCoordChange
+    (g : RiemannianMetric I M) (α₀ α₁ : M) {x : M}
+    (hx₀ : x ∈ (trivializationAt E (TangentSpace I) α₀).baseSet)
+    (hx₁ : x ∈ (trivializationAt E (TangentSpace I) α₁).baseSet) :
+    chartSqrtGramDet (I := I) g α₁ x =
+      |(tangentCoordChange I α₁ α₀ x : E →L[ℝ] E).det| *
+        chartSqrtGramDet (I := I) g α₀ x := by
+  rw [chartSqrtGramDet_pullback g α₀ α₁ hx₀ hx₁,
+      transitionMatrix_det_eq_tangentCoordChange_det α₀ α₁ hx₀ hx₁]
+
+/-- **Math.** **Chart-overlap invariance of `chartLocalMeasure`**: the two
+chart-local measures at `α₀` and `α₁` give the same lintegral on any
+measurable function over the chart-source overlap.
+
+Proof sketch: convert both sides to chart-image set-lintegrals on `E`,
+apply `MeasureTheory.lintegral_image_eq_lintegral_abs_det_fderiv_mul`
+with the chart-transition map `extChartAt α₁ ∘ (extChartAt α₀).symm`,
+then cancel the Jacobian factor using `chartSqrtGramDet_pullback_tangentCoordChange`
+together with `ennreal_abs_det_tangentCoordChange_mul_abs_det_inv`.
+
+Ground truth: do Carmo Ch.1 §2; Lee Ch.16 (smooth atlas + change-of-
+variables formula gives chart-independent volume measure). -/
+theorem chartLocalMeasure_lintegral_U_eq_of_overlap
+    (g : RiemannianMetric I M) (α₀ α₁ : M)
+    {F : M → ℝ≥0∞} (hF : Measurable F) :
+    ∫⁻ x in (chartAt H α₀).source ∩ (chartAt H α₁).source, F x
+        ∂(chartLocalMeasure (I := I) g α₀) =
+      ∫⁻ x in (chartAt H α₀).source ∩ (chartAt H α₁).source, F x
+        ∂(chartLocalMeasure (I := I) g α₁) := by
+  set U : Set M := (chartAt H α₀).source ∩ (chartAt H α₁).source with hU_def
+  have hUopen : IsOpen U :=
+    (chartAt H α₀).open_source.inter (chartAt H α₁).open_source
+  have hUmeas : MeasurableSet U := hUopen.measurableSet
+  have hUsub0 : U ⊆ (chartAt H α₀).source := Set.inter_subset_left
+  have hUsub1 : U ⊆ (chartAt H α₁).source := Set.inter_subset_right
+  -- Convert both sides to chart-image set-lintegrals on `E`.
+  rw [chartLocalMeasure_lintegral_U_eq_setLIntegral_image (I := I)
+        g α₀ hUopen hUsub0 hF hUmeas,
+      chartLocalMeasure_lintegral_U_eq_setLIntegral_image (I := I)
+        g α₁ hUopen hUsub1 hF hUmeas]
+  -- The chart-transition map `T = extChartAt α₁ ∘ (extChartAt α₀).symm`
+  -- carries `α₀ '' U` to `α₁ '' U`, is injective there with derivative
+  -- `tangentCoordChange α₀ α₁ ((extChartAt α₀).symm y)`.
+  have hV0_meas : MeasurableSet ((extChartAt I α₀) '' U) :=
+    extChartAt_image_measurableSet_of_open_subset_source α₀ hUopen hUsub0
+  have hT_image :
+      (extChartAt I α₁ ∘ (extChartAt I α₀).symm) '' ((extChartAt I α₀) '' U) =
+        (extChartAt I α₁) '' U :=
+    extChartAt_transition_image α₀ α₁ hUsub0
+  have hT_injOn :
+      Set.InjOn (extChartAt I α₁ ∘ (extChartAt I α₀).symm)
+        ((extChartAt I α₀) '' U) :=
+    extChartAt_transition_injOn_overlap_image α₀ α₁ hUsub0 hUsub1
+  have hT_fderiv :
+      ∀ y ∈ (extChartAt I α₀) '' U,
+        HasFDerivWithinAt (extChartAt I α₁ ∘ (extChartAt I α₀).symm)
+          (tangentCoordChange I α₀ α₁ ((extChartAt I α₀).symm y))
+          ((extChartAt I α₀) '' U) y :=
+    extChartAt_transition_hasFDerivWithinAt_on_overlap_image α₀ α₁ hUsub0 hUsub1
+  rw [← hT_image,
+      MeasureTheory.lintegral_image_eq_lintegral_abs_det_fderiv_mul
+        (μ := modelHaar (E := E)) hV0_meas hT_fderiv hT_injOn
+        (g := fun z : E =>
+          ENNReal.ofReal
+              (chartSqrtGramDet (I := I) g α₁ ((extChartAt I α₁).symm z)) *
+            F ((extChartAt I α₁).symm z))]
+  -- Pointwise identify the integrands: cancel Jacobian factors using
+  -- `chartSqrtGramDet_pullback_tangentCoordChange` + |det| · |det⁻¹| = 1.
+  refine MeasureTheory.setLIntegral_congr_fun hV0_meas ?_
+  intro y hy
+  obtain ⟨x, hxU, hx_eq⟩ := hy
+  have hx0 : x ∈ (extChartAt I α₀).source := by
+    rw [extChartAt_source]; exact hUsub0 hxU
+  have hx1 : x ∈ (extChartAt I α₁).source := by
+    rw [extChartAt_source]; exact hUsub1 hxU
+  have hx_in_inter : x ∈ (extChartAt I α₀).source ∩ (extChartAt I α₁).source :=
+    ⟨hx0, hx1⟩
+  have hx_trivBase0 : x ∈ (trivializationAt E (TangentSpace I) α₀).baseSet := by
+    show x ∈ (chartAt H α₀).source
+    exact hUsub0 hxU
+  have hx_trivBase1 : x ∈ (trivializationAt E (TangentSpace I) α₁).baseSet := by
+    show x ∈ (chartAt H α₁).source
+    exact hUsub1 hxU
+  have hsymm0 : (extChartAt I α₀).symm y = x := by
+    rw [← hx_eq]; exact (extChartAt I α₀).left_inv hx0
+  have hTy :
+      (extChartAt I α₁ ∘ (extChartAt I α₀).symm) y = extChartAt I α₁ x := by
+    change extChartAt I α₁ ((extChartAt I α₀).symm y) = _
+    rw [hsymm0]
+  have hsymm1 :
+      (extChartAt I α₁).symm ((extChartAt I α₁ ∘ (extChartAt I α₀).symm) y) = x := by
+    rw [hTy]; exact (extChartAt I α₁).left_inv hx1
+  have hdens_pb :
+      chartSqrtGramDet (I := I) g α₁ x =
+        |(tangentCoordChange I α₁ α₀ x : E →L[ℝ] E).det| *
+          chartSqrtGramDet (I := I) g α₀ x :=
+    chartSqrtGramDet_pullback_tangentCoordChange g α₀ α₁ hx_trivBase0 hx_trivBase1
+  have hdet_mul :
+      ENNReal.ofReal |(tangentCoordChange I α₀ α₁ x : E →L[ℝ] E).det| *
+        ENNReal.ofReal |(tangentCoordChange I α₁ α₀ x : E →L[ℝ] E).det| = 1 :=
+    ennreal_abs_det_tangentCoordChange_mul_abs_det_inv α₀ α₁ hx_in_inter
+  simp only [hsymm0, hsymm1]
+  rw [hdens_pb, ENNReal.ofReal_mul (abs_nonneg _)]
+  rw [show
+    ENNReal.ofReal |(tangentCoordChange I α₀ α₁ x : E →L[ℝ] E).det| *
+        (ENNReal.ofReal |(tangentCoordChange I α₁ α₀ x : E →L[ℝ] E).det| *
+          ENNReal.ofReal (chartSqrtGramDet (I := I) g α₀ x) * F x) =
+      (ENNReal.ofReal |(tangentCoordChange I α₀ α₁ x : E →L[ℝ] E).det| *
+        ENNReal.ofReal |(tangentCoordChange I α₁ α₀ x : E →L[ℝ] E).det|) *
+        (ENNReal.ofReal (chartSqrtGramDet (I := I) g α₀ x) * F x) by ring]
+  rw [hdet_mul, one_mul]
+
+/-- **Math.** Restrict form: the two chart-local measures agree on the
+chart-source overlap (as restricted measures). -/
+theorem chartLocalMeasure_restrict_overlap_eq
+    (g : RiemannianMetric I M) (α₀ α₁ : M) :
+    (chartLocalMeasure (I := I) g α₀).restrict
+        ((chartAt H α₀).source ∩ (chartAt H α₁).source) =
+      (chartLocalMeasure (I := I) g α₁).restrict
+        ((chartAt H α₀).source ∩ (chartAt H α₁).source) := by
+  refine MeasureTheory.Measure.ext_of_lintegral _ (fun F hF => ?_)
+  exact chartLocalMeasure_lintegral_U_eq_of_overlap (I := I) g α₀ α₁ hF
 
 end Riemannian.Tensor
