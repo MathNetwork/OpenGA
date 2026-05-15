@@ -1,6 +1,6 @@
 import Mathlib.Geometry.Manifold.Riemannian.Basic
-import OpenGALib.Comparison.Util.RiemannianVolume
 import OpenGALib.Comparison.Util.SpaceForm
+import OpenGALib.MetricGeometry.Util.ScalarMultipleOfHausdorff
 import OpenGALib.Riemannian.Curvature.RicciTensorBundle
 
 /-!
@@ -39,7 +39,7 @@ local notation:max "𝒟_K" => spaceFormAdmissibleRadii K
 theorem bishopGromov_volume_comparison
     (hRic : ∀ x : M, ∀ v : TangentSpace I x,
       ((n_M : ℝ) - 1) * K * ⟪v, v⟫_g ≤ Ric_g(v, v) x)
-    (μ : Measure M) (hμ : μ.IsRiemannianVolume n_M)
+    (μ : Measure M) (hμ : μ.IsScalarMultipleOfHausdorff n_M)
     (p : M) {r R : ℝ} (hr : r ∈ 𝒟_K) (hR : R ∈ 𝒟_K) (hrR : r ≤ R) :
     μ.real B(p, R) / V_K^n_M(R) ≤ μ.real B(p, r) / V_K^n_M(r) := by
   sorry

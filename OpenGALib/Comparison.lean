@@ -1,5 +1,4 @@
 import OpenGALib.Comparison.BishopGromov
-import OpenGALib.Comparison.Util.RiemannianVolume
 import OpenGALib.Comparison.Util.SpaceForm
 
 /-!
