@@ -64,11 +64,7 @@ Linter-enforced (`OpenGALib/Util/Linter/MathTag.lean`). Math names must pass the
 
 **Refactor protocol** — see `docs/REFACTOR_PLAYBOOK.md`. Plan from first principles, not current state. Execute in atomic chunks with build-verify per commit.
 
-## Identity
-
-Xinze Li (Moqian), 5th-year math PhD, University of Toronto, advisor Yevgeny Liokumovich. Communication in Chinese. Avoids em-dashes and AI-style phrasing.
-
-Role division:
+## Role division
 
 - **Moqian** (总指挥) — direction, scope, refactor triggers
 - **Claude chat** (参谋) — translates direction into executable Claude Code prompts
