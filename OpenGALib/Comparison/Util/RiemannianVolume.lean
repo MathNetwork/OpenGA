@@ -2,26 +2,22 @@ import Mathlib.MeasureTheory.Measure.Hausdorff
 import OpenGALib.Util.Attributes
 
 /-!
-# Riemannian-volume predicate
+# `Measure.IsRiemannianVolume` predicate
 
-`IsRiemannianVolume n μ` asserts that `μ` agrees, up to a positive finite
-scalar, with the `n`-dimensional Hausdorff measure of the metric on `X`.
-Generic over the carrier `X` (just needs an `EMetricSpace` + Borel
-σ-algebra) — the Riemannian-specific instantiation (`X = M`,
-`n = Module.finrank ℝ E`) happens at the headline-theorem site.
+`μ.IsRiemannianVolume n` asserts that `μ` agrees, up to a positive finite
+scalar, with the `n`-dimensional Hausdorff measure on `X`.
 
 Ground truth: Federer §3.2.46.
 -/
 
-open scoped ENNReal
+open scoped ENNReal MeasureTheory
 
-namespace OpenGA.Comparison.BishopGromov
+namespace MeasureTheory.Measure
 
 /-- **Math.** `μ` is a positive finite scalar multiple of the
 `n`-dimensional Hausdorff measure on `X`. -/
 def IsRiemannianVolume {X : Type*} [EMetricSpace X] [MeasurableSpace X]
-    [BorelSpace X] (n : ℕ) (μ : MeasureTheory.Measure X) : Prop :=
-  ∃ c : ℝ≥0∞, 0 < c ∧ c ≠ ⊤ ∧
-    μ = c • MeasureTheory.Measure.hausdorffMeasure (n : ℝ)
+    [BorelSpace X] (μ : Measure X) (n : ℕ) : Prop :=
+  ∃ c : ℝ≥0∞, 0 < c ∧ c ≠ ⊤ ∧ μ = c • μH[(n : ℝ)]
 
-end OpenGA.Comparison.BishopGromov
+end MeasureTheory.Measure
