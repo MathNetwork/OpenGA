@@ -24,14 +24,14 @@ This catalog covers `Algebraic`, `Tensor`, `MetricGeometry`, `Riemannian`, `Brid
 | Algebraic | 5 | 0 | 5 |
 | Tensor | 9 | 0 | 9 |
 | MetricGeometry | 0 | 0 | 0 |
-| Riemannian | 1 | 0 | 1 |
+| Riemannian | 4 | 0 | 4 |
 | Bridges | 1 | 0 | 1 |
 | Comparison | 1 | 0 | 1 |
 | GeometricMeasureTheory | 5 | 10 | 15 |
-| **Total** | **22** | **10** | **32** |
+| **Total** | **25** | **10** | **35** |
 
-CI workflow `.github/workflows/ci.yml` asserts the total equals 32
-(`EXPECTED=32`).
+CI workflow `.github/workflows/ci.yml` asserts the total equals 35
+(`EXPECTED=35`).
 
 ## Algebraic (5)
 
@@ -57,11 +57,14 @@ CI workflow `.github/workflows/ci.yml` asserts the total equals 32
 | `DifferentialForm/Basic.lean:326` | `pullback_ederiv` (outer) | PRE-PAPER | Outer goal of same proof. |
 | `Product/Pretrivialization.lean:281` | `tensorProductCoordChange_contMDiffOn` | PRE-PAPER | Bundle pretrivialization plumbing; Mathlib gap on tensor-product bundle smoothness. |
 
-## Riemannian (1)
+## Riemannian (4)
 
 | File:line | Identifier | Classification | Notes |
 |-----------|-----------|---------------|-------|
 | `Connection.lean:956` | `bianchi_second` | PRE-PAPER | Differential Bianchi identity $(\nabla_X R)(Y,Z) W + \text{cyclic} = 0$. Statement-only commit (`a08f02a`). Repair plan (in docstring): expand `riemannCurvature_commutator_form`, distribute `covDeriv_sub_field` to 12 cov-deriv-of-cov-deriv terms, group into 6 pairs via torsion-freeness, close via `bianchi_first` + `SmoothVectorField.mlieBracket_jacobi`. Infrastructure in place; estimated 80-120 LOC. |
+| `Volume/ChartPullback.lean:75` | `volumeMeasure` | PRE-PAPER | Riemannian volume measure `vol_g`. Phase 1 skeleton of `riemannian-volume` branch — chart-pullback construction with partition-of-unity glue. Repair plan in docstring: (1) chart-wise pushforward of `√det(g_ij)·Lebesgue`, (2) chart-invariance via `g' = Jᵀ·g·J ⟹ √det g'  = \|det J\|·√det g` cancelling Lebesgue Jacobian, (3) global glue via Mathlib `Mathlib.Geometry.Manifold.PartitionOfUnity`. Estimated 150-250 LOC. |
+| `Volume/ChartPullback.lean:89` | `instIsLocallyFiniteMeasure_volumeMeasure` | PRE-PAPER | `vol_g` locally finite. Repair plan: take chart-relative compact neighborhood, apply chart-pullback formula, bound `√det` by sup. ~30 LOC. |
+| `Volume/ChartPullback.lean:98` | `instSigmaFinite_volumeMeasure` | PRE-PAPER | `vol_g` sigma-finite. Repair plan: `IsLocallyFiniteMeasure + SigmaCompactSpace ⟹ SigmaFinite` (standard Mathlib lemma). ~5 LOC. |
 
 The Bochner stack (closed via commit `de19ee7`) remains unconditional;
 this is a *new* statement-only addition. Closure path documented above.

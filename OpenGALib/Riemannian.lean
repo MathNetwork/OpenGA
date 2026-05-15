@@ -18,6 +18,7 @@ import OpenGALib.Riemannian.Util.MetricInnerSmoothness
 import OpenGALib.Riemannian.TensorBundle.Defs
 import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 import OpenGALib.Riemannian.Instances.EuclideanSpace
+import OpenGALib.Riemannian.Volume.ChartPullback
 
 /-!
 # Riemannian
