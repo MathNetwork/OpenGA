@@ -6,7 +6,7 @@ count; new sorry additions require updating this file.
 
 ## Scope
 
-This catalog covers `Algebraic`, `Tensor`, `Core`, `Riemannian`, `Bridges`,
+This catalog covers `Algebraic`, `Tensor`, `MetricGeometry`, `Riemannian`, `Bridges`,
 `Comparison`, and `GeometricMeasureTheory`.
 
 ## Classification
@@ -23,7 +23,7 @@ This catalog covers `Algebraic`, `Tensor`, `Core`, `Riemannian`, `Bridges`,
 |--------|-----------|------------------|-------|
 | Algebraic | 5 | 0 | 5 |
 | Tensor | 9 | 0 | 9 |
-| Core | 0 | 0 | 0 |
+| MetricGeometry | 0 | 0 | 0 |
 | Riemannian | 1 | 0 | 1 |
 | Bridges | 1 | 0 | 1 |
 | Comparison | 1 | 0 | 1 |

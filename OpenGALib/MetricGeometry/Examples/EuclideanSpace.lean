@@ -2,7 +2,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Normed.Lp.MeasurableSpace
 import Mathlib.MeasureTheory.Measure.Haar.OfBasis
 import OpenGALib.Bridges.RiemannianToLength
-import OpenGALib.Core.MetricMeasureSpace
+import OpenGALib.MetricGeometry.MetricMeasureSpace
 
 /-!
 # Layer 1 instances on real inner product spaces and Euclidean space

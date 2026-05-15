@@ -1,4 +1,4 @@
-import OpenGALib.Core.LengthSpace
+import OpenGALib.MetricGeometry.LengthSpace
 
 /-!
 # Geodesic spaces

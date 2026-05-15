@@ -17,7 +17,7 @@ sections; existing sections only ever clarify, never change semantics.
 
 ## Layer 1: Autonomy policy
 
-The Layer 1 stack (`OpenGALib/Core/`) — `MetricMeasureSpace`, `LengthSpace`,
+The Layer 1 stack (`OpenGALib/MetricGeometry/`) — `MetricMeasureSpace`, `LengthSpace`,
 `GeodesicSpace` — is OpenGA-owned. Types, classes, headline statements, and
 conventions are chosen for OpenGA's purposes; they are not constrained to
 match upstream Mathlib formulations even where Mathlib has a similar
@@ -74,7 +74,7 @@ spaces, Riemannian manifolds (via the
 `OpenGALib/Bridges/RiemannianToLength` bridge), Alexandrov spaces, and
 limits of these.
 
-Implementation: `OpenGALib.pathLength` in `OpenGALib/Core/LengthSpace.lean`,
+Implementation: `OpenGALib.pathLength` in `OpenGALib/MetricGeometry/LengthSpace.lean`,
 wrapping Mathlib's `eVariationOn`.
 
 The Mathlib tangent-integral length `Manifold.pathELength` (used inside
@@ -98,7 +98,7 @@ belongs to Layer 3a; it is not provided in Layer 1 as Layer 1 is
 metric-only.
 
 Implementation: `OpenGALib.GeodesicSpace` in
-`OpenGALib/Core/GeodesicSpace.lean`.
+`OpenGALib/MetricGeometry/GeodesicSpace.lean`.
 
 ---
 
@@ -117,7 +117,7 @@ structure. Stronger hypotheses are added at the use site, matching Mathlib's
 `MeasureTheory.Measure` discipline.
 
 Implementation: `MetricMeasureSpace` in
-`OpenGALib/Core/MetricMeasureSpace.lean`.
+`OpenGALib/MetricGeometry/MetricMeasureSpace.lean`.
 
 ---
 

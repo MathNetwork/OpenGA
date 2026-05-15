@@ -1,5 +1,5 @@
 import Mathlib.Geometry.Manifold.Riemannian.Basic
-import OpenGALib.Core.LengthSpace
+import OpenGALib.MetricGeometry.LengthSpace
 
 /-!
 # Bridge: Riemannian manifolds are length spaces
