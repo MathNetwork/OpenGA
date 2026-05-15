@@ -796,6 +796,30 @@ def IsKilling (X : SmoothVectorField I M) : Prop :=
   ∀ (U W : SmoothVectorField I M) (y : M),
     metricInner y ((∇[U] X) y) (W y) + metricInner y ((∇[W] X) y) (U y) = 0
 
+/-- **Math.** **Killing field PDE**: a Killing vector field `X` satisfies
+$$\nabla^2_{Y, Z} X = R(X, Y) Z$$
+for all vector fields `Y, Z` and points `x`, where
+$\nabla^2_{Y, Z} W := \nabla_Y(\nabla_Z W) - \nabla_{\nabla_Y Z} W$.
+
+This is **the** PDE characterizing infinitesimal isometries — the
+linearization of "flow generates isometries". Foundation for the
+Bochner–Yano dimension bound `dim Isom(M) ≤ n(n+1)/2` and the rigidity
+of constant-sectional-curvature manifolds.
+
+Reference: do Carmo, *Riemannian Geometry*, §3 Ex. 5; Petersen, Ch. 8 §2;
+Cheeger–Ebin §1.84.
+
+PRE-PAPER. **Repair plan**: differentiate the Killing equation along a
+third direction, apply metric compatibility (`covDeriv_metric_compat`)
+twice and the curvature commutator identity (`riemannCurvature_def`),
+then symmetrize via the Killing equation again. Standard textbook proof;
+the sign-bookkeeping is the bulk. Estimated 80-120 LOC. -/
+theorem IsKilling.second_covDeriv_eq_curvature
+    (X : SmoothVectorField I M) (_hX : IsKilling X)
+    (Y Z : SmoothVectorField I M) (x : M) :
+    (∇[Y] (∇[Z] X)) x - (∇[∇[Y] Z] X) x = Riem(X, Y) Z x := by
+  sorry
+
 /-! ## Sectional curvature
 
 Pointwise sectional curvature
