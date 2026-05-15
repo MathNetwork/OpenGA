@@ -1,10 +1,8 @@
-import Mathlib.Geometry.Manifold.VectorBundle.SmoothSection
 import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 import Mathlib.Geometry.Manifold.ContMDiff.NormedSpace
 import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.LinearAlgebra.Dimension.Free
 import OpenGALib.Riemannian.Metric.RiemannianMetric
-import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 
 /-!
 # Chart-basis tangent sections and the un-normalised $g$-Gram-Schmidt

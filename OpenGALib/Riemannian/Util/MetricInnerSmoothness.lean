@@ -1,4 +1,5 @@
 import OpenGALib.Riemannian.Manifold.SmoothManifold
+import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 
 /-!
 # `metricInner` smoothness — pointwise / set / global variants

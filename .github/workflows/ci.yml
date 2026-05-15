@@ -131,7 +131,7 @@ jobs:
           # transitive-relied-on imports). Baseline is current debt; CI
           # fails on growth, mirrors Mathlib's `noshake.json` discipline.
           ACTUAL=$(lake exe shake OpenGALib --no-downstream 2>&1 | grep -c "^/.*\.lean:$" || echo 0)
-          EXPECTED_SHAKE=35
+          EXPECTED_SHAKE=34
           echo "Shake suggestions: $ACTUAL (expected ≤ $EXPECTED_SHAKE; gradually reduce)"
           if [ "$ACTUAL" -gt "$EXPECTED_SHAKE" ]; then
             echo "::error::Shake regression: $ACTUAL > $EXPECTED_SHAKE"
