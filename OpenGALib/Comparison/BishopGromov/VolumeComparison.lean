@@ -55,8 +55,16 @@ Statement-level dependencies this theorem forces to be load-bearing:
   the simply-connected `n`-dimensional space form of constant sectional
   curvature `K`, given by `n · ω_n · ∫_0^r s_K(t)^(n-1) dt` where `ω_n` is
   the volume of the unit ball in `ℝⁿ`.
-* `spaceFormCutDiameter K` — the maximal radius `D_K^n` on which the
-  volume-ratio comparison holds: `π / √K` when `K > 0`, and `+∞` otherwise.
+* `spaceFormAdmissibleRadii K` — the set `𝒟_K` of admissible radii on which
+  the comparison holds: `(0, π/√K)` when `K > 0`, and `(0, +∞)` otherwise.
+
+## Paper-style notation (scoped to `OpenGA.Comparison.BishopGromov`)
+
+* `B(p, r)` — open metric ball (wraps Mathlib `Metric.ball`).
+* `V[K, n, r]` — space-form ball volume (wraps `spaceFormBallVolume n K r`).
+* `𝒟[K]` — admissible radii (wraps `spaceFormAdmissibleRadii K`).
+* `μ.real s` — already in Mathlib (`Measure.real`, gives `(μ s).toReal`).
+* `⟪v, w⟫_g`, `Ric_g(v, w) x` — already in OpenGA Riemannian scope.
 -/
 
 open scoped Real Manifold InnerProductSpace ENNReal ContDiff Riemannian
@@ -99,22 +107,37 @@ noncomputable def spaceFormBallVolume (n : ℕ) (K r : ℝ) : ℝ :=
     (MeasureTheory.volume (Metric.ball (0 : EuclideanSpace ℝ (Fin n)) 1)).toReal
   (n : ℝ) * unitBallVolume * ∫ t in (0 : ℝ)..r, (snakeFunction K t) ^ (n - 1)
 
-/-- **Math.** The *cut diameter* `D_K^n` of the space form `M_K^n`: the
-radius at which the geodesic ball closes up. The volume-ratio comparison
-of Bishop–Gromov is stated on the open interval `(0, D_K^n)`.
+/-- **Math.** The set of *admissible radii* `𝒟_K` for Bishop–Gromov
+comparison in the space form `M_K^n`: the open interval `(0, D_K^n)`
+where `D_K^n = π/√K` for `K > 0` and `D_K^n = +∞` otherwise. Concretely
 
-* `D_K^n = π / √K`   if `K > 0` (positive curvature, `M_K^n` is a sphere);
-* `D_K^n = +∞`       if `K ≤ 0` (flat or negative curvature, `M_K^n` is
-  Euclidean or hyperbolic). -/
-noncomputable def spaceFormCutDiameter (K : ℝ) : ℝ≥0∞ :=
-  if 0 < K then ENNReal.ofReal (Real.pi / Real.sqrt K) else ⊤
+* `𝒟_K = (0, π/√K)`   if `K > 0`  (sphere, comparison fails past
+  the antipode);
+* `𝒟_K = (0, +∞)`     if `K ≤ 0`  (Euclidean / hyperbolic, no cut). -/
+noncomputable def spaceFormAdmissibleRadii (K : ℝ) : Set ℝ :=
+  if 0 < K then Set.Ioo 0 (Real.pi / Real.sqrt K) else Set.Ioi 0
+
+/-! ## Paper-style notation -/
+
+/-- **Math.** `B(p, r)` — open metric ball of radius `r` around `p` in the
+ambient Riemannian manifold (Mathlib `Metric.ball`). -/
+scoped notation:max "B(" p ", " r ")" => Metric.ball p r
+
+/-- **Math.** `V[K, n, r]` — volume of a radius-`r` geodesic ball in the
+`n`-dimensional space form of constant sectional curvature `K`. -/
+scoped notation:max "V[" K:max ", " n:max ", " r:max "]" =>
+  spaceFormBallVolume n K r
+
+/-- **Math.** `𝒟[K]` — the open interval of admissible radii for
+Bishop–Gromov comparison at curvature lower bound `K`. -/
+scoped notation:max "𝒟[" K:max "]" => spaceFormAdmissibleRadii K
 
 end OpenGA.Comparison.BishopGromov
 
 /-! ## Riemannian setup for the headline theorem
 
 A single file-level variable block fixes the Riemannian-manifold setup so
-that the headline `bishopGromov_volume_ratio_antitone` reads as the
+that the headline `bishopGromov_volume_comparison` reads as the
 textbook sentence with no engineering tax exposed (mirrors the discipline
 of `bochner_weitzenboeck` in `Riemannian/Operators/Bochner.lean`). -/
 
@@ -193,12 +216,10 @@ polar-coordinates change-of-variables on Riemannian manifolds). The chain
 closes the Layer 1 bridge sorry as a side effect — Bishop–Gromov cannot be
 invoked without `Metric.ball` being the path-infimum ball, which forces
 `IsRiemannianManifold.toLengthSpace` to be 0-sorry. -/
-theorem bishopGromov_volume_ratio_antitone
+theorem bishopGromov_volume_comparison
     (μ : Measure M) [IsRiemannianVolume μ]
     {K : ℝ} (hRic : ∀ x : M, ∀ v : TangentSpace I x,
       (n_M - 1 : ℝ) * K * ⟪v, v⟫_g ≤ Ric_g(v, v) x)
-    (p : M) :
-    AntitoneOn
-      (fun r : ℝ ↦ (μ (Metric.ball p r)).toReal / spaceFormBallVolume n_M K r)
-      (Set.Ioo 0 (spaceFormCutDiameter K).toReal) := by
+    (p : M) {r R : ℝ} (hr : r ∈ 𝒟[K]) (hR : R ∈ 𝒟[K]) (hrR : r ≤ R) :
+    μ.real B(p, R) / V[K, n_M, R] ≤ μ.real B(p, r) / V[K, n_M, r] := by
   sorry
