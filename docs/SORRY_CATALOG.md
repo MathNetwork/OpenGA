@@ -24,14 +24,14 @@ This catalog covers `Algebraic`, `Tensor`, `MetricGeometry`, `Riemannian`, `Brid
 | Algebraic | 5 | 0 | 5 |
 | Tensor | 9 | 0 | 9 |
 | MetricGeometry | 0 | 0 | 0 |
-| Riemannian | 8 | 1 | 9 |
+| Riemannian | 7 | 1 | 8 |
 | Bridges | 1 | 0 | 1 |
 | Comparison | 1 | 0 | 1 |
 | GeometricMeasureTheory | 5 | 10 | 15 |
-| **Total** | **29** | **11** | **40** |
+| **Total** | **28** | **11** | **39** |
 
-CI workflow `.github/workflows/ci.yml` asserts the total equals 40
-(`EXPECTED=40`).
+CI workflow `.github/workflows/ci.yml` asserts the total equals 39
+(`EXPECTED=39`).
 
 ## Algebraic (5)
 
@@ -69,7 +69,6 @@ CI workflow `.github/workflows/ci.yml` asserts the total equals 40
 | `Volume/Hausdorff.lean:48` | `alphaFedererConstant` | PRE-PAPER | Federer–Hausdorff normalization constant `α(n) = ω_n / 2^n`. Phase 3 skeleton. Repair plan: explicit value via Mathlib `(volume (Metric.ball 0 1 : Set (EuclideanSpace ℝ (Fin n)))).toReal / 2^n`. ~30 LOC including positivity / finiteness. |
 | `Volume/Hausdorff.lean:88` | `volumeMeasure_eq_alphaFederer_smul_hausdorffMeasure` | CITED-BLACK-BOX | **Federer §3.2.46-50**: `vol_g = α(n) · μH[n]_{d_g}` for smooth Riemannian manifolds. Phase 3 of `riemannian-volume`. **This is the closing-bridge for the Bishop–Gromov stopgap**: once landed, `volumeMeasure g` satisfies `IsScalarMultipleOfHausdorff (Module.finrank ℝ E)` and the BG hypothesis can tighten to `μ = vol_g`. OpenGA imports the statement; proof delegated to Federer's monograph. Migrate to real proof if/when OpenGA GMT layer builds out covering-lemma + density-estimate infrastructure. |
 | `Volume/UniversalProperty.lean:55` | `volumeMeasure_unique` | PRE-PAPER | Universal property of `vol_g`: any Borel measure agreeing with `vol_g` on chart-coordinate opens equals `vol_g`. Phase 5 skeleton. Repair plan: Mathlib `Measure.ext_of_iUnion` (uniqueness on π-system) applied to chart-open generating set of the Borel σ-algebra. Depends on Phase 1 follow-up (`volumeMeasure_chart_pullback_eq`). Estimated 30-50 LOC. |
-| `Volume/Util/GramDeterminant.lean:82` | `gramMatrix_posDef` | PRE-PAPER | Positive-definiteness of the Gram matrix `(g_x(b_i, b_j))`. Phase 1b. Repair plan: bilinear-form-on-basis-expansion `Σ_i Σ_j y_i · g(b_i, b_j) · y_j = g(Σ_i y_i b_i, Σ_j y_j b_j) = g(v, v)` with `v = b.repr.symm y ≠ 0`; positivity via `g.metricInner_self_pos`. Needs `Finsupp.linearCombination` + `ContinuousLinearMap.map_finsupp_sum` chain. Estimated 30-50 LOC. Consequences (`gramMatrix_det_pos`, `sqrtGramDet_pos`) are derived in same file. |
 
 The Bochner stack (closed via commit `de19ee7`) remains unconditional;
 this is a *new* statement-only addition. Closure path documented above.
