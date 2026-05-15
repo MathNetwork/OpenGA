@@ -1,5 +1,5 @@
 import Mathlib.LinearAlgebra.Alternating.Basic
-import OpenGALib.Riemannian.Metric.RiemannianMetric
+import OpenGALib.Riemannian.Metric.HasMetric
 
 /-!
 # Volume form bridge: `vol_g(A) = ∫_A dV_g`

@@ -10,6 +10,9 @@ import Mathlib.LinearAlgebra.BilinearMap
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import OpenGALib.Algebraic.BilinearForm.Basic
 import OpenGALib.Algebraic.BilinearForm.Riesz
+import OpenGALib.Riemannian.Metric.HasMetric
+import OpenGALib.Riemannian.Util.MetricRieszBilinForm
+import OpenGALib.Riemannian.Util.TangentSpaceInstances
 import OpenGALib.Util.Attributes
 
 /-!
@@ -33,46 +36,16 @@ Mathlib upstream: `Mathlib.Geometry.Manifold.VectorBundle.Riemannian`.
 open Bundle
 open scoped ContDiff Manifold Topology Bundle
 
-namespace Riemannian
-
-/-! ## The metric type -/
-
-/-- **Math.** A **Riemannian metric** on a smooth manifold $M$ modelled
-on $(E, H, I)$. Mathlib's `Bundle.ContMDiffRiemannianMetric` aliased:
-data, not a typeclass attribute. -/
-abbrev RiemannianMetric
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-    {H : Type*} [TopologicalSpace H]
-    (I : ModelWithCorners ℝ E H)
-    (M : Type*) [TopologicalSpace M] [ChartedSpace H M]
-    [IsManifold I ∞ M] : Type _ :=
-  Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I : M → Type _)
-
-/-- **Math.** **`[HasMetric I M]` typeclass**: thin wrapper around
-`RiemannianMetric I M` to make the metric instance-bindable when
-downstream code binds `{I : ModelWithCorners ...}` independently of
-the manifold's bundled `modelI`. Single-field class; bridged from
-`[RiemannianManifold M]` in `Manifold.lean`. -/
-class HasMetric {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-    {H : Type*} [TopologicalSpace H] (I : ModelWithCorners ℝ E H)
-    (M : Type*) [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-    where
-  /-- The Riemannian metric on $(M, I)$. -/
-  metric : RiemannianMetric I M
-
-/-- **Eng.** Bridge: `[HasMetric I M]` induces a global
-`Bundle.RiemannianBundle (TangentSpace I : M → Type _)`, activating
-Mathlib's scoped `NormedAddCommGroup` and `InnerProductSpace ℝ`
-instances on each fibre. Single `NormedAddCommGroup` / `InnerProductSpace` source. -/
-noncomputable instance instRiemannianBundleOfHasMetric
-    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-    {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-    {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-    [hm : HasMetric I M] :
-    Bundle.RiemannianBundle (TangentSpace I : M → Type _) :=
-  ⟨hm.metric.toRiemannianMetric⟩
-
-end Riemannian
+-- Type definitions `RiemannianMetric` and `HasMetric` are in
+-- `Riemannian/Metric/HasMetric.lean` (extracted to break the cycle with
+-- `Util/MetricRieszBilinForm.lean` and `Util/TangentSpaceInstances.lean`,
+-- which need to refer to `RiemannianMetric I M` as a literal param type
+-- for Lean dot-notation resolution). The two typeclass instances —
+-- `instFiniteDimensionalTangent`, `instRiemannianBundleOfHasMetric` —
+-- live in `Util/TangentSpaceInstances.lean`. The Riesz bilinear-form
+-- bridge (`toBilinForm`, `toBilinForm_isPosDef`) lives in
+-- `Util/MetricRieszBilinForm.lean`. All are transitively imported above,
+-- so downstream consumers of this anchor get the full setup.
 
 namespace Riemannian.RiemannianMetric
 
@@ -238,47 +211,8 @@ theorem metricNormSqSection_nonneg (g : RiemannianMetric I M)
 
 end Riemannian.RiemannianMetric
 
-/-! ## TangentSpace fibre instances
-
-`NormedAddCommGroup`, `NormedSpace`, and `InnerProductSpace` on each
-fibre `TangentSpace I x` are *not* declared here. Instead, they are
-supplied by Mathlib's scoped `Bundle.RiemannianBundle`-derived
-instances, which become active once a `RiemannianBundle E` is in scope
-(e.g., via the global instance on `[RiemannianManifold M]`, or via a
-local `letI`). Routing through `RiemannianBundle` ensures that the
-inner product the Mathlib `inner` projection lands on is *exactly*
-`g.inner b · ·`, sidestepping the lean4#13063 `NormedAddCommGroup` diamond.
-
-The non-metric fibre instances `FiniteDimensional` and `CompleteSpace`
-are orthogonal to the `NormedAddCommGroup` / `InnerProductSpace` chain and are transported here via the
-`TangentSpace I x = E` def-eq. -/
-
-namespace Riemannian
-
-section TangentSpaceInstances
-
-variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-  {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
-
--- Mathlib defines `TangentSpace I x := E` as a `def` (not `abbrev`), so it
--- does not unfold under default reducible-only transparency. Lean 4's strict
--- `isDefEq` (the `backward.isDefEq.respectTransparency true` default) then
--- refuses to identify `FiniteDimensional ℝ (TangentSpace I x)` with
--- `FiniteDimensional ℝ E` during instance synthesis, even though they are
--- definitionally equal. Disabling transparency-respect here forces aggressive
--- unfolding for this one synthesis, matching the workaround used throughout
--- Mathlib (see `Mathlib/Tactic/DefEqAbuse.lean` for diagnosis tooling).
--- Remove once Mathlib's TangentSpace gets `@[reducible]` or once strict
--- isDefEq learns to unfold it through whnf.
-set_option backward.isDefEq.respectTransparency false in
-instance instFiniteDimensionalTangent [FiniteDimensional ℝ E] (x : M) :
-    FiniteDimensional ℝ (TangentSpace I x) :=
-  inferInstanceAs (FiniteDimensional ℝ E)
-
-end TangentSpaceInstances
-
-end Riemannian
+-- `instFiniteDimensionalTangent` (Eng): moved to
+-- `Riemannian/Util/TangentSpaceInstances.lean`.
 
 /-! ## Riesz duality
 
@@ -295,27 +229,8 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
-/-- **Eng.** Bridge from the metric's continuous bilinear form to the
-algebraic-core `BilinearForm.Form ℝ E`. -/
-private noncomputable def toBilinForm (g : RiemannianMetric I M) (x : M) :
-    BilinearForm.Form ℝ E :=
-  LinearMap.mk₂ ℝ
-    (fun v w => g.inner x v w)
-    (fun v₁ v₂ w => by
-      simp only [show g.inner x (v₁ + v₂) = g.inner x v₁ + g.inner x v₂
-        from (g.inner x).map_add v₁ v₂, ContinuousLinearMap.add_apply])
-    (fun c v w => by
-      simp only [show g.inner x (c • v) = c • g.inner x v
-        from (g.inner x).map_smul c v, ContinuousLinearMap.smul_apply])
-    (fun v w₁ w₂ => (g.inner x v).map_add w₁ w₂)
-    (fun c v w => (g.inner x v).map_smul c w)
-
-omit [FiniteDimensional ℝ E] in
-private theorem toBilinForm_isPosDef (g : RiemannianMetric I M) (x : M) :
-    BilinearForm.IsPosDef (g.toBilinForm x) := by
-  intro v hv
-  show 0 < g.inner x v v
-  exact g.pos x v hv
+-- `toBilinForm`, `toBilinForm_isPosDef` (Eng): in
+-- `Util/MetricRieszBilinForm.lean`.
 
 /-- **Math.** Forward Riesz $V \mapsto g_x(V, \cdot)$. -/
 noncomputable def metricToDual (g : RiemannianMetric I M) (x : M) :

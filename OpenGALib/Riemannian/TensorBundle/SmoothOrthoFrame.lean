@@ -10,10 +10,10 @@ import Mathlib.Analysis.InnerProductSpace.Orthonormal
 import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.LinearAlgebra.Dimension.Free
 import OpenGALib.Algebraic.Auxiliary.OrthonormalBasisDiagonal
-import OpenGALib.Riemannian.Metric.RiemannianMetric
 import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame.ChartBasis
 import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame.Orthonormality
+import OpenGALib.Riemannian.Util.TangentSpaceInstances
 
 /-!
 # Smooth orthonormal local frame from the chart frame

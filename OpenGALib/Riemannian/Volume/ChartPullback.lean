@@ -81,6 +81,7 @@ noncomputable def volumeMeasure (g : RiemannianMetric I M) : MeasureTheory.Measu
 @[inherit_doc] scoped[Riemannian]
   notation:max "dV_g[" g "]" => Riemannian.volumeMeasure g
 
+
 variable (g : RiemannianMetric I M)
 
 /-- **Math.** `vol_g` is locally finite (every point has a neighborhood of
