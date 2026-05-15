@@ -136,4 +136,78 @@ lemma extChartAt_transition_hasFDerivWithinAt_on_overlap_image
   rw [hsymm_eq]
   exact hfull.mono himage_sub
 
+/-! ## Inverse relation between `tangentCoordChange` in both directions
+
+The two chart-transition derivatives at a common overlap point compose
+to the identity (via the triple-composition identity `tangentCoordChange_comp`
++ self-identity `tangentCoordChange_self`). Determinants of the two
+opposite transitions are reciprocals; their absolute values, and the
+`ENNReal.ofReal` of those, multiply to `1`. These identities cancel the
+Jacobian factor in the chart-overlap change-of-variables step of the
+upcoming B3 invariance theorem. -/
+
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
+/-- **Eng.** Composition of the two opposite chart-transition derivatives
+at a common overlap point is the identity. -/
+lemma tangentCoordChange_comp_self_overlap
+    (α₀ α₁ : M) {x : M}
+    (h : x ∈ (extChartAt I α₀).source ∩ (extChartAt I α₁).source) (v : E) :
+    tangentCoordChange I α₁ α₀ x (tangentCoordChange I α₀ α₁ x v) = v := by
+  have h3 : x ∈ (extChartAt I α₀).source ∩ (extChartAt I α₁).source ∩
+      (extChartAt I α₀).source := ⟨h, h.1⟩
+  have := tangentCoordChange_comp (I := I) (w := α₀) (x := α₁) (y := α₀)
+    (z := x) (v := v) h3
+  rw [this]
+  exact tangentCoordChange_self (I := I) h.1
+
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
+/-- **Eng.** `det (tangentCoordChange α₀ α₁ x) · det (tangentCoordChange α₁ α₀ x) = 1`
+on the chart-source overlap. Follows from
+`tangentCoordChange_comp_self_overlap` + `LinearMap.det_comp`. -/
+lemma tangentCoordChange_det_mul_inv_det_eq_one
+    (α₀ α₁ : M) {x : M}
+    (h : x ∈ (extChartAt I α₀).source ∩ (extChartAt I α₁).source) :
+    (tangentCoordChange I α₀ α₁ x : E →L[ℝ] E).det *
+      (tangentCoordChange I α₁ α₀ x : E →L[ℝ] E).det = 1 := by
+  classical
+  have hcomp_id :
+      ((tangentCoordChange I α₁ α₀ x : E →L[ℝ] E) :
+            E →ₗ[ℝ] E).comp
+          ((tangentCoordChange I α₀ α₁ x : E →L[ℝ] E) : E →ₗ[ℝ] E) =
+        LinearMap.id := by
+    ext v
+    simp only [LinearMap.coe_comp, ContinuousLinearMap.coe_coe, Function.comp_apply,
+      LinearMap.id_coe, id_eq]
+    exact tangentCoordChange_comp_self_overlap α₀ α₁ h v
+  have hdet := congrArg LinearMap.det hcomp_id
+  rw [LinearMap.det_comp, LinearMap.det_id] at hdet
+  -- `det(tcc α₁ α₀) * det(tcc α₀ α₁) = 1`; want `det(tcc α₀ α₁) * det(tcc α₁ α₀) = 1`.
+  linarith [mul_comm
+    ((tangentCoordChange I α₀ α₁ x : E →L[ℝ] E).det)
+    ((tangentCoordChange I α₁ α₀ x : E →L[ℝ] E).det)]
+
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
+/-- **Eng.** Absolute-value version: `|det(tcc α₀ α₁ x)| · |det(tcc α₁ α₀ x)| = 1`. -/
+lemma abs_det_tangentCoordChange_mul_abs_det_inv
+    (α₀ α₁ : M) {x : M}
+    (h : x ∈ (extChartAt I α₀).source ∩ (extChartAt I α₁).source) :
+    |(tangentCoordChange I α₀ α₁ x : E →L[ℝ] E).det| *
+      |(tangentCoordChange I α₁ α₀ x : E →L[ℝ] E).det| = 1 := by
+  rw [← abs_mul,
+      tangentCoordChange_det_mul_inv_det_eq_one α₀ α₁ h,
+      abs_one]
+
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
+/-- **Eng.** ENNReal form: the chart-overlap Jacobian factors cancel
+when promoted to `ℝ≥0∞`. -/
+lemma ennreal_abs_det_tangentCoordChange_mul_abs_det_inv
+    (α₀ α₁ : M) {x : M}
+    (h : x ∈ (extChartAt I α₀).source ∩ (extChartAt I α₁).source) :
+    ENNReal.ofReal |(tangentCoordChange I α₀ α₁ x : E →L[ℝ] E).det| *
+      ENNReal.ofReal
+        |(tangentCoordChange I α₁ α₀ x : E →L[ℝ] E).det| = 1 := by
+  rw [← ENNReal.ofReal_mul (abs_nonneg _),
+      abs_det_tangentCoordChange_mul_abs_det_inv α₀ α₁ h]
+  exact ENNReal.ofReal_one
+
 end Riemannian.Tensor
