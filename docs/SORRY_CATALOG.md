@@ -7,7 +7,7 @@ count; new sorry additions require updating this file.
 ## Scope
 
 This catalog covers `Algebraic`, `Tensor`, `Core`, `Riemannian`, `Bridges`,
-and `GeometricMeasureTheory`.
+`Comparison`, and `GeometricMeasureTheory`.
 
 ## Classification
 
@@ -26,11 +26,12 @@ and `GeometricMeasureTheory`.
 | Core | 0 | 0 | 0 |
 | Riemannian | 1 | 0 | 1 |
 | Bridges | 1 | 0 | 1 |
+| Comparison | 1 | 0 | 1 |
 | GeometricMeasureTheory | 5 | 10 | 15 |
-| **Total** | **21** | **10** | **31** |
+| **Total** | **22** | **10** | **32** |
 
-CI workflow `.github/workflows/ci.yml` asserts the total equals 31
-(`EXPECTED=31`).
+CI workflow `.github/workflows/ci.yml` asserts the total equals 32
+(`EXPECTED=32`).
 
 ## Algebraic (5)
 
@@ -70,6 +71,12 @@ this is a *new* statement-only addition. Closure path documented above.
 | File:line | Identifier | Classification | Notes |
 |-----------|-----------|---------------|-------|
 | `RiemannianToLength.lean:101` | `IsRiemannianManifold.toLengthSpace` (`≤` direction) | PRE-PAPER | The bound `pathLength γ_continuous ≤ Manifold.pathELength I γ_smooth 0 1` for the `Path` constructed from a Mathlib smooth `γ : ℝ → M`. Closure path: partition-telescoping via `IsRiemannianManifold.out`, `Manifold.riemannianEDist_le_pathELength`, `Manifold.pathELength_add`, `Manifold.pathELength_mono` (~60–100 LOC). Repair trigger: first downstream consumer that destructures the `iInf` equation. See module docstring for the full repair plan. |
+
+## Comparison (1)
+
+| File:line | Identifier | Classification | Notes |
+|-----------|-----------|---------------|-------|
+| `BishopGromov/VolumeComparison.lean:203` | `bishopGromov_volume_ratio_antitone` | PRE-PAPER | **North-star.** Headline Bishop–Gromov volume comparison theorem (do Carmo Ch.10 §2 Thm 2.2 / Petersen Ch.9 Thm 27). Statement landed as the multi-stage driver of OpenGA Layer 1+3a+3b development. Closure path (sketched in the theorem docstring): Riccati comparison → Laplacian comparison → polar-coordinates volume comparison; each step needs Layer 3a infrastructure (smooth radial distance on `M ∖ Cut(p)`, Hessian comparison, polar-coordinates change-of-variables on Riemannian manifolds) that is not yet present. Sibling files in `Comparison/BishopGromov/` will host the chain. The proof, once landed, will also close the `Bridges/RiemannianToLength` `≤` sorry as a side effect. |
 
 ## GeometricMeasureTheory (15)
 
