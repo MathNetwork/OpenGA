@@ -24,14 +24,14 @@ This catalog covers `Algebraic`, `Tensor`, `MetricGeometry`, `Riemannian`, `Brid
 | Algebraic | 5 | 0 | 5 |
 | Tensor | 9 | 0 | 9 |
 | MetricGeometry | 0 | 0 | 0 |
-| Riemannian | 5 | 0 | 5 |
+| Riemannian | 6 | 1 | 7 |
 | Bridges | 1 | 0 | 1 |
 | Comparison | 1 | 0 | 1 |
 | GeometricMeasureTheory | 5 | 10 | 15 |
-| **Total** | **26** | **10** | **36** |
+| **Total** | **27** | **11** | **38** |
 
-CI workflow `.github/workflows/ci.yml` asserts the total equals 36
-(`EXPECTED=36`).
+CI workflow `.github/workflows/ci.yml` asserts the total equals 38
+(`EXPECTED=38`).
 
 ## Algebraic (5)
 
@@ -66,6 +66,8 @@ CI workflow `.github/workflows/ci.yml` asserts the total equals 36
 | `Volume/ChartPullback.lean:89` | `instIsLocallyFiniteMeasure_volumeMeasure` | PRE-PAPER | `vol_g` locally finite. Repair plan: take chart-relative compact neighborhood, apply chart-pullback formula, bound `√det` by sup. ~30 LOC. |
 | `Volume/ChartPullback.lean:98` | `instSigmaFinite_volumeMeasure` | PRE-PAPER | `vol_g` sigma-finite. Repair plan: `IsLocallyFiniteMeasure + SigmaCompactSpace ⟹ SigmaFinite` (standard Mathlib lemma). ~5 LOC. |
 | `Volume/VolumeForm.lean:46` | `volumeFormAt` | PRE-PAPER | Pointwise volume form `dV_g(x) : Λⁿ(T_xM)*`. Phase 2 skeleton. Repair plan: Gram-matrix determinant `√det(g_ij(x))` extended by n-linear-alternating universal property; chart-invariance via `g' = Jᵀ·g·J`. Bridge `volumeMeasure_eq_integral_volumeForm` deferred until form-integration API lands. Estimated 80-120 LOC. |
+| `Volume/Hausdorff.lean:48` | `alphaFedererConstant` | PRE-PAPER | Federer–Hausdorff normalization constant `α(n) = ω_n / 2^n`. Phase 3 skeleton. Repair plan: explicit value via Mathlib `(volume (Metric.ball 0 1 : Set (EuclideanSpace ℝ (Fin n)))).toReal / 2^n`. ~30 LOC including positivity / finiteness. |
+| `Volume/Hausdorff.lean:88` | `volumeMeasure_eq_alphaFederer_smul_hausdorffMeasure` | CITED-BLACK-BOX | **Federer §3.2.46-50**: `vol_g = α(n) · μH[n]_{d_g}` for smooth Riemannian manifolds. Phase 3 of `riemannian-volume`. **This is the closing-bridge for the Bishop–Gromov stopgap**: once landed, `volumeMeasure g` satisfies `IsScalarMultipleOfHausdorff (Module.finrank ℝ E)` and the BG hypothesis can tighten to `μ = vol_g`. OpenGA imports the statement; proof delegated to Federer's monograph. Migrate to real proof if/when OpenGA GMT layer builds out covering-lemma + density-estimate infrastructure. |
 
 The Bochner stack (closed via commit `de19ee7`) remains unconditional;
 this is a *new* statement-only addition. Closure path documented above.

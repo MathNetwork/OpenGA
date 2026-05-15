@@ -19,6 +19,7 @@ import OpenGALib.Riemannian.TensorBundle.Defs
 import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 import OpenGALib.Riemannian.Instances.EuclideanSpace
 import OpenGALib.Riemannian.Volume.ChartPullback
+import OpenGALib.Riemannian.Volume.Hausdorff
 import OpenGALib.Riemannian.Volume.VolumeForm
 
 /-!
