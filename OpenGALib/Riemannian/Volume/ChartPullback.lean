@@ -1,6 +1,7 @@
 import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
 import Mathlib.MeasureTheory.Measure.Typeclasses.SFinite
 import OpenGALib.Riemannian.Metric.RiemannianMetric
+import OpenGALib.Riemannian.Volume.Util.PartitionOfUnityGlue
 
 /-!
 # Riemannian volume measure — chart-pullback definition
@@ -65,12 +66,17 @@ PRE-PAPER. **Construction sketch** (to be filled in subsequent commits):
    `vol_g(A) := Σᵢ ∫ χᵢ d(vol_g^{Uᵢ,φᵢ})`. Chart-invariance (step 2)
    ensures the sum is independent of the choice of atlas / partition.
 
-**Repair trigger.** Next commit on this branch implements steps 1-3.
-Requires Mathlib `Mathlib.Geometry.Manifold.PartitionOfUnity` + a custom
-chart-pullback measure helper (Mathlib doesn't ship Riemannian volume).
--/
+**Implementation.** Steps 1-3 land in `Riemannian/Volume/Util/`:
+* `chartLocalMeasure g α` (step 1, per-chart pushforward of
+  `√det · Lebesgue`),
+* `chartLocalMeasure_lintegral_U_eq_of_overlap` (step 2, chart-overlap
+  invariance via change of variables),
+* `riemannianMeasure g ρ` (step 3, partition-of-unity sum).
+
+The canonical volume measure picks the canonical chart-atlas partition
+of unity `chartAtlasPOU I M`. -/
 noncomputable def volumeMeasure (g : RiemannianMetric I M) : MeasureTheory.Measure M :=
-  sorry
+  Riemannian.Tensor.riemannianMeasure g (Riemannian.Tensor.chartAtlasPOU I M)
 
 @[inherit_doc] scoped[Riemannian]
   notation:max "dV_g[" g "]" => Riemannian.volumeMeasure g

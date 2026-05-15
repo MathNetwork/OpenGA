@@ -1,5 +1,6 @@
 import Mathlib.MeasureTheory.Function.Jacobian
 import Mathlib.MeasureTheory.Integral.Lebesgue.Map
+import OpenGALib.Riemannian.Volume.Util.ChartLocalMeasure
 import OpenGALib.Riemannian.Volume.Util.ChartOverlap
 
 /-!
@@ -39,16 +40,17 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [NeZero (Module.finrank ℝ E)]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+  [MeasurableSpace M] [BorelSpace M]
 
 private local instance : MeasurableSpace E := borel E
 private local instance : BorelSpace E := ⟨rfl⟩
-private local instance : MeasurableSpace M := borel M
-private local instance : BorelSpace M := ⟨rfl⟩
+private local instance : MeasurableSpace H := borel H
+private local instance : BorelSpace H := ⟨rfl⟩
 
 /-! ## Borel measurability of the chart target -/
 
 omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
-  [IsManifold I ∞ M] in
+  [IsManifold I ∞ M] [MeasurableSpace M] in
 /-- **Eng.** The extended-chart target `(extChartAt I α).target` is
 Borel-measurable in `E`. Decomposes as
 `I.symm ⁻¹' (chartAt H α).target ∩ range I`: preimage of an open set
@@ -73,6 +75,7 @@ lemma aemeasurable_extChartAt_symm_restrict_target (α : M) :
 
 /-! ## Continuity of `chartSqrtGramDet` on the chart source -/
 
+omit [MeasurableSpace M] in
 /-- **Eng.** `chartSqrtGramDet g α` is continuous on
 `(chartAt H α).source = (trivializationAt α).baseSet`. Derived from
 `chartSqrtGramDet_contMDiffOn` via `ContMDiffOn → ContinuousOn`. -/
@@ -82,6 +85,7 @@ lemma chartSqrtGramDet_continuousOn_source
   -- `(trivializationAt α).baseSet = (chartAt H α).source` definitionally.
   (chartSqrtGramDet_contMDiffOn (I := I) g α).continuousOn
 
+omit [MeasurableSpace M] in
 /-- **Eng.** `y ↦ ENNReal.ofReal (chartSqrtGramDet g α ((extChartAt I α).symm y))`
 is `AEMeasurable` on `modelHaar.restrict (extChartAt I α).target`.
 Composition chain: `chartSqrtGramDet g α` continuous on chart source,
@@ -160,7 +164,8 @@ theorem chartLocalMeasure_setLintegral_indicator
   rw [← MeasureTheory.lintegral_indicator hAmeas]
   exact chartLocalMeasure_lintegral (I := I) g α (hF.indicator hAmeas)
 
-omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] in
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M]
+  [MeasurableSpace M] in
 /-- **Eng.** Indicator trick: the `U.indicator`-style target lintegral
 equals a set-lintegral over `(extChartAt I α) '' U`. -/
 lemma setLIntegral_target_eq_setLIntegral_image
@@ -230,6 +235,7 @@ theorem chartLocalMeasure_lintegral_U_eq_setLIntegral_image
 
 /-! ## Chart-overlap invariance (B3 main theorem) -/
 
+omit [MeasurableSpace M] in
 /-- **Math.** `chartSqrtGramDet` pullback in `tangentCoordChange` language:
 `chartSqrtGramDet g α₁ x = |det(tangentCoordChange α₁ α₀ x)| · chartSqrtGramDet g α₀ x`.
 Combines the abstract `chartSqrtGramDet_pullback` (via `transitionMatrix`)

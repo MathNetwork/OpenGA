@@ -1,7 +1,7 @@
 import Mathlib.MeasureTheory.Measure.Haar.OfBasis
 import Mathlib.MeasureTheory.Measure.MeasureSpace
 import Mathlib.MeasureTheory.Measure.WithDensity
-import OpenGALib.Riemannian.Volume.Util.ChartTransition
+import OpenGALib.Riemannian.Volume.Util.ChartSqrtGramDet
 
 /-!
 # Chart-local Riemannian volume measure
@@ -43,17 +43,19 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [NeZero (Module.finrank ℝ E)]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
+  [MeasurableSpace M] [BorelSpace M]
 
-/-! ## File-local Borel structures on `E` and `M`
+/-! ## File-local Borel structures on `E` and `H`
 
-These are declared `private local` so they do not leak into downstream
-typeclass search, avoiding the standard `MeasurableSpace` / `BorelSpace`
-diamond on charted spaces. -/
+`MeasurableSpace M` / `BorelSpace M` come from the consumer's variable
+block so that the result type `Measure M` matches downstream. The
+auxiliary `E` and `H` Borel structures are file-local since they appear
+only inside the construction, not in the public result type. -/
 
-private local instance instMSEofBorel : MeasurableSpace E := borel E
-private local instance instBSEofBorel : BorelSpace E := ⟨rfl⟩
-private local instance instMSMofBorel : MeasurableSpace M := borel M
-private local instance instBSMofBorel : BorelSpace M := ⟨rfl⟩
+private local instance : MeasurableSpace E := borel E
+private local instance : BorelSpace E := ⟨rfl⟩
+private local instance : MeasurableSpace H := borel H
+private local instance : BorelSpace H := ⟨rfl⟩
 
 /-! ## The canonical Haar reference measure on `E` -/
 
@@ -105,7 +107,7 @@ noncomputable def chartLocalMeasure
         ENNReal.ofReal
           (chartSqrtGramDet (I := I) g α ((extChartAt I α).symm y))))
 
-omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [BorelSpace M] in
 /-- **Eng.** Unfolding lemma: definitional expansion of `chartLocalMeasure`. -/
 lemma chartLocalMeasure_def
     (g : RiemannianMetric I M) (α : M) :

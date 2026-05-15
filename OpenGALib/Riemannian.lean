@@ -28,6 +28,7 @@ import OpenGALib.Riemannian.Volume.Util.ChartOverlap
 import OpenGALib.Riemannian.Volume.Util.ChartSqrtGramDet
 import OpenGALib.Riemannian.Volume.Util.ChartTransition
 import OpenGALib.Riemannian.Volume.Util.GramDeterminant
+import OpenGALib.Riemannian.Volume.Util.PartitionOfUnityGlue
 import OpenGALib.Riemannian.Volume.VolumeForm
 
 /-!

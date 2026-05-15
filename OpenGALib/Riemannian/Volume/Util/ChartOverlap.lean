@@ -1,5 +1,7 @@
+import Mathlib.Geometry.Manifold.VectorBundle.Tangent
+import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
 import Mathlib.MeasureTheory.MeasurableSpace.Embedding
-import OpenGALib.Riemannian.Volume.Util.ChartLocalMeasure
+import OpenGALib.Riemannian.Volume.Util.ChartTransition
 
 /-!
 # Geometric / measure-theoretic plumbing on chart-source overlaps
@@ -39,8 +41,8 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
 private local instance : MeasurableSpace E := borel E
 private local instance : BorelSpace E := ⟨rfl⟩
-private local instance : MeasurableSpace M := borel M
-private local instance : BorelSpace M := ⟨rfl⟩
+private local instance : MeasurableSpace H := borel H
+private local instance : BorelSpace H := ⟨rfl⟩
 
 omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
   [IsManifold I ∞ M] in
