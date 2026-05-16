@@ -796,8 +796,137 @@ def IsKilling (X : SmoothVectorField I M) : Prop :=
   ∀ (U W : SmoothVectorField I M) (y : M),
     metricInner y ((∇[U] X) y) (W y) + metricInner y ((∇[W] X) y) (U y) = 0
 
+/-- **Math.** Covariantly differentiating the Killing equation.
+
+For a Killing field `X`, the tensor
+`(U, V, W) ↦ ⟪∇_U ∇_V X - ∇_{∇_U V} X, W⟫` is skew in its last two slots.
+This is the textbook "differentiate the Killing equation and subtract the
+connection terms" step. -/
+private lemma IsKilling.second_covDeriv_inner_skew
+    (X : SmoothVectorField I M) (hX : IsKilling X)
+    (U V W : SmoothVectorField I M) (x : M) :
+    metricInner x
+        (covDeriv U.toFun (fun y => covDeriv V.toFun X.toFun y) x
+          - covDeriv (fun y => covDeriv U.toFun V.toFun y) X.toFun x) (W x)
+      + metricInner x
+        (covDeriv U.toFun (fun y => covDeriv W.toFun X.toFun y) x
+          - covDeriv (fun y => covDeriv U.toFun W.toFun y) X.toFun x) (V x)
+      = 0 := by
+  classical
+  let f : M → ℝ := fun y =>
+    metricInner y (covDeriv V.toFun X.toFun y) (W y)
+  let g : M → ℝ := fun y =>
+    metricInner y (covDeriv W.toFun X.toFun y) (V y)
+  have h_kill_fun : (fun y : M => f y + g y) = fun _ => 0 := by
+    funext y
+    exact hX V W y
+  have h_deriv_zero : mDirDeriv (fun y : M => f y + g y) x (U x) = 0 := by
+    rw [h_kill_fun]
+    rw [mDirDeriv, mfderiv_const]
+    rfl
+  have h_dVX : TangentSmoothAt (fun y : M => covDeriv V.toFun X.toFun y) x :=
+    covDeriv_smoothVF_smoothAt V X x
+  have h_dWX : TangentSmoothAt (fun y : M => covDeriv W.toFun X.toFun y) x :=
+    covDeriv_smoothVF_smoothAt W X x
+  have hf_mdiff : MDifferentiableAt I 𝓘(ℝ, ℝ) f x := by
+    exact metricInner_mdifferentiableAt_of_tangentSmoothAt h_dVX (W.smoothAt x)
+  have hg_mdiff : MDifferentiableAt I 𝓘(ℝ, ℝ) g x := by
+    exact metricInner_mdifferentiableAt_of_tangentSmoothAt h_dWX (V.smoothAt x)
+  have h_deriv_add :
+      mDirDeriv (fun y : M => f y + g y) x (U x)
+        = mDirDeriv f x (U x) + mDirDeriv g x (U x) := by
+    unfold mDirDeriv
+    rw [show (fun y : M => f y + g y) = f + g from rfl,
+      mfderiv_add hf_mdiff hg_mdiff]
+    rfl
+  have h_compat_f := leviCivitaConnection_metric_compatible
+    U.toFun (fun y : M => covDeriv V.toFun X.toFun y) W.toFun x
+    (U.smoothAt x) h_dVX (W.smoothAt x)
+  have h_compat_g := leviCivitaConnection_metric_compatible
+    U.toFun (fun y : M => covDeriv W.toFun X.toFun y) V.toFun x
+    (U.smoothAt x) h_dWX (V.smoothAt x)
+  change mDirDeriv f x (U x)
+      = metricInner x (covDeriv U.toFun (fun y => covDeriv V.toFun X.toFun y) x) (W x)
+        + metricInner x (covDeriv V.toFun X.toFun x) (covDeriv U.toFun W.toFun x)
+    at h_compat_f
+  change mDirDeriv g x (U x)
+      = metricInner x (covDeriv U.toFun (fun y => covDeriv W.toFun X.toFun y) x) (V x)
+        + metricInner x (covDeriv W.toFun X.toFun x) (covDeriv U.toFun V.toFun x)
+    at h_compat_g
+  have h_expanded :
+      metricInner x (covDeriv U.toFun (fun y => covDeriv V.toFun X.toFun y) x) (W x)
+        + metricInner x (covDeriv V.toFun X.toFun x) (covDeriv U.toFun W.toFun x)
+        + (metricInner x
+            (covDeriv U.toFun (fun y => covDeriv W.toFun X.toFun y) x) (V x)
+          + metricInner x (covDeriv W.toFun X.toFun x) (covDeriv U.toFun V.toFun x))
+        = 0 := by
+    linarith [h_deriv_zero, h_deriv_add, h_compat_f, h_compat_g]
+  have h_cross_W :
+      metricInner x (covDeriv V.toFun X.toFun x) (covDeriv U.toFun W.toFun x)
+        = -metricInner x
+            (covDeriv (fun y : M => covDeriv U.toFun W.toFun y) X.toFun x) (V x) := by
+    have h := hX (SmoothVectorField.const (I := I) (M := M)
+        (covDeriv U.toFun W.toFun x)) V x
+    change
+      metricInner x
+          (leviCivitaConnection.toFun X.toFun x ((fun y : M => covDeriv U.toFun W.toFun y) x))
+          (V x)
+        + metricInner x (covDeriv V.toFun X.toFun x) (covDeriv U.toFun W.toFun x) = 0 at h
+    have h_comm :
+        metricInner x (covDeriv V.toFun X.toFun x) (covDeriv U.toFun W.toFun x)
+          + metricInner x
+            (leviCivitaConnection.toFun X.toFun x ((fun y : M => covDeriv U.toFun W.toFun y) x))
+            (V x) = 0 := by
+      rw [add_comm]
+      exact h
+    exact eq_neg_of_add_eq_zero_left h_comm
+  have h_cross_V :
+      metricInner x (covDeriv W.toFun X.toFun x) (covDeriv U.toFun V.toFun x)
+        = -metricInner x
+            (covDeriv (fun y : M => covDeriv U.toFun V.toFun y) X.toFun x) (W x) := by
+    have h := hX (SmoothVectorField.const (I := I) (M := M)
+        (covDeriv U.toFun V.toFun x)) W x
+    change
+      metricInner x
+          (leviCivitaConnection.toFun X.toFun x ((fun y : M => covDeriv U.toFun V.toFun y) x))
+          (W x)
+        + metricInner x (covDeriv W.toFun X.toFun x) (covDeriv U.toFun V.toFun x) = 0 at h
+    have h_comm :
+        metricInner x (covDeriv W.toFun X.toFun x) (covDeriv U.toFun V.toFun x)
+          + metricInner x
+            (leviCivitaConnection.toFun X.toFun x ((fun y : M => covDeriv U.toFun V.toFun y) x))
+            (W x) = 0 := by
+      rw [add_comm]
+      exact h
+    exact eq_neg_of_add_eq_zero_left h_comm
+  rw [metricInner_sub_left, metricInner_sub_left]
+  show metricInner x (covDeriv U.toFun (fun y => covDeriv V.toFun X.toFun y) x) (W x)
+      - metricInner x (covDeriv (fun y => covDeriv U.toFun V.toFun y) X.toFun x) (W x)
+      + (metricInner x (covDeriv U.toFun (fun y => covDeriv W.toFun X.toFun y) x) (V x)
+        - metricInner x (covDeriv (fun y => covDeriv U.toFun W.toFun y) X.toFun x) (V x))
+      = 0
+  linarith [h_expanded, h_cross_W, h_cross_V]
+
+/-- **Math.** Commutator of the second covariant derivative operator:
+`H(U,V)X - H(V,U)X = R(U,V)X`, where
+`H(U,V)X = ∇_U∇_V X - ∇_{∇_U V}X`. -/
+private lemma second_covDeriv_commutator
+    (X U V : SmoothVectorField I M) (x : M) :
+    (covDeriv U.toFun (fun y => covDeriv V.toFun X.toFun y) x
+        - covDeriv (fun y => covDeriv U.toFun V.toFun y) X.toFun x)
+      - (covDeriv V.toFun (fun y => covDeriv U.toFun X.toFun y) x
+        - covDeriv (fun y => covDeriv V.toFun U.toFun y) X.toFun x)
+      = Riem(U, V) X x := by
+  rw [riemannCurvature_commutator_form]
+  have h_torsion := covDeriv_sub_swap_eq_mlieBracket U.toFun V.toFun x
+    (U.smoothAt x) (V.smoothAt x)
+  unfold covDeriv at h_torsion ⊢
+  rw [← h_torsion]
+  simp only [map_sub]
+  abel_nf
+
 /-- **Math.** **Killing field PDE**: a Killing vector field `X` satisfies
-$$\nabla^2_{Y, Z} X = R(X, Y) Z$$
+$$\nabla^2_{Y, Z} X = R(Y, X) Z$$
 for all vector fields `Y, Z` and points `x`, where
 $\nabla^2_{Y, Z} W := \nabla_Y(\nabla_Z W) - \nabla_{\nabla_Y Z} W$.
 
@@ -806,19 +935,98 @@ linearization of "flow generates isometries". Foundation for the
 Bochner–Yano dimension bound `dim Isom(M) ≤ n(n+1)/2` and the rigidity
 of constant-sectional-curvature manifolds.
 
-Reference: do Carmo, *Riemannian Geometry*, §3 Ex. 5; Petersen, Ch. 8 §2;
-Cheeger–Ebin §1.84.
+With OpenGA's convention
+`Riem(U,V)X = ∇_U∇_V X - ∇_V∇_U X - ∇_[U,V] X`, the right-hand side is
+`Riem(Y, X) Z`, equivalently `-Riem(X, Y) Z`.
 
-PRE-PAPER. **Repair plan**: differentiate the Killing equation along a
-third direction, apply metric compatibility (`covDeriv_metric_compat`)
-twice and the curvature commutator identity (`riemannCurvature_def`),
-then symmetrize via the Killing equation again. Standard textbook proof;
-the sign-bookkeeping is the bulk. Estimated 80-120 LOC. -/
+Reference: do Carmo, *Riemannian Geometry*, §3 Ex. 5; Petersen, Ch. 8 §2;
+Cheeger–Ebin §1.84. -/
 theorem IsKilling.second_covDeriv_eq_curvature
-    (X : SmoothVectorField I M) (_hX : IsKilling X)
+    (X : SmoothVectorField I M) (hX : IsKilling X)
     (Y Z : SmoothVectorField I M) (x : M) :
-    (∇[Y] (∇[Z] X)) x - (∇[∇[Y] Z] X) x = Riem(X, Y) Z x := by
-  sorry
+    (∇[Y] (∇[Z] X)) x - (∇[∇[Y] Z] X) x = Riem(Y, X) Z x := by
+  classical
+  apply (metricInner_eq_iff_eq x _ _).mp
+  intro w
+  set W : SmoothVectorField I M := SmoothVectorField.const (I := I) (M := M) w with hW_def
+  let A (U V W : SmoothVectorField I M) : ℝ :=
+    metricInner x
+      (covDeriv U.toFun (fun y => covDeriv V.toFun X.toFun y) x
+        - covDeriv (fun y => covDeriv U.toFun V.toFun y) X.toFun x) (W x)
+  let C (U V W : SmoothVectorField I M) : ℝ :=
+    metricInner x (Riem(U, V) X x) (W x)
+  have h_skew_Y : A Y Z W + A Y W Z = 0 := by
+    simpa [A] using IsKilling.second_covDeriv_inner_skew X hX Y Z W x
+  have h_skew_Z : A Z W Y + A Z Y W = 0 := by
+    simpa [A] using IsKilling.second_covDeriv_inner_skew X hX Z W Y x
+  have h_skew_W : A W Y Z + A W Z Y = 0 := by
+    simpa [A] using IsKilling.second_covDeriv_inner_skew X hX W Y Z x
+  have h_comm_YZ : A Y Z W - A Z Y W = C Y Z W := by
+    have h := congrArg (fun v => metricInner x v (W x))
+      (second_covDeriv_commutator X Y Z x)
+    change metricInner x
+        ((covDeriv Y.toFun (fun y => covDeriv Z.toFun X.toFun y) x
+            - covDeriv (fun y => covDeriv Y.toFun Z.toFun y) X.toFun x)
+          - (covDeriv Z.toFun (fun y => covDeriv Y.toFun X.toFun y) x
+            - covDeriv (fun y => covDeriv Z.toFun Y.toFun y) X.toFun x)) (W x)
+        = metricInner x (Riem(Y, Z) X x) (W x) at h
+    rw [metricInner_sub_left] at h
+    simpa [A, C] using h
+  have h_comm_ZW : A Z W Y - A W Z Y = C Z W Y := by
+    have h := congrArg (fun v => metricInner x v (Y x))
+      (second_covDeriv_commutator X Z W x)
+    change metricInner x
+        ((covDeriv Z.toFun (fun y => covDeriv W.toFun X.toFun y) x
+            - covDeriv (fun y => covDeriv Z.toFun W.toFun y) X.toFun x)
+          - (covDeriv W.toFun (fun y => covDeriv Z.toFun X.toFun y) x
+            - covDeriv (fun y => covDeriv W.toFun Z.toFun y) X.toFun x)) (Y x)
+        = metricInner x (Riem(Z, W) X x) (Y x) at h
+    rw [metricInner_sub_left] at h
+    simpa [A, C] using h
+  have h_comm_WY : A W Y Z - A Y W Z = C W Y Z := by
+    have h := congrArg (fun v => metricInner x v (Z x))
+      (second_covDeriv_commutator X W Y x)
+    change metricInner x
+        ((covDeriv W.toFun (fun y => covDeriv Y.toFun X.toFun y) x
+            - covDeriv (fun y => covDeriv W.toFun Y.toFun y) X.toFun x)
+          - (covDeriv Y.toFun (fun y => covDeriv W.toFun X.toFun y) x
+            - covDeriv (fun y => covDeriv Y.toFun W.toFun y) X.toFun x)) (Z x)
+        = metricInner x (Riem(W, Y) X x) (Z x) at h
+    rw [metricInner_sub_left] at h
+    simpa [A, C] using h
+  have h_curv : C Y Z W - C Z W Y + C W Y Z
+      = 2 * metricInner x (Riem(Y, X) Z x) (W x) := by
+    have h_bianchi := bianchi_first X W Y x
+    have h_inner :
+        metricInner x (Riem(X, W) Y x + Riem(W, Y) X x + Riem(Y, X) W x) (Z x)
+          = 0 := by
+      rw [h_bianchi]
+      exact metricInner_zero_left x (Z x)
+    rw [metricInner_add_left, metricInner_add_left] at h_inner
+    have h_pair₁ : C Y Z W = metricInner x (Riem(X, W) Y x) (Z x) := by
+      simpa [C] using riemannCurvature_pair_symm Y Z X W x
+    have h_pair₂ : C Z W Y = metricInner x (Riem(X, Y) Z x) (W x) := by
+      simpa [C] using riemannCurvature_pair_symm Z W X Y x
+    have h_pair₃ : C W Y Z = metricInner x (Riem(X, Z) W x) (Y x) := by
+      simpa [C] using riemannCurvature_pair_symm W Y X Z x
+    have h_antisym12 :
+        metricInner x (Riem(X, Y) Z x) (W x)
+          = -metricInner x (Riem(Y, X) Z x) (W x) := by
+      rw [riemannCurvature_antisymm X.toFun Y.toFun Z.toFun x, metricInner_neg_left]
+    have h_antisym34 :
+        metricInner x (Riem(Y, X) W x) (Z x)
+          = -metricInner x (Riem(Y, X) Z x) (W x) := by
+      have h := riemannCurvature_metric_skew Y X W Z x (by
+        rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ, closure_univ]
+        exact Set.mem_univ _)
+      linarith
+    rw [h_pair₁, h_pair₂, h_pair₃]
+    linarith [h_inner, h_antisym12, h_antisym34]
+  have h_A : 2 * A Y Z W = C Y Z W - C Z W Y + C W Y Z := by
+    linarith [h_skew_Y, h_skew_Z, h_skew_W, h_comm_YZ, h_comm_ZW, h_comm_WY]
+  have h_target : A Y Z W = metricInner x (Riem(Y, X) Z x) (W x) := by
+    linarith [h_A, h_curv]
+  simpa [A, hW_def] using h_target
 
 /-! ## Sectional curvature
 

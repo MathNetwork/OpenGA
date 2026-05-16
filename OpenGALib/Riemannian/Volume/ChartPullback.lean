@@ -104,6 +104,6 @@ PRE-PAPER (Phase 1 follow-up). **Repair plan**: follows from
 `isLocallyFinite + sigma_compact ⟹ sigma_finite` (Mathlib lemma). -/
 instance instSigmaFinite_volumeMeasure :
     MeasureTheory.SigmaFinite (volumeMeasure g) := by
-  sorry
+  infer_instance
 
 end Riemannian

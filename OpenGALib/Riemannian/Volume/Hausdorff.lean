@@ -38,14 +38,10 @@ Explicit value (Mathlib's diameter-based Hausdorff convention):
 `α(n) = ω_n / 2^n` where `ω_n = volume(B(0, 1) ⊆ ℝⁿ) = π^{n/2} / Γ(n/2 + 1)`
 is the volume of the Euclidean unit ball.
 
-Ground truth: Federer §2.10.35 (the constant); Mattila §6 (statement).
-
-PRE-PAPER (Phase 3). **Repair plan**: implement as
-`(MeasureTheory.volume (Metric.ball (0 : EuclideanSpace ℝ (Fin n)) 1)).toReal
-   / 2^n` (Mathlib gives `ω_n` via the unit ball volume), wrapped in
-`ENNReal.ofReal`. Strictly positive for `n ≥ 1`, finite for all `n`.
-Estimated ~30 LOC including positivity / finiteness lemmas. -/
-noncomputable def alphaFedererConstant (n : ℕ) : ℝ≥0∞ := sorry
+Ground truth: Federer §2.10.35 (the constant); Mattila §6 (statement). -/
+noncomputable def alphaFedererConstant (n : ℕ) : ℝ≥0∞ :=
+  ENNReal.ofReal
+    ((MeasureTheory.volume (Metric.ball (0 : EuclideanSpace ℝ (Fin n)) 1)).toReal / 2 ^ n)
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
   [CompleteSpace E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]

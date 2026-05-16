@@ -24,14 +24,14 @@ This catalog covers `Algebraic`, `Tensor`, `MetricGeometry`, `Riemannian`, `Brid
 | Algebraic | 5 | 0 | 5 |
 | Tensor | 9 | 0 | 9 |
 | MetricGeometry | 0 | 0 | 0 |
-| Riemannian | 7 | 1 | 8 |
+| Riemannian | 4 | 1 | 5 |
 | Bridges | 1 | 0 | 1 |
 | Comparison | 1 | 0 | 1 |
 | GeometricMeasureTheory | 5 | 10 | 15 |
-| **Total** | **28** | **11** | **39** |
+| **Total** | **25** | **11** | **36** |
 
-CI workflow `.github/workflows/ci.yml` asserts the total equals 39
-(`EXPECTED=39`).
+CI workflow `.github/workflows/ci.yml` asserts the total equals 36
+(`EXPECTED=36`).
 
 ## Algebraic (5)
 
@@ -57,17 +57,14 @@ CI workflow `.github/workflows/ci.yml` asserts the total equals 39
 | `DifferentialForm/Basic.lean:326` | `pullback_ederiv` (outer) | PRE-PAPER | Outer goal of same proof. |
 | `Product/Pretrivialization.lean:281` | `tensorProductCoordChange_contMDiffOn` | PRE-PAPER | Bundle pretrivialization plumbing; Mathlib gap on tensor-product bundle smoothness. |
 
-## Riemannian (4)
+## Riemannian (5)
 
 | File:line | Identifier | Classification | Notes |
 |-----------|-----------|---------------|-------|
 | `Connection/LeviCivita.lean:921` | `bianchi_second` | PRE-PAPER | Differential Bianchi identity $(\nabla_X R)(Y,Z) W + \text{cyclic} = 0$. Statement-only commit (`a08f02a`). Repair plan (in docstring): expand `riemannCurvature_commutator_form`, distribute `covDeriv_sub_field` to 12 cov-deriv-of-cov-deriv terms, group into 6 pairs via torsion-freeness, close via `bianchi_first` + `SmoothVectorField.mlieBracket_jacobi`. Infrastructure in place; estimated 80-120 LOC. Tracked: #12. |
-| `Curvature/RiemannCurvature.lean:817` | `IsKilling.second_covDeriv_eq_curvature` | PRE-PAPER | Killing field PDE $\nabla^2_{Y, Z} X = R(X, Y) Z$ for Killing $X$. Foundation for Bochner–Yano isometry-group dimension bound. Repair plan in docstring: differentiate Killing equation along third direction, apply metric compatibility twice + curvature commutator, symmetrize via Killing equation. Reference: do Carmo §3 Ex. 5; Petersen Ch. 8 §2. Estimated 80-120 LOC. |
-| `Volume/ChartPullback.lean:97` | `instIsLocallyFiniteMeasure_volumeMeasure` | PRE-PAPER | `vol_g` locally finite. Repair plan: take chart-relative compact neighborhood, apply chart-pullback formula, bound `√det` by sup. ~30 LOC. |
-| `Volume/ChartPullback.lean:106` | `instSigmaFinite_volumeMeasure` | PRE-PAPER | `vol_g` sigma-finite. Repair plan: `IsLocallyFiniteMeasure + SigmaCompactSpace ⟹ SigmaFinite` (standard Mathlib lemma). ~5 LOC. |
+| `Volume/ChartPullback.lean:98` | `instIsLocallyFiniteMeasure_volumeMeasure` | PRE-PAPER | `vol_g` locally finite. Repair plan: take chart-relative compact neighborhood, apply chart-pullback formula, bound `√det` by sup. ~30 LOC. |
 | `Volume/VolumeForm.lean:46` | `volumeFormAt` | PRE-PAPER | Pointwise volume form `dV_g(x) : Λⁿ(T_xM)*`. Phase 2 skeleton. Repair plan: Gram-matrix determinant `√det(g_ij(x))` extended by n-linear-alternating universal property; chart-invariance via `g' = Jᵀ·g·J`. Bridge `volumeMeasure_eq_integral_volumeForm` deferred until form-integration API lands. Estimated 80-120 LOC. |
-| `Volume/Hausdorff.lean:48` | `alphaFedererConstant` | PRE-PAPER | Federer–Hausdorff normalization constant `α(n) = ω_n / 2^n`. Phase 3 skeleton. Repair plan: explicit value via Mathlib `(volume (Metric.ball 0 1 : Set (EuclideanSpace ℝ (Fin n)))).toReal / 2^n`. ~30 LOC including positivity / finiteness. |
-| `Volume/Hausdorff.lean:88` | `volumeMeasure_eq_alphaFederer_smul_hausdorffMeasure` | CITED-BLACK-BOX | **Federer §3.2.46-50**: `vol_g = α(n) · μH[n]_{d_g}` for smooth Riemannian manifolds. Phase 3 of `riemannian-volume`. **This is the closing-bridge for the Bishop–Gromov stopgap**: once landed, `volumeMeasure g` satisfies `IsScalarMultipleOfHausdorff (Module.finrank ℝ E)` and the BG hypothesis can tighten to `μ = vol_g`. OpenGA imports the statement; proof delegated to Federer's monograph. Migrate to real proof if/when OpenGA GMT layer builds out covering-lemma + density-estimate infrastructure. |
+| `Volume/Hausdorff.lean:84` | `volumeMeasure_eq_alphaFederer_smul_hausdorffMeasure` | CITED-BLACK-BOX | **Federer §3.2.46-50**: `vol_g = α(n) · μH[n]_{d_g}` for smooth Riemannian manifolds. Phase 3 of `riemannian-volume`. **This is the closing-bridge for the Bishop–Gromov stopgap**: once landed, `volumeMeasure g` satisfies `IsScalarMultipleOfHausdorff (Module.finrank ℝ E)` and the BG hypothesis can tighten to `μ = vol_g`. OpenGA imports the statement; proof delegated to Federer's monograph. Migrate to real proof if/when OpenGA GMT layer builds out covering-lemma + density-estimate infrastructure. |
 | `Volume/UniversalProperty.lean:55` | `volumeMeasure_unique` | PRE-PAPER | Universal property of `vol_g`: any Borel measure agreeing with `vol_g` on chart-coordinate opens equals `vol_g`. Phase 5 skeleton. Repair plan: Mathlib `Measure.ext_of_iUnion` (uniqueness on π-system) applied to chart-open generating set of the Borel σ-algebra. Depends on Phase 1 follow-up (`volumeMeasure_chart_pullback_eq`). Estimated 30-50 LOC. |
 
 The Bochner stack (closed via commit `de19ee7`) remains unconditional;
