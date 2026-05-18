@@ -215,13 +215,6 @@ noncomputable def ricci
     (X Y : SmoothVectorField I M) (x : M) : ℝ :=
   LinearMap.trace ℝ (TangentSpace I x) (curvatureEndo g X Y x)
 
-/-- **Math.** The Ricci curvature as a scalar function on the manifold:
-`(Ric(X, Y))(x) = ricci HasMetric.metric X Y x`. The notation pipes the
-ambient `[HasMetric I M]` metric so downstream consumers continue to
-write `Ric(X, Y)` unchanged during Phase 1 (typeclass retained). -/
-scoped[Riemannian] notation:max "Ric(" X ", " Y ")" =>
-  ricci (HasMetric.metric) X Y
-
 /-! ### Diagonal `(3,4)` vanishing: $g(R(X,Y)Z, Z) = 0$
 
 do Carmo §4 Proposition 2.5(iii) closure. The proof reduces, via metric
@@ -759,12 +752,12 @@ theorem ricci_symm
   set b := stdOrthonormalBasis ℝ (TangentSpace I x) with hb_def
   -- Expand each Ricci scalar as `∑ i, ⟪b i, R(const b i, ·) · x⟫_ℝ` via
   -- `LinearMap.trace_eq_sum_inner`.
-  have h_RXY : Ric(X, Y) x =
+  have h_RXY : ricci HasMetric.metric X Y x =
       ∑ i, ⟪b i, riemannCurvature HasMetric.metric (fun _ : M => (b i : E)) X.toFun Y.toFun x⟫_ℝ := by
     show LinearMap.trace ℝ (TangentSpace I x)
           (curvatureEndo (HasMetric.metric) X Y x) = _
     exact LinearMap.trace_eq_sum_inner _ b
-  have h_RYX : Ric(Y, X) x =
+  have h_RYX : ricci HasMetric.metric Y X x =
       ∑ i, ⟪b i, riemannCurvature HasMetric.metric (fun _ : M => (b i : E)) Y.toFun X.toFun x⟫_ℝ := by
     show LinearMap.trace ℝ (TangentSpace I x)
           (curvatureEndo (HasMetric.metric) Y X x) = _
