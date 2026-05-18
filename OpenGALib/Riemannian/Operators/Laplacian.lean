@@ -98,28 +98,30 @@ set_option backward.isDefEq.respectTransparency false in
 $f : M \to \mathbb{R}$ at $x$, the geometric trace of the Hessian:
 $\Delta_g f(x) = \sum_i \operatorname{Hess} f(x)(\varepsilon_i, \varepsilon_i)$
 in the $g$-orthonormal frame `stdOrthonormalBasis`. Basis-independent. -/
-noncomputable def scalarLaplacian (f : M → ℝ) (x : M) : ℝ :=
+noncomputable def scalarLaplacian (g : RiemannianMetric I M) (f : M → ℝ) (x : M) : ℝ :=
   let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
     stdOrthonormalBasis ℝ (TangentSpace I x)
-  ∑ i, hessian (I := I) (M := M) f
+  ∑ i, hessian (I := I) (M := M) g f
     (fun (_ : M) => (e i : TangentSpace I x))
     (fun (_ : M) => (e i : TangentSpace I x))
     x
 
 /-- **Math.** Notation `Δ_g[I] f` for the scalar Laplacian
 $\mathrm{tr}_g(\mathrm{Hess}\,f)$. `I` bracketed since `f : M → ℝ` hides
-the model with corners. -/
+the model with corners. The notation pipes the ambient `[HasMetric I M]`
+metric so downstream code keeps using `Δ_g[I] f` during Phase 1
+(typeclass retained until #19). -/
 scoped[Riemannian] notation:max "Δ_g[" I "] " f:max =>
-  Operators.scalarLaplacian (I := I) f
+  Operators.scalarLaplacian (I := I) HasMetric.metric f
 
 /-- **Math.** **Scalar Laplacian as Bilin-trace of the Hessian section.**
 Both unfold to $\sum_i \langle \nabla_{\varepsilon_i} \nabla f,\,
 \varepsilon_i\rangle_g$ in the same $g$-orthonormal frame
 `stdOrthonormalBasis`. -/
 theorem scalarLaplacian_eq_laplacian_hessianBilin
-    (f : M → ℝ) (x : M) :
-    scalarLaplacian (I := I) f x =
-      laplacian (I := I) (M := M) (hessianBilin (I := I) f) x := by
+    (g : RiemannianMetric I M) (f : M → ℝ) (x : M) :
+    scalarLaplacian (I := I) g f x =
+      laplacian (I := I) (M := M) (hessianBilin (I := I) g f) x := by
   unfold scalarLaplacian
   simp only [laplacian, trace_def, hessian, hessianBilin, LinearMap.mk₂_apply,
              covDeriv_const_eq_covDerivAt]

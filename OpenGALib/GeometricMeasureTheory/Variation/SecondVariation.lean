@@ -68,7 +68,7 @@ noncomputable def secondVariationFull
   let νSmooth : SmoothVectorField I M :=
     ⟨hN.unitNormal, sorry⟩
   ∫ x, (‖grad_g[I] φ‖²_g x -
-        (secondFundamentalFormSqNorm hN.unitNormal x +
+        (secondFundamentalFormSqNorm HasMetric.metric hN.unitNormal x +
          ricci (HasMetric.metric) νSmooth νSmooth x) * φ x ^ 2)
       ∂V.massMeasure
 

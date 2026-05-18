@@ -42,45 +42,51 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteS
 
 /-- **Math.** $A(X, Y)(x) = \langle \nabla^M_X Y(x),\, \nu(x)\rangle$. -/
 noncomputable def secondFundamentalFormScalar
+    (g : RiemannianMetric I M)
     (ν X Y : VectorFieldSection I M) (x : M) : ℝ :=
-  metricInner x (covDeriv HasMetric.metric X Y x) (ν x)
+  g.metricInner x (covDeriv g X Y x) (ν x)
 
 /-- **Math.** Notation `II(X, Y)` for the codim-1 second fundamental form
-scalar, with the unit normal `ν` from context. -/
+scalar, with the unit normal `ν` from context. The notation pipes the
+ambient `[HasMetric I M]` metric so downstream code keeps using
+`II(X, Y)` during Phase 1 (typeclass retained until #19). -/
 scoped[Riemannian] notation:max "II(" X ", " Y ")" =>
-  secondFundamentalFormScalar X Y
+  secondFundamentalFormScalar HasMetric.metric X Y
 
 set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** $|A|^2(x) = \sum_{i,j} A(e_i, e_j)^2$ over the standard
 orthonormal basis of `TangentSpace I x`. Basis-independent for
 orthonormal frames. -/
 noncomputable def secondFundamentalFormSqNorm
+    (g : RiemannianMetric I M)
     (ν : VectorFieldSection I M) (x : M) : ℝ :=
   let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
     stdOrthonormalBasis ℝ (TangentSpace I x)
-  ∑ i, ∑ j, (secondFundamentalFormScalar (I := I) (M := M) ν
+  ∑ i, ∑ j, (secondFundamentalFormScalar (I := I) (M := M) g ν
     (fun (_ : M) => (e i : TangentSpace I x))
     (fun (_ : M) => (e j : TangentSpace I x)) x) ^ 2
 
 @[simp]
 theorem secondFundamentalFormSqNorm_nonneg
+    (g : RiemannianMetric I M)
     (ν : VectorFieldSection I M) (x : M) :
-    0 ≤ secondFundamentalFormSqNorm ν x := by
+    0 ≤ secondFundamentalFormSqNorm g ν x := by
   unfold secondFundamentalFormSqNorm
   positivity
 
 set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** $H(x) = \mathrm{tr}_g A(x) = \sum_i A(e_i, e_i)(x)$. -/
 noncomputable def meanCurvature
+    (g : RiemannianMetric I M)
     (ν : VectorFieldSection I M) (x : M) : ℝ :=
   let e : OrthonormalBasis _ ℝ (TangentSpace I x) :=
     stdOrthonormalBasis ℝ (TangentSpace I x)
-  ∑ i, secondFundamentalFormScalar (I := I) (M := M) ν
+  ∑ i, secondFundamentalFormScalar (I := I) (M := M) g ν
     (fun (_ : M) => (e i : TangentSpace I x))
     (fun (_ : M) => (e i : TangentSpace I x)) x
 
 /-- **Math.** Notation `H_g[I] ν` for the mean curvature of a hypersurface
 oriented by unit normal `ν`. -/
-scoped[Riemannian] notation:max "H_g[" I "]" => meanCurvature (I := I)
+scoped[Riemannian] notation:max "H_g[" I "]" => meanCurvature (I := I) HasMetric.metric
 
 end Riemannian

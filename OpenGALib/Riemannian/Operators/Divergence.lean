@@ -50,35 +50,38 @@ against a $g$-orthonormal basis of $T_xM$. The result is basis-invariant
 (though this fact is not used in the definition itself; the canonical
 `smoothOrthoFrame` is picked as the working basis). -/
 noncomputable def divergence
+    (g : RiemannianMetric I M)
     (X : VectorFieldSection I M) (x : M) : ℝ :=
-  ∑ i, metricInner x
-    ((∇[Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i] X) x)
-    (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
+  ∑ i, g.metricInner x
+    (covDeriv g (Riemannian.Tensor.smoothOrthoFrame (I := I) g x i) X x)
+    (Riemannian.Tensor.smoothOrthoFrame (I := I) g x i x)
 
 /-- **Math.** Notation `div_g[I] X` for the divergence as a function
-`M → ℝ`; `(div_g[I] X) x` is the value at `x`. -/
+`M → ℝ`; `(div_g[I] X) x` is the value at `x`. The notation pipes the
+ambient `[HasMetric I M]` metric so downstream code keeps using
+`div_g[I] X` during Phase 1 (typeclass retained until #19). -/
 scoped[Riemannian] notation:max "div_g[" I "]" =>
-  Operators.divergence (I := I)
+  Operators.divergence (I := I) HasMetric.metric
 
 /-- **Math.** The divergence of the zero vector field is zero. -/
-@[simp] theorem divergence_zero (x : M) :
-    divergence (I := I) (M := M) (0 : VectorFieldSection I M) x = 0 := by
-  show ∑ i, metricInner x
-        ((∇[Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i]
-            (0 : VectorFieldSection I M)) x)
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x) = 0
+@[simp] theorem divergence_zero (g : RiemannianMetric I M) (x : M) :
+    divergence (I := I) (M := M) g (0 : VectorFieldSection I M) x = 0 := by
+  show ∑ i, g.metricInner x
+        (covDeriv g (Riemannian.Tensor.smoothOrthoFrame (I := I) g x i)
+            (0 : VectorFieldSection I M) x)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) g x i x) = 0
   refine Finset.sum_eq_zero ?_
   intro i _
   -- ∇_{B_i} 0 at x = 0 via continuous linear map-zero of `leviCivitaConnection.toFun 0 x`.
-  have h_zero : (∇[Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i]
-        (0 : VectorFieldSection I M)) x = 0 := by
-    show ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun 0 x)
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x) = 0
+  have h_zero : covDeriv g (Riemannian.Tensor.smoothOrthoFrame (I := I) g x i)
+        (0 : VectorFieldSection I M) x = 0 := by
+    show ((leviCivitaConnection (I := I) (M := M) g).toFun 0 x)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) g x i x) = 0
     rw [CovariantDerivative.zero]
     rfl
   rw [h_zero]
-  show ⟪(0 : TangentSpace I x), _⟫_ℝ = 0
-  exact inner_zero_left _
+  show g.metricInner x 0 _ = 0
+  rw [g.metricInner_zero_left]
 
 end Operators
 end Riemannian

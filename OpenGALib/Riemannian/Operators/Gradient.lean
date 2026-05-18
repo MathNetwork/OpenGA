@@ -40,21 +40,25 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
 Riesz duality: the unique $v$ with $\langle v, w \rangle_g = (\mathrm{d}f)_x(w)$
 for all $w$. -/
 noncomputable def manifoldGradient
+    (g : RiemannianMetric I M)
     (f : M → ℝ) (x : M) : TangentSpace I x :=
-  metricRiesz x (mfderiv I 𝓘(ℝ, ℝ) f x)
+  g.metricRiesz x (mfderiv I 𝓘(ℝ, ℝ) f x)
 
 /-- **Math.** Notation `grad_g[I] f` for the manifold gradient section.
 `I` is bracketed because `f : M → ℝ` does not expose the model with
-corners to typeclass synthesis. -/
+corners to typeclass synthesis. The notation pipes the ambient
+`[HasMetric I M]` metric so downstream code continues to write
+`grad_g[I] f` unchanged during Phase 1 (typeclass retained until #19). -/
 scoped[Riemannian] notation:max "grad_g[" I "] " f:max =>
-  manifoldGradient (I := I) f
+  manifoldGradient (I := I) HasMetric.metric f
 
 omit [CompleteSpace E] in
 /-- **Math.** $\langle \nabla^M f(x), v \rangle_g = (\mathrm{d}f)_x(v)$. -/
 theorem manifoldGradient_inner_eq
+    (g : RiemannianMetric I M)
     (f : M → ℝ) (x : M) (v : TangentSpace I x) :
-    metricInner x (grad_g[I] f x) v = (mfderiv I 𝓘(ℝ, ℝ) f x) v :=
-  metricRiesz_inner x (mfderiv I 𝓘(ℝ, ℝ) f x) v
+    g.metricInner x (manifoldGradient g f x) v = (mfderiv I 𝓘(ℝ, ℝ) f x) v :=
+  g.metricRiesz_inner x (mfderiv I 𝓘(ℝ, ℝ) f x) v
 
 omit [CompleteSpace E] in
 /-- **Math.** **Gradient smoothness propagation**: $C^\infty$ scalar $g$
@@ -72,22 +76,23 @@ base set (without `[I.Boundaryless]`, the identity holds only on the strict
 interior of the chart target). -/
 theorem manifoldGradient_smooth_of_smooth
     [InnerProductSpace ℝ E] [I.Boundaryless] [NeZero (Module.finrank ℝ E)]
-    (g : M → ℝ) (hg : ContMDiff I 𝓘(ℝ, ℝ) ∞ g) :
+    (g : RiemannianMetric I M)
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) :
     ContMDiff I (I.prod 𝓘(ℝ, E)) ∞
-      (fun y => (⟨y, manifoldGradient (I := I) g y⟩ : TangentBundle I M)) := by
+      (fun y => (⟨y, manifoldGradient (I := I) g f y⟩ : TangentBundle I M)) := by
   intro x
   have hx_base : x ∈ (trivializationAt E (TangentSpace I) x).baseSet := by
     rw [TangentBundle.trivializationAt_baseSet (𝕜 := ℝ) (I := I) x]
     exact mem_chart_source H x
   have hΦ : ∀ j : Fin (Module.finrank ℝ E),
       ContMDiffOn I 𝓘(ℝ) ∞
-        (fun y => (mfderiv I 𝓘(ℝ, ℝ) g y)
+        (fun y => (mfderiv I 𝓘(ℝ, ℝ) f y)
           (Riemannian.Tensor.chartBasisVecFiber (I := I) x j y))
         (trivializationAt E (TangentSpace I) x).baseSet := by
     intro j
     exact Riemannian.Tensor.mfderiv_chartBasisVec_apply_contMDiffOn
-      (I := I) x hg j
+      (I := I) x hf j
   exact Riemannian.Tensor.metricRiesz_section_contMDiffAt
-    (I := I) hm.metric x hx_base (Φ := fun y => mfderiv I 𝓘(ℝ, ℝ) g y) hΦ
+    (I := I) g x hx_base (Φ := fun y => mfderiv I 𝓘(ℝ, ℝ) f y) hΦ
 
 end Riemannian

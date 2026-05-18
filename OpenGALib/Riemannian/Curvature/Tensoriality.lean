@@ -54,12 +54,12 @@ theorem mfderiv_apply_smoothVF_contMDiff
   -- Then smoothness follows from manifoldGradient smoothness + V smoothness +
   -- bilinearity of the metric (encoded in `HasMetric` smoothness).
   have h_eq : (fun y => (show ℝ from mfderiv I 𝓘(ℝ, ℝ) f y (V.toFun y)))
-      = (fun y => metricInner y (manifoldGradient (I := I) f y) (V.toFun y)) := by
+      = (fun y => metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (V.toFun y)) := by
     funext y
-    exact (manifoldGradient_inner_eq (I := I) f y (V.toFun y)).symm
+    exact (manifoldGradient_inner_eq (I := I) HasMetric.metric f y (V.toFun y)).symm
   rw [h_eq]
   exact fun y => hm.metric.metricInner_contMDiffAt
-    (n := ∞) (manifoldGradient_smooth_of_smooth (I := I) f hf y) (V.smooth y)
+    (n := ∞) (manifoldGradient_smooth_of_smooth (I := I) HasMetric.metric f hf y) (V.smooth y)
 
 /-- **Math.** **3rd-slot (Z-slot) C∞-linearity of `riemannCurvature HasMetric.metric`**:
 $$R(X, Y)(f \cdot Z)(x) = f(x) \cdot R(X, Y)\,Z(x).$$

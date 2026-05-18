@@ -28,9 +28,10 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
 `secondCovDerivSection` over the smooth $g$-orthonormal frame. Pure
 `rfl`; tagged `@[simp]` for tactic-level rewrites. -/
 @[simp] lemma connectionLaplacian_def
+    (g : RiemannianMetric I M)
     (Z : VectorFieldSection I M) (α : M) :
-    connectionLaplacian (I := I) (M := M) Z α =
-      ∑ i, Riemannian.Operators.secondCovDerivSection (I := I) (M := M) Z
+    connectionLaplacian (I := I) (M := M) g Z α =
+      ∑ i, Riemannian.Operators.secondCovDerivSection (I := I) (M := M) g Z
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α :=
   rfl
