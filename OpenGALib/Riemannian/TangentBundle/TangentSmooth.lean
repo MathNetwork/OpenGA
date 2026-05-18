@@ -308,7 +308,6 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [IsLocallyConstantChartedSpace H M]
 
 omit [FiniteDimensional ℝ E] [CompleteSpace E] in
-set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** Smoothness of $y \mapsto \mathrm{d}f_y(v)$ for chart-frame-constant $v$. -/
 theorem mfderiv_const_dir_smoothAt
     {f : M → ℝ} (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) (v : E) :
@@ -386,7 +385,6 @@ theorem mfderiv_const_dir_smoothAt
   rfl
 
 omit [FiniteDimensional ℝ E] [CompleteSpace E] in
-set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** Smoothness of $y \mapsto \mathrm{d}f_y(V(y))$ for smoothly-varying $V : M \to E$. -/
 theorem mfderiv_smoothDir_smoothAt
     {f : M → ℝ} (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) {x : M}

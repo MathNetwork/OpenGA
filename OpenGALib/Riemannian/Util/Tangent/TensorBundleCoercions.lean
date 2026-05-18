@@ -19,6 +19,11 @@ model representations can `import` this file directly.
 namespace Tensor0SBundle
 noncomputable section
 
+-- issue #8: strict `isDefEq` exposes mismatches between the synthesized
+-- topology/normed-space instances on tensor-bundle fiber aliases and the
+-- instances inferred by the `ContinuousLinearEquiv` coercions below. Keep this
+-- option scoped to the coercion bridge file until those aliases have explicit
+-- topology and CLM coercion lemmas.
 set_option backward.isDefEq.respectTransparency false
 
 open Bundle Set IsManifold ContinuousLinearMap

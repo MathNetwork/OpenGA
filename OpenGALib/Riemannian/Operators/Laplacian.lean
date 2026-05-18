@@ -92,8 +92,6 @@ The **scalar Laplacian** $\Delta_g f$ of a smooth function $f : M \to \mathbb{R}
 as the trace of the Hessian. Used in the Bochner identity. -/
 
 variable [IsLocallyConstantChartedSpace H M]
-
-set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** The **scalar Laplacian** $\Delta_g f(x)$ of a smooth function
 $f : M \to \mathbb{R}$ at $x$, the geometric trace of the Hessian:
 $\Delta_g f(x) = \sum_i \operatorname{Hess} f(x)(\varepsilon_i, \varepsilon_i)$

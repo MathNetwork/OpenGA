@@ -338,8 +338,6 @@ private theorem mlieBracket_eq_lieBracketWithin_chart_pullback
   exact (mpullbackWithin_extChartAt_symm_eq_eventually V x).lieBracketWithin_vectorField_eq_of_mem
     (mpullbackWithin_extChartAt_symm_eq_eventually W x)
     (extChartAt_target_subset_range x (mem_extChartAt_target x))
-
-set_option backward.isDefEq.respectTransparency false in
 /-- **Manifold scalar Hessian–Lie identity**:
 $D_V(D_W f) - D_W(D_V f) = D_{[V,W]} f$ at $x \in M$, where $D_V f$
 denotes `mfderiv f · (V ·)` and `mlieBracket I V W` is the manifold

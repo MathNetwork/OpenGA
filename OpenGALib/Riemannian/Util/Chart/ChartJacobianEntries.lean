@@ -27,8 +27,6 @@ The proof identifies the wrapped composition with Mathlib's
 
 noncomputable section
 
-set_option backward.isDefEq.respectTransparency false
-
 open Bundle Set IsManifold ContinuousLinearMap
 open scoped Manifold Topology Bundle ContDiff
 

@@ -74,8 +74,6 @@ def IsPointwiseSymm (B : Bilin (M := M) I) : Prop :=
 on $T_x M$. Frobenius and trace against this frame are the **geometric**
 Hilbert-Schmidt norm and trace of $B$ at $x$ (basis-independent among
 $g$-orthonormal frames). -/
-
-set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** Frobenius squared norm $\sum_{i,j} B(x)(\varepsilon_i, \varepsilon_j)^2$
 in the $g$-orthonormal frame. -/
 def frobeniusSq (B : Bilin (M := M) I) (x : M) : ℝ :=
@@ -89,8 +87,6 @@ def frobeniusSq (B : Bilin (M := M) I) (x : M) : ℝ :=
         (B x ((stdOrthonormalBasis ℝ (TangentSpace I x)) i : TangentSpace I x)
              ((stdOrthonormalBasis ℝ (TangentSpace I x)) j : TangentSpace I x))^2 :=
   rfl
-
-set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** Trace $\sum_i B(x)(\varepsilon_i, \varepsilon_i)$ in the
 $g$-orthonormal frame. -/
 def trace (B : Bilin (M := M) I) (x : M) : ℝ :=
@@ -255,8 +251,6 @@ theorem hessian_eq_mDirDeriv_iterate_sub_chris
   linarith [h_compat]
 
 /-! ## Symmetry of the Hessian on scalar functions -/
-
-set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** **Hessian symmetry on scalar functions** (covariant Schwarz / Clairaut):
 $$\mathrm{Hess}\,f(x)(v, w) \;=\; \mathrm{Hess}\,f(x)(w, v).$$
 For $f \in C^2$ near $x$, with $\nabla^M f$ smooth at $x$ as a tangent

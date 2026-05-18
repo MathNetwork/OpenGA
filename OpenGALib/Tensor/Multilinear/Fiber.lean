@@ -20,8 +20,6 @@ equivalence to the model fiber.
 
 noncomputable section
 
-set_option backward.isDefEq.respectTransparency false
-
 open Bundle Set
 
 open scoped Manifold Topology Bundle ContDiff BigOperators
@@ -42,8 +40,6 @@ instance instFunLike (s : ℕ) (x : B) :
   ContinuousMultilinearMap.funLike
 
 /-! ## Topology equivalence -/
-
-set_option backward.isDefEq.respectTransparency false in
 /-- The bundle and norm topologies on a `Bundle.continuousMultilinearMap` fiber
 agree. -/
 theorem topology_eq (s : ℕ) (x : B) :
@@ -182,7 +178,8 @@ theorem triv_zero_symmL_apply_elim0 (x₀ x : B)
   have hbase : x ∈ e.baseSet := hx
   have hsymmL : (e.symmL 𝕜 x ω₀ : Bundle.continuousMultilinearMap 𝕜 0 F E x) =
       e.symm x ω₀ := by
-    simp [Trivialization.symmL_apply]
+    rw [Bundle.Trivialization.symmL_apply]
+    rfl
   rw [hsymmL]
   have h1 := triv_zero_apply_eq (F := F) (E := E) x₀ x (e.symm x ω₀) 0
   have h2 : (e ⟨x, e.symm x ω₀⟩ : B × _) = (x, ω₀) :=
@@ -206,7 +203,8 @@ theorem triv_symmL_eq_compContinuousLinearMap {s : ℕ} (x₀ x : B)
   have hbase : x ∈ e.baseSet := hx
   have hsymmL : (e.symmL 𝕜 x T : Bundle.continuousMultilinearMap 𝕜 s F E x) =
       e.symm x T := by
-    simp [Trivialization.symmL_apply]
+    rw [Bundle.Trivialization.symmL_apply]
+    rfl
   rw [hsymmL]
   apply Bundle.continuousMultilinearMap.ext
   intro v

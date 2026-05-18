@@ -101,8 +101,6 @@ coordinate functions (with respect to the tensor product basis) are smooth.
 
 section smooth
 
-set_option backward.isDefEq.respectTransparency false
-
 open Bundle Set
 
 open scoped Manifold Topology Bundle

@@ -28,7 +28,6 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
   [IsLocallyConstantChartedSpace H M]
 
 omit [CompleteSpace E] [FiniteDimensional ℝ E] in
-set_option backward.isDefEq.respectTransparency false in
 /-- **Eng.** A `SmoothVectorField`'s underlying `Y.toFun : Π y : M, T_yM`
 viewed as `M → E` (via `T_yM = E` def-eq) is globally `ContMDiff` under
 `IsLocallyConstantChartedSpace`. Bundle-section ↔ function-form bridge. -/

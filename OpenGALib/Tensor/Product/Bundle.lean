@@ -384,7 +384,6 @@ noncomputable instance memTrivializationAtlas :
     MemTrivializationAtlas
       (e₁.tensorProduct (𝕜 := 𝕜) e₂ :
         Trivialization (F₁ ⊗[𝕜] F₂) (π (F₁ ⊗[𝕜] F₂) (fun x ↦ E₁ x ⊗[𝕜] E₂ x))) := by
-  set_option backward.isDefEq.respectTransparency false in
   letI : (b : B) → TopologicalSpace (E₁ b ⊗[𝕜] E₂ b) := fun b ↦ inferInstance
   exact ⟨_, ⟨e₁, e₂, he₁, he₂, rfl⟩, rfl⟩
 
