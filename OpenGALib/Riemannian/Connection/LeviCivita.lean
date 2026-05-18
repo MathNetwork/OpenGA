@@ -325,13 +325,6 @@ noncomputable def covDeriv
     TangentSpace I x :=
   ((leviCivitaConnection (I := I) (M := M) g).toFun Y x) (X x)
 
-/-- **Math.** Notation `∇[X] Y` for `covDeriv (HasMetric.metric) X Y`. The
-notation pipes the ambient `[HasMetric I M]` metric so downstream code
-continues to write `∇[X] Y` unchanged during Phase 1 (typeclass retained
-until #19). -/
-scoped[Riemannian] notation:max "∇[" X "] " Y:max =>
-  covDeriv (HasMetric.metric) X Y
-
 /-- **Math.** Notation `⟦X, Y⟧` for the manifold Lie bracket
 `mlieBracket _ X Y` (model `I` inferred from section types). -/
 scoped[Riemannian] notation:max "⟦" X ", " Y "⟧" =>
@@ -927,10 +920,10 @@ This is the standard $(1,4)$-tensor covariant-derivative pattern: $\nabla$
 acts on each slot of $R$ as a derivation. -/
 noncomputable def covDerivRiemann
     (X Y Z W : SmoothVectorField I M) (x : M) : TangentSpace I x :=
-  (∇[X] (Riem(Y, Z) W)) x
-    - Riem(∇[X] Y, Z) W x
-    - Riem(Y, ∇[X] Z) W x
-    - Riem(Y, Z) (∇[X] W) x
+  covDeriv HasMetric.metric X.toFun (Riem(Y, Z) W) x
+    - Riem(covDeriv HasMetric.metric X Y, Z) W x
+    - Riem(Y, covDeriv HasMetric.metric X Z) W x
+    - Riem(Y, Z) (covDeriv HasMetric.metric X W) x
 
 /-- **Math.** Notation `(∇R)[X](Y, Z) W` for `covDerivRiemann X Y Z W`. -/
 scoped[Riemannian] notation:max "(∇R)[" X "](" Y ", " Z ") " W:max =>

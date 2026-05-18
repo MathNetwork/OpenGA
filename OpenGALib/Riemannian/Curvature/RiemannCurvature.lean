@@ -799,7 +799,7 @@ is by isometries).
 Reference: do Carmo §3 Ex. 5; Petersen Ch. 8. -/
 def IsKilling (X : SmoothVectorField I M) : Prop :=
   ∀ (U W : SmoothVectorField I M) (y : M),
-    metricInner y ((∇[U] X) y) (W y) + metricInner y ((∇[W] X) y) (U y) = 0
+    metricInner y ((covDeriv HasMetric.metric U X) y) (W y) + metricInner y ((covDeriv HasMetric.metric W X) y) (U y) = 0
 
 /-- **Math.** Covariantly differentiating the Killing equation.
 
@@ -949,7 +949,9 @@ Cheeger–Ebin §1.84. -/
 theorem IsKilling.second_covDeriv_eq_curvature
     (X : SmoothVectorField I M) (hX : IsKilling X)
     (Y Z : SmoothVectorField I M) (x : M) :
-    (∇[Y] (∇[Z] X)) x - (∇[∇[Y] Z] X) x = Riem(Y, X) Z x := by
+    covDeriv HasMetric.metric Y.toFun (covDeriv HasMetric.metric Z X) x
+      - covDeriv HasMetric.metric (covDeriv HasMetric.metric Y Z) X.toFun x
+      = Riem(Y, X) Z x := by
   classical
   apply (metricInner_eq_iff_eq x _ _).mp
   intro w
