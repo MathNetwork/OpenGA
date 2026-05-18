@@ -46,13 +46,6 @@ noncomputable def secondFundamentalFormScalar
     (ν X Y : VectorFieldSection I M) (x : M) : ℝ :=
   g.metricInner x (covDeriv g X Y x) (ν x)
 
-/-- **Math.** Notation `II(X, Y)` for the codim-1 second fundamental form
-scalar, with the unit normal `ν` from context. The notation pipes the
-ambient `[HasMetric I M]` metric so downstream code keeps using
-`II(X, Y)` during Phase 1 (typeclass retained until #19). -/
-scoped[Riemannian] notation:max "II(" X ", " Y ")" =>
-  secondFundamentalFormScalar HasMetric.metric X Y
-
 set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** $|A|^2(x) = \sum_{i,j} A(e_i, e_j)^2$ over the standard
 orthonormal basis of `TangentSpace I x`. Basis-independent for

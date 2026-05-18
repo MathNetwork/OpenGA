@@ -919,9 +919,6 @@ noncomputable def covDerivRiemann
     - riemannCurvature HasMetric.metric Y.toFun (covDeriv HasMetric.metric X Z) W.toFun x
     - riemannCurvature HasMetric.metric Y.toFun Z.toFun (covDeriv HasMetric.metric X W) x
 
-/-- **Math.** Notation `(∇R)[X](Y, Z) W` for `covDerivRiemann X Y Z W`. -/
-scoped[Riemannian] notation:max "(∇R)[" X "](" Y ", " Z ") " W:max =>
-  covDerivRiemann X Y Z W
 
 /-- **Math.** **Second (differential) Bianchi identity** for the
 Levi-Civita connection:
@@ -942,7 +939,7 @@ Estimated 80-120 LOC; repair tracked separately. -/
 theorem bianchi_second
     [IsManifold I 3 M]
     (X Y Z W : SmoothVectorField I M) (x : M) :
-    (∇R)[X](Y, Z) W x + (∇R)[Y](Z, X) W x + (∇R)[Z](X, Y) W x = 0 := by
+    covDerivRiemann X Y Z W x + covDerivRiemann Y Z X W x + covDerivRiemann Z X Y W x = 0 := by
   sorry
 
 end Riemannian
