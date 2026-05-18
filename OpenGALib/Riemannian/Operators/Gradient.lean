@@ -44,14 +44,6 @@ noncomputable def manifoldGradient
     (f : M → ℝ) (x : M) : TangentSpace I x :=
   g.metricRiesz x (mfderiv I 𝓘(ℝ, ℝ) f x)
 
-/-- **Math.** Notation `grad_g[I] f` for the manifold gradient section.
-`I` is bracketed because `f : M → ℝ` does not expose the model with
-corners to typeclass synthesis. The notation pipes the ambient
-`[HasMetric I M]` metric so downstream code continues to write
-`grad_g[I] f` unchanged during Phase 1 (typeclass retained until #19). -/
-scoped[Riemannian] notation:max "grad_g[" I "] " f:max =>
-  manifoldGradient (I := I) HasMetric.metric f
-
 omit [CompleteSpace E] in
 /-- **Math.** $\langle \nabla^M f(x), v \rangle_g = (\mathrm{d}f)_x(v)$. -/
 theorem manifoldGradient_inner_eq

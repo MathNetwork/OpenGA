@@ -466,9 +466,9 @@ Hess-symmetry-on-nbhd used inside `bochner_per_summand_swap`. -/
 theorem bochner_connectionLaplacian_grad_decomposition
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
-    ⟪connectionLaplacian HasMetric.metric (grad_g[I] f) x, (grad_g[I] f) x⟫_g
-      = ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
-        + ricciTensor HasMetric.metric x ((grad_g[I] f) x) ((grad_g[I] f) x) := by
+    ⟪connectionLaplacian HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x, (manifoldGradient (I := I) HasMetric.metric f) x⟫_g
+      = ⟪(manifoldGradient (I := I) HasMetric.metric f) x, (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f)) x⟫_g
+        + ricciTensor HasMetric.metric x ((manifoldGradient (I := I) HasMetric.metric f) x) ((manifoldGradient (I := I) HasMetric.metric f) x) := by
   classical
   have h_grad := manifoldGradient_smooth_of_smooth HasMetric.metric f hf
   let gradF : SmoothVectorField I M :=
