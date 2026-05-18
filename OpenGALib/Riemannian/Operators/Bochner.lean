@@ -247,7 +247,7 @@ theorem bochner_weitzenboeck
             ((manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f)) x)
       + ricciTensor HasMetric.metric x ((manifoldGradient (I := I) HasMetric.metric f) x) ((manifoldGradient (I := I) HasMetric.metric f) x) := by
   rw [bochner_leibniz_trace_reduction f hf x,
-      bochner_connectionLaplacian_grad_decomposition f hf x]
+      bochner_connectionLaplacian_grad_decomposition HasMetric.metric rfl f hf x]
   abel
 
 /-- **Math.** **Explicit-`g` form of the Bochner–Weitzenböck identity**.
