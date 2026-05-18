@@ -581,22 +581,18 @@ $$0 = \langle R(X, Y)(Z + W), Z + W\rangle_g
 Reference: do Carmo §4 Proposition 2.5(iv). -/
 theorem riemannCurvature_metric_skew
     [IsManifold I 2 M]
+    (g : RiemannianMetric I M)
     (X Y Z W : SmoothVectorField I M) (x : M)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I))) :
-    metricInner x (riemannCurvature HasMetric.metric X.toFun Y.toFun Z.toFun x) (W x)
-      + metricInner x (riemannCurvature HasMetric.metric X.toFun Y.toFun W.toFun x) (Z x) = 0 := by
-  -- Diagonal-zero applied to U = Z+W, Z, W.
-  have h_ZW := riemannCurvature_inner_self_zero HasMetric.metric X Y (Z + W) x h_interior
-  have h_Z := riemannCurvature_inner_self_zero HasMetric.metric X Y Z x h_interior
-  have h_W := riemannCurvature_inner_self_zero HasMetric.metric X Y W x h_interior
-  -- Additivity of R in 3rd slot.
-  have h_add := riemannCurvature_add_third HasMetric.metric X Y Z W x
-  -- (Z+W) x = Z x + W x.
+    g.metricInner x (riemannCurvature g X.toFun Y.toFun Z.toFun x) (W x)
+      + g.metricInner x (riemannCurvature g X.toFun Y.toFun W.toFun x) (Z x) = 0 := by
+  have h_ZW := riemannCurvature_inner_self_zero g X Y (Z + W) x h_interior
+  have h_Z := riemannCurvature_inner_self_zero g X Y Z x h_interior
+  have h_W := riemannCurvature_inner_self_zero g X Y W x h_interior
+  have h_add := riemannCurvature_add_third g X Y Z W x
   have h_ZW_x : (Z + W) x = Z x + W x := rfl
-  -- Expand h_ZW via h_add and h_ZW_x and bilinearity of metricInner.
-  rw [h_add, h_ZW_x, HasMetric.metric.metricInner_add_left, HasMetric.metric.metricInner_add_right,
-      HasMetric.metric.metricInner_add_right] at h_ZW
-  -- h_ZW : g(R Z, Z) + g(R Z, W) + (g(R W, Z) + g(R W, W)) = 0
+  rw [h_add, h_ZW_x, g.metricInner_add_left, g.metricInner_add_right,
+      g.metricInner_add_right] at h_ZW
   linarith
 
 /-! ### Pair symmetry: $g(R(X,Y)Z, W) = g(R(Z,W)X, Y)$
@@ -613,46 +609,39 @@ $$g_x(R(X,Y)Z, W) \;=\; g_x(R(Z,W)X, Y).$$
 Reference: do Carmo §4 Proposition 2.5 (iv); Petersen Ch. 3. -/
 theorem riemannCurvature_pair_symm
     [IsManifold I 2 M]
+    (g : RiemannianMetric I M)
     (X Y Z W : SmoothVectorField I M) (x : M) :
-    metricInner x (riemannCurvature HasMetric.metric X Y Z x) (W x)
-      = metricInner x (riemannCurvature HasMetric.metric Z W X x) (Y x) := by
-  -- Strict-interior hypothesis used by `riemannCurvature_metric_skew`.
+    g.metricInner x (riemannCurvature g X Y Z x) (W x)
+      = g.metricInner x (riemannCurvature g Z W X x) (Y x) := by
   have h_interior : extChartAt I x x ∈ closure (interior (Set.range I)) := by
     rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ, closure_univ]
     exact Set.mem_univ _
-  -- Four cyclic Bianchi I instances, paired with the respective 4th vector.
   have bianchi_inner : ∀ (A B C D : SmoothVectorField I M),
-      metricInner x (riemannCurvature HasMetric.metric A B C x) (D x)
-        + metricInner x (riemannCurvature HasMetric.metric B C A x) (D x)
-        + metricInner x (riemannCurvature HasMetric.metric C A B x) (D x) = 0 := by
+      g.metricInner x (riemannCurvature g A B C x) (D x)
+        + g.metricInner x (riemannCurvature g B C A x) (D x)
+        + g.metricInner x (riemannCurvature g C A B x) (D x) = 0 := by
     intro A B C D
-    have h := bianchi_first HasMetric.metric A B C x
-    have : metricInner x
-              (riemannCurvature HasMetric.metric A B C x + riemannCurvature HasMetric.metric B C A x + riemannCurvature HasMetric.metric C A B x) (D x)
-            = metricInner x (0 : TangentSpace I x) (D x) := by rw [h]
-    rw [metricInner_add_left, metricInner_add_left] at this
-    -- `metricInner x 0 (D x) = 0`.
-    have h_zero : metricInner x (0 : TangentSpace I x) (D x) = 0 := by
-      show ⟪(0 : TangentSpace I x), D x⟫_ℝ = 0
-      exact inner_zero_left _
-    rw [h_zero] at this
+    have h := bianchi_first g A B C x
+    have : g.metricInner x
+              (riemannCurvature g A B C x + riemannCurvature g B C A x + riemannCurvature g C A B x) (D x)
+            = g.metricInner x (0 : TangentSpace I x) (D x) := by rw [h]
+    rw [g.metricInner_add_left, g.metricInner_add_left] at this
+    rw [g.metricInner_zero_left] at this
     linarith
   have b1 := bianchi_inner X Y Z W
   have b2 := bianchi_inner Y Z W X
   have b3 := bianchi_inner Z W X Y
   have b4 := bianchi_inner W X Y Z
-  -- (1,2)-antisymmetry, scalar form via metricInner congrArg.
   have antisym12 : ∀ (A B C D : SmoothVectorField I M),
-      metricInner x (riemannCurvature HasMetric.metric A B C x) (D x)
-        = -metricInner x (riemannCurvature HasMetric.metric B A C x) (D x) := by
+      g.metricInner x (riemannCurvature g A B C x) (D x)
+        = -g.metricInner x (riemannCurvature g B A C x) (D x) := by
     intro A B C D
-    rw [riemannCurvature_antisymm HasMetric.metric A B C x, metricInner_neg_left]
-  -- (3,4)-antisymmetry from `riemannCurvature_metric_skew`.
+    rw [riemannCurvature_antisymm g A B C x, g.metricInner_neg_left]
   have antisym34 : ∀ (A B C D : SmoothVectorField I M),
-      metricInner x (riemannCurvature HasMetric.metric A B C x) (D x)
-        = -metricInner x (riemannCurvature HasMetric.metric A B D x) (C x) := by
+      g.metricInner x (riemannCurvature g A B C x) (D x)
+        = -g.metricInner x (riemannCurvature g A B D x) (C x) := by
     intro A B C D
-    have h := riemannCurvature_metric_skew A B C D x h_interior
+    have h := riemannCurvature_metric_skew g A B C D x h_interior
     linarith
   -- Combine: sum of b1..b4 with the antisymmetries gives 2·σ(X,Y,Z,W) - 2·σ(Z,W,X,Y) = 0.
   -- Specialise antisym to the 12 σ-instances appearing in b1..b4 and feed to linarith.
@@ -1011,11 +1000,11 @@ theorem IsKilling.second_covDeriv_eq_curvature
       exact metricInner_zero_left x (Z x)
     rw [metricInner_add_left, metricInner_add_left] at h_inner
     have h_pair₁ : C Y Z W = metricInner x (riemannCurvature HasMetric.metric X W Y x) (Z x) := by
-      simpa [C] using riemannCurvature_pair_symm Y Z X W x
+      simpa [C] using riemannCurvature_pair_symm HasMetric.metric Y Z X W x
     have h_pair₂ : C Z W Y = metricInner x (riemannCurvature HasMetric.metric X Y Z x) (W x) := by
-      simpa [C] using riemannCurvature_pair_symm Z W X Y x
+      simpa [C] using riemannCurvature_pair_symm HasMetric.metric Z W X Y x
     have h_pair₃ : C W Y Z = metricInner x (riemannCurvature HasMetric.metric X Z W x) (Y x) := by
-      simpa [C] using riemannCurvature_pair_symm W Y X Z x
+      simpa [C] using riemannCurvature_pair_symm HasMetric.metric W Y X Z x
     have h_antisym12 :
         metricInner x (riemannCurvature HasMetric.metric X Y Z x) (W x)
           = -metricInner x (riemannCurvature HasMetric.metric Y X Z x) (W x) := by
@@ -1023,7 +1012,7 @@ theorem IsKilling.second_covDeriv_eq_curvature
     have h_antisym34 :
         metricInner x (riemannCurvature HasMetric.metric Y X W x) (Z x)
           = -metricInner x (riemannCurvature HasMetric.metric Y X Z x) (W x) := by
-      have h := riemannCurvature_metric_skew Y X W Z x (by
+      have h := riemannCurvature_metric_skew HasMetric.metric Y X W Z x (by
         rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ, closure_univ]
         exact Set.mem_univ _)
       linarith
@@ -1057,10 +1046,11 @@ parallelogram); $K$ is well-defined when the two vectors are linearly
 independent (denominator non-zero). At linearly dependent inputs, the
 formula returns the junk value $0$ via division by zero. -/
 noncomputable def sectionalCurvature
+    (g : RiemannianMetric I M)
     (X Y : VectorFieldSection I M) (x : M) : ℝ :=
-  metricInner x (riemannCurvature HasMetric.metric X Y Y x) (X x) /
-    (metricInner x (X x) (X x) * metricInner x (Y x) (Y x)
-      - metricInner x (X x) (Y x) ^ 2)
+  g.metricInner x (riemannCurvature g X Y Y x) (X x) /
+    (g.metricInner x (X x) (X x) * g.metricInner x (Y x) (Y x)
+      - g.metricInner x (X x) (Y x) ^ 2)
 
 /-- **Math.** **Tangent-vector form** of sectional curvature: same
 formula as `sectionalCurvature` but consuming the pointwise tangent
@@ -1070,8 +1060,9 @@ on vector fields. By $C^\infty(M)$-tensoriality of `riemannCurvature HasMetric.m
 the value depends only on $X(x), Y(x)$, so this is the canonical
 pointwise function. -/
 noncomputable def sectionalCurvatureAt
+    (g : RiemannianMetric I M)
     (x : M) (v w : TangentSpace I x) : ℝ :=
-  sectionalCurvature (I := I) (M := M)
+  sectionalCurvature (I := I) (M := M) g
     (fun _ : M => v) (fun _ : M => w) x
 
 /-- **Math.** **Sectional curvature is symmetric in $X, Y$**:
@@ -1083,19 +1074,15 @@ using `riemannCurvature_antisymm` once in each slot.
 Denominator: symmetric in $X, Y$ via `metricInner_comm`. -/
 theorem sectionalCurvature_symmetric
     [IsManifold I 2 M]
+    (g : RiemannianMetric I M)
     (X Y : SmoothVectorField I M) (x : M) :
-    sectionalCurvature (I := I) X Y x = sectionalCurvature (I := I) Y X x := by
+    sectionalCurvature (I := I) g X Y x = sectionalCurvature (I := I) g Y X x := by
   unfold sectionalCurvature
   congr 1
-  · -- Numerator: g(R(X,Y) Y, X) = g(R(Y,X) X, Y) via pair-symmetry + double antisym.
-    -- pair-symm: g(R(X,Y) Y, X) = g(R(Y,X) X, Y) by swapping (1,2) ↔ (3,4) slots and
-    -- using R(Y,X) = -R(X,Y), with the Y, X swap on slot 3,4.
-    have h_pair := riemannCurvature_pair_symm X Y Y X x
-    -- h_pair : g(R(X,Y) Y, X) = g(R(Y,X) X, Y).
+  · have h_pair := riemannCurvature_pair_symm g X Y Y X x
     exact h_pair
-  · -- Denominator: g(X,X) g(Y,Y) - g(X,Y)^2 = g(Y,Y) g(X,X) - g(Y,X)^2.
-    have hXY : metricInner x (X x) (Y x) = metricInner x (Y x) (X x) :=
-      metricInner_comm x _ _
+  · have hXY : g.metricInner x (X x) (Y x) = g.metricInner x (Y x) (X x) :=
+      g.metricInner_comm x _ _
     rw [hXY]; ring
 
 end Riemannian
