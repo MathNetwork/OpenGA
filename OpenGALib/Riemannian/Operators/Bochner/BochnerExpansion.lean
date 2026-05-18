@@ -9,7 +9,7 @@ import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame
 import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame.Smoothness
 import OpenGALib.Util.Notation
 import Mathlib.Analysis.InnerProductSpace.Trace
-import OpenGALib.Riemannian.Util.CovDerivBridges
+import OpenGALib.Riemannian.Util.CovDeriv.CovDerivBridges
 
 /-!
 # Bochner expansion: Ricci-identity-driven chain

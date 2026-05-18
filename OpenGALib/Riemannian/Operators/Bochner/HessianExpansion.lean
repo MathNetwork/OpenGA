@@ -6,10 +6,10 @@ import OpenGALib.Riemannian.Curvature.Tensoriality
 import OpenGALib.Riemannian.Operators.Gradient
 import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame
 import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame.Smoothness
-import OpenGALib.Riemannian.Util.MetricInnerSmoothness
+import OpenGALib.Riemannian.Util.Metric.MetricInnerSmoothness
 import OpenGALib.Util.Notation
 import Mathlib.Analysis.InnerProductSpace.Trace
-import OpenGALib.Riemannian.Util.CovDerivBridges
+import OpenGALib.Riemannian.Util.CovDeriv.CovDerivBridges
 
 /-!
 # Bochner anchor — Hessian expansion of `|∇f|²`

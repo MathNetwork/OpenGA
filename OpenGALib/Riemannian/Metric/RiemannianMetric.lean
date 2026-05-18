@@ -11,8 +11,8 @@ import Mathlib.Topology.Algebra.Module.FiniteDimension
 import OpenGALib.Algebraic.BilinearForm.Basic
 import OpenGALib.Algebraic.BilinearForm.Riesz
 import OpenGALib.Riemannian.Metric.HasMetric
-import OpenGALib.Riemannian.Util.MetricRieszBilinForm
-import OpenGALib.Riemannian.Util.TangentSpaceInstances
+import OpenGALib.Riemannian.Util.Metric.MetricRieszBilinForm
+import OpenGALib.Riemannian.Util.Tangent.TangentSpaceInstances
 import OpenGALib.Util.Attributes
 
 /-!

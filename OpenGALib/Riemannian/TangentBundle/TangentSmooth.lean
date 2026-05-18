@@ -13,7 +13,7 @@ import Mathlib.LinearAlgebra.Basis.Defs
 import Mathlib.LinearAlgebra.Dimension.Finite
 import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
 import OpenGALib.Riemannian.TangentBundle.LocallyConstant
-import OpenGALib.Riemannian.Util.FlatChartDerivs
+import OpenGALib.Riemannian.Util.Chart.FlatChartDerivs
 
 /-!
 # Tangent bundle smoothness API

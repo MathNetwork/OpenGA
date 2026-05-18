@@ -1,6 +1,6 @@
 import OpenGALib.Riemannian.Curvature.RiemannCurvature
 import OpenGALib.Riemannian.Operators.Gradient
-import OpenGALib.Riemannian.Util.MetricInnerSmoothness
+import OpenGALib.Riemannian.Util.Metric.MetricInnerSmoothness
 import Mathlib.Geometry.Manifold.VectorBundle.LocalFrame
 import Mathlib.Geometry.Manifold.BumpFunction
 import Mathlib.LinearAlgebra.Dimension.Free

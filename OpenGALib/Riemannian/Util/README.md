@@ -12,41 +12,41 @@ describe their concrete content. No `Helpers` / `Base` / `Foundation` suffixes.
 
 | File | Role |
 |------|------|
-| [`ChartJacobianSmooth.lean`](./ChartJacobianSmooth.lean) | **Smoothness of chart-Jacobian-related continuous linear map-valued functions**: CLM-valued composites (e.g. `(triv α).symmL ℝ b`, `(triv α).continuousLinearMapAt ℝ b`) in `inTangentCoordinates` form. CLM-level operators. |
-| [`ChartJacobianSmoothness.lean`](./ChartJacobianSmoothness.lean) | **Smoothness of chart-Jacobian matrix entries**: scalar-valued entries obtained by composing the CLM with model-basis vectors and projections. Scalar-level. |
-| [`FlatChartDerivs.lean`](./FlatChartDerivs.lean) | **Tangent bundle — chart-derivative engineering**: `mfderiv` of chart maps under the flat (Euclidean-modeled) setup. |
+| [`Chart/ChartJacobianCLM.lean`](./Chart/ChartJacobianCLM.lean) | **Smoothness of chart-Jacobian CLM-valued functions**: CLM-valued composites (e.g. `(triv α).symmL ℝ b`, `(triv α).continuousLinearMapAt ℝ b`) in `inTangentCoordinates` form. CLM-level operators. |
+| [`Chart/ChartJacobianEntries.lean`](./Chart/ChartJacobianEntries.lean) | **Smoothness of chart-Jacobian matrix entries**: scalar-valued entries obtained by composing the CLM with model-basis vectors and projections. Scalar-level. |
+| [`Chart/FlatChartDerivs.lean`](./Chart/FlatChartDerivs.lean) | **Tangent bundle — chart-derivative engineering**: `mfderiv` of chart maps under the flat (Euclidean-modeled) setup. |
 
 ### Tangent bundle / section glue
 
 | File | Role |
 |------|------|
-| [`TangentHelpers.lean`](./TangentHelpers.lean) | **Tangent helpers — chart-bundle smoothness bridges**: general-purpose smoothness lemmas for chart-induced tangent-bundle constructions. |
-| [`TangentSpaceInstances.lean`](./TangentSpaceInstances.lean) | **Typeclass instances on `TangentSpace I x` and the tangent bundle**: `instFiniteDimensionalTangent` (def-eq lift of `FiniteDimensional ℝ E`); `instRiemannianBundleOfHasMetric` (activates Mathlib's scoped fibre instances when `[HasMetric I M]` is in scope). |
-| [`TensorBundleCoercions.lean`](./TensorBundleCoercions.lean) | **Riemannian (r,s)-tensor bundle — fiber-to-model coercion algebra**: coercion-level lemmas for `Tensor⟨r,s⟩` bundle. |
-| [`MfderivApplySection.lean`](./MfderivApplySection.lean) | **Smoothness of `mfderiv f` applied to a tangent-bundle section**: machinery for proving that `(mfderiv f x).comp (v x)` is smooth when `f, v` are. |
+| [`Tangent/TangentHelpers.lean`](./Tangent/TangentHelpers.lean) | **Tangent helpers — chart-bundle smoothness bridges**: general-purpose smoothness lemmas for chart-induced tangent-bundle constructions. |
+| [`Tangent/TangentSpaceInstances.lean`](./Tangent/TangentSpaceInstances.lean) | **Typeclass instances on `TangentSpace I x` and the tangent bundle**: `instFiniteDimensionalTangent` (def-eq lift of `FiniteDimensional ℝ E`); `instRiemannianBundleOfHasMetric` (activates Mathlib's scoped fibre instances when `[HasMetric I M]` is in scope). |
+| [`Tangent/TensorBundleCoercions.lean`](./Tangent/TensorBundleCoercions.lean) | **Riemannian (r,s)-tensor bundle — fiber-to-model coercion algebra**: coercion-level lemmas for `Tensor⟨r,s⟩` bundle. |
+| [`Tangent/MfderivApplySection.lean`](./Tangent/MfderivApplySection.lean) | **Smoothness of `mfderiv f` applied to a tangent-bundle section**: machinery for proving that `(mfderiv f x).comp (v x)` is smooth when `f, v` are. |
 
 ### Metric inner / Riesz / notation
 
 | File | Role |
 |------|------|
-| [`MetricNotation.lean`](./MetricNotation.lean) | **Polymorphic metric notation `⟪·, ·⟫_g` and `‖·‖²_g`**: dispatches over tangent-vector vs. section forms via `MetricInnerHom` / `MetricNormSq` typeclasses, resolved through `[HasMetric I M]`. |
-| [`MetricInnerSmoothness.lean`](./MetricInnerSmoothness.lean) | **`metricInner` smoothness — pointwise / set / global variants**: `ContMDiffWithinAt` / `ContMDiff` / `MDifferentiable` parity siblings of the headline `metricInner_contMDiffWithinAt` in `Metric/RiemannianMetric.lean`. |
-| [`MetricRieszBilinForm.lean`](./MetricRieszBilinForm.lean) | **Bridge from `RiemannianMetric.inner` to `BilinearForm.Form ℝ E`**: `toBilinForm`, `toBilinForm_isPosDef`. Supports the Riesz duality methods in `Metric/RiemannianMetric.lean`. |
-| [`CotangentFunctional.lean`](./CotangentFunctional.lean) | **Half-Koszul cotangent functional**: bilinear-form construction in the Koszul formula. |
+| [`Metric/MetricNotation.lean`](./Metric/MetricNotation.lean) | **Polymorphic metric notation `⟪·, ·⟫_g` and `‖·‖²_g`**: dispatches over tangent-vector vs. section forms via `MetricInnerHom` / `MetricNormSq` typeclasses, resolved through `[HasMetric I M]`. |
+| [`Metric/MetricInnerSmoothness.lean`](./Metric/MetricInnerSmoothness.lean) | **`metricInner` smoothness — pointwise / set / global variants**: `ContMDiffWithinAt` / `ContMDiff` / `MDifferentiable` parity siblings of the headline `metricInner_contMDiffWithinAt` in `Metric/RiemannianMetric.lean`. |
+| [`Metric/MetricRieszBilinForm.lean`](./Metric/MetricRieszBilinForm.lean) | **Bridge from `RiemannianMetric.inner` to `BilinearForm.Form ℝ E`**: `toBilinForm`, `toBilinForm_isPosDef`. Supports the Riesz duality methods in `Metric/RiemannianMetric.lean`. |
+| [`Metric/CotangentFunctional.lean`](./Metric/CotangentFunctional.lean) | **Half-Koszul cotangent functional**: bilinear-form construction in the Koszul formula. |
 
 ### Covariant derivative
 
 | File | Role |
 |------|------|
-| [`CovDerivBridges.lean`](./CovDerivBridges.lean) | **`covDeriv` / `covDerivAt` simp bridges**: definitional unfolding lemmas. |
-| [`CovDerivSmoothness.lean`](./CovDerivSmoothness.lean) | **Tensoriality + smoothness machinery for `koszulCovDeriv`**: the proof-level workhorse behind Levi-Civita smoothness. |
+| [`CovDeriv/CovDerivBridges.lean`](./CovDeriv/CovDerivBridges.lean) | **`covDeriv` / `covDerivAt` simp bridges**: definitional unfolding lemmas. |
+| [`CovDeriv/CovDerivSmoothness.lean`](./CovDeriv/CovDerivSmoothness.lean) | **Tensoriality + smoothness machinery for `koszulCovDeriv`**: the proof-level workhorse behind Levi-Civita smoothness. |
 
 ### Operator simp lemmas
 
 | File | Role |
 |------|------|
-| [`ConnectionLaplacianSimp.lean`](./ConnectionLaplacianSimp.lean) | **Connection Laplacian — simp def-unfold**: `@[simp]` lemmas exposing the definitional shape of `Δ_g` for use in `rw` and `simp` calls. |
-| [`DivergenceSimp.lean`](./DivergenceSimp.lean) | **Divergence — simp def-unfold**: same pattern for the manifold divergence operator. |
+| [`Simp/ConnectionLaplacianSimp.lean`](./Simp/ConnectionLaplacianSimp.lean) | **Connection Laplacian — simp def-unfold**: `@[simp]` lemmas exposing the definitional shape of `Δ_g` for use in `rw` and `simp` calls. |
+| [`Simp/DivergenceSimp.lean`](./Simp/DivergenceSimp.lean) | **Divergence — simp def-unfold**: same pattern for the manifold divergence operator. |
 
 ## Conventions
 

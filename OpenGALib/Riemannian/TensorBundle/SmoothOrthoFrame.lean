@@ -13,7 +13,7 @@ import OpenGALib.Algebraic.Auxiliary.OrthonormalBasisDiagonal
 import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame.ChartBasis
 import OpenGALib.Riemannian.TensorBundle.SmoothOrthoFrame.Orthonormality
-import OpenGALib.Riemannian.Util.TangentSpaceInstances
+import OpenGALib.Riemannian.Util.Tangent.TangentSpaceInstances
 
 /-!
 # Smooth orthonormal local frame from the chart frame

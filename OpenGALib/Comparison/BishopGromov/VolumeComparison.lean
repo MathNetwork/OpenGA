@@ -1,6 +1,7 @@
 import Mathlib.Geometry.Manifold.Riemannian.Basic
 import OpenGALib.Comparison.Util.SpaceForm
 import OpenGALib.Riemannian.Curvature.RicciTensorBundle
+import OpenGALib.Riemannian.Util.Metric.MetricNotation
 import OpenGALib.Riemannian.Volume.ChartPullback
 
 /-!

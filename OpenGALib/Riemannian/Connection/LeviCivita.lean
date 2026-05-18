@@ -6,11 +6,11 @@ import Mathlib.Geometry.Manifold.VectorField.LieBracket
 import OpenGALib.Riemannian.Manifold.SmoothManifold
 import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 import OpenGALib.Riemannian.TensorBundle.MusicalIso
-import OpenGALib.Riemannian.Util.TangentHelpers
+import OpenGALib.Riemannian.Util.Tangent.TangentHelpers
 import OpenGALib.Riemannian.Connection.Koszul
 import OpenGALib.Riemannian.Connection.RieszExtraction
-import OpenGALib.Riemannian.Util.CovDerivSmoothness
-import OpenGALib.Riemannian.Util.MetricInnerSmoothness
+import OpenGALib.Riemannian.Util.CovDeriv.CovDerivSmoothness
+import OpenGALib.Riemannian.Util.Metric.MetricInnerSmoothness
 import OpenGALib.Util.Attributes
 
 /-!
