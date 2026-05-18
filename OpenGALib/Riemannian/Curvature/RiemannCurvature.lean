@@ -754,7 +754,7 @@ theorem ricci_symm
     [IsManifold I 2 M]
     (X Y : SmoothVectorField I M) (x : M)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I))) :
-    Ric(X, Y) x = Ric(Y, X) x := by
+    ricci HasMetric.metric X Y x = ricci HasMetric.metric Y X x := by
   classical
   set b := stdOrthonormalBasis ℝ (TangentSpace I x) with hb_def
   -- Expand each Ricci scalar as `∑ i, ⟪b i, R(const b i, ·) · x⟫_ℝ` via
