@@ -772,10 +772,10 @@ These predicates describe properties of the ambient Riemannian metric
 explicit argument because the underlying notations (`Riem`, `Ric_g`)
 already consume the metric through the typeclass. -/
 
-/-- **Math.** The ambient Riemannian metric is **flat** if its Riemann
+/-- **Math.** A Riemannian metric `g` is **flat** if its Riemann
 curvature tensor vanishes pointwise. -/
-def IsFlat : Prop :=
-  ∀ (X Y Z : VectorFieldSection I M) (x : M), riemannCurvature HasMetric.metric X Y Z x = 0
+def IsFlat (g : RiemannianMetric I M) : Prop :=
+  ∀ (X Y Z : VectorFieldSection I M) (x : M), riemannCurvature g X Y Z x = 0
 
 /-! ## Killing vector fields -/
 
