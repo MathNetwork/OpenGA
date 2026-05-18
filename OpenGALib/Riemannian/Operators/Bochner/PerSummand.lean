@@ -579,5 +579,19 @@ theorem bochner_connectionLaplacian_grad_decomposition
 -- composing this file's `bochner_connectionLaplacian_grad_decomposition`
 -- with the anchor's `bochner_leibniz_trace_reduction`.
 
+/-- **Math.** **Explicit-`g` form of the heart-of-Bochner reduction**. -/
+theorem bochner_connectionLaplacian_grad_decomposition_g
+    [IsManifold I 2 M] [T2Space M]
+    (g : RiemannianMetric I M) (hg : g = hm.metric)
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
+    g.metricInner x (connectionLaplacian g (manifoldGradient (I := I) g f) x)
+        (manifoldGradient (I := I) g f x)
+      = g.metricInner x (manifoldGradient (I := I) g f x)
+            (manifoldGradient (I := I) g (Operators.scalarLaplacian g f) x)
+        + ricciTensor g x (manifoldGradient (I := I) g f x)
+                          (manifoldGradient (I := I) g f x) := by
+  subst hg
+  exact bochner_connectionLaplacian_grad_decomposition f hf x
+
 end Operators
 end Riemannian

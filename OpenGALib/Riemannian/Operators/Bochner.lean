@@ -209,6 +209,20 @@ theorem bochner_leibniz_trace_reduction
       _ = ∑ j, ⟪v, b j⟫_ℝ ^ 2 := (b.sum_sq_inner_left v).symm
       _ = ∑ j, (metricInner x v (b j)) ^ 2 := rfl
 
+/-- **Math.** **Explicit-`g` form of the Leibniz trace reduction**. -/
+theorem bochner_leibniz_trace_reduction_g
+    [IsManifold I 2 M]
+    (g : RiemannianMetric I M) (hg : g = hm.metric)
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
+    (1 / 2 : ℝ) * Operators.scalarLaplacian g
+        (fun y => g.metricInner y (manifoldGradient (I := I) g f y)
+                                  (manifoldGradient (I := I) g f y)) x
+      = g.metricInner x (connectionLaplacian g (manifoldGradient (I := I) g f) x)
+            (manifoldGradient (I := I) g f x)
+        + Operators.frobeniusSq (I := I) (M := M) (Operators.hessianBilin (I := I) g f) x := by
+  subst hg
+  exact bochner_leibniz_trace_reduction f hf x
+
 /-! ## The headline identity -/
 
 /-- **Math.** **Bochner–Weitzenböck identity** (unconditional under
@@ -232,6 +246,26 @@ theorem bochner_weitzenboeck
   rw [bochner_leibniz_trace_reduction f hf x,
       bochner_connectionLaplacian_grad_decomposition f hf x]
   abel
+
+/-- **Math.** **Explicit-`g` form of the Bochner–Weitzenböck identity**.
+Same statement as `bochner_weitzenboeck` but the metric `g` is an explicit
+`RiemannianMetric I M` parameter constrained by `hg : g = hm.metric`,
+giving consumers a `g`-parametric API without changing the underlying
+proof. Discharged via `subst hg` and `bochner_weitzenboeck`. -/
+theorem bochner_weitzenboeck_g
+    [IsManifold I 2 M]
+    (g : RiemannianMetric I M) (hg : g = hm.metric)
+    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
+    (1 / 2 : ℝ) * Operators.scalarLaplacian g
+        (fun y => g.metricInner y (manifoldGradient (I := I) g f y)
+                                  (manifoldGradient (I := I) g f y)) x =
+      Operators.frobeniusSq (I := I) (M := M) (Operators.hessianBilin (I := I) g f) x
+      + g.metricInner x (manifoldGradient (I := I) g f x)
+          (manifoldGradient (I := I) g (Operators.scalarLaplacian g f) x)
+      + ricciTensor g x (manifoldGradient (I := I) g f x)
+                        (manifoldGradient (I := I) g f x) := by
+  subst hg
+  exact bochner_weitzenboeck f hf x
 
 end Operators
 end Riemannian
