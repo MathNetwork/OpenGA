@@ -49,6 +49,9 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] [T2Space M]
   [IsLocallyConstantChartedSpace H M]
   [hm : HasMetric I M]
+  (g : RiemannianMetric I M) (hg : g = hm.metric)
+
+include g hg
 
 /-! ## Building block: Ricci as g-orthonormal trace -/
 
@@ -61,12 +64,13 @@ endomorphism. -/
 theorem ricciTensor_eq_sum_inner_orthonormal
     [IsManifold I 2 M]
     (x : M) (V W : TangentSpace I x) :
-    ricciTensor HasMetric.metric x V W =
+    ricciTensor g x V W =
       ∑ i, ⟪(stdOrthonormalBasis ℝ (TangentSpace I x)) i,
-            curvatureEndo (HasMetric.metric)
+            curvatureEndo (g)
               (SmoothVectorField.const (I := I) (M := M) V)
               (SmoothVectorField.const (I := I) (M := M) W) x
               ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)⟫_ℝ := by
+  subst hg
   show ricci (HasMetric.metric)
         (SmoothVectorField.const (I := I) (M := M) V)
         (SmoothVectorField.const (I := I) (M := M) W) x = _
@@ -101,17 +105,18 @@ theorem metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym
     (f : M → ℝ) (x : M) (v w z : TangentSpace I x)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I)))
     (hf_2 : ContMDiffAt I 𝓘(ℝ, ℝ) 2 f x)
-    (h_grad : TangentSmoothAt (manifoldGradient (I := I) HasMetric.metric f) x)
+    (h_grad : TangentSmoothAt (manifoldGradient (I := I) g f) x)
     (h_grad_const_w : TangentSmoothAt
-        (fun y : M => covDerivAt HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) y w) x)
+        (fun y : M => covDerivAt g (manifoldGradient (I := I) g f) y w) x)
     (h_grad_const_z : TangentSmoothAt
-        (fun y : M => covDerivAt HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) y z) x)
-    (h_eventual_sym : (fun y : M => hessianBilin (I := I) HasMetric.metric f y w z)
-        =ᶠ[𝓝 x] (fun y : M => hessianBilin (I := I) HasMetric.metric f y z w)) :
-    metricInner x (secondCovDerivAt (I := I) (M := M) HasMetric.metric
-        (manifoldGradient (I := I) HasMetric.metric f) x v w) z =
-      metricInner x (secondCovDerivAt (I := I) (M := M) HasMetric.metric
-        (manifoldGradient (I := I) HasMetric.metric f) x v z) w := by
+        (fun y : M => covDerivAt g (manifoldGradient (I := I) g f) y z) x)
+    (h_eventual_sym : (fun y : M => hessianBilin (I := I) g f y w z)
+        =ᶠ[𝓝 x] (fun y : M => hessianBilin (I := I) g f y z w)) :
+    g.metricInner x (secondCovDerivAt (I := I) (M := M) g
+        (manifoldGradient (I := I) g f) x v w) z =
+      g.metricInner x (secondCovDerivAt (I := I) (M := M) g
+        (manifoldGradient (I := I) g f) x v z) w := by
+  subst hg
   classical
   -- Constant lifts of v, w, z at x.
   set V : VectorFieldSection I M := fun _ => (v : TangentSpace I x) with hV_def
@@ -235,8 +240,9 @@ theorem hessianBilin_eventually_symm_of_strict_interior
     [IsManifold I 2 M]
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M)
     (w z : TangentSpace I x) :
-    (fun y : M => hessianBilin (I := I) HasMetric.metric f y w z)
-      =ᶠ[𝓝 x] (fun y : M => hessianBilin (I := I) HasMetric.metric f y z w) := by
+    (fun y : M => hessianBilin (I := I) g f y w z)
+      =ᶠ[𝓝 x] (fun y : M => hessianBilin (I := I) g f y z w) := by
+  subst hg
   have h_strict : extChartAt I x x ∈ interior (Set.range I) := by
     rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ]; exact Set.mem_univ _
   have h_grad := manifoldGradient_smooth_of_smooth HasMetric.metric f hf
@@ -263,8 +269,9 @@ theorem hessianBilin_section_eventually_symm_of_strict_interior
     [IsManifold I 2 M]
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
     (X Y : VectorFieldSection I M) (x : M) :
-    (fun y : M => hessianBilin (I := I) HasMetric.metric f y (X y) (Y y))
-      =ᶠ[𝓝 x] (fun y : M => hessianBilin (I := I) HasMetric.metric f y (Y y) (X y)) := by
+    (fun y : M => hessianBilin (I := I) g f y (X y) (Y y))
+      =ᶠ[𝓝 x] (fun y : M => hessianBilin (I := I) g f y (Y y) (X y)) := by
+  subst hg
   have h_strict : extChartAt I x x ∈ interior (Set.range I) := by
     rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ]; exact Set.mem_univ _
   have h_grad := manifoldGradient_smooth_of_smooth HasMetric.metric f hf
@@ -286,14 +293,15 @@ $$\langle (\nabla^2 \nabla f)(v, w),\, z\rangle_g(x)
     + \langle R(\mathrm{const}\,v,\,\mathrm{const}\,w)\,\nabla f,\, z\rangle_g(x).$$ -/
 theorem metricInner_secondCovDerivAt_grad_eq_swap_add_curvature
     (f : M → ℝ) (x : M) (v w z : TangentSpace I x) :
-    metricInner x (secondCovDerivAt (I := I) (M := M) HasMetric.metric
-        (manifoldGradient (I := I) HasMetric.metric f) x v w) z
-      = metricInner x (secondCovDerivAt (I := I) (M := M) HasMetric.metric
-          (manifoldGradient (I := I) HasMetric.metric f) x w v) z
-        + metricInner x
-            (riemannCurvature HasMetric.metric (fun _ : M => (v : TangentSpace I x))
+    g.metricInner x (secondCovDerivAt (I := I) (M := M) g
+        (manifoldGradient (I := I) g f) x v w) z
+      = g.metricInner x (secondCovDerivAt (I := I) (M := M) g
+          (manifoldGradient (I := I) g f) x w v) z
+        + g.metricInner x
+            (riemannCurvature g (fun _ : M => (v : TangentSpace I x))
               (fun _ : M => (w : TangentSpace I x))
-              (manifoldGradient (I := I) HasMetric.metric f) x) z := by
+              (manifoldGradient (I := I) g f) x) z := by
+  subst hg
   have h := secondCovDerivAt_sub_swap_eq_riemannCurvature HasMetric.metric    (I := I) (M := M) (manifoldGradient (I := I) HasMetric.metric f) x v w
   -- h : secondCovDerivAt ∇f x v w - secondCovDerivAt ∇f x w v
   --       = riemannCurvature HasMetric.metric (const v) (const w) ∇f x
@@ -304,7 +312,7 @@ theorem metricInner_secondCovDerivAt_grad_eq_swap_add_curvature
             (fun _ : M => (w : TangentSpace I x))
             (manifoldGradient (I := I) HasMetric.metric f) x := by
     rw [← h]; abel
-  rw [h', metricInner_add_left]
+  rw [h', HasMetric.metric.metricInner_add_left]
 
 /-- **Math.** Curvature-term metric-skew packaging:
 given $g(R(B, w)\nabla f, B) + g(\nabla f, R(B, w) B) = 0$, the
@@ -315,14 +323,15 @@ The hypothesis is the polarisation of `riemannCurvature_inner_self_zero`. -/
 theorem heart_of_bochner_curvature_term
     (f : M → ℝ)
     {B w : VectorFieldSection I M} {x : M}
-    (h_metric_skew : metricInner x
-        (riemannCurvature HasMetric.metric B w (manifoldGradient (I := I) HasMetric.metric f) x) (B x)
-      + metricInner x (manifoldGradient (I := I) HasMetric.metric f x)
-          (riemannCurvature HasMetric.metric B w B x) = 0) :
-    metricInner x
-        (riemannCurvature HasMetric.metric B w (manifoldGradient (I := I) HasMetric.metric f) x) (B x) =
-      - metricInner x (manifoldGradient (I := I) HasMetric.metric f x)
-          (riemannCurvature HasMetric.metric B w B x) := by
+    (h_metric_skew : g.metricInner x
+        (riemannCurvature g B w (manifoldGradient (I := I) g f) x) (B x)
+      + g.metricInner x (manifoldGradient (I := I) g f x)
+          (riemannCurvature g B w B x) = 0) :
+    g.metricInner x
+        (riemannCurvature g B w (manifoldGradient (I := I) g f) x) (B x) =
+      - g.metricInner x (manifoldGradient (I := I) g f x)
+          (riemannCurvature g B w B x) := by
+  subst hg
   linarith
 
 /-- **Math.** **Ricci sum identity** (heart-of-Bochner Step 3): the
@@ -334,12 +343,13 @@ theorem heart_curvature_orthonormal_sum_eq_ricci
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
     (W : SmoothVectorField I M) (x : M) :
-    ∑ i, metricInner x
-        (riemannCurvature HasMetric.metric
+    ∑ i, g.metricInner x
+        (riemannCurvature g
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i)
-          W.toFun (manifoldGradient (I := I) HasMetric.metric f) x)
+          W.toFun (manifoldGradient (I := I) g f) x)
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
-      = ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x) (W.toFun x) := by
+      = ricciTensor g x (manifoldGradient (I := I) g f x) (W.toFun x) := by
+  subst hg
   classical
   have h_interior : extChartAt I x x ∈ closure (interior (Set.range I)) := by
     rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ, closure_univ]
@@ -402,7 +412,7 @@ theorem heart_curvature_orthonormal_sum_eq_ricci
                 ((stdOrthonormalBasis ℝ (TangentSpace I x)) i) :=
         Riemannian.Tensor.sum_diagonal_smoothOrthoFrame_eq_std (I := I) x Φ
     _ = ricciTensor HasMetric.metric x (W.toFun x) (gradF.toFun x) := by
-        rw [ricciTensor_eq_sum_inner_orthonormal x (W.toFun x) (gradF.toFun x)]
+        rw [ricciTensor_eq_sum_inner_orthonormal HasMetric.metric rfl x (W.toFun x) (gradF.toFun x)]
         apply Finset.sum_congr rfl
         intro i _
         -- Φ v v = metricInner (curvatureEndo (HasMetric.metric) WV GV x v) v
@@ -428,10 +438,11 @@ with `sum_diagonal_smoothOrthoFrame_at_nbhd_eq_std` and the std-basis
 trace identification with `scalarLaplacian`. -/
 theorem sum_hessianBilin_smoothOrthoFrame_eventuallyEq_laplacian
     (f : M → ℝ) (x : M) :
-    (fun b => ∑ i, hessianBilin (I := I) HasMetric.metric f b
+    (fun b => ∑ i, hessianBilin (I := I) g f b
                     (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i b)
                     (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i b))
-      =ᶠ[𝓝 x] (Operators.scalarLaplacian (I := I) HasMetric.metric f : M → ℝ) := by
+      =ᶠ[𝓝 x] (Operators.scalarLaplacian (I := I) g f : M → ℝ) := by
+  subst hg
   filter_upwards [Riemannian.Tensor.smoothOrthoFrameNbhd_mem_nhds (I := I) (M := M) x]
     with b hb
   -- At b ∈ nbhd, basis-invariance of trace of `hessianBilin f b`.
@@ -454,15 +465,16 @@ and apply metric compatibility. -/
 theorem smoothOrthoFrame_cov_skew
     [T2Space M]
     (x : M) (i j : Fin (Module.finrank ℝ E)) (v : TangentSpace I x) :
-    metricInner x
-        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
+    g.metricInner x
+        ((leviCivitaConnection (I := I) (M := M) g).toFun
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x v)
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j x) +
-    metricInner x
+    g.metricInner x
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
-        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
+        ((leviCivitaConnection (I := I) (M := M) g).toFun
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j) x v)
       = 0 := by
+  subst hg
   classical
   -- Section-level smoothness of the smooth orthonormal frame.
   have hBi := Riemannian.Tensor.smoothOrthoFrame_smooth (I := I) hm.metric x i
@@ -521,11 +533,12 @@ theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
     (W : SmoothVectorField I M) (x : M) :
-    ∑ i, hessianBilin (I := I) HasMetric.metric f x
+    ∑ i, hessianBilin (I := I) g f x
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
-        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
+        ((leviCivitaConnection (I := I) (M := M) g).toFun
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x
           (W.toFun x)) = 0 := by
+  subst hg
   classical
   have h_interior : extChartAt I x x ∈ closure (interior (Set.range I)) := by
     rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ, closure_univ]
@@ -598,14 +611,14 @@ theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
     intro i j
     -- From smoothOrthoFrame_cov_skew: a i j + g(B_i, ∇_W B_j) = 0.
     -- And g(B_i x, ∇_{W x} B_j) = g(∇_{W x} B_j, B_i x) = a j i by metricInner_comm.
-    have h := smoothOrthoFrame_cov_skew x i j (W.toFun x)
-    have h_swap : metricInner x
+    have h := smoothOrthoFrame_cov_skew HasMetric.metric rfl x i j (W.toFun x)
+    have h_swap : HasMetric.metric.metricInner x
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
         ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j) x (W.toFun x))
         = a j i := by
-      show metricInner x _ _ = metricInner x _ _
-      exact metricInner_comm x _ _
+      show HasMetric.metric.metricInner x _ _ = HasMetric.metric.metricInner x _ _
+      exact HasMetric.metric.metricInner_comm x _ _
     rw [h_swap] at h
     linarith
   have h_symm : ∀ i j, h_mat i j = h_mat j i := by
@@ -650,23 +663,24 @@ theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_of_inner_form
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (x : M)
     (hInner : ∀ w : TangentSpace I x,
-      metricInner x
-          (∑ i, secondCovDerivAt (I := I) (M := M) HasMetric.metric
-            (manifoldGradient (I := I) HasMetric.metric f) x
+      g.metricInner x
+          (∑ i, secondCovDerivAt (I := I) (M := M) g
+            (manifoldGradient (I := I) g f) x
             (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
             (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
           w
-        = metricInner x (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x) w
-          + ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x) w) :
-    ∑ i, metricInner x
-        (secondCovDerivAt (I := I) (M := M) HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x
+        = g.metricInner x (manifoldGradient (I := I) g (Operators.scalarLaplacian (I := I) g f) x) w
+          + ricciTensor g x (manifoldGradient (I := I) g f x) w) :
+    ∑ i, g.metricInner x
+        (secondCovDerivAt (I := I) (M := M) g (manifoldGradient (I := I) g f) x
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
-        (manifoldGradient (I := I) HasMetric.metric f x)
-      = metricInner x (manifoldGradient (I := I) HasMetric.metric f x)
-            (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x)
-        + ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x)
-                                          (manifoldGradient (I := I) HasMetric.metric f x) := by
+        (manifoldGradient (I := I) g f x)
+      = g.metricInner x (manifoldGradient (I := I) g f x)
+            (manifoldGradient (I := I) g (Operators.scalarLaplacian (I := I) g f) x)
+        + ricciTensor g x (manifoldGradient (I := I) g f x)
+                                          (manifoldGradient (I := I) g f x) := by
+  subst hg
   classical
   -- Specialise hInner at w = ∇f x.
   have h := hInner (manifoldGradient (I := I) HasMetric.metric f x)

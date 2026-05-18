@@ -98,7 +98,7 @@ theorem bochner_per_summand_swap
       (fun y : M => metricInner y (Q y) (W.toFun y))
         =ᶠ[𝓝 x] (fun y : M => metricInner y (P y) (B.toFun y)) :=
     hessianBilin_section_eventually_symm_of_strict_interior
-      (I := I) f hf B.toFun W.toFun x
+      (I := I) HasMetric.metric rfl f hf B.toFun W.toFun x
   -- Step (c): metric compat on `(P, B)` along direction `B x` at `x`.
   have h_compat_PB := leviCivitaConnection_metric_compatible HasMetric.metric
     B.toFun P B.toFun x (B.smoothAt x) (hP_smooth x) (B.smoothAt x)
@@ -537,10 +537,10 @@ theorem bochner_connectionLaplacian_grad_decomposition
   -- (1) ∑ R-term = Ric(∇f, ∇f).
   have h_R_eq : (∑ i, Rterm i) =
       ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x) (gradF.toFun x) :=
-    heart_curvature_orthonormal_sum_eq_ricci (I := I) f hf gradF x
+    heart_curvature_orthonormal_sum_eq_ricci (I := I) HasMetric.metric rfl f hf gradF x
   -- (2) ∑ H-term = 0.
   have h_H_eq : (∑ i, Hterm i) = 0 :=
-    sum_hessianBilin_smoothOrthoFrame_cov_eq_zero (I := I) f hf gradF x
+    sum_hessianBilin_smoothOrthoFrame_cov_eq_zero (I := I) HasMetric.metric rfl f hf gradF x
   -- (3) ∑ M-term: factor mfderiv outside, identify inner sum as Δ_g f via Stage 7.
   have h_each_hess_smooth : ∀ i,
       MDifferentiableAt I 𝓘(ℝ, ℝ)
@@ -561,7 +561,7 @@ theorem bochner_connectionLaplacian_grad_decomposition
       (fun b : M => ∑ i, hessianBilin (I := I) HasMetric.metric f b ((Bi i).toFun b)
             ((Bi i).toFun b))
         =ᶠ[𝓝 x] (fun b : M => Operators.scalarLaplacian (I := I) (M := M) HasMetric.metric f b) :=
-    sum_hessianBilin_smoothOrthoFrame_eventuallyEq_laplacian (I := I) f x
+    sum_hessianBilin_smoothOrthoFrame_eventuallyEq_laplacian (I := I) HasMetric.metric rfl f x
   have h_M_to_lap :
       (mfderiv I 𝓘(ℝ, ℝ)
           (fun b : M => ∑ i, hessianBilin (I := I) HasMetric.metric f b ((Bi i).toFun b)
