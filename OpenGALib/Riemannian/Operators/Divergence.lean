@@ -56,13 +56,6 @@ noncomputable def divergence
     (covDeriv g (Riemannian.Tensor.smoothOrthoFrame (I := I) g x i) X x)
     (Riemannian.Tensor.smoothOrthoFrame (I := I) g x i x)
 
-/-- **Math.** Notation `div_g[I] X` for the divergence as a function
-`M → ℝ`; `(div_g[I] X) x` is the value at `x`. The notation pipes the
-ambient `[HasMetric I M]` metric so downstream code keeps using
-`div_g[I] X` during Phase 1 (typeclass retained until #19). -/
-scoped[Riemannian] notation:max "div_g[" I "]" =>
-  Operators.divergence (I := I) HasMetric.metric
-
 /-- **Math.** The divergence of the zero vector field is zero. -/
 @[simp] theorem divergence_zero (g : RiemannianMetric I M) (x : M) :
     divergence (I := I) (M := M) g (0 : VectorFieldSection I M) x = 0 := by

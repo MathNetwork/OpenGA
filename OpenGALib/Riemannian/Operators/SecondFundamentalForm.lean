@@ -85,8 +85,4 @@ noncomputable def meanCurvature
     (fun (_ : M) => (e i : TangentSpace I x))
     (fun (_ : M) => (e i : TangentSpace I x)) x
 
-/-- **Math.** Notation `H_g[I] ν` for the mean curvature of a hypersurface
-oriented by unit normal `ν`. -/
-scoped[Riemannian] notation:max "H_g[" I "]" => meanCurvature (I := I) HasMetric.metric
-
 end Riemannian
