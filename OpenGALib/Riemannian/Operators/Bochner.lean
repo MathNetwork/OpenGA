@@ -96,8 +96,8 @@ theorem bochner_leibniz_trace_reduction
               (manifoldGradient (I := I) f) (Bi i).toFun (Bi i).toFun x)
             (manifoldGradient (I := I) f x)
           + metricInner x
-              (covDeriv (Bi i).toFun (manifoldGradient (I := I) f) x)
-              (covDeriv (Bi i).toFun (manifoldGradient (I := I) f) x) := by
+              (covDeriv HasMetric.metric (Bi i).toFun (manifoldGradient (I := I) f) x)
+              (covDeriv HasMetric.metric (Bi i).toFun (manifoldGradient (I := I) f) x) := by
     intro i
     rw [hessian_gradientNormSq_apply_section f (Bi i) x h_grad]
     ring
@@ -120,81 +120,81 @@ theorem bochner_leibniz_trace_reduction
       (manifoldGradient (I := I) f x)).symm
   · -- Second sum: ∑_i ‖∇_{Bi · x x} ∇f x‖² = frobeniusSq (hessianBilin f) x.
     -- Approach: Stage 7 basis-invariance on the bilinear form
-    -- `B(v, w) := ⟪covDerivAt ∇f x v, covDerivAt ∇f x w⟫_ℝ` (a `LinearMap.mk₂`),
+    -- `B(v, w) := ⟪covDerivAt HasMetric.metric ∇f x v, covDerivAt HasMetric.metric ∇f x w⟫_ℝ` (a `LinearMap.mk₂`),
     -- converts smoothOrthoFrame trace to std-basis trace; then the existing
     -- orthonormal-basis Frobenius identity closes.
     show ∑ i, metricInner x
-            (covDeriv (Bi i).toFun (manifoldGradient (I := I) f) x)
-            (covDeriv (Bi i).toFun (manifoldGradient (I := I) f) x)
+            (covDeriv HasMetric.metric (Bi i).toFun (manifoldGradient (I := I) f) x)
+            (covDeriv HasMetric.metric (Bi i).toFun (manifoldGradient (I := I) f) x)
         = frobeniusSq (I := I) (M := M) (hessianBilin (I := I) f) x
     -- Construct the bilinear form for Stage 7 swap.
     set B' : TangentSpace I x →ₗ[ℝ] TangentSpace I x →ₗ[ℝ] ℝ :=
       LinearMap.mk₂ ℝ
         (fun v w => @inner ℝ (TangentSpace I x) _
-          (covDerivAt (manifoldGradient (I := I) f) x v)
-          (covDerivAt (manifoldGradient (I := I) f) x w))
+          (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x v)
+          (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x w))
         (fun v₁ v₂ w => by
           show @inner ℝ (TangentSpace I x) _
-              (covDerivAt (manifoldGradient (I := I) f) x (v₁ + v₂))
-              (covDerivAt (manifoldGradient (I := I) f) x w)
+              (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x (v₁ + v₂))
+              (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x w)
             = @inner ℝ (TangentSpace I x) _
-                (covDerivAt (manifoldGradient (I := I) f) x v₁)
-                (covDerivAt (manifoldGradient (I := I) f) x w)
+                (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x v₁)
+                (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x w)
               + @inner ℝ (TangentSpace I x) _
-                  (covDerivAt (manifoldGradient (I := I) f) x v₂)
-                  (covDerivAt (manifoldGradient (I := I) f) x w)
-          rw [(covDerivAt (manifoldGradient (I := I) f) x).map_add, inner_add_left])
+                  (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x v₂)
+                  (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x w)
+          rw [(covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x).map_add, inner_add_left])
         (fun c v w => by
           show @inner ℝ (TangentSpace I x) _
-              (covDerivAt (manifoldGradient (I := I) f) x (c • v))
-              (covDerivAt (manifoldGradient (I := I) f) x w)
+              (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x (c • v))
+              (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x w)
             = c • @inner ℝ (TangentSpace I x) _
-                (covDerivAt (manifoldGradient (I := I) f) x v)
-                (covDerivAt (manifoldGradient (I := I) f) x w)
-          rw [(covDerivAt (manifoldGradient (I := I) f) x).map_smul,
+                (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x v)
+                (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x w)
+          rw [(covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x).map_smul,
               real_inner_smul_left]; rfl)
         (fun v w₁ w₂ => by
           show @inner ℝ (TangentSpace I x) _
-              (covDerivAt (manifoldGradient (I := I) f) x v)
-              (covDerivAt (manifoldGradient (I := I) f) x (w₁ + w₂))
+              (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x v)
+              (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x (w₁ + w₂))
             = @inner ℝ (TangentSpace I x) _
-                (covDerivAt (manifoldGradient (I := I) f) x v)
-                (covDerivAt (manifoldGradient (I := I) f) x w₁)
+                (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x v)
+                (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x w₁)
               + @inner ℝ (TangentSpace I x) _
-                  (covDerivAt (manifoldGradient (I := I) f) x v)
-                  (covDerivAt (manifoldGradient (I := I) f) x w₂)
-          rw [(covDerivAt (manifoldGradient (I := I) f) x).map_add, inner_add_right])
+                  (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x v)
+                  (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x w₂)
+          rw [(covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x).map_add, inner_add_right])
         (fun c v w => by
           show @inner ℝ (TangentSpace I x) _
-              (covDerivAt (manifoldGradient (I := I) f) x v)
-              (covDerivAt (manifoldGradient (I := I) f) x (c • w))
+              (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x v)
+              (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x (c • w))
             = c • @inner ℝ (TangentSpace I x) _
-                (covDerivAt (manifoldGradient (I := I) f) x v)
-                (covDerivAt (manifoldGradient (I := I) f) x w)
-          rw [(covDerivAt (manifoldGradient (I := I) f) x).map_smul,
+                (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x v)
+                (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x w)
+          rw [(covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x).map_smul,
               real_inner_smul_right]; rfl) with hB'_def
     -- Stage 7 swap: ∑_i B'(Bi · x x, Bi · x x) = ∑_i B'(εᵢ, εᵢ).
     have h_stage7 :=
       Riemannian.Tensor.sum_diagonal_smoothOrthoFrame_eq_std (I := I) x B'
     rw [hB'_def] at h_stage7
     simp only [LinearMap.mk₂_apply] at h_stage7
-    -- LHS: rewrite `metricInner x (covDeriv (Bi · x) ∇f x) (covDeriv (Bi · x) ∇f x)`
-    -- as `⟪covDerivAt ∇f x (Bi · x x), covDerivAt ∇f x (Bi · x x)⟫_ℝ` (def-eq), match h_stage7's LHS.
+    -- LHS: rewrite `metricInner x (covDeriv HasMetric.metric (Bi · x) ∇f x) (covDeriv HasMetric.metric (Bi · x) ∇f x)`
+    -- as `⟪covDerivAt HasMetric.metric ∇f x (Bi · x x), covDerivAt HasMetric.metric ∇f x (Bi · x x)⟫_ℝ` (def-eq), match h_stage7's LHS.
     show ∑ i, @inner ℝ (TangentSpace I x) _
-              (covDerivAt (manifoldGradient (I := I) f) x
+              (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x
                 (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
-              (covDerivAt (manifoldGradient (I := I) f) x
+              (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x
                 (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
         = frobeniusSq (I := I) (M := M) (hessianBilin (I := I) f) x
     rw [h_stage7]
-    -- Now goal: ∑_i ⟪covDerivAt ∇f x εᵢ, covDerivAt ∇f x εᵢ⟫_ℝ = frobeniusSq.
+    -- Now goal: ∑_i ⟪covDerivAt HasMetric.metric ∇f x εᵢ, covDerivAt HasMetric.metric ∇f x εᵢ⟫_ℝ = frobeniusSq.
     -- Existing chain via OrthonormalBasis.sum_sq_inner_left.
     unfold frobeniusSq
     refine Finset.sum_congr rfl ?_
     intro i _
     set b := stdOrthonormalBasis ℝ (TangentSpace I x)
     set v : TangentSpace I x :=
-      covDerivAt (manifoldGradient (I := I) f) x (b i)
+      covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x (b i)
     have h_hess_unfold : ∀ j, ((hessianBilin (I := I) f x) (b i)) (b j)
                             = metricInner x v (b j) := fun _ => rfl
     simp only [h_hess_unfold]

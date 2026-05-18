@@ -50,7 +50,6 @@ noncomputable def ricciTensor
     (g : RiemannianMetric I M) (x : M) :
     TangentSpace I x →ₗ[ℝ] TangentSpace I x →ₗ[ℝ] ℝ where
   toFun V :=
-    letI : HasMetric I M := ⟨g⟩
     { toFun := fun W =>
         ricci g (cF[V])
               (cF[W]) x
@@ -72,13 +71,13 @@ noncomputable def ricciTensor
         · exact (LinearMap.trace ℝ _).map_add _ _
         -- Pointwise LinearMap equality.
         refine LinearMap.ext fun z => ?_
-        show riemannCurvature (fun _ => z)
+        show riemannCurvature g (fun _ => z)
               (cF[V]).toFun
               (cF[W₁ + W₂]).toFun x
-            = riemannCurvature (fun _ => z)
+            = riemannCurvature g (fun _ => z)
                 (cF[V]).toFun
                 (cF[W₁]).toFun x
-              + riemannCurvature (fun _ => z)
+              + riemannCurvature g (fun _ => z)
                 (cF[V]).toFun
                 (cF[W₂]).toFun x
         -- Π-equality: const(W₁+W₂) = const W₁ + const W₂.
@@ -96,102 +95,102 @@ noncomputable def ricciTensor
         have h_const_V_smooth : ∀ y, TangentSmoothAt
             (fun _ : M => V) y :=
           fun y => (cF[V]).smoothAt y
-        show covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => V)
+        show covDeriv g (fun _ => z) (fun y => covDeriv g (fun _ : M => V)
                   (fun _ : M => W₁ + W₂) y) x
-              - covDeriv (fun _ : M => V) (fun y => covDeriv (fun _ => z)
+              - covDeriv g (fun _ : M => V) (fun y => covDeriv g (fun _ => z)
                   (fun _ : M => W₁ + W₂) y) x
-              - covDeriv (fun y => mlieBracket I (fun _ => z) (fun _ : M => V) y)
+              - covDeriv g (fun y => mlieBracket I (fun _ => z) (fun _ : M => V) y)
                   (fun _ : M => W₁ + W₂) x
-            = (covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => V)
+            = (covDeriv g (fun _ => z) (fun y => covDeriv g (fun _ : M => V)
                     (fun _ : M => W₁) y) x
-                - covDeriv (fun _ : M => V) (fun y => covDeriv (fun _ => z)
+                - covDeriv g (fun _ : M => V) (fun y => covDeriv g (fun _ => z)
                     (fun _ : M => W₁) y) x
-                - covDeriv (fun y => mlieBracket I (fun _ => z) (fun _ : M => V) y)
+                - covDeriv g (fun y => mlieBracket I (fun _ => z) (fun _ : M => V) y)
                     (fun _ : M => W₁) x)
-              + (covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => V)
+              + (covDeriv g (fun _ => z) (fun y => covDeriv g (fun _ : M => V)
                     (fun _ : M => W₂) y) x
-                - covDeriv (fun _ : M => V) (fun y => covDeriv (fun _ => z)
+                - covDeriv g (fun _ : M => V) (fun y => covDeriv g (fun _ => z)
                     (fun _ : M => W₂) y) x
-                - covDeriv (fun y => mlieBracket I (fun _ => z) (fun _ : M => V) y)
+                - covDeriv g (fun y => mlieBracket I (fun _ => z) (fun _ : M => V) y)
                     (fun _ : M => W₂) x)
         -- Π-equality for the sum-of-constant-sections form.
         have h_const_W_sum : ((fun _ : M => W₁ + W₂) : (y : M) → TangentSpace I y)
             = (fun _ => W₁) + (fun _ => W₂) := by funext y; rfl
         -- Term1 inner: rewrite W₁+W₂ as Π-sum, apply covDeriv_add_field.
         have h_inner_T1 :
-            ((fun y => covDeriv (fun _ : M => V) (fun _ : M => W₁ + W₂) y) :
+            ((fun y => covDeriv g (fun _ : M => V) (fun _ : M => W₁ + W₂) y) :
               (y : M) → TangentSpace I y)
-            = (fun y => covDeriv (fun _ : M => V) (fun _ : M => W₁) y)
-              + (fun y => covDeriv (fun _ : M => V) (fun _ : M => W₂) y) := by
+            = (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W₁) y)
+              + (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W₂) y) := by
           funext y
           rw [show ((fun _ : M => W₁ + W₂) : (z : M) → TangentSpace I z)
                 = (fun _ => W₁) + (fun _ => W₂) from h_const_W_sum]
-          exact covDeriv_add_field (fun _ => V) (fun _ => W₁) (fun _ => W₂) y
+          exact covDeriv_add_field g (fun _ => V) (fun _ => W₁) (fun _ => W₂) y
             (h_const_W₁_smooth y) (h_const_W₂_smooth y)
         rw [h_inner_T1]
         have h_inner_T2 :
-            ((fun y => covDeriv (fun _ : M => z) (fun _ : M => W₁ + W₂) y) :
+            ((fun y => covDeriv g (fun _ : M => z) (fun _ : M => W₁ + W₂) y) :
               (y : M) → TangentSpace I y)
-            = (fun y => covDeriv (fun _ : M => z) (fun _ : M => W₁) y)
-              + (fun y => covDeriv (fun _ : M => z) (fun _ : M => W₂) y) := by
+            = (fun y => covDeriv g (fun _ : M => z) (fun _ : M => W₁) y)
+              + (fun y => covDeriv g (fun _ : M => z) (fun _ : M => W₂) y) := by
           funext y
           rw [show ((fun _ : M => W₁ + W₂) : (z : M) → TangentSpace I z)
                 = (fun _ => W₁) + (fun _ => W₂) from h_const_W_sum]
-          exact covDeriv_add_field (fun _ => z) (fun _ => W₁) (fun _ => W₂) y
+          exact covDeriv_add_field g (fun _ => z) (fun _ => W₁) (fun _ => W₂) y
             (h_const_W₁_smooth y) (h_const_W₂_smooth y)
         rw [h_inner_T2]
         -- Term3: convert `(fun _ => W₁+W₂)` to Π-add, then split.
-        have hT3 : covDeriv
+        have hT3 : covDeriv g
               (fun y => mlieBracket I (fun _ : M => z) (fun _ : M => V) y)
               (fun _ : M => W₁ + W₂) x
-            = covDeriv
+            = covDeriv g
               (fun y => mlieBracket I (fun _ : M => z) (fun _ : M => V) y)
               (fun _ : M => W₁) x
-            + covDeriv
+            + covDeriv g
               (fun y => mlieBracket I (fun _ : M => z) (fun _ : M => V) y)
               (fun _ : M => W₂) x := by
           rw [show ((fun _ : M => W₁ + W₂) : (z : M) → TangentSpace I z)
                 = (fun _ => W₁) + (fun _ => W₂) from h_const_W_sum]
-          exact covDeriv_add_field
+          exact covDeriv_add_field g
               (fun y => mlieBracket I (fun _ : M => z) (fun _ : M => V) y)
               (fun _ => W₁) (fun _ => W₂) x
               (h_const_W₁_smooth x) (h_const_W₂_smooth x)
         rw [hT3]
-        -- Outer T1: direction `(fun _ => z)` via covDeriv_add_field on the
+        -- Outer T1: direction `(fun _ => z)` via covDeriv_add_field g on the
         -- differentiated section sum.
         have hT1 :
-            covDeriv (fun _ : M => z)
-              (((fun y => covDeriv (fun _ : M => V) (fun _ : M => W₁) y) :
+            covDeriv g (fun _ : M => z)
+              (((fun y => covDeriv g (fun _ : M => V) (fun _ : M => W₁) y) :
                   (y : M) → TangentSpace I y)
-                + (fun y => covDeriv (fun _ : M => V) (fun _ : M => W₂) y)) x
-            = covDeriv (fun _ : M => z)
-                (fun y => covDeriv (fun _ : M => V) (fun _ : M => W₁) y) x
-              + covDeriv (fun _ : M => z)
-                (fun y => covDeriv (fun _ : M => V) (fun _ : M => W₂) y) x :=
-          covDeriv_add_field (fun _ => z)
-            (fun y => covDeriv (fun _ : M => V) (fun _ : M => W₁) y)
-            (fun y => covDeriv (fun _ : M => V) (fun _ : M => W₂) y) x
-            (covDeriv_const_smoothVF_smoothAt (I := I) (M := M) V
+                + (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W₂) y)) x
+            = covDeriv g (fun _ : M => z)
+                (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W₁) y) x
+              + covDeriv g (fun _ : M => z)
+                (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W₂) y) x :=
+          covDeriv_add_field g (fun _ => z)
+            (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W₁) y)
+            (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W₂) y) x
+            (covDeriv_const_smoothVF_smoothAt g (I := I) (M := M) V
               (cF[W₁]) x)
-            (covDeriv_const_smoothVF_smoothAt (I := I) (M := M) V
+            (covDeriv_const_smoothVF_smoothAt g (I := I) (M := M) V
               (cF[W₂]) x)
         rw [hT1]
         -- Outer T2: direction `(fun _ => V)` of inner T2 sum.
         have hT2 :
-            covDeriv (fun _ : M => V)
-              (((fun y => covDeriv (fun _ : M => z) (fun _ : M => W₁) y) :
+            covDeriv g (fun _ : M => V)
+              (((fun y => covDeriv g (fun _ : M => z) (fun _ : M => W₁) y) :
                   (y : M) → TangentSpace I y)
-                + (fun y => covDeriv (fun _ : M => z) (fun _ : M => W₂) y)) x
-            = covDeriv (fun _ : M => V)
-                (fun y => covDeriv (fun _ : M => z) (fun _ : M => W₁) y) x
-              + covDeriv (fun _ : M => V)
-                (fun y => covDeriv (fun _ : M => z) (fun _ : M => W₂) y) x :=
-          covDeriv_add_field (fun _ => V)
-            (fun y => covDeriv (fun _ : M => z) (fun _ : M => W₁) y)
-            (fun y => covDeriv (fun _ : M => z) (fun _ : M => W₂) y) x
-            (covDeriv_const_smoothVF_smoothAt (I := I) (M := M) z
+                + (fun y => covDeriv g (fun _ : M => z) (fun _ : M => W₂) y)) x
+            = covDeriv g (fun _ : M => V)
+                (fun y => covDeriv g (fun _ : M => z) (fun _ : M => W₁) y) x
+              + covDeriv g (fun _ : M => V)
+                (fun y => covDeriv g (fun _ : M => z) (fun _ : M => W₂) y) x :=
+          covDeriv_add_field g (fun _ => V)
+            (fun y => covDeriv g (fun _ : M => z) (fun _ : M => W₁) y)
+            (fun y => covDeriv g (fun _ : M => z) (fun _ : M => W₂) y) x
+            (covDeriv_const_smoothVF_smoothAt g (I := I) (M := M) z
               (cF[W₁]) x)
-            (covDeriv_const_smoothVF_smoothAt (I := I) (M := M) z
+            (covDeriv_const_smoothVF_smoothAt g (I := I) (M := M) z
               (cF[W₂]) x)
         rw [hT2]
         abel
@@ -208,10 +207,10 @@ noncomputable def ricciTensor
                   (cF[W]) x from ?_]
         · simp
         refine LinearMap.ext fun z => ?_
-        show riemannCurvature (fun _ => z)
+        show riemannCurvature g (fun _ => z)
               (cF[V]).toFun
               (cF[c • W]).toFun x
-            = c • riemannCurvature (fun _ => z)
+            = c • riemannCurvature g (fun _ => z)
                 (cF[V]).toFun
                 (cF[W]).toFun x
         have h_const_smul : ((fun _ : M => c • W) : (y : M) → TangentSpace I y)
@@ -219,78 +218,77 @@ noncomputable def ricciTensor
         have h_const_W_smooth : ∀ y, TangentSmoothAt
             (fun _ : M => W) y :=
           fun y => (cF[W]).smoothAt y
-        show covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => V)
+        show covDeriv g (fun _ => z) (fun y => covDeriv g (fun _ : M => V)
                   (fun _ : M => c • W) y) x
-              - covDeriv (fun _ : M => V) (fun y => covDeriv (fun _ => z)
+              - covDeriv g (fun _ : M => V) (fun y => covDeriv g (fun _ => z)
                   (fun _ : M => c • W) y) x
-              - covDeriv (fun y => mlieBracket I (fun _ => z) (fun _ : M => V) y)
+              - covDeriv g (fun y => mlieBracket I (fun _ => z) (fun _ : M => V) y)
                   (fun _ : M => c • W) x
-            = c • (covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => V)
+            = c • (covDeriv g (fun _ => z) (fun y => covDeriv g (fun _ : M => V)
                     (fun _ : M => W) y) x
-                - covDeriv (fun _ : M => V) (fun y => covDeriv (fun _ => z)
+                - covDeriv g (fun _ : M => V) (fun y => covDeriv g (fun _ => z)
                     (fun _ : M => W) y) x
-                - covDeriv (fun y => mlieBracket I (fun _ => z) (fun _ : M => V) y)
+                - covDeriv g (fun y => mlieBracket I (fun _ => z) (fun _ : M => V) y)
                     (fun _ : M => W) x)
         -- Term 1 inner.
         have h_inner_T1 :
-            ((fun y => covDeriv (fun _ : M => V) (fun _ : M => c • W) y) :
+            ((fun y => covDeriv g (fun _ : M => V) (fun _ : M => c • W) y) :
               (y : M) → TangentSpace I y)
-            = c • (fun y => covDeriv (fun _ : M => V) (fun _ : M => W) y) := by
+            = c • (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W) y) := by
           funext y
           rw [show ((fun _ : M => c • W) : (z : M) → TangentSpace I z)
                 = c • (fun _ => W) from h_const_smul]
-          exact covDeriv_smul_const_field (fun _ => V) (fun _ => W) y c
+          exact covDeriv_smul_const_field g (fun _ => V) (fun _ => W) y c
             (h_const_W_smooth y)
         rw [h_inner_T1]
         have h_inner_T2 :
-            ((fun y => covDeriv (fun _ : M => z) (fun _ : M => c • W) y) :
+            ((fun y => covDeriv g (fun _ : M => z) (fun _ : M => c • W) y) :
               (y : M) → TangentSpace I y)
-            = c • (fun y => covDeriv (fun _ : M => z) (fun _ : M => W) y) := by
+            = c • (fun y => covDeriv g (fun _ : M => z) (fun _ : M => W) y) := by
           funext y
           rw [show ((fun _ : M => c • W) : (z : M) → TangentSpace I z)
                 = c • (fun _ => W) from h_const_smul]
-          exact covDeriv_smul_const_field (fun _ => z) (fun _ => W) y c
+          exact covDeriv_smul_const_field g (fun _ => z) (fun _ => W) y c
             (h_const_W_smooth y)
         rw [h_inner_T2]
-        -- Term 3: covDeriv (...) (c • const W) x = c • covDeriv (...) (const W) x.
-        have hT3 : covDeriv
+        -- Term 3: covDeriv g (...) (c • const W) x = c • covDeriv g (...) (const W) x.
+        have hT3 : covDeriv g
               (fun y => mlieBracket I (fun _ : M => z) (fun _ : M => V) y)
               (fun _ : M => c • W) x
-            = c • covDeriv
+            = c • covDeriv g
               (fun y => mlieBracket I (fun _ : M => z) (fun _ : M => V) y)
               (fun _ : M => W) x := by
           rw [show ((fun _ : M => c • W) : (z : M) → TangentSpace I z)
                 = c • (fun _ => W) from h_const_smul]
-          exact covDeriv_smul_const_field
+          exact covDeriv_smul_const_field g
             (fun y => mlieBracket I (fun _ : M => z) (fun _ : M => V) y)
             (fun _ => W) x c (h_const_W_smooth x)
         rw [hT3]
         -- Outer T1: direction `(fun _ => z)`, differentiated `c • F`.
         have hT1 :
-            covDeriv (fun _ : M => z)
-              ((c • (fun y => covDeriv (fun _ : M => V) (fun _ : M => W) y)) :
+            covDeriv g (fun _ : M => z)
+              ((c • (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W) y)) :
                   (y : M) → TangentSpace I y) x
-            = c • covDeriv (fun _ : M => z)
-                (fun y => covDeriv (fun _ : M => V) (fun _ : M => W) y) x :=
-          covDeriv_smul_const_field (fun _ => z)
-            (fun y => covDeriv (fun _ : M => V) (fun _ : M => W) y) x c
-            (covDeriv_const_smoothVF_smoothAt (I := I) (M := M) V
+            = c • covDeriv g (fun _ : M => z)
+                (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W) y) x :=
+          covDeriv_smul_const_field g (fun _ => z)
+            (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W) y) x c
+            (covDeriv_const_smoothVF_smoothAt g (I := I) (M := M) V
               (cF[W]) x)
         rw [hT1]
         have hT2 :
-            covDeriv (fun _ : M => V)
-              ((c • (fun y => covDeriv (fun _ : M => z) (fun _ : M => W) y)) :
+            covDeriv g (fun _ : M => V)
+              ((c • (fun y => covDeriv g (fun _ : M => z) (fun _ : M => W) y)) :
                   (y : M) → TangentSpace I y) x
-            = c • covDeriv (fun _ : M => V)
-                (fun y => covDeriv (fun _ : M => z) (fun _ : M => W) y) x :=
-          covDeriv_smul_const_field (fun _ => V)
-            (fun y => covDeriv (fun _ : M => z) (fun _ : M => W) y) x c
-            (covDeriv_const_smoothVF_smoothAt (I := I) (M := M) z
+            = c • covDeriv g (fun _ : M => V)
+                (fun y => covDeriv g (fun _ : M => z) (fun _ : M => W) y) x :=
+          covDeriv_smul_const_field g (fun _ => V)
+            (fun y => covDeriv g (fun _ : M => z) (fun _ : M => W) y) x c
+            (covDeriv_const_smoothVF_smoothAt g (I := I) (M := M) z
               (cF[W]) x)
         rw [hT2]
         rw [smul_sub, smul_sub] }
   map_add' V₁ V₂ := by
-    letI : HasMetric I M := ⟨g⟩
     -- LinearMap-level additivity in V slot.
     refine LinearMap.ext fun W => ?_
     show ricci g (cF[V₁ + V₂])
@@ -308,13 +306,13 @@ noncomputable def ricciTensor
               (cF[W]) x from ?_]
     · exact (LinearMap.trace ℝ _).map_add _ _
     refine LinearMap.ext fun z => ?_
-    show riemannCurvature (fun _ => z)
+    show riemannCurvature g (fun _ => z)
           (cF[V₁ + V₂]).toFun
           (cF[W]).toFun x
-        = riemannCurvature (fun _ => z)
+        = riemannCurvature g (fun _ => z)
             (cF[V₁]).toFun
             (cF[W]).toFun x
-          + riemannCurvature (fun _ => z)
+          + riemannCurvature g (fun _ => z)
             (cF[V₂]).toFun
             (cF[W]).toFun x
     have h_const_add : ((fun _ : M => V₁ + V₂) : (y : M) → TangentSpace I y)
@@ -325,45 +323,45 @@ noncomputable def ricciTensor
     have h_const_V₂_smooth : ∀ y, TangentSmoothAt
         (fun _ : M => V₂) y :=
       fun y => (cF[V₂]).smoothAt y
-    show covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => V₁ + V₂)
+    show covDeriv g (fun _ => z) (fun y => covDeriv g (fun _ : M => V₁ + V₂)
               (fun _ : M => W) y) x
-          - covDeriv (fun _ : M => V₁ + V₂)
-              (fun y => covDeriv (fun _ => z) (fun _ : M => W) y) x
-          - covDeriv (fun y => mlieBracket I (fun _ => z)
+          - covDeriv g (fun _ : M => V₁ + V₂)
+              (fun y => covDeriv g (fun _ => z) (fun _ : M => W) y) x
+          - covDeriv g (fun y => mlieBracket I (fun _ => z)
               (fun _ : M => V₁ + V₂) y) (fun _ : M => W) x
-        = (covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => V₁)
+        = (covDeriv g (fun _ => z) (fun y => covDeriv g (fun _ : M => V₁)
                 (fun _ : M => W) y) x
-            - covDeriv (fun _ : M => V₁) (fun y => covDeriv (fun _ => z)
+            - covDeriv g (fun _ : M => V₁) (fun y => covDeriv g (fun _ => z)
                 (fun _ : M => W) y) x
-            - covDeriv (fun y => mlieBracket I (fun _ => z) (fun _ : M => V₁) y)
+            - covDeriv g (fun y => mlieBracket I (fun _ => z) (fun _ : M => V₁) y)
                 (fun _ : M => W) x)
-          + (covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => V₂)
+          + (covDeriv g (fun _ => z) (fun y => covDeriv g (fun _ : M => V₂)
                 (fun _ : M => W) y) x
-            - covDeriv (fun _ : M => V₂) (fun y => covDeriv (fun _ => z)
+            - covDeriv g (fun _ : M => V₂) (fun y => covDeriv g (fun _ => z)
                 (fun _ : M => W) y) x
-            - covDeriv (fun y => mlieBracket I (fun _ => z) (fun _ : M => V₂) y)
+            - covDeriv g (fun y => mlieBracket I (fun _ => z) (fun _ : M => V₂) y)
                 (fun _ : M => W) x)
-    -- Term 1 inner: direction-continuous linear map-linearity of covDeriv.
+    -- Term 1 inner: direction-continuous linear map-linearity of covDeriv g.
     have h_inner_T1 :
-        ((fun y => covDeriv (fun _ : M => V₁ + V₂) (fun _ : M => W) y) :
+        ((fun y => covDeriv g (fun _ : M => V₁ + V₂) (fun _ : M => W) y) :
           (y : M) → TangentSpace I y)
-        = (fun y => covDeriv (fun _ : M => V₁) (fun _ : M => W) y)
-          + (fun y => covDeriv (fun _ : M => V₂) (fun _ : M => W) y) := by
+        = (fun y => covDeriv g (fun _ : M => V₁) (fun _ : M => W) y)
+          + (fun y => covDeriv g (fun _ : M => V₂) (fun _ : M => W) y) := by
       funext y
-      show (leviCivitaConnection.toFun (fun _ : M => W) y) (V₁ + V₂)
-          = (leviCivitaConnection.toFun (fun _ : M => W) y) V₁
-            + (leviCivitaConnection.toFun (fun _ : M => W) y) V₂
+      show ((leviCivitaConnection g).toFun (fun _ : M => W) y) (V₁ + V₂)
+          = ((leviCivitaConnection g).toFun (fun _ : M => W) y) V₁
+            + ((leviCivitaConnection g).toFun (fun _ : M => W) y) V₂
       exact map_add _ _ _
     rw [h_inner_T1]
-    -- Term 2: outer covDeriv direction (V₁+V₂) at section-level via continuous linear map.
+    -- Term 2: outer covDeriv g direction (V₁+V₂) at section-level via continuous linear map.
     -- Stash the differentiated section so its type is fully determined.
     set Fz : (y : M) → TangentSpace I y :=
-      fun y => covDeriv (fun _ : M => z) (fun _ : M => W) y with hFz
-    have hT2 : covDeriv (fun _ : M => V₁ + V₂) Fz x
-        = covDeriv (fun _ : M => V₁) Fz x + covDeriv (fun _ : M => V₂) Fz x := by
-      show (leviCivitaConnection.toFun Fz x) (V₁ + V₂)
-          = (leviCivitaConnection.toFun Fz x) V₁
-            + (leviCivitaConnection.toFun Fz x) V₂
+      fun y => covDeriv g (fun _ : M => z) (fun _ : M => W) y with hFz
+    have hT2 : covDeriv g (fun _ : M => V₁ + V₂) Fz x
+        = covDeriv g (fun _ : M => V₁) Fz x + covDeriv g (fun _ : M => V₂) Fz x := by
+      show ((leviCivitaConnection g).toFun Fz x) (V₁ + V₂)
+          = ((leviCivitaConnection g).toFun Fz x) V₁
+            + ((leviCivitaConnection g).toFun Fz x) V₂
       exact map_add _ _ _
     rw [hT2]
     -- Term 3: mlieBracket additivity in right argument.
@@ -377,45 +375,44 @@ noncomputable def ricciTensor
             = (fun _ => V₁) + (fun _ => V₂) from h_const_add]
       exact VectorField.mlieBracket_add_right (h_const_V₁_smooth y) (h_const_V₂_smooth y)
     rw [h_lieBr_add]
-    -- Outer covDeriv on T3: direction is the sum, differentiated is `const W`.
-    have hT3 : covDeriv ((fun y => mlieBracket I (fun _ : M => z)
+    -- Outer covDeriv g on T3: direction is the sum, differentiated is `const W`.
+    have hT3 : covDeriv g ((fun y => mlieBracket I (fun _ : M => z)
               (fun _ : M => V₁) y)
             + (fun y => mlieBracket I (fun _ : M => z)
               (fun _ : M => V₂) y))
               (fun _ : M => W) x
-        = covDeriv (fun y => mlieBracket I (fun _ : M => z)
+        = covDeriv g (fun y => mlieBracket I (fun _ : M => z)
               (fun _ : M => V₁) y) (fun _ : M => W) x
-          + covDeriv (fun y => mlieBracket I (fun _ : M => z)
+          + covDeriv g (fun y => mlieBracket I (fun _ : M => z)
               (fun _ : M => V₂) y) (fun _ : M => W) x := by
-      show (leviCivitaConnection.toFun (fun _ : M => W) x)
+      show ((leviCivitaConnection g).toFun (fun _ : M => W) x)
             ((fun y => mlieBracket I (fun _ : M => z) (fun _ : M => V₁) y) x
               + (fun y => mlieBracket I (fun _ : M => z) (fun _ : M => V₂) y) x)
-          = (leviCivitaConnection.toFun (fun _ : M => W) x)
+          = ((leviCivitaConnection g).toFun (fun _ : M => W) x)
               ((fun y => mlieBracket I (fun _ : M => z) (fun _ : M => V₁) y) x)
-            + (leviCivitaConnection.toFun (fun _ : M => W) x)
+            + ((leviCivitaConnection g).toFun (fun _ : M => W) x)
               ((fun y => mlieBracket I (fun _ : M => z) (fun _ : M => V₂) y) x)
       exact map_add _ _ _
-    -- Outer covDeriv on T1: direction `(fun _ => z)`, differentiated sum.
+    -- Outer covDeriv g on T1: direction `(fun _ => z)`, differentiated sum.
     have hT1 :
-        covDeriv (fun _ : M => z)
-            (((fun y => covDeriv (fun _ : M => V₁) (fun _ : M => W) y) :
+        covDeriv g (fun _ : M => z)
+            (((fun y => covDeriv g (fun _ : M => V₁) (fun _ : M => W) y) :
                 (y : M) → TangentSpace I y)
-              + (fun y => covDeriv (fun _ : M => V₂) (fun _ : M => W) y)) x
-        = covDeriv (fun _ : M => z)
-              (fun y => covDeriv (fun _ : M => V₁) (fun _ : M => W) y) x
-          + covDeriv (fun _ : M => z)
-              (fun y => covDeriv (fun _ : M => V₂) (fun _ : M => W) y) x :=
-      covDeriv_add_field (fun _ => z)
-        (fun y => covDeriv (fun _ : M => V₁) (fun _ : M => W) y)
-        (fun y => covDeriv (fun _ : M => V₂) (fun _ : M => W) y) x
-        (covDeriv_const_smoothVF_smoothAt (I := I) (M := M) V₁
+              + (fun y => covDeriv g (fun _ : M => V₂) (fun _ : M => W) y)) x
+        = covDeriv g (fun _ : M => z)
+              (fun y => covDeriv g (fun _ : M => V₁) (fun _ : M => W) y) x
+          + covDeriv g (fun _ : M => z)
+              (fun y => covDeriv g (fun _ : M => V₂) (fun _ : M => W) y) x :=
+      covDeriv_add_field g (fun _ => z)
+        (fun y => covDeriv g (fun _ : M => V₁) (fun _ : M => W) y)
+        (fun y => covDeriv g (fun _ : M => V₂) (fun _ : M => W) y) x
+        (covDeriv_const_smoothVF_smoothAt g (I := I) (M := M) V₁
           (cF[W]) x)
-        (covDeriv_const_smoothVF_smoothAt (I := I) (M := M) V₂
+        (covDeriv_const_smoothVF_smoothAt g (I := I) (M := M) V₂
           (cF[W]) x)
     rw [hT1, hT3]
     abel
   map_smul' c V := by
-    letI : HasMetric I M := ⟨g⟩
     refine LinearMap.ext fun W => ?_
     show ricci g (cF[c • V])
             (cF[W]) x
@@ -428,10 +425,10 @@ noncomputable def ricciTensor
               (cF[W]) x from ?_]
     · simp
     refine LinearMap.ext fun z => ?_
-    show riemannCurvature (fun _ => z)
+    show riemannCurvature g (fun _ => z)
           (cF[c • V]).toFun
           (cF[W]).toFun x
-        = c • riemannCurvature (fun _ => z)
+        = c • riemannCurvature g (fun _ => z)
             (cF[V]).toFun
             (cF[W]).toFun x
     have h_const_smul : ((fun _ : M => c • V) : (y : M) → TangentSpace I y)
@@ -439,35 +436,35 @@ noncomputable def ricciTensor
     have h_const_V_smooth : ∀ y, TangentSmoothAt
         (fun _ : M => V) y :=
       fun y => (cF[V]).smoothAt y
-    show covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => c • V)
+    show covDeriv g (fun _ => z) (fun y => covDeriv g (fun _ : M => c • V)
               (fun _ : M => W) y) x
-          - covDeriv (fun _ : M => c • V)
-              (fun y => covDeriv (fun _ => z) (fun _ : M => W) y) x
-          - covDeriv (fun y => mlieBracket I (fun _ => z)
+          - covDeriv g (fun _ : M => c • V)
+              (fun y => covDeriv g (fun _ => z) (fun _ : M => W) y) x
+          - covDeriv g (fun y => mlieBracket I (fun _ => z)
               (fun _ : M => c • V) y) (fun _ : M => W) x
-        = c • (covDeriv (fun _ => z) (fun y => covDeriv (fun _ : M => V)
+        = c • (covDeriv g (fun _ => z) (fun y => covDeriv g (fun _ : M => V)
                 (fun _ : M => W) y) x
-            - covDeriv (fun _ : M => V) (fun y => covDeriv (fun _ => z)
+            - covDeriv g (fun _ : M => V) (fun y => covDeriv g (fun _ => z)
                 (fun _ : M => W) y) x
-            - covDeriv (fun y => mlieBracket I (fun _ => z) (fun _ : M => V) y)
+            - covDeriv g (fun y => mlieBracket I (fun _ => z) (fun _ : M => V) y)
                 (fun _ : M => W) x)
     -- Term 1 inner.
     have h_inner_T1 :
-        ((fun y => covDeriv (fun _ : M => c • V) (fun _ : M => W) y) :
+        ((fun y => covDeriv g (fun _ : M => c • V) (fun _ : M => W) y) :
           (y : M) → TangentSpace I y)
-        = c • (fun y => covDeriv (fun _ : M => V) (fun _ : M => W) y) := by
+        = c • (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W) y) := by
       funext y
-      show (leviCivitaConnection.toFun (fun _ : M => W) y) (c • V)
-          = c • (leviCivitaConnection.toFun (fun _ : M => W) y) V
+      show ((leviCivitaConnection g).toFun (fun _ : M => W) y) (c • V)
+          = c • ((leviCivitaConnection g).toFun (fun _ : M => W) y) V
       exact ContinuousLinearMap.map_smul _ _ _
     rw [h_inner_T1]
-    -- Term 2: outer covDeriv direction is c • V at section level.
+    -- Term 2: outer covDeriv g direction is c • V at section level.
     set Fz : (y : M) → TangentSpace I y :=
-      fun y => covDeriv (fun _ : M => z) (fun _ : M => W) y with hFz
-    have hT2 : covDeriv (fun _ : M => c • V) Fz x
-        = c • covDeriv (fun _ : M => V) Fz x := by
-      show (leviCivitaConnection.toFun Fz x) (c • V)
-          = c • (leviCivitaConnection.toFun Fz x) V
+      fun y => covDeriv g (fun _ : M => z) (fun _ : M => W) y with hFz
+    have hT2 : covDeriv g (fun _ : M => c • V) Fz x
+        = c • covDeriv g (fun _ : M => V) Fz x := by
+      show ((leviCivitaConnection g).toFun Fz x) (c • V)
+          = c • ((leviCivitaConnection g).toFun Fz x) V
       exact ContinuousLinearMap.map_smul _ _ _
     rw [hT2]
     -- Term 3: mlieBracket scalar in right arg.
@@ -480,30 +477,30 @@ noncomputable def ricciTensor
             = c • (fun _ => V) from h_const_smul]
       exact VectorField.mlieBracket_const_smul_right (h_const_V_smooth y)
     rw [h_lieBr_smul]
-    have hT3 : covDeriv (c • (fun y => mlieBracket I (fun _ : M => z)
+    have hT3 : covDeriv g (c • (fun y => mlieBracket I (fun _ : M => z)
               (fun _ : M => V) y)) (fun _ : M => W) x
-        = c • covDeriv (fun y => mlieBracket I (fun _ : M => z)
+        = c • covDeriv g (fun y => mlieBracket I (fun _ : M => z)
               (fun _ : M => V) y) (fun _ : M => W) x := by
-      show (leviCivitaConnection.toFun (fun _ : M => W) x)
+      show ((leviCivitaConnection g).toFun (fun _ : M => W) x)
             ((c • fun y => mlieBracket I (fun _ : M => z) (fun _ : M => V) y) x)
-          = c • (leviCivitaConnection.toFun (fun _ : M => W) x)
+          = c • ((leviCivitaConnection g).toFun (fun _ : M => W) x)
               ((fun y => mlieBracket I (fun _ : M => z) (fun _ : M => V) y) x)
-      show (leviCivitaConnection.toFun (fun _ : M => W) x)
+      show ((leviCivitaConnection g).toFun (fun _ : M => W) x)
             (c • mlieBracket I (fun _ : M => z) (fun _ : M => V) x)
-          = c • (leviCivitaConnection.toFun (fun _ : M => W) x)
+          = c • ((leviCivitaConnection g).toFun (fun _ : M => W) x)
               (mlieBracket I (fun _ : M => z) (fun _ : M => V) x)
       exact ContinuousLinearMap.map_smul _ _ _
     rw [hT3]
     -- Outer T1: direction `(fun _ => z)`, differentiated `c • F`.
     have hT1 :
-        covDeriv (fun _ : M => z)
-            ((c • (fun y => covDeriv (fun _ : M => V) (fun _ : M => W) y)) :
+        covDeriv g (fun _ : M => z)
+            ((c • (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W) y)) :
                 (y : M) → TangentSpace I y) x
-        = c • covDeriv (fun _ : M => z)
-              (fun y => covDeriv (fun _ : M => V) (fun _ : M => W) y) x :=
-      covDeriv_smul_const_field (fun _ => z)
-        (fun y => covDeriv (fun _ : M => V) (fun _ : M => W) y) x c
-        (covDeriv_const_smoothVF_smoothAt (I := I) (M := M) V
+        = c • covDeriv g (fun _ : M => z)
+              (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W) y) x :=
+      covDeriv_smul_const_field g (fun _ => z)
+        (fun y => covDeriv g (fun _ : M => V) (fun _ : M => W) y) x c
+        (covDeriv_const_smoothVF_smoothAt g (I := I) (M := M) V
           (cF[W]) x)
     rw [hT1]
     rw [smul_sub, smul_sub]

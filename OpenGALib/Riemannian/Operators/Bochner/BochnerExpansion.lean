@@ -103,9 +103,9 @@ theorem metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym
     (hf_2 : ContMDiffAt I 𝓘(ℝ, ℝ) 2 f x)
     (h_grad : TangentSmoothAt (manifoldGradient (I := I) f) x)
     (h_grad_const_w : TangentSmoothAt
-        (fun y : M => covDerivAt (manifoldGradient (I := I) f) y w) x)
+        (fun y : M => covDerivAt HasMetric.metric (manifoldGradient (I := I) f) y w) x)
     (h_grad_const_z : TangentSmoothAt
-        (fun y : M => covDerivAt (manifoldGradient (I := I) f) y z) x)
+        (fun y : M => covDerivAt HasMetric.metric (manifoldGradient (I := I) f) y z) x)
     (h_eventual_sym : (fun y : M => hessianBilin (I := I) f y w z)
         =ᶠ[𝓝 x] (fun y : M => hessianBilin (I := I) f y z w)) :
     metricInner x (secondCovDerivAt (I := I) (M := M)
@@ -133,21 +133,21 @@ theorem metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym
       = mfderiv I 𝓘(ℝ, ℝ) (fun y : M => hessianBilin (I := I) f y z w) x v :=
     congrArg (· v) h_eq_mfderiv
   -- Metric-compatibility at x; bridge ∇ → `.toFun` form for `rw [h_id_W/Z]`.
-  have h_compat_W := leviCivitaConnection_metric_compatible
-    V (fun y => covDerivAt (manifoldGradient (I := I) f) y w) Z x
+  have h_compat_W := leviCivitaConnection_metric_compatible HasMetric.metric
+    V (fun y => covDerivAt HasMetric.metric (manifoldGradient (I := I) f) y w) Z x
     hVsm h_grad_const_w hZsm
   simp only [← leviCivitaConnection_toFun_eq_covDeriv] at h_compat_W
-  have h_compat_Z := leviCivitaConnection_metric_compatible
-    V (fun y => covDerivAt (manifoldGradient (I := I) f) y z) W x
+  have h_compat_Z := leviCivitaConnection_metric_compatible HasMetric.metric
+    V (fun y => covDerivAt HasMetric.metric (manifoldGradient (I := I) f) y z) W x
     hVsm h_grad_const_z hWsm
   simp only [← leviCivitaConnection_toFun_eq_covDeriv] at h_compat_Z
   -- Rewrite metric-compat LHS into `hessianBilin f y w z` / `f y z w` form.
   have h_hess_W :
-      (fun y : M => metricInner y (covDerivAt (manifoldGradient (I := I) f) y w) (Z y))
+      (fun y : M => metricInner y (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) y w) (Z y))
         = (fun y : M => hessianBilin (I := I) f y w z) := by
     funext y; show metricInner y _ z = hessianBilin (I := I) f y w z; rfl
   have h_hess_Z :
-      (fun y : M => metricInner y (covDerivAt (manifoldGradient (I := I) f) y z) (W y))
+      (fun y : M => metricInner y (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) y z) (W y))
         = (fun y : M => hessianBilin (I := I) f y z w) := by
     funext y; show metricInner y _ w = hessianBilin (I := I) f y z w; rfl
   rw [h_hess_W] at h_compat_W
@@ -165,36 +165,51 @@ theorem metricInner_secondCovDerivAt_grad_swap_of_hess_eventual_sym
     fun a b => hessianBilin_symm (I := I) f x h_interior hf_2 h_grad a b
   -- Christoffel corrections as tangent-space elements at x.
   set Γvw : TangentSpace I x :=
-    (leviCivitaConnection (I := I) (M := M)).toFun W x v with hΓvw_def
+    (leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun W x v with hΓvw_def
   set Γvz : TangentSpace I x :=
-    (leviCivitaConnection (I := I) (M := M)).toFun Z x v with hΓvz_def
+    (leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z x v with hΓvz_def
   -- Identify the second metric-compat term as hessianBilin (cross terms).
-  -- ⟨covDerivAt ∇f x w, Γvz⟩ = hessianBilin f x w Γvz (by def).
-  have h_id_W : metricInner x (covDerivAt (manifoldGradient (I := I) f) x w)
-        ((leviCivitaConnection (I := I) (M := M)).toFun Z x v)
+  -- ⟨covDerivAt HasMetric.metric ∇f x w, Γvz⟩ = hessianBilin f x w Γvz (by def).
+  have h_id_W : metricInner x (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x w)
+        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z x v)
       = hessianBilin (I := I) f x w Γvz := rfl
-  have h_id_Z : metricInner x (covDerivAt (manifoldGradient (I := I) f) x z)
-        ((leviCivitaConnection (I := I) (M := M)).toFun W x v)
+  have h_id_Z : metricInner x (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x z)
+        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun W x v)
       = hessianBilin (I := I) f x z Γvw := rfl
+  -- Cast h_compat_W / h_compat_Z to typeclass `metricInner` abbrev form for rw matching.
+  change ((mfderiv% fun y : M => hessianBilin (I := I) f y w z) x) v
+      = metricInner x
+          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
+            (fun y : M => covDerivAt HasMetric.metric (manifoldGradient (I := I) f) y w) x v) z
+        + metricInner x (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x w)
+          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z x v)
+    at h_compat_W
+  change ((mfderiv% fun y : M => hessianBilin (I := I) f y z w) x) v
+      = metricInner x
+          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
+            (fun y : M => covDerivAt HasMetric.metric (manifoldGradient (I := I) f) y z) x v) w
+        + metricInner x (covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x z)
+          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun W x v)
+    at h_compat_Z
   rw [h_id_W] at h_compat_W
   rw [h_id_Z] at h_compat_Z
   -- Now unfold secondCovDerivAt and metric-inner-sub.
   show metricInner x
-      (covDerivAt (fun y : M => covDerivAt (manifoldGradient (I := I) f) y w) x v
-        - covDerivAt (manifoldGradient (I := I) f) x
-            (covDerivAt (Y := fun _ : M => (w : TangentSpace I x)) x v)) z
+      (covDerivAt HasMetric.metric (fun y : M => covDerivAt HasMetric.metric (manifoldGradient (I := I) f) y w) x v
+        - covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x
+            (covDerivAt HasMetric.metric (Y := fun _ : M => (w : TangentSpace I x)) x v)) z
     = metricInner x
-      (covDerivAt (fun y : M => covDerivAt (manifoldGradient (I := I) f) y z) x v
-        - covDerivAt (manifoldGradient (I := I) f) x
-            (covDerivAt (Y := fun _ : M => (z : TangentSpace I x)) x v)) w
+      (covDerivAt HasMetric.metric (fun y : M => covDerivAt HasMetric.metric (manifoldGradient (I := I) f) y z) x v
+        - covDerivAt HasMetric.metric (manifoldGradient (I := I) f) x
+            (covDerivAt HasMetric.metric (Y := fun _ : M => (z : TangentSpace I x)) x v)) w
   rw [metricInner_sub_left, metricInner_sub_left]
-  -- Identify outer terms: ⟨covDerivAt (∂_W ∇f) x v, z⟩ = ⟨lcc.(∂_W ∇f) x v, z⟩ (rfl).
-  -- Identify Christoffel terms: ⟨covDerivAt ∇f x Γvw, z⟩ = hessianBilin f x Γvw z (rfl).
-  show metricInner x ((leviCivitaConnection (I := I) (M := M)).toFun
-        (fun y : M => covDerivAt (manifoldGradient (I := I) f) y w) x v) z
+  -- Identify outer terms: ⟨covDerivAt HasMetric.metric (∂_W ∇f) x v, z⟩ = ⟨lcc.(∂_W ∇f) x v, z⟩ (rfl).
+  -- Identify Christoffel terms: ⟨covDerivAt HasMetric.metric ∇f x Γvw, z⟩ = hessianBilin f x Γvw z (rfl).
+  show metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
+        (fun y : M => covDerivAt HasMetric.metric (manifoldGradient (I := I) f) y w) x v) z
       - hessianBilin (I := I) f x Γvw z
-    = metricInner x ((leviCivitaConnection (I := I) (M := M)).toFun
-        (fun y : M => covDerivAt (manifoldGradient (I := I) f) y z) x v) w
+    = metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
+        (fun y : M => covDerivAt HasMetric.metric (manifoldGradient (I := I) f) y z) x v) w
       - hessianBilin (I := I) f x Γvz w
   -- Cross-term Hess-sym: hessianBilin f x z Γvw = hessianBilin f x Γvw z, etc.
   have h_sym_zΓvw : hessianBilin (I := I) f x z Γvw
@@ -276,17 +291,17 @@ theorem metricInner_secondCovDerivAt_grad_eq_swap_add_curvature
       = metricInner x (secondCovDerivAt (I := I) (M := M)
           (manifoldGradient (I := I) f) x w v) z
         + metricInner x
-            (riemannCurvature (fun _ : M => (v : TangentSpace I x))
+            (riemannCurvature HasMetric.metric (fun _ : M => (v : TangentSpace I x))
               (fun _ : M => (w : TangentSpace I x))
               (manifoldGradient (I := I) f) x) z := by
   have h := secondCovDerivAt_sub_swap_eq_riemannCurvature
     (I := I) (M := M) (manifoldGradient (I := I) f) x v w
   -- h : secondCovDerivAt ∇f x v w - secondCovDerivAt ∇f x w v
-  --       = riemannCurvature (const v) (const w) ∇f x
+  --       = riemannCurvature HasMetric.metric (const v) (const w) ∇f x
   -- Restate: secondCovDerivAt ∇f x v w = secondCovDerivAt ∇f x w v + R(const v, const w) ∇f x
   have h' : secondCovDerivAt (I := I) (M := M) (manifoldGradient (I := I) f) x v w
       = secondCovDerivAt (I := I) (M := M) (manifoldGradient (I := I) f) x w v
-        + riemannCurvature (fun _ : M => (v : TangentSpace I x))
+        + riemannCurvature HasMetric.metric (fun _ : M => (v : TangentSpace I x))
             (fun _ : M => (w : TangentSpace I x))
             (manifoldGradient (I := I) f) x := by
     rw [← h]; abel
@@ -302,13 +317,13 @@ theorem heart_of_bochner_curvature_term
     (f : M → ℝ)
     {B w : VectorFieldSection I M} {x : M}
     (h_metric_skew : metricInner x
-        (riemannCurvature B w (manifoldGradient (I := I) f) x) (B x)
+        (riemannCurvature HasMetric.metric B w (manifoldGradient (I := I) f) x) (B x)
       + metricInner x (manifoldGradient (I := I) f x)
-          (riemannCurvature B w B x) = 0) :
+          (riemannCurvature HasMetric.metric B w B x) = 0) :
     metricInner x
-        (riemannCurvature B w (manifoldGradient (I := I) f) x) (B x) =
+        (riemannCurvature HasMetric.metric B w (manifoldGradient (I := I) f) x) (B x) =
       - metricInner x (manifoldGradient (I := I) f x)
-          (riemannCurvature B w B x) := by
+          (riemannCurvature HasMetric.metric B w B x) := by
   linarith
 
 /-- **Math.** **Ricci sum identity** (heart-of-Bochner Step 3): the
@@ -321,7 +336,7 @@ theorem heart_curvature_orthonormal_sum_eq_ricci
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
     (W : SmoothVectorField I M) (x : M) :
     ∑ i, metricInner x
-        (riemannCurvature
+        (riemannCurvature HasMetric.metric
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i)
           W.toFun (manifoldGradient (I := I) f) x)
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
@@ -366,13 +381,13 @@ theorem heart_curvature_orthonormal_sum_eq_ricci
   -- Step 1: per-`i` pointwise-eq reduction.
   have h_per_i : ∀ i,
       metricInner x
-          (riemannCurvature (Bi i).toFun W.toFun gradF.toFun x) ((Bi i).toFun x)
+          (riemannCurvature HasMetric.metric (Bi i).toFun W.toFun gradF.toFun x) ((Bi i).toFun x)
         = Φ ((Bi i).toFun x) ((Bi i).toFun x) := by
     intro i
-    have hR_eq : riemannCurvature (Bi i).toFun W.toFun gradF.toFun x
+    have hR_eq : riemannCurvature HasMetric.metric (Bi i).toFun W.toFun gradF.toFun x
         = curvatureEndo (HasMetric.metric) WV GV x ((Bi i).toFun x) := by
-      show riemannCurvature (Bi i).toFun W.toFun gradF.toFun x
-        = riemannCurvature
+      show riemannCurvature HasMetric.metric (Bi i).toFun W.toFun gradF.toFun x
+        = riemannCurvature HasMetric.metric
             (fun _ : M => ((Bi i).toFun x : TangentSpace I x))
             WV.toFun GV.toFun x
       exact riemannCurvature_eq_of_pointwise_eq
@@ -381,7 +396,7 @@ theorem heart_curvature_orthonormal_sum_eq_ricci
     rw [hR_eq]; rfl
   -- Step 2 + 3 + 4: rewrite via h_per_i, Stage 7, identify with Ric, ricci_symm.
   calc ∑ i, metricInner x
-        (riemannCurvature (Bi i).toFun W.toFun gradF.toFun x) ((Bi i).toFun x)
+        (riemannCurvature HasMetric.metric (Bi i).toFun W.toFun gradF.toFun x) ((Bi i).toFun x)
       = ∑ i, Φ ((Bi i).toFun x) ((Bi i).toFun x) :=
         Finset.sum_congr rfl (fun i _ => h_per_i i)
     _ = ∑ i, Φ ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)
@@ -441,12 +456,12 @@ theorem smoothOrthoFrame_cov_skew
     [T2Space M]
     (x : M) (i j : Fin (Module.finrank ℝ E)) (v : TangentSpace I x) :
     metricInner x
-        ((leviCivitaConnection (I := I) (M := M)).toFun
+        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x v)
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j x) +
     metricInner x
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
-        ((leviCivitaConnection (I := I) (M := M)).toFun
+        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j) x v)
       = 0 := by
   classical
@@ -483,7 +498,7 @@ theorem smoothOrthoFrame_cov_skew
   -- Metric compatibility at x along the constant direction `v`.
   have hVsm : TangentSmoothAt (fun _ : M => (v : TangentSpace I x)) x :=
     (SmoothVectorField.const (I := I) (M := M) (v : E)).smoothAt x
-  have hmc := leviCivitaConnection_metric_compatible
+  have hmc := leviCivitaConnection_metric_compatible HasMetric.metric
     (fun _ : M => (v : TangentSpace I x))
     (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i)
     (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j) x hVsm hBi_at hBj_at
@@ -509,7 +524,7 @@ theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
     (W : SmoothVectorField I M) (x : M) :
     ∑ i, hessianBilin (I := I) f x
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
-        ((leviCivitaConnection (I := I) (M := M)).toFun
+        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x
           (W.toFun x)) = 0 := by
   classical
@@ -522,7 +537,7 @@ theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
   -- Key matrices.
   set a : Fin (Module.finrank ℝ E) → Fin (Module.finrank ℝ E) → ℝ :=
     fun i j => metricInner x
-      ((leviCivitaConnection (I := I) (M := M)).toFun
+      ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x (W.toFun x))
       (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j x) with ha_def
   set h_mat : Fin (Module.finrank ℝ E) → Fin (Module.finrank ℝ E) → ℝ :=
@@ -532,13 +547,13 @@ theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
   -- Step 1: Orthonormal Riesz expansion of ∇_{W(x)} B_i.
   -- `v = ∑ k, ⟪b_k, v⟫_ℝ • b_k` for orthonormal basis `b_k` and `v ∈ T_xM`.
   have h_riesz : ∀ i,
-      (leviCivitaConnection (I := I) (M := M)).toFun
+      (leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x (W.toFun x)
         = ∑ j, a i j •
             (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j x) := by
     intro i
     set v : TangentSpace I x :=
-      (leviCivitaConnection (I := I) (M := M)).toFun
+      (leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x (W.toFun x)
       with hv_def
     -- `OrthonormalBasis.sum_repr'` : `∑ j, ⟪b j, v⟫_ℝ • b j = v`.
@@ -561,7 +576,7 @@ theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
   -- Step 2: rewrite the sum with the Riesz expansion + bilinearity of hessianBilin.
   have h_expand : ∀ i, hessianBilin (I := I) f x
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
-        ((leviCivitaConnection (I := I) (M := M)).toFun
+        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i) x
           (W.toFun x))
       = ∑ j, a i j * h_mat i j := by
@@ -587,7 +602,7 @@ theorem sum_hessianBilin_smoothOrthoFrame_cov_eq_zero
     have h := smoothOrthoFrame_cov_skew x i j (W.toFun x)
     have h_swap : metricInner x
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
-        ((leviCivitaConnection (I := I) (M := M)).toFun
+        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x j) x (W.toFun x))
         = a j i := by
       show metricInner x _ _ = metricInner x _ _

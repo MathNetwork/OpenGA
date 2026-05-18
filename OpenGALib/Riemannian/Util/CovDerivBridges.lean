@@ -29,14 +29,15 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
 definition. Rewrites raw structural form into the `∇` notation form. -/
 @[simp] theorem leviCivitaConnection_toFun_eq_covDeriv
     (X Y : VectorFieldSection I M) (x : M) :
-    (leviCivitaConnection (I := I) (M := M)).toFun Y x (X x) = (∇[X] Y) x := rfl
+    (leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Y x (X x)
+      = (∇[X] Y) x := rfl
 
 /-- **Eng.** `covDeriv X Y x = covDerivAt Y x (X x)`: section-level
 `covDeriv` factors through the pointwise continuous linear map `covDerivAt`. -/
 @[simp]
 theorem covDeriv_eq_covDerivAt
     (X Y : VectorFieldSection I M) (x : M) :
-    covDeriv X Y x = covDerivAt Y x (X x) :=
+    covDeriv HasMetric.metric X Y x = covDerivAt HasMetric.metric Y x (X x) :=
   rfl
 
 /-- **Eng.** Constant-section specialization:
@@ -44,7 +45,8 @@ theorem covDeriv_eq_covDerivAt
 @[simp]
 theorem covDeriv_const_eq_covDerivAt
     (v : E) (Y : VectorFieldSection I M) (x : M) :
-    covDeriv (fun _ : M => v) Y x = covDerivAt Y x v :=
+    covDeriv HasMetric.metric (fun _ : M => v) Y x
+      = covDerivAt HasMetric.metric Y x v :=
   rfl
 
 end CovDerivBridges

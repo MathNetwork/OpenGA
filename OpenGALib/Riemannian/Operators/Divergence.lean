@@ -72,7 +72,7 @@ scoped[Riemannian] notation:max "div_g[" I "]" =>
   -- ∇_{B_i} 0 at x = 0 via continuous linear map-zero of `leviCivitaConnection.toFun 0 x`.
   have h_zero : (∇[Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i]
         (0 : VectorFieldSection I M)) x = 0 := by
-    show ((leviCivitaConnection (I := I) (M := M)).toFun 0 x)
+    show ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun 0 x)
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x) = 0
     rw [CovariantDerivative.zero]
     rfl

@@ -43,7 +43,7 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteS
 /-- **Math.** $A(X, Y)(x) = \langle \nabla^M_X Y(x),\, \nu(x)\rangle$. -/
 noncomputable def secondFundamentalFormScalar
     (ν X Y : VectorFieldSection I M) (x : M) : ℝ :=
-  metricInner x (covDeriv X Y x) (ν x)
+  metricInner x (covDeriv HasMetric.metric X Y x) (ν x)
 
 /-- **Math.** Notation `II(X, Y)` for the codim-1 second fundamental form
 scalar, with the unit normal `ν` from context. -/
