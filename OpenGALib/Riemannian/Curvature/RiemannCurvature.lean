@@ -1067,10 +1067,6 @@ noncomputable def sectionalCurvature
     (metricInner x (X x) (X x) * metricInner x (Y x) (Y x)
       - metricInner x (X x) (Y x) ^ 2)
 
-/-- **Math.** Notation `K_g[I](X, Y)` for `sectionalCurvature X Y`. -/
-scoped[Riemannian] notation:max "K_g[" I "](" X ", " Y ")" =>
-  sectionalCurvature (I := I) X Y
-
 /-- **Math.** **Tangent-vector form** of sectional curvature: same
 formula as `sectionalCurvature` but consuming the pointwise tangent
 vectors $v, w \in T_xM$ directly via constant-section lifts. Useful when
@@ -1093,7 +1089,7 @@ Denominator: symmetric in $X, Y$ via `metricInner_comm`. -/
 theorem sectionalCurvature_symmetric
     [IsManifold I 2 M]
     (X Y : SmoothVectorField I M) (x : M) :
-    K_g[I](X, Y) x = K_g[I](Y, X) x := by
+    sectionalCurvature (I := I) X Y x = sectionalCurvature (I := I) Y X x := by
   unfold sectionalCurvature
   congr 1
   · -- Numerator: g(R(X,Y) Y, X) = g(R(Y,X) X, Y) via pair-symmetry + double antisym.

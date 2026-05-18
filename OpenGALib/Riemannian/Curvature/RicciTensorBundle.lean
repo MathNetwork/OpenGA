@@ -552,13 +552,6 @@ noncomputable def scalarCurvature
     (g : RiemannianMetric I M) (x : M) : ℝ :=
   LinearMap.trace ℝ (TangentSpace I x) (ricciSharp (I := I) (M := M) g x)
 
-/-- **Math.** Notation `scal_g[I]` for the scalar curvature on the ambient
-`[HasMetric I M]` metric. `I` is bracketed because `x : M` does not expose
-the model with corners. The notation pipes `HasMetric.metric` so downstream
-consumers continue to write `scal_g[I] x` during Phase 1 (typeclass
-retained until #19). -/
-scoped[Riemannian] notation:max "scal_g[" I "]" =>
-  scalarCurvature (I := I) (HasMetric.metric)
 
 
 /-! ## Ricci-flat and Einstein metric predicates
