@@ -81,7 +81,7 @@ noncomputable def koszulFunctional
   - g.metricInner x (mlieBracket I Y Z x) (X x)
   - g.metricInner x (mlieBracket I X Z x) (Y x)
 
-omit [CompleteSpace E] [FiniteDimensional ℝ E] in
+omit [CompleteSpace E] [FiniteDimensional ℝ E] hm in
 /-- **Math.** **Koszul antisymmetry identity**:
 $$K(X, Y; Z)(x) - K(Y, X; Z)(x) \;=\; 2\,\langle [X, Y], Z\rangle(x).$$
 
@@ -116,7 +116,7 @@ theorem koszul_antisymm
   rw [g.metricInner_neg_left]
   ring
 
-omit [CompleteSpace E] [FiniteDimensional ℝ E] in
+omit [CompleteSpace E] [FiniteDimensional ℝ E] hm in
 /-- **Math.** **Koszul metric-compatibility sum identity**:
 $$K(X, Y; Z)(x) + K(X, Z; Y)(x) \;=\; 2\,X\langle Y, Z\rangle(x).$$
 
@@ -216,7 +216,7 @@ lemma directionalDeriv_add_arg
   unfold directionalDeriv
   exact (mfderiv I 𝓘(ℝ, ℝ) f x).map_add v₁ v₂
 
-omit [FiniteDimensional ℝ E] in
+omit [FiniteDimensional ℝ E] hm in
 /-- **Math.** **Koszul $C^\infty(M)$-linearity in $Z$**:
 $$K(X, Y; f \cdot Z)(x) = f(x) \cdot K(X, Y; Z)(x).$$
 
@@ -289,7 +289,7 @@ $C^\infty(M)$-linearity in the X and Y axes (Z-axis already covered by
 `koszulCovDeriv_inner_eq` + Riesz uniqueness, to a corresponding
 Levi-Civita connection structural property (additivity, Leibniz). -/
 
-omit [FiniteDimensional ℝ E] in
+omit [FiniteDimensional ℝ E] hm in
 /-- **Math.** **Koszul Z-additivity**: $K(X, Y; Z_1 + Z_2) = K(X, Y; Z_1) + K(X, Y; Z_2)$.
 
 Each Koszul term is linear in $Z$ (via `g.metricInner_add_right`/`left`,
@@ -330,7 +330,7 @@ theorem koszul_add_right
   rw [g.metricInner_add_left, g.metricInner_add_left]
   ring
 
-omit [FiniteDimensional ℝ E] in
+omit [FiniteDimensional ℝ E] hm in
 /-- **Math.** **Koszul X-additivity**: $K(X_1 + X_2, Y; Z) = K(X_1, Y; Z) + K(X_2, Y; Z)$. -/
 theorem koszul_add_left
     (g : RiemannianMetric I M)
@@ -370,7 +370,7 @@ theorem koszul_add_left
   rw [g.metricInner_add_left]
   ring
 
-omit [FiniteDimensional ℝ E] in
+omit [FiniteDimensional ℝ E] hm in
 /-- **Math.** **Koszul Y-additivity**: $K(X, Y_1 + Y_2; Z) = K(X, Y_1; Z) + K(X, Y_2; Z)$. -/
 theorem koszul_add_middle
     (g : RiemannianMetric I M)
@@ -410,7 +410,7 @@ theorem koszul_add_middle
   rw [g.metricInner_add_right]
   ring
 
-omit [FiniteDimensional ℝ E] in
+omit [FiniteDimensional ℝ E] hm in
 /-- **Math.** **Koszul X-axis $C^\infty(M)$-linearity**:
 $K(f \cdot X, Y; Z)(x) = f(x) \cdot K(X, Y; Z)(x)$.
 
@@ -468,7 +468,7 @@ theorem koszul_smul_left
   rw [h_fromTS_Y, h_fromTS_Z]
   ring
 
-omit [FiniteDimensional ℝ E] in
+omit [FiniteDimensional ℝ E] hm in
 /-- **Math.** **Koszul Y-axis Leibniz**:
 $K(X, f \cdot Y; Z)(x) = f(x) \cdot K(X, Y; Z)(x) + 2 \cdot X(f)(x) \cdot \langle Y, Z\rangle(x)$.
 
@@ -534,7 +534,7 @@ extension-independence of the functional, tensoriality packages it as
 `TensorialAt` for `mkHom`.
 -/
 
-omit [CompleteSpace E] [FiniteDimensional ℝ E] 
+omit [CompleteSpace E] [FiniteDimensional ℝ E] hm
   in
 /-- **Math.** **Locality of the Koszul functional in $Z$**: if $Z_1, Z_2$
 agree on a neighborhood of $x$, then $K(X, Y; Z_1)(x) = K(X, Y; Z_2)(x)$.
@@ -562,7 +562,7 @@ theorem koszulFunctional_local
   rw [hT1.mfderiv_eq, hT2.mfderiv_eq, hZx, hT5, hT6]
   rfl
 
-omit [FiniteDimensional ℝ E] [CompleteSpace E] 
+omit [FiniteDimensional ℝ E] [CompleteSpace E] hm
   in
 /-- **Mixed.** Tensoriality at $x$ of the half-Koszul functional in the
 third argument. Math: $Z \mapsto \tfrac12 K(X, Y; Z)(x)$ respects
