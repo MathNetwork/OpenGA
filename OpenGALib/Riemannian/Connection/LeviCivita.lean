@@ -771,8 +771,11 @@ standard $C^2$ textbook setup but fire pointwise.
 
 **Ground truth**: do Carmo 1992 §4 Proposition 2.5 (ii). -/
 theorem bianchi_first
+    (g : RiemannianMetric I M)
     (X Y Z : SmoothVectorField I M) (x : M) :
-    Riem(X, Y) Z x + Riem(Y, Z) X x + Riem(Z, X) Y x = 0 := by
+    riemannCurvature g X.toFun Y.toFun Z.toFun x
+      + riemannCurvature g Y.toFun Z.toFun X.toFun x
+      + riemannCurvature g Z.toFun X.toFun Y.toFun x = 0 := by
   -- Jacobi identity via the `SmoothVectorField.mlieBracket_jacobi` framework
   -- primitive (wraps Mathlib's `leibniz_identity_mlieBracket_apply`).
   have h_jac : (⟦X, ⟦Y, Z⟧⟧) x = (⟦⟦X, Y⟧, Z⟧) x + (⟦Y, ⟦X, Z⟧⟧) x :=
@@ -782,12 +785,12 @@ theorem bianchi_first
   have hX : ∀ y, TangentSmoothAt X.toFun y := X.smoothAt
   have hY : ∀ y, TangentSmoothAt Y.toFun y := Y.smoothAt
   have hZ : ∀ y, TangentSmoothAt Z.toFun y := Z.smoothAt
-  have h_dXZ : ∀ y, TangentSmoothAt ∇[X] Z y :=
-    fun y => covDeriv_smoothVF_smoothAt HasMetric.metric X Z y
-  have h_dYX : ∀ y, TangentSmoothAt ∇[Y] X y :=
-    fun y => covDeriv_smoothVF_smoothAt HasMetric.metric Y X y
-  have h_dZY : ∀ y, TangentSmoothAt ∇[Z] Y y :=
-    fun y => covDeriv_smoothVF_smoothAt HasMetric.metric Z Y y
+  have h_dXZ : ∀ y, TangentSmoothAt (fun y => covDeriv g X.toFun Z.toFun y) y :=
+    fun y => covDeriv_smoothVF_smoothAt g X Z y
+  have h_dYX : ∀ y, TangentSmoothAt (fun y => covDeriv g Y.toFun X.toFun y) y :=
+    fun y => covDeriv_smoothVF_smoothAt g Y X y
+  have h_dZY : ∀ y, TangentSmoothAt (fun y => covDeriv g Z.toFun Y.toFun y) y :=
+    fun y => covDeriv_smoothVF_smoothAt g Z Y y
   have h_XY : ∀ y, TangentSmoothAt ⟦X, Y⟧ y :=
     fun _ => mlieBracket_tangentSmoothAt X.smooth Y.smooth
   have h_YX : ∀ y, TangentSmoothAt ⟦Y, X⟧ y :=
@@ -799,42 +802,45 @@ theorem bianchi_first
   have h_XZ : ∀ y, TangentSmoothAt ⟦X, Z⟧ y :=
     fun _ => mlieBracket_tangentSmoothAt X.smooth Z.smooth
   -- Step 1: section-level torsion-freeness (Π-equalities, via global smoothness).
-  have eq_YZ : (∇[Y] Z : VectorFieldSection I M) = ∇[Z] Y + ⟦Y, Z⟧ :=
-    covDeriv_section_eq_swap_add_mlieBracket HasMetric.metric Y Z hY hZ
-  have eq_ZX : (∇[Z] X : VectorFieldSection I M) = ∇[X] Z + ⟦Z, X⟧ :=
-    covDeriv_section_eq_swap_add_mlieBracket HasMetric.metric Z X hZ hX
-  have eq_XY : (∇[X] Y : VectorFieldSection I M) = ∇[Y] X + ⟦X, Y⟧ :=
-    covDeriv_section_eq_swap_add_mlieBracket HasMetric.metric X Y hX hY
+  have eq_YZ : ((fun y => covDeriv g Y.toFun Z.toFun y) : VectorFieldSection I M)
+      = (fun y => covDeriv g Z.toFun Y.toFun y) + ⟦Y, Z⟧ :=
+    covDeriv_section_eq_swap_add_mlieBracket g Y.toFun Z.toFun hY hZ
+  have eq_ZX : ((fun y => covDeriv g Z.toFun X.toFun y) : VectorFieldSection I M)
+      = (fun y => covDeriv g X.toFun Z.toFun y) + ⟦Z, X⟧ :=
+    covDeriv_section_eq_swap_add_mlieBracket g Z.toFun X.toFun hZ hX
+  have eq_XY : ((fun y => covDeriv g X.toFun Y.toFun y) : VectorFieldSection I M)
+      = (fun y => covDeriv g Y.toFun X.toFun y) + ⟦X, Y⟧ :=
+    covDeriv_section_eq_swap_add_mlieBracket g X.toFun Y.toFun hX hY
   -- Step 2: unfold riemannCurvature, substitute section equalities, split via add_field.
-  show (∇[X] (∇[Y] Z)) x
-        - (∇[Y] (∇[X] Z)) x
-        - (∇[⟦X, Y⟧] Z) x
-      + ((∇[Y] (∇[Z] X)) x
-        - (∇[Z] (∇[Y] X)) x
-        - (∇[⟦Y, Z⟧] X) x)
-      + ((∇[Z] (∇[X] Y)) x
-        - (∇[X] (∇[Z] Y)) x
-        - (∇[⟦Z, X⟧] Y) x) = 0
+  show (covDeriv g X.toFun (fun y => covDeriv g Y.toFun Z.toFun y) x
+        - covDeriv g Y.toFun (fun y => covDeriv g X.toFun Z.toFun y) x
+        - covDeriv g (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x)
+      + (covDeriv g Y.toFun (fun y => covDeriv g Z.toFun X.toFun y) x
+        - covDeriv g Z.toFun (fun y => covDeriv g Y.toFun X.toFun y) x
+        - covDeriv g (VectorField.mlieBracket I Y.toFun Z.toFun) X.toFun x)
+      + (covDeriv g Z.toFun (fun y => covDeriv g X.toFun Y.toFun y) x
+        - covDeriv g X.toFun (fun y => covDeriv g Z.toFun Y.toFun y) x
+        - covDeriv g (VectorField.mlieBracket I Z.toFun X.toFun) Y.toFun x) = 0
   rw [eq_YZ, eq_ZX, eq_XY]
-  rw [covDeriv_add_field HasMetric.metric X ∇[Z] Y ⟦Y, Z⟧ x
+  rw [covDeriv_add_field g X.toFun (fun y => covDeriv g Z.toFun Y.toFun y) ⟦Y, Z⟧ x
         (h_dZY x) (h_YZ x),
-      covDeriv_add_field HasMetric.metric Y ∇[X] Z ⟦Z, X⟧ x
+      covDeriv_add_field g Y.toFun (fun y => covDeriv g X.toFun Z.toFun y) ⟦Z, X⟧ x
         (h_dXZ x) (h_ZX x),
-      covDeriv_add_field HasMetric.metric Z ∇[Y] X ⟦X, Y⟧ x
+      covDeriv_add_field g Z.toFun (fun y => covDeriv g Y.toFun X.toFun y) ⟦X, Y⟧ x
         (h_dYX x) (h_XY x)]
   -- Step 3: pointwise torsion-free pairings (∇_A B - ∇_B A = [A,B]):
-  have pair_X : (∇[X] ⟦Y, Z⟧) x
-                  - (∇[⟦Y, Z⟧] X) x
+  have pair_X : covDeriv g X.toFun ⟦Y, Z⟧ x
+                  - covDeriv g ⟦Y, Z⟧ X.toFun x
                 = (⟦X, ⟦Y, Z⟧⟧) x :=
-    covDeriv_sub_swap_eq_mlieBracket HasMetric.metric X ⟦Y, Z⟧ x (hX x) (h_YZ x)
-  have pair_Y : (∇[Y] ⟦Z, X⟧) x
-                  - (∇[⟦Z, X⟧] Y) x
+    covDeriv_sub_swap_eq_mlieBracket g X.toFun ⟦Y, Z⟧ x (hX x) (h_YZ x)
+  have pair_Y : covDeriv g Y.toFun ⟦Z, X⟧ x
+                  - covDeriv g ⟦Z, X⟧ Y.toFun x
                 = (⟦Y, ⟦Z, X⟧⟧) x :=
-    covDeriv_sub_swap_eq_mlieBracket HasMetric.metric Y ⟦Z, X⟧ x (hY x) (h_ZX x)
-  have pair_Z : (∇[Z] ⟦X, Y⟧) x
-                  - (∇[⟦X, Y⟧] Z) x
+    covDeriv_sub_swap_eq_mlieBracket g Y.toFun ⟦Z, X⟧ x (hY x) (h_ZX x)
+  have pair_Z : covDeriv g Z.toFun ⟦X, Y⟧ x
+                  - covDeriv g ⟦X, Y⟧ Z.toFun x
                 = (⟦Z, ⟦X, Y⟧⟧) x :=
-    covDeriv_sub_swap_eq_mlieBracket HasMetric.metric Z ⟦X, Y⟧ x (hZ x) (h_XY x)
+    covDeriv_sub_swap_eq_mlieBracket g Z.toFun ⟦X, Y⟧ x (hZ x) (h_XY x)
   -- Step 4: rearrange so abel collapses all 12 cov-terms via pair_X/Y/Z.
   -- The goal after rewrites is (with shorthand):
   --   (∇_X∇_Z Y + ∇_X[Y,Z]) - ∇_Y∇_X Z - ∇_{[X,Y]} Z
@@ -845,17 +851,17 @@ theorem bianchi_first
   -- We rewrite using pair_X/Y/Z by isolating the LHS shapes.
   -- pair_X gives ∇_X[Y,Z] = pair_X.lhs.lhs ↦ … — to use pair_X as a substitution,
   -- we set up the equations as A = mlie + B and rewrite ∇_X[Y,Z] = mlie + ∇_{[Y,Z]} X:
-  have h_subX : (∇[X] ⟦Y, Z⟧) x
+  have h_subX : covDeriv g X.toFun ⟦Y, Z⟧ x
                   = (⟦X, ⟦Y, Z⟧⟧) x
-                    + (∇[⟦Y, Z⟧] X) x := by
+                    + covDeriv g ⟦Y, Z⟧ X.toFun x := by
     rw [← pair_X]; abel
-  have h_subY : (∇[Y] ⟦Z, X⟧) x
+  have h_subY : covDeriv g Y.toFun ⟦Z, X⟧ x
                   = (⟦Y, ⟦Z, X⟧⟧) x
-                    + (∇[⟦Z, X⟧] Y) x := by
+                    + covDeriv g ⟦Z, X⟧ Y.toFun x := by
     rw [← pair_Y]; abel
-  have h_subZ : (∇[Z] ⟦X, Y⟧) x
+  have h_subZ : covDeriv g Z.toFun ⟦X, Y⟧ x
                   = (⟦Z, ⟦X, Y⟧⟧) x
-                    + (∇[⟦X, Y⟧] Z) x := by
+                    + covDeriv g ⟦X, Y⟧ Z.toFun x := by
     rw [← pair_Z]; abel
   rw [h_subX, h_subY, h_subZ]
   -- Goal now has 3 outer-bracket terms + 6 ∇_·_ terms; three pairs of ∇_{[·,·]} ·

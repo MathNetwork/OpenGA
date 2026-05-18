@@ -240,35 +240,36 @@ Stated using `mDirDeriv` (the `ℝ`-typed `mfderiv` wrapper) on the LHS
 and `(leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun` (definitionally equal to `covDeriv HasMetric.metric`)
 on the RHS. -/
 private lemma mDirDeriv_self_eq_two_metricInner_leviCivita_self
+    (g : RiemannianMetric I M)
     (V : VectorFieldSection I M) (Z : SmoothVectorField I M) (y : M)
     (hV : TangentSmoothAt V y) :
-    mDirDeriv (fun y' => metricInner y' (Z y') (Z y')) y (V y)
-      = 2 * metricInner y
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y (V y)) (Z y) := by
+    mDirDeriv (fun y' => g.metricInner y' (Z y') (Z y')) y (V y)
+      = 2 * g.metricInner y
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y (V y)) (Z y) := by
   -- Bridge metric-compat ∇ → `.toFun` form so `rw [hsym]` matches the structural shape.
-  have h := leviCivitaConnection_metric_compatible HasMetric.metric V Z.toFun Z.toFun y
+  have h := leviCivitaConnection_metric_compatible g V Z.toFun Z.toFun y
     hV (Z.smoothAt y) (Z.smoothAt y)
   simp only [← leviCivitaConnection_toFun_eq_covDeriv] at h
   -- Cast h to typeclass `metricInner` form for rw matching.
-  change mDirDeriv (fun y' => metricInner y' (Z y') (Z y')) y (V y)
-      = metricInner y
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y (V y))
+  change mDirDeriv (fun y' => g.metricInner y' (Z y') (Z y')) y (V y)
+      = g.metricInner y
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y (V y))
           (Z y)
-        + metricInner y (Z y)
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y (V y))
+        + g.metricInner y (Z y)
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y (V y))
     at h
   have hsym :
-      metricInner y (Z y)
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y (V y))
-        = metricInner y
-            ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y (V y)) (Z y) :=
-    metricInner_comm y _ _
+      g.metricInner y (Z y)
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y (V y))
+        = g.metricInner y
+            ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y (V y)) (Z y) :=
+    g.metricInner_comm y _ _
   rw [hsym] at h
-  have h_ℝ : mDirDeriv (fun y' => metricInner y' (Z y') (Z y')) y (V y)
-      = metricInner y
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y (V y)) (Z y)
-        + metricInner y
-            ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y (V y)) (Z y) :=
+  have h_ℝ : mDirDeriv (fun y' => g.metricInner y' (Z y') (Z y')) y (V y)
+      = g.metricInner y
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y (V y)) (Z y)
+        + g.metricInner y
+            ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y (V y)) (Z y) :=
     h
   rw [h_ℝ]; ring
 
@@ -276,13 +277,14 @@ private lemma mDirDeriv_self_eq_two_metricInner_leviCivita_self
 $y \mapsto g(Z, Z)(y)$ along the smooth vector field $V$ equals
 $2\,g(\nabla_V Z, Z)(y)$. -/
 private lemma fun_mDirDeriv_self_eq_two_metricInner_leviCivita_self
+    (g : RiemannianMetric I M)
     (V Z : SmoothVectorField I M) :
-    (fun y' : M => mDirDeriv (fun y'' => metricInner y'' (Z y'') (Z y'')) y' (V.toFun y'))
-      = (fun y' : M => 2 * metricInner y'
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+    (fun y' : M => mDirDeriv (fun y'' => g.metricInner y'' (Z y'') (Z y'')) y' (V.toFun y'))
+      = (fun y' : M => 2 * g.metricInner y'
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
           (Z y')) := by
   funext y'
-  exact mDirDeriv_self_eq_two_metricInner_leviCivita_self V.toFun Z y' (V.smoothAt y')
+  exact mDirDeriv_self_eq_two_metricInner_leviCivita_self g V.toFun Z y' (V.smoothAt y')
 
 /-- **Math.** **Iterated metric-compat identity at $x$**: differentiating the
 diagonal identity once more at $x$ in direction $W(x)$ and applying
@@ -292,111 +294,112 @@ $$\tfrac12\,W\!\left(V (g(Z, Z))\right)(x)
     + \langle \nabla_V Z, \nabla_W Z\rangle_g(x).$$ -/
 private lemma half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv
     [IsManifold I 2 M]
+    (g : RiemannianMetric I M)
     (V W Z : SmoothVectorField I M) (x : M) :
     (1/2 : ℝ) * mDirDeriv
         (fun y' : M => mDirDeriv
-          (fun y'' => metricInner y'' (Z y'') (Z y'')) y' (V.toFun y')) x (W.toFun x)
-      = metricInner x
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
-            (fun y' => covDeriv HasMetric.metric V.toFun Z.toFun y') x (W.toFun x))
+          (fun y'' => g.metricInner y'' (Z y'') (Z y'')) y' (V.toFun y')) x (W.toFun x)
+      = g.metricInner x
+          ((leviCivitaConnection (I := I) (M := M) g).toFun
+            (fun y' => covDeriv g V.toFun Z.toFun y') x (W.toFun x))
           (Z x)
-        + metricInner x (covDeriv HasMetric.metric V.toFun Z.toFun x)
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun x (W.toFun x)) := by
+        + g.metricInner x (covDeriv g V.toFun Z.toFun x)
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun x (W.toFun x)) := by
   -- Use function-equality form of the diagonal identity to rewrite the LHS
   -- inner function; then apply mfderiv_const_smul and metric-compat at x.
-  have h_fun := fun_mDirDeriv_self_eq_two_metricInner_leviCivita_self V Z
+  have h_fun := fun_mDirDeriv_self_eq_two_metricInner_leviCivita_self g V Z
   -- Sections smooth at x.
-  have hcovVZ : TangentSmoothAt (fun y' => covDeriv HasMetric.metric V.toFun Z.toFun y') x :=
-    covDeriv_smoothVF_smoothAt HasMetric.metric V Z x
+  have hcovVZ : TangentSmoothAt (fun y' => covDeriv g V.toFun Z.toFun y') x :=
+    covDeriv_smoothVF_smoothAt g V Z x
   -- The mfderiv of LHS (the iterated mDirDeriv expression) at x in dir W(x):
   -- by h_fun, equals mfderiv of `fun y' => 2 * g(∇_V Z, Z)(y')` at x in dir W(x).
   -- That = 2 * mfderiv (g(∇_V Z, Z)) x (W x), and by metric-compat at x:
   --      = 2 * [g(∇_W ∇_V Z, Z) + g(∇_V Z, ∇_W Z)] x.
   -- So (1/2) * LHS = g(∇_W ∇_V Z, Z) x + g(∇_V Z, ∇_W Z) x.
-  -- Bridge metric-compat ∇ → `.toFun` form for downstream `metricInner_comm` / `linarith`.
-  have h_compat := leviCivitaConnection_metric_compatible HasMetric.metric
-    W.toFun (fun y' => covDeriv HasMetric.metric V.toFun Z.toFun y') Z.toFun x
+  -- Bridge metric-compat ∇ → `.toFun` form for downstream `g.metricInner_comm` / `linarith`.
+  have h_compat := leviCivitaConnection_metric_compatible g
+    W.toFun (fun y' => covDeriv g V.toFun Z.toFun y') Z.toFun x
     (W.smoothAt x) hcovVZ (Z.smoothAt x)
   simp only [← leviCivitaConnection_toFun_eq_covDeriv] at h_compat
   -- h_compat : mfderiv (fun y' => g(∇_V Z, Z) y') x (W x) =
   --              g(∇_W (∇_V Z), Z) + g(∇_V Z, ∇_W Z)
   -- Rewrite the LHS function via h_fun:
   conv_lhs => rw [show (fun y' : M => mDirDeriv
-        (fun y'' => metricInner y'' (Z y'') (Z y'')) y' (V.toFun y'))
-      = (fun y' : M => 2 * metricInner y'
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+        (fun y'' => g.metricInner y'' (Z y'') (Z y'')) y' (V.toFun y'))
+      = (fun y' : M => 2 * g.metricInner y'
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
           (Z y')) from h_fun]
   -- Now LHS = (1/2) * mfderiv (fun y' => 2 * g(∇_V Z, Z) y') x (W x)
   -- Pull the 2 out: mfderiv (2 * h) x v = 2 * mfderiv h x v (linear).
   -- The function under mfderiv:  fun y' => 2 * g(LC.toFun Z y' (V y'), Z y')
   -- equals  2 • (fun y' => g(LC.toFun Z y' (V y'), Z y'))  via funext.
   -- Use mfderiv_const_smul; we need MDifferentiableAt of the inner section.
-  -- The "covDeriv HasMetric.metric V Z = LC.toFun Z y (V y)" is def-eq; the inner section's
-  -- smoothness at x is hcovVZ (via metricInner_mdifferentiableAt).
+  -- The "covDeriv g V Z = LC.toFun Z y (V y)" is def-eq; the inner section's
+  -- smoothness at x is hcovVZ (via g.metricInner_mdifferentiableAt).
   have h_inner_mdiff : MDifferentiableAt I 𝓘(ℝ, ℝ)
-      (fun y' : M => metricInner y'
-        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+      (fun y' : M => g.metricInner y'
+        ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
         (Z y')) x := by
-    -- The function is `y' ↦ g(covDeriv HasMetric.metric V Z y', Z y')` (def-eq covDeriv HasMetric.metric ↔ LC.toFun).
-    -- Use `metricInner_mdifferentiableAt` with `hcovVZ` and `Z.smoothAt x`.
-    have h := hm.metric.metricInner_mdifferentiableAt
-      (v := fun y' => covDeriv HasMetric.metric V.toFun Z.toFun y') (w := Z.toFun) hcovVZ (Z.smoothAt x)
+    -- The function is `y' ↦ g(covDeriv g V Z y', Z y')` (def-eq covDeriv g ↔ LC.toFun).
+    -- Use `g.metricInner_mdifferentiableAt` with `hcovVZ` and `Z.smoothAt x`.
+    have h := g.metricInner_mdifferentiableAt
+      (v := fun y' => covDeriv g V.toFun Z.toFun y') (w := Z.toFun) hcovVZ (Z.smoothAt x)
     exact h
   -- Avoid continuous linear map-smul issues by writing `2 * h = h + h` and using `mfderiv_add`.
-  have h_two_add : (fun y' : M => (2 : ℝ) * metricInner y'
-        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+  have h_two_add : (fun y' : M => (2 : ℝ) * g.metricInner y'
+        ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
         (Z y'))
-      = (fun y' : M => metricInner y'
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+      = (fun y' : M => g.metricInner y'
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
           (Z y')
-        + metricInner y'
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+        + g.metricInner y'
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
           (Z y')) := by
     funext y'; ring
   rw [h_two_add]
   -- Now: (1/2) * mDirDeriv (fun y' => h y' + h y') x (W x) where h := g(∇_V Z, Z) y'.
   -- Convert `fun y' => h y' + h y'` to the Pi-add form `h + h` (definitional).
-  have h_pi_add : (fun y' : M => metricInner y'
-        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+  have h_pi_add : (fun y' : M => g.metricInner y'
+        ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
         (Z y')
-      + metricInner y'
-        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+      + g.metricInner y'
+        ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
         (Z y'))
-      = (fun y' : M => metricInner y'
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+      = (fun y' : M => g.metricInner y'
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
           (Z y'))
-        + (fun y' : M => metricInner y'
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+        + (fun y' : M => g.metricInner y'
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
           (Z y')) := rfl
   rw [h_pi_add]
   -- `mfderiv (f + g) x v = mfderiv f x v + mfderiv g x v`.
   -- Compute the continuous linear map add via `mfderiv_add` then evaluate at `W.toFun x`.
   have h_clm_add :
-      mfderiv I 𝓘(ℝ, ℝ) ((fun y' : M => metricInner y'
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+      mfderiv I 𝓘(ℝ, ℝ) ((fun y' : M => g.metricInner y'
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
           (Z y'))
-        + (fun y' : M => metricInner y'
-            ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+        + (fun y' : M => g.metricInner y'
+            ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
             (Z y'))) x
-        = mfderiv I 𝓘(ℝ, ℝ) (fun y' : M => metricInner y'
-            ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+        = mfderiv I 𝓘(ℝ, ℝ) (fun y' : M => g.metricInner y'
+            ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
             (Z y')) x
-          + mfderiv I 𝓘(ℝ, ℝ) (fun y' : M => metricInner y'
-              ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+          + mfderiv I 𝓘(ℝ, ℝ) (fun y' : M => g.metricInner y'
+              ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
               (Z y')) x :=
     mfderiv_add h_inner_mdiff h_inner_mdiff
   -- Apply both sides to (W.toFun x) and use continuous linear map-add evaluation.
-  have h_val_add : mDirDeriv ((fun y' : M => metricInner y'
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+  have h_val_add : mDirDeriv ((fun y' : M => g.metricInner y'
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
           (Z y'))
-        + (fun y' : M => metricInner y'
-            ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+        + (fun y' : M => g.metricInner y'
+            ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
             (Z y'))) x (W.toFun x)
-      = mDirDeriv (fun y' : M => metricInner y'
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+      = mDirDeriv (fun y' : M => g.metricInner y'
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
           (Z y')) x (W.toFun x)
-        + mDirDeriv (fun y' : M => metricInner y'
-            ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+        + mDirDeriv (fun y' : M => g.metricInner y'
+            ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
             (Z y')) x (W.toFun x) := by
     show mfderiv I 𝓘(ℝ, ℝ) _ x (W.toFun x) = _
     rw [h_clm_add]
@@ -404,15 +407,15 @@ private lemma half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv
   rw [h_val_add]
   -- Now: (1/2) * (mDirDeriv h x v + mDirDeriv h x v) = h_compat
   have h_compat_ℝ :
-      mDirDeriv (fun y' : M => metricInner y'
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun y' (V.toFun y'))
+      mDirDeriv (fun y' : M => g.metricInner y'
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun y' (V.toFun y'))
           (Z y')) x (W.toFun x)
-        = metricInner x
-            ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
-              (fun y' => covDeriv HasMetric.metric V.toFun Z.toFun y') x (W.toFun x))
+        = g.metricInner x
+            ((leviCivitaConnection (I := I) (M := M) g).toFun
+              (fun y' => covDeriv g V.toFun Z.toFun y') x (W.toFun x))
             (Z x)
-          + metricInner x (covDeriv HasMetric.metric V.toFun Z.toFun x)
-            ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun x (W.toFun x)) :=
+          + g.metricInner x (covDeriv g V.toFun Z.toFun x)
+            ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun x (W.toFun x)) :=
     h_compat
   rw [h_compat_ℝ]; ring
 
@@ -422,16 +425,17 @@ $X, Y, Z$, with $x$ in the closure of the interior of $\mathrm{range}\,I$
 
 Reference: do Carmo §4 Proposition 2.5(iii). -/
 theorem riemannCurvature_inner_self_zero
+    (g : RiemannianMetric I M)
     [IsManifold I 2 M]
     (X Y Z : SmoothVectorField I M) (x : M)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I))) :
-    metricInner x (Riem(X.toFun, Y.toFun) Z.toFun x) (Z x) = 0 := by
+    g.metricInner x (riemannCurvature g X.toFun Y.toFun Z.toFun x) (Z x) = 0 := by
   classical
   -- Setup: f := g(Z, Z), the self-norm-squared scalar function.
-  set f : M → ℝ := fun y' => metricInner y' (Z y') (Z y') with hf_def
+  set f : M → ℝ := fun y' => g.metricInner y' (Z y') (Z y') with hf_def
   -- f is C∞ globally, hence C² at x.
   have hf_smooth : ContMDiff I 𝓘(ℝ, ℝ) ∞ f := fun y =>
-    hm.metric.metricInner_contMDiffAt (n := ∞) (Z.smooth y) (Z.smooth y)
+    g.metricInner_contMDiffAt (n := ∞) (Z.smooth y) (Z.smooth y)
   have hf_2 : ContMDiffAt I 𝓘(ℝ, ℝ) 2 f x :=
     (hf_smooth x).of_le (by
       show ((2 : ℕ∞) : ℕ∞ω) ≤ ∞
@@ -440,10 +444,10 @@ theorem riemannCurvature_inner_self_zero
   have hXY_br : TangentSmoothAt (mlieBracket I X.toFun Y.toFun) x :=
     mlieBracket_tangentSmoothAt X.smooth Y.smooth
   -- Equations (A) and (B): iterated metric-compat at x.
-  have hA := half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv X Y Z x  -- (V=X, W=Y)
-  have hB := half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv Y X Z x  -- (V=Y, W=X)
+  have hA := half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv g X Y Z x  -- (V=X, W=Y)
+  have hB := half_mDirDeriv_iterate_eq_metricInner_iterCovDeriv g Y X Z x  -- (V=Y, W=X)
   -- Equation (C): metric-compat at x for V = [X, Y].
-  have hC := mDirDeriv_self_eq_two_metricInner_leviCivita_self
+  have hC := mDirDeriv_self_eq_two_metricInner_leviCivita_self g
     (mlieBracket I X.toFun Y.toFun) Z x hXY_br
   -- Hessian–Lie identity at x: X(Y(f))(x) - Y(X(f))(x) = mfderiv f x ([X,Y](x))
   have hX1 : ContMDiffAt I (I.prod 𝓘(ℝ, E)) 1
@@ -461,33 +465,33 @@ theorem riemannCurvature_inner_self_zero
       = mDirDeriv f x (mlieBracket I X.toFun Y.toFun x) :=
     mfderiv_iterate_sub_eq_mlieBracket_apply f X.toFun Y.toFun x h_interior hf_2 hX1 hY1
   -- Inner product cross-cancel: g(∇_X Z, ∇_Y Z) = g(∇_Y Z, ∇_X Z).
-  have h_inner_comm : metricInner x (covDeriv HasMetric.metric X.toFun Z.toFun x)
-        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun x (Y.toFun x))
-      = metricInner x (covDeriv HasMetric.metric Y.toFun Z.toFun x)
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun x (X.toFun x)) := by
-    show metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun x (X.toFun x))
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun x (Y.toFun x))
-      = metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun x (Y.toFun x))
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun x (X.toFun x))
-    exact metricInner_comm x _ _
-  -- Expand R via riemannCurvature_commutator_form HasMetric.metric + metricInner_sub_left twice.
-  show metricInner x (riemannCurvature HasMetric.metric X.toFun Y.toFun Z.toFun x) (Z x) = 0
+  have h_inner_comm : g.metricInner x (covDeriv g X.toFun Z.toFun x)
+        ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun x (Y.toFun x))
+      = g.metricInner x (covDeriv g Y.toFun Z.toFun x)
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun x (X.toFun x)) := by
+    show g.metricInner x ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun x (X.toFun x))
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun x (Y.toFun x))
+      = g.metricInner x ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun x (Y.toFun x))
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun x (X.toFun x))
+    exact g.metricInner_comm x _ _
+  -- Expand R via riemannCurvature_commutator_form g + g.metricInner_sub_left twice.
+  show g.metricInner x (riemannCurvature g X.toFun Y.toFun Z.toFun x) (Z x) = 0
   rw [riemannCurvature_commutator_form]
   -- Goal: g(∇_X ∇_Y Z - ∇_Y ∇_X Z - ∇_{[X,Y]} Z, Z) x = 0
-  rw [show metricInner x (covDeriv HasMetric.metric X.toFun (fun y => covDeriv HasMetric.metric Y.toFun Z.toFun y) x
-        - covDeriv HasMetric.metric Y.toFun (fun y => covDeriv HasMetric.metric X.toFun Z.toFun y) x
-        - covDeriv HasMetric.metric (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x) (Z x)
-      = metricInner x (covDeriv HasMetric.metric X.toFun (fun y => covDeriv HasMetric.metric Y.toFun Z.toFun y) x) (Z x)
-        - metricInner x (covDeriv HasMetric.metric Y.toFun (fun y => covDeriv HasMetric.metric X.toFun Z.toFun y) x) (Z x)
-        - metricInner x (covDeriv HasMetric.metric (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x) (Z x)
+  rw [show g.metricInner x (covDeriv g X.toFun (fun y => covDeriv g Y.toFun Z.toFun y) x
+        - covDeriv g Y.toFun (fun y => covDeriv g X.toFun Z.toFun y) x
+        - covDeriv g (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x) (Z x)
+      = g.metricInner x (covDeriv g X.toFun (fun y => covDeriv g Y.toFun Z.toFun y) x) (Z x)
+        - g.metricInner x (covDeriv g Y.toFun (fun y => covDeriv g X.toFun Z.toFun y) x) (Z x)
+        - g.metricInner x (covDeriv g (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x) (Z x)
       from by
-    rw [show ((covDeriv HasMetric.metric X.toFun (fun y => covDeriv HasMetric.metric Y.toFun Z.toFun y) x
-          - covDeriv HasMetric.metric Y.toFun (fun y => covDeriv HasMetric.metric X.toFun Z.toFun y) x
-          - covDeriv HasMetric.metric (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x : TangentSpace I x))
-        = (covDeriv HasMetric.metric X.toFun (fun y => covDeriv HasMetric.metric Y.toFun Z.toFun y) x
-          - covDeriv HasMetric.metric Y.toFun (fun y => covDeriv HasMetric.metric X.toFun Z.toFun y) x)
-          - covDeriv HasMetric.metric (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x from rfl,
-      metricInner_sub_left, metricInner_sub_left]]
+    rw [show ((covDeriv g X.toFun (fun y => covDeriv g Y.toFun Z.toFun y) x
+          - covDeriv g Y.toFun (fun y => covDeriv g X.toFun Z.toFun y) x
+          - covDeriv g (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x : TangentSpace I x))
+        = (covDeriv g X.toFun (fun y => covDeriv g Y.toFun Z.toFun y) x
+          - covDeriv g Y.toFun (fun y => covDeriv g X.toFun Z.toFun y) x)
+          - covDeriv g (VectorField.mlieBracket I X.toFun Y.toFun) Z.toFun x from rfl,
+      g.metricInner_sub_left, g.metricInner_sub_left]]
   -- Now: g(∇_X ∇_Y Z, Z) - g(∇_Y ∇_X Z, Z) - g(∇_{[X,Y]} Z, Z) = 0
   -- From hB (V=Y, W=X): (1/2) X(Y(f))(x) = g(∇_X ∇_Y Z, Z) + g(∇_Y Z, ∇_X Z)
   --                    ⇒ g(∇_X ∇_Y Z, Z) = (1/2) X(Y(f))(x) - g(∇_Y Z, ∇_X Z)
@@ -495,15 +499,15 @@ theorem riemannCurvature_inner_self_zero
   -- From hC: 2 g(∇_{[X,Y]} Z, Z) = D_{[X,Y]} f(x)
   --        ⇒ g(∇_{[X,Y]} Z, Z) = (1/2) D_{[X,Y]} f(x) = (1/2) mDirDeriv f x ([X,Y] x)
   -- Combine: difference = (1/2) [X(Y(f)) - Y(X(f)) - [X,Y](f)] - inner cross-cancel = 0.
-  -- Show all four covDeriv HasMetric.metric terms are def-equal to LC.toFun forms:
-  show metricInner x
-        ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
-          (fun y => covDeriv HasMetric.metric Y.toFun Z.toFun y) x (X.toFun x)) (Z x)
-      - metricInner x
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun
-            (fun y => covDeriv HasMetric.metric X.toFun Z.toFun y) x (Y.toFun x)) (Z x)
-      - metricInner x
-          ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Z.toFun x
+  -- Show all four covDeriv g terms are def-equal to LC.toFun forms:
+  show g.metricInner x
+        ((leviCivitaConnection (I := I) (M := M) g).toFun
+          (fun y => covDeriv g Y.toFun Z.toFun y) x (X.toFun x)) (Z x)
+      - g.metricInner x
+          ((leviCivitaConnection (I := I) (M := M) g).toFun
+            (fun y => covDeriv g X.toFun Z.toFun y) x (Y.toFun x)) (Z x)
+      - g.metricInner x
+          ((leviCivitaConnection (I := I) (M := M) g).toFun Z.toFun x
             (VectorField.mlieBracket I X.toFun Y.toFun x)) (Z x)
       = 0
   -- Substitute via hA, hB, hC, hHL.
@@ -589,16 +593,16 @@ theorem riemannCurvature_metric_skew
     metricInner x (Riem(X.toFun, Y.toFun) Z.toFun x) (W x)
       + metricInner x (Riem(X.toFun, Y.toFun) W.toFun x) (Z x) = 0 := by
   -- Diagonal-zero applied to U = Z+W, Z, W.
-  have h_ZW := riemannCurvature_inner_self_zero X Y (Z + W) x h_interior
-  have h_Z := riemannCurvature_inner_self_zero X Y Z x h_interior
-  have h_W := riemannCurvature_inner_self_zero X Y W x h_interior
+  have h_ZW := riemannCurvature_inner_self_zero HasMetric.metric X Y (Z + W) x h_interior
+  have h_Z := riemannCurvature_inner_self_zero HasMetric.metric X Y Z x h_interior
+  have h_W := riemannCurvature_inner_self_zero HasMetric.metric X Y W x h_interior
   -- Additivity of R in 3rd slot.
   have h_add := riemannCurvature_add_third HasMetric.metric X Y Z W x
   -- (Z+W) x = Z x + W x.
   have h_ZW_x : (Z + W) x = Z x + W x := rfl
   -- Expand h_ZW via h_add and h_ZW_x and bilinearity of metricInner.
-  rw [h_add, h_ZW_x, metricInner_add_left, metricInner_add_right,
-      metricInner_add_right] at h_ZW
+  rw [h_add, h_ZW_x, HasMetric.metric.metricInner_add_left, HasMetric.metric.metricInner_add_right,
+      HasMetric.metric.metricInner_add_right] at h_ZW
   -- h_ZW : g(R Z, Z) + g(R Z, W) + (g(R W, Z) + g(R W, W)) = 0
   linarith
 
@@ -629,7 +633,7 @@ theorem riemannCurvature_pair_symm
         + metricInner x (Riem(B, C) A x) (D x)
         + metricInner x (Riem(C, A) B x) (D x) = 0 := by
     intro A B C D
-    have h := bianchi_first A B C x
+    have h := bianchi_first HasMetric.metric A B C x
     have : metricInner x
               (Riem(A, B) C x + Riem(B, C) A x + Riem(C, A) B x) (D x)
             = metricInner x (0 : TangentSpace I x) (D x) := by rw [h]
@@ -705,35 +709,30 @@ together with first-pair antisymmetry of $R$ rearranges to the form needed
 for the Ricci-symmetry trace argument. -/
 private lemma riemannCurvature_const_first_swap_eq_neg
     [IsManifold I 2 M]
+    (g : RiemannianMetric I M)
     (v : E) (X Y : SmoothVectorField I M) (x : M) :
-    riemannCurvature HasMetric.metric (fun _ : M => v) X.toFun Y.toFun x
-        - riemannCurvature HasMetric.metric (fun _ : M => v) Y.toFun X.toFun x
-      = -riemannCurvature HasMetric.metric X.toFun Y.toFun (fun _ : M => v) x := by
+    riemannCurvature g (fun _ : M => v) X.toFun Y.toFun x
+        - riemannCurvature g (fun _ : M => v) Y.toFun X.toFun x
+      = -riemannCurvature g X.toFun Y.toFun (fun _ : M => v) x := by
   classical
   set V : SmoothVectorField I M := SmoothVectorField.const (I := I) (M := M) v with hV_def
-  -- Bianchi I with (X', Y', Z') = (V, X, Y). Use the unfolded `V.toFun = fun _ => v`
-  -- form so the rewrite by `h_antisym` (using the `fun _ => v` shape) fires.
-  have h_bianchi : riemannCurvature HasMetric.metric (fun _ : M => v) X.toFun Y.toFun x
-        + riemannCurvature HasMetric.metric X.toFun Y.toFun (fun _ : M => v) x
-        + riemannCurvature HasMetric.metric Y.toFun (fun _ : M => v) X.toFun x = 0 :=
-    bianchi_first V X Y x
-  -- First-pair antisymmetry on the 3rd Bianchi summand.
+  have h_bianchi : riemannCurvature g (fun _ : M => v) X.toFun Y.toFun x
+        + riemannCurvature g X.toFun Y.toFun (fun _ : M => v) x
+        + riemannCurvature g Y.toFun (fun _ : M => v) X.toFun x = 0 :=
+    bianchi_first g V X Y x
   have h_antisym :
-      riemannCurvature HasMetric.metric Y.toFun (fun _ : M => v) X.toFun x
-        = -riemannCurvature HasMetric.metric (fun _ : M => v) Y.toFun X.toFun x :=
-    riemannCurvature_antisymm HasMetric.metric Y.toFun (fun _ : M => v) X.toFun x
+      riemannCurvature g Y.toFun (fun _ : M => v) X.toFun x
+        = -riemannCurvature g (fun _ : M => v) Y.toFun X.toFun x :=
+    riemannCurvature_antisymm g Y.toFun (fun _ : M => v) X.toFun x
   rw [h_antisym] at h_bianchi
-  -- h_bianchi : R(V,X) Y + R(X,Y) V + - R(V,Y) X = 0
-  -- Goal: R(V,X) Y - R(V,Y) X = -R(X,Y) V  ⇔  (R(V,X) Y - R(V,Y) X) + R(X,Y) V = 0.
   apply eq_neg_of_add_eq_zero_left
-  -- Rearrange h_bianchi via `abel`.
-  rw [show (riemannCurvature HasMetric.metric (fun _ : M => v) X.toFun Y.toFun x
-              - riemannCurvature HasMetric.metric (fun _ : M => v) Y.toFun X.toFun x
-            + riemannCurvature HasMetric.metric X.toFun Y.toFun (fun _ : M => v) x
+  rw [show (riemannCurvature g (fun _ : M => v) X.toFun Y.toFun x
+              - riemannCurvature g (fun _ : M => v) Y.toFun X.toFun x
+            + riemannCurvature g X.toFun Y.toFun (fun _ : M => v) x
             : TangentSpace I x)
-        = riemannCurvature HasMetric.metric (fun _ : M => v) X.toFun Y.toFun x
-            + riemannCurvature HasMetric.metric X.toFun Y.toFun (fun _ : M => v) x
-            + -riemannCurvature HasMetric.metric (fun _ : M => v) Y.toFun X.toFun x from by abel]
+        = riemannCurvature g (fun _ : M => v) X.toFun Y.toFun x
+            + riemannCurvature g X.toFun Y.toFun (fun _ : M => v) x
+            + -riemannCurvature g (fun _ : M => v) Y.toFun X.toFun x from by abel]
   exact h_bianchi
 
 /-- **Math.** $\mathrm{Ric}(X, Y) = \mathrm{Ric}(Y, X)$.
@@ -771,18 +770,16 @@ theorem ricci_symm
           (curvatureEndo (HasMetric.metric) Y X x) = _
     exact LinearMap.trace_eq_sum_inner _ b
   rw [h_RXY, h_RYX]
-  -- Per i: the two inner products are equal (their difference vanishes
-  -- by const-swap Bianchi + diagonal-zero).
   refine Finset.sum_congr rfl (fun i _ => ?_)
   rw [← sub_eq_zero, ← inner_sub_right,
-      riemannCurvature_const_first_swap_eq_neg (I := I) (M := M) (b i : E) X Y x]
+      riemannCurvature_const_first_swap_eq_neg (I := I) (M := M) HasMetric.metric (b i : E) X Y x]
   -- Goal: ⟪b i, -R(X, Y) (const b i) x⟫_ℝ = 0
   rw [inner_neg_right, neg_eq_zero]
   -- Goal: ⟪b i, R(X, Y) (const b i) x⟫_ℝ = 0
   -- Use real_inner_comm + riemannCurvature_inner_self_zero (with Z = cF[b i]).
   rw [real_inner_comm]
-  -- Goal: ⟪R(X, Y) (const b i) x, b i⟫_ℝ = 0 (def-eq metricInner via hm.metric).
-  exact riemannCurvature_inner_self_zero X Y
+  -- Goal: ⟪R(X, Y) (const b i) x, b i⟫_ℝ = 0 (def-eq g.metricInner via g).
+  exact riemannCurvature_inner_self_zero HasMetric.metric X Y
     (SmoothVectorField.const (I := I) (M := M) (b i : E)) x h_interior
 
 
@@ -1011,7 +1008,7 @@ theorem IsKilling.second_covDeriv_eq_curvature
     simpa [A, C] using h
   have h_curv : C Y Z W - C Z W Y + C W Y Z
       = 2 * metricInner x (Riem(Y, X) Z x) (W x) := by
-    have h_bianchi := bianchi_first X W Y x
+    have h_bianchi := bianchi_first HasMetric.metric X W Y x
     have h_inner :
         metricInner x (Riem(X, W) Y x + Riem(W, Y) X x + Riem(Y, X) W x) (Z x)
           = 0 := by
