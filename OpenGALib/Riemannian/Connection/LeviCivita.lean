@@ -53,8 +53,8 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
 
 -- Bundle ↔ function-form / componentwise continuous linear map / mlieBracket smoothness
 -- helpers live in `Connection/TangentHelpers.lean` (Foundation module).
--- Smoothness of `metricInner` on bundle sections lives in `Manifold.lean`
--- as the public `Riemannian.metricInner_contMDiff` (parametric over `n`).
+-- Smoothness of `g.metricInner` on bundle sections lives in `Manifold.lean`
+-- as the public `Riemannian.g.metricInner_contMDiff` (parametric over `n`).
 
 /-! ## from `Connection.lean` (LeviCivita section) -/
 
@@ -82,8 +82,8 @@ feed the construction of `leviCivitaConnection` below.
   extends the pointwise Koszul value for smooth inputs. Construction:
   `TensorialAt.mkHom` over `koszulCovDerivAux` (smoothness-erased
   variant), with tensoriality via Riesz uniqueness against
-  `metricInner_eq_iff_eq`. Real proof, no `sorry`.
-* `koszul_antisymm` → torsion-free via `metricInner_eq_iff_eq` +
+  `g.metricInner_eq_iff_eq`. Real proof, no `sorry`.
+* `koszul_antisymm` → torsion-free via `g.metricInner_eq_iff_eq` +
   `koszulCovDeriv_inner_eq` + Mathlib's `FiberBundle.extend`.
 * `koszul_metric_compat_sum` → metric-compatibility for smooth vector
   fields. -/
@@ -93,8 +93,8 @@ feed the construction of `leviCivitaConnection` below.
 Build the `CovariantDerivative` via the smoothness-erased aux and its
 tensoriality from `Connection/CovDerivSmoothness.lean`:
 
-1. `koszulCovDerivAux hm.metric Y x hY` — smoothness-erased function `(X) ↦ ∇_X Y(x)`,
-   defined as `koszulCovDeriv hm.metric X Y x hX hY` for smooth `X` and `0` otherwise.
+1. `koszulCovDerivAux g Y x hY` — smoothness-erased function `(X) ↦ ∇_X Y(x)`,
+   defined as `koszulCovDeriv g X Y x hX hY` for smooth `X` and `0` otherwise.
 2. `koszulCovDerivAux_tensorialAt` — tensorality in `X` (the
    `C^∞`-linearity of $\nabla_\cdot Y$ at $x$), via `koszul_smul_left` /
    `koszul_add_left` + Riesz uniqueness.
@@ -112,19 +112,19 @@ via Riesz uniqueness; `IsCovariantDerivativeOn.leibniz` from
 `koszul_smul_middle` (the $2 \cdot X(g) \cdot \langle Y, Z\rangle$ term
 matches `(extDerivFun g x).smulRight (Y x)` after the $\tfrac12$ factor
 cancels). -/
-private theorem koszulLeviCivita_exists :
+private theorem koszulLeviCivita_exists (g : RiemannianMetric I M) :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       ∀ (X Y : VectorFieldSection I M) (x : M)
         (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x),
-        cov.toFun Y x (X x) = koszulCovDeriv hm.metric X Y x hX hY := by
+        cov.toFun Y x (X x) = koszulCovDeriv g X Y x hX hY := by
   classical
   -- Step 1: build cov.toFun Y x as the mkHom continuous linear map for smooth Y, else 0.
   let toFun : (VectorFieldSection I M) →
       (Π y : M, TangentSpace I y →L[ℝ] TangentSpace I y) :=
     fun Y x =>
       if hY : TangentSmoothAt Y x then
-        TensorialAt.mkHom (koszulCovDerivAux hm.metric Y x hY) x
-          (koszulCovDerivAux_tensorialAt hm.metric Y x hY)
+        TensorialAt.mkHom (koszulCovDerivAux g Y x hY) x
+          (koszulCovDerivAux_tensorialAt g Y x hY)
       else 0
   -- Step 2: prove IsCovariantDerivativeOn for `toFun`.
   refine ⟨⟨toFun, ?_⟩, ?_⟩
@@ -147,36 +147,36 @@ private theorem koszulLeviCivita_exists :
       rw [TensorialAt.mkHom_apply _ hV_smooth,
           TensorialAt.mkHom_apply _ hV_smooth,
           TensorialAt.mkHom_apply _ hV_smooth]
-      -- Goal: koszulCovDerivAux hm.metric (Y₁+Y₂) x h_sum V
-      --     = koszulCovDerivAux hm.metric Y₁ x hY₁ V + koszulCovDerivAux hm.metric Y₂ x hY₂ V
+      -- Goal: koszulCovDerivAux g (Y₁+Y₂) x h_sum V
+      --     = koszulCovDerivAux g Y₁ x hY₁ V + koszulCovDerivAux g Y₂ x hY₂ V
       simp only [koszulCovDerivAux, dif_pos hV_smooth]
-      -- Goal: koszulCovDeriv hm.metric V (Y₁+Y₂) x ... = koszulCovDeriv hm.metric V Y₁ x ... + koszulCovDeriv hm.metric V Y₂ x ...
-      apply (metricInner_eq_iff_eq x _ _).mp
+      -- Goal: koszulCovDeriv g V (Y₁+Y₂) x ... = koszulCovDeriv g V Y₁ x ... + koszulCovDeriv g V Y₂ x ...
+      apply (g.metricInner_eq_iff_eq x _ _).mp
       intro Z₀
       set Z : VectorFieldSection I M := FiberBundle.extend E Z₀
       have hZ_smooth : TangentSmoothAt Z x :=
         FiberBundle.mdifferentiableAt_extend I E Z₀
       have hZx : Z x = Z₀ := FiberBundle.extend_apply_self _ _
-      have h_Y₁Z := metricInner_mdifferentiableAt hY₁ hZ_smooth
-      have h_Y₂Z := metricInner_mdifferentiableAt hY₂ hZ_smooth
-      have h_VY₁ := metricInner_mdifferentiableAt hV_smooth hY₁
-      have h_VY₂ := metricInner_mdifferentiableAt hV_smooth hY₂
+      have h_Y₁Z := g.metricInner_mdifferentiableAt hY₁ hZ_smooth
+      have h_Y₂Z := g.metricInner_mdifferentiableAt hY₂ hZ_smooth
+      have h_VY₁ := g.metricInner_mdifferentiableAt hV_smooth hY₁
+      have h_VY₂ := g.metricInner_mdifferentiableAt hV_smooth hY₂
       rw [← hZx]
-      simp only [koszulCovDeriv_inner_eq hm.metric _ _ _ x hV_smooth h_sum hZ_smooth,
-          koszul_add_middle hm.metric V Y₁ Y₂ Z x h_Y₁Z h_Y₂Z h_VY₁ h_VY₂ hY₁ hY₂,
-          metricInner_add_left,
-          koszulCovDeriv_inner_eq hm.metric V Y₁ Z x hV_smooth hY₁ hZ_smooth,
-          koszulCovDeriv_inner_eq hm.metric V Y₂ Z x hV_smooth hY₂ hZ_smooth]
+      simp only [koszulCovDeriv_inner_eq g _ _ _ x hV_smooth h_sum hZ_smooth,
+          koszul_add_middle g V Y₁ Y₂ Z x h_Y₁Z h_Y₂Z h_VY₁ h_VY₂ hY₁ hY₂,
+          g.metricInner_add_left,
+          koszulCovDeriv_inner_eq g V Y₁ Z x hV_smooth hY₁ hZ_smooth,
+          koszulCovDeriv_inner_eq g V Y₂ Z x hV_smooth hY₂ hZ_smooth]
       ring
     case leibniz =>
-      -- toFun (g • Y) x = g x • toFun Y x + (extDerivFun g x).smulRight (Y x)
-      intro Y g x hY hg _
+      -- toFun (f • Y) x = f x • toFun Y x + (extDerivFun f x).smulRight (Y x)
+      intro Y f x hY hf _
       have hY' : TangentSmoothAt Y x := hY
-      have h_gY_lambda : TangentSmoothAt (fun y => g y • Y y) x :=
-        TangentSmoothAt.smul hg hY'
-      -- Note: g • Y = fun y => g y • Y y (Pi-smul, definitionally)
-      have h_gY' : TangentSmoothAt (g • Y) x := h_gY_lambda
-      simp only [toFun, dif_pos hY', dif_pos h_gY']
+      have h_fY_lambda : TangentSmoothAt (fun y => f y • Y y) x :=
+        TangentSmoothAt.smul hf hY'
+      -- Note: f • Y = fun y => f y • Y y (Pi-smul, definitionally)
+      have h_fY' : TangentSmoothAt (f • Y) x := h_fY_lambda
+      simp only [toFun, dif_pos hY', dif_pos h_fY']
       ext v
       set V : VectorFieldSection I M := FiberBundle.extend E v
       have hV_smooth : TangentSmoothAt V x :=
@@ -187,50 +187,50 @@ private theorem koszulLeviCivita_exists :
       rw [TensorialAt.mkHom_apply _ hV_smooth,
           TensorialAt.mkHom_apply _ hV_smooth]
       simp only [koszulCovDerivAux, dif_pos hV_smooth]
-      -- Goal: koszulCovDeriv hm.metric V (g•Y) x ... = g x • koszulCovDeriv hm.metric V Y x ... +
-      --       (extDerivFun g x).smulRight (Y x) v
-      apply (metricInner_eq_iff_eq x _ _).mp
+      -- Goal: koszulCovDeriv g V (f•Y) x ... = f x • koszulCovDeriv g V Y x ... +
+      --       (extDerivFun f x).smulRight (Y x) v
+      apply (g.metricInner_eq_iff_eq x _ _).mp
       intro Z₀
       set Z : VectorFieldSection I M := FiberBundle.extend E Z₀
       have hZ_smooth : TangentSmoothAt Z x :=
         FiberBundle.mdifferentiableAt_extend I E Z₀
       have hZx : Z x = Z₀ := FiberBundle.extend_apply_self _ _
-      have h_YZ := metricInner_mdifferentiableAt hY hZ_smooth
-      have h_VY := metricInner_mdifferentiableAt hV_smooth hY
+      have h_YZ := g.metricInner_mdifferentiableAt hY hZ_smooth
+      have h_VY := g.metricInner_mdifferentiableAt hV_smooth hY
       rw [← hZx]
-      simp only [koszulCovDeriv_inner_eq hm.metric _ _ _ x hV_smooth h_gY' hZ_smooth]
-      -- LHS = (1/2) * koszulFunctional hm.metric V (g • Y) Z x
+      simp only [koszulCovDeriv_inner_eq g _ _ _ x hV_smooth h_fY' hZ_smooth]
+      -- LHS = (1/2) * koszulFunctional g V (f • Y) Z x
       -- by koszul_smul_middle:
-      --     = (1/2) * (g x * K V Y Z x + 2 * directionalDeriv g x (V x) * ⟨Y x, Z x⟩)
-      rw [show (g • Y : VectorFieldSection I M) = fun y => g y • Y y from rfl]
-      rw [koszul_smul_middle hm.metric V Y Z g x hg h_YZ h_VY hY]
-      -- RHS expands via koszulCovDeriv_inner_eq hm.metric V Y Z and metricInner_add/smul.
-      simp only [metricInner_add_left, metricInner_smul_left,
-          koszulCovDeriv_inner_eq hm.metric V Y Z x hV_smooth hY hZ_smooth]
+      --     = (1/2) * (f x * K V Y Z x + 2 * directionalDeriv f x (V x) * ⟨Y x, Z x⟩)
+      rw [show (f • Y : VectorFieldSection I M) = fun y => f y • Y y from rfl]
+      rw [koszul_smul_middle g V Y Z f x hf h_YZ h_VY hY]
+      -- RHS expands via koszulCovDeriv_inner_eq g V Y Z and g.metricInner_add/smul.
+      simp only [g.metricInner_add_left, g.metricInner_smul_left,
+          koszulCovDeriv_inner_eq g V Y Z x hV_smooth hY hZ_smooth]
       -- Remaining goal (modulo extDerivFun = directionalDeriv):
-      -- (1/2) * (g x * K V Y Z + 2 * dDeriv g x (V x) * ⟨Y x, Z x⟩)
-      --   = g x * (1/2) * K V Y Z + (extDerivFun g x).smulRight (Y x) v • Z x
+      -- (1/2) * (f x * K V Y Z + 2 * dDeriv f x (V x) * ⟨Y x, Z x⟩)
+      --   = f x * (1/2) * K V Y Z + (extDerivFun f x).smulRight (Y x) v • Z x
       show (1 / 2 : ℝ) *
-          (g x * koszulFunctional hm.metric V Y Z x
-            + 2 * directionalDeriv g x (V x) * metricInner x (Y x) (Z x))
-          = g x *
-              ((1 / 2 : ℝ) * koszulFunctional hm.metric V Y Z x)
-            + metricInner x ((extDerivFun g x).smulRight (Y x) (V x)) (Z x)
+          (f x * koszulFunctional g V Y Z x
+            + 2 * directionalDeriv f x (V x) * g.metricInner x (Y x) (Z x))
+          = f x *
+              ((1 / 2 : ℝ) * koszulFunctional g V Y Z x)
+            + g.metricInner x ((extDerivFun f x).smulRight (Y x) (V x)) (Z x)
       -- Unfold extDerivFun and smulRight at (V x).
       have h_smulRight :
-          ((extDerivFun (I := I) g x).smulRight (Y x) (V x) : TangentSpace I x)
-            = directionalDeriv g x (V x) • Y x := by
-        show (extDerivFun (I := I) g x (V x)) • Y x
-            = directionalDeriv g x (V x) • Y x
+          ((extDerivFun (I := I) f x).smulRight (Y x) (V x) : TangentSpace I x)
+            = directionalDeriv f x (V x) • Y x := by
+        show (extDerivFun (I := I) f x (V x)) • Y x
+            = directionalDeriv f x (V x) • Y x
         rfl
-      rw [h_smulRight, metricInner_smul_left]
+      rw [h_smulRight, g.metricInner_smul_left]
       ring
-  -- Step 3: prove the main equation cov.toFun Y x (X x) = koszulCovDeriv hm.metric X Y x hX hY.
+  -- Step 3: prove the main equation cov.toFun Y x (X x) = koszulCovDeriv g X Y x hX hY.
   · intro X Y x hX hY
-    show toFun Y x (X x) = koszulCovDeriv hm.metric X Y x hX hY
+    show toFun Y x (X x) = koszulCovDeriv g X Y x hX hY
     simp only [toFun, dif_pos hY]
     rw [TensorialAt.mkHom_apply _ hX]
-    -- Goal: koszulCovDerivAux hm.metric Y x hY X = koszulCovDeriv hm.metric X Y x hX hY
+    -- Goal: koszulCovDerivAux g Y x hY X = koszulCovDeriv g X Y x hX hY
     simp only [koszulCovDerivAux, dif_pos hX]
 
 /-- **Math.** **Existence theorem for the Levi-Civita connection.**
@@ -245,63 +245,63 @@ required by downstream curvature identities (Bochner stack).
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6 (existence + uniqueness
 via the Koszul formula); Lee 2018 Prop. 4.26 (smoothness on smooth
 manifolds). -/
-theorem leviCivitaConnection_exists :
+theorem leviCivitaConnection_exists (g : RiemannianMetric I M) :
     ∃ cov : CovariantDerivative I E (fun x : M => TangentSpace I x),
       cov.torsion = 0 ∧
       (∀ (X Y Z : VectorFieldSection I M) (x : M)
         (_hX : TangentSmoothAt X x) (_hY : TangentSmoothAt Y x)
         (_hZ : TangentSmoothAt Z x),
-        mfderiv I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x (X x) =
-          metricInner x (cov.toFun Y x (X x)) (Z x) +
-          metricInner x (Y x) (cov.toFun Z x (X x))) ∧
+        mfderiv I 𝓘(ℝ, ℝ) (fun y => g.metricInner y (Y y) (Z y)) x (X x) =
+          g.metricInner x (cov.toFun Y x (X x)) (Z x) +
+          g.metricInner x (Y x) (cov.toFun Z x (X x))) ∧
       (∀ (X Y : SmoothVectorField I M) (x : M),
         TangentSmoothAt
           (fun y : M => cov.toFun Y.toFun y (X.toFun y)) x) := by
-  obtain ⟨cov, hcov⟩ := koszulLeviCivita_exists (I := I) (M := M)
+  obtain ⟨cov, hcov⟩ := koszulLeviCivita_exists (I := I) (M := M) g
   refine ⟨cov, ?_, ?_, ?_⟩
   · -- Torsion = 0
     rw [CovariantDerivative.torsion_eq_zero_iff]
     intro X Y x hX hY
     rw [hcov X Y x hX hY, hcov Y X x hY hX]
-    apply (metricInner_eq_iff_eq x _ _).mp
+    apply (g.metricInner_eq_iff_eq x _ _).mp
     intro Z₀
     set Z : VectorFieldSection I M := FiberBundle.extend E Z₀ with hZ_def
     have hZx : Z x = Z₀ := FiberBundle.extend_apply_self _ _
     have hZ_smooth : TangentSmoothAt Z x :=
       FiberBundle.mdifferentiableAt_extend I E Z₀
     rw [← hZx]
-    simp only [metricInner_sub_left,
-        koszulCovDeriv_inner_eq hm.metric X Y Z x hX hY hZ_smooth,
-        koszulCovDeriv_inner_eq hm.metric Y X Z x hY hX hZ_smooth]
-    -- Goal: 1/2 * K X Y Z x - 1/2 * K Y X Z x = metricInner x (mlieBracket I X Y x) (Z x)
-    have h := koszul_antisymm hm.metric X Y Z x
-    -- h: K X Y Z x - K Y X Z x = 2 * metricInner x (mlieBracket I X Y x) (Z x)
+    simp only [g.metricInner_sub_left,
+        koszulCovDeriv_inner_eq g X Y Z x hX hY hZ_smooth,
+        koszulCovDeriv_inner_eq g Y X Z x hY hX hZ_smooth]
+    -- Goal: 1/2 * K X Y Z x - 1/2 * K Y X Z x = g.metricInner x (mlieBracket I X Y x) (Z x)
+    have h := koszul_antisymm g X Y Z x
+    -- h: K X Y Z x - K Y X Z x = 2 * g.metricInner x (mlieBracket I X Y x) (Z x)
     linarith
   · -- Metric-compat for smooth X, Y, Z
     intro X Y Z x hX hY hZ
     rw [hcov X Y x hX hY, hcov X Z x hX hZ]
-    rw [show metricInner x (Y x) (koszulCovDeriv hm.metric X Z x hX hZ) =
-        metricInner x (koszulCovDeriv hm.metric X Z x hX hZ) (Y x) from
-      metricInner_comm x _ _]
-    simp only [koszulCovDeriv_inner_eq hm.metric X Y Z x hX hY hZ,
-        koszulCovDeriv_inner_eq hm.metric X Z Y x hX hZ hY]
-    have hsum := koszul_metric_compat_sum hm.metric X Y Z x
+    rw [show g.metricInner x (Y x) (koszulCovDeriv g X Z x hX hZ) =
+        g.metricInner x (koszulCovDeriv g X Z x hX hZ) (Y x) from
+      g.metricInner_comm x _ _]
+    simp only [koszulCovDeriv_inner_eq g X Y Z x hX hY hZ,
+        koszulCovDeriv_inner_eq g X Z Y x hX hZ hY]
+    have hsum := koszul_metric_compat_sum g X Y Z x
     -- hsum : K X Y Z + K X Z Y = 2 * directionalDeriv ... x (X x)
     -- Convert goal to directionalDeriv form (rfl by def of directionalDeriv).
-    show directionalDeriv (fun y => metricInner y (Y y) (Z y)) x (X x) =
-        (1 / 2) * koszulFunctional hm.metric X Y Z x + (1 / 2) * koszulFunctional hm.metric X Z Y x
+    show directionalDeriv (fun y => g.metricInner y (Y y) (Z y)) x (X x) =
+        (1 / 2) * koszulFunctional g X Y Z x + (1 / 2) * koszulFunctional g X Z Y x
     linarith
   · -- Smoothness clause (smooth-VF direction): reduce via `hcov` eq spec
-    -- to smoothness of `(fun y => koszulCovDeriv hm.metric X.toFun Y.toFun y _ _)`,
+    -- to smoothness of `(fun y => koszulCovDeriv g X.toFun Y.toFun y _ _)`,
     -- then forward to `koszulCovDeriv_smoothVF_smoothAt`.
     intro X Y x
     have h_eq : (fun y : M => cov.toFun Y.toFun y (X.toFun y))
-        = (fun y : M => koszulCovDeriv hm.metric X.toFun Y.toFun y
+        = (fun y : M => koszulCovDeriv g X.toFun Y.toFun y
             (X.smoothAt y) (Y.smoothAt y)) := by
       funext y
       exact hcov X.toFun Y.toFun y (X.smoothAt y) (Y.smoothAt y)
     rw [h_eq]
-    exact koszulCovDeriv_smoothVF_smoothAt hm.metric X Y x
+    exact koszulCovDeriv_smoothVF_smoothAt g X Y x
 
 /-- **Math.** The **Levi-Civita connection** $\nabla$ on the tangent
 bundle of a Riemannian manifold: the unique torsion-free,
@@ -309,23 +309,28 @@ metric-compatible covariant derivative. Real `noncomputable def` via
 `Classical.choose` over `leviCivitaConnection_exists`.
 
 **Ground truth**: do Carmo 1992 §2 (Koszul formula gives uniqueness). -/
-noncomputable def leviCivitaConnection :
+noncomputable def leviCivitaConnection (g : RiemannianMetric I M) :
     CovariantDerivative I E (fun x : M => TangentSpace I x) :=
-  Classical.choose (leviCivitaConnection_exists (I := I) (M := M))
+  Classical.choose (leviCivitaConnection_exists (I := I) (M := M) g)
 
 /-- **Math.** **Covariant derivative of one vector field along another**:
 $(\nabla_X Y)(x) := \nabla\,Y\,x\,(X\,x)$, where $\nabla$ is the
 Levi-Civita connection. Torsion-free and metric-compatible w.r.t.
-`metricInner`.
+`g.metricInner`.
 
 **Ground truth**: do Carmo 1992 §2 Definition 2.1. -/
 noncomputable def covDeriv
+    (g : RiemannianMetric I M)
     (X Y : VectorFieldSection I M) (x : M) :
     TangentSpace I x :=
-  ((leviCivitaConnection (I := I) (M := M)).toFun Y x) (X x)
+  ((leviCivitaConnection (I := I) (M := M) g).toFun Y x) (X x)
 
-/-- **Math.** Notation `∇[X] Y` for `covDeriv X Y`. -/
-scoped[Riemannian] notation:max "∇[" X "] " Y:max => covDeriv X Y
+/-- **Math.** Notation `∇[X] Y` for `covDeriv (HasMetric.metric) X Y`. The
+notation pipes the ambient `[HasMetric I M]` metric so downstream code
+continues to write `∇[X] Y` unchanged during Phase 1 (typeclass retained
+until #19). -/
+scoped[Riemannian] notation:max "∇[" X "] " Y:max =>
+  covDeriv (HasMetric.metric) X Y
 
 /-- **Math.** Notation `⟦X, Y⟧` for the manifold Lie bracket
 `mlieBracket _ X Y` (model `I` inferred from section types). -/
@@ -333,42 +338,46 @@ scoped[Riemannian] notation:max "⟦" X ", " Y "⟧" =>
   VectorField.mlieBracket _ X Y
 
 /-- **Math.** The Levi-Civita connection is torsion-free. -/
-theorem leviCivitaConnection_torsion_zero :
-    (leviCivitaConnection : CovariantDerivative I E
-      (fun x : M => TangentSpace I x)).torsion = 0 :=
-  (Classical.choose_spec leviCivitaConnection_exists).1
+theorem leviCivitaConnection_torsion_zero (g : RiemannianMetric I M) :
+    (leviCivitaConnection (I := I) (M := M) g).torsion = 0 :=
+  (Classical.choose_spec (leviCivitaConnection_exists (I := I) (M := M) g)).1
 
 /-- **Math.** The Levi-Civita connection is **metric-compatible** for
 smooth $X, Y, Z$ at $x$:
 $$\nabla_X \langle Y, Z \rangle (x) =
   \langle \nabla_X Y, Z \rangle (x) + \langle Y, \nabla_X Z \rangle (x).$$
-Metric is the framework-owned `metricInner`. Smoothness hypotheses match
+Metric is the framework-owned `g.metricInner`. Smoothness hypotheses match
 do Carmo 1992 §2 Theorem 3.6. -/
 theorem leviCivitaConnection_metric_compatible
+    (g : RiemannianMetric I M)
     (X Y Z : VectorFieldSection I M) (x : M)
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x)
     (hZ : TangentSmoothAt Z x) :
-    mfderiv I 𝓘(ℝ, ℝ) (fun y => metricInner y (Y y) (Z y)) x (X x) =
-      metricInner x ((∇[X] Y) x) (Z x) + metricInner x (Y x) ((∇[X] Z) x) :=
-  (Classical.choose_spec leviCivitaConnection_exists).2.1 X Y Z x hX hY hZ
+    mfderiv I 𝓘(ℝ, ℝ) (fun y => g.metricInner y (Y y) (Z y)) x (X x) =
+      g.metricInner x (covDeriv g X Y x) (Z x)
+        + g.metricInner x (Y x) (covDeriv g X Z x) :=
+  (Classical.choose_spec (leviCivitaConnection_exists (I := I) (M := M) g)).2.1
+    X Y Z x hX hY hZ
 
 /-- **Math.** Smoothness of the Levi-Civita connection along a smooth
 direction: for `X, Y : SmoothVectorField I M`, the section
 `y ↦ ∇_{X(y)} Y(y)` is smooth at every point. Direct projection from
 the 3rd conjunct of `leviCivitaConnection_exists`. -/
 theorem leviCivitaConnection_smoothAt_smoothVF_dir
+    (g : RiemannianMetric I M)
     (X Y : SmoothVectorField I M) (x : M) :
-    TangentSmoothAt (fun y : M => (∇[X] Y) y) x :=
-  (Classical.choose_spec leviCivitaConnection_exists).2.2 X Y x
+    TangentSmoothAt (fun y : M => covDeriv g X Y y) x :=
+  (Classical.choose_spec (leviCivitaConnection_exists (I := I) (M := M) g)).2.2 X Y x
 
 /-- **Math.** Covariant derivative at a point as a continuous linear map
 in the direction slot: $\nabla\,Y|_x : T_xM \to_L T_xM$,
 $v \mapsto (\nabla_v Y)(x)$. Pointwise linearity in direction lets
 identities involving the direction slot reduce to standard CLM lemmas. -/
 noncomputable def covDerivAt
+    (g : RiemannianMetric I M)
     (Y : VectorFieldSection I M) (x : M) :
     TangentSpace I x →L[ℝ] TangentSpace I x :=
-  (leviCivitaConnection (I := I) (M := M)).toFun Y x
+  (leviCivitaConnection (I := I) (M := M) g).toFun Y x
 
 /-- **Math.** **Riesz formula for the covariant derivative**: for smooth
 $X, Y, Z$,
@@ -376,30 +385,31 @@ $$\langle \nabla_X Y, Z\rangle_g(x) = \tfrac12 K(X, Y; Z)(x).$$
 Cycling metric-compat over $(X, Y, Z)$, $(Y, Z, X)$, $(Z, X, Y)$ and
 substituting torsion-freeness isolates $\langle \nabla_X Y, Z\rangle$. -/
 private theorem covDeriv_inner_eq_half_koszul
+    (g : RiemannianMetric I M)
     (X Y Z : VectorFieldSection I M) (x : M)
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x)
     (hZ : TangentSmoothAt Z x) :
-    metricInner x (covDeriv X Y x) (Z x)
-      = (1/2 : ℝ) * koszulFunctional hm.metric X Y Z x := by
-  -- Notation: write `cov A B := leviCivitaConnection.toFun B x (A x)` (= covDeriv A B x).
+    g.metricInner x (covDeriv g X Y x) (Z x)
+      = (1/2 : ℝ) * koszulFunctional g X Y Z x := by
+  -- Notation: write `cov A B := (leviCivitaConnection g).toFun B x (A x)` (= covDeriv A B x).
   -- We'll identify these via `show` against the unfolded form and use linarith.
   -- Spec from Classical.choose: torsion-free + metric-compat for smooth fields.
   obtain ⟨h_tors, h_compat, _h_smooth⟩ := Classical.choose_spec
-    (leviCivitaConnection_exists (I := I) (M := M))
+    (leviCivitaConnection_exists (I := I) (M := M) g)
   -- Three cyclic metric-compat instances + 3 torsion-free instances.
   -- Wrap each LHS into `directionalDeriv` (= mfderiv) so that all
   -- arithmetic happens uniformly in `ℝ`.
-  have hXY : directionalDeriv (fun y => metricInner y (Y y) (Z y)) x (X x)
-      = metricInner x ((leviCivitaConnection.toFun Y x) (X x)) (Z x)
-        + metricInner x (Y x) ((leviCivitaConnection.toFun Z x) (X x)) :=
+  have hXY : directionalDeriv (fun y => g.metricInner y (Y y) (Z y)) x (X x)
+      = g.metricInner x (((leviCivitaConnection g).toFun Y x) (X x)) (Z x)
+        + g.metricInner x (Y x) (((leviCivitaConnection g).toFun Z x) (X x)) :=
     h_compat X Y Z x hX hY hZ
-  have hYZ : directionalDeriv (fun y => metricInner y (Z y) (X y)) x (Y x)
-      = metricInner x ((leviCivitaConnection.toFun Z x) (Y x)) (X x)
-        + metricInner x (Z x) ((leviCivitaConnection.toFun X x) (Y x)) :=
+  have hYZ : directionalDeriv (fun y => g.metricInner y (Z y) (X y)) x (Y x)
+      = g.metricInner x (((leviCivitaConnection g).toFun Z x) (Y x)) (X x)
+        + g.metricInner x (Z x) (((leviCivitaConnection g).toFun X x) (Y x)) :=
     h_compat Y Z X x hY hZ hX
-  have hZX : directionalDeriv (fun y => metricInner y (X y) (Y y)) x (Z x)
-      = metricInner x ((leviCivitaConnection.toFun X x) (Z x)) (Y x)
-        + metricInner x (X x) ((leviCivitaConnection.toFun Y x) (Z x)) :=
+  have hZX : directionalDeriv (fun y => g.metricInner y (X y) (Y y)) x (Z x)
+      = g.metricInner x (((leviCivitaConnection g).toFun X x) (Z x)) (Y x)
+        + g.metricInner x (X x) (((leviCivitaConnection g).toFun Y x) (Z x)) :=
     h_compat Z X Y x hZ hX hY
   rw [CovariantDerivative.torsion_eq_zero_iff] at h_tors
   have h_torsXY := @h_tors X Y x hX hY
@@ -408,43 +418,43 @@ private theorem covDeriv_inner_eq_half_koszul
   -- Symmetrize the right slot of each metric-compat equation, then convert to
   -- the unfolded `leviCivitaConnection` form so all cov-quantities live in
   -- the same syntactic namespace.
-  rw [metricInner_comm x (Y x)] at hXY
-  rw [metricInner_comm x (Z x)] at hYZ
-  rw [metricInner_comm x (X x)] at hZX
+  rw [g.metricInner_comm x (Y x)] at hXY
+  rw [g.metricInner_comm x (Z x)] at hYZ
+  rw [g.metricInner_comm x (X x)] at hZX
   -- Convert torsion-free identities to inner-product form, in the
   -- `leviCivitaConnection` syntactic form.
   have htXY :
-      metricInner x (leviCivitaConnection.toFun Y x (X x)) (Z x)
-      - metricInner x (leviCivitaConnection.toFun X x (Y x)) (Z x)
-      = metricInner x (mlieBracket I X Y x) (Z x) := by
-    have := congrArg (fun v => metricInner x v (Z x)) h_torsXY
-    simpa [metricInner_sub_left] using this
+      g.metricInner x ((leviCivitaConnection g).toFun Y x (X x)) (Z x)
+      - g.metricInner x ((leviCivitaConnection g).toFun X x (Y x)) (Z x)
+      = g.metricInner x (mlieBracket I X Y x) (Z x) := by
+    have := congrArg (fun v => g.metricInner x v (Z x)) h_torsXY
+    simpa [g.metricInner_sub_left] using this
   have htYZ :
-      metricInner x (leviCivitaConnection.toFun Z x (Y x)) (X x)
-      - metricInner x (leviCivitaConnection.toFun Y x (Z x)) (X x)
-      = metricInner x (mlieBracket I Y Z x) (X x) := by
-    have := congrArg (fun v => metricInner x v (X x)) h_torsYZ
-    simpa [metricInner_sub_left] using this
+      g.metricInner x ((leviCivitaConnection g).toFun Z x (Y x)) (X x)
+      - g.metricInner x ((leviCivitaConnection g).toFun Y x (Z x)) (X x)
+      = g.metricInner x (mlieBracket I Y Z x) (X x) := by
+    have := congrArg (fun v => g.metricInner x v (X x)) h_torsYZ
+    simpa [g.metricInner_sub_left] using this
   have htZX :
-      metricInner x (leviCivitaConnection.toFun X x (Z x)) (Y x)
-      - metricInner x (leviCivitaConnection.toFun Z x (X x)) (Y x)
-      = metricInner x (mlieBracket I Z X x) (Y x) := by
-    have := congrArg (fun v => metricInner x v (Y x)) h_torsZX
-    simpa [metricInner_sub_left] using this
+      g.metricInner x ((leviCivitaConnection g).toFun X x (Z x)) (Y x)
+      - g.metricInner x ((leviCivitaConnection g).toFun Z x (X x)) (Y x)
+      = g.metricInner x (mlieBracket I Z X x) (Y x) := by
+    have := congrArg (fun v => g.metricInner x v (Y x)) h_torsZX
+    simpa [g.metricInner_sub_left] using this
   -- [Z,X] = -[X,Z], so its inner product flips sign.
-  have h_brXZ : metricInner x (mlieBracket I Z X x) (Y x)
-      = -metricInner x (mlieBracket I X Z x) (Y x) := by
+  have h_brXZ : g.metricInner x (mlieBracket I Z X x) (Y x)
+      = -g.metricInner x (mlieBracket I X Z x) (Y x) := by
     rw [show mlieBracket I Z X x = -mlieBracket I X Z x from
-        VectorField.mlieBracket_swap_apply, metricInner_neg_left]
+        VectorField.mlieBracket_swap_apply, g.metricInner_neg_left]
   -- Goal: 2⟨covXY, Z⟩ = K. linarith closes after combining hypotheses linearly.
-  show metricInner x ((leviCivitaConnection.toFun Y x) (X x)) (Z x)
+  show g.metricInner x (((leviCivitaConnection g).toFun Y x) (X x)) (Z x)
     = (1/2 : ℝ) * (
-        directionalDeriv (fun y => metricInner y (Y y) (Z y)) x (X x)
-      + directionalDeriv (fun y => metricInner y (Z y) (X y)) x (Y x)
-      - directionalDeriv (fun y => metricInner y (X y) (Y y)) x (Z x)
-      + metricInner x (mlieBracket I X Y x) (Z x)
-      - metricInner x (mlieBracket I Y Z x) (X x)
-      - metricInner x (mlieBracket I X Z x) (Y x))
+        directionalDeriv (fun y => g.metricInner y (Y y) (Z y)) x (X x)
+      + directionalDeriv (fun y => g.metricInner y (Z y) (X y)) x (Y x)
+      - directionalDeriv (fun y => g.metricInner y (X y) (Y y)) x (Z x)
+      + g.metricInner x (mlieBracket I X Y x) (Z x)
+      - g.metricInner x (mlieBracket I Y Z x) (X x)
+      - g.metricInner x (mlieBracket I X Z x) (Y x))
   linarith [hXY, hYZ, hZX, htXY, htYZ, htZX, h_brXZ]
 
 
@@ -461,18 +471,19 @@ omit [CompleteSpace E] [FiniteDimensional ℝ E] [InnerProductSpace ℝ E]
 /-- **Math.** **Locality of `koszulFunctional` in the middle argument**:
 if $Y_1 =ᶠ[𝓝 x] Y_2$, then $K(X, Y_1; Z)(x) = K(X, Y_2; Z)(x)$. -/
 private theorem koszulFunctional_eventuallyEq_middle
+    (g : RiemannianMetric I M)
     (X Y₁ Y₂ Z : VectorFieldSection I M) (x : M)
     (h : ∀ᶠ y in 𝓝 x, Y₁ y = Y₂ y) :
-    koszulFunctional hm.metric X Y₁ Z x = koszulFunctional hm.metric X Y₂ Z x := by
+    koszulFunctional g X Y₁ Z x = koszulFunctional g X Y₂ Z x := by
   -- Pointwise equality at `x` follows from `EventuallyEq` membership.
   have hx : Y₁ x = Y₂ x := h.self_of_nhds
   -- Function-level eventual equalities for the 3 directionalDeriv arguments.
-  have h_metYZ : (fun y => metricInner y (Y₁ y) (Z y))
-      =ᶠ[𝓝 x] (fun y => metricInner y (Y₂ y) (Z y)) := by
+  have h_metYZ : (fun y => g.metricInner y (Y₁ y) (Z y))
+      =ᶠ[𝓝 x] (fun y => g.metricInner y (Y₂ y) (Z y)) := by
     filter_upwards [h] with y hy
     rw [hy]
-  have h_metXY : (fun y => metricInner y (X y) (Y₁ y))
-      =ᶠ[𝓝 x] (fun y => metricInner y (X y) (Y₂ y)) := by
+  have h_metXY : (fun y => g.metricInner y (X y) (Y₁ y))
+      =ᶠ[𝓝 x] (fun y => g.metricInner y (X y) (Y₂ y)) := by
     filter_upwards [h] with y hy
     rw [hy]
   -- Lie bracket pointwise equalities at `x`.
@@ -489,25 +500,26 @@ private theorem koszulFunctional_eventuallyEq_middle
 uniqueness): if $Y_1 =ᶠ[𝓝 x] Y_2$ and both are smooth at $x$, then for
 smooth $X$, $\nabla_X Y_1(x) = \nabla_X Y_2(x)$. -/
 private theorem covDeriv_congr_eventuallyEq_middle
+    (g : RiemannianMetric I M)
     (X Y₁ Y₂ : VectorFieldSection I M) (x : M)
     (hX : TangentSmoothAt X x)
     (hY₁ : TangentSmoothAt Y₁ x) (hY₂ : TangentSmoothAt Y₂ x)
     (h : ∀ᶠ y in 𝓝 x, Y₁ y = Y₂ y) :
-    covDeriv X Y₁ x = covDeriv X Y₂ x := by
-  -- By Riesz uniqueness on `metricInner_eq_iff_eq`: equal inner-products against
+    covDeriv g X Y₁ x = covDeriv g X Y₂ x := by
+  -- By Riesz uniqueness on `g.metricInner_eq_iff_eq`: equal inner-products against
   -- arbitrary test vector ⇒ equal vectors. Test via the smooth FiberBundle.extend
   -- of a model-fiber test, lift through `covDeriv_inner_eq_half_koszul`, then use
   -- `koszulFunctional_eventuallyEq_middle`.
-  apply (metricInner_eq_iff_eq x _ _).mp
+  apply (g.metricInner_eq_iff_eq x _ _).mp
   intro Z₀
   set Z : VectorFieldSection I M := FiberBundle.extend E Z₀ with hZ_def
   have hZx : Z x = Z₀ := FiberBundle.extend_apply_self _ _
   have hZ_smooth : TangentSmoothAt Z x :=
     FiberBundle.mdifferentiableAt_extend I E Z₀
   rw [← hZx]
-  rw [covDeriv_inner_eq_half_koszul X Y₁ Z x hX hY₁ hZ_smooth,
-      covDeriv_inner_eq_half_koszul X Y₂ Z x hX hY₂ hZ_smooth,
-      koszulFunctional_eventuallyEq_middle X Y₁ Y₂ Z x h]
+  simp only [covDeriv_inner_eq_half_koszul g X Y₁ Z x hX hY₁ hZ_smooth,
+      covDeriv_inner_eq_half_koszul g X Y₂ Z x hX hY₂ hZ_smooth,
+      koszulFunctional_eventuallyEq_middle g X Y₁ Y₂ Z x h]
 
 /-! ## from `Connection.lean` (Bianchi section) -/
 
@@ -529,24 +541,26 @@ differentiated field, and subtractivity (corollary). -/
 $\nabla_X Y - \nabla_Y X = [X, Y]$ at any point where $X, Y$ are
 differentiable as bundle sections. -/
 theorem covDeriv_sub_swap_eq_mlieBracket
+    (g : RiemannianMetric I M)
     (X Y : VectorFieldSection I M) (x : M)
     (hX : TangentSmoothAt X x) (hY : TangentSmoothAt Y x) :
-    (∇[X] Y) x - (∇[Y] X) x = (⟦X, Y⟧) x :=
+    covDeriv g X Y x - covDeriv g Y X x = (⟦X, Y⟧) x :=
   (CovariantDerivative.torsion_eq_zero_iff
-    (cov := leviCivitaConnection (I := I) (M := M))).mp
-    leviCivitaConnection_torsion_zero hX hY
+    (cov := leviCivitaConnection (I := I) (M := M) g)).mp
+    (leviCivitaConnection_torsion_zero g) hX hY
 
 /-- **Math.** Additivity of `covDeriv` in the differentiated field:
 $\nabla_X (Y_1 + Y_2)(x) = \nabla_X Y_1(x) + \nabla_X Y_2(x)$ for
 $Y_1, Y_2$ smooth at $x$. -/
 theorem covDeriv_add_field
+    (g : RiemannianMetric I M)
     (X Y₁ Y₂ : VectorFieldSection I M) (x : M)
     (hY₁ : TangentSmoothAt Y₁ x) (hY₂ : TangentSmoothAt Y₂ x) :
-    (∇[X] (Y₁ + Y₂)) x = (∇[X] Y₁) x + (∇[X] Y₂) x := by
-  have h := leviCivitaConnection.isCovariantDerivativeOnUniv.add (σ := Y₁) (σ' := Y₂)
+    covDeriv g X (Y₁ + Y₂) x = covDeriv g X Y₁ x + covDeriv g X Y₂ x := by
+  have h := (leviCivitaConnection g).isCovariantDerivativeOnUniv.add (σ := Y₁) (σ' := Y₂)
     (x := x) hY₁ hY₂
-  show (leviCivitaConnection.toFun (Y₁ + Y₂) x) (X x)
-    = (leviCivitaConnection.toFun Y₁ x) (X x) + (leviCivitaConnection.toFun Y₂ x) (X x)
+  show ((leviCivitaConnection g).toFun (Y₁ + Y₂) x) (X x)
+    = ((leviCivitaConnection g).toFun Y₁ x) (X x) + ((leviCivitaConnection g).toFun Y₂ x) (X x)
   rw [h]
   rfl
 
@@ -555,34 +569,37 @@ $Y_1 =ᶠ[𝓝 x] Y_2$ and both are smooth at $x$, then
 $\nabla_X Y_1(x) = \nabla_X Y_2(x)$. Smoothness of $X$ is not required
 (the connection is continuous linear map in the direction slot). -/
 theorem covDeriv_congr_eventuallyEq_field
+    (g : RiemannianMetric I M)
     (X Y₁ Y₂ : VectorFieldSection I M) (x : M)
     (hY₁ : TangentSmoothAt Y₁ x) (hY₂ : TangentSmoothAt Y₂ x)
     (h : ∀ᶠ y in 𝓝 x, Y₁ y = Y₂ y) :
-    (∇[X] Y₁) x = (∇[X] Y₂) x := by
-  show (leviCivitaConnection.toFun Y₁ x) (X x)
-      = (leviCivitaConnection.toFun Y₂ x) (X x)
-  rw [leviCivitaConnection.isCovariantDerivativeOnUniv.congr_of_eventuallyEq
+    covDeriv g X Y₁ x = covDeriv g X Y₂ x := by
+  show ((leviCivitaConnection g).toFun Y₁ x) (X x)
+      = ((leviCivitaConnection g).toFun Y₂ x) (X x)
+  rw [(leviCivitaConnection g).isCovariantDerivativeOnUniv.congr_of_eventuallyEq
         hY₁ hY₂ Filter.univ_mem h]
 
 /-- **Math.** `covDeriv` of a constant scalar multiple:
 $\nabla_X (a \cdot Y)(x) = a \cdot \nabla_X Y(x)$ for $a : \mathbb{R}$. -/
 theorem covDeriv_smul_const_field
+    (g : RiemannianMetric I M)
     (X Y : VectorFieldSection I M) (x : M) (a : ℝ)
     (hY : TangentSmoothAt Y x) :
-    (∇[X] (a • Y)) x = a • (∇[X] Y) x := by
-  have h := leviCivitaConnection.isCovariantDerivativeOnUniv.smul_const (σ := Y)
+    covDeriv g X (a • Y) x = a • covDeriv g X Y x := by
+  have h := (leviCivitaConnection g).isCovariantDerivativeOnUniv.smul_const (σ := Y)
     (x := x) a hY
-  show (leviCivitaConnection.toFun (a • Y) x) (X x)
-    = a • (leviCivitaConnection.toFun Y x) (X x)
+  show ((leviCivitaConnection g).toFun (a • Y) x) (X x)
+    = a • ((leviCivitaConnection g).toFun Y x) (X x)
   rw [h]
   rfl
 
 /-- **Math.** Subtractivity of `covDeriv` in the differentiated field:
 $\nabla_X (Y_1 - Y_2)(x) = \nabla_X Y_1(x) - \nabla_X Y_2(x)$. -/
 theorem covDeriv_sub_field
+    (g : RiemannianMetric I M)
     (X Y₁ Y₂ : VectorFieldSection I M) (x : M)
     (hY₁ : TangentSmoothAt Y₁ x) (hY₂ : TangentSmoothAt Y₂ x) :
-    (∇[X] (Y₁ - Y₂)) x = (∇[X] Y₁) x - (∇[X] Y₂) x := by
+    covDeriv g X (Y₁ - Y₂) x = covDeriv g X Y₁ x - covDeriv g X Y₂ x := by
   -- Y₁ - Y₂ = Y₁ + (-1) • Y₂
   have h_eq : (Y₁ - Y₂ : VectorFieldSection I M) = Y₁ + ((-1 : ℝ) • Y₂) := by
     funext z
@@ -597,35 +614,36 @@ theorem covDeriv_sub_field
       exact neg_one_smul _ _
     rw [h_eq']
     exact hY₂.neg
-  rw [covDeriv_add_field X Y₁ ((-1 : ℝ) • Y₂) x hY₁ h_neg,
-      covDeriv_smul_const_field X Y₂ x (-1) hY₂]
-  show covDeriv X Y₁ x + (-1 : ℝ) • covDeriv X Y₂ x = covDeriv X Y₁ x - covDeriv X Y₂ x
+  rw [covDeriv_add_field g X Y₁ ((-1 : ℝ) • Y₂) x hY₁ h_neg,
+      covDeriv_smul_const_field g X Y₂ x (-1) hY₂]
+  show covDeriv g X Y₁ x + (-1 : ℝ) • covDeriv g X Y₂ x = covDeriv g X Y₁ x - covDeriv g X Y₂ x
   rw [neg_one_smul, sub_eq_add_neg]
 
 /-- **Math.** Leibniz rule: the connection acts as a derivation in the
 scalar factor of `g • Y`:
 $$\nabla_X (g \cdot Y)(x) = g(x) \cdot \nabla_X Y(x) + (\mathrm{d}g \cdot X)(x) \cdot Y(x).$$ -/
 theorem covDeriv_smul_scalar_field
+    (g : RiemannianMetric I M)
     (X : VectorFieldSection I M)
-    (g : M → ℝ) (Y : VectorFieldSection I M) (x : M)
-    (hg : MDifferentiableAt I 𝓘(ℝ, ℝ) g x)
+    (f : M → ℝ) (Y : VectorFieldSection I M) (x : M)
+    (hf : MDifferentiableAt I 𝓘(ℝ, ℝ) f x)
     (hY : TangentSmoothAt Y x) :
-    (∇[X] (g • Y)) x
-      = g x • (∇[X] Y) x
-        + (show ℝ from mfderiv I 𝓘(ℝ, ℝ) g x (X x)) • Y x := by
-  have h := leviCivitaConnection.isCovariantDerivativeOnUniv.leibniz
-    (σ := Y) (g := g) (x := x) hY hg trivial
-  -- h : leviCivitaConnection.toFun (g • Y) x
-  --     = g x • leviCivitaConnection.toFun Y x + (extDerivFun g x).smulRight (Y x)
-  show (leviCivitaConnection.toFun (g • Y) x) (X x) = _
+    covDeriv g X (f • Y) x
+      = f x • covDeriv g X Y x
+        + (show ℝ from mfderiv I 𝓘(ℝ, ℝ) f x (X x)) • Y x := by
+  have h := (leviCivitaConnection (I := I) (M := M) g).isCovariantDerivativeOnUniv.leibniz
+    (σ := Y) (g := f) (x := x) hY hf trivial
+  -- h : (leviCivitaConnection g).toFun (f • Y) x
+  --     = f x • (leviCivitaConnection g).toFun Y x + (extDerivFun f x).smulRight (Y x)
+  show ((leviCivitaConnection (I := I) (M := M) g).toFun (f • Y) x) (X x) = _
   rw [h]
-  show g x • (leviCivitaConnection.toFun Y x) (X x)
-      + ((extDerivFun g x).smulRight (Y x)) (X x)
-    = g x • (leviCivitaConnection.toFun Y x) (X x)
-      + (show ℝ from mfderiv I 𝓘(ℝ, ℝ) g x (X x)) • Y x
-  -- `((extDerivFun g x).smulRight (Y x)) v = (extDerivFun g x v) • Y x` (def-eq).
-  -- `extDerivFun g x v = mfderiv g x v` via `NormedSpace.fromTangentSpace` identity
-  -- on the scalar tangent space `TangentSpace 𝓘(ℝ, ℝ) (g x) ≃L ℝ`.
+  show f x • ((leviCivitaConnection (I := I) (M := M) g).toFun Y x) (X x)
+      + ((extDerivFun f x).smulRight (Y x)) (X x)
+    = f x • ((leviCivitaConnection (I := I) (M := M) g).toFun Y x) (X x)
+      + (show ℝ from mfderiv I 𝓘(ℝ, ℝ) f x (X x)) • Y x
+  -- `((extDerivFun f x).smulRight (Y x)) v = (extDerivFun f x v) • Y x` (def-eq).
+  -- `extDerivFun f x v = mfderiv f x v` via `NormedSpace.fromTangentSpace` identity
+  -- on the scalar tangent space `TangentSpace 𝓘(ℝ, ℝ) (f x) ≃L ℝ`.
   congr 1
 
 /-! ## Riemann curvature tensor (connection-level definition)
@@ -644,13 +662,16 @@ Connection-level definition (no metric). Metric-dependent extensions
 
 **Ground truth**: do Carmo 1992 §4 Definition 2.1. -/
 noncomputable def riemannCurvature
+    (g : RiemannianMetric I M)
     (X Y Z : VectorFieldSection I M) (x : M) : TangentSpace I x :=
-  covDeriv X (covDeriv Y Z) x - covDeriv Y (covDeriv X Z) x
-    - covDeriv (mlieBracket I X Y) Z x
+  covDeriv g X (covDeriv g Y Z) x - covDeriv g Y (covDeriv g X Z) x
+    - covDeriv g (mlieBracket I X Y) Z x
 
-/-- **Math.** Notation `Riem(X, Y) Z` for `riemannCurvature X Y Z`. -/
+/-- **Math.** Notation `Riem(X, Y) Z` for `riemannCurvature (HasMetric.metric) X Y Z`.
+The notation pipes the ambient `[HasMetric I M]` metric so downstream code
+continues to write `Riem(X, Y) Z` unchanged during Phase 1. -/
 scoped[Riemannian] notation:max "Riem(" X ", " Y ") " Z:max =>
-  riemannCurvature X Y Z
+  riemannCurvature (HasMetric.metric) X Y Z
 
 /-! ### `riem_simp` lemmas
 
@@ -670,19 +691,23 @@ derivative. Pure `rfl` from the definition of `riemannCurvature`; tagged
 Reference: do Carmo 1992 §4 Definition 2.1. -/
 @[riem_simp]
 theorem riemannCurvature_commutator_form
+    (g : RiemannianMetric I M)
     (X Y Z : VectorFieldSection I M) (x : M) :
-    Riem(X, Y) Z x = (∇[X] (∇[Y] Z)) x - (∇[Y] (∇[X] Z)) x - (∇[⟦X, Y⟧] Z) x := rfl
+    riemannCurvature g X Y Z x
+      = covDeriv g X (covDeriv g Y Z) x - covDeriv g Y (covDeriv g X Z) x
+        - covDeriv g (⟦X, Y⟧) Z x := rfl
 
 /-- **Math.** Lie-bracket antisymmetry through the direction slot:
 $\nabla_{[Y,X]} Z = -\nabla_{[X,Y]} Z$ pointwise. Used as explicit `rw`
 step (kept out of `riem_simp` to avoid the $X \leftrightarrow Y$ loop). -/
 theorem covDeriv_mlieBracket_swap_apply
+    (g : RiemannianMetric I M)
     (X Y Z : VectorFieldSection I M) (x : M) :
-    (∇[⟦Y, X⟧] Z) x = -(∇[⟦X, Y⟧] Z) x := by
+    covDeriv g (⟦Y, X⟧) Z x = -covDeriv g (⟦X, Y⟧) Z x := by
   unfold covDeriv
   rw [show mlieBracket I Y X x = -mlieBracket I X Y x from
         VectorField.mlieBracket_swap_apply,
-      (leviCivitaConnection.toFun Z x).map_neg]
+      ((leviCivitaConnection (I := I) (M := M) g).toFun Z x).map_neg]
 
 -- riemannCurvature_antisymm lives in Curvature.lean: its statement
 -- uses the post-Bianchi `Riem(X, Y) Z` notation, so it must be in a
@@ -706,14 +731,15 @@ The two derivations needed at section level: -/
 pointwise torsion-free identity lifts to a Π-equality, enabling direct
 substitution under `covDeriv X (·) x`. -/
 theorem covDeriv_section_eq_swap_add_mlieBracket
+    (g : RiemannianMetric I M)
     (Y Z : VectorFieldSection I M)
     (hY : ∀ y, TangentSmoothAt Y y) (hZ : ∀ y, TangentSmoothAt Z y) :
-    (fun y => covDeriv Y Z y)
-      = (fun y => covDeriv Z Y y) + (fun y => mlieBracket I Y Z y) := by
+    (fun y => covDeriv g Y Z y)
+      = (fun y => covDeriv g Z Y y) + (fun y => mlieBracket I Y Z y) := by
   funext y
-  have h := covDeriv_sub_swap_eq_mlieBracket Y Z y (hY y) (hZ y)
-  -- h : covDeriv Y Z y - covDeriv Z Y y = mlieBracket I Y Z y
-  show covDeriv Y Z y = covDeriv Z Y y + mlieBracket I Y Z y
+  have h := covDeriv_sub_swap_eq_mlieBracket g Y Z y (hY y) (hZ y)
+  -- h : covDeriv g Y Z y - covDeriv g Z Y y = mlieBracket I Y Z y
+  show covDeriv g Y Z y = covDeriv g Z Y y + mlieBracket I Y Z y
   rw [← h]; abel
 
 /-! ## Smoothness wrappers on `covDeriv` -/
@@ -721,18 +747,20 @@ theorem covDeriv_section_eq_swap_add_mlieBracket
 /-- **Math.** $\nabla_{\,\mathrm{const}\,v}\, Y$ is smooth at every $x$
 for any `SmoothVectorField Y` and any constant direction $v : E$. -/
 theorem covDeriv_const_smoothVF_smoothAt
+    (g : RiemannianMetric I M)
     (v : E) (Y : SmoothVectorField I M) (x : M) :
-    TangentSmoothAt (fun y : M => (∇[fun _ : M => v] Y) y) x :=
-  leviCivitaConnection_smoothAt_smoothVF_dir
+    TangentSmoothAt (fun y : M => covDeriv g (fun _ : M => v) Y y) x :=
+  leviCivitaConnection_smoothAt_smoothVF_dir g
     (SmoothVectorField.const v) Y x
 
 /-- **Math.** $\nabla_X Y$ is smooth at every $x$ for any smooth vector
 fields `X, Y : SmoothVectorField I M`. Smooth-VF-direction strengthening
 of `covDeriv_const_smoothVF_smoothAt`. -/
 theorem covDeriv_smoothVF_smoothAt
+    (g : RiemannianMetric I M)
     (X Y : SmoothVectorField I M) (x : M) :
-    TangentSmoothAt (fun y : M => (∇[X] Y) y) x :=
-  Riemannian.leviCivitaConnection_smoothAt_smoothVF_dir X Y x
+    TangentSmoothAt (fun y : M => covDeriv g X Y y) x :=
+  Riemannian.leviCivitaConnection_smoothAt_smoothVF_dir g X Y x
 
 /-- **Math.** **Algebraic (first) Bianchi identity** for the Levi-Civita
 connection:
@@ -755,11 +783,11 @@ theorem bianchi_first
   have hY : ∀ y, TangentSmoothAt Y.toFun y := Y.smoothAt
   have hZ : ∀ y, TangentSmoothAt Z.toFun y := Z.smoothAt
   have h_dXZ : ∀ y, TangentSmoothAt ∇[X] Z y :=
-    fun y => covDeriv_smoothVF_smoothAt X Z y
+    fun y => covDeriv_smoothVF_smoothAt HasMetric.metric X Z y
   have h_dYX : ∀ y, TangentSmoothAt ∇[Y] X y :=
-    fun y => covDeriv_smoothVF_smoothAt Y X y
+    fun y => covDeriv_smoothVF_smoothAt HasMetric.metric Y X y
   have h_dZY : ∀ y, TangentSmoothAt ∇[Z] Y y :=
-    fun y => covDeriv_smoothVF_smoothAt Z Y y
+    fun y => covDeriv_smoothVF_smoothAt HasMetric.metric Z Y y
   have h_XY : ∀ y, TangentSmoothAt ⟦X, Y⟧ y :=
     fun _ => mlieBracket_tangentSmoothAt X.smooth Y.smooth
   have h_YX : ∀ y, TangentSmoothAt ⟦Y, X⟧ y :=
@@ -772,11 +800,11 @@ theorem bianchi_first
     fun _ => mlieBracket_tangentSmoothAt X.smooth Z.smooth
   -- Step 1: section-level torsion-freeness (Π-equalities, via global smoothness).
   have eq_YZ : (∇[Y] Z : VectorFieldSection I M) = ∇[Z] Y + ⟦Y, Z⟧ :=
-    covDeriv_section_eq_swap_add_mlieBracket Y Z hY hZ
+    covDeriv_section_eq_swap_add_mlieBracket HasMetric.metric Y Z hY hZ
   have eq_ZX : (∇[Z] X : VectorFieldSection I M) = ∇[X] Z + ⟦Z, X⟧ :=
-    covDeriv_section_eq_swap_add_mlieBracket Z X hZ hX
+    covDeriv_section_eq_swap_add_mlieBracket HasMetric.metric Z X hZ hX
   have eq_XY : (∇[X] Y : VectorFieldSection I M) = ∇[Y] X + ⟦X, Y⟧ :=
-    covDeriv_section_eq_swap_add_mlieBracket X Y hX hY
+    covDeriv_section_eq_swap_add_mlieBracket HasMetric.metric X Y hX hY
   -- Step 2: unfold riemannCurvature, substitute section equalities, split via add_field.
   show (∇[X] (∇[Y] Z)) x
         - (∇[Y] (∇[X] Z)) x
@@ -788,25 +816,25 @@ theorem bianchi_first
         - (∇[X] (∇[Z] Y)) x
         - (∇[⟦Z, X⟧] Y) x) = 0
   rw [eq_YZ, eq_ZX, eq_XY]
-  rw [covDeriv_add_field X ∇[Z] Y ⟦Y, Z⟧ x
+  rw [covDeriv_add_field HasMetric.metric X ∇[Z] Y ⟦Y, Z⟧ x
         (h_dZY x) (h_YZ x),
-      covDeriv_add_field Y ∇[X] Z ⟦Z, X⟧ x
+      covDeriv_add_field HasMetric.metric Y ∇[X] Z ⟦Z, X⟧ x
         (h_dXZ x) (h_ZX x),
-      covDeriv_add_field Z ∇[Y] X ⟦X, Y⟧ x
+      covDeriv_add_field HasMetric.metric Z ∇[Y] X ⟦X, Y⟧ x
         (h_dYX x) (h_XY x)]
   -- Step 3: pointwise torsion-free pairings (∇_A B - ∇_B A = [A,B]):
   have pair_X : (∇[X] ⟦Y, Z⟧) x
                   - (∇[⟦Y, Z⟧] X) x
                 = (⟦X, ⟦Y, Z⟧⟧) x :=
-    covDeriv_sub_swap_eq_mlieBracket X ⟦Y, Z⟧ x (hX x) (h_YZ x)
+    covDeriv_sub_swap_eq_mlieBracket HasMetric.metric X ⟦Y, Z⟧ x (hX x) (h_YZ x)
   have pair_Y : (∇[Y] ⟦Z, X⟧) x
                   - (∇[⟦Z, X⟧] Y) x
                 = (⟦Y, ⟦Z, X⟧⟧) x :=
-    covDeriv_sub_swap_eq_mlieBracket Y ⟦Z, X⟧ x (hY x) (h_ZX x)
+    covDeriv_sub_swap_eq_mlieBracket HasMetric.metric Y ⟦Z, X⟧ x (hY x) (h_ZX x)
   have pair_Z : (∇[Z] ⟦X, Y⟧) x
                   - (∇[⟦X, Y⟧] Z) x
                 = (⟦Z, ⟦X, Y⟧⟧) x :=
-    covDeriv_sub_swap_eq_mlieBracket Z ⟦X, Y⟧ x (hZ x) (h_XY x)
+    covDeriv_sub_swap_eq_mlieBracket HasMetric.metric Z ⟦X, Y⟧ x (hZ x) (h_XY x)
   -- Step 4: rearrange so abel collapses all 12 cov-terms via pair_X/Y/Z.
   -- The goal after rewrites is (with shorthand):
   --   (∇_X∇_Z Y + ∇_X[Y,Z]) - ∇_Y∇_X Z - ∇_{[X,Y]} Z
