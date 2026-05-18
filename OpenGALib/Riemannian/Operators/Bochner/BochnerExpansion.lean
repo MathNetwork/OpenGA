@@ -389,7 +389,7 @@ theorem heart_curvature_orthonormal_sum_eq_ricci
         = riemannCurvature HasMetric.metric
             (fun _ : M => ((Bi i).toFun x : TangentSpace I x))
             WV.toFun GV.toFun x
-      exact riemannCurvature_eq_of_pointwise_eq
+      exact riemannCurvature_eq_of_pointwise_eq HasMetric.metric
         (Bi i) (SmoothVectorField.const ((Bi i).toFun x : E))
         W WV gradF GV x h_interior rfl rfl rfl
     rw [hR_eq]; rfl

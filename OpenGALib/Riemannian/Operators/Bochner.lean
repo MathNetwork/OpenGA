@@ -99,7 +99,12 @@ theorem bochner_leibniz_trace_reduction
               (covDeriv HasMetric.metric (Bi i).toFun (manifoldGradient (I := I) HasMetric.metric f) x)
               (covDeriv HasMetric.metric (Bi i).toFun (manifoldGradient (I := I) HasMetric.metric f) x) := by
     intro i
-    rw [hessian_gradientNormSq_apply_section f (Bi i) x h_grad]
+    show (1 / 2 : ℝ) * hessian (I := I) (M := M) HasMetric.metric
+          (fun y => HasMetric.metric.metricInner y
+            (manifoldGradient (I := I) HasMetric.metric f y)
+            (manifoldGradient (I := I) HasMetric.metric f y))
+          (Bi i).toFun (Bi i).toFun x = _
+    rw [hessian_gradientNormSq_apply_section HasMetric.metric f (Bi i) x h_grad]
     ring
   rw [Finset.sum_congr rfl (fun i _ => h_summand i), Finset.sum_add_distrib]
   -- Step 3: identify the two sums.

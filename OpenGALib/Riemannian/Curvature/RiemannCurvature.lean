@@ -54,8 +54,9 @@ local notation "cF[" V "]" => SmoothVectorField.const (I := I) (M := M) V
 
 Reference: do Carmo §4 Proposition 2.5 (i). -/
 theorem riemannCurvature_antisymm
+    (g : RiemannianMetric I M)
     (X Y Z : VectorFieldSection I M) (x : M) :
-    Riem(X, Y) Z x = -Riem(Y, X) Z x := by
+    riemannCurvature g X Y Z x = -riemannCurvature g Y X Z x := by
   simp only [riem_simp]
   rw [covDeriv_mlieBracket_swap_apply]
   abel
@@ -528,49 +529,47 @@ Public-exposure of formerly `private` helper, needed by the Z-slot
 additivity step of the full 3-slot tensoriality chain
 (`Riemannian/Curvature/Tensoriality.lean`). -/
 theorem riemannCurvature_add_third
+    (g : RiemannianMetric I M)
     (X Y Z₁ Z₂ : SmoothVectorField I M) (x : M) :
-    riemannCurvature HasMetric.metric X.toFun Y.toFun (Z₁ + Z₂).toFun x
-      = riemannCurvature HasMetric.metric X.toFun Y.toFun Z₁.toFun x
-        + riemannCurvature HasMetric.metric X.toFun Y.toFun Z₂.toFun x := by
+    riemannCurvature g X.toFun Y.toFun (Z₁ + Z₂).toFun x
+      = riemannCurvature g X.toFun Y.toFun Z₁.toFun x
+        + riemannCurvature g X.toFun Y.toFun Z₂.toFun x := by
   classical
-  -- Pi-add of toFun.
   have h_pi_add : (Z₁ + Z₂).toFun = Z₁.toFun + Z₂.toFun := by
     funext y; show (Z₁ + Z₂) y = Z₁ y + Z₂ y; rfl
-  -- Inner section additivity (covDeriv HasMetric.metric Y (Z₁+Z₂) y = covDeriv HasMetric.metric Y Z₁ y + covDeriv HasMetric.metric Y Z₂ y).
-  have h_inner_Y : (fun y => covDeriv HasMetric.metric Y.toFun (Z₁ + Z₂).toFun y)
-      = (fun y => covDeriv HasMetric.metric Y.toFun Z₁.toFun y)
-        + (fun y => covDeriv HasMetric.metric Y.toFun Z₂.toFun y) := by
+  have h_inner_Y : (fun y => covDeriv g Y.toFun (Z₁ + Z₂).toFun y)
+      = (fun y => covDeriv g Y.toFun Z₁.toFun y)
+        + (fun y => covDeriv g Y.toFun Z₂.toFun y) := by
     funext y
     rw [h_pi_add]
-    exact covDeriv_add_field HasMetric.metric Y.toFun Z₁.toFun Z₂.toFun y
+    exact covDeriv_add_field g Y.toFun Z₁.toFun Z₂.toFun y
       (Z₁.smoothAt y) (Z₂.smoothAt y)
-  have h_inner_X : (fun y => covDeriv HasMetric.metric X.toFun (Z₁ + Z₂).toFun y)
-      = (fun y => covDeriv HasMetric.metric X.toFun Z₁.toFun y)
-        + (fun y => covDeriv HasMetric.metric X.toFun Z₂.toFun y) := by
+  have h_inner_X : (fun y => covDeriv g X.toFun (Z₁ + Z₂).toFun y)
+      = (fun y => covDeriv g X.toFun Z₁.toFun y)
+        + (fun y => covDeriv g X.toFun Z₂.toFun y) := by
     funext y
     rw [h_pi_add]
-    exact covDeriv_add_field HasMetric.metric X.toFun Z₁.toFun Z₂.toFun y
+    exact covDeriv_add_field g X.toFun Z₁.toFun Z₂.toFun y
       (Z₁.smoothAt y) (Z₂.smoothAt y)
-  -- Unfold riemannCurvature HasMetric.metric.
-  show covDeriv HasMetric.metric X.toFun (fun y => covDeriv HasMetric.metric Y.toFun (Z₁ + Z₂).toFun y) x
-      - covDeriv HasMetric.metric Y.toFun (fun y => covDeriv HasMetric.metric X.toFun (Z₁ + Z₂).toFun y) x
-      - covDeriv HasMetric.metric (VectorField.mlieBracket I X.toFun Y.toFun) (Z₁ + Z₂).toFun x
-    = (covDeriv HasMetric.metric X.toFun (fun y => covDeriv HasMetric.metric Y.toFun Z₁.toFun y) x
-        - covDeriv HasMetric.metric Y.toFun (fun y => covDeriv HasMetric.metric X.toFun Z₁.toFun y) x
-        - covDeriv HasMetric.metric (VectorField.mlieBracket I X.toFun Y.toFun) Z₁.toFun x)
-      + (covDeriv HasMetric.metric X.toFun (fun y => covDeriv HasMetric.metric Y.toFun Z₂.toFun y) x
-        - covDeriv HasMetric.metric Y.toFun (fun y => covDeriv HasMetric.metric X.toFun Z₂.toFun y) x
-        - covDeriv HasMetric.metric (VectorField.mlieBracket I X.toFun Y.toFun) Z₂.toFun x)
+  show covDeriv g X.toFun (fun y => covDeriv g Y.toFun (Z₁ + Z₂).toFun y) x
+      - covDeriv g Y.toFun (fun y => covDeriv g X.toFun (Z₁ + Z₂).toFun y) x
+      - covDeriv g (VectorField.mlieBracket I X.toFun Y.toFun) (Z₁ + Z₂).toFun x
+    = (covDeriv g X.toFun (fun y => covDeriv g Y.toFun Z₁.toFun y) x
+        - covDeriv g Y.toFun (fun y => covDeriv g X.toFun Z₁.toFun y) x
+        - covDeriv g (VectorField.mlieBracket I X.toFun Y.toFun) Z₁.toFun x)
+      + (covDeriv g X.toFun (fun y => covDeriv g Y.toFun Z₂.toFun y) x
+        - covDeriv g Y.toFun (fun y => covDeriv g X.toFun Z₂.toFun y) x
+        - covDeriv g (VectorField.mlieBracket I X.toFun Y.toFun) Z₂.toFun x)
   rw [h_inner_Y, h_inner_X, h_pi_add]
-  rw [covDeriv_add_field HasMetric.metric X.toFun (fun y => covDeriv HasMetric.metric Y.toFun Z₁.toFun y)
-        (fun y => covDeriv HasMetric.metric Y.toFun Z₂.toFun y) x
-        (covDeriv_smoothVF_smoothAt HasMetric.metric Y Z₁ x)
-        (covDeriv_smoothVF_smoothAt HasMetric.metric Y Z₂ x),
-      covDeriv_add_field HasMetric.metric Y.toFun (fun y => covDeriv HasMetric.metric X.toFun Z₁.toFun y)
-        (fun y => covDeriv HasMetric.metric X.toFun Z₂.toFun y) x
-        (covDeriv_smoothVF_smoothAt HasMetric.metric X Z₁ x)
-        (covDeriv_smoothVF_smoothAt HasMetric.metric X Z₂ x),
-      covDeriv_add_field HasMetric.metric (VectorField.mlieBracket I X.toFun Y.toFun)
+  rw [covDeriv_add_field g X.toFun (fun y => covDeriv g Y.toFun Z₁.toFun y)
+        (fun y => covDeriv g Y.toFun Z₂.toFun y) x
+        (covDeriv_smoothVF_smoothAt g Y Z₁ x)
+        (covDeriv_smoothVF_smoothAt g Y Z₂ x),
+      covDeriv_add_field g Y.toFun (fun y => covDeriv g X.toFun Z₁.toFun y)
+        (fun y => covDeriv g X.toFun Z₂.toFun y) x
+        (covDeriv_smoothVF_smoothAt g X Z₁ x)
+        (covDeriv_smoothVF_smoothAt g X Z₂ x),
+      covDeriv_add_field g (VectorField.mlieBracket I X.toFun Y.toFun)
         Z₁.toFun Z₂.toFun x (Z₁.smoothAt x) (Z₂.smoothAt x)]
   abel
 
@@ -594,7 +593,7 @@ theorem riemannCurvature_metric_skew
   have h_Z := riemannCurvature_inner_self_zero X Y Z x h_interior
   have h_W := riemannCurvature_inner_self_zero X Y W x h_interior
   -- Additivity of R in 3rd slot.
-  have h_add := riemannCurvature_add_third X Y Z W x
+  have h_add := riemannCurvature_add_third HasMetric.metric X Y Z W x
   -- (Z+W) x = Z x + W x.
   have h_ZW_x : (Z + W) x = Z x + W x := rfl
   -- Expand h_ZW via h_add and h_ZW_x and bilinearity of metricInner.
@@ -650,7 +649,7 @@ theorem riemannCurvature_pair_symm
       metricInner x (Riem(A, B) C x) (D x)
         = -metricInner x (Riem(B, A) C x) (D x) := by
     intro A B C D
-    rw [riemannCurvature_antisymm A B C x, metricInner_neg_left]
+    rw [riemannCurvature_antisymm HasMetric.metric A B C x, metricInner_neg_left]
   -- (3,4)-antisymmetry from `riemannCurvature_metric_skew`.
   have antisym34 : ∀ (A B C D : SmoothVectorField I M),
       metricInner x (Riem(A, B) C x) (D x)
@@ -722,7 +721,7 @@ private lemma riemannCurvature_const_first_swap_eq_neg
   have h_antisym :
       riemannCurvature HasMetric.metric Y.toFun (fun _ : M => v) X.toFun x
         = -riemannCurvature HasMetric.metric (fun _ : M => v) Y.toFun X.toFun x :=
-    riemannCurvature_antisymm Y.toFun (fun _ : M => v) X.toFun x
+    riemannCurvature_antisymm HasMetric.metric Y.toFun (fun _ : M => v) X.toFun x
   rw [h_antisym] at h_bianchi
   -- h_bianchi : R(V,X) Y + R(X,Y) V + - R(V,Y) X = 0
   -- Goal: R(V,X) Y - R(V,Y) X = -R(X,Y) V  ⇔  (R(V,X) Y - R(V,Y) X) + R(X,Y) V = 0.
@@ -1028,7 +1027,7 @@ theorem IsKilling.second_covDeriv_eq_curvature
     have h_antisym12 :
         metricInner x (Riem(X, Y) Z x) (W x)
           = -metricInner x (Riem(Y, X) Z x) (W x) := by
-      rw [riemannCurvature_antisymm X.toFun Y.toFun Z.toFun x, metricInner_neg_left]
+      rw [riemannCurvature_antisymm HasMetric.metric X.toFun Y.toFun Z.toFun x, metricInner_neg_left]
     have h_antisym34 :
         metricInner x (Riem(Y, X) W x) (Z x)
           = -metricInner x (Riem(Y, X) Z x) (W x) := by

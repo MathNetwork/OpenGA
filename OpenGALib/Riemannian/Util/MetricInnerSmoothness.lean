@@ -116,6 +116,17 @@ theorem metricInner_mdifferentiable
       (fun y => g.metricInner y (v y) (w y)) :=
   fun y => g.metricInner_mdifferentiableAt (hv y) (hw y)
 
+/-- **Eng.** `TangentSmoothAt`-form pointwise differentiability — convenience
+wrapper that converts the framework's `TangentSmoothAt` predicate to
+the underlying `MDifferentiableAt` bundle-section form. Explicit-`g` variant. -/
+theorem metricInner_mdifferentiableAt_of_tangentSmoothAt
+    (g : RiemannianMetric I M)
+    {Y Z : ∀ y : M, TangentSpace I y}
+    (hY : TangentSmoothAt Y x) (hZ : TangentSmoothAt Z x) :
+    MDifferentiableAt I 𝓘(ℝ, ℝ)
+      (fun y => g.metricInner y (Y y) (Z y)) x :=
+  g.metricInner_mdifferentiableAt hY.toBundleSection hZ.toBundleSection
+
 end Smoothness
 
 end Riemannian.RiemannianMetric
