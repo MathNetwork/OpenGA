@@ -418,7 +418,7 @@ theorem heart_curvature_orthonormal_sum_eq_ricci
           = ricciTensor (HasMetric.metric) x (gradF.toFun x) (W.toFun x)
         show ricci (HasMetric.metric) WV GV x
             = ricci (HasMetric.metric) GV WV x
-        exact ricci_symm WV GV x h_interior
+        exact ricci_symm HasMetric.metric rfl WV GV x h_interior
 
 /-- **Math.** Hessian-frame trace equals Laplacian locally: on a
 neighbourhood of $x$,

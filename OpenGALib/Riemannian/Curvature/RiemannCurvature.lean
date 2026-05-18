@@ -734,34 +734,30 @@ The hypothesis `h_interior` is required by `riemannCurvature_inner_self_zero`
 (via the Hessian-Lie identity on boundary-aware models). -/
 theorem ricci_symm
     [IsManifold I 2 M]
+    (g : RiemannianMetric I M) (hg : g = hm.metric)
     (X Y : SmoothVectorField I M) (x : M)
     (h_interior : extChartAt I x x ∈ closure (interior (Set.range I))) :
-    ricci HasMetric.metric X Y x = ricci HasMetric.metric Y X x := by
+    ricci g X Y x = ricci g Y X x := by
+  subst hg
   classical
   set b := stdOrthonormalBasis ℝ (TangentSpace I x) with hb_def
-  -- Expand each Ricci scalar as `∑ i, ⟪b i, R(const b i, ·) · x⟫_ℝ` via
-  -- `LinearMap.trace_eq_sum_inner`.
-  have h_RXY : ricci HasMetric.metric X Y x =
-      ∑ i, ⟪b i, riemannCurvature HasMetric.metric (fun _ : M => (b i : E)) X.toFun Y.toFun x⟫_ℝ := by
+  have h_RXY : ricci hm.metric X Y x =
+      ∑ i, ⟪b i, riemannCurvature hm.metric (fun _ : M => (b i : E)) X.toFun Y.toFun x⟫_ℝ := by
     show LinearMap.trace ℝ (TangentSpace I x)
-          (curvatureEndo (HasMetric.metric) X Y x) = _
+          (curvatureEndo hm.metric X Y x) = _
     exact LinearMap.trace_eq_sum_inner _ b
-  have h_RYX : ricci HasMetric.metric Y X x =
-      ∑ i, ⟪b i, riemannCurvature HasMetric.metric (fun _ : M => (b i : E)) Y.toFun X.toFun x⟫_ℝ := by
+  have h_RYX : ricci hm.metric Y X x =
+      ∑ i, ⟪b i, riemannCurvature hm.metric (fun _ : M => (b i : E)) Y.toFun X.toFun x⟫_ℝ := by
     show LinearMap.trace ℝ (TangentSpace I x)
-          (curvatureEndo (HasMetric.metric) Y X x) = _
+          (curvatureEndo hm.metric Y X x) = _
     exact LinearMap.trace_eq_sum_inner _ b
   rw [h_RXY, h_RYX]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   rw [← sub_eq_zero, ← inner_sub_right,
-      riemannCurvature_const_first_swap_eq_neg (I := I) (M := M) HasMetric.metric (b i : E) X Y x]
-  -- Goal: ⟪b i, -R(X, Y) (const b i) x⟫_ℝ = 0
+      riemannCurvature_const_first_swap_eq_neg (I := I) (M := M) hm.metric (b i : E) X Y x]
   rw [inner_neg_right, neg_eq_zero]
-  -- Goal: ⟪b i, R(X, Y) (const b i) x⟫_ℝ = 0
-  -- Use real_inner_comm + riemannCurvature_inner_self_zero (with Z = cF[b i]).
   rw [real_inner_comm]
-  -- Goal: ⟪R(X, Y) (const b i) x, b i⟫_ℝ = 0 (def-eq g.metricInner via g).
-  exact riemannCurvature_inner_self_zero HasMetric.metric X Y
+  exact riemannCurvature_inner_self_zero hm.metric X Y
     (SmoothVectorField.const (I := I) (M := M) (b i : E)) x h_interior
 
 
