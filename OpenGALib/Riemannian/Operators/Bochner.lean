@@ -56,14 +56,14 @@ Combines `hessian_gradientNormSq_apply_chartFrame` summed over
 theorem bochner_leibniz_trace_reduction
     [IsManifold I 2 M]
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
-    (1 / 2 : ℝ) * (Operators.scalarLaplacian (I := I) HasMetric.metric (‖manifoldGradient (I := I) HasMetric.metric f‖²_g)) x
+    (1 / 2 : ℝ) * (Operators.scalarLaplacian (I := I) HasMetric.metric ((fun y => HasMetric.metric.metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (manifoldGradient (I := I) HasMetric.metric f y)))) x
       = HasMetric.metric.metricInner x
             (connectionLaplacian HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x)
             ((manifoldGradient (I := I) HasMetric.metric f) x)
-        + ‖Operators.hessianBilin (I := I) HasMetric.metric f‖²_g x := by
+        + frobeniusSq (I := I) (M := M) (Operators.hessianBilin (I := I) HasMetric.metric f) x := by
   classical
   have h_grad := manifoldGradient_smooth_of_smooth HasMetric.metric f hf
-  show (1 / 2 : ℝ) * Operators.scalarLaplacian (I := I) (M := M) HasMetric.metric (‖manifoldGradient (I := I) HasMetric.metric f‖²_g) x
+  show (1 / 2 : ℝ) * Operators.scalarLaplacian (I := I) (M := M) HasMetric.metric ((fun y => HasMetric.metric.metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (manifoldGradient (I := I) HasMetric.metric f y))) x
       = metricInner x
           (connectionLaplacian (I := I) (M := M) HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x)
           (manifoldGradient (I := I) HasMetric.metric f x)
@@ -75,23 +75,23 @@ theorem bochner_leibniz_trace_reduction
   -- Step 1: convert `scalarLaplacian` from std-basis trace to smoothOrthoFrame trace
   -- via Stage 7 basis-invariance of trace (`sum_diagonal_smoothOrthoFrame_eq_std`).
   have h_scalarLap_eq :
-      Operators.scalarLaplacian (I := I) (M := M) HasMetric.metric (‖manifoldGradient (I := I) HasMetric.metric f‖²_g) x
-        = ∑ i, hessian (I := I) (M := M) HasMetric.metric (‖manifoldGradient (I := I) HasMetric.metric f‖²_g)
+      Operators.scalarLaplacian (I := I) (M := M) HasMetric.metric ((fun y => HasMetric.metric.metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (manifoldGradient (I := I) HasMetric.metric f y))) x
+        = ∑ i, hessian (I := I) (M := M) HasMetric.metric ((fun y => HasMetric.metric.metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (manifoldGradient (I := I) HasMetric.metric f y)))
             (Bi i).toFun (Bi i).toFun x := by
     rw [scalarLaplacian_eq_laplacian_hessianBilin HasMetric.metric]
     show laplacian (I := I) (M := M)
-        (hessianBilin (I := I) HasMetric.metric (‖manifoldGradient (I := I) HasMetric.metric f‖²_g)) x = _
+        (hessianBilin (I := I) HasMetric.metric ((fun y => HasMetric.metric.metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (manifoldGradient (I := I) HasMetric.metric f y)))) x = _
     unfold laplacian
     rw [trace_def]
     rw [← Riemannian.Tensor.sum_diagonal_smoothOrthoFrame_eq_std (I := I) x
-          (hessianBilin (I := I) HasMetric.metric (‖manifoldGradient (I := I) HasMetric.metric f‖²_g) x)]
+          (hessianBilin (I := I) HasMetric.metric ((fun y => HasMetric.metric.metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (manifoldGradient (I := I) HasMetric.metric f y))) x)]
     refine Finset.sum_congr rfl ?_
     intro i _
     rfl
   rw [h_scalarLap_eq, Finset.mul_sum]
   -- Step 2: per-summand section-form Hess identity (`hessian_gradientNormSq_apply_section`).
   have h_summand : ∀ i,
-      (1 / 2 : ℝ) * hessian (I := I) (M := M) HasMetric.metric (‖manifoldGradient (I := I) HasMetric.metric f‖²_g)
+      (1 / 2 : ℝ) * hessian (I := I) (M := M) HasMetric.metric ((fun y => HasMetric.metric.metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (manifoldGradient (I := I) HasMetric.metric f y)))
         (Bi i).toFun (Bi i).toFun x
       = metricInner x
             (secondCovDerivSection (I := I) (M := M) HasMetric.metric
@@ -241,8 +241,8 @@ Reference: Petersen Ch. 7 §1 Prop 33; do Carmo §6; Schoen-Simon 1981 §1. -/
 theorem bochner_weitzenboeck
     [IsManifold I 2 M]
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
-    (1 / 2 : ℝ) * (Operators.scalarLaplacian (I := I) HasMetric.metric (‖manifoldGradient (I := I) HasMetric.metric f‖²_g)) x =
-      ‖Operators.hessianBilin (I := I) HasMetric.metric f‖²_g x
+    (1 / 2 : ℝ) * (Operators.scalarLaplacian (I := I) HasMetric.metric ((fun y => HasMetric.metric.metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (manifoldGradient (I := I) HasMetric.metric f y)))) x =
+      frobeniusSq (I := I) (M := M) (Operators.hessianBilin (I := I) HasMetric.metric f) x
       + HasMetric.metric.metricInner x ((manifoldGradient (I := I) HasMetric.metric f) x)
             ((manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f)) x)
       + ricciTensor HasMetric.metric x ((manifoldGradient (I := I) HasMetric.metric f) x) ((manifoldGradient (I := I) HasMetric.metric f) x) := by

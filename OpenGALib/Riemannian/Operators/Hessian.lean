@@ -396,11 +396,4 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] [T2Space M]
   [HasMetric I M]
 
-/-- **Math.** Frobenius squared norm on `(0,2)`-tensor sections, w.r.t. a $g$-orthonormal
-frame: `‖B‖²_g x = ∑_{ij} B(x)(εᵢ, εⱼ)²` where $\{\varepsilon_i\}$ is the
-`stdOrthonormalBasis` of $T_x M$ (geometric Hilbert-Schmidt norm). -/
-noncomputable instance instMetricNormSqBilin :
-    MetricNormSq (Riemannian.Operators.Bilin (M := M) I) (M → ℝ) where
-  normSqG B := fun x => Riemannian.Operators.frobeniusSq (I := I) (M := M) B x
-
 end Riemannian
