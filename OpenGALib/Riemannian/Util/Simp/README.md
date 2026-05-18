@@ -1,8 +1,5 @@
-# `Util/Simp/`
+# Simp
 
-Operator simp modules.
-
-| File | Role |
-|------|------|
-| [`ConnectionLaplacianSimp.lean`](./ConnectionLaplacianSimp.lean) | Connection Laplacian simp def-unfold lemmas. |
-| [`DivergenceSimp.lean`](./DivergenceSimp.lean) | Divergence simp def-unfold lemmas. |
+Simp utilities collect small operator unfoldings used explicitly by downstream
+proofs. `OperatorSimp.lean` combines the connection-Laplacian and divergence
+definitional simp lemmas.

@@ -1,7 +1,7 @@
 import OpenGALib.Riemannian.Operators.Bochner.HessianExpansion
 import OpenGALib.Riemannian.Operators.Bochner.BochnerExpansion
 import OpenGALib.Riemannian.Operators.ConnectionLaplacian
-import OpenGALib.Riemannian.Util.Simp.ConnectionLaplacianSimp
+import OpenGALib.Riemannian.Util.Simp.OperatorSimp
 import OpenGALib.Util.MFDeriv
 import OpenGALib.Riemannian.Util.Metric.MetricInnerSmoothness
 import OpenGALib.Riemannian.Util.CovDeriv.CovDerivBridges

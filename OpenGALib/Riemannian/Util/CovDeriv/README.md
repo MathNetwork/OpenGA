@@ -1,8 +1,6 @@
-# `Util/CovDeriv/`
+# CovDeriv
 
-Covariant-derivative smoothness and bridge modules.
-
-| File | Role |
-|------|------|
-| [`CovDerivSmoothness.lean`](./CovDerivSmoothness.lean) | Tensoriality and smoothness machinery for `koszulCovDeriv`. |
-| [`CovDerivBridges.lean`](./CovDerivBridges.lean) | `covDeriv` / `covDerivAt` simp bridge lemmas. |
+Covariant-derivative utilities are split by import direction.
+`CovDerivSmoothness.lean` is pre-`LeviCivita` scaffolding used to construct the
+connection. `CovDerivBridges.lean` is post-`LeviCivita` simp glue for
+`covDeriv` and `covDerivAt`, kept separate to avoid an import cycle.
