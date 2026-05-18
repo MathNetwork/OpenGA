@@ -25,8 +25,6 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   [MeasurableSpace M] [BorelSpace M] [SigmaCompactSpace M]
 
 local notation:max "n_M" => Module.finrank ℝ E
-local notation:max "vol_g" =>
-  Riemannian.volumeMeasure (HasMetric.metric : RiemannianMetric I M)
 
 scoped[OpenGA.Comparison.BishopGromov]
   notation:max "B(" p ", " r ")" => Metric.ball p r
@@ -40,22 +38,24 @@ local notation:max "𝒟_K" => spaceFormAdmissibleRadii K
 /-- **Math.** Bishop–Gromov volume comparison.
 
 For a Riemannian manifold `(M, g)` with `Ric_g ≥ (n - 1) K g`, the ratio
-`vol_g(B(p, R)) / V_K^n(R)` of the Riemannian-volume ball to the model
-space-form ball is monotone non-increasing in `R` on the admissible
-radius window `𝒟_K`.
+`(volumeMeasure g)(B(p, R)) / V_K^n(R)` of the Riemannian-volume ball
+to the model space-form ball is monotone non-increasing in `R` on the
+admissible radius window `𝒟_K`.
 
-Stated directly on the canonical Riemannian volume `vol_g`; the
-generic-measure stopgap (`IsScalarMultipleOfHausdorff`) is retired
-now that `vol_g` is constructed in `Riemannian/Volume/`. The
+Stated directly on the canonical Riemannian volume `Riemannian.volumeMeasure g`;
+the generic-measure stopgap (`IsScalarMultipleOfHausdorff`) is retired
+now that `volumeMeasure` is constructed in `Riemannian/Volume/`. The
 scale-invariance of the ratio that motivated the stopgap is subsumed:
-any scalar multiple of `vol_g` gives the same ratio, so the
-vol_g-specific statement is no less general for downstream consumers
+any scalar multiple of `volumeMeasure g` gives the same ratio, so the
+metric-specific statement is no less general for downstream consumers
 (which must produce a Riemannian volume anyway). -/
 theorem bishopGromov_volume_comparison
+    (g : RiemannianMetric I M)
     (hRic : ∀ x : M, ∀ v : TangentSpace I x,
-      ((n_M : ℝ) - 1) * K * ⟪v, v⟫_g ≤ Ric_g(v, v) x)
+      ((n_M : ℝ) - 1) * K * g.metricInner x v v ≤ (ricciTensor g x v) v)
     (p : M) {r R : ℝ} (hr : r ∈ 𝒟_K) (hR : R ∈ 𝒟_K) (hrR : r ≤ R) :
-    (vol_g).real B(p, R) / V_K^n_M(R) ≤ (vol_g).real B(p, r) / V_K^n_M(r) := by
+    (Riemannian.volumeMeasure g).real B(p, R) / V_K^n_M(R)
+      ≤ (Riemannian.volumeMeasure g).real B(p, r) / V_K^n_M(r) := by
   sorry
 
 end

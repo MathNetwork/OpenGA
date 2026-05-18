@@ -57,10 +57,11 @@ noncomputable def normalCorrection
     (I : ModelWithCorners ℝ E H) [I.Boundaryless]
     [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
-    [hm : HasMetric I M]
+    [HasMetric I M]
+    (g : RiemannianMetric I M)
     (X : TestVectorField I M)
     (ν : (x : M) → TangentSpace I x) (x : M) : ℝ :=
-  metricInner x (ν x) (covDeriv HasMetric.metric ν X.toFun x)
+  g.metricInner x (ν x) (covDeriv g ν X.toFun x)
 
 /-- **Math.** **Full-form first variation** $\delta V(X)$ for a codim-1 varifold:
 $$\delta V(X) = \int (\mathrm{div}_M X - \langle \nu, \nabla_\nu X \rangle_g)\, d\|V\|.$$
@@ -82,10 +83,11 @@ noncomputable def firstVariationFull
     (I : ModelWithCorners ℝ E H) [I.Boundaryless]
     [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
-    [hm : HasMetric I M]
+    [HasMetric I M]
+    (g : RiemannianMetric I M)
     (V : Varifold M) [hN : Varifold.HasNormal I V]
     (X : TestVectorField I M) : ℝ :=
-  ∫ x, (divergenceM I X.toFun x - normalCorrection I X hN.unitNormal x)
+  ∫ x, (divergenceM I X.toFun x - normalCorrection I g X hN.unitNormal x)
       ∂V.massMeasure
 
 end GeometricMeasureTheory.Variation

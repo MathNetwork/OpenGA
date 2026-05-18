@@ -59,6 +59,7 @@ noncomputable def secondVariationFull
     [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
     [Riemannian.HasMetric I M]
+    (g : Riemannian.RiemannianMetric I M)
     (V : Varifold M) [hN : Varifold.HasNormal I V]
     (φ : M → ℝ) : ℝ :=
   -- PRE-PAPER: `Varifold.HasNormal.unitNormal` is raw
@@ -67,9 +68,9 @@ noncomputable def secondVariationFull
   -- with a `unitNormal_smooth` field.
   let νSmooth : SmoothVectorField I M :=
     ⟨hN.unitNormal, sorry⟩
-  ∫ x, (‖grad_g[I] φ‖²_g x -
-        (secondFundamentalFormSqNorm HasMetric.metric hN.unitNormal x +
-         ricci (HasMetric.metric) νSmooth νSmooth x) * φ x ^ 2)
+  ∫ x, (g.metricInner x (manifoldGradient g φ x) (manifoldGradient g φ x) -
+        (secondFundamentalFormSqNorm g hN.unitNormal x +
+         ricci g νSmooth νSmooth x) * φ x ^ 2)
       ∂V.massMeasure
 
 end GeometricMeasureTheory.Variation

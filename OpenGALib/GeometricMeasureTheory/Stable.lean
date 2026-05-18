@@ -58,7 +58,7 @@ def IsStable
     [Riemannian.HasMetric I M]
     (V : Varifold M) [Varifold.HasNormal I V] : Prop :=
   ∀ φ : M → ℝ, Function.support φ ⊆ (sing I V)ᶜ →
-    0 ≤ Variation.secondVariationFull I V φ
+    0 ≤ Variation.secondVariationFull I Riemannian.HasMetric.metric V φ
 
 /-- **Math.** $V$ is **unstable**: there exists a test direction with negative
 second variation. -/
@@ -73,7 +73,7 @@ def IsUnstable
     (V : Varifold M) [Varifold.HasNormal I V] : Prop :=
   ∃ φ : M → ℝ,
     Function.support φ ⊆ (sing I V)ᶜ ∧
-    Variation.secondVariationFull I V φ < 0
+    Variation.secondVariationFull I Riemannian.HasMetric.metric V φ < 0
 
 /-- **Math.** The **Morse index** of $V$: dimension of the negative eigenspace
 of the Jacobi operator (stub).

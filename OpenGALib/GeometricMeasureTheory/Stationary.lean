@@ -150,7 +150,8 @@ def IsStationary (V : Varifold M) : Prop :=
     [IsLocallyConstantChartedSpace H M]
     [Riemannian.HasMetric I M]
     [Varifold.HasNormal I V]
-    (X : TestVectorField I M), Variation.firstVariationFull I V X = 0
+    (X : TestVectorField I M),
+    Variation.firstVariationFull I Riemannian.HasMetric.metric V X = 0
 
 end Varifold
 
