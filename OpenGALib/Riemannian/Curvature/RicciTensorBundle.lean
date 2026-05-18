@@ -560,10 +560,6 @@ retained until #19). -/
 scoped[Riemannian] notation:max "scal_g[" I "]" =>
   scalarCurvature (I := I) (HasMetric.metric)
 
-/-- **Math.** Notation `Ric_g(v, w) x` for `ricciTensor HasMetric.metric x v w`
-on the ambient `[HasMetric I M]` metric. -/
-scoped[Riemannian] notation:max "Ric_g(" v ", " w ") " x:max =>
-  ricciTensor (HasMetric.metric) x v w
 
 /-! ## Ricci-flat and Einstein metric predicates
 
@@ -575,7 +571,7 @@ explicit argument because the underlying notations (`Ric_g`,
 /-- **Math.** The ambient Riemannian metric is **Ricci-flat** if its
 Ricci tensor vanishes pointwise. -/
 def IsRicciFlat : Prop :=
-  ∀ (x : M) (V W : TangentSpace I x), Ric_g(V, W) x = 0
+  ∀ (x : M) (V W : TangentSpace I x), ricciTensor HasMetric.metric x V W = 0
 
 /-- **Math.** The ambient Riemannian metric is **Einstein** if its Ricci
 tensor is a constant scalar multiple of the metric:
@@ -585,7 +581,7 @@ fixed real constant $c$ (the *Einstein constant*).
 Reference: do Carmo §4 Ex. 6; Petersen Ch. 3 §6. -/
 def IsEinstein : Prop :=
   ∃ c : ℝ, ∀ (x : M) (V W : TangentSpace I x),
-    Ric_g(V, W) x = c * metricInner x V W
+    ricciTensor HasMetric.metric x V W = c * metricInner x V W
 
 end Riemannian
 

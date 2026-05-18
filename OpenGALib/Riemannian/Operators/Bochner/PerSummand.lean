@@ -468,7 +468,7 @@ theorem bochner_connectionLaplacian_grad_decomposition
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
     ⟪connectionLaplacian HasMetric.metric (grad_g[I] f) x, (grad_g[I] f) x⟫_g
       = ⟪(grad_g[I] f) x, (grad_g[I] (Δ_g[I] f)) x⟫_g
-        + Ric_g((grad_g[I] f) x, (grad_g[I] f) x) x := by
+        + ricciTensor HasMetric.metric x ((grad_g[I] f) x) ((grad_g[I] f) x) := by
   classical
   have h_grad := manifoldGradient_smooth_of_smooth HasMetric.metric f hf
   let gradF : SmoothVectorField I M :=
@@ -510,8 +510,8 @@ theorem bochner_connectionLaplacian_grad_decomposition
         (manifoldGradient (I := I) HasMetric.metric f x)
       = metricInner x (manifoldGradient (I := I) HasMetric.metric f x)
           (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x)
-        + Ric_g((manifoldGradient (I := I) HasMetric.metric f x),
-                (manifoldGradient (I := I) HasMetric.metric f x)) x
+        + ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x)
+                                          (manifoldGradient (I := I) HasMetric.metric f x)
   rw [connectionLaplacian_def]
   -- Pull sum out via `sum_inner`.
   have h_pull :
@@ -533,7 +533,7 @@ theorem bochner_connectionLaplacian_grad_decomposition
   rw [Finset.sum_sub_distrib, Finset.sum_add_distrib, ← Finset.mul_sum]
   -- (1) ∑ R-term = Ric(∇f, ∇f).
   have h_R_eq : (∑ i, Rterm i) =
-      Ric_g(manifoldGradient (I := I) HasMetric.metric f x, gradF.toFun x) x :=
+      ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x) (gradF.toFun x) :=
     heart_curvature_orthonormal_sum_eq_ricci (I := I) f hf gradF x
   -- (2) ∑ H-term = 0.
   have h_H_eq : (∑ i, Hterm i) = 0 :=

@@ -61,7 +61,7 @@ endomorphism. -/
 theorem ricciTensor_eq_sum_inner_orthonormal
     [IsManifold I 2 M]
     (x : M) (V W : TangentSpace I x) :
-    Ric_g(V, W) x =
+    ricciTensor HasMetric.metric x V W =
       ∑ i, ⟪(stdOrthonormalBasis ℝ (TangentSpace I x)) i,
             curvatureEndo (HasMetric.metric)
               (SmoothVectorField.const (I := I) (M := M) V)
@@ -339,7 +339,7 @@ theorem heart_curvature_orthonormal_sum_eq_ricci
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i)
           W.toFun (manifoldGradient (I := I) HasMetric.metric f) x)
         (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
-      = Ric_g(manifoldGradient (I := I) HasMetric.metric f x, W.toFun x) x := by
+      = ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x) (W.toFun x) := by
   classical
   have h_interior : extChartAt I x x ∈ closure (interior (Set.range I)) := by
     rw [ModelWithCorners.Boundaryless.range_eq_univ, interior_univ, closure_univ]
@@ -401,7 +401,7 @@ theorem heart_curvature_orthonormal_sum_eq_ricci
     _ = ∑ i, Φ ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)
                 ((stdOrthonormalBasis ℝ (TangentSpace I x)) i) :=
         Riemannian.Tensor.sum_diagonal_smoothOrthoFrame_eq_std (I := I) x Φ
-    _ = Ric_g(W.toFun x, gradF.toFun x) x := by
+    _ = ricciTensor HasMetric.metric x (W.toFun x) (gradF.toFun x) := by
         rw [ricciTensor_eq_sum_inner_orthonormal x (W.toFun x) (gradF.toFun x)]
         apply Finset.sum_congr rfl
         intro i _
@@ -413,7 +413,7 @@ theorem heart_curvature_orthonormal_sum_eq_ricci
             = ⟪(stdOrthonormalBasis ℝ (TangentSpace I x)) i,
                 curvatureEndo (HasMetric.metric) WV GV x ((stdOrthonormalBasis ℝ (TangentSpace I x)) i)⟫_ℝ
         exact real_inner_comm _ _
-    _ = Ric_g(gradF.toFun x, W.toFun x) x := by
+    _ = ricciTensor HasMetric.metric x (gradF.toFun x) (W.toFun x) := by
         show ricciTensor (HasMetric.metric) x (W.toFun x) (gradF.toFun x)
           = ricciTensor (HasMetric.metric) x (gradF.toFun x) (W.toFun x)
         show ricci (HasMetric.metric) WV GV x
@@ -657,7 +657,7 @@ theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_of_inner_form
             (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
           w
         = metricInner x (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x) w
-          + Ric_g(manifoldGradient (I := I) HasMetric.metric f x, w) x) :
+          + ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x) w) :
     ∑ i, metricInner x
         (secondCovDerivAt (I := I) (M := M) HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
@@ -665,8 +665,8 @@ theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_of_inner_form
         (manifoldGradient (I := I) HasMetric.metric f x)
       = metricInner x (manifoldGradient (I := I) HasMetric.metric f x)
             (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x)
-        + Ric_g((manifoldGradient (I := I) HasMetric.metric f x),
-                (manifoldGradient (I := I) HasMetric.metric f x)) x := by
+        + ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x)
+                                          (manifoldGradient (I := I) HasMetric.metric f x) := by
   classical
   -- Specialise hInner at w = ∇f x.
   have h := hInner (manifoldGradient (I := I) HasMetric.metric f x)
@@ -687,12 +687,12 @@ theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_of_inner_form
         (sum_inner Finset.univ _ (manifoldGradient (I := I) HasMetric.metric f x)).symm
     _ = metricInner x (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x)
             (manifoldGradient (I := I) HasMetric.metric f x)
-          + Ric_g(manifoldGradient (I := I) HasMetric.metric f x,
-                  manifoldGradient (I := I) HasMetric.metric f x) x := h
+          + ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x)
+                                            (manifoldGradient (I := I) HasMetric.metric f x) := h
     _ = metricInner x (manifoldGradient (I := I) HasMetric.metric f x)
             (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x)
-          + Ric_g(manifoldGradient (I := I) HasMetric.metric f x,
-                  manifoldGradient (I := I) HasMetric.metric f x) x := by
+          + ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x)
+                                            (manifoldGradient (I := I) HasMetric.metric f x) := by
         rw [metricInner_comm x (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x)]
 
 end Operators
