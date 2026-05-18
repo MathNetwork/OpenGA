@@ -12,7 +12,7 @@ over itself with the standard inner product as a constant metric tensor.
 
 * `euclideanRiemannianMetric` — the flat metric as data
   (`RiemannianMetric (𝓘(ℝ, E)) E`).
-* `metricInner_euclidean` — `g.metricInner x v w = ⟪v, w⟫_ℝ` on the
+* `HasMetric.metric.metricInner_euclidean` — `g.metricInner x v w = ⟪v, w⟫_ℝ` on the
   flat metric.
 
 Reference: do Carmo, *Riemannian Geometry*, §1.1 Example 1.4.

@@ -145,7 +145,7 @@ infrastructure.
 theorem tangentHyperplane_at_reducedBoundary_orthogonal
     (Ω : FinitePerimeter M) (x : M)
     (_hx : x ∈ FinitePerimeter.reducedBoundary Ω) (v : TangentSpace I x) :
-    Riemannian.metricInner x v (Varifold.bvGradientDirection I Ω x) = 0 ↔
+    Riemannian.HasMetric.metric.metricInner x v (Varifold.bvGradientDirection I Ω x) = 0 ↔
       v ∈ (Submodule.span ℝ {Varifold.bvGradientDirection I Ω x})ᗮ := by
   sorry
 

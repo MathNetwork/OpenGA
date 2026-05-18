@@ -64,7 +64,7 @@ theorem bochner_leibniz_trace_reduction
   classical
   have h_grad := manifoldGradient_smooth_of_smooth HasMetric.metric f hf
   show (1 / 2 : ℝ) * Operators.scalarLaplacian (I := I) (M := M) HasMetric.metric ((fun y => HasMetric.metric.metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (manifoldGradient (I := I) HasMetric.metric f y))) x
-      = metricInner x
+      = HasMetric.metric.metricInner x
           (connectionLaplacian (I := I) (M := M) HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x)
           (manifoldGradient (I := I) HasMetric.metric f x)
         + frobeniusSq (I := I) (M := M) (hessianBilin (I := I) HasMetric.metric f) x
@@ -93,11 +93,11 @@ theorem bochner_leibniz_trace_reduction
   have h_summand : ∀ i,
       (1 / 2 : ℝ) * hessian (I := I) (M := M) HasMetric.metric ((fun y => HasMetric.metric.metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (manifoldGradient (I := I) HasMetric.metric f y)))
         (Bi i).toFun (Bi i).toFun x
-      = metricInner x
+      = HasMetric.metric.metricInner x
             (secondCovDerivSection (I := I) (M := M) HasMetric.metric
               (manifoldGradient (I := I) HasMetric.metric f) (Bi i).toFun (Bi i).toFun x)
             (manifoldGradient (I := I) HasMetric.metric f x)
-          + metricInner x
+          + HasMetric.metric.metricInner x
               (covDeriv HasMetric.metric (Bi i).toFun (manifoldGradient (I := I) HasMetric.metric f) x)
               (covDeriv HasMetric.metric (Bi i).toFun (manifoldGradient (I := I) HasMetric.metric f) x) := by
     intro i
@@ -113,11 +113,11 @@ theorem bochner_leibniz_trace_reduction
   congr 1
   · -- First sum: ∑_i ⟨secondCovDerivSection ∇f (Bi · x) (Bi · x) x, ∇f x⟩
     --             = ⟨connectionLaplacian ∇f x, ∇f x⟩ via `sum_inner` + `connectionLaplacian_def`.
-    show ∑ i, metricInner x
+    show ∑ i, HasMetric.metric.metricInner x
           (secondCovDerivSection (I := I) (M := M) HasMetric.metric
             (manifoldGradient (I := I) HasMetric.metric f) (Bi i).toFun (Bi i).toFun x)
           (manifoldGradient (I := I) HasMetric.metric f x)
-        = metricInner x
+        = HasMetric.metric.metricInner x
             (connectionLaplacian (I := I) (M := M) HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x)
             (manifoldGradient (I := I) HasMetric.metric f x)
     unfold connectionLaplacian
@@ -130,7 +130,7 @@ theorem bochner_leibniz_trace_reduction
     -- `B(v, w) := ⟪covDerivAt HasMetric.metric ∇f x v, covDerivAt HasMetric.metric ∇f x w⟫_ℝ` (a `LinearMap.mk₂`),
     -- converts smoothOrthoFrame trace to std-basis trace; then the existing
     -- orthonormal-basis Frobenius identity closes.
-    show ∑ i, metricInner x
+    show ∑ i, HasMetric.metric.metricInner x
             (covDeriv HasMetric.metric (Bi i).toFun (manifoldGradient (I := I) HasMetric.metric f) x)
             (covDeriv HasMetric.metric (Bi i).toFun (manifoldGradient (I := I) HasMetric.metric f) x)
         = frobeniusSq (I := I) (M := M) (hessianBilin (I := I) HasMetric.metric f) x
@@ -185,7 +185,7 @@ theorem bochner_leibniz_trace_reduction
       Riemannian.Tensor.sum_diagonal_smoothOrthoFrame_eq_std (I := I) x B'
     rw [hB'_def] at h_stage7
     simp only [LinearMap.mk₂_apply] at h_stage7
-    -- LHS: rewrite `metricInner x (covDeriv HasMetric.metric (Bi · x) ∇f x) (covDeriv HasMetric.metric (Bi · x) ∇f x)`
+    -- LHS: rewrite `HasMetric.metric.metricInner x (covDeriv HasMetric.metric (Bi · x) ∇f x) (covDeriv HasMetric.metric (Bi · x) ∇f x)`
     -- as `⟪covDerivAt HasMetric.metric ∇f x (Bi · x x), covDerivAt HasMetric.metric ∇f x (Bi · x x)⟫_ℝ` (def-eq), match h_stage7's LHS.
     show ∑ i, @inner ℝ (TangentSpace I x) _
               (covDerivAt HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x
@@ -203,13 +203,13 @@ theorem bochner_leibniz_trace_reduction
     set v : TangentSpace I x :=
       covDerivAt HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x (b i)
     have h_hess_unfold : ∀ j, ((hessianBilin (I := I) HasMetric.metric f x) (b i)) (b j)
-                            = metricInner x v (b j) := fun _ => rfl
+                            = HasMetric.metric.metricInner x v (b j) := fun _ => rfl
     simp only [h_hess_unfold]
     calc @inner ℝ (TangentSpace I x) _ v v
         = ⟪v, v⟫_ℝ := rfl
       _ = ‖v‖ ^ 2 := real_inner_self_eq_norm_sq v
       _ = ∑ j, ⟪v, b j⟫_ℝ ^ 2 := (b.sum_sq_inner_left v).symm
-      _ = ∑ j, (metricInner x v (b j)) ^ 2 := rfl
+      _ = ∑ j, (HasMetric.metric.metricInner x v (b j)) ^ 2 := rfl
 
 /-- **Math.** **Explicit-`g` form of the Leibniz trace reduction**. -/
 theorem bochner_leibniz_trace_reduction_g

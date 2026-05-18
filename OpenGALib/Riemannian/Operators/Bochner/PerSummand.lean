@@ -99,8 +99,8 @@ theorem bochner_per_summand_swap
   -- Equivalent (def-eq) to the section-level form of
   -- `hessianBilin_section_eventually_symm_of_strict_interior` with X := B, Y := W.
   have h_section_sym :
-      (fun y : M => metricInner y (Q y) (W.toFun y))
-        =ᶠ[𝓝 x] (fun y : M => metricInner y (P y) (B.toFun y)) :=
+      (fun y : M => HasMetric.metric.metricInner y (Q y) (W.toFun y))
+        =ᶠ[𝓝 x] (fun y : M => HasMetric.metric.metricInner y (P y) (B.toFun y)) :=
     hessianBilin_section_eventually_symm_of_strict_interior
       (I := I) HasMetric.metric rfl f hf B.toFun W.toFun x
   -- Step (c): metric compat on `(P, B)` along direction `B x` at `x`.
@@ -110,9 +110,9 @@ theorem bochner_per_summand_swap
   -- Step (d): differentiate `h_section_sym` at `x` along `B x` via `EventuallyEq.mfderiv_eq`.
   have h_mfderiv_eq :
       mfderiv I 𝓘(ℝ, ℝ)
-          (fun y : M => metricInner y (Q y) (W.toFun y)) x (B.toFun x)
+          (fun y : M => HasMetric.metric.metricInner y (Q y) (W.toFun y)) x (B.toFun x)
         = mfderiv I 𝓘(ℝ, ℝ)
-          (fun y : M => metricInner y (P y) (B.toFun y)) x (B.toFun x) := by
+          (fun y : M => HasMetric.metric.metricInner y (P y) (B.toFun y)) x (B.toFun x) := by
     rw [Filter.EventuallyEq.mfderiv_eq h_section_sym]
     rfl
   -- `h_mfderiv_eq : mfderiv (...g(Q, W)) x (B x) = mfderiv (...g(P, B)) x (B x)`.
@@ -122,13 +122,13 @@ theorem bochner_per_summand_swap
   --   = mfderiv (b ↦ g(P, B)) x (B x)   [h_mfderiv_eq]
   --   = g(LC P x (B x), B x) + g(P x, LC B x (B x))  [h_compat_PB]
   have h_combined :
-      metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Q x (B.toFun x))
+      HasMetric.metric.metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Q x (B.toFun x))
           (W.toFun x)
-        + metricInner x (Q x)
+        + HasMetric.metric.metricInner x (Q x)
             ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun W.toFun x (B.toFun x))
-      = metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun P x (B.toFun x))
+      = HasMetric.metric.metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun P x (B.toFun x))
           (B.toFun x)
-        + metricInner x (P x)
+        + HasMetric.metric.metricInner x (P x)
             ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun B.toFun x (B.toFun x)) := by
     rw [← h_compat_QW, h_mfderiv_eq, h_compat_PB]
   -- Step (e): identify `g(Q x, LC W x (B x))` via `hessianBilin_symm` at `x`.
@@ -162,36 +162,36 @@ theorem bochner_per_summand_swap
             ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun B.toFun x (B.toFun x))
             (W.toFun x) :=
     h_hess_sym _ _
-  -- Unfold `hessianBilin f x a b = metricInner x (covDerivAt HasMetric.metric ∇f x a) b` (rfl).
-  -- LHS of h_sym_BW : `metricInner x (Q x) (LC W x (B x)) = metricInner x (LC ∇f x (LC W x (B x))) (B x)`.
-  -- LHS of h_sym_WB : `metricInner x (P x) (LC B x (B x)) = metricInner x (LC ∇f x (LC B x (B x))) (W x)`.
+  -- Unfold `hessianBilin f x a b = HasMetric.metric.metricInner x (covDerivAt HasMetric.metric ∇f x a) b` (rfl).
+  -- LHS of h_sym_BW : `HasMetric.metric.metricInner x (Q x) (LC W x (B x)) = HasMetric.metric.metricInner x (LC ∇f x (LC W x (B x))) (B x)`.
+  -- LHS of h_sym_WB : `HasMetric.metric.metricInner x (P x) (LC B x (B x)) = HasMetric.metric.metricInner x (LC ∇f x (LC B x (B x))) (W x)`.
   -- Note Q x = LC ∇f x (B x) and P x = LC ∇f x (W x) (def-eq).
-  -- We need `metricInner x (Q x) (LC W x (B x))` form on LHS of h_sym_BW.
-  -- `hessianBilin f x (B x) v = metricInner x (covDerivAt HasMetric.metric ∇f x (B x)) v = metricInner x (Q x) v`
+  -- We need `HasMetric.metric.metricInner x (Q x) (LC W x (B x))` form on LHS of h_sym_BW.
+  -- `hessianBilin f x (B x) v = HasMetric.metric.metricInner x (covDerivAt HasMetric.metric ∇f x (B x)) v = HasMetric.metric.metricInner x (Q x) v`
   -- by def (covDerivAt HasMetric.metric ∇f x (B x) = (lcc ∇f) x (B x) = Q x def-eq).
-  have h_QcovBW : metricInner x (Q x)
+  have h_QcovBW : HasMetric.metric.metricInner x (Q x)
         ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun W.toFun x (B.toFun x))
-      = metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun gradF.toFun x
+      = HasMetric.metric.metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun gradF.toFun x
           ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun W.toFun x (B.toFun x)))
           (B.toFun x) := h_sym_BW
-  have h_PcovBB : metricInner x (P x)
+  have h_PcovBB : HasMetric.metric.metricInner x (P x)
         ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun B.toFun x (B.toFun x))
-      = metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun gradF.toFun x
+      = HasMetric.metric.metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun gradF.toFun x
           ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun B.toFun x (B.toFun x)))
           (W.toFun x) := h_sym_WB
   rw [h_QcovBW, h_PcovBB] at h_combined
   -- Rearrange to match the goal: LHS - LCBB term = RHS - LCWB term.
   -- The goal uses `covDerivAt HasMetric.metric ∇f x v` form rather than `lcc.toFun ∇f x v`.
   -- These are definitionally equal: `covDerivAt HasMetric.metric Y x v := (lcc.toFun Y x) v`.
-  show metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Q x (B.toFun x))
+  show HasMetric.metric.metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Q x (B.toFun x))
           (W.toFun x)
-        - metricInner x
+        - HasMetric.metric.metricInner x
             ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun gradF.toFun x
               ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun B.toFun x (B.toFun x)))
             (W.toFun x)
-      = metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun P x (B.toFun x))
+      = HasMetric.metric.metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun P x (B.toFun x))
           (B.toFun x)
-        - metricInner x
+        - HasMetric.metric.metricInner x
             ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun gradF.toFun x
               ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun W.toFun x (B.toFun x)))
             (B.toFun x)
@@ -274,7 +274,7 @@ theorem bochner_per_summand_riemann_form
   rw [h_riem, h_lieb_dir]
   -- Now: g(∇_B ∇_W ∇f - ∇_W ∇_B ∇f - (covDeriv HasMetric.metric ∇f (∇_B W) - covDeriv HasMetric.metric ∇f (∇_W B)), B x)
   --     = g(∇_B ∇_W ∇f, B) - g(∇_W ∇_B ∇f, B) - g(covDeriv HasMetric.metric ∇f (∇_B W), B) + g(covDeriv HasMetric.metric ∇f (∇_W B), B)
-  -- (by metricInner_sub_left distribution × 2 + metricInner_add_left for the inner +).
+  -- (by HasMetric.metric.metricInner_sub_left distribution × 2 + HasMetric.metric.metricInner_add_left for the inner +).
   -- Goal becomes pure algebra; linarith with metricInner-sub distribution closes.
   rw [HasMetric.metric.metricInner_sub_left, HasMetric.metric.metricInner_sub_left,
       HasMetric.metric.metricInner_sub_left]
@@ -331,12 +331,12 @@ theorem bochner_per_summand_assembled
   have h_compat_QB := leviCivitaConnection_metric_compatible HasMetric.metric
     W.toFun Q B.toFun x (W.smoothAt x) hQ_smooth (B.smoothAt x)
   simp only [← leviCivitaConnection_toFun_eq_covDeriv] at h_compat_QB
-  -- Identify `(fun y => metricInner y (Q y) (B y)) = (fun y => hessianBilin f y (B y) (B y))`.
+  -- Identify `(fun y => HasMetric.metric.metricInner y (Q y) (B y)) = (fun y => hessianBilin f y (B y) (B y))`.
   have h_QB_section :
-      (fun y : M => metricInner y (Q y) (B.toFun y))
+      (fun y : M => HasMetric.metric.metricInner y (Q y) (B.toFun y))
         = (fun y : M => hessianBilin (I := I) HasMetric.metric f y (B.toFun y) (B.toFun y)) := by
     funext y
-    -- hessianBilin f y v w = metricInner y (covDerivAt HasMetric.metric ∇f y v) w (def).
+    -- hessianBilin f y v w = HasMetric.metric.metricInner y (covDerivAt HasMetric.metric ∇f y v) w (def).
     -- Q y = covDeriv HasMetric.metric B ∇f y = covDerivAt HasMetric.metric ∇f y (B y) (def).
     rfl
   rw [h_QB_section] at h_compat_QB
@@ -375,7 +375,7 @@ theorem bochner_per_summand_assembled
   --   g(LC Q x (W x), B) = mfderiv (...) - g(Q x, LC B x (W x))
   --                       = mfderiv (...) - hessianBilin f x (B x) (LC B x (W x))
   -- and g(LC Gf x (LC B x (W x))) (B) = hessianBilin f x (LC B x (W x)) (B x)
-  --   (def: hessianBilin f x v w = metricInner x (covDerivAt HasMetric.metric ∇f x v) w; here v = LC B x (W x) = ∇_W B x, w = B x)
+  --   (def: hessianBilin f x v w = HasMetric.metric.metricInner x (covDerivAt HasMetric.metric ∇f x v) w; here v = LC B x (W x) = ∇_W B x, w = B x)
   --   = hessianBilin f x (B x) (LC B x (W x))   [by h_sym_WB]
   -- So the cancellation:
   --   g(R + g(LC Q W, B) - Hess(LC B W, B)
@@ -390,9 +390,9 @@ theorem bochner_per_summand_assembled
   -- Rewrite h_compat_QB in terms of mf_val.
   have h_compat_QB' :
       mf_val
-        = metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Q x (W.toFun x))
+        = HasMetric.metric.metricInner x ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun Q x (W.toFun x))
             (B.toFun x)
-          + metricInner x (Q x)
+          + HasMetric.metric.metricInner x (Q x)
               ((leviCivitaConnection (I := I) (M := M) HasMetric.metric).toFun B.toFun x (W.toFun x)) :=
     h_compat_QB
   have h_id_LCQW :
@@ -441,7 +441,7 @@ without any Hom-bundle Leibniz bridge. -/
 /-- **Eng.** Smoothness of the section-form Hessian summand
 `b ↦ ⟨covDerivAt HasMetric.metric ∇f b (B b), B b⟩_g` at `x`, via composition of
 `leviCivitaConnection_smoothAt_smoothVF_dir` with
-`metricInner_mdifferentiableAt_of_tangentSmoothAt`. -/
+`HasMetric.metric.metricInner_mdifferentiableAt_of_tangentSmoothAt`. -/
 private lemma hessianBilin_smoothVF_diag_mdifferentiableAt
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f)
     (B : SmoothVectorField I M) (x : M) :
@@ -457,9 +457,9 @@ private lemma hessianBilin_smoothVF_diag_mdifferentiableAt
     leviCivitaConnection_smoothAt_smoothVF_dir HasMetric.metric B gradF x
   -- Smoothness of `b ↦ B b` (just B.smoothAt).
   have h_B : TangentSmoothAt B.toFun x := B.smoothAt x
-  -- `hessianBilin f y v w = metricInner y (covDerivAt HasMetric.metric ∇f y v) w` (def).
-  -- So the diagonal is `metricInner y (covDerivAt HasMetric.metric ∇f y (B y)) (B y)`.
-  exact metricInner_mdifferentiableAt_of_tangentSmoothAt h_covAt h_B
+  -- `hessianBilin f y v w = HasMetric.metric.metricInner y (covDerivAt HasMetric.metric ∇f y v) w` (def).
+  -- So the diagonal is `HasMetric.metric.metricInner y (covDerivAt HasMetric.metric ∇f y (B y)) (B y)`.
+  exact HasMetric.metric.metricInner_mdifferentiableAt_of_tangentSmoothAt h_covAt h_B
 
 /-- **Math.** **Heart-of-Bochner reduction (section form, unconditional)**:
 $$\langle \Delta_\nabla \nabla f, \nabla f\rangle_g
@@ -488,7 +488,7 @@ theorem bochner_connectionLaplacian_grad_decomposition
       smooth := Riemannian.Tensor.smoothOrthoFrame_smooth (I := I) hm.metric x i }
   -- Per-summand quantities.
   set Rterm : Fin (Module.finrank ℝ E) → ℝ := fun i =>
-    metricInner x
+    HasMetric.metric.metricInner x
       (riemannCurvature HasMetric.metric (Bi i).toFun gradF.toFun gradF.toFun x)
       ((Bi i).toFun x) with hRterm_def
   set Mterm : Fin (Module.finrank ℝ E) → ℝ := fun i =>
@@ -500,36 +500,36 @@ theorem bochner_connectionLaplacian_grad_decomposition
       (covDeriv HasMetric.metric gradF.toFun (Bi i).toFun x) with hHterm_def
   -- Per-summand: `g(secondCovDerivSection ∇f Bi Bi x, ∇f x) = R + M - 2 H`.
   have h_per_summand : ∀ i,
-      metricInner x
+      HasMetric.metric.metricInner x
           (secondCovDerivSection (I := I) (M := M) HasMetric.metric
             gradF.toFun (Bi i).toFun (Bi i).toFun x)
           (gradF.toFun x)
         = Rterm i + Mterm i - 2 * Hterm i := by
     intro i
-    show metricInner x
+    show HasMetric.metric.metricInner x
           (covDeriv HasMetric.metric (Bi i).toFun (covDeriv HasMetric.metric (Bi i).toFun gradF.toFun) x
             - covDerivAt HasMetric.metric gradF.toFun x (covDeriv HasMetric.metric (Bi i).toFun (Bi i).toFun x))
           (gradF.toFun x) = _
-    rw [metricInner_sub_left]
+    rw [HasMetric.metric.metricInner_sub_left]
     show _ = Rterm i + Mterm i - 2 * Hterm i
     rw [hRterm_def, hMterm_def, hHterm_def]
     exact bochner_per_summand_assembled (I := I) HasMetric.metric rfl f hf (Bi i) gradF x
   -- Main: unfold `connectionLaplacian`, sum_inner pull-out, per_summand, sum-distribute.
-  show metricInner x
+  show HasMetric.metric.metricInner x
         (connectionLaplacian (I := I) (M := M) HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x)
         (manifoldGradient (I := I) HasMetric.metric f x)
-      = metricInner x (manifoldGradient (I := I) HasMetric.metric f x)
+      = HasMetric.metric.metricInner x (manifoldGradient (I := I) HasMetric.metric f x)
           (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x)
         + ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x)
                                           (manifoldGradient (I := I) HasMetric.metric f x)
   rw [connectionLaplacian_def]
   -- Pull sum out via `sum_inner`.
   have h_pull :
-      metricInner x
+      HasMetric.metric.metricInner x
           (∑ i, secondCovDerivSection (I := I) (M := M) HasMetric.metric
             gradF.toFun (Bi i).toFun (Bi i).toFun x)
           (gradF.toFun x)
-        = ∑ i, metricInner x
+        = ∑ i, HasMetric.metric.metricInner x
             (secondCovDerivSection (I := I) (M := M) HasMetric.metric
               gradF.toFun (Bi i).toFun (Bi i).toFun x)
             (gradF.toFun x) :=
@@ -578,11 +578,11 @@ theorem bochner_connectionLaplacian_grad_decomposition
     exact Filter.EventuallyEq.mfderiv_eq h_eventuallyEq
   have h_grad_dual :
       (mfderiv I 𝓘(ℝ, ℝ) (Operators.scalarLaplacian (I := I) HasMetric.metric f : M → ℝ) x (gradF.toFun x) : ℝ)
-        = metricInner x (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x) (gradF.toFun x) :=
+        = HasMetric.metric.metricInner x (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x) (gradF.toFun x) :=
     (manifoldGradient_inner_eq HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x (gradF.toFun x)).symm
   -- Combine.
   rw [h_R_eq, h_H_eq, h_M_factor, h_M_to_lap, h_grad_dual,
-      metricInner_comm x (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x)]
+      HasMetric.metric.metricInner_comm x (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x)]
   ring
 
 -- `bochner_weitzenboeck` (the headline) lives in `Operators/Bochner.lean`,

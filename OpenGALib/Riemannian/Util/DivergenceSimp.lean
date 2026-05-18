@@ -4,7 +4,7 @@ import OpenGALib.Riemannian.Operators.Divergence
 # Divergence — simp def-unfold
 
 Engineering simp lemma exposing the definition of `divergence` as a sum
-of `metricInner (∇_{B_i} X) B_i` over the smooth $g$-orthonormal frame.
+of `HasMetric.metric.metricInner (∇_{B_i} X) B_i` over the smooth $g$-orthonormal frame.
 Imported by callers that need to rewrite at the level of the frame sum
 rather than against the opaque operator name.
 -/
@@ -25,7 +25,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   [hm : HasMetric I M]
 
 /-- **Eng.** Definitional unfold of `divergence` as a sum of
-`metricInner (∇_{B_i} X) B_i` over the smooth $g$-orthonormal frame. Pure
+`HasMetric.metric.metricInner (∇_{B_i} X) B_i` over the smooth $g$-orthonormal frame. Pure
 `rfl`; tagged `@[simp]` for tactic-level rewrites. -/
 @[simp] lemma divergence_def
     (g : RiemannianMetric I M)

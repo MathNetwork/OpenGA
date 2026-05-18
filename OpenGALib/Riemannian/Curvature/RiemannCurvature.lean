@@ -1071,7 +1071,7 @@ $K_g(X, Y)(x) = K_g(Y, X)(x)$.
 Numerator: $g(R(X,Y)Y, X) = g(R(Y,X)X, Y)$ via `riemannCurvature_pair_symm`
 on $(X, Y, Y, X) \leftrightarrow (Y, X, X, Y)$, then a sign cancellation
 using `riemannCurvature_antisymm` once in each slot.
-Denominator: symmetric in $X, Y$ via `metricInner_comm`. -/
+Denominator: symmetric in $X, Y$ via `HasMetric.metric.metricInner_comm`. -/
 theorem sectionalCurvature_symmetric
     [IsManifold I 2 M]
     (g : RiemannianMetric I M)

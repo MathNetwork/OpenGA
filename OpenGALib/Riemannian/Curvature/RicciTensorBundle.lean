@@ -574,7 +574,7 @@ fixed real constant $c$ (the *Einstein constant*).
 Reference: do Carmo §4 Ex. 6; Petersen Ch. 3 §6. -/
 def IsEinstein : Prop :=
   ∃ c : ℝ, ∀ (x : M) (V W : TangentSpace I x),
-    ricciTensor HasMetric.metric x V W = c * metricInner x V W
+    ricciTensor HasMetric.metric x V W = c * HasMetric.metric.metricInner x V W
 
 end Riemannian
 
