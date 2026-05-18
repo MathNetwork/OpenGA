@@ -191,13 +191,6 @@ noncomputable def hessianBilin
           = c • g.metricInner x (covDerivAt g (manifoldGradient (I := I) g f) x v) w
       rw [g.metricInner_smul_right]; rfl)
 
-/-- **Math.** Notation `hess_g[I] f` for the Hessian as a `(0,2)`-tensor
-section. `I` is bracketed because `f : M → ℝ` does not expose the model.
-For the Frobenius squared norm use `‖hess_g[I] f‖²_g`. The notation pipes
-the ambient `[HasMetric I M]` metric so downstream code keeps writing
-`hess_g[I] f` during Phase 1 (typeclass retained until #19). -/
-scoped[Riemannian] notation:max "hess_g[" I "] " f:max =>
-  Operators.hessianBilin (I := I) HasMetric.metric f
 
 /-- **Math.** $(\operatorname{trace} B(x))^2 / n \le \operatorname{frobeniusSq} B(x)$. -/
 theorem trace_sq_div_dim_le_frobeniusSq
