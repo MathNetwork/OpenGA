@@ -431,7 +431,7 @@ theorem sum_hessianBilin_smoothOrthoFrame_eventuallyEq_laplacian
     (fun b => ∑ i, hessianBilin (I := I) HasMetric.metric f b
                     (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i b)
                     (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i b))
-      =ᶠ[𝓝 x] (Δ_g[I] f : M → ℝ) := by
+      =ᶠ[𝓝 x] (Operators.scalarLaplacian (I := I) HasMetric.metric f : M → ℝ) := by
   filter_upwards [Riemannian.Tensor.smoothOrthoFrameNbhd_mem_nhds (I := I) (M := M) x]
     with b hb
   -- At b ∈ nbhd, basis-invariance of trace of `hessianBilin f b`.
@@ -656,7 +656,7 @@ theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_of_inner_form
             (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x)
             (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
           w
-        = metricInner x (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x) w
+        = metricInner x (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x) w
           + ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x) w) :
     ∑ i, metricInner x
         (secondCovDerivAt (I := I) (M := M) HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x
@@ -664,7 +664,7 @@ theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_of_inner_form
           (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
         (manifoldGradient (I := I) HasMetric.metric f x)
       = metricInner x (manifoldGradient (I := I) HasMetric.metric f x)
-            (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x)
+            (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x)
         + ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x)
                                           (manifoldGradient (I := I) HasMetric.metric f x) := by
   classical
@@ -685,15 +685,15 @@ theorem sum_inner_secondCovDerivAt_grad_smoothOrthoFrame_of_inner_form
             (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric x i x))
           (manifoldGradient (I := I) HasMetric.metric f x) :=
         (sum_inner Finset.univ _ (manifoldGradient (I := I) HasMetric.metric f x)).symm
-    _ = metricInner x (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x)
+    _ = metricInner x (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x)
             (manifoldGradient (I := I) HasMetric.metric f x)
           + ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x)
                                             (manifoldGradient (I := I) HasMetric.metric f x) := h
     _ = metricInner x (manifoldGradient (I := I) HasMetric.metric f x)
-            (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x)
+            (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x)
           + ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x)
                                             (manifoldGradient (I := I) HasMetric.metric f x) := by
-        rw [metricInner_comm x (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x)]
+        rw [metricInner_comm x (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x)]
 
 end Operators
 end Riemannian

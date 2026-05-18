@@ -467,7 +467,7 @@ theorem bochner_connectionLaplacian_grad_decomposition
     [IsManifold I 2 M] [T2Space M]
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
     ⟪connectionLaplacian HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x, (manifoldGradient (I := I) HasMetric.metric f) x⟫_g
-      = ⟪(manifoldGradient (I := I) HasMetric.metric f) x, (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f)) x⟫_g
+      = ⟪(manifoldGradient (I := I) HasMetric.metric f) x, (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f)) x⟫_g
         + ricciTensor HasMetric.metric x ((manifoldGradient (I := I) HasMetric.metric f) x) ((manifoldGradient (I := I) HasMetric.metric f) x) := by
   classical
   have h_grad := manifoldGradient_smooth_of_smooth HasMetric.metric f hf
@@ -509,7 +509,7 @@ theorem bochner_connectionLaplacian_grad_decomposition
         (connectionLaplacian (I := I) (M := M) HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x)
         (manifoldGradient (I := I) HasMetric.metric f x)
       = metricInner x (manifoldGradient (I := I) HasMetric.metric f x)
-          (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x)
+          (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x)
         + ricciTensor HasMetric.metric x (manifoldGradient (I := I) HasMetric.metric f x)
                                           (manifoldGradient (I := I) HasMetric.metric f x)
   rw [connectionLaplacian_def]
@@ -563,16 +563,16 @@ theorem bochner_connectionLaplacian_grad_decomposition
       (mfderiv I 𝓘(ℝ, ℝ)
           (fun b : M => ∑ i, hessianBilin (I := I) HasMetric.metric f b ((Bi i).toFun b)
             ((Bi i).toFun b)) x (gradF.toFun x) : ℝ)
-        = (mfderiv I 𝓘(ℝ, ℝ) (Δ_g[I] f : M → ℝ) x (gradF.toFun x) : ℝ) := by
+        = (mfderiv I 𝓘(ℝ, ℝ) (Operators.scalarLaplacian (I := I) HasMetric.metric f : M → ℝ) x (gradF.toFun x) : ℝ) := by
     congr 1
     exact Filter.EventuallyEq.mfderiv_eq h_eventuallyEq
   have h_grad_dual :
-      (mfderiv I 𝓘(ℝ, ℝ) (Δ_g[I] f : M → ℝ) x (gradF.toFun x) : ℝ)
-        = metricInner x (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x) (gradF.toFun x) :=
-    (manifoldGradient_inner_eq HasMetric.metric (Δ_g[I] f) x (gradF.toFun x)).symm
+      (mfderiv I 𝓘(ℝ, ℝ) (Operators.scalarLaplacian (I := I) HasMetric.metric f : M → ℝ) x (gradF.toFun x) : ℝ)
+        = metricInner x (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x) (gradF.toFun x) :=
+    (manifoldGradient_inner_eq HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x (gradF.toFun x)).symm
   -- Combine.
   rw [h_R_eq, h_H_eq, h_M_factor, h_M_to_lap, h_grad_dual,
-      metricInner_comm x (manifoldGradient (I := I) HasMetric.metric (Δ_g[I] f) x)]
+      metricInner_comm x (manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f) x)]
   ring
 
 -- `bochner_weitzenboeck` (the headline) lives in `Operators/Bochner.lean`,
