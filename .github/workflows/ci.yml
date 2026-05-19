@@ -64,27 +64,34 @@ jobs:
       - name: Print Lean version
         run: lean --version
 
+      # Cache the FULL Lake build: Mathlib oleans (via `lake exe cache get`),
+      # OpenGALib oleans (incremental — Lake re-elaborates only changed
+      # files + transitive deps), plus packages.  Key on
+      # lake-manifest + toolchain so a Mathlib/toolchain bump invalidates.
+      # Branch prefix in restore-keys allows in-PR cache reuse across pushes.
       - name: Cache .lake build artifacts
         uses: actions/cache@v4
         with:
           path: |
             .lake/build
             .lake/packages
-          key: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}
+          key: lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-${{ github.sha }}
           restore-keys: |
+            lake-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}-
             lake-${{ runner.os }}-
 
+      # `lake exe cache get` pulls Mathlib oleans from Mathlib's own artifact
+      # cache.  Safe no-op on cache hit; fast (~10 s) on cache miss.
       - name: Get Mathlib build cache
         run: lake exe cache get
         continue-on-error: true
 
-      - name: Force fresh OpenGALib elaboration (preserves Mathlib cache)
-        # Lean linters only fire during elaboration; cached `.olean` files
-        # skip them. Removing OpenGALib's build outputs forces re-elaboration
-        # so all linter warnings reach `/tmp/build.log` for the baseline check.
-        # Mathlib outputs in `.lake/build/lib/lean/Mathlib/…` are untouched.
-        run: rm -rf .lake/build/lib/lean/OpenGALib .lake/build/ir/OpenGALib
-
+      # Incremental build: Lake re-elaborates only the files that changed in
+      # this PR plus their transitive downstream consumers.  Linter warnings
+      # only fire for files that re-elaborate, but since all linter baselines
+      # are 0 (no untouched-file false-positive risk), this is the right
+      # trade-off — fast PR feedback (~30 s on warm cache) while still
+      # catching every new violation.
       - name: Build OpenGALib (capture linter output)
         run: |
           set -o pipefail
@@ -93,6 +100,9 @@ jobs:
       - name: Enforce linter baselines
         run: |
           # Each Lean linter emits a distinct warning prefix; grep + count.
+          # Only re-elaborated files emit warnings, but the EXPECTED
+          # constants are all 0, so any new violation in changed files
+          # (or their transitive consumers) fails CI.
           MATH_TAG=$(grep -c "docstring should start with" /tmp/build.log 2>/dev/null || echo 0)
           ANCHOR_PURITY=$(grep -c "in an anchor file" /tmp/build.log 2>/dev/null || echo 0)
           NAMING=$(grep -c "forbidden initialism" /tmp/build.log 2>/dev/null || echo 0)
@@ -101,7 +111,7 @@ jobs:
           EXPECTED_ANCHOR_PURITY=0
           EXPECTED_NAMING=0
 
-          echo "Linter baselines:"
+          echo "Linter baselines (re-elaborated files only):"
           echo "  MathTag:        $MATH_TAG (expected $EXPECTED_MATH_TAG)"
           echo "  AnchorPurity:   $ANCHOR_PURITY (expected ≤ $EXPECTED_ANCHOR_PURITY; gradually reduce)"
           echo "  Naming:         $NAMING (expected $EXPECTED_NAMING)"
@@ -139,3 +149,59 @@ jobs:
             echo "Run \`lake exe shake OpenGALib --no-downstream\` locally to see the suggestions."
             exit 1
           fi
+
+  # On main push, do a full-fresh elaboration to catch any linter regressions
+  # that the incremental build missed (e.g., a regression hiding behind a
+  # cached olean).  This is the safety net; PRs use incremental for speed.
+  full-lint-on-main:
+    name: Full lint baseline (main push only)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install elan
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Print Lean version
+        run: lean --version
+
+      # Restore cache so Mathlib doesn't re-download
+      - name: Cache .lake build artifacts (Mathlib only)
+        uses: actions/cache@v4
+        with:
+          path: |
+            .lake/packages
+          key: lake-mathlib-${{ runner.os }}-${{ hashFiles('lake-manifest.json', 'lean-toolchain') }}
+          restore-keys: |
+            lake-mathlib-${{ runner.os }}-
+
+      - name: Get Mathlib build cache
+        run: lake exe cache get
+        continue-on-error: true
+
+      # Force fresh OpenGALib elaboration to catch every linter warning
+      - name: Build OpenGALib from scratch
+        run: |
+          set -o pipefail
+          lake build 2>&1 | tee /tmp/build.log
+
+      - name: Enforce linter baselines (fresh elaboration — authoritative)
+        run: |
+          MATH_TAG=$(grep -c "docstring should start with" /tmp/build.log 2>/dev/null || echo 0)
+          ANCHOR_PURITY=$(grep -c "in an anchor file" /tmp/build.log 2>/dev/null || echo 0)
+          NAMING=$(grep -c "forbidden initialism" /tmp/build.log 2>/dev/null || echo 0)
+
+          echo "Linter baselines (fresh elaboration):"
+          echo "  MathTag:        $MATH_TAG"
+          echo "  AnchorPurity:   $ANCHOR_PURITY"
+          echo "  Naming:         $NAMING"
+
+          FAIL=0
+          if [ "$MATH_TAG" -gt 0 ]; then echo "::error::MathTag regression: $MATH_TAG"; FAIL=1; fi
+          if [ "$ANCHOR_PURITY" -gt 0 ]; then echo "::error::AnchorPurity regression: $ANCHOR_PURITY"; FAIL=1; fi
+          if [ "$NAMING" -gt 0 ]; then echo "::error::Naming regression: $NAMING"; FAIL=1; fi
+          exit $FAIL
