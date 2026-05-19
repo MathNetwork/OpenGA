@@ -32,8 +32,8 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
     (Z : VectorFieldSection I M) (α : M) :
     connectionLaplacian (I := I) (M := M) g Z α =
       ∑ i, Riemannian.Operators.secondCovDerivSection (I := I) (M := M) g Z
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α :=
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) g α i)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) g α i) α :=
   rfl
 
 end Operators
