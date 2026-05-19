@@ -143,9 +143,10 @@ infrastructure.
 
 **Ground truth**: Maggi 2012 Theorem 15.5. -/
 theorem tangentHyperplane_at_reducedBoundary_orthogonal
+    (g : Riemannian.RiemannianMetric I M)
     (Ω : FinitePerimeter M) (x : M)
     (_hx : x ∈ FinitePerimeter.reducedBoundary Ω) (v : TangentSpace I x) :
-    Riemannian.HasMetric.metric.metricInner x v (Varifold.bvGradientDirection I Ω x) = 0 ↔
+    g.metricInner x v (Varifold.bvGradientDirection I Ω x) = 0 ↔
       v ∈ (Submodule.span ℝ {Varifold.bvGradientDirection I Ω x})ᗮ := by
   sorry
 

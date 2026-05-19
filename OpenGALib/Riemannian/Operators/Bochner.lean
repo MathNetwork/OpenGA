@@ -55,12 +55,15 @@ Combines `hessian_gradientNormSq_apply_chartFrame` summed over
 `OrthonormalBasis.sum_sq_inner_left` for Frobenius². -/
 theorem bochner_leibniz_trace_reduction
     [IsManifold I 2 M]
+    (g : RiemannianMetric I M) (hg : g = hm.metric)
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
-    (1 / 2 : ℝ) * (Operators.scalarLaplacian (I := I) HasMetric.metric ((fun y => HasMetric.metric.metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (manifoldGradient (I := I) HasMetric.metric f y)))) x
-      = HasMetric.metric.metricInner x
-            (connectionLaplacian HasMetric.metric (manifoldGradient (I := I) HasMetric.metric f) x)
-            ((manifoldGradient (I := I) HasMetric.metric f) x)
-        + frobeniusSq (I := I) (M := M) (Operators.hessianBilin (I := I) HasMetric.metric f) x := by
+    (1 / 2 : ℝ) * Operators.scalarLaplacian g
+        (fun y => g.metricInner y (manifoldGradient (I := I) g f y)
+                                  (manifoldGradient (I := I) g f y)) x
+      = g.metricInner x (connectionLaplacian g (manifoldGradient (I := I) g f) x)
+            (manifoldGradient (I := I) g f x)
+        + Operators.frobeniusSq (I := I) (M := M) (Operators.hessianBilin (I := I) g f) x := by
+  subst hg
   classical
   have h_grad := manifoldGradient_smooth_of_smooth HasMetric.metric f hf
   show (1 / 2 : ℝ) * Operators.scalarLaplacian (I := I) (M := M) HasMetric.metric ((fun y => HasMetric.metric.metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (manifoldGradient (I := I) HasMetric.metric f y))) x
@@ -211,20 +214,6 @@ theorem bochner_leibniz_trace_reduction
       _ = ∑ j, ⟪v, b j⟫_ℝ ^ 2 := (b.sum_sq_inner_left v).symm
       _ = ∑ j, (HasMetric.metric.metricInner x v (b j)) ^ 2 := rfl
 
-/-- **Math.** **Explicit-`g` form of the Leibniz trace reduction**. -/
-theorem bochner_leibniz_trace_reduction_g
-    [IsManifold I 2 M]
-    (g : RiemannianMetric I M) (hg : g = hm.metric)
-    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
-    (1 / 2 : ℝ) * Operators.scalarLaplacian g
-        (fun y => g.metricInner y (manifoldGradient (I := I) g f y)
-                                  (manifoldGradient (I := I) g f y)) x
-      = g.metricInner x (connectionLaplacian g (manifoldGradient (I := I) g f) x)
-            (manifoldGradient (I := I) g f x)
-        + Operators.frobeniusSq (I := I) (M := M) (Operators.hessianBilin (I := I) g f) x := by
-  subst hg
-  exact bochner_leibniz_trace_reduction f hf x
-
 /-! ## The headline identity -/
 
 /-- **Math.** **Bochner–Weitzenböck identity** (unconditional under
@@ -240,23 +229,6 @@ Composes `bochner_leibniz_trace_reduction` (LHS step) with
 Reference: Petersen Ch. 7 §1 Prop 33; do Carmo §6; Schoen-Simon 1981 §1. -/
 theorem bochner_weitzenboeck
     [IsManifold I 2 M]
-    (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
-    (1 / 2 : ℝ) * (Operators.scalarLaplacian (I := I) HasMetric.metric ((fun y => HasMetric.metric.metricInner y (manifoldGradient (I := I) HasMetric.metric f y) (manifoldGradient (I := I) HasMetric.metric f y)))) x =
-      frobeniusSq (I := I) (M := M) (Operators.hessianBilin (I := I) HasMetric.metric f) x
-      + HasMetric.metric.metricInner x ((manifoldGradient (I := I) HasMetric.metric f) x)
-            ((manifoldGradient (I := I) HasMetric.metric (Operators.scalarLaplacian (I := I) HasMetric.metric f)) x)
-      + ricciTensor HasMetric.metric x ((manifoldGradient (I := I) HasMetric.metric f) x) ((manifoldGradient (I := I) HasMetric.metric f) x) := by
-  rw [bochner_leibniz_trace_reduction f hf x,
-      bochner_connectionLaplacian_grad_decomposition HasMetric.metric rfl f hf x]
-  abel
-
-/-- **Math.** **Explicit-`g` form of the Bochner–Weitzenböck identity**.
-Same statement as `bochner_weitzenboeck` but the metric `g` is an explicit
-`RiemannianMetric I M` parameter constrained by `hg : g = hm.metric`,
-giving consumers a `g`-parametric API without changing the underlying
-proof. Discharged via `subst hg` and `bochner_weitzenboeck`. -/
-theorem bochner_weitzenboeck_g
-    [IsManifold I 2 M]
     (g : RiemannianMetric I M) (hg : g = hm.metric)
     (f : M → ℝ) (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) :
     (1 / 2 : ℝ) * Operators.scalarLaplacian g
@@ -267,8 +239,9 @@ theorem bochner_weitzenboeck_g
           (manifoldGradient (I := I) g (Operators.scalarLaplacian g f) x)
       + ricciTensor g x (manifoldGradient (I := I) g f x)
                         (manifoldGradient (I := I) g f x) := by
-  subst hg
-  exact bochner_weitzenboeck f hf x
+  rw [bochner_leibniz_trace_reduction g hg f hf x,
+      bochner_connectionLaplacian_grad_decomposition g hg f hf x]
+  abel
 
 end Operators
 end Riemannian
