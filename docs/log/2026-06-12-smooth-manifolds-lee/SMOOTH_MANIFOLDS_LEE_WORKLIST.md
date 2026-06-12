@@ -17,7 +17,7 @@
 ## 整合原则
 
 1. **按目标模块移植，不按章节顺序**。教材组织（`ChapNN/SecNN_MM/`）不进主库；声明按数学对象重组进领域模块。
-2. **声明名基本可保留**（已是 Mathlib 风格描述性命名），但命名空间必须换掉（staged 代码用了 `Manifold` 等通用命名空间），文件结构按 `docs/NAMING_CONVENTION.md` 重排。
+2. **声明名基本可保留**（已是 Mathlib 风格描述性命名），但命名空间必须换掉（staged 代码用了 `Manifold` 等通用命名空间），文件结构按 `../../NAMING_CONVENTION.md` 重排。
 3. **打包类收编进现有体系**：`TopologicalManifold n M` 等类只是 Mathlib 实例（T2 + 第二可数 + `ChartedSpace`）的打包，与我们已有的 `SmoothManifold M` 打包类（`Riemannian/Manifold/SmoothManifold.lean`）是同一设计模式。移植时统一收编进我们的打包类体系，不引入第二套；维数显式化（`n` 参数）是否保留在收编时定夺。
    - 与 OpenGALib 的重叠：全量审计为 0 个 `opengalib-dup`——我们库直接踩在 Mathlib 流形机器上做度量层以上的内容，Lee 覆盖的子流形/浸入/坐标球层我们完全没有。唯一接口接触点：`GeometricMeasureTheory/Varifold.lean` 的 `LocalSmoothEmbeddingWitness` 临时证人结构，嵌入子流形理论移植后应垫到其下并替换之。
 4. **sorry 不进主干**：含 sorry 的文件要么先补证明，要么陈述层有 sorry 的（如 Chap04 的 `rankAt`/`HasConstantRank`）整段推迟。
@@ -40,7 +40,7 @@
 
 ## 施工台账
 
-流程见 `docs/INTEGRATION_WORKFLOW.md`（领单改状态、一单一 `port/` 分支、质量门、销单）。施工单按依赖序排列；标注"可并行"的单之间无依赖。
+流程见 `INTEGRATION_WORKFLOW.md`（同目录）（领单改状态、一单一 `port/` 分支、质量门、销单）。施工单按依赖序排列；标注"可并行"的单之间无依赖。
 
 | # | 施工单 | 内容 | 依赖 | 状态 |
 |---|---|---|---|---|

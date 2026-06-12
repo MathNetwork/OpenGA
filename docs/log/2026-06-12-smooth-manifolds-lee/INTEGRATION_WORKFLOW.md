@@ -1,6 +1,6 @@
 # Integration Workflow
 
-Source of truth for how content from reference branches reaches `main`. Sister to `REFACTOR_PLAYBOOK.md` (in-tree refactors) and the per-import worklist documents (e.g. `SMOOTH_MANIFOLDS_LEE_WORKLIST.md`). Goal: **external material enters the library only through our conventions, in reviewable units, with provenance intact**.
+Source of truth for how content from reference branches reaches `main`. Sister to `../../REFACTOR_PLAYBOOK.md` (in-tree refactors) and the per-import worklist documents (e.g. `SMOOTH_MANIFOLDS_LEE_WORKLIST.md`). Goal: **external material enters the library only through our conventions, in reviewable units, with provenance intact**.
 
 ## Branch topology
 
@@ -37,7 +37,7 @@ Each import gets a worklist document in `docs/` produced by a full overlap audit
 
 ## Quality gates per port pull request
 
-1. **Conventions**: namespaces replaced (no foreign generic namespaces such as bare `Manifold`), files placed per the normalized module layout, names per `NAMING_CONVENTION.md`, no bare initialisms.
+1. **Conventions**: namespaces replaced (no foreign generic namespaces such as bare `Manifold`), files placed per the normalized module layout, names per `../../NAMING_CONVENTION.md`, no bare initialisms.
 2. **Zero `sorry`**: a source file containing `sorry` is either completed during the port or excluded from the item.
 3. **Full `lake build` locally before the pull request** — not language-server diagnostics only. Ports touch typeclass resolution paths; incremental builds miss downstream `@[simp] rfl` breakage (clean dependent `.olean` files when definition bodies change).
 4. **Provenance line** in the module docstring: `Ported from <source> <path> (<commit>), restructured.` This is what makes future upstream diffs actionable.
