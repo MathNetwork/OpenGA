@@ -72,95 +72,99 @@
 
 # Chap01
 
-## 移植优先（high value）
+## 移植优先（high，10 项）
 
-| 文件 | 主要声明 | 重叠分类 | 对应物 | 目标模块 | sorry | 理由 |
-|---|---|---|---|---|---|---|
-| Chap01/Sec01/Definition_1_extra_2.lean | OpenPartialHomeomorph.IsCoordinateBall, IsCenteredAt, IsCoordinateBox, centerAt, centerAt_isCenteredAt | new | — | Riemannian/Manifold/Charts | 否 | Small, complete, reusable chart-shape predicates (coordinate ball/box, centered chart, chart recentering) absent from Mathlib and foundational for the rest of the coordinate-ball stack. |
-| Chap01/Sec01/Example_1_5.lean | RealProjectiveSpace, realProjectiveSpaceTopologicalSpace, realProjectiveChartDomain, realProjectiveChart, realProjectiveChartDomain_isOpen, real_projective_space_has_standard_chart | new | — | Riemannian/Instances/ProjectiveSpace | 否 | Complete, sorry-free quotient topology and standard affine charts (as OpenPartialHomeomorphs with simp API) on RP^n, which Mathlib lacks entirely — a real instance-level gap. |
-| Chap01/Sec01/Example_1_8.lean | openPartialHomeomorph_pi_symm_trans_pi, contDiffGroupoid_pi, instIsManifoldPi, isManifold_pi | new | Mathlib has ModelWithCorners.pi and the ChartedSpace pi instance but no IsManifold pi instance (gap noted in Mathlib/Geometry/Manifold/ContMDiff/Constructions.lean:352) | Riemannian/Instances/Pi | 否 | Sorry-free C^r manifold instance for finite products over ModelWithCorners.pi, filling an acknowledged Mathlib infrastructure gap with reusable groupoid-level helper lemmas. |
-| Chap01/Sec01/Lemma_1_10.lean | IsPrecompactCoordinateBall, isPrecompactCoordinateBall_chart_preimage_metric_ball, isTopologicalBasis_isPrecompactCoordinateBall, exists_countable_precompact_coordinate_ball_basis | new | — | Riemannian/Manifold/Charts | 否 | Sorry-free countable basis of precompact coordinate balls — reusable covering infrastructure beneath partitions of unity and exhaustions that Mathlib does not provide in this form. |
-| Chap01/Sec01_03/Definition_1_3_extra_1.lean | IsSmoothCoordinateBall, IsRegularCoordinateBall, IsRegularCoordinateBall.exists_smoothCoordinateBall_superset | new | — | Riemannian/Manifold/CoordinateBall | 否 | Smooth/regular coordinate-ball predicates absent from both Mathlib and OpenGALib, with a complete proof; this is exactly the reusable chart-ball infrastructure underlying exhaustions and partitions of unity, though it would need generalizing beyond model-with-corners-self and the project-local IsCoordinateBall dependency. |
-| Chap01/Sec01_04/Example_1_32.lean | regular_level_set_topologicalManifold, regular_level_set_smooth_structure, RegularLevelSetSmoothLocalGraphData, regular_level_set_exists_local_smooth_graph_data, split_at_coordinate | new | no Mathlib counterpart (Mathlib has only the sphere as a concrete level-set manifold; no regular value theorem) | Riemannian/Manifold/RegularLevelSet | 否 | A fully proved, 1750-line regular-level-set theorem (scalar regular values of C^∞ functions on open subsets of ℝ^n are smooth (n-1)-manifolds) fills a real Mathlib gap and is core hypersurface infrastructure for OpenGALib's GMT direction, though the existential, EuclideanSpace-specific statement needs API rework. |
-| Chap01/Sec01_04/Lemma_1_35.lean | ChartedSpaceCore.toTopologicalSpace_t2Space, ChartedSpaceCore.toTopologicalSpace_secondCountableTopology, ChartedSpaceCore.toChartedSpace_isManifold, ChartedSpaceCore.eq_toTopologicalSpace_of_chartedSpace | new | extends Mathlib's ChartedSpaceCore (Geometry/Manifold/ChartedSpace.lean), which lacks all four results | Riemannian/Manifold/ChartedSpaceCore | 否 | Fully proved smooth-manifold-chart-construction lemma (T2, second-countability, smooth-structure, and topology-uniqueness criteria for ChartedSpaceCore) is exactly the reusable build-a-manifold-from-an-atlas infrastructure Mathlib lacks and that constructions like projective spaces and Grassmannians need. |
-| Chap01/Sec01_06/Exercise_1_42.lean | IsRegularCoordinateBall, IsRegularCoordinateHalfBall, IsRegularCoordinateBallHalfBallBasis, exists_countable_regular_coordinate_ball_half_ball_basis | new | — | Riemannian/Manifold/CoordinateBalls | 是 | Regular coordinate ball/half-ball definitions plus countable-basis theorem are reusable covering infrastructure (useful for partition-of-unity and GMT covering arguments) entirely absent from Mathlib, though all three theorems are still sorried. |
-| Chap01/Sec01_07/Problem_1_9.lean | ComplexProjectiveSpace, complexProjectiveChart, complexProjectiveSpaceCompactSpace, complexProjectiveSpaceT2Space, complexProjectiveSpaceChartedSpace, complexProjectiveSpaceIsManifold | new | — | Riemannian/Instances/ComplexProjectiveSpace | 否 | Sorry-free quotient topology, affine charts, compactness, Hausdorffness, ChartedSpace, and IsManifold instances for CP^n — Mathlib's Projectivization has no topology or manifold structure at all — giving a key example space (future Fubini-Study host) as instance-level reusable API. |
-| Chap01/Sec01_05/Proposition_1_40.lean | IsBoundaryModelCoordinateBall, IsBoundaryModelCoordinateHalfBall, IsPrecompactBoundaryModelCoordinateBall(HalfBall), IsPrecompactBoundaryModelCoordinateBallHalfBallBasis, exists_countable_precompact_coordinate_ball_half_ball_basis, topologicalManifoldWithBoundary_locallyCompactSpace/paracompactSpace/locPathConnectedSpace, topologicalManifoldWithBoundary_countable_connectedComponents, countable_fundamentalGroup | partial-dup | ModelWithCorners.locallyCompactSpace (IsManifold/Basic.lean), ChartedSpace.locPathConnectedSpace (ChartedSpace.lean), Manifold.metrizableSpace (Metrizable.lean); coordinate-ball basis and countable fundamental group have no Mathlib counterpart | Riemannian/Manifold/CoordinateBall | 是 | The precompact coordinate-ball/half-ball basis API and countable-fundamental-group statement are genuinely missing reusable infrastructure beneath exhaustions, partitions of unity, and GMT covering arguments, though every theorem is sorried and the topological consequences (local compactness, paracompactness, local path-connectedness) already exist in Mathlib. |
+| 文件 | 声明 | 分类 | 落点 | sorry | 理由 |
+|---|---|---|---|---|---|
+| Sec01/Definition_1_extra_2.lean | IsCoordinateBall, centerAt 等 | new | Manifold/Charts | 否 | 坐标球/盒卡形谓词，Mathlib 缺，坐标球栈基础 |
+| Sec01/Example_1_5.lean | RealProjectiveSpace, realProjectiveChart 等 | new | Instances/ProjectiveSpace | 否 | RP^n 商拓扑与标准仿射卡，Mathlib 完全缺失 |
+| Sec01/Example_1_8.lean | contDiffGroupoid_pi, instIsManifoldPi 等 | new | Instances/Pi | 否 | 有限乘积 IsManifold 实例，补 Mathlib 已注明缺口 |
+| Sec01/Lemma_1_10.lean | isTopologicalBasis_isPrecompactCoordinateBall 等 | new | Manifold/Charts | 否 | 预紧坐标球可数基，单位分解/穷竭列底层 |
+| Sec01_03/Definition_1_3_extra_1.lean | IsSmoothCoordinateBall, IsRegularCoordinateBall 等 | new | Manifold/CoordinateBall | 否 | 光滑/正则坐标球谓词全证，需脱离项目内依赖 |
+| Sec01_04/Example_1_32.lean | regular_level_set_smooth_structure 等 | new | Manifold/RegularLevelSet | 否 | 正则水平集定理 1750 行全证，Mathlib 无正则值定理 |
+| Sec01_04/Lemma_1_35.lean | ChartedSpaceCore.toTopologicalSpace_t2Space, toChartedSpace_isManifold 等 | new | Manifold/ChartedSpaceCore | 否 | 由图册造流形的 T2/二可数/光滑判据，Mathlib 缺 |
+| Sec01_06/Exercise_1_42.lean | IsRegularCoordinateHalfBall 等 | new | Manifold/CoordinateBalls | 是 | 正则坐标(半)球可数基，三定理全 sorry |
+| Sec01_07/Problem_1_9.lean | ComplexProjectiveSpace, complexProjectiveSpaceIsManifold 等 | new | Instances/ComplexProjectiveSpace | 否 | CP^n 完整流形结构无 sorry，Fubini-Study 宿主 |
+| Sec01_05/Proposition_1_40.lean | IsBoundaryModelCoordinateBall, countable_fundamentalGroup 等 | partial-dup | Manifold/CoordinateBall | 是 | 半球基与可数基本群为缺口，拓扑推论 Mathlib 已有，全 sorry |
 
-## 可考虑（medium value）
+<details><summary>可考虑（medium，21 项）</summary>
 
-| 文件 | 主要声明 | 重叠分类 | 对应物 | 目标模块 | sorry | 理由 |
-|---|---|---|---|---|---|---|
-| Chap01/Sec01/Exercise_1_1.lean | HasCoordinateBallCharts, HasEuclideanTargetCharts, hasCoordinateBallCharts_of_topologicalManifold, hasCoordinateBallCharts_iff_hasEuclideanTargetCharts | new | OpenPartialHomeomorph.univBall (Mathlib) does the analytic heavy lifting | Riemannian/Manifold/Charts | 否 | Complete chart-shrinking/straightening lemmas and ball-vs-univ chart equivalences are genuinely reusable, but the existential-typeclass statement shape (∃ tm : TopologicalManifold ...) needs API rework before porting. |
-| Chap01/Sec01/Exercise_1_6.lean | realProjectiveSpace_t2Space, realProjectiveSpace_secondCountableTopology, realProjectiveSpace_has_euclidean_chart, realProjectiveSpace_chartDomain_isOpen | new | — | Riemannian/Instances/ProjectiveSpace | 是 | T2 and second-countability of RP^n are exactly what is needed to finish the high-value Example_1_5 instance, but all four statements are sorry'd (and two merely restate Example_1_5 results). |
-| Chap01/Sec01/Exercise_1_7.lean | realProjectiveSpaceCompactSpace | new | — | Riemannian/Instances/ProjectiveSpace | 否 | Complete proof that RP^n is compact via the sphere quotient map — a real instance not in Mathlib, naturally bundled with an Example_1_5 port. |
-| Chap01/Sec01_03/Proposition_1_19.lean | IsCountableRegularCoordinateBallBasis, exists_countable_regular_coordinate_ball_basis | new | — | Riemannian/Manifold/CoordinateBall | 是 | Countable regular-coordinate-ball basis is a genuinely useful manifold infrastructure statement not in Mathlib, but the proof is a sorry and the class-based packaging of a set property would need API rework before porting. |
-| Chap01/Sec01_04/Example_1_30.lean | graph_coordinate_chart, graph_charted_space, graph_charted_space_isManifold | new | no Mathlib counterpart; depends on project-internal Example_1_3 graph_coordinates | Riemannian/Manifold/GraphChart | 是 | Graph-of-smooth-map charted-space API is a genuine gap in Mathlib and a useful submanifold building block, but the key chart lemmas and the IsManifold instance are still sorry-stubbed and EuclideanSpace-specific. |
-| Chap01/Sec01_04/Example_1_33.lean | realProjectiveChartTransitionDiffeomorph, realProjectiveSpaceChartedSpace, realProjectiveSpaceIsManifold, realProjectiveChartOverlap | new | Mathlib has Projectivization (LinearAlgebra) but no charted-space or manifold structure on it; depends on project-internal Example_1_5 RealProjectiveSpace | Riemannian/Instances/RealProjectiveSpace | 否 | Fully proved smooth structure on ℝPⁿ with explicit transition diffeomorphisms is genuinely absent from Mathlib, but it is a single example space whose port also requires the upstream RealProjectiveSpace definition and re-grounding on Mathlib's Projectivization. |
-| Chap01/Sec01_06/Definition_1_6_extra_1.lean | contMDiffOn_halfSpace_iff_forall_exists_smoothAmbientExtension, contMDiffOn_halfSpace_iff_contDiffOn_image, contDiffOn_range_halfSpace_exists_open_extension_at | new | — | Riemannian/Manifold/HalfSpaceExtension | 是 | Equates manifold smoothness on the half-space with Lee's local ambient-extension condition; Mathlib lacks the closed-half-space C^inf extension theorem, but that key boundary lemma is sorried and the rest is half-space-specific glue. |
-| Chap01/Sec01_06/Definition_1_6_extra_3.lean | IsSmoothCoordinateHalfBall, IsRegularCoordinateHalfBall, IsRegularCoordinateHalfBall.exists_smoothCoordinateHalfBall_superset | new | — | Riemannian/Manifold/CoordinateBalls | 是 | Bundled regular-coordinate-half-ball structure absent from Mathlib, but its only theorem is sorried and it overlaps with the competing Prop-valued definition in Exercise_1_42, so the API needs consolidation before porting. |
-| Chap01/Sec01_07/Problem_1_10.lean | left_coordinate_plane, right_coordinate_plane, block_column_subspace, problem_1_10_chart_matrix, standard_chart_matrix_unique | new | Mathlib/RingTheory/Grassmannian.lean (Module.Grassmannian, different algebraic definition without charts) | GeometricMeasureTheory/Grassmannian/Charts | 是 | Matrix coordinates for Grassmannian charts would feed OpenGALib's planned Grassmann-bundle varifold convergence (Varifold.lean TODO), but all four main theorems are sorried and the underlying chart construction lives in the project's Example_1_36, so a port would mean re-deriving most of it. |
-| Chap01/Sec01_07/Problem_1_11.lean | closed_unit_ball_topologicalManifoldWithBoundary, closed_unit_ball_isBoundaryPoint_of_mem_sphere, closed_unit_ball_isInteriorPoint_of_mem_ball, closed_unit_ball_smoothManifoldWithBoundary, closed_unit_ball_subtype_val_contMDiff | new | Mathlib/Geometry/Manifold/Instances/Icc.lean (only the 1-D interval instance exists) | Riemannian/SmoothManifold/ClosedBall | 是 | A smooth manifold-with-boundary structure on the closed n-ball fills a real Mathlib gap relevant to the divergence-theorem direction of OpenGALib's GMT stack, but the boundary/interior characterizations and smooth-inclusion theorem are sorried and the actual atlas is imported from the project's Problem_2_4. |
-| Chap01/Sec01_07/Problem_1_5.lean | sigmaCompactSpace_of_connected_paracompact_locallyCompact_t2, isSigmaCompact_connectedComponent_of_paracompact_t2_euclidean, secondCountableTopology_iff_paracompact_and_countable_components_of_t2_euclidean | new | — | Riemannian/Manifold/Paracompactness | 否 | Mathlib only has the sigma-compact-to-paracompact direction; the converse (connected paracompact locally compact T2 is sigma-compact) and the second-countable iff paracompact-plus-countably-many-components characterization for locally Euclidean spaces are genuine, complete, reusable topology infrastructure beneath manifold theory. |
-| Chap01/Sec01_07/Problem_1_6.lean | radialPowerMap, supportedRadialTwistHomeomorph, chart_at_point_with_ball_target, transported_self_isManifold, exists_uncountably_many_distinct_smooth_structures | new | — | Riemannian/Manifold/SmoothStructures | 否 | Complete 2000-line sorry-free proof that every smooth n-manifold (n>=1) carries uncountably many distinct smooth structures — not in Mathlib — with reusable pieces (coordinate-ball chart at a point, compactly supported radial twist homeomorphisms, transport of charted/manifold structure along a homeomorphism), though much of it is single-theorem scaffolding needing rework. |
-| Chap01/Sec01/Definition_1_extra_1.lean | TopologicalManifold, topologicalManifoldOfChartedSpace, TopologicalManifold.of_homeomorph, locallyCompactSpace_of_topologicalManifold, dimension_eq, dimension_eq_of_homeomorph, Opens.topologicalManifold | partial-dup | Mathlib ChartedSpace + ChartedSpace.locallyCompactSpace; OpenGALib/Riemannian/Manifold/SmoothManifold.lean (same bundling pattern, smooth case) | Riemannian/Manifold/TopologicalManifold | 是 | A bundled C^0-manifold class mirroring OpenGALib's SmoothManifold bundling could be useful for MetricGeometry, but most lemmas are Mathlib-instance wrappers and the dimension-invariance theorem is sorry'd (a genuine Mathlib gap left unproven). |
-| Chap01/Sec01/Example_1_3.lean | graphMap, range_graphMap_eq_graphOn, graphMap_isEmbedding, graph_coordinates | partial-dup | isEmbedding_graph, Set.graphOn (Mathlib); no bundled graphOn ≃ₜ domain homeomorphism | Riemannian/Manifold/Charts | 否 | The bundled homeomorphism graphOn f ≃ₜ U is not in Mathlib and graph parametrizations recur in GMT (Lipschitz graphs, reduced boundary), though the embedding half already exists. |
-| Chap01/Sec01/Theorem_1_15.lean | paracompactSpace_of_topologicalManifold, exists_countable_locallyFinite_refinement_of_isTopologicalBasis, exists_countable_locally_finite_precompact_coordinate_ball_refinement | partial-dup | refinement_of_locallyCompact_sigmaCompact_of_nhds_basis, paracompact instances (Mathlib/Topology/Compactness/Paracompact.lean) | Riemannian/Manifold/Charts | 否 | Paracompactness is Mathlib plumbing, but the countable locally finite refinement by basis elements and by precompact coordinate balls is a complete, reusable covering theorem feeding partitions of unity. |
-| Chap01/Sec01_02/Definition_1_2_extra_3.lean | OpenPartialHomeomorph.IsSmoothAtlas, OpenPartialHomeomorph.isSmoothAtlas_atlas_iff | partial-dup | ChartedSpace + HasGroupoid M (contDiffGroupoid ∞ I) (Mathlib/Geometry/Manifold/HasGroupoid.lean) | Riemannian/SmoothManifold/Atlas | 否 | The IsSmoothAtlas predicate on an arbitrary set of charts (not tied to a ChartedSpace instance) is genuinely absent from Mathlib and enables atlas-comparison statements, but it is niche scaffolding for foundations OpenGALib otherwise inherits from Mathlib. |
-| Chap01/Sec01_02/Proposition_1_17.lean | smooth_structure_determined_by_atlas, same_smooth_structure_iff_union_is_smooth_atlas | partial-dup | StructureGroupoid.subset_maximalAtlas, mem_maximalAtlas_iff, compatible_of_mem_maximalAtlas (Mathlib/Geometry/Manifold/HasGroupoid.lean); part 2 union criterion has no Mathlib counterpart | Riemannian/SmoothManifold/Atlas | 否 | Part 1 repackages Mathlib's maximalAtlas API, but part 2 (two atlases determine the same maximal atlas iff their union is a smooth atlas) is genuinely new — though its letI-in-statement comparison of ChartedSpace instances would need API rework to be usable. |
-| Chap01/Sec01_04/Example_1_36.lean | grassmannian, grassmannian.chart_domain, grassmannian.graph, grassmannian.chart_equiv, grassmannian.chart_model_finrank | partial-dup | Mathlib/RingTheory/Grassmannian.lean (quotient convention, no topology or manifold structure) | Riemannian/Instances/Grassmannian | 是 | Grassmannian chart bijections toward a manifold structure are absent from Mathlib (whose Grassmannian is purely algebraic) and relevant to k-plane/blade geometry, but every nontrivial lemma here is sorry-stubbed so only the statement skeleton would be ported. |
-| Chap01/Sec01_05/Proposition_1_38.lean | manifoldInterior_isOpen, manifoldBoundary_isClosed, boundaryChart, boundaryTopologicalManifold, boundaryIsManifold, manifoldBoundary_boundaryless, manifoldInteriorTopologicalManifold, manifoldInterior_boundaryless | partial-dup | ModelWithCorners.isOpen_interior, isClosed_boundary, Boundaryless.iff_boundary_eq_empty (Mathlib/Geometry/Manifold/IsManifold/InteriorBoundary.lean — C¹ case only) | Riemannian/Manifold/InteriorBoundary | 是 | The boundary-as-(n-1)-manifold charted-space construction and the C⁰ interior-open/boundary-closed statements fill real Mathlib gaps, but nearly all chart lemmas and instances are sorried and the design is tied to the bespoke LeeBoundaryModelSpace, requiring substantial rework before it is a usable API. |
-| Chap01/Sec01_06/Exercise_1_44.lean | ModelWithCorners.interiorOpens, open_subset_of_interior_boundaryless, manifoldInterior_boundaryless | partial-dup | TopologicalSpace.Opens.instIsManifold, Opens.chartAt_eq, ModelWithCorners.isInteriorPoint_iff_isInteriorPoint_val, BoundarylessManifold.open (Mathlib/Geometry/Manifold/IsManifold/InteriorBoundary.lean) | Riemannian/Manifold/InteriorBoundary | 否 | Parts 1-2 are existing Mathlib instances, but interiorOpens and 'the manifold interior is a boundaryless open submanifold' are small proven lemmas Mathlib lacks that round out boundary infrastructure. |
-| Chap01/Sec01_06/Theorem_1_46.lean | ModelWithCorners.isInteriorPoint_iff_of_mem_maximalAtlas, ModelWithCorners.isBoundaryPoint_iff_of_mem_maximalAtlas, smooth_boundary_chart_frontier_independence | partial-dup | ModelWithCorners.isBoundaryPoint_iff_of_mem_atlas and mem_interior_range_of_mem_interior_range_of_mem_atlas (Mathlib/Geometry/Manifold/IsManifold/InteriorBoundary.lean) | Riemannian/Manifold/InteriorBoundary | 否 | Generalizes Mathlib's atlas-chart boundary-detection lemmas to arbitrary maximal-atlas charts with complete proofs adapted from Mathlib's, a modest but genuine API strengthening for boundary work. |
+| 文件 | 声明 | 分类 | 落点 | sorry | 理由 |
+|---|---|---|---|---|---|
+| Sec01/Exercise_1_1.lean | HasCoordinateBallCharts 等 | new | Manifold/Charts | 否 | 卡收缩/拉直引理完整，存在式陈述需重构 |
+| Sec01/Exercise_1_6.lean | realProjectiveSpace_t2Space 等 | new | Instances/ProjectiveSpace | 是 | 补 Example_1_5 所需 T2/二可数，四条全 sorry |
+| Sec01/Exercise_1_7.lean | realProjectiveSpaceCompactSpace | new | Instances/ProjectiveSpace | 否 | RP^n 紧性全证，宜随 Example_1_5 一并移植 |
+| Sec01_03/Proposition_1_19.lean | exists_countable_regular_coordinate_ball_basis 等 | new | Manifold/CoordinateBall | 是 | 正则坐标球可数基有用，证明 sorry 且打包需重构 |
+| Sec01_04/Example_1_30.lean | graph_coordinate_chart, graph_charted_space 等 | new | Manifold/GraphChart | 是 | 光滑映射图卡空间为缺口，关键引理 sorry |
+| Sec01_04/Example_1_33.lean | realProjectiveSpaceIsManifold, realProjectiveChartTransitionDiffeomorph 等 | new | Instances/RealProjectiveSpace | 否 | ℝPⁿ 光滑结构全证，需先移上游 Example_1_5 |
+| Sec01_06/Definition_1_6_extra_1.lean | contMDiffOn_halfSpace_iff_forall_exists_smoothAmbientExtension 等 | new | Manifold/HalfSpaceExtension | 是 | 半空间环境延拓光滑判据，关键边界引理 sorry |
+| Sec01_06/Definition_1_6_extra_3.lean | IsSmoothCoordinateHalfBall 等 | new | Manifold/CoordinateBalls | 是 | 与 Exercise_1_42 定义重叠，需先合并 API |
+| Sec01_07/Problem_1_10.lean | problem_1_10_chart_matrix, block_column_subspace 等 | new | GeometricMeasureTheory/Grassmannian/Charts | 是 | Grassmann 矩阵坐标可喂 varifold，主定理全 sorry |
+| Sec01_07/Problem_1_11.lean | closed_unit_ball_smoothManifoldWithBoundary 等 | new | SmoothManifold/ClosedBall | 是 | 闭球带边流形补缺口，关键定理 sorry，图册取自 Problem_2_4 |
+| Sec01_07/Problem_1_5.lean | sigmaCompactSpace_of_connected_paracompact_locallyCompact_t2 等 | new | Manifold/Paracompactness | 否 | 仿紧⇒σ紧逆向及二可数刻画，Mathlib 仅有正向 |
+| Sec01_07/Problem_1_6.lean | supportedRadialTwistHomeomorph, exists_uncountably_many_distinct_smooth_structures 等 | new | Manifold/SmoothStructures | 否 | 不可数多光滑结构全证，多为单定理脚手架 |
+| Sec01/Definition_1_extra_1.lean | TopologicalManifold, dimension_eq 等 | partial-dup | Manifold/TopologicalManifold | 是 | C⁰流形打包类，多为包装且维数不变 sorry |
+| Sec01/Example_1_3.lean | graphMap, graph_coordinates 等 | partial-dup | Manifold/Charts | 否 | 打包同胚 graphOn≃ₜU 为 Mathlib 缺，GMT 图参数化常用 |
+| Sec01/Theorem_1_15.lean | exists_countable_locallyFinite_refinement_of_isTopologicalBasis 等 | partial-dup | Manifold/Charts | 否 | 预紧坐标球可数局部有限加细，喂单位分解 |
+| Sec01_02/Definition_1_2_extra_3.lean | IsSmoothAtlas 等 | partial-dup | SmoothManifold/Atlas | 否 | 不依实例的图册谓词为新，属小众脚手架 |
+| Sec01_02/Proposition_1_17.lean | same_smooth_structure_iff_union_is_smooth_atlas 等 | partial-dup | SmoothManifold/Atlas | 否 | 并集判同光滑结构为新，letI 陈述需重构 |
+| Sec01_04/Example_1_36.lean | grassmannian, grassmannian.chart_equiv 等 | partial-dup | Instances/Grassmannian | 是 | Grassmann 卡双射缺口，非平凡引理全 sorry |
+| Sec01_05/Proposition_1_38.lean | boundaryChart, boundaryTopologicalManifold 等 | partial-dup | Manifold/InteriorBoundary | 是 | 边界作(n-1)流形构造，近全 sorry 且绑定专有模型 |
+| Sec01_06/Exercise_1_44.lean | ModelWithCorners.interiorOpens 等 | partial-dup | Manifold/InteriorBoundary | 否 | 内部为无边开子流形等小引理，补全边界设施 |
+| Sec01_06/Theorem_1_46.lean | isInteriorPoint_iff_of_mem_maximalAtlas 等 | partial-dup | Manifold/InteriorBoundary | 否 | 边界检测推广到极大图册卡，全证 |
 
-## 跳过（low value / duplicates）
+</details>
 
-- Chap01/Sec01/Definition_1_extra_3.lean — mathlib-dup — pure recall of three Mathlib typeclasses.
-- Chap01/Sec01/Definition_1_extra_4.lean — mathlib-dup — recalls plus a thin Opens-typed wrapper around precise_refinement.
-- Chap01/Sec01/Example_1_4.lean — mathlib-dup — one-line repackaging of Mathlib's sphere charted-space instance.
-- Chap01/Sec01/Example_1_9.lean — new — trivial abbrev plus infer_instance riding on the pi instance.
-- Chap01/Sec01/Exercise_1_14.lean — mathlib-dup — pure recall of two Mathlib LocallyFinite theorems.
-- Chap01/Sec01/Lemma_1_13.lean — mathlib-dup — identical recall content to Exercise_1_14.
-- Chap01/Sec01/Proposition_1_11.lean — partial-dup — mostly recalls and instance plumbing over existing Mathlib results.
-- Chap01/Sec01/Proposition_1_12.lean — mathlib-dup — pure recall of a ChartedSpace.locallyCompactSpace wrapper.
-- Chap01/Sec01/Proposition_1_16.lean — new — one-line simpa over the project's Proposition 1.40 where the real content lives.
-- Chap01/Sec01/Theorem_1_2.lean — new — pure recall of the project's own (sorry'd) dimension-invariance theorem.
-- Chap01/Sec01_02/Definition_1_2_extra_1.lean — mathlib-dup — #check/recall pointers only, identifying Lee's diffeomorphism with Mathlib's Diffeomorph.
-- Chap01/Sec01_02/Definition_1_2_extra_2.lean — partial-dup — two-line wrappers over ContDiffGroupoid.mem_of_source_eq_empty.
-- Chap01/Sec01_02/Definition_1_2_extra_4.lean — mathlib-dup — recall pointer to StructureGroupoid.maximalAtlas.
-- Chap01/Sec01_02/Definition_1_2_extra_5.lean — mathlib-dup — its sole (sorry'd) theorem holds by rfl from Mathlib's IsManifold.maximalAtlas.
-- Chap01/Sec01_02/Exercise_1_18.lean — mathlib-dup — zero-declaration pointer to the project's Proposition 1.17(b).
-- Chap01/Sec01_02/Remark_1_2_extra_6.lean — mathlib-dup — recall pointer noting Mathlib's IsManifold regularity parameter subsumes the cases.
-- Chap01/Sec01_03/Exercise_1_20.lean — new — pedagogical recall restating Proposition 1.19 with no new declarations.
-- Chap01/Sec01_03/Notation_1_3_extra_2.lean — mathlib-dup — recall of Mathlib's extChartAt for textbook numbering.
-- Chap01/Sec01_04/Example_1_21.lean — partial-dup — thin assembly of Mathlib's discrete-topology manifold lemmas.
-- Chap01/Sec01_04/Example_1_22.lean — mathlib-dup — sorry-stubbed restatement of Mathlib's model-space manifold instance.
-- Chap01/Sec01_04/Example_1_23.lean — new — fully proved but one-off pedagogical counterexample (cube-root chart) with no reusable API.
-- Chap01/Sec01_04/Example_1_24.lean — mathlib-dup — thin compositions/#checks of Mathlib basis/diffeomorphism API.
-- Chap01/Sec01_04/Example_1_25.lean — mathlib-dup — one-line finrank corollaries plus #checks of the matrix-space instance.
-- Chap01/Sec01_04/Example_1_26.lean — mathlib-dup — pure #check of Mathlib's open-subset manifold instance.
-- Chap01/Sec01_04/Example_1_27.lean — mathlib-dup — GL(n,ℝ) is a #check of Mathlib's units instance; supporting lemmas sorry-stubbed.
-- Chap01/Sec01_04/Example_1_28.lean — partial-dup — only substantive openness claim is sorry-stubbed; rest is instance plumbing.
-- Chap01/Sec01_04/Example_1_29.lean — mathlib-dup — two-step corollaries of Mathlib's finrank/toMatrix API.
-- Chap01/Sec01_04/Example_1_31.lean — mathlib-dup — pure #check of Mathlib's sphere manifold instance.
-- Chap01/Sec01_04/Example_1_34.lean — mathlib-dup — restates Mathlib's finite-product manifold instance and torus specialization.
-- Chap01/Sec01_04/Notation_1_4_extra_1.lean — mathlib-dup — notation crosswalk of #checks only.
-- Chap01/Sec01_05/Definition_1_5_extra_1.lean — partial-dup — awkward dimension-case-split bundling of Mathlib's half-space models.
-- Chap01/Sec01_05/Exercise_1_39.lean — mathlib-dup — zero declarations, only #check/#synth pointers to boundary lemmas.
-- Chap01/Sec01_05/Exercise_1_41.lean — partial-dup — pure pointer file recalling the local Proposition 1.40 declarations.
-- Chap01/Sec01_05/Theorem_1_37.lean — mathlib-dup — single recall of ModelWithCorners.disjoint_interior_boundary.
-- Chap01/Sec01_06/Definition_1_6_extra_2.lean — mathlib-dup — bundled class repackaging Mathlib's ChartedSpace + IsManifold (𝓡∂ n). 
-- Chap01/Sec01_06/Exercise_1_43.lean — mathlib-dup — zero declarations, only #check restatements specialized to the half-space model.
-- Chap01/Sec01_06/Proposition_1_45.lean — mathlib-dup — pure recall of boundary_of_boundaryless_left.
-- Chap01/Sec01_07/Problem_1_1.lean — new — complete line-with-two-origins counterexample but no reusable API surface.
-- Chap01/Sec01_07/Problem_1_12.lean — mathlib-dup — infer_instance plus a direct call to existing Mathlib results.
-- Chap01/Sec01_07/Problem_1_2.lean — partial-dup — short exercise-specific compositions of Mathlib sigma-topology lemmas.
-- Chap01/Sec01_07/Problem_1_3.lean — mathlib-dup — both iff directions are thin wrappers over existing Mathlib results.
-- Chap01/Sec01_07/Problem_1_4.lean — new — two near-trivial LocallyFinite lemmas plus a concrete counterexample cover.
-- Chap01/Sec01_07/Problem_1_7.lean — mathlib-dup — re-derives the sphere's stereographic atlas (24 sorries) that Mathlib already provides.
-- Chap01/Sec01_07/Problem_1_8.lean — partial-dup — circle-specific exercise on Mathlib's Circle.exp/arg machinery with only small reusable helpers.
+<details><summary>跳过（44 项，绝大多数为 Mathlib 包装/recall 文件）</summary>
 
-## 本章小结
+- Sec01/Definition_1_extra_3.lean — mathlib-dup — 纯 recall 类型类
+- Sec01/Definition_1_extra_4.lean — mathlib-dup — recall 加薄包装
+- Sec01/Example_1_4.lean — mathlib-dup — 球面实例一行复包
+- Sec01/Example_1_9.lean — new — 平凡 abbrev
+- Sec01/Exercise_1_14.lean — mathlib-dup — 纯 recall
+- Sec01/Lemma_1_13.lean — mathlib-dup — 与 Exercise_1_14 重复
+- Sec01/Proposition_1_11.lean — partial-dup — recall 加实例装配
+- Sec01/Proposition_1_12.lean — mathlib-dup — 纯 recall 包装
+- Sec01/Proposition_1_16.lean — new — 一行 simpa 引 1.40
+- Sec01/Theorem_1_2.lean — new — recall 项目 sorry 定理
+- Sec01_02/Definition_1_2_extra_1.lean — mathlib-dup — #check 指针
+- Sec01_02/Definition_1_2_extra_2.lean — partial-dup — 两行包装
+- Sec01_02/Definition_1_2_extra_4.lean — mathlib-dup — recall 指针
+- Sec01_02/Definition_1_2_extra_5.lean — mathlib-dup — rfl 即得且 sorry
+- Sec01_02/Exercise_1_18.lean — mathlib-dup — 零声明指针
+- Sec01_02/Remark_1_2_extra_6.lean — mathlib-dup — recall 指针
+- Sec01_03/Exercise_1_20.lean — new — 复述 1.19 无新声明
+- Sec01_03/Notation_1_3_extra_2.lean — mathlib-dup — extChartAt recall
+- Sec01_04/Example_1_21.lean — partial-dup — 离散流形薄装配
+- Sec01_04/Example_1_22.lean — mathlib-dup — sorry 复述实例
+- Sec01_04/Example_1_23.lean — new — 一次性反例无 API
+- Sec01_04/Example_1_24.lean — mathlib-dup — 薄组合/#check
+- Sec01_04/Example_1_25.lean — mathlib-dup — 一行推论加 #check
+- Sec01_04/Example_1_26.lean — mathlib-dup — 纯 #check
+- Sec01_04/Example_1_27.lean — mathlib-dup — #check 加 sorry 辅理
+- Sec01_04/Example_1_28.lean — partial-dup — 关键开性 sorry
+- Sec01_04/Example_1_29.lean — mathlib-dup — 两步推论
+- Sec01_04/Example_1_31.lean — mathlib-dup — 球面实例 #check
+- Sec01_04/Example_1_34.lean — mathlib-dup — 复述乘积实例
+- Sec01_04/Notation_1_4_extra_1.lean — mathlib-dup — 记号对照 #check
+- Sec01_05/Definition_1_5_extra_1.lean — partial-dup — 半空间模型笨拙打包
+- Sec01_05/Exercise_1_39.lean — mathlib-dup — 零声明 #check
+- Sec01_05/Exercise_1_41.lean — partial-dup — 纯指针文件
+- Sec01_05/Theorem_1_37.lean — mathlib-dup — 单条 recall
+- Sec01_06/Definition_1_6_extra_2.lean — mathlib-dup — 类复包 Mathlib
+- Sec01_06/Exercise_1_43.lean — mathlib-dup — 零声明 #check
+- Sec01_06/Proposition_1_45.lean — mathlib-dup — 纯 recall
+- Sec01_07/Problem_1_1.lean — new — 双原点反例无 API
+- Sec01_07/Problem_1_12.lean — mathlib-dup — infer_instance 直调
+- Sec01_07/Problem_1_2.lean — partial-dup — 习题级薄组合
+- Sec01_07/Problem_1_3.lean — mathlib-dup — 双向薄包装
+- Sec01_07/Problem_1_4.lean — new — 近平凡引理加反例
+- Sec01_07/Problem_1_7.lean — mathlib-dup — 重造球极图册多 sorry
+- Sec01_07/Problem_1_8.lean — partial-dup — 圆专用习题
+
+</details>
+
+## 小结
 
 第一章共审计 75 个文件，约六成是对 Mathlib 既有结果的 recall、#check 或薄封装，可直接跳过。真正值得移植的核心资产集中在两条线：一是坐标球/覆盖基础设施（坐标球谓词、预紧坐标球可数基、正则坐标(半)球），它们是单位分解、穷竭列与 GMT 覆盖论证的底层；二是实例级缺口（RP^n、CP^n 的完整流形结构、有限乘积 IsManifold 实例、正则水平集定理、ChartedSpaceCore 构造引理），均为 Mathlib 公认空白且大多 sorry-free。中等价值条目多数受 sorry 残留或项目内部依赖（TopologicalManifold 类、LeeBoundaryModelSpace）牵制，移植前需先做 API 重构与依赖消解。
 
@@ -168,78 +172,82 @@
 
 # Chap02
 
-## 移植优先（high value）
+## 移植优先（high，4 项）
 
-| 文件 | 主要声明 | 重叠分类 | 对应物 | 目标模块 | sorry | 理由 |
-|---|---|---|---|---|---|---|
-| Chap02/Sec02_12/Problem_2_4.lean | split_at_coordinate (+ continuity/ContDiff API), closed_unit_ball_boundary_chart, closed_unit_ball_center_chart, closed_unit_ball_fixed_atlas, closed_unit_ball_higher_dimensional_isManifold_infty, closedUnitBall_exists_smoothManifoldWithBoundary | new | — | Riemannian/Instances/ClosedBall | 否 | A complete, sorry-free 2600-line construction of a smooth manifold-with-boundary structure on the closed unit ball in R^n with smooth inclusion -- boundary-chart and coordinate-splitting infrastructure Mathlib lacks (it only has Icc and half-space instances) and that sits directly under the GMT divergence-theorem gap, though the existential statement should be reworked into instances and decoupled from the project-local SmoothManifoldWithBoundary wrapper. |
-| Chap02/Sec02_11/Proposition_2_28.lean | exists_positive_smooth_exhaustion_function | new | — | Riemannian/Manifold/Exhaustion | 否 | Complete sorry-free proof that every sigma-compact smooth manifold admits a positive smooth exhaustion function, absent from Mathlib and exactly the cutoff/proper-function infrastructure needed for noncompact L2/Bochner and GMT arguments. |
-| Chap02/Sec02_09/Example_2_14.lean | unitOpenBall, unitBall_symm_contMDiff, unitBall_contMDiff, unitOpenBallDiffeomorph, smoothChart_contMDiff_toHomeomorphSourceTarget, smoothChart_symm_contMDiff_toHomeomorphSourceTarget, smoothChartDiffeomorph | partial-dup | Mathlib: Homeomorph.unitBall, Homeomorph.contDiff_unitBall, OpenPartialHomeomorph.contDiffOn_univUnitBall_symm, contMDiffAt_of_mem_maximalAtlas (ingredients only; bundled Diffeomorphs are new) | Riemannian/Manifold/Diffeomorph | 否 | Sorry-free bundled Diffeomorphs 'open unit ball ≃ₘ ℝⁿ' and 'maximal-atlas chart is a diffeomorphism onto its image' are reusable coordinate-ball/chart infrastructure Mathlib only provides as unbundled ContDiff/ContMDiff lemmas. |
-| Chap02/Sec02_09/Proposition_2_15.lean | Diffeomorph.pi, Diffeomorph.restrictOpen, Diffeomorph.restrictOpenImage, Diffeomorph.restrictOpenMap, diffeomorph_isOpenMap, diffeomorphic_refl, diffeomorphic_symm, diffeomorphic_trans | partial-dup | Mathlib Diffeomorph.refl/symm/trans/toHomeomorph cover the relation and open-map parts; Diffeomorph.pi and the restrictOpen family have no Mathlib counterpart | Riemannian/Manifold/Diffeomorph | 是 | The finite-product diffeomorphism and restriction-of-a-diffeomorphism-to-an-open-submanifold API fill a real Mathlib gap and are reusable infrastructure, but six supporting lemmas (incl. pi_bijective and the restrictOpen lemmas) are still sorry. |
+| 文件 | 声明 | 分类 | 落点 | sorry | 理由 |
+|---|---|---|---|---|---|
+| Sec02_12/Problem_2_4.lean | closed_unit_ball_fixed_atlas, split_at_coordinate 等 | new | Instances/ClosedBall | 否 | 闭球带边流形 2600 行无 sorry，直撑 GMT 散度定理 |
+| Sec02_11/Proposition_2_28.lean | exists_positive_smooth_exhaustion_function | new | Manifold/Exhaustion | 否 | 正光滑穷竭函数全证，非紧 L²/Bochner/GMT 所需 |
+| Sec02_09/Example_2_14.lean | unitOpenBallDiffeomorph, smoothChartDiffeomorph 等 | partial-dup | Manifold/Diffeomorph | 否 | 打包单位球≃ℝⁿ与卡微分同胚，Mathlib 仅散装引理 |
+| Sec02_09/Proposition_2_15.lean | Diffeomorph.pi, Diffeomorph.restrictOpen 等 | partial-dup | Manifold/Diffeomorph | 是 | 乘积与开子流形限制 API 为缺口，六条辅理 sorry |
 
-## 可考虑（medium value）
+<details><summary>可考虑（medium，14 项）</summary>
 
-| 文件 | 主要声明 | 重叠分类 | 对应物 | 目标模块 | sorry | 理由 |
-|---|---|---|---|---|---|---|
-| Chap02/Sec02_09/Theorem_2_17.lean | Diffeomorph.dimension_eq, diffeomorphic_dimension_eq | new | Mathlib Diffeomorph.mfderivToContinuousLinearEquiv (key ingredient; the dimension-equality statement itself is absent from Mathlib) | Riemannian/Manifold/Diffeomorph | 否 | Complete, sorry-free proof of C^r diffeomorphism invariance of dimension for Euclidean-modeled manifolds — a small but genuinely missing general lemma, derived in a few lines from Mathlib's tangent-map equivalence. |
-| Chap02/Sec02_11/Definition_2_11_extra_2.lean | Function.IsSmoothOn, Function.isSmoothOn_iff_exists_local_extension | new | — | Riemannian/Manifold/SmoothExtension | 否 | Subtype-domain smoothness-via-local-extension predicate absent from Mathlib (which only has ContMDiffOn for total maps), useful but needs API reconciliation with ContMDiffOn to be idiomatic. |
-| Chap02/Sec02_11/Definition_2_11_extra_3.lean | Function.IsExhaustionFunction, IsExhaustionFunction.tendsto_atTop, IsExhaustionFunction.isProperMap, Continuous.isExhaustionFunction | new | — | Riemannian/Manifold/Exhaustion | 否 | Exhaustion-function class with proper-map/cocompact lemmas does not exist in Mathlib (only CompactExhaustion) and is the API base for Proposition 2.28, though the instance-on-a-function design needs minor rework. |
-| Chap02/Sec02_11/Lemma_2_26.lean | exists_supported_contMDiffMap_extension_of_isClosed | new | — | Riemannian/Manifold/SmoothExtension | 是 | Smooth extension lemma from closed sets is a genuine Mathlib gap and valuable infrastructure, but the file is statement-only (proof is sorry) so porting means proving it from scratch. |
-| Chap02/Sec02_12/Problem_2_10.lean | continuous_pullback_isLinearMap, smooth_iff_pullback_preserves_smooth_real_functions, homeomorph_is_diffeomorphism_iff_pullback_preserves_smooth_real_functions_forward, homeomorph_is_diffeomorphism_iff_pullback_preserves_smooth_real_functions_inverse | new | — | Riemannian/Manifold/SmoothFunctionCriterion | 是 | The functional characterization 'F smooth iff pullback preserves C^infinity real functions' is a genuinely useful API absent from Mathlib, but every theorem in the file is sorry so only statements would be ported. |
-| Chap02/Sec02_12/Problem_2_11.lean | Projectivization.basisMap, Projectivization.basisEquiv, Projectivization.continuous_map_continuousLinearEquiv, Projectivization.BasisCompatible, real_projectivization_exists_basisCompatible_smoothStructure | new | — | Riemannian/Instances/Projectivization | 是 | Mathlib has no manifold structure on Projectivization, so this transport-of-structure layer fills a real gap (and the continuity lemma for projectivized continuous linear equivs is fully proved), but the key IsManifold and diffeomorphism proofs are sorry and the file depends on project-local chapter-1 charts. |
-| Chap02/Sec02_12/Problem_2_13.lean | paracompactSpace_of_hasSubordinatePartitionOfUnity | new | — | Riemannian/Manifold/PartitionOfUnity | 否 | Complete, sorry-free, fully general converse (subordinate partitions of unity imply paracompactness) that Mathlib only states in the forward direction; small but a clean reusable lemma. |
-| Chap02/Sec02_12/Problem_2_6.lean | IsHomogeneousOfDegree, RespectsProjectiveClasses, projectivizationMap, contMDiff_projectivizationMap, contMDiff_homogeneousProjectivizationMap, puncturedEuclidean | new | — | Riemannian/Manifolds/ProjectiveSpace | 否 | Genuinely new general API (Mathlib has no smooth ℝPⁿ) for descending smooth homogeneous maps to projective space, but porting it requires also porting the project-local realProjectiveChart atlas it builds on. |
-| Chap02/Sec02_12/Problem_2_7.lean | functions_linearIndependent_of_pairwise_disjoint_support, exists_pairwise_disjoint_balls_in_ball, exists_linearlyIndependent_smooth_family, smooth_functions_not_finiteDimensional | new | — | Riemannian/Util/SmoothFunctionSpace | 否 | Complete, fully general proof (arbitrary model with corners) that C^∞(M,ℝ) is infinite-dimensional, with reusable lemmas (disjoint-support linear independence, disjoint chart balls) absent from Mathlib, though niche for OpenGALib's Riemannian/GMT focus. |
-| Chap02/Sec02_08/Corollary_2_8.lean | gluing_lemma_for_smooth_maps | partial-dup | smoothSheaf + TopCat.Sheaf.existsUnique_gluing' (Mathlib/Geometry/Manifold/Sheaf/Smooth.lean) | Riemannian/Manifold/SmoothManifold | 否 | Unbundles Mathlib's smooth-sheaf gluing into a directly usable ContMDiff-level existence-uniqueness statement absent from Mathlib, a reusable local-to-global tool for partition-of-unity-style constructions. |
-| Chap02/Sec02_08/Exercise_2_2.lean | contMDiff_open_submanifold_euclidean_iff_contDiffOn, contMDiff_open_submanifold_halfspace_iff_forall_exists_smoothAmbientExtension | partial-dup | contMDiffAt_subtype_iff, contMDiffOn_iff_contDiffOn (Mathlib); halfspace iff relies on the project's own Chap01 Definition_1_6_extra_1 | Riemannian/Manifold/Boundary | 否 | Part (1) is a thin Mathlib combination, but the half-space ambient-extension smoothness criterion (with its Chap01 dependency) is genuine boundary infrastructure Mathlib lacks and would need to be ported together with that Chap01 file. |
-| Chap02/Sec02_09/Theorem_2_18.lean | Diffeomorph.restrictInterior, Diffeomorph.restrictInterior_apply | partial-dup | Mathlib Diffeomorph.image_boundary / Diffeomorph.image_interior (Mathlib/Geometry/Manifold/IsManifold/InteriorBoundary.lean) cover part (1); restrictInterior is new | Riemannian/Manifold/Diffeomorph | 是 | Boundary/interior preservation is already in Mathlib; the new piece — restricting a diffeomorphism to manifold interiors as a diffeomorphism — is useful for boundary handling but depends on project-local interiorOpens and restrictOpen infra and leaves its simp lemma as sorry. |
-| Chap02/Sec02_11/Proposition_2_25.lean | exists_smooth_bump_function_for | partial-dup | Mathlib Geometry/Manifold/PartitionOfUnity.lean: exists_contMDiffMap_zero_one_of_isClosed, SmoothPartitionOfUnity.exists_isSubordinate | Riemannian/Manifold/BumpFunction | 否 | Closed-set bump with the strict tsupport-in-U conclusion is not literally in Mathlib (whose EqOn 0/1 version only gives support containment) but is a short complete corollary of Mathlib's subordinate partitions, and would usefully extend OpenGALib's pointwise-only BumpFunction module. |
-| Chap02/Sec02_12/Problem_2_3.lean | circle_zpow_map, circle_zpow_map_smooth, hopf_map_aux, hopf_map, hopf_map_smooth | partial-dup | contMDiff_neg_sphere and Circle Lie-group instances (Mathlib/Geometry/Manifold/Instances/Sphere.lean, Mathlib/Analysis/SpecialFunctions/Complex/Circle.lean) | Riemannian/Instances/HopfFibration | 是 | Circle-power and antipodal smoothness are immediate from Mathlib's Lie-group/sphere API, but the explicit Hopf map S^3 -> S^2 and its smoothness statement are new and a canonical Riemannian example -- though all five proofs here are sorry. |
+| 文件 | 声明 | 分类 | 落点 | sorry | 理由 |
+|---|---|---|---|---|---|
+| Sec02_09/Theorem_2_17.lean | Diffeomorph.dimension_eq 等 | new | Manifold/Diffeomorph | 否 | 微分同胚维数不变全证，Mathlib 缺此通用引理 |
+| Sec02_11/Definition_2_11_extra_2.lean | Function.IsSmoothOn 等 | new | Manifold/SmoothExtension | 否 | 子类型域局部延拓光滑谓词，需对齐 ContMDiffOn |
+| Sec02_11/Definition_2_11_extra_3.lean | Function.IsExhaustionFunction 等 | new | Manifold/Exhaustion | 否 | 穷竭函数类与 proper 引理，2.28 的 API 基础 |
+| Sec02_11/Lemma_2_26.lean | exists_supported_contMDiffMap_extension_of_isClosed | new | Manifold/SmoothExtension | 是 | 闭集光滑延拓为真缺口，仅有陈述需从头证 |
+| Sec02_12/Problem_2_10.lean | smooth_iff_pullback_preserves_smooth_real_functions 等 | new | Manifold/SmoothFunctionCriterion | 是 | 回拉保光滑函数判据有用，定理全 sorry |
+| Sec02_12/Problem_2_11.lean | Projectivization.basisMap, BasisCompatible 等 | new | Instances/Projectivization | 是 | Projectivization 结构搬运层，关键证明 sorry 且依赖一章 |
+| Sec02_12/Problem_2_13.lean | paracompactSpace_of_hasSubordinatePartitionOfUnity | new | Manifold/PartitionOfUnity | 否 | 单位分解⇒仿紧逆向全证，Mathlib 仅有正向 |
+| Sec02_12/Problem_2_6.lean | projectivizationMap, contMDiff_projectivizationMap 等 | new | Manifolds/ProjectiveSpace | 否 | 齐次映射下降到 ℝPⁿ 为新，需先移项目图册 |
+| Sec02_12/Problem_2_7.lean | smooth_functions_not_finiteDimensional 等 | new | Util/SmoothFunctionSpace | 否 | C^∞(M,ℝ) 无限维全证，于本库方向偏小众 |
+| Sec02_08/Corollary_2_8.lean | gluing_lemma_for_smooth_maps | partial-dup | Manifold/SmoothManifold | 否 | 光滑层粘合解包为 ContMDiff 级可用陈述 |
+| Sec02_08/Exercise_2_2.lean | contMDiff_open_submanifold_halfspace_iff_forall_exists_smoothAmbientExtension 等 | partial-dup | Manifold/Boundary | 否 | 半空间延拓判据真缺，需连带一章依赖文件 |
+| Sec02_09/Theorem_2_18.lean | Diffeomorph.restrictInterior 等 | partial-dup | Manifold/Diffeomorph | 是 | 限制到流形内部为新，依项目内设施且 simp 引理 sorry |
+| Sec02_11/Proposition_2_25.lean | exists_smooth_bump_function_for | partial-dup | Manifold/BumpFunction | 否 | 严格 tsupport⊆U 闭集 bump，可扩展本库模块 |
+| Sec02_12/Problem_2_3.lean | hopf_map, hopf_map_smooth 等 | partial-dup | Instances/HopfFibration | 是 | Hopf 映射 S³→S² 为新典型例，五条证明全 sorry |
 
-## 跳过（low value / duplicates）
+</details>
 
-- Chap02/Sec02_08/Definition_2_8_extra_2.lean — mathlib-dup — pure pedagogical #check restatement of ContMDiff.
-- Chap02/Sec02_08/Definition_2_8_extra_4.lean — mathlib-dup — thin pointwise corollary of an existing chart-source equivalence.
-- Chap02/Sec02_08/Definition_2_8_extra_5.lean — mathlib-dup — recall of ContMDiff with textbook numbering only.
-- Chap02/Sec02_08/Definition_2_8_extra_6.lean — partial-dup — chart-conjugation abbrev already covered by writtenInExtChartAt API.
-- Chap02/Sec02_08/Exercise_2_1.lean — mathlib-dup — only #checks Mathlib's ring/algebra structure on smooth functions.
-- Chap02/Sec02_08/Exercise_2_11.lean — mathlib-dup — three recall statements of canonical smoothness lemmas.
-- Chap02/Sec02_08/Exercise_2_3.lean — mathlib-dup — two-line wrapper around the maximal-atlas chart criterion.
-- Chap02/Sec02_08/Exercise_2_7.lean — mathlib-dup — pure recall file cross-referencing existing lemmas.
-- Chap02/Sec02_08/Exercise_2_9.lean — mathlib-dup — four-line wrapper around the two-chart smoothness criterion.
-- Chap02/Sec02_08/Notation_2_8_extra_3.lean — mathlib-dup — notation crosswalk via #check, all content is Mathlib's.
-- Chap02/Sec02_08/Proposition_2_10.lean — mathlib-dup — #checks of four canonical smoothness theorems.
-- Chap02/Sec02_08/Proposition_2_4.lean — mathlib-dup — single #check of ContMDiff.continuous.
-- Chap02/Sec02_08/Proposition_2_5.lean — mathlib-dup — single #check of the chart criterion contMDiff_iff.
-- Chap02/Sec02_08/Proposition_2_6.lean — mathlib-dup — two #checks of locality and restriction lemmas.
-- Chap02/Sec02_08/Remark_2_8_extra_1.lean — new — terminology predicate with a sorry'd trivial iff, no math content.
-- Chap02/Sec02_08/Remark_2_8_extra_7.lean — mathlib-dup — recalls core charted-space vocabulary with no declarations.
-- Chap02/Sec02_09/Definition_2_9_extra_1.lean — mathlib-dup — pure #check restatement of the Diffeomorph type.
-- Chap02/Sec02_09/Exercise_2_16.lean — partial-dup — recall-only scaffolding for Diffeomorph.trans and Proposition 2.15.
-- Chap02/Sec02_09/Exercise_2_19.lean — partial-dup — recall-only scaffolding referencing image_boundary and bridge lemmas.
-- Chap02/Sec02_10/Definition_2_10_extra_1.lean — mathlib-dup — documentation file with a single #check, no declarations.
-- Chap02/Sec02_10/Definition_2_10_extra_2.lean — mathlib-dup — recall of Mathlib bump-function owners already wrapped in OpenGALib.
-- Chap02/Sec02_10/Definition_2_10_extra_3.lean — mathlib-dup — recall of tsupport / HasCompactSupport definitions.
-- Chap02/Sec02_10/Definition_2_10_extra_4.lean — mathlib-dup — recall of subordinate-partition-of-unity definitions.
-- Chap02/Sec02_10/Exercise_2_24.lean — mathlib-dup — #check instantiating partition-of-unity existence at the half-space model.
-- Chap02/Sec02_10/Lemma_2_20.lean — mathlib-dup — recall pointer to expNegInvGlue.contDiff, already re-exposed in OpenGALib.
-- Chap02/Sec02_10/Lemma_2_21.lean — partial-dup — affine repackaging of Real.smoothTransition; OpenGALib smoothStep covers it.
-- Chap02/Sec02_10/Lemma_2_22.lean — partial-dup — ContDiffBump already supplies the construction except a minor strict bound.
-- Chap02/Sec02_10/Theorem_2_23.lean — mathlib-dup — sorry'd restatement of Mathlib's partition-of-unity existence theorem.
-- Chap02/Sec02_11/Definition_2_11_extra_1.lean — new — trivial pedagogical check of the constant function 1, no reusable API.
-- Chap02/Sec02_11/Exercise_2_27.lean — new — concrete counterexample on (0,inf), pedagogical only.
-- Chap02/Sec02_11/Theorem_2_29.lean — mathlib-dup — six-line wrapper specializing exists_contMDiff_zero_iff_one_iff_of_isClosed.
-- Chap02/Sec02_12/Problem_2_1.lean — new — purely pedagogical Heaviside-step counterexample, no reusable API.
-- Chap02/Sec02_12/Problem_2_12.lean — new — main theorem is a single sorry and the instance bundling is an API antipattern.
-- Chap02/Sec02_12/Problem_2_14.lean — mathlib-dup — literally a `recall` of the Mathlib smooth-separation theorem.
-- Chap02/Sec02_12/Problem_2_5.lean — new — incomplete textbook-specific cubic-real-line characterization with two sorries.
-- Chap02/Sec02_12/Problem_2_8.lean — new — concrete-space exercise contingent on first porting projective-chart infrastructure.
-- Chap02/Sec02_12/Problem_2_9.lean — new — heavily textbook-specific ℂP¹ extension with ~30 single-purpose Fin 2 helpers.
-- Chap02/Sec02_12/Problem_2_9_corecheck.lean — new — internal pipeline snapshot, strict prefix of Problem_2_9.lean.
-- Chap02/Sec02_12/Problem_2_9_pre_north.lean — new — internal pipeline snapshot duplicating Problem_2_9.lean's first part.
-- Chap02/Sec02_12/Problem_2_9_prefixcheck.lean — new — internal pipeline snapshot through the north-chart formula, no independent content.
+<details><summary>跳过（40 项，绝大多数为 Mathlib 包装/recall 文件）</summary>
 
-## 本章小结
+- Sec02_08/Definition_2_8_extra_2.lean — mathlib-dup — 纯 #check 复述
+- Sec02_08/Definition_2_8_extra_4.lean — mathlib-dup — 薄逐点推论
+- Sec02_08/Definition_2_8_extra_5.lean — mathlib-dup — recall 编号对照
+- Sec02_08/Definition_2_8_extra_6.lean — partial-dup — 既有 API 已覆盖
+- Sec02_08/Exercise_2_1.lean — mathlib-dup — 仅 #check 环结构
+- Sec02_08/Exercise_2_11.lean — mathlib-dup — 三条 recall
+- Sec02_08/Exercise_2_3.lean — mathlib-dup — 两行包装
+- Sec02_08/Exercise_2_7.lean — mathlib-dup — 纯 recall 交叉引用
+- Sec02_08/Exercise_2_9.lean — mathlib-dup — 四行包装
+- Sec02_08/Notation_2_8_extra_3.lean — mathlib-dup — 记号对照 #check
+- Sec02_08/Proposition_2_10.lean — mathlib-dup — 四条 #check
+- Sec02_08/Proposition_2_4.lean — mathlib-dup — 单条 #check
+- Sec02_08/Proposition_2_5.lean — mathlib-dup — 单条 #check
+- Sec02_08/Proposition_2_6.lean — mathlib-dup — 两条 #check
+- Sec02_08/Remark_2_8_extra_1.lean — new — 术语谓词无数学内容
+- Sec02_08/Remark_2_8_extra_7.lean — mathlib-dup — 零声明词汇复述
+- Sec02_09/Definition_2_9_extra_1.lean — mathlib-dup — 纯 #check
+- Sec02_09/Exercise_2_16.lean — partial-dup — recall 脚手架
+- Sec02_09/Exercise_2_19.lean — partial-dup — recall 脚手架
+- Sec02_10/Definition_2_10_extra_1.lean — mathlib-dup — 文档加单 #check
+- Sec02_10/Definition_2_10_extra_2.lean — mathlib-dup — 本库已有包装
+- Sec02_10/Definition_2_10_extra_3.lean — mathlib-dup — 定义 recall
+- Sec02_10/Definition_2_10_extra_4.lean — mathlib-dup — 定义 recall
+- Sec02_10/Exercise_2_24.lean — mathlib-dup — #check 特化
+- Sec02_10/Lemma_2_20.lean — mathlib-dup — recall 指针
+- Sec02_10/Lemma_2_21.lean — partial-dup — smoothStep 已覆盖
+- Sec02_10/Lemma_2_22.lean — partial-dup — ContDiffBump 已供
+- Sec02_10/Theorem_2_23.lean — mathlib-dup — sorry 复述
+- Sec02_11/Definition_2_11_extra_1.lean — new — 平凡常函数检查
+- Sec02_11/Exercise_2_27.lean — new — 教学反例
+- Sec02_11/Theorem_2_29.lean — mathlib-dup — 六行特化包装
+- Sec02_12/Problem_2_1.lean — new — 教学反例无 API
+- Sec02_12/Problem_2_12.lean — new — 主定理单 sorry
+- Sec02_12/Problem_2_14.lean — mathlib-dup — 字面 recall
+- Sec02_12/Problem_2_5.lean — new — 教材特定含两 sorry
+- Sec02_12/Problem_2_8.lean — new — 依赖未移植图册
+- Sec02_12/Problem_2_9.lean — new — 教材特定大量辅件
+- Sec02_12/Problem_2_9_corecheck.lean — new — 流水线快照
+- Sec02_12/Problem_2_9_pre_north.lean — new — 流水线快照
+- Sec02_12/Problem_2_9_prefixcheck.lean — new — 流水线快照
+
+</details>
+
+## 小结
 
 第二章共审计 55 个文件，其中大部分（约 40 个）是对 Mathlib 既有 ContMDiff / 光滑函数 / 单位分解 API 的 #check 或 recall 式复述，可直接跳过。真正值得移植的核心资产集中在两条线：一是 Diffeomorph 基础设施（乘积、开子流形限制、维数不变性、单位球与图卡的打包微分同胚），二是闭球带边流形构造（Problem 2.4，2600 行无 sorry）与正光滑穷竭函数（Proposition 2.28），后两者直接支撑 GMT 散度定理与非紧 L²/Bochner 方向的缺口。中等价值项多数围绕光滑延拓、投影空间结构与回拉判据，部分仍含 sorry，宜在对应目标模块成型后按依赖顺序择机引入。
 
@@ -247,77 +255,81 @@
 
 # Chap03
 
-## 移植优先（high value）
+## 移植优先（high，4 项）
 
-| 文件 | 主要声明 | 重叠分类 | 对应物 | 目标模块 | sorry | 理由 |
-|---|---|---|---|---|---|---|
-| Chap03/Sec03_14/Proposition_3_9.lean | mfderiv_open_subset_inclusion_isInvertible | new | — | Riemannian/Util/Tangent | 否 | Sorry-free proof that the differential of the open-subset inclusion is invertible, with a reusable Opens-to-PartialDiffeomorph construction; this tangent-space-identification API is absent from Mathlib and directly useful for restriction arguments in Riemannian/GMT work. |
-| Chap03/Sec03_17/Proposition_3_23.lean | exists_smooth_curve_with_velocity, exists_smooth_curve_with_velocity_boundaryless, exists_open_interval_curve_with_velocity_of_isInteriorPoint, exists_one_sided_curve_with_velocity_of_isBoundaryPoint | new | — | Riemannian/CurveVelocity | 否 | Fully proved surjectivity of curve velocities onto the tangent space — general-model interior case plus one-sided-interval boundary case — exists nowhere in Mathlib and is reusable infrastructure for variation/geodesic arguments, though the `hγ ▸` casts and the project-local SmoothManifoldWithBoundary class need rework on port. |
-| Chap03/Sec03_16/Proposition_3_20.lean | tangent_bundle_opens_trivializationAt_eq_toProd, tangent_bundle_opens_to_prod_contMDiff, tangentBundle_diffeomorphic_prod_of_global_chart, globalChartDiffeomorph, tangentBundle_diffeomorphic_prod_of_global_chart_map | partial-dup | Mathlib tangentBundleModelSpaceDiffeomorph (Geometry/Manifold/MFDeriv/Tangent) covers only the full model space, not Opens U or a globally-charted M | Riemannian/TangentBundle/Trivialization | 否 | Fully proved, reusable single-chart trivialization infrastructure (TangentBundle over an Opens of the model space equals TotalSpace.toProd, hence TM diffeomorphic to M x R^n given a global chart) absent from both Mathlib and OpenGALib, though its main def routes through the sorried tangentMap_diffeomorph in Corollary_3_22. |
-| Chap03/Sec03_20/Problem_3_7.lean | TangentSpace.toPointDerivation, smooth_germ_derivation_at.toPointDerivation, smooth_germ_derivation_existsUnique_tangentVector, toTangentSpace, eq_toTangentSpace | partial-dup | Mathlib/Geometry/Manifold/DerivationBundle.lean (PointDerivation, fdifferential) and Sheaf/Smooth.lean (smoothSheafCommRing) provide the ingredients but not the TangentSpace ≃ derivations equivalence | Riemannian/TangentBundle/PointDerivation | 是 | Builds the tangent-vectors-as-derivations-of-germs equivalence that Mathlib famously lacks — a high-value reusable tangent-space API — though two chart-transition extension lemmas remain sorried and the chart-pullback scaffolding needs cleanup. |
+| 文件 | 声明 | 分类 | 落点 | sorry | 理由 |
+|---|---|---|---|---|---|
+| Sec03_14/Proposition_3_9.lean | mfderiv_open_subset_inclusion_isInvertible | new | Util/Tangent | 否 | 开子集包含微分可逆全证，Mathlib 缺此切空间识别 API |
+| Sec03_17/Proposition_3_23.lean | exists_smooth_curve_with_velocity, exists_smooth_curve_with_velocity_boundaryless 等 | new | CurveVelocity | 否 | 曲线速度满射切空间含边界情形，Mathlib 全缺 |
+| Sec03_16/Proposition_3_20.lean | tangent_bundle_opens_trivializationAt_eq_toProd, globalChartDiffeomorph 等 | partial-dup | TangentBundle/Trivialization | 否 | 单图卡切丛平凡化全证，主 def 依赖含 sorry 的 3.22 |
+| Sec03_20/Problem_3_7.lean | TangentSpace.toPointDerivation, smooth_germ_derivation_existsUnique_tangentVector 等 | partial-dup | TangentBundle/PointDerivation | 是 | 切向量≃芽导子等价，Mathlib 著名缺口，余两条 sorry |
 
-## 可考虑（medium value）
+<details><summary>可考虑（medium，11 项）</summary>
 
-| 文件 | 主要声明 | 重叠分类 | 对应物 | 目标模块 | sorry | 理由 |
-|---|---|---|---|---|---|---|
-| Chap03/Sec03_13/Proposition_3_2.lean | directional_point_derivation, geometric_to_point_derivation, point_derivation_to_geometric, geometric_to_point_derivation_linear_equiv | new | — | Riemannian/Util/Tangent/PointDerivation | 是 | The geometric-tangent-vector ↔ PointDerivation linear equivalence is a real Mathlib gap and a reusable bridge, but the file is Euclidean-only and sorries every substantive step including the hard surjectivity direction, while OpenGALib's stack currently never uses derivations. |
-| Chap03/Sec03_14/Lemma_3_11.lean | mfderiv_half_space_inclusion_isInvertible_of_boundary_eq_zero | new | — | Riemannian/Manifold/Boundary | 是 | Invertibility of the half-space inclusion differential at boundary points is genuinely absent from Mathlib and relevant to OpenGALib's manifold-with-boundary/divergence-theorem gap, but the file is a sorry'd statement with no proof to port. |
-| Chap03/Sec03_14/Proposition_3_8.lean | PointDerivation.congr_of_eqOn_nhds | new | PointDerivation (Mathlib/Geometry/Manifold/DerivationBundle.lean) provides the type but not the locality lemma | Riemannian/Manifold/Derivation | 否 | Locality of point derivations is a real Mathlib gap with a complete bump-function proof (dependency Lemma 3.4 is also sorry-free), but OpenGALib currently builds on mfderiv-based tangent spaces rather than the derivation model, making it niche. |
-| Chap03/Sec03_17/Definition_3_17_extra_1.lean | curve_velocity, curve_velocityWithin, curve_velocityWithin_eq_curve_velocity | new | — | Riemannian/CurveVelocity | 否 | Named curve-velocity abbrevs over mfderiv/mfderivWithin applied to the unit tangent vector are thin but absent from Mathlib (which inlines `mfderiv 𝓘(ℝ) I γ t 1` in IntegralCurve) and would be the foundation for porting Proposition 3.23. |
-| Chap03/Sec03_18/Definition_3_18_extra_3.lean | SmoothCurveAt, SmoothCurveEqv, CurveVelocityClass, curveVelocityClassEquivTangentSpace | new | — | Riemannian/TangentBundle/CurveVelocity | 是 | A curve-velocity realization of TangentSpace is absent from Mathlib and could underpin geodesic/velocity APIs, but both load-bearing theorems (tangentVector well-definedness and bijectivity) are sorried and the design needs rework. |
-| Chap03/Sec03_18/Definition_3_18_extra_4.lean | IsCoordinateTangentVector, CoordinateTangentVector, TangentSpace.coordinateComponent, CoordinateTangentVector.equivTangentSpace | new | — | Riemannian/TangentBundle/CoordinateComponents | 否 | Fully proved coordinate-component API (chart components of tangent vectors compatible under tangentCoordChange, with an equiv to TangentSpace) not in Mathlib; useful for OpenGALib's chart-basis work though somewhat pedagogical in origin. |
-| Chap03/Sec03_20/Problem_3_4.lean | tangentBundle_circle_diffeomorph_prodLie, tangentBundle_unitCircle_diffeomorph, circleTangentFiberDiffeomorph, contMDiff_tangentBundle_circle_prodLie_toFun/invFun | new | Mathlib GroupLieAlgebra.lean has mulInvariantVectorField but no tangent-bundle trivialization diffeomorphism | Riemannian/TangentBundle/LieGroupTrivialization | 否 | Complete sorry-free left-translation trivialization TG ≃ G × Lie(G) instantiated for the circle; the construction fills a real Lie-group-parallelizability gap but is hardcoded to Circle/𝓡 1 and needs generalization rework to be a good API. |
-| Chap03/Sec03_14/Proposition_3_6.lean | mfderiv_comp_of_smooth, diffeomorph_mfderiv_symm_eq_symm | partial-dup | mfderiv_comp, IsLocalDiffeomorphAt.mfderivToContinuousLinearEquiv (Mathlib/Geometry/Manifold/LocalDiffeomorph.lean) | Riemannian/Util/Tangent | 否 | mfderiv_comp_of_smooth is a thin specialization of Mathlib's mfderiv_comp, but diffeomorph_mfderiv_symm_eq_symm (inverse of a diffeomorphism's differential equals the differential of the inverse) is a small sorry-free glue lemma Mathlib lacks. |
-| Chap03/Sec03_15/Proposition_3_15.lean | chart_mdifferentiable_of_mem_maximalAtlas, chart_coordinate_vectors_basis | partial-dup | Mathlib mdifferentiable_of_mem_atlas + OpenPartialHomeomorph.MDifferentiable.mfderiv; OpenGALib Riemannian/TensorBundle/SmoothOrthoFrame/ChartBasis.lean (chartBasisVecFiber, smoothOrthoFrame) | Riemannian/Util/Chart/CoordinateBasis | 否 | The maximal-atlas mdifferentiability lemma is a six-line corollary of Mathlib, but packaging the chart mfderiv into a Module.Basis with repr is a small reusable coordinate-components API that OpenGALib's trivialization-based chart frames do not expose. |
-| Chap03/Sec03_16/Corollary_3_22.lean | tangentMap_comp_of_smooth, tangentMap_id_eq_id, tangentMap_symm_leftInverse, tangentMap_symm_rightInverse, tangentMap_diffeomorph, tangentMap_diffeomorph_apply | partial-dup | Mathlib tangentMap_comp (MFDeriv/Basic), tangentMap_id (MFDeriv/SpecificFunctions), ContMDiff.contMDiff_tangentMap (ContMDiffMFDeriv) | Riemannian/TangentBundle/Diffeomorph | 是 | Composition/identity laws duplicate Mathlib, but the packaged tangent-bundle diffeomorphism induced by a Diffeomorph is a small reusable API gap; five supporting lemmas are sorried. |
-| Chap03/Sec03_20/Problem_3_1.lean | isLocallyConstant_of_mfderiv_eq_zero, mfderiv_eq_zero_iff_isLocallyConstant, mfderiv_eq_zero_iff_constant_on_components, manifold_locPathConnectedSpace | partial-dup | Mathlib isLocallyConstant_of_fderiv_eq_zero (Analysis/Calculus/MeanValue.lean) covers the model-space case only; no manifold version exists | Riemannian/TangentBundle/MFDerivLocallyConstant | 是 | The 'mfderiv ≡ 0 iff locally constant' lemma for manifolds is a genuinely missing, reusable Mathlib gap, but the forward direction is sorried (blocked on IsManifold hypotheses) and the API surface is small. |
+| 文件 | 声明 | 分类 | 落点 | sorry | 理由 |
+|---|---|---|---|---|---|
+| Sec03_13/Proposition_3_2.lean | directional_point_derivation, geometric_to_point_derivation_linear_equiv 等 | new | Util/Tangent/PointDerivation | 是 | 几何切向量↔导子等价是真缺口，但仅欧氏且关键步全 sorry |
+| Sec03_14/Lemma_3_11.lean | mfderiv_half_space_inclusion_isInvertible_of_boundary_eq_zero | new | Manifold/Boundary | 是 | 半空间包含边界点微分可逆，仅语句无证明可移 |
+| Sec03_14/Proposition_3_8.lean | PointDerivation.congr_of_eqOn_nhds | new | Manifold/Derivation | 否 | 导子局部性 bump 函数完整证明，但本库不用导子模型 |
+| Sec03_17/Definition_3_17_extra_1.lean | curve_velocity, curve_velocityWithin 等 | new | CurveVelocity | 否 | 命名曲线速度薄封装，是移植 3.23 的基础 |
+| Sec03_18/Definition_3_18_extra_3.lean | SmoothCurveAt, CurveVelocityClass 等 | new | TangentBundle/CurveVelocity | 是 | 曲线速度实现切空间，两核心定理 sorry 需重设计 |
+| Sec03_18/Definition_3_18_extra_4.lean | IsCoordinateTangentVector, TangentSpace.coordinateComponent 等 | new | TangentBundle/CoordinateComponents | 否 | 坐标分量 API 全证，Mathlib 缺，偏教学起源 |
+| Sec03_20/Problem_3_4.lean | tangentBundle_circle_diffeomorph_prodLie, circleTangentFiberDiffeomorph 等 | new | TangentBundle/LieGroupTrivialization | 否 | 李群平凡化 TG≃G×Lie(G) 全证，硬编码圆需泛化 |
+| Sec03_14/Proposition_3_6.lean | mfderiv_comp_of_smooth, diffeomorph_mfderiv_symm_eq_symm | partial-dup | Util/Tangent | 否 | 微分同胚逆的微分等于微分之逆，Mathlib 缺的小胶水 |
+| Sec03_15/Proposition_3_15.lean | chart_mdifferentiable_of_mem_maximalAtlas, chart_coordinate_vectors_basis | partial-dup | Util/Chart/CoordinateBasis | 否 | 图卡 mfderiv 打包成 Basis，小型可复用坐标 API |
+| Sec03_16/Corollary_3_22.lean | tangentMap_diffeomorph, tangentMap_comp_of_smooth 等 | partial-dup | TangentBundle/Diffeomorph | 是 | Diffeomorph 诱导切丛微分同胚，五条辅助引理 sorry |
+| Sec03_20/Problem_3_1.lean | isLocallyConstant_of_mfderiv_eq_zero, mfderiv_eq_zero_iff_isLocallyConstant 等 | partial-dup | TangentBundle/MFDerivLocallyConstant | 是 | mfderiv≡0 当且仅当局部常值，正向 sorry 受阻 |
 
-## 跳过（low value / duplicates）
+</details>
 
-- Chap03/Sec03_13/Corollary_3_3.lean — new — Euclidean-only, sorried at every key step, trivial corollary of the (also sorried) Proposition 3.2 equivalence.
-- Chap03/Sec03_13/Definition_3_13_extra_1.lean — mathlib-dup — thin abbrev-plus-notation wrapper over Bundle.Trivial adding textbook naming, not API.
-- Chap03/Sec03_13/Definition_3_13_extra_2.lean — mathlib-dup — no declarations, only #check restatements of Mathlib's PointDerivation API.
-- Chap03/Sec03_13/Definition_3_13_extra_3.lean — mathlib-dup — single rfl-level pedagogical restatement of Derivation.leibniz in evaluation form.
-- Chap03/Sec03_13/Exercise_3_5.lean — mathlib-dup — pure #check file recalling Lemma 3.4's one-line Mathlib consequences.
-- Chap03/Sec03_13/Lemma_3_1.lean — mathlib-dup — Euclidean specialization, one-line consequences of Mathlib's Derivation API.
-- Chap03/Sec03_13/Lemma_3_4.lean — mathlib-dup — one-line wrappers over Derivation.map_algebraMap and the Leibniz rule with textbook numbering.
-- Chap03/Sec03_14/Definition_3_14_extra_1.lean — mathlib-dup — recall-only restatement of Mathlib's mfderiv signature.
-- Chap03/Sec03_14/Definition_3_14_extra_2.lean — mathlib-dup — single #check identifying Lee's D_v|_a with Mathlib's lineDeriv.
-- Chap03/Sec03_14/Exercise_3_7.lean — mathlib-dup — pure #check restatements of Mathlib lemmas and the project's own Proposition 3.6.
-- Chap03/Sec03_14/Proposition_3_10.lean — mathlib-dup — one-line defeq `change` plus finrank_euclideanSpace_fin, no reusable API.
-- Chap03/Sec03_14/Proposition_3_12.lean — mathlib-dup — sorry'd restatement of the same defeq-trivial finrank fact tied to local scaffolding.
-- Chap03/Sec03_14/Proposition_3_13.lean — mathlib-dup — one-line wrapper of fromTangentSpace.symm with both accompanying lemmas sorry'd.
-- Chap03/Sec03_15/Definition_3_15_extra_1.lean — partial-dup — two sorried statements plus a wrapper already covered by Mathlib's chart-mfderiv API and OpenGALib's chart-basis machinery.
-- Chap03/Sec03_15/Definition_3_15_extra_2.lean — partial-dup — one-line .repr wrapper with no independent API value beyond the basis it derives from.
-- Chap03/Sec03_15/Example_3_16.lean — new — concrete numeric evaluation of Mathlib's polar Jacobian at one point, textbook example only.
-- Chap03/Sec03_15/Exercise_3_17.lean — new — complete but entirely textbook-specific shear-diffeomorphism illustration.
-- Chap03/Sec03_15/Remark_3_15_extra_3.lean — mathlib-dup — pure recall of two existing Mathlib lemmas, no new declarations.
-- Chap03/Sec03_15/Remark_3_15_extra_4.lean — partial-dup — two-line glue lemma already effectively available via Mathlib and OpenGALib's ChartTransition bridges.
-- Chap03/Sec03_15/Remark_3_15_extra_5.lean — mathlib-dup — recall-only restatement of Mathlib's tangentMap_chart_symm.
-- Chap03/Sec03_16/Definition_3_16_extra_1.lean — mathlib-dup — recall/#check restatement of Mathlib's TangentBundle definition.
-- Chap03/Sec03_16/Definition_3_16_extra_3.lean — mathlib-dup — only #check statements pointing at Mathlib's tangentMap.
-- Chap03/Sec03_16/Exercise_3_19.lean — new — lone rfl theorem about swapping factors of the canonical tangent-bundle chart, no reusable API.
-- Chap03/Sec03_16/Notation_3_16_extra_2.lean — mathlib-dup — notation-only file with a single #check of Mathlib's canonical tangent-bundle charts.
-- Chap03/Sec03_16/Notation_3_16_extra_4.lean — mathlib-dup — recall of a project bridge lemma that thinly restates Diffeomorph.mfderivToContinuousLinearEquiv.
-- Chap03/Sec03_16/Proposition_3_18.lean — mathlib-dup — instances #synth'd from Mathlib and the lone sorried theorem directly specializes contMDiff_proj.
-- Chap03/Sec03_16/Proposition_3_21.lean — mathlib-dup — single #check specializing ContMDiff.contMDiff_tangentMap to infinite smoothness.
-- Chap03/Sec03_17/Proposition_3_24.lean — mathlib-dup — one-line evaluations of Mathlib's chain rule at the unit tangent vector, textbook numbering only.
-- Chap03/Sec03_17/Corollary_3_25.lean — mathlib-dup — symm-and-substitute restatement of Proposition 3.24, no new API surface.
-- Chap03/Sec03_18/Definition_3_18_extra_1.lean — mathlib-dup — textbook notation over Mathlib's smooth-sheaf stalk, only a one-line Algebra instance as new glue.
-- Chap03/Sec03_18/Definition_3_18_extra_2.lean — partial-dup — two trivial abbrevs plus a sorried restatement of Derivation.leibniz.
-- Chap03/Sec03_19/Definition_3_19_extra_1.lean — mathlib-dup — pure recall of Mathlib's Category typeclass.
-- Chap03/Sec03_19/Definition_3_19_extra_2.lean — mathlib-dup — pure recall of Mathlib's IsIso.
-- Chap03/Sec03_19/Definition_3_19_extra_3.lean — mathlib-dup — recalls Mathlib's small/locally-small category notions verbatim.
-- Chap03/Sec03_19/Definition_3_19_extra_4.lean — mathlib-dup — just a #check of Mathlib's functor type, no declarations.
-- Chap03/Sec03_19/Definition_3_19_extra_5.lean — mathlib-dup — a #check identifying contravariant functors with Cᵒᵖ ⥤ D, no declarations.
-- Chap03/Sec03_19/Example_3_26.lean — partial-dup — one trivial lemma unpacking Pointed.Hom plus #checks of standard categories, pedagogical only.
-- Chap03/Sec03_19/Exercise_3_27.lean — mathlib-dup — recalls Functor.map_isIso with no new proof or API.
-- Chap03/Sec03_20/Problem_3_3.lean — mathlib-dup — recall-only restatement of declarations existing verbatim in Mathlib's ContMDiffMFDeriv. 
-- Chap03/Sec03_20/Problem_3_5.lean — new — complete but entirely textbook-specific circle-vs-square-boundary exercise with ad-hoc gauge scaffolding.
-- Chap03/Sec03_20/Problem_3_6.lean — new — concrete S³⊆ℂ² phase-curve example with nearly every statement (including the main theorem) sorried.
-- Chap03/Sec03_20/Problem_3_8.lean — new — recall-only bridge file with zero owned content; the substance lives in Definition_3_18_extra_3.
+<details><summary>跳过（42 项，绝大多数为 Mathlib 包装/recall 文件）</summary>
 
-## 本章小结
+- Sec03_13/Corollary_3_3.lean — new — 欧氏限定全 sorry
+- Sec03_13/Definition_3_13_extra_1.lean — mathlib-dup — 薄包装加记号
+- Sec03_13/Definition_3_13_extra_2.lean — mathlib-dup — 仅 #check 复述
+- Sec03_13/Definition_3_13_extra_3.lean — mathlib-dup — rfl 级复述
+- Sec03_13/Exercise_3_5.lean — mathlib-dup — 纯 #check 回顾
+- Sec03_13/Lemma_3_1.lean — mathlib-dup — 欧氏一行推论
+- Sec03_13/Lemma_3_4.lean — mathlib-dup — 一行包装
+- Sec03_14/Definition_3_14_extra_1.lean — mathlib-dup — 复述 mfderiv 签名
+- Sec03_14/Definition_3_14_extra_2.lean — mathlib-dup — 单个 #check
+- Sec03_14/Exercise_3_7.lean — mathlib-dup — 纯 #check 复述
+- Sec03_14/Proposition_3_10.lean — mathlib-dup — 一行 defeq
+- Sec03_14/Proposition_3_12.lean — mathlib-dup — sorry 复述维数
+- Sec03_14/Proposition_3_13.lean — mathlib-dup — 一行包装附 sorry
+- Sec03_15/Definition_3_15_extra_1.lean — partial-dup — 已被现有 API 覆盖
+- Sec03_15/Definition_3_15_extra_2.lean — partial-dup — 一行 .repr 包装
+- Sec03_15/Example_3_16.lean — new — 教科书数值例
+- Sec03_15/Exercise_3_17.lean — new — 教学专用示例
+- Sec03_15/Remark_3_15_extra_3.lean — mathlib-dup — 纯回顾
+- Sec03_15/Remark_3_15_extra_4.lean — partial-dup — 两行胶水已有
+- Sec03_15/Remark_3_15_extra_5.lean — mathlib-dup — 回顾复述
+- Sec03_16/Definition_3_16_extra_1.lean — mathlib-dup — 回顾 TangentBundle
+- Sec03_16/Definition_3_16_extra_3.lean — mathlib-dup — 仅 #check
+- Sec03_16/Exercise_3_19.lean — new — 单个 rfl 定理
+- Sec03_16/Notation_3_16_extra_2.lean — mathlib-dup — 仅记号加 #check
+- Sec03_16/Notation_3_16_extra_4.lean — mathlib-dup — 回顾桥引理
+- Sec03_16/Proposition_3_18.lean — mathlib-dup — 特化 contMDiff_proj
+- Sec03_16/Proposition_3_21.lean — mathlib-dup — 单个 #check 特化
+- Sec03_17/Proposition_3_24.lean — mathlib-dup — 链规则一行求值
+- Sec03_17/Corollary_3_25.lean — mathlib-dup — 复述 3.24
+- Sec03_18/Definition_3_18_extra_1.lean — mathlib-dup — 记号加一行实例
+- Sec03_18/Definition_3_18_extra_2.lean — partial-dup — 平凡 abbrev 加 sorry
+- Sec03_19/Definition_3_19_extra_1.lean — mathlib-dup — 回顾 Category
+- Sec03_19/Definition_3_19_extra_2.lean — mathlib-dup — 回顾 IsIso
+- Sec03_19/Definition_3_19_extra_3.lean — mathlib-dup — 回顾小范畴概念
+- Sec03_19/Definition_3_19_extra_4.lean — mathlib-dup — 仅 #check 函子
+- Sec03_19/Definition_3_19_extra_5.lean — mathlib-dup — 仅 #check 反变函子
+- Sec03_19/Example_3_26.lean — partial-dup — 教学示例
+- Sec03_19/Exercise_3_27.lean — mathlib-dup — 回顾无新证明
+- Sec03_20/Problem_3_3.lean — mathlib-dup — 纯回顾复述
+- Sec03_20/Problem_3_5.lean — new — 教科书专用习题
+- Sec03_20/Problem_3_6.lean — new — 具体例几乎全 sorry
+- Sec03_20/Problem_3_8.lean — new — 纯回顾桥文件
+
+</details>
+
+## 小结
 
 第三章共审计 53 个文件，其中约四分之三为 Mathlib 重复（recall/#check 复述或一行包装），可直接跳过。真正值得移植的高价值条目集中在切空间基础设施：开子集包含映射微分可逆性（Proposition 3.9）、曲线速度满射（Proposition 3.23）、单图卡切丛平凡化（Proposition 3.20）以及切向量-导子等价（Problem 3.7），前三者中两个已完全无 sorry。中价值条目多围绕导子模型与坐标基 API，但普遍含 sorry 或需要设计返工，建议在 CurveVelocity 与 Tangent 工具模块落地高价值条目后再酌情跟进。
 
@@ -325,84 +337,88 @@
 
 # Chap04
 
-## 移植优先（high value）
+## 移植优先（high，16 项）
 
-| 文件 | 主要声明 | 重叠分类 | 对应物 | 目标模块 | sorry | 理由 |
-|---|---|---|---|---|---|---|
-| Chap04/Sec04_21/Exercise_4_3.lean | prod_fst_isSmoothSubmersion, prod_snd_isSmoothSubmersion, prod_mk_right_isImmersion, prod_mk_left_isImmersion, model_partial_diffeomorph_mem_contDiffGroupoid, mem_contDiffGroupoid_of_local_structomorphOn_source | new | builds on Mathlib.Geometry.Manifold.Immersion (IsImmersionOfComplement) without duplicating it | Riemannian/Manifold/ImmersionSubmersion | no | Fully proved product-projection submersions and product-slice immersions plus genuinely reusable chart/groupoid infrastructure (maximal-atlas stability, PartialDiffeomorph-to-contDiffGroupoid membership) absent from both Mathlib and OpenGALib. |
-| Chap04/Sec04_21/Exercise_4_4.lean | IsSmoothSubmersion.comp, IsImmersionAtOfComplement.comp, IsImmersion.comp, rankAt, HasConstantRank, IsSmoothSubmersion.hasConstantRank, parabola_snd_comp_not_constant_rank | new | IsImmersion.comp is an explicit TODO in Mathlib.Geometry.Manifold.Immersion | Riemannian/Manifold/ImmersionSubmersion | yes | Proves submersion composition and rank API cleanly and attacks Mathlib's open TODO IsImmersion.comp, though the immersion-composition chain still rests on one helper lemma (codomain_straightening_full_range_windows) holding the file's 3 sorries. |
-| Chap04/Sec04_22/Proposition_4_8.lean | ContinuousLinearMap.isInvertible_of_bijective, IsLocalDiffeomorph.isImmersion, IsLocalDiffeomorph.isSmoothSubmersion, partialDiffeomorph_of_writtenInExtend, isLocalDiffeomorphAt_of_chart_eq_continuousLinearEquiv, Manifold.IsImmersion.isLocalDiffeomorph_of_eq_finrank, Manifold.IsSmoothSubmersion.isLocalDiffeomorph_of_eq_finrank, is_local_diffeomorph_iff_is_immersion_and_is_smooth_submersion | new | builds on Mathlib/Geometry/Manifold/Immersion.lean (IsImmersion chart normal form) but the equivalences are not in Mathlib | Riemannian/Manifold/Submersion | no | Fully proved local-diffeo ↔ immersion+submersion equivalence and equal-dimension upgrade theorems, plus reusable maximal-atlas chart-transport infrastructure (partialDiffeomorph_of_writtenInExtend) that Mathlib lacks, though it leans on the project's sorried IsSmoothSubmersion predicate upstream. |
-| Chap04/Sec04_22/Theorem_4_5.lean | isLocalDiffeomorphAt_of_contMDiffAt_mfderiv_isInvertible, partialDiffeomorph_of_writtenInExtChartAt, model_partialDiffeomorph_of_inverse_function_theorem, IsLocalDiffeomorphAt.exists_connected_open_diffeomorph, exists_connected_open_neighborhoods_diffeomorph_of_mfderiv_isInvertible | new | explicitly listed as TODO in Mathlib/Geometry/Manifold/LocalDiffeomorph.lean | Riemannian/Manifold/InverseFunctionTheorem | no | Complete, model-general proof of the inverse function theorem for manifolds (invertible mfderiv at an interior point gives a C^n local diffeomorphism) — an explicit Mathlib TODO — together with reusable chart-transport and connected-neighborhood packaging lemmas. |
-| Chap04/Sec04_24/Exercise_4_16.lean | IsImmersionAtOfComplement.ex416_comp, IsImmersion.ex416_comp, IsSmoothEmbedding.comp | new | Mathlib proof_wanted IsSmoothEmbedding.comp / docstring-promised IsImmersion.comp (statements only, no proofs in Mathlib) | Riemannian/SmoothManifold/Immersion | yes | Near-complete (one sorry in the range-K straightening helper at line 1467) proof of immersion and smooth-embedding composition via local normal forms — exactly the proof_wanted gap in Mathlib and foundational reusable API for any submanifold theory. |
-| Chap04/Sec04_25/Definition_4_25_extra_2.lean | Topology.IsTopologicalSubmersion, IsTopologicalSubmersion.isOpenMap, IsTopologicalSubmersion.isQuotientMap, IsLocalHomeomorph.isTopologicalSubmersion | new | — | Riemannian/Manifold/Submersion | no | Fully proved, general topological-submersion API (open map, quotient map, local-homeomorph instance) absent from Mathlib and reusable beneath all smooth submersion theory. |
-| Chap04/Sec04_25/Proposition_4_28.lean | Manifold.IsSmoothSubmersion, IsSmoothSubmersion.continuous, IsSmoothSubmersion.toTopologicalSubmersion, IsSmoothSubmersion.isOpenMap, IsSmoothSubmersion.isQuotientMap | new | — | Riemannian/Manifold/Submersion | no | Defines the smooth-submersion structure missing from Mathlib (only immersions exist there) and derives open/quotient-map properties, though the route via toTopologicalSubmersion leans on the sorried Theorem 4.26. |
-| Chap04/Sec04_25/Theorem_4_26.lean | Manifold.IsSmoothLocalSection, IsSmoothLocalSection.apply_eq, smooth_submersion_iff_exists_smooth_local_section_through_every_point | new | — | Riemannian/Manifold/Submersion | yes | The Local Section Theorem characterizing submersions is a key reusable result absent from Mathlib, but both the trivial helper and the main theorem are sorried so porting means proving it (rank-theorem level work). |
-| Chap04/Sec04_25/Theorem_4_29.lean | Manifold.contMDiff_iff_comp_of_surjective_smooth_submersion | new | — | Riemannian/Manifold/Submersion | yes | Characteristic property of surjective submersions (F smooth iff F∘pi smooth) is the workhorse lemma for quotient-manifold constructions and missing from Mathlib, but it is statement-only with sorry. |
-| Chap04/Sec04_25/Theorem_4_30.lean | Manifold.existsUnique_contMDiff_lift_of_surjective_smooth_submersion | new | — | Riemannian/Manifold/Submersion | yes | Passing-to-the-quotient existence/uniqueness of smooth lifts is core quotient-manifold infrastructure not in Mathlib, but the proof is a sorry. |
-| Chap04/Sec04_26/Definition_4_26_extra_1.lean | Manifold.IsSmoothCoveringMap, Manifold.IsUniversalSmoothCoveringMap, isSmoothCoveringMap_id, id_isCoveringMap | new | — | Riemannian/Manifold/CoveringMap | no | Sorry-free core definition of smooth (and universal) covering maps with accessor API and identity instance; Mathlib has only the topological IsCoveringMap, so this is the foundational reusable layer the whole section builds on. |
-| Chap04/Sec04_26/Exercise_4_37.lean | IsLocalDiffeomorph.isSmoothLocalSection, IsLocalDiffeomorph.localSection_contMDiffOn, Manifold.IsSmoothCoveringMap.isSmoothLocalSection, Manifold.IsSmoothCoveringMap.localSection_contMDiffOn | new | — | Riemannian/Manifold/CoveringMap | no | Sorry-free and fully general: continuous local sections of smooth local diffeomorphisms/covering maps are automatically smooth, a reusable upgrade lemma absent from Mathlib's LocalDiffeomorph API. |
-| Chap04/Sec04_26/Proposition_4_36.lean | IsCoveringMap.localSection_eq, IsCoveringMap.exists_localSectionOn, Manifold.IsSmoothCoveringMap.exists_localSectionOn, Manifold.IsSmoothCoveringMap.localSection_eq | new | — | Riemannian/Manifold/CoveringMap | no | Sorry-free existence of smooth local sections through any fiber point plus uniqueness on preconnected sets, a complete and general section API (only the underlying eq_of_comp_eq comes from Mathlib). |
-| Chap04/Sec04_26/Proposition_4_40.lean | exists_smooth_covering_structure, smooth_covering_same_smooth_structure, exists_unique_smooth_covering_structure, lifted_covering_chartedSpace | new | — | Riemannian/Manifold/CoveringMap | no | Sorry-free 700-line proof that a topological cover of a smooth manifold carries a unique smooth structure (maximal atlas) making the projection a smooth covering map, a substantial general theorem absent from Mathlib and useful infrastructure for quotient/space-form constructions. |
-| Chap04/Sec04_26/Proposition_4_46.lean | isSmoothCoveringMap_of_proper_localDiffeomorph, fiber_finite_of_proper_local_diffeomorph, surjective_of_nonempty_preconnected_open_closed_range | new | — | Riemannian/Manifold/CoveringMap | no | Sorry-free proof that a proper smooth local diffeomorphism onto a preconnected target is a smooth covering map, a genuinely reusable criterion (Cartan-Hadamard-style arguments) not in Mathlib, though it locally re-declares IsSmoothCoveringMap and should reuse the canonical definition when ported. |
-| Chap04/Sec04_27/Problem_4_5.lean | puncturedComplexEuclidean, complexProjectiveScaledChartSection, complexProjectiveQuotientMap_isSmoothSubmersion, partialDiffeomorphOfOpenPartialHomeomorph, complex_projective_line_to_sphere, complexProjectiveLine_diffeomorphic_sphere | new | — | Riemannian/Instances/ComplexProjectiveSpace | no | Fully proved, substantial package absent from Mathlib: smooth local sections and submersion structure of the quotient C^{n+1}\{0} -> CP^n for general n, glue-local-diffeos-to-diffeomorphism infrastructure, and the CP^1 = S^2 diffeomorphism as a capstone. |
+| 文件 | 声明 | 分类 | 落点 | sorry | 理由 |
+|---|---|---|---|---|---|
+| Sec04_21/Exercise_4_3.lean | prod_fst_isSmoothSubmersion, prod_mk_right_isImmersion 等 | new | Manifold/ImmersionSubmersion | 否 | 积投影淹没/切片浸入全证，含可复用图卡群胚基建 |
+| Sec04_21/Exercise_4_4.lean | IsSmoothSubmersion.comp, IsImmersion.comp 等 | new | Manifold/ImmersionSubmersion | 是 | 淹没复合与秩 API，攻 Mathlib TODO，一辅助引理 3 sorry |
+| Sec04_22/Proposition_4_8.lean | IsLocalDiffeomorph.isImmersion, is_local_diffeomorph_iff_is_immersion_and_is_smooth_submersion 等 | new | Manifold/Submersion | 否 | 局部微分同胚↔浸入+淹没全证，上游谓词含 sorry |
+| Sec04_22/Theorem_4_5.lean | isLocalDiffeomorphAt_of_contMDiffAt_mfderiv_isInvertible, model_partialDiffeomorph_of_inverse_function_theorem 等 | new | Manifold/InverseFunctionTheorem | 否 | 流形版反函数定理完整证明，Mathlib 明确 TODO |
+| Sec04_24/Exercise_4_16.lean | IsImmersion.ex416_comp, IsSmoothEmbedding.comp 等 | new | SmoothManifold/Immersion | 是 | 浸入/光滑嵌入复合，Mathlib proof_wanted，余一 sorry |
+| Sec04_25/Definition_4_25_extra_2.lean | Topology.IsTopologicalSubmersion, IsTopologicalSubmersion.isQuotientMap 等 | new | Manifold/Submersion | 否 | 拓扑淹没 API 全证（开/商映射），Mathlib 缺 |
+| Sec04_25/Proposition_4_28.lean | Manifold.IsSmoothSubmersion, IsSmoothSubmersion.isOpenMap 等 | new | Manifold/Submersion | 否 | 定义 Mathlib 缺失的光滑淹没结构，依赖含 sorry 的 4.26 |
+| Sec04_25/Theorem_4_26.lean | Manifold.IsSmoothLocalSection, smooth_submersion_iff_exists_smooth_local_section_through_every_point 等 | new | Manifold/Submersion | 是 | 局部截面定理刻画淹没，主定理 sorry 需秩定理级工作 |
+| Sec04_25/Theorem_4_29.lean | Manifold.contMDiff_iff_comp_of_surjective_smooth_submersion | new | Manifold/Submersion | 是 | 满淹没特征性质是商流形主力引理，仅语句含 sorry |
+| Sec04_25/Theorem_4_30.lean | Manifold.existsUnique_contMDiff_lift_of_surjective_smooth_submersion | new | Manifold/Submersion | 是 | 商流形光滑提升存在唯一性核心基建，证明为 sorry |
+| Sec04_26/Definition_4_26_extra_1.lean | Manifold.IsSmoothCoveringMap, IsUniversalSmoothCoveringMap 等 | new | Manifold/CoveringMap | 否 | 光滑覆盖映射核心定义层，Mathlib 仅有拓扑版 |
+| Sec04_26/Exercise_4_37.lean | IsLocalDiffeomorph.isSmoothLocalSection, IsSmoothCoveringMap.isSmoothLocalSection 等 | new | Manifold/CoveringMap | 否 | 连续局部截面自动光滑，全证通用升级引理 |
+| Sec04_26/Proposition_4_36.lean | IsCoveringMap.exists_localSectionOn, IsSmoothCoveringMap.localSection_eq 等 | new | Manifold/CoveringMap | 否 | 光滑局部截面存在与预连通集上唯一性，完整 API |
+| Sec04_26/Proposition_4_40.lean | exists_unique_smooth_covering_structure, lifted_covering_chartedSpace 等 | new | Manifold/CoveringMap | 否 | 拓扑覆盖唯一光滑结构，700 行无 sorry 大定理 |
+| Sec04_26/Proposition_4_46.lean | isSmoothCoveringMap_of_proper_localDiffeomorph, fiber_finite_of_proper_local_diffeomorph 等 | new | Manifold/CoveringMap | 否 | 真局部微分同胚⇒覆盖映射判据全证，移植需并回正式定义 |
+| Sec04_27/Problem_4_5.lean | complexProjectiveQuotientMap_isSmoothSubmersion, complexProjectiveLine_diffeomorphic_sphere 等 | new | Instances/ComplexProjectiveSpace | 否 | CP^n 商淹没全证，含 CP^1≅S^2 压轴构造 |
 
-## 可考虑（medium value）
+<details><summary>可考虑（medium，22 项）</summary>
 
-| 文件 | 主要声明 | 重叠分类 | 对应物 | 目标模块 | sorry | 理由 |
-|---|---|---|---|---|---|---|
-| Chap04/Sec04_21/Definition_4_21_extra_1.lean | rank_at_eq_finrank_range_mfderiv, has_constant_rank_iff_forall_rank_at_eq, has_full_rank_at, has_full_rank, is_smooth_submersion_iff_forall_surjective_mfderiv, is_immersion_iff_forall_injective_mfderiv | new | related: Mathlib.Geometry.Manifold.Immersion (IsImmersion only; no rank API) | Riemannian/Manifold/Rank | yes | Rank/full-rank API and mfderiv characterizations of immersion/submersion fill a genuine Mathlib gap, but every theorem is sorry'd so only the (thin) definitions and statement shapes are portable. |
-| Chap04/Sec04_21/Proposition_4_1.lean | exists_open_restriction_isSmoothSubmersion_of_surjective_mfderiv, exists_open_restriction_isImmersion_of_injective_mfderiv | new | related to Mathlib Immersion.lean TODO (injective mfderiv implies immersion in finite dimension) | Riemannian/Manifold/ImmersionSubmersion | yes | The two open-restriction theorems (pointwise surjective/injective mfderiv gives a local submersion/immersion) are good reusable API statements not in Mathlib, but both proofs are sorry so all the hard work remains. |
-| Chap04/Sec04_22/Exercise_4_10.lean | smooth_iff_comp_left_of_isLocalDiffeomorph, smooth_iff_comp_right_of_surjective_isLocalDiffeomorph | new | — | Riemannian/Manifold/LocalDiffeomorph | no | Fully proved, model-general iff-lemmas letting smoothness be detected through pre/post-composition with a smooth local diffeomorphism (useful for covering maps and chart transfers), absent from Mathlib's localInverse API. |
-| Chap04/Sec04_23/Theorem_4_14.lean | constant_rank_surjective_is_smooth_submersion, constant_rank_injective_is_immersion, constant_rank_bijective_is_diffeomorphism | new | — | Riemannian/Manifold/RankTheorem | yes | The Global Rank Theorem (surjective/injective/bijective constant-rank maps are submersions/immersions/diffeomorphisms) is absent from Mathlib and genuinely useful, but the file is statements-only with all three proofs sorried and rests on project-local HasConstantRank and IsSmoothSubmersion definitions. |
-| Chap04/Sec04_23/Theorem_4_15.lean | boundary_immersion_normal_form, BoundaryLocalCoordinateNormalFormAt, smooth_immersion_boundary_local_inclusion_form | new | — | Riemannian/Manifold/Boundary | yes | Boundary-chart normal forms for immersions from manifolds with boundary are not in Mathlib and are relevant infrastructure beneath divergence-theorem/GMT work, but the main theorem and accessor are sorried and the structure is a half-space clone of Theorem_4_12's API. |
-| Chap04/Sec04_24/Definition_4_24_extra_2.lean | Topology.IsTopologicalImmersion, IsTopologicalImmersion.continuous, IsEmbedding.isTopologicalImmersion | new | — | Riemannian/SmoothManifold/Immersion | no | Small, complete, genuinely-new general-topology API (local-embedding predicate) absent from Mathlib, useful as the topological precursor to immersion theory but niche on its own. |
-| Chap04/Sec04_24/Proposition_4_22.lean | smooth_embedding_of_injective_isImmersion_isOpenMap, _isClosedMap, _isProperMap, smooth_embedding_of_compact_source_injective_isImmersion, smooth_embedding_of_injective_isImmersion_boundaryless_of_eq_finrank | new | — | Riemannian/SmoothManifold/Embedding | yes | Well-designed statement skeletons for the standard sufficient conditions making an injective immersion a smooth embedding — genuinely missing from Mathlib's thin embedding API but all five proofs are sorry, so only the statements are portable. |
-| Chap04/Sec04_24/Theorem_4_25.lean | Manifold.isImmersion_iff_forall_exists_open_restriction_isSmoothEmbedding | new | — | Riemannian/SmoothManifold/Embedding | yes | The local embedding theorem (immersion iff locally a smooth embedding) is a genuinely missing, reusable characterization, but the file is a single sorry stub with no proof content. |
-| Chap04/Sec04_25/Definition_4_25_extra_1.lean | ContinuousMap.IsLocalSection, ContinuousMap.IsLocalSection.apply_eq, Function.RightInverse.isLocalSection_restrict_top | new | — | Riemannian/Manifold/Submersion | no | Small but fully proved local-section predicate for continuous maps that Mathlib lacks; useful only as the foundation layer of a submersion API. |
-| Chap04/Sec04_25/Theorem_4_31.lean | Manifold.existsUnique_diffeomorph_of_surjective_smooth_submersions_constant_on_each_others_fibers | new | — | Riemannian/Manifold/Submersion | yes | Uniqueness of smooth quotients is a useful but derivative corollary of Theorems 4.29/4.30, stated only with sorry. |
-| Chap04/Sec04_26/Exercise_4_38.lean | Manifold.IsSmoothCoveringMap.pi, isCoveringMap_pi, isEvenlyCovered_pi, set_pi_homeomorph, pi_prod_homeomorph | new | — | Riemannian/Manifold/CoveringMap | no | Sorry-free finite-product theorem for (smooth) covering maps not in Mathlib, but roughly half the file is generic homeomorphism plumbing that should be slimmed or pushed to utility lemmas before porting. |
-| Chap04/Sec04_26/Exercise_4_39.lean | Bundle.Trivialization.sheet_coordinate_eq_on_component, component_bijOn_baseSet, component_isLocalDiffeomorphOn_and_bijOn, topological_evenly_covered_component_isLocalDiffeomorphOn_and_bijOn | new | — | Riemannian/Manifold/CoveringMap | no | Sorry-free sheet-decomposition lemmas (sheet coordinate locally constant, components biject onto a preconnected base set) that are general Trivialization API missing from Mathlib, though somewhat niche. |
-| Chap04/Sec04_26/Proposition_4_33.lean | Manifold.IsSmoothCoveringMap.isSmoothSubmersion, isOpenMap, isQuotientMap, diffeomorphOfInjective, IsCoveringMap.isSmoothCoveringMap_iff_isLocalDiffeomorph | new | — | Riemannian/Manifold/CoveringMap | yes | The basic-properties API surface for smooth covering maps (submersion, open, quotient, injective implies diffeomorphism) is exactly the right interface but four of five statements are sorried, so it is a statement skeleton needing proofs. |
-| Chap04/Sec04_27/Problem_4_11.lean | isProperMap_iff_finite_fibers_of_isCoveringMap, exists_smoothCoveringMap_not_isProperMap | new | — | MetricGeometry/Covering/ProperMap | yes | The covering-map-proper-iff-finite-fibers equivalence is a genuinely missing, reusable topology lemma (not in Mathlib's Topology/Covering), but both theorems here are statement-only sorries so a port means proving from scratch. |
-| Chap04/Sec04_27/Problem_4_12.lean | torus_of_revolution_map, torus_of_revolution_immersion, torus_contDiffGroupoid_pi, torus_product_isManifold, torus_of_revolution_map_isSmoothEmbedding, range_torus_of_revolution_map | new | Mathlib/Geometry/Manifold/SmoothEmbedding.lean (IsSmoothEmbedding predicate it instantiates) | Riemannian/Instances/Torus | no | Fully proved smooth embedding of the flat torus into R^3 with computed derivatives and range identified as the algebraic surface of revolution; concrete but a useful worked surface example for Riemannian/GMT testing, plus reusable pi-groupoid/product-manifold helpers. |
-| Chap04/Sec04_27/Problem_4_3.lean | boundary_rank_normal_form, constant_rank_boundary_local_coordinate_normal_form | new | — | Riemannian/Manifold/RankTheorem | yes | The constant-rank normal form at boundary points is real missing infrastructure (Mathlib has no rank theorem for manifolds with boundary), but this file is a sorry'd statement in an awkward exists-True form that leans on project-local HasConstantRank APIs. |
-| Chap04/Sec04_27/Problem_4_6.lean | not_exists_smooth_submersion_to_euclideanSpace | new | — | Riemannian/Manifold/Submersion | no | Fully proved, general, classic result (no submersion from a compact manifold to R^k) that Mathlib lacks, though it depends on the project-local IsSmoothSubmersion open-map API defined in an earlier file. |
-| Chap04/Sec04_27/Problem_4_7.lean | contMDiff_iff_comp_equiv_of_submersion_characteristic_property, exists_diffeomorph_of_submersion_characteristic_property | new | — | Riemannian/Manifold/Submersion | yes | Uniqueness of the quotient smooth structure under a surjective submersion is valuable general API not in Mathlib, but both theorems are sorry'd statements over project-local IsSmoothSubmersion, so porting means proving them. |
-| Chap04/Sec04_22/Proposition_4_6.lean | isLocalDiffeomorph_comp, isLocalDiffeomorph_pi, isLocalDiffeomorph_iff_writtenInExtChartAt | partial-dup | IsLocalDiffeomorph.isLocalHomeomorph / isOpenMap / isLocalDiffeomorphOn / diffeomorphOfBijective in Mathlib/Geometry/Manifold/LocalDiffeomorph.lean | Riemannian/Manifold/LocalDiffeomorph | yes | Parts (c)-(f) are #check recalls of existing Mathlib lemmas, while the genuinely missing closure lemmas (composition, finite products, coordinate criterion) are stated generally but all left as sorry. |
-| Chap04/Sec04_23/Theorem_4_12.lean | rank_normal_form, LocalCoordinateNormalFormAt, constant_rank_local_coordinate_normal_form, smooth_submersion_local_projection_form, smooth_immersion_local_inclusion_form | partial-dup | Mathlib/Geometry/Manifold/Immersion.lean (Manifold.IsImmersionAt is defined as the local inclusion normal form) | Riemannian/Manifold/RankTheorem | yes | The constant-rank theorem and submersion projection form are real Mathlib gaps, but all five proofs are sorry, the immersion corollary is essentially Mathlib's IsImmersion definition, and the Euclidean-only normal-form structure would need rework toward Mathlib's complement-based local-property framework. |
-| Chap04/Sec04_24/Example_4_20.lean | denseTorusCurve, circle_exp_isLocalDiffeomorph_from_angle_branch, torus_circle_exp_isImmersion, denseTorusCurve_isImmersion, denseTorusCurve_injective, denseTorusCurve_not_isEmbedding, denseTorusCurve_denseRange | partial-dup | AddCircle.denseRange_zsmul_coe_iff, Real.exists_int_int_abs_mul_sub_le (Mathlib) | Riemannian/SmoothManifold/CircleExp | no | The irrational torus winding itself is a textbook counterexample (density already follows from Mathlib's AddCircle orbit lemma), but the proved helpers — Circle.exp as a smooth local diffeomorphism and the pi-model/charted-space compatibility lemmas — are reusable chart infrastructure. |
-| Chap04/Sec04_26/Example_4_35.lean | circle_exp_isSmoothCoveringMap, standard_torus_covering_isSmoothCoveringMap, sphere_to_realProjectiveSpace_isCoveringMap, sphere_to_realProjectiveSpace_fiber_eq_antipodal_pair, isCoveringMap_pi | partial-dup | Mathlib Circle.isCoveringMap_exp (Analysis/SpecialFunctions/Complex/Circle.lean); internal dup of Exercise_4_38 pi/set_pi homeomorph helpers | Riemannian/Instances/CoveringExamples | no | Sorry-free concrete smooth-covering instances (circle exp, n-torus, sphere-to-RPn with antipodal fibers) whose topological circle part duplicates Mathlib and which repeats Exercise 4.38's product plumbing, but the smooth upgrades and RPn covering are new and good test/example material. |
+| 文件 | 声明 | 分类 | 落点 | sorry | 理由 |
+|---|---|---|---|---|---|
+| Sec04_21/Definition_4_21_extra_1.lean | rank_at_eq_finrank_range_mfderiv, is_immersion_iff_forall_injective_mfderiv 等 | new | Manifold/Rank | 是 | 秩 API 填 Mathlib 缺口，但定理全 sorry 仅语句可移 |
+| Sec04_21/Proposition_4_1.lean | exists_open_restriction_isSmoothSubmersion_of_surjective_mfderiv, exists_open_restriction_isImmersion_of_injective_mfderiv | new | Manifold/ImmersionSubmersion | 是 | 点态满/单 mfderiv 给局部淹没/浸入，证明全 sorry |
+| Sec04_22/Exercise_4_10.lean | smooth_iff_comp_left_of_isLocalDiffeomorph, smooth_iff_comp_right_of_surjective_isLocalDiffeomorph | new | Manifold/LocalDiffeomorph | 否 | 经局部微分同胚前后复合检测光滑性，全证 iff 引理 |
+| Sec04_23/Theorem_4_14.lean | constant_rank_surjective_is_smooth_submersion, constant_rank_injective_is_immersion 等 | new | Manifold/RankTheorem | 是 | 全局秩定理是真缺口，但三证明全 sorry 仅语句 |
+| Sec04_23/Theorem_4_15.lean | boundary_immersion_normal_form, BoundaryLocalCoordinateNormalFormAt 等 | new | Manifold/Boundary | 是 | 带边流形浸入边界标准形，与 GMT 相关但主定理 sorry |
+| Sec04_24/Definition_4_24_extra_2.lean | Topology.IsTopologicalImmersion, IsEmbedding.isTopologicalImmersion 等 | new | SmoothManifold/Immersion | 否 | 局部嵌入谓词小型全证拓扑 API，单独价值有限 |
+| Sec04_24/Proposition_4_22.lean | smooth_embedding_of_injective_isImmersion_isOpenMap, smooth_embedding_of_compact_source_injective_isImmersion 等 | new | SmoothManifold/Embedding | 是 | 单浸入成嵌入的充分条件骨架，五证明全 sorry |
+| Sec04_24/Theorem_4_25.lean | Manifold.isImmersion_iff_forall_exists_open_restriction_isSmoothEmbedding | new | SmoothManifold/Embedding | 是 | 局部嵌入定理是真缺口，但仅单条 sorry 存根 |
+| Sec04_25/Definition_4_25_extra_1.lean | ContinuousMap.IsLocalSection, Function.RightInverse.isLocalSection_restrict_top 等 | new | Manifold/Submersion | 否 | 连续映射局部截面谓词，小而全证的基础层 |
+| Sec04_25/Theorem_4_31.lean | Manifold.existsUnique_diffeomorph_of_surjective_smooth_submersions_constant_on_each_others_fibers | new | Manifold/Submersion | 是 | 光滑商唯一性，4.29/4.30 的推论，仅语句 sorry |
+| Sec04_26/Exercise_4_38.lean | Manifold.IsSmoothCoveringMap.pi, isCoveringMap_pi 等 | new | Manifold/CoveringMap | 否 | 覆盖映射有限积定理无 sorry，移植前需精简同胚管线 |
+| Sec04_26/Exercise_4_39.lean | Bundle.Trivialization.sheet_coordinate_eq_on_component, component_bijOn_baseSet 等 | new | Manifold/CoveringMap | 否 | 叶分解引理全证，Mathlib 缺的 Trivialization API，略偏门 |
+| Sec04_26/Proposition_4_33.lean | IsSmoothCoveringMap.isSmoothSubmersion, diffeomorphOfInjective 等 | new | Manifold/CoveringMap | 是 | 覆盖映射基本性质接口正确，但五条中四条 sorry |
+| Sec04_27/Problem_4_11.lean | isProperMap_iff_finite_fibers_of_isCoveringMap, exists_smoothCoveringMap_not_isProperMap | new | MetricGeometry/Covering/ProperMap | 是 | 覆盖真当且仅当纤维有限是真缺口，仅语句需从头证 |
+| Sec04_27/Problem_4_12.lean | torus_of_revolution_map_isSmoothEmbedding, torus_product_isManifold 等 | new | Instances/Torus | 否 | 平坦环面嵌入 R^3 全证，含 pi 群胚/积流形助手 |
+| Sec04_27/Problem_4_3.lean | boundary_rank_normal_form, constant_rank_boundary_local_coordinate_normal_form | new | Manifold/RankTheorem | 是 | 边界点常秩标准形是真缺口，但 sorry 语句且形式别扭 |
+| Sec04_27/Problem_4_6.lean | not_exists_smooth_submersion_to_euclideanSpace | new | Manifold/Submersion | 否 | 紧流形无淹没到 R^k 经典结果全证，依赖项目谓词 |
+| Sec04_27/Problem_4_7.lean | contMDiff_iff_comp_equiv_of_submersion_characteristic_property, exists_diffeomorph_of_submersion_characteristic_property | new | Manifold/Submersion | 是 | 商光滑结构唯一性有价值，但两定理皆 sorry |
+| Sec04_22/Proposition_4_6.lean | isLocalDiffeomorph_comp, isLocalDiffeomorph_pi 等 | partial-dup | Manifold/LocalDiffeomorph | 是 | 缺失的复合/积/坐标判据引理全 sorry，余为回顾 |
+| Sec04_23/Theorem_4_12.lean | rank_normal_form, constant_rank_local_coordinate_normal_form 等 | partial-dup | Manifold/RankTheorem | 是 | 常秩定理是真缺口，但五证明全 sorry 且欧氏结构需重构 |
+| Sec04_24/Example_4_20.lean | denseTorusCurve, circle_exp_isLocalDiffeomorph_from_angle_branch 等 | partial-dup | SmoothManifold/CircleExp | 否 | 无理缠绕属反例，Circle.exp 局部微分同胚助手可复用 |
+| Sec04_26/Example_4_35.lean | circle_exp_isSmoothCoveringMap, sphere_to_realProjectiveSpace_isCoveringMap 等 | partial-dup | Instances/CoveringExamples | 否 | 光滑覆盖实例全证，RP^n 覆盖为新内容好例证 |
 
-## 跳过（low value / duplicates）
+</details>
 
-- Chap04/Sec04_21/Example_4_2.lean — new — statement-only (all sorry) textbook examples about concrete spaces.
-- Chap04/Sec04_22/Definition_4_22_extra_1.lean — mathlib-dup — pure abbrev/restatement of Mathlib's IsLocalDiffeomorph adding no API.
-- Chap04/Sec04_22/Exercise_4_7.lean — mathlib-dup — contains only #check recalls, no declarations.
-- Chap04/Sec04_22/Exercise_4_9.lean — new — boundary exercise variants hard-coded to Euclidean models resting on sorried project-local predicates.
-- Chap04/Sec04_23/Corollary_4_13.lean — new — single sorried pedagogical iff-restatement with no reusable API.
-- Chap04/Sec04_24/Definition_4_24_extra_1.lean — mathlib-dup — eight-line file with only a #check of Mathlib's smooth-embedding structure.
-- Chap04/Sec04_24/Example_4_17.lean — partial-dup — open-submanifold inclusion is Mathlib's of_opens and the new statements are sorry stubs.
-- Chap04/Sec04_24/Example_4_18.lean — new — fully proved but a single concrete counterexample with no reusable API.
-- Chap04/Sec04_24/Example_4_19.lean — new — fully proved but purely pedagogical figure-eight counterexample about one curve.
-- Chap04/Sec04_24/Exercise_4_24.lean — new — single concrete counterexample with bespoke one-off chart machinery.
-- Chap04/Sec04_24/Lemma_4_21.lean — mathlib-dup — re-proves Dirichlet's approximation theorem already in Mathlib.
-- Chap04/Sec04_25/Exercise_4_27.lean — new — pedagogical counterexample about x^3 with no reusable API surface.
-- Chap04/Sec04_25/Exercise_4_32.lean — new — recall-only restatement of Theorem 4.31, zero new content.
-- Chap04/Sec04_26/Corollary_4_43.lean — new — statement-only sorry stub of universal smooth cover existence.
-- Chap04/Sec04_26/Exercise_4_34.lean — new — recall-only pipeline scaffolding, no new content.
-- Chap04/Sec04_26/Exercise_4_42.lean — new — recall-only scaffolding re-checking Proposition 4.41, nothing to port.
-- Chap04/Sec04_26/Exercise_4_44.lean — new — recall-only scaffolding re-checking Corollary 4.43, nothing to port.
-- Chap04/Sec04_26/Exercise_4_45.lean — new — sorry stub tied to the project-specific boundary framework.
-- Chap04/Sec04_26/Proposition_4_41.lean — new — boundary version of Proposition 4.40 with all main results sorried.
-- Chap04/Sec04_27/Problem_4_1.lean — new — single counterexample built as thin wrappers over Mathlib's boundary API.
-- Chap04/Sec04_27/Problem_4_10.lean — new — single sorry'd statement resting on definitions living in other files.
-- Chap04/Sec04_27/Problem_4_13.lean — new — statement-only embedding claim depending on unproven project-local infrastructure.
-- Chap04/Sec04_27/Problem_4_2.lean — mathlib-dup — one-line specializations of Mathlib's isInteriorPoint_of_surjective_mfderiv.
-- Chap04/Sec04_27/Problem_4_4.lean — new — pure bookkeeping recall/#check of a theorem proved elsewhere.
-- Chap04/Sec04_27/Problem_4_8.lean — new — textbook counterexample with every lemma sorry'd and no reusable surface.
-- Chap04/Sec04_27/Problem_4_9.lean — new — pure recall view of an earlier file's theorem, no own declarations.
+<details><summary>跳过（26 项，绝大多数为 Mathlib 包装/recall 文件）</summary>
 
-## 本章总结
+- Sec04_21/Example_4_2.lean — new — 全 sorry 教学例
+- Sec04_22/Definition_4_22_extra_1.lean — mathlib-dup — 纯 abbrev 复述
+- Sec04_22/Exercise_4_7.lean — mathlib-dup — 仅 #check 回顾
+- Sec04_22/Exercise_4_9.lean — new — 欧氏硬编码加 sorry
+- Sec04_23/Corollary_4_13.lean — new — 单条 sorry 复述
+- Sec04_24/Definition_4_24_extra_1.lean — mathlib-dup — 八行仅 #check
+- Sec04_24/Example_4_17.lean — partial-dup — of_opens 加 sorry 存根
+- Sec04_24/Example_4_18.lean — new — 单个具体反例
+- Sec04_24/Example_4_19.lean — new — 教学八字曲线反例
+- Sec04_24/Exercise_4_24.lean — new — 一次性反例机件
+- Sec04_24/Lemma_4_21.lean — mathlib-dup — 重证 Dirichlet 逼近
+- Sec04_25/Exercise_4_27.lean — new — x^3 教学反例
+- Sec04_25/Exercise_4_32.lean — new — 纯回顾 4.31
+- Sec04_26/Corollary_4_43.lean — new — sorry 存根
+- Sec04_26/Exercise_4_34.lean — new — 纯回顾脚手架
+- Sec04_26/Exercise_4_42.lean — new — 纯回顾 4.41
+- Sec04_26/Exercise_4_44.lean — new — 纯回顾 4.43
+- Sec04_26/Exercise_4_45.lean — new — 边界框架 sorry 存根
+- Sec04_26/Proposition_4_41.lean — new — 边界版主结果全 sorry
+- Sec04_27/Problem_4_1.lean — new — 薄包装单反例
+- Sec04_27/Problem_4_10.lean — new — 单条 sorry 语句
+- Sec04_27/Problem_4_13.lean — new — 语句依赖未证基建
+- Sec04_27/Problem_4_2.lean — mathlib-dup — 一行特化
+- Sec04_27/Problem_4_4.lean — new — 纯记账回顾
+- Sec04_27/Problem_4_8.lean — new — 全 sorry 反例
+- Sec04_27/Problem_4_9.lean — new — 纯回顾视图
+
+</details>
+
+## 小结
 
 第四章（浸入、淹没、嵌入与覆盖映射）是整个审计中移植价值最高的章节之一：16 个高价值文件中多数完全无 sorry，包括流形版反函数定理（Mathlib 明确 TODO）、光滑淹没与光滑覆盖映射的完整定义层 API、拓扑覆盖提升唯一光滑结构的 700 行大定理，以及 CP^n 商淹没与 CP^1 ≅ S^2 的完整构造。中价值条目主要是设计良好但证明缺失的语句骨架（秩定理、全局秩定理、商流形特征性质），移植它们等于承诺补全秩定理级别的证明工作。建议优先按 Submersion → CoveringMap → InverseFunctionTheorem 的依赖顺序成块移植无 sorry 文件，再以其为基础逐步补证 IsSmoothSubmersion 上游的局部截面定理。
 
@@ -410,104 +426,108 @@
 
 # Chap05
 
-## 移植优先（high value）
+## 移植优先（high，18 项）
 
-| 文件 | 主要声明 | 重叠分类 | 对应物 | 目标模块 | sorry | 理由 |
-|---|---|---|---|---|---|---|
-| Chap05/Sec05_28/Definition_5_28_extra_1.lean | IsEmbeddedSubmanifold, IsEmbeddedSubmanifold.toImmersedSubmanifold, IsEmbeddedSubmanifold.codimension, IsEmbeddedSubmanifold.IsHypersurface, isEmbeddedSubmanifold_empty | new | - | Riemannian/Manifold/Submanifold/Embedded | 否 | A fully proved embedded-submanifold class with codimension/hypersurface API on top of Mathlib's IsSmoothEmbedding fills a real gap (Mathlib has the embedding predicate but no submanifold-of-a-set notion), though porting also requires the project's ImmersedSubmanifold from Sec05_31. |
-| Chap05/Sec05_28/Proposition_5_4.lean | TopologicalSpace.Opens.graphMap, range_graphMap_eq_graphOn, graphMap_isSmoothEmbedding | new | - | Riemannian/Manifold/Submanifold/Graph | 是 | Graphs of smooth maps as smooth embeddings are absent from Mathlib and directly underpin geometric measure theory (graph submanifolds, rectifiability), though the statements are sorried, restricted to real models, and depend on a project-local graphMap. |
-| Chap05/Sec05_29/Definition_5_29_extra_1.lean | Set.euclideanSlice, Set.IsEuclideanSlice, Set.IsSliceInChart, OpenPartialHomeomorph.IsSliceChart, Set.SatisfiesLocalSliceCondition | new | - | Riemannian/Manifold/SliceCharts | 否 | Mathlib has immersions/embeddings but no slice-chart or local-slice-condition API for subsets of manifolds, and this small predicate layer is the reusable foundation for submanifold theory OpenGALib's GMT stack lacks. |
-| Chap05/Sec05_29/Theorem_5_8.lean | local_slice_criterion_for_embedded_submanifold, embedded_submanifold_point_has_centered_zero_slice_charts, centered_zero_slice_restricted_chart_isSliceChart | new | builds on Mathlib's Manifold.IsImmersion local normal form but the slice criterion itself has no Mathlib counterpart | Riemannian/Manifold/SliceCharts | 否 | A sorry-free proof of the local k-slice criterion (slice condition iff embedded submanifold structure) with reusable chart-centering and coordinate-ball machinery, filling a genuine Mathlib gap beneath OpenGALib's rectifiability and varifold work. |
-| Chap05/Sec05_30/Proposition_5_16.lean | euclidean_tail_projection, euclidean_head_projection, euclidean_tail_projection_isSmoothSubmersion, euclideanSlice_eq_tail_projection_fiber, embedded_submanifold_iff_locally_level_set_of_smooth_submersion | new | - | Riemannian/Manifold/Submanifold/LocalDefining | 是 | The local submersion-level-set criterion for embedded submanifolds is core missing infrastructure, and the file already contains fully proven, reusable Euclidean head/tail projection and slice-as-fiber lemmas (including the tail projection being a smooth submersion), though the gluing lemmas and main iff still carry sorries. |
-| Chap05/Sec05_31/Definition_5_31_extra_1.lean | Manifold.ImmersedSubmanifold, ImmersedSubmanifold.carrier, ImmersedSubmanifold.codimension, ImmersedSubmanifold.IsHypersurface, IsSmoothEmbedding.toImmersedSubmanifold, IsImmersion.toImmersedSubmanifold | new | - | Riemannian/Manifold/Submanifold/Immersed | 否 | Sorry-free bundled immersed-submanifold structure (carrier, codimension, hypersurface, constructors from Mathlib's IsImmersion/IsSmoothEmbedding) that exists in neither Mathlib nor OpenGALib and would sit directly beneath OpenGALib's varifold and second-fundamental-form code. |
-| Chap05/Sec05_32/Corollary_5_30.lean | Manifold.IsSmoothEmbedding.contMDiff_toSubtype, contMDiff_toSubtype_of_isEmbeddedSubmanifold, contMDiffAt_toSubtype, writtenInCharts_codRestrict_eqOn | new | Only the sphere special case exists: ContMDiff.codRestrict_sphere (Mathlib/Geometry/Manifold/Instances/Sphere.lean) | Riemannian/Manifold/Submanifold | 否 | Fully proved general codomain-restriction theorem for embedded submanifolds, absent from Mathlib and directly reusable by OpenGALib GMT which already consumes Manifold.IsSmoothEmbedding in Varifold.lean. |
-| Chap05/Sec05_35/Corollary_5_39.lean | tangent_iff_mfderiv_eq_zero_of_isDefiningFunction, exists_open_neighborhood_surjective_mfderiv, exists_local_defining_mapOn_nhds_of_isDefiningFunction, surjective_mfderiv_iff_surjective_in_tangent_coordinates | new | - | Riemannian/Submanifold/LevelSet | 否 | Sorry-free regular-value tangent characterization T_pS = ker dPhi plus a genuinely reusable lemma that mfderiv-surjectivity is an open condition, none of which exists in Mathlib (though it leans on the sorried Prop 5.38). |
-| Chap05/Sec05_35/Definition_5_35_extra_2.lean | IsBoundaryTangentVector, HasInwardCurveVelocity, HasOutwardCurveVelocity, IsInwardPointing, IsOutwardPointing | new | - | Riemannian/Boundary/PointingVectors | 否 | Inward/outward-pointing and boundary-tangent vector API for manifolds with boundary is absent from Mathlib and is exactly the infrastructure the GMT divergence-theorem gap needs, though the curve-based definitions and Fact instances want redesign. |
-| Chap05/Sec05_35/Notation_5_35_extra_1.lean | Manifold.submanifoldTangentSpace, scoped notation T[J; p] | new | - | Riemannian/Submanifold/TangentSpace | 否 | Tiny but keystone API: defines T_pS as the range submodule of the inclusion differential, the submanifold tangent-space abstraction Mathlib lacks and on which the whole section's theorems hang. |
-| Chap05/Sec05_35/Proposition_5_35.lean | tangentVector_mem_submanifold_iff_exists_curve, IsImmersedSubmanifold, subtype_val_mdifferentiableAt_of_isImmersedSubmanifold, ambient_velocity_eq_subtype_mfderiv_tangentVector | new | - | Riemannian/Submanifold/TangentSpace | 否 | Complete sorry-free proof that submanifold tangent vectors are exactly velocities of curves in S, including the reusable fact that an immersed-submanifold inclusion is MDifferentiable, none of which is in Mathlib (porting requires the Chap03 SmoothCurveAt/curve-velocity infrastructure). |
-| Chap05/Sec05_35/Proposition_5_38.lean | IsLocalDefiningMapOn, tangentSpace_eq_ker_mfderiv_of_isLocalDefiningMapOn | new | - | Riemannian/Submanifold/LevelSet | 是 | The IsLocalDefiningMapOn predicate plus T_pS = ker dPhi is the core local defining-map API missing from Mathlib and the load-bearing dependency of Corollary 5.39 and Exercise 5.40, though its main theorem is still sorried. |
-| Chap05/Sec05_36/Definition_5_36_extra_4.lean | Set.euclideanHalfSlice, Set.IsEuclideanHalfSlice, Set.IsHalfSliceInChart, OpenPartialHomeomorph.IsBoundarySliceChart, Set.SatisfiesLocalSliceConditionWithBoundary | new | - | Riemannian/Manifold/SliceCharts | 否 | Sorry-free Euclidean half-slice and boundary slice-chart API with the local k-slice condition for submanifolds with boundary, a reusable coordinate-chart infrastructure layer entirely absent from Mathlib (needs the companion interior-slice file euclideanSlice/IsSliceChart from Sec05_29). |
-| Chap05/Sec05_36/Theorem_5_51.lean | local_slice_criterion_for_embedded_submanifold_with_boundary, satisfiesLocalSliceConditionWithBoundary_has_manifold_with_boundary_structure, smooth_embedding_subtype_val_satisfiesLocalSliceConditionWithBoundary, empty_subtype_smooth_manifold_with_boundary_structure | new | - | Riemannian/Manifold/SubmanifoldWithBoundary | 是 | The local k-slice criterion characterizing embedded submanifolds with boundary plus ~2000 lines of chart-transport and half-space-shift infrastructure with no Mathlib counterpart, but three sorries remain at the core normal-form steps (interior slice chart, boundary half-slice chart, forward atlas construction), so porting means finishing substantial proofs. |
-| Chap05/Sec05_37/Problem_5_18.lean | immersed_submanifold_isEmbeddedSubmanifold_iff_smoothFunctions_isSmoothOn, immersed_submanifold_properlyEmbedded_iff_smoothFunctions_extend_globally, smoothFunctions_extend_globally_as_C_infty, embedded_pointwise_local_scalar_extension | new | - | Riemannian/Manifold/Submanifold/SmoothExtension | 否 | Sorry-free general characterizations (embedded iff smooth scalars locally extend; properly embedded iff they extend globally on sigma-compact Hausdorff ambients) constitute reusable embedded-submanifold API that neither Mathlib nor OpenGALib has, and that underpins GMT-style submanifold work. |
-| Chap05/Sec05_37/Problem_5_23.lean | IsBoundaryRegularValue, boundary_chart_retraction, boundary_restriction_isRegularValue, regular_preimage_has_embedded_submanifold_with_boundary_structure | new | - | Riemannian/Manifold/Submanifold/RegularValue | 是 | A large, mostly-proved regular-value preimage theorem for manifolds with boundary (boundary retraction, half-slice charts, patch gluing) that Mathlib lacks entirely and that underpins level-set submanifolds and regular domains in Riemannian/GMT work, though two local-chart lemmas are still sorry'd. |
-| Chap05/Sec05_37/Problem_5_8.lean | basis_model_diffeomorph, IsRegularCoordinateBall lemmas, regularCoordinateBall_compl_exists_smoothManifoldWithBoundary, regularCoordinateBall_compl_boundary_diffeomorph_sphere | new | - | Riemannian/Manifold/CoordinateBall | 是 | Genuine regular-coordinate-ball and regular-domain infrastructure (basis-model transport between E and R^n charts, slice conditions, frontier-equals-sphere, complement as smooth manifold with boundary diffeomorphic to a sphere) that Mathlib lacks, nearly complete with a single sorry in one boundary slice-chart lemma. |
-| Chap05/Sec05_36/Proposition_5_49.lean | isSmoothEmbedding_of_le, smooth_embedding_range_has_manifold_with_boundary, immersed_submanifold_has_embedded_neighborhood, subtype_val_isSmoothEmbedding_of_open_embedding, partialEquiv_sourceTargetHomeomorph | partial-dup | Mathlib.Geometry.Manifold.SmoothEmbedding / Immersion (of_opens, comp exist; contMDiff and range-structure results are still proof_wanted or absent) | Riemannian/Manifold/Submanifold | 否 | Sorry-free proofs that a smooth embedding's range carries an induced manifold structure with smoothly embedded inclusion and that immersions are locally smooth embeddings — real API beyond Mathlib's Immersion/SmoothEmbedding files (parts 1 and 3 are mere #check restatements of existing owners). |
+| 文件 | 声明 | 分类 | 落点 | sorry | 理由 |
+|---|---|---|---|---|---|
+| Sec05_28/Definition_5_28_extra_1.lean | IsEmbeddedSubmanifold、IsEmbeddedSubmanifold.codimension 等 | new | Manifold/Submanifold/Embedded | 否 | 嵌入子流形类填 Mathlib 空白，需 Sec05_31 浸入结构 |
+| Sec05_28/Proposition_5_4.lean | graphMap、graphMap_isSmoothEmbedding 等 | new | Manifold/Submanifold/Graph | 是 | 光滑映射的图作光滑嵌入，Mathlib 缺，GMT 基础 |
+| Sec05_29/Definition_5_29_extra_1.lean | Set.euclideanSlice、Set.IsSliceInChart 等 | new | Manifold/SliceCharts | 否 | 切片图卡/局部切片条件 API，子流形理论根基 |
+| Sec05_29/Theorem_5_8.lean | local_slice_criterion_for_embedded_submanifold 等 | new | Manifold/SliceCharts | 否 | 局部 k-切片判据无 sorry 全证，Mathlib 空白 |
+| Sec05_30/Proposition_5_16.lean | euclidean_tail_projection、embedded_submanifold_iff_locally_level_set_of_smooth_submersion 等 | new | Manifold/Submanifold/LocalDefining | 是 | 浸没水平集局部判据，投影引理已证，主 iff 仍 sorry |
+| Sec05_31/Definition_5_31_extra_1.lean | Manifold.ImmersedSubmanifold、IsImmersion.toImmersedSubmanifold 等 | new | Manifold/Submanifold/Immersed | 否 | 无 sorry 捆绑浸入子流形结构，varifold 代码直接受益 |
+| Sec05_32/Corollary_5_30.lean | IsSmoothEmbedding.contMDiff_toSubtype、contMDiffAt_toSubtype 等 | new | Manifold/Submanifold | 否 | 一般余域限制定理已证，Mathlib 仅有球面特例 |
+| Sec05_35/Corollary_5_39.lean | tangent_iff_mfderiv_eq_zero_of_isDefiningFunction 等 | new | Submanifold/LevelSet | 否 | 正则值切空间刻画已证，但依赖含 sorry 的命题 5.38 |
+| Sec05_35/Definition_5_35_extra_2.lean | IsInwardPointing、IsBoundaryTangentVector 等 | new | Boundary/PointingVectors | 否 | 内外指向向量 API 填散度定理缺口，定义需重设计 |
+| Sec05_35/Notation_5_35_extra_1.lean | Manifold.submanifoldTangentSpace、T[J; p] 记号 | new | Submanifold/TangentSpace | 否 | 子流形切空间核心定义，全节定理之基石 |
+| Sec05_35/Proposition_5_35.lean | tangentVector_mem_submanifold_iff_exists_curve 等 | new | Submanifold/TangentSpace | 否 | 切向量即曲线速度，全证，需 Chap03 曲线基建 |
+| Sec05_35/Proposition_5_38.lean | IsLocalDefiningMapOn、tangentSpace_eq_ker_mfderiv_of_isLocalDefiningMapOn | new | Submanifold/LevelSet | 是 | 局部定义映射核心 API，5.39/5.40 依赖，主定理 sorry |
+| Sec05_36/Definition_5_36_extra_4.lean | Set.euclideanHalfSlice、OpenPartialHomeomorph.IsBoundarySliceChart 等 | new | Manifold/SliceCharts | 否 | 带边界半切片图卡 API 无 sorry，需 Sec05_29 配套 |
+| Sec05_36/Theorem_5_51.lean | local_slice_criterion_for_embedded_submanifold_with_boundary 等 | new | Manifold/SubmanifoldWithBoundary | 是 | 带边界 k-切片判据约 2000 行，核心三处 sorry 待补 |
+| Sec05_37/Problem_5_18.lean | immersed_submanifold_isEmbeddedSubmanifold_iff_smoothFunctions_isSmoothOn 等 | new | Manifold/Submanifold/SmoothExtension | 否 | 嵌入 iff 光滑函数可延拓，无 sorry 可复用 API |
+| Sec05_37/Problem_5_23.lean | IsBoundaryRegularValue、regular_preimage_has_embedded_submanifold_with_boundary_structure 等 | new | Manifold/Submanifold/RegularValue | 是 | 带边界正则值原像定理大部已证，余两引理 sorry |
+| Sec05_37/Problem_5_8.lean | basis_model_diffeomorph、regularCoordinateBall_compl_boundary_diffeomorph_sphere 等 | new | Manifold/CoordinateBall | 是 | 正则坐标球/正则域基建近完成，仅余一处 sorry |
+| Sec05_36/Proposition_5_49.lean | isSmoothEmbedding_of_le、immersed_submanifold_has_embedded_neighborhood 等 | partial-dup | Manifold/Submanifold | 否 | 嵌入像诱导结构已证，超出 Mathlib SmoothEmbedding |
 
-## 可考虑（medium value）
+<details><summary>可考虑（medium，33 项）</summary>
 
-| 文件 | 主要声明 | 重叠分类 | 对应物 | 目标模块 | sorry | 理由 |
-|---|---|---|---|---|---|---|
-| Chap05/Sec05_28/Proposition_5_2.lean | IsInducedImageManifoldStructure, smooth_embedding_range_has_induced_manifold_structure, image_diffeomorph_eq_of_comp_subtype_val | new | - | Riemannian/Manifold/Submanifold/InducedStructure | 是 | The induced manifold structure on the image of a smooth embedding is a genuine cornerstone absent from Mathlib, but both theorems are sorried and the existential let-bound packaging is poor API that should be reworked into an explicit charted-space construction. |
-| Chap05/Sec05_28/Proposition_5_3.lean | productSliceMap, range_productSliceMap_eq_univ_prod_singleton, productSliceMap_isSmoothEmbedding, product_slice_has_induced_manifold_structure | new | - | Riemannian/Manifold/Submanifold/Product | 是 | The slice embedding x ↦ (x, p) is a small reusable lemma not in Mathlib, but the main theorem is a fully sorried repackaging of Proposition 5.2 applied to a textbook example. |
-| Chap05/Sec05_28/Proposition_5_7.lean | smooth_map_graph_isProperlyEmbedded | new | - | Riemannian/Manifold/Submanifold/Graph | 是 | Proper embeddedness of global graphs is a useful companion to the graph-embedding result and not in Mathlib, but it is a single fully sorried theorem that only makes sense ported together with Proposition 5.4. |
-| Chap05/Sec05_29/Exercise_5_10.lean | sphericalCoordinates (OpenPartialHomeomorph R3 R3), sphericalCoordinates_mem_maximalAtlas, sphericalCoordinates_restrOpen_isSliceChart_unitSphere2, Complex.arg_contDiffOn_slitPlane | new | Mathlib polarCoord (2D only) covers part of the smoothness argument | Riemannian/Instances/SphericalCoordinates | 否 | A fully proved, bundled 3D spherical-coordinate chart with smoothness and maximal-atlas membership is absent from Mathlib and useful for GMT/volume computations, but it is a single concrete chart on R^3 rather than general infrastructure. |
-| Chap05/Sec05_30/Corollary_5_13.lean | smooth_submersion_level_set_has_embedded_submanifold_structure, smooth_submersion_level_set_isProperlyEmbedded | new | - | Riemannian/Manifold/Submanifold/LevelSet | 否 | Submersion-level-set corollary absent from Mathlib/OpenGALib, but it is a thin wrapper whose proofs reduce to the sorried Theorem 5.12 and whose existential-instance statement shape needs redesign before it is a usable API. |
-| Chap05/Sec05_30/Corollary_5_14.lean | regular_level_set_has_embedded_submanifold_structure, regular_level_set_isProperlyEmbedded | new | - | Riemannian/Manifold/Submanifold/LevelSet | 是 | The Regular Level Set Theorem is a genuine Mathlib gap and key submanifold infrastructure, but both statements are sorry and depend on project-local regular-value/embedded-submanifold owners, so porting means re-proving from scratch. |
-| Chap05/Sec05_30/Definition_5_30_extra_2.lean | Manifold.IsRegularPoint, Manifold.IsCriticalPoint, Manifold.IsCriticalValue, Manifold.IsRegularLevelSet, isOpen_setOf_isRegularPoint | new | - | Riemannian/Manifold/Submanifold/RegularValue | 是 | Regular/critical point-value vocabulary is absent from Mathlib and reusable beneath manifold coarea/Sard work, but the defs are one-line negations/surjectivity conditions and every supporting lemma (including the substantive isOpen_setOf_isRegularPoint) is sorry. |
-| Chap05/Sec05_30/Definition_5_30_extra_3.lean | Set.IsDefiningMap, Set.IsDefiningFunction, Set.IsLocalDefiningMapOn, Set.IsLocalDefiningFunctionOn | new | - | Riemannian/Manifold/Submanifold/DefiningMap | 是 | Defining-map/local-defining-function API has no Mathlib counterpart and supports submanifold-by-equations workflows, but the data-carrying class design with explicit-argument Fact instances and sorried iff lemmas needs a substantial redesign before porting. |
-| Chap05/Sec05_30/Theorem_5_12.lean | constant_rank_level_set_has_embedded_submanifold_structure, constant_rank_level_set_isProperlyEmbedded | new | - | Riemannian/Manifold/Submanifold/LevelSet | 是 | The Constant-Rank Level Set Theorem is the keystone result missing from Mathlib, but both statements are sorry, depend on project-local HasConstantRank/IsEmbeddedSubmanifold owners, and the existential-ChartedSpace statement shape would need a redesign, so only the statement design is portable. |
-| Chap05/Sec05_31/Definition_5_31_extra_2.lean | ImmersedSubmanifold.IsLocalParametrization, IsSmoothLocalParametrization, IsGlobalParametrization, IsGlobalParametrization.range_eq_carrier | new | - | Riemannian/Manifold/Submanifold/Parametrization | 是 | Genuinely new parametrization predicates useful beneath GMT, but hardcoded to EuclideanSpace ℝ (Fin k), with three sorried lemmas and an ill-conceived Fact instance, so it needs API rework before porting. |
-| Chap05/Sec05_31/Exercise_5_20.lean | ImmersedSubmanifold.continuous_inclusion, givenTopology_le_subspaceTopology, subspaceTopology_le_givenTopology_iff_isEmbedding | new | - | Riemannian/Manifold/Submanifold/Immersed | 否 | Fully proved, general core API for the bundled structure (continuity of the inclusion extracted from immersion chart data, topology-comparison iff with embeddings); should be ported together with Definition_5_31_extra_1. |
-| Chap05/Sec05_31/Proposition_5_18.lean | injective_immersion_range_has_immersed_submanifold_structure, injective_immersion_range_immersed_submanifold_structure_unique | new | - | Riemannian/Manifold/Submanifold/Immersed | 是 | Statement-only (both sorried) existence and uniqueness of the smooth structure on the image of an injective immersion — valuable target theorems for a submanifold module, but porting them is statements without proofs. |
-| Chap05/Sec05_31/Proposition_5_22.lean | ImmersedSubmanifold.exists_open_neighborhood_isSmoothEmbedding | new | - | Riemannian/Manifold/Submanifold/Immersed | 是 | The 'immersed submanifolds are locally embedded' theorem is a genuinely useful general result absent from Mathlib, but the file is a single sorried statement. |
-| Chap05/Sec05_31/Proposition_5_23.lean | IsImmersion.isSmoothLocalParametrization_of_mem_maximalAtlas, isSmoothLocalParametrization_iff_exists_chart, exists_isSmoothLocalParametrization_through | new | - | Riemannian/Manifold/Submanifold/Parametrization | 否 | Fully proved chart-to-parametrization API (charts give smooth local parametrizations covering every point), reusable but tied to the Fin-k Euclidean model and to the parametrization definitions that need rework. |
-| Chap05/Sec05_32/Remark_5_32_extra_1.lean | instance IsWeaklyEmbeddedSubmanifold (from IsEmbeddedSubmanifold) | new | - | Riemannian/Manifold/Submanifold | 否 | Small but correct hierarchy-glue instance (embedded implies weakly embedded) that is only worth porting together with the submanifold classes it connects. |
-| Chap05/Sec05_32/Theorem_5_29.lean | contMDiff_toSubtype_of_isImmersedSubmanifold | new | - | Riemannian/Manifold/Submanifold | 是 | The right general statement (codomain restriction into immersed submanifolds given continuity, strictly generalizing Corollary 5.30) but it is statement-only with a sorry, so porting means proving it from scratch. |
-| Chap05/Sec05_33/Theorem_5_31.lean | immersed_submanifold_structure_unique_of_same_carrier | new | - | Riemannian/Manifold/Submanifold | 是 | States Lee 5.31 (uniqueness of submanifold smooth structure), absent from Mathlib and OpenGALib, but is a sorry-only statement resting on project-local ImmersedSubmanifold/IsEmbeddedSubmanifold scaffolding, so porting it needs the whole submanifold API plus a real proof. |
-| Chap05/Sec05_35/Definition_5_35_extra_3.lean | BoundaryDefiningFunction (structure), CoeFun instance | new | - | Riemannian/Boundary/DefiningFunction | 否 | Bundled boundary-defining-function structure not in Mathlib and useful for boundary analysis, but it is hardwired to the EuclideanHalfSpace model and duplicates the unbundled class in Proposition_5_43, so the two need unifying. |
-| Chap05/Sec05_35/Exercise_5_40.lean | tangentSpace_eq_ker_mfderiv_of_level_set_of_hasConstantRank, exists_local_defining_map_on_nhds_to_fin_of_level_set_of_has_constant_rank, mem_level_set_iff_eq_basepoint | new | - | Riemannian/Submanifold/LevelSet | 是 | Constant-rank level-set tangent theorem is real infrastructure missing from Mathlib, but its key constant-rank normal-form lemma is sorried and the file duplicates a helper already in Corollary_5_39. |
-| Chap05/Sec05_35/Exercise_5_44.lean | boundary_defining_derivative, IsBoundaryDefiningFunctionAt, inwardPointing_iff_boundaryDefiningDerivative_pos, outwardPointing_iff_boundaryDefiningDerivative_neg, tangentToBoundary_iff_boundaryDefiningDerivative_eq_zero | new | - | Riemannian/Boundary/DefiningFunction | 是 | Sign-of-defining-function-derivative characterization of inward/outward vectors is the right API for outward-normal work, but all four theorems are statement-only sorries and it introduces a third local variant of boundary defining function. |
-| Chap05/Sec05_35/Proposition_5_37.lean | tangentVector_mem_submanifold_iff_forall_smooth_eq_zero | new | - | Riemannian/Submanifold/TangentSpace | 是 | Nice functional characterization (v tangent to S iff it kills all smooth functions vanishing on S) but it is a single statement-only sorry whose proof needs extension-lemma machinery not yet present. |
-| Chap05/Sec05_35/Proposition_5_41.lean | boundary_coordinate_component, inward_pointing_iff_boundary_coordinate_component_pos, boundary_vector_trichotomy, inward_pointing_iff_neg_outward_pointing (8 theorems) | new | - | Riemannian/Boundary/PointingVectors | 是 | The chart-coordinate trichotomy for boundary vectors is the right theorem suite to accompany the pointing-vector API, but all eight theorems are statement-only sorries needing real half-space chart work. |
-| Chap05/Sec05_35/Proposition_5_43.lean | IsBoundaryDefiningFunction (class), exists_boundary_defining_function | new | - | Riemannian/Boundary/DefiningFunction | 是 | Existence of a global boundary defining function (via partitions of unity) would be valuable boundary infrastructure, but the theorem is sorried and the statement leans on a project-local SmoothManifoldWithBoundary class and duplicates Definition_5_35_extra_3's structure. |
-| Chap05/Sec05_36/Definition_5_36_extra_2.lean | Set.IsRegularDomain, instIsRegularDomainEmpty | new | - | Riemannian/Manifold/RegularDomain | 否 | Regular-domain predicate (properly embedded codimension-0 submanifold with boundary) is exactly the integration-domain notion needed for a divergence/Stokes theorem, but it is a thin class tied to project-local SmoothManifoldWithBoundary and leeBoundaryModelWithCorners scaffolding that would need re-founding. |
-| Chap05/Sec05_36/Definition_5_36_extra_3.lean | Manifold.IsRegularValue, isRegularValue_iff, IsRegularSublevelSet, IsDefiningFunction, isRegularSublevelSet_iff, isDefiningFunction_iff | new | - | Riemannian/Manifold/RegularValue | 是 | Mathlib has no regular-value notion so IsRegularValue/IsRegularSublevelSet/IsDefiningFunction fill a real gap feeding regular domains, but the API is tiny, the three iff lemmas are trivial unfolds left as sorry, and the Fact instance is a design smell needing rework. |
-| Chap05/Sec05_36/Proposition_5_46.lean | regular_domain_manifoldInterior_image_eq_interior, regular_domain_manifoldBoundary_image_eq_frontier | new | - | Riemannian/Manifold/RegularDomain | 是 | States the genuinely useful identification of a regular domain's manifold interior/boundary with the ambient topological interior/frontier (key for boundary-term bookkeeping in a divergence theorem), but both proofs are sorry so only statements would port. |
-| Chap05/Sec05_37/Problem_5_15.lean | transported_subset_chartedSpace, transported_subset_isManifold_top, transported_subset_val_isImmersion_explicit, transported_subset_isImmersedCurveWithTopology, figure_eight_curveMap_isImmersion, exists_subset_with_two_immersed_curve_topologies | new | - | Riemannian/Manifold/StructureTransport | 否 | The figure-eight two-topologies counterexample is pedagogical, but the fully proved transported_subset_* family (transporting charted-space/manifold/immersion structure across a homeomorphism onto a subset) is genuinely reusable infrastructure absent from Mathlib. |
-| Chap05/Sec05_37/Problem_5_19.lean | subtype_val_mdifferentiableAt_of_isEmbeddedSubmanifold, curve_velocity_eq_subtype_inclusion_mfderiv, curve_velocity_mem_embedded_submanifold_tangent, figureEightCurveMap_counterexample | new | - | Riemannian/Manifold/Submanifold/Tangent | 否 | The proved general lemma that velocities of curves lying in an embedded submanifold land in the tangent subspace is useful tangent-space API, but it leans on project-local owners (IsEmbeddedSubmanifold, curve_velocity) and half the file is a concrete figure-eight counterexample. |
-| Chap05/Sec05_37/Problem_5_4.lean | continuous_injective_order_to_real_isOpenEmbedding, continuous_injective_interval_to_curve_manifold_isEmbedding, figureEightCurve_image_not_embedded_curve | new | - | Riemannian/Manifold/CurveEmbedding | 否 | The headline figure-eight theorem is textbook-specific, but the sorry-free 1-dimensional invariance-of-domain helpers (continuous injective interval-to-1-manifold maps are embeddings) are general and absent from Mathlib. |
-| Chap05/Sec05_37/Problem_5_5.lean | continuous_injective_real_to_curve_manifold_isLocalHomeomorph, continuous_injective_real_to_curve_manifold_isEmbedding, denseTorusCurve_image_not_embedded_curve | new | - | Riemannian/Manifold/CurveEmbedding | 否 | The dense torus-curve result is a textbook counterexample, but the sorry-free helper that a continuous injective map from the real line into any 1-manifold is an embedding is reusable curve infrastructure not in Mathlib, and largely duplicates the Problem_5_4 helpers so the two files should port as one module. |
-| Chap05/Sec05_37/Problem_5_6.lean | unitTangentBundle, unitTangentBundle.inclusion, unitTangentBundle_exists_isSmoothEmbedding | new | - | Riemannian/TangentBundle/UnitTangentBundle | 是 | A unit tangent bundle exists nowhere in Mathlib or OpenGALib and matters for Riemannian geometry (geodesic flow), but here it is only a thin set-level definition whose main smooth-structure theorem is fully sorry'd, so it is an API seed needing substantial rework. |
-| Chap05/Sec05_28/Proposition_5_1.lean | open_submanifold_isEmbeddedSubmanifold, open_submanifold_codimension_zero, isOpen_of_codimension_zero_embedded_submanifold | partial-dup | Manifold.IsSmoothEmbedding.of_opens (Mathlib/Geometry/Manifold/SmoothEmbedding.lean) | Riemannian/Manifold/Submanifold/Open | 是 | Part (1) is essentially Mathlib's of_opens repackaged, while the codimension-0-implies-open converse is new but fully sorried and hard-coded to Euclidean models, so it needs both proofs and generalization. |
-| Chap05/Sec05_32/Definition_5_32_extra_2.lean | IsImmersedSubmanifold, IsWeaklyEmbeddedSubmanifold, contMDiff_of_comp_subtype_val, isWeaklyEmbeddedSubmanifold_univ | partial-dup | contMDiff_subtype_val_comp_iff duplicates ContMDiff.subtypeVal_comp_iff (Mathlib/Geometry/Manifold/ContMDiff/Basic.lean); the submanifold classes are new | Riemannian/Manifold/Submanifold | 否 | The immersed/weakly-embedded submanifold predicate classes fill a genuine Mathlib gap, but the explicit-universe class field and route-correction helper lemmas show the API needs substantial rework, and one helper duplicates Mathlib. |
+| 文件 | 声明 | 分类 | 落点 | sorry | 理由 |
+|---|---|---|---|---|---|
+| Sec05_28/Proposition_5_2.lean | IsInducedImageManifoldStructure、smooth_embedding_range_has_induced_manifold_structure 等 | new | Manifold/Submanifold/InducedStructure | 是 | 像上诱导结构是基石，但定理全 sorry 且 API 需重做 |
+| Sec05_28/Proposition_5_3.lean | productSliceMap、productSliceMap_isSmoothEmbedding 等 | new | Manifold/Submanifold/Product | 是 | 切片嵌入 x↦(x,p) 小引理可用，主定理全 sorry |
+| Sec05_28/Proposition_5_7.lean | smooth_map_graph_isProperlyEmbedded | new | Manifold/Submanifold/Graph | 是 | 全局图真嵌入，单条 sorry，应与命题 5.4 同移植 |
+| Sec05_29/Exercise_5_10.lean | sphericalCoordinates、sphericalCoordinates_mem_maximalAtlas 等 | new | Instances/SphericalCoordinates | 否 | 三维球坐标图卡全证，但属具体图卡非通用基建 |
+| Sec05_30/Corollary_5_13.lean | smooth_submersion_level_set_has_embedded_submanifold_structure 等 | new | Manifold/Submanifold/LevelSet | 否 | 浸没水平集推论为薄包装，依赖含 sorry 定理 5.12 |
+| Sec05_30/Corollary_5_14.lean | regular_level_set_has_embedded_submanifold_structure 等 | new | Manifold/Submanifold/LevelSet | 是 | 正则水平集定理填空白，但全 sorry 需从头证 |
+| Sec05_30/Definition_5_30_extra_2.lean | Manifold.IsRegularPoint、Manifold.IsCriticalValue 等 | new | Manifold/Submanifold/RegularValue | 是 | 正则/临界点词汇缺失，但支撑引理全 sorry |
+| Sec05_30/Definition_5_30_extra_3.lean | Set.IsDefiningMap、Set.IsLocalDefiningMapOn 等 | new | Manifold/Submanifold/DefiningMap | 是 | 定义映射 API 空白，但类设计需大幅重做 |
+| Sec05_30/Theorem_5_12.lean | constant_rank_level_set_has_embedded_submanifold_structure 等 | new | Manifold/Submanifold/LevelSet | 是 | 常秩水平集定理为关键空白，全 sorry 仅语句可移 |
+| Sec05_31/Definition_5_31_extra_2.lean | ImmersedSubmanifold.IsLocalParametrization、IsGlobalParametrization 等 | new | Manifold/Submanifold/Parametrization | 是 | 参数化谓词新颖，但硬编码 Fin k，API 需重做 |
+| Sec05_31/Exercise_5_20.lean | ImmersedSubmanifold.continuous_inclusion、subspaceTopology_le_givenTopology_iff_isEmbedding 等 | new | Manifold/Submanifold/Immersed | 否 | 已证核心 API，应与 Definition_5_31_extra_1 同移植 |
+| Sec05_31/Proposition_5_18.lean | injective_immersion_range_has_immersed_submanifold_structure 等 | new | Manifold/Submanifold/Immersed | 是 | 单射浸入像结构存在唯一性，仅语句无证明 |
+| Sec05_31/Proposition_5_22.lean | ImmersedSubmanifold.exists_open_neighborhood_isSmoothEmbedding | new | Manifold/Submanifold/Immersed | 是 | 浸入子流形局部嵌入有用，但全文单条 sorry 语句 |
+| Sec05_31/Proposition_5_23.lean | IsImmersion.isSmoothLocalParametrization_of_mem_maximalAtlas 等 | new | Manifold/Submanifold/Parametrization | 否 | 图卡给局部参数化已证，但绑定待重做的定义 |
+| Sec05_32/Remark_5_32_extra_1.lean | IsWeaklyEmbeddedSubmanifold 实例 | new | Manifold/Submanifold | 否 | 嵌入蕴含弱嵌入的胶水实例，须随子流形类同移 |
+| Sec05_32/Theorem_5_29.lean | contMDiff_toSubtype_of_isImmersedSubmanifold | new | Manifold/Submanifold | 是 | 推广推论 5.30 的余域限制，仅语句需从头证 |
+| Sec05_33/Theorem_5_31.lean | immersed_submanifold_structure_unique_of_same_carrier | new | Manifold/Submanifold | 是 | 子流形结构唯一性 sorry 语句，需全套 API 加真证明 |
+| Sec05_35/Definition_5_35_extra_3.lean | BoundaryDefiningFunction、CoeFun 实例 | new | Boundary/DefiningFunction | 否 | 捆绑边界定义函数，硬编码半空间且与 5.43 重复 |
+| Sec05_35/Exercise_5_40.lean | tangentSpace_eq_ker_mfderiv_of_level_set_of_hasConstantRank 等 | new | Submanifold/LevelSet | 是 | 常秩水平集切空间，关键引理 sorry 且与 5.39 重复 |
+| Sec05_35/Exercise_5_44.lean | boundary_defining_derivative、inwardPointing_iff_boundaryDefiningDerivative_pos 等 | new | Boundary/DefiningFunction | 是 | 导数符号刻画内外向是对的 API，四定理全 sorry |
+| Sec05_35/Proposition_5_37.lean | tangentVector_mem_submanifold_iff_forall_smooth_eq_zero | new | Submanifold/TangentSpace | 是 | 函数式切向刻画，单条 sorry，证明需延拓引理 |
+| Sec05_35/Proposition_5_41.lean | boundary_coordinate_component、boundary_vector_trichotomy 等 | new | Boundary/PointingVectors | 是 | 边界向量坐标三分法配套定理，八条全 sorry |
+| Sec05_35/Proposition_5_43.lean | IsBoundaryDefiningFunction、exists_boundary_defining_function | new | Boundary/DefiningFunction | 是 | 全局边界定义函数存在性 sorry，与 extra_3 重复 |
+| Sec05_36/Definition_5_36_extra_2.lean | Set.IsRegularDomain、instIsRegularDomainEmpty | new | Manifold/RegularDomain | 否 | 正则域即散度定理积分域，依项目脚手架需重建 |
+| Sec05_36/Definition_5_36_extra_3.lean | Manifold.IsRegularValue、IsRegularSublevelSet 等 | new | Manifold/RegularValue | 是 | 正则值概念填空白，iff 引理 sorry，设计需改 |
+| Sec05_36/Proposition_5_46.lean | regular_domain_manifoldInterior_image_eq_interior 等 | new | Manifold/RegularDomain | 是 | 正则域内部/边界对应拓扑内部/边缘，证明全 sorry |
+| Sec05_37/Problem_5_15.lean | transported_subset_chartedSpace、transported_subset_isManifold_top 等 | new | Manifold/StructureTransport | 否 | 结构沿同胚移植引理族已证可复用，反例部分教材性 |
+| Sec05_37/Problem_5_19.lean | curve_velocity_mem_embedded_submanifold_tangent 等 | new | Manifold/Submanifold/Tangent | 否 | 曲线速度落入切子空间已证，半个文件是反例 |
+| Sec05_37/Problem_5_4.lean | continuous_injective_interval_to_curve_manifold_isEmbedding 等 | new | Manifold/CurveEmbedding | 否 | 一维区域不变性辅助引理无 sorry，Mathlib 缺 |
+| Sec05_37/Problem_5_5.lean | continuous_injective_real_to_curve_manifold_isEmbedding 等 | new | Manifold/CurveEmbedding | 否 | 实线入一维流形嵌入引理已证，宜与 5.4 并为一模块 |
+| Sec05_37/Problem_5_6.lean | unitTangentBundle、unitTangentBundle_exists_isSmoothEmbedding 等 | new | TangentBundle/UnitTangentBundle | 是 | 单位切丛各处皆无，但主定理全 sorry，仅 API 种子 |
+| Sec05_28/Proposition_5_1.lean | open_submanifold_isEmbeddedSubmanifold 等 | partial-dup | Manifold/Submanifold/Open | 是 | 部分重复 Mathlib of_opens，逆命题全 sorry 需推广 |
+| Sec05_32/Definition_5_32_extra_2.lean | IsImmersedSubmanifold、IsWeaklyEmbeddedSubmanifold 等 | partial-dup | Manifold/Submanifold | 否 | 子流形谓词类填空白，API 需重做且一辅助重复 Mathlib |
 
-## 跳过（low value / duplicates）
+</details>
 
-- Chap05/Sec05_28/Corollary_5_6.lean — mathlib-dup — one-line composition of two existing Mathlib lemmas restated through the project's IsProperlyEmbedded abbrev.
-- Chap05/Sec05_28/Definition_5_28_extra_2.lean — partial-dup — thin naming abbrev over IsProperMap Subtype.val with one-line consequences of existing Mathlib API.
-- Chap05/Sec05_28/Proposition_5_5.lean — mathlib-dup — no declarations, only a #check at a wrapper around existing Mathlib proper-map lemmas.
-- Chap05/Sec05_29/Example_5_9.lean — partial-dup — substantive content is Mathlib's sphere API, only repackaging is new and the ω-regularity step is sorried.
-- Chap05/Sec05_29/Remark_5_29_extra_2.lean — new — statement-only remark proved by sorry; port the underlying theorems instead.
-- Chap05/Sec05_29/Remark_5_29_extra_3.lean — new — declaration-free `recall` cross-reference, pure pedagogical scaffolding.
-- Chap05/Sec05_30/Definition_5_30_extra_1.lean — mathlib-dup — declaration-free recall of Set.preimage, already canonical Mathlib vocabulary.
-- Chap05/Sec05_30/Example_5_15.lean — mathlib-dup — declaration-free pedagogical view of the unit sphere, fully covered by Mathlib's sphere instances.
-- Chap05/Sec05_30/Example_5_17.lean — new — textbook-specific surfaces-of-revolution/torus example with every substantive proof sorried.
-- Chap05/Sec05_31/Example_5_19.lean — new — single concrete figure-eight counterexample with no reusable API.
-- Chap05/Sec05_31/Example_5_25.lean — new — mostly #check cross-references plus one trivial pedagogical corollary.
-- Chap05/Sec05_31/Example_5_26.lean — new — 467 lines of concrete figure-eight scaffolding with two sorries; only isImmersion_of_le worth extracting.
-- Chap05/Sec05_31/Exercise_5_24.lean — new — no declarations, only recall and #check cross-references.
-- Chap05/Sec05_32/Example_5_28.lean — new — textbook-specific figure-eight counterexample with the key ω-regularity upgrade left as sorry.
-- Chap05/Sec05_32/Theorem_5_27.lean — mathlib-dup — recall of Mathlib's ContMDiff.comp plus a one-line specialization, no new API.
-- Chap05/Sec05_34/Notation_5_34_extra_1.lean — mathlib-dup — pure notation citation of Mathlib's ContMDiffMap notation, no declarations.
-- Chap05/Sec05_35/Definition_5_35_extra_4.lean — new — plane-specific (R^2 only) existential scaffolding for Example 5.45; design fresh instead.
-- Chap05/Sec05_35/Example_5_45.lean — new — 780-line sorry-free treatment of one concrete plane curve (y=|x| cusp), helpers too R^2-specialized to extract.
-- Chap05/Sec05_35/Exercise_5_36.lean — new — pure `recall` restatement of Proposition 5.35, zero new declarations.
-- Chap05/Sec05_35/Exercise_5_42.lean — new — pure `recall` restatement of Proposition 5.41's sorried statements.
-- Chap05/Sec05_36/Definition_5_36_extra_1.lean — mathlib-dup — #check-only restatement of Mathlib's immersion and smooth-embedding predicates.
-- Chap05/Sec05_36/Exercise_5_50.lean — partial-dup — recall bundle re-proving a conjunction via Mathlib's of_opens and Proposition 5.49, no new API.
-- Chap05/Sec05_36/Exercise_5_52.lean — partial-dup — recall-only re-export of Theorem 5.51's declarations.
-- Chap05/Sec05_36/Exercise_5_54.lean — partial-dup — recall-only pointer at Theorem 5.53 and its project-local owner.
-- Chap05/Sec05_36/Remark_5_36_extra_5.lean — partial-dup — recall-only remark with no declarations.
-- Chap05/Sec05_36/Theorem_5_53.lean — partial-dup — one-line wrapper whose only real content is itself sorry'd (matching Mathlib's proof_wanted).
-- Chap05/Sec05_37/Problem_5_1.lean — new — fully proved but entirely a concrete textbook exercise (level set in R^4 diffeomorphic to S^2), no reusable API.
-- Chap05/Sec05_37/Problem_5_10.lean — new — concrete plane-cubic classification with 17 sorries; generic transport lemmas duplicated from Problem_5_15.
-- Chap05/Sec05_37/Problem_5_11.lean — new — four statements about specific zero sets, all proved by sorry, no API content.
-- Chap05/Sec05_37/Problem_5_12.lean — partial-dup — boundary-preservation statements are corollaries of Mathlib's IsLocalDiffeomorph.preimage_boundary; the new covering-map parts are all sorried.
-- Chap05/Sec05_37/Problem_5_13.lean — new — concrete dense-torus-curve counterexample on a bespoke one-off predicate, still with 2 sorries.
-- Chap05/Sec05_37/Problem_5_20.lean — new — sorry-free but entirely a concrete figure-eight counterexample, no reusable API.
-- Chap05/Sec05_37/Problem_5_7.lean — new — worked classification of one cubic with five sorries; general helpers duplicated elsewhere in the project.
-- Chap05/Sec05_37/Problem_5_9.lean — new — single statement-only theorem (proof is sorry) about one concrete space.
+<details><summary>跳过（34 项，绝大多数为 Mathlib 包装/recall 文件）</summary>
 
----
+- Sec05_28/Corollary_5_6.lean — mathlib-dup — 一行复合既有引理
+- Sec05_28/Definition_5_28_extra_2.lean — partial-dup — 薄命名缩写
+- Sec05_28/Proposition_5_5.lean — mathlib-dup — 仅 #check 包装
+- Sec05_29/Example_5_9.lean — partial-dup — 球面 API 重包装
+- Sec05_29/Remark_5_29_extra_2.lean — new — 仅 sorry 语句备注
+- Sec05_29/Remark_5_29_extra_3.lean — new — recall 交叉引用
+- Sec05_30/Definition_5_30_extra_1.lean — mathlib-dup — recall 原像概念
+- Sec05_30/Example_5_15.lean — mathlib-dup — 球面教学复述
+- Sec05_30/Example_5_17.lean — new — 环面例全 sorry
+- Sec05_31/Example_5_19.lean — new — 八字反例无 API
+- Sec05_31/Example_5_25.lean — new — #check 加平凡推论
+- Sec05_31/Example_5_26.lean — new — 八字脚手架含 sorry
+- Sec05_31/Exercise_5_24.lean — new — 仅 recall/#check
+- Sec05_32/Example_5_28.lean — new — 八字反例关键 sorry
+- Sec05_32/Theorem_5_27.lean — mathlib-dup — recall 加一行特化
+- Sec05_34/Notation_5_34_extra_1.lean — mathlib-dup — 纯记号引用
+- Sec05_35/Definition_5_35_extra_4.lean — new — R² 专用脚手架
+- Sec05_35/Example_5_45.lean — new — 单条平面曲线例
+- Sec05_35/Exercise_5_36.lean — new — 纯 recall 复述
+- Sec05_35/Exercise_5_42.lean — new — recall sorry 语句
+- Sec05_36/Definition_5_36_extra_1.lean — mathlib-dup — #check 复述谓词
+- Sec05_36/Exercise_5_50.lean — partial-dup — recall 重证组合
+- Sec05_36/Exercise_5_52.lean — partial-dup — recall 再导出
+- Sec05_36/Exercise_5_54.lean — partial-dup — recall 指针
+- Sec05_36/Remark_5_36_extra_5.lean — partial-dup — 无声明备注
+- Sec05_36/Theorem_5_53.lean — partial-dup — 一行包装且 sorry
+- Sec05_37/Problem_5_1.lean — new — 具体习题无 API
+- Sec05_37/Problem_5_10.lean — new — 三次曲线 17 sorry
+- Sec05_37/Problem_5_11.lean — new — 具体零集全 sorry
+- Sec05_37/Problem_5_12.lean — partial-dup — 新部分全 sorry
+- Sec05_37/Problem_5_13.lean — new — 一次性反例含 sorry
+- Sec05_37/Problem_5_20.lean — new — 八字反例无 API
+- Sec05_37/Problem_5_7.lean — new — 单例分类含 sorry
+- Sec05_37/Problem_5_9.lean — new — 单条 sorry 语句
+
+</details>
+
+## 小结
 
 本章（第五章：子流形理论）是整个审计中移植价值最高的一章：嵌入/浸入子流形类、切片图卡判据、子流形切空间、局部定义映射与边界向量 API 共 18 个高价值文件，几乎全部为 Mathlib 空白且半数以上 sorry-free，可直接支撑 OpenGALib 的 GMT 与散度定理缺口。建议以 SliceCharts、Submanifold/Immersed+Embedded、Submanifold/TangentSpace 三条主线为骨架先移植无 sorry 文件，再用 medium 表中的 level-set 与 boundary 系列补全语句层。低价值条目以教材具体反例与 recall 脚手架为主，可整体跳过。
