@@ -3,6 +3,7 @@ import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
 import Mathlib.Tactic
 import OpenGALib.GeometricMeasureTheory.FinitePerimeter
 import Mathlib.MeasureTheory.Measure.Typeclasses.Finite
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.Geometry.Manifold.SmoothEmbedding
 import Mathlib.Geometry.Manifold.IsManifold.Basic
 

@@ -297,7 +297,7 @@ theorem shuffleLeftBwd_restrictComplement
   have h_round : (Equiv.removeNone
       (Equiv.permCongr finSuccSumOptionEquiv σ)).optionCongr =
       Equiv.permCongr finSuccSumOptionEquiv σ := by
-    rw [map_equiv_removeNone, h_fixes_none]; simp
+    rw [map_equiv_removeNone, h_fixes_none]; simp; rfl
   ext x; simp [Equiv.permCongr_apply, h_round]
 
 /-- Embedding `Perm(Fin m) → Perm(Fin (m+1))` via `optionCongr`. -/
@@ -911,7 +911,7 @@ theorem shuffleRightBwd_restrictComplementRight
   have h_round : (Equiv.removeNone
       (Equiv.permCongr finSumSuccOptionEquiv σ)).optionCongr =
       Equiv.permCongr finSumSuccOptionEquiv σ := by
-    rw [map_equiv_removeNone, h_fixes_none]; simp
+    rw [map_equiv_removeNone, h_fixes_none]; simp; rfl
   rw [h_round]
   have h_cancel : Equiv.permCongr finSumSuccOptionEquiv.symm
       (Equiv.permCongr finSumSuccOptionEquiv σ) = σ := by

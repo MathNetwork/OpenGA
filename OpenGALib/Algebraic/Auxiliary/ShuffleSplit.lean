@@ -99,7 +99,7 @@ theorem preimage_inl_none_side_well_defined'
 theorem optionCongr_removeNone_of_fix_none {α : Type*} [DecidableEq α]
     (σ : Equiv.Perm (Option α)) (h : σ none = none) :
     (Equiv.removeNone σ).optionCongr = σ := by
-  rw [map_equiv_removeNone, h]; simp
+  rw [map_equiv_removeNone, h]; simp; rfl
 
 /-- `removeNone` is multiplicative on the stabilizer of `none`. -/
 theorem removeNone_inv_mul {α : Type*} [DecidableEq α]

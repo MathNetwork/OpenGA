@@ -1,3 +1,4 @@
+import Mathlib.Analysis.InnerProductSpace.Orthogonal
 import OpenGALib.GeometricMeasureTheory.HasNormal
 import OpenGALib.Riemannian.Manifold.SmoothManifold
 

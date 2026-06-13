@@ -215,7 +215,7 @@ theorem addCasesSwapPerm_sign (m n : ℕ) :
     obtain ⟨k, hk⟩ := Nat.exists_eq_succ_of_ne_zero hm_ne
     have h_sign : Equiv.Perm.sign (finRotate (m + n)) = (-1) ^ (m + n - 1) := by
       rw [hk]
-      exact sign_finRotate k
+      exact sign_finRotate k.succ
     rw [h_sign, ← pow_mul]
     have e1 : (-1 : ℤˣ) ^ ((m + n - 1) * m) = (-1 : ℤˣ) ^ (((m + n - 1) * m) % 2) :=
       Int.units_pow_eq_pow_mod_two (-1 : ℤˣ) ((m + n - 1) * m)

@@ -37,7 +37,7 @@ noncomputable def volume (Ω : FinitePerimeter M) : ENNReal :=
 
 /-- Volume is non-negative (as an `ℝ≥0∞`-valued quantity). -/
 @[simp] theorem volume_nonneg (Ω : FinitePerimeter M) : 0 ≤ volume Ω :=
-  zero_le _
+  _root_.zero_le
 
 /-- The volume equals the ambient measure restricted to the carrier,
 applied to the universe. This rewrite is convenient when downstream

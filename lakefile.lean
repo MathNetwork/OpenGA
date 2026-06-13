@@ -9,7 +9,7 @@ package OpenGALib where
 
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4.git"
-    @ "5fc0241932dd6d465bc5549308cc39011772293a"
+    @ "v4.30.0"
 
 @[default_target]
 lean_lib OpenGALib where

@@ -28,6 +28,8 @@ Math content here because the 8 identities are stated in terms of them.
 **Ground truth**: do Carmo 1992 §2 Theorem 3.6.
 -/
 
+set_option backward.isDefEq.respectTransparency false
+
 open Bundle VectorField
 open scoped ContDiff Manifold Topology
 
@@ -274,11 +276,11 @@ theorem koszul_smul_right
   -- Step 9: unfold `directionalDeriv` so `fromTangentSpace _ (mfderiv ...) = mfderiv ...`
   -- (rfl by `fromTangentSpace.toFun v := v`), making X(f)/Y(f) terms align syntactically.
   unfold directionalDeriv
-  have h_fromTS_X : NormedSpace.fromTangentSpace (f x)
-      ((mfderiv I 𝓘(ℝ, ℝ) f x) (X x)) = (mfderiv I 𝓘(ℝ, ℝ) f x) (X x) := rfl
-  have h_fromTS_Y : NormedSpace.fromTangentSpace (f x)
-      ((mfderiv I 𝓘(ℝ, ℝ) f x) (Y x)) = (mfderiv I 𝓘(ℝ, ℝ) f x) (Y x) := rfl
-  rw [h_fromTS_X, h_fromTS_Y]
+  -- v4.30.0: `mlieBracket_smul_right` now yields `mvfderiv` (`d%`) terms; on a
+  -- scalar codomain they agree with `mfderiv` pointwise by `rfl`.
+  have h_d : ∀ v : TangentSpace I x, mvfderiv I f x v = (mfderiv I 𝓘(ℝ, ℝ) f x) v :=
+    fun _ => rfl
+  simp only [h_d]
   ring
 
 /-! ## Additional koszul algebraic identities
@@ -461,11 +463,11 @@ theorem koszul_smul_left
   rw [hZX, hXY]
   -- Step 8: unfold so fromTangentSpace identity rfl-aligns the X(f)/Y(f)/Z(f) terms.
   unfold directionalDeriv
-  have h_fromTS_Y : NormedSpace.fromTangentSpace (f x)
-      ((mfderiv I 𝓘(ℝ, ℝ) f x) (Y x)) = (mfderiv I 𝓘(ℝ, ℝ) f x) (Y x) := rfl
-  have h_fromTS_Z : NormedSpace.fromTangentSpace (f x)
-      ((mfderiv I 𝓘(ℝ, ℝ) f x) (Z x)) = (mfderiv I 𝓘(ℝ, ℝ) f x) (Z x) := rfl
-  rw [h_fromTS_Y, h_fromTS_Z]
+  -- v4.30.0: `mlieBracket_smul_right` now yields `mvfderiv` (`d%`) terms; on a
+  -- scalar codomain they agree with `mfderiv` pointwise by `rfl`.
+  have h_d : ∀ v : TangentSpace I x, mvfderiv I f x v = (mfderiv I 𝓘(ℝ, ℝ) f x) v :=
+    fun _ => rfl
+  simp only [h_d]
   ring
 
 omit [FiniteDimensional ℝ E] hm in
@@ -520,11 +522,11 @@ theorem koszul_smul_middle
   rw [hYX]
   -- Step 8: unfold so fromTangentSpace identity rfl-aligns the X(f)/Z(f) terms.
   unfold directionalDeriv
-  have h_fromTS_X : NormedSpace.fromTangentSpace (f x)
-      ((mfderiv I 𝓘(ℝ, ℝ) f x) (X x)) = (mfderiv I 𝓘(ℝ, ℝ) f x) (X x) := rfl
-  have h_fromTS_Z : NormedSpace.fromTangentSpace (f x)
-      ((mfderiv I 𝓘(ℝ, ℝ) f x) (Z x)) = (mfderiv I 𝓘(ℝ, ℝ) f x) (Z x) := rfl
-  rw [h_fromTS_X, h_fromTS_Z]
+  -- v4.30.0: `mlieBracket_smul_right` now yields `mvfderiv` (`d%`) terms; on a
+  -- scalar codomain they agree with `mfderiv` pointwise by `rfl`.
+  have h_d : ∀ v : TangentSpace I x, mvfderiv I f x v = (mfderiv I 𝓘(ℝ, ℝ) f x) v :=
+    fun _ => rfl
+  simp only [h_d]
   ring
 
 /-! ## Locality and tensoriality of the Koszul functional

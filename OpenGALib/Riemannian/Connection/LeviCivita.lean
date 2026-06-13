@@ -215,7 +215,7 @@ private theorem koszulLeviCivita_exists (g : RiemannianMetric I M) :
             + 2 * directionalDeriv f x (V x) * g.metricInner x (Y x) (Z x))
           = f x *
               ((1 / 2 : ℝ) * koszulFunctional g V Y Z x)
-            + g.metricInner x ((extDerivFun f x).smulRight (Y x) (V x)) (Z x)
+            + g.metricInner x ((extDerivFun (I := I) f x).smulRight (Y x) (V x)) (Z x)
       -- Unfold extDerivFun and smulRight at (V x).
       have h_smulRight :
           ((extDerivFun (I := I) f x).smulRight (Y x) (V x) : TangentSpace I x)
@@ -631,7 +631,7 @@ theorem covDeriv_smul_scalar_field
   show ((leviCivitaConnection (I := I) (M := M) g).toFun (f • Y) x) (X x) = _
   rw [h]
   show f x • ((leviCivitaConnection (I := I) (M := M) g).toFun Y x) (X x)
-      + ((extDerivFun f x).smulRight (Y x)) (X x)
+      + ((extDerivFun (I := I) f x).smulRight (Y x)) (X x)
     = f x • ((leviCivitaConnection (I := I) (M := M) g).toFun Y x) (X x)
       + (show ℝ from mfderiv I 𝓘(ℝ, ℝ) f x (X x)) • Y x
   -- `((extDerivFun f x).smulRight (Y x)) v = (extDerivFun f x v) • Y x` (def-eq).

@@ -74,7 +74,7 @@ namespace). -/
 
 /-- Total variation is non-negative (trivial via `ENNReal`). -/
 theorem totalVariation_nonneg (u : BVFunction E) :
-    0 ≤ totalVariation u := zero_le _
+    0 ≤ totalVariation u := _root_.zero_le
 
 /-! ## BV ↔ finite-perimeter set bridge (Maggi Proposition 13.1) -/
 

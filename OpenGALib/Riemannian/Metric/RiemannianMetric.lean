@@ -12,6 +12,8 @@ import OpenGALib.Algebraic.BilinearForm.Basic
 import OpenGALib.Algebraic.BilinearForm.Riesz
 import OpenGALib.Util.Attributes
 
+set_option backward.isDefEq.respectTransparency false
+
 /-!
 # Riemannian metric
 

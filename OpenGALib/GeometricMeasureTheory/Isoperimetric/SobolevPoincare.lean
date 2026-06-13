@@ -103,7 +103,7 @@ noncomputable def lpNorm (u : BVFunction E) (p : ENNReal) : ENNReal :=
 
 /-- The L^p norm is non-negative (trivial via `ENNReal`). -/
 theorem lpNorm_nonneg (u : BVFunction E) (p : ENNReal) :
-    0 ≤ lpNorm u p := zero_le _
+    0 ≤ lpNorm u p := _root_.zero_le
 
 end LpNorm
 
