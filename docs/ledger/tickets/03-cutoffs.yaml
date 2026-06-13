@@ -1,0 +1,15 @@
+id: 3
+slug: cutoffs
+title: 设施层 3：截断/单位分解/穷竭函数并入 BumpFunction 体系（Chap02 Sec02_10/11 高价值条目）
+branch: port/cutoffs
+deps:
+- 1
+state: todo
+assignee: null
+pr: null
+rework_count: 0
+source:
+  import_branch: import/smooth-manifolds-lee
+  import_commit: a5f308c
+gates: {}
+notes: '与 #2 可并行'

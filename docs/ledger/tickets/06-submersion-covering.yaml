@@ -1,0 +1,15 @@
+id: 6
+slug: submersion-covering
+title: 浸没/浸入/覆盖映射（Chap04 Sec04_25/26 高价值簇）
+branch: port/submersion-covering
+deps:
+- 2
+state: todo
+assignee: null
+pr: null
+rework_count: 0
+source:
+  import_branch: import/smooth-manifolds-lee
+  import_commit: a5f308c
+gates: {}
+notes: '与 #4–5 可并行'

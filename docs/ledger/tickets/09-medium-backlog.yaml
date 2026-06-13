@@ -1,0 +1,14 @@
+id: 9
+slug: medium-backlog
+title: （按需）medium 条目，见 WORKLIST 各章节「可考虑」表
+branch: port/medium-backlog
+deps: []
+state: backlog
+assignee: null
+pr: null
+rework_count: 0
+source:
+  import_branch: import/smooth-manifolds-lee
+  import_commit: a5f308c
+gates: {}
+notes: 视条目定依赖，逐条拆小单

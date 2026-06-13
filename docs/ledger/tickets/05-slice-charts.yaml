@@ -1,0 +1,15 @@
+id: 5
+slug: slice-charts
+title: 设施层 5 下半：切片定理基础设施（Theorem_5_8/ 全家 + Sec05_29）
+branch: port/slice-charts
+deps:
+- 4
+state: todo
+assignee: null
+pr: null
+rework_count: 0
+source:
+  import_branch: import/smooth-manifolds-lee
+  import_commit: a5f308c
+gates: {}
+notes: ''

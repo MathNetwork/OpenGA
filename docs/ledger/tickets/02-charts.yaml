@@ -1,0 +1,15 @@
+id: 2
+slug: charts
+title: 设施层 2：图卡演算共用模块（坐标球、居中图卡 + 现有 ChartOverlap/ChartTransition 迁出合并）
+branch: port/charts
+deps:
+- 1
+state: todo
+assignee: null
+pr: null
+rework_count: 0
+source:
+  import_branch: import/smooth-manifolds-lee
+  import_commit: a5f308c
+gates: {}
+notes: ''
