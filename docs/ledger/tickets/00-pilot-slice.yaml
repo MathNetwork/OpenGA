@@ -1,0 +1,40 @@
+id: 0
+slug: pilot-slice
+title: 试点切片：Example_1_8（有限乘积 IsManifold 实例）真实移植，校准流水线机械部分；不预决打包类/维数等数学待决项
+branch: port/pilot-slice
+deps: []
+state: gated
+assignee: leheng
+pr: null
+rework_count: 0
+source:
+  import_branch: import/smooth-manifolds-lee
+  import_commit: a5f308c
+  files:
+  - SmoothManifoldsLee/Chap01/Sec01/Example_1_8.lean
+gates:
+  build:
+    passed: true
+    summary: lake build 通过
+    at: 20260613T015419Z
+  no-sorry:
+    passed: true
+    summary: 改动文件无 sorry
+    at: 20260613T015419Z
+  namespace:
+    passed: true
+    summary: 顶层 namespace 均在白名单内
+    at: 20260613T015419Z
+  provenance:
+    passed: true
+    summary: 出处行齐全
+    at: 20260613T015419Z
+  docstring:
+    passed: true
+    summary: 双 docstring 齐全
+    at: 20260613T015419Z
+  linter-baseline:
+    passed: true
+    summary: '占位通过：三个新 linter 尚未进 OpenGALib/Util/Linter/（issue #61 待决）'
+    at: 20260613T015419Z
+notes: 落点暂用 WORKLIST 候选名 OpenGALib/SmoothManifold/，定名争议在 PR 上提
