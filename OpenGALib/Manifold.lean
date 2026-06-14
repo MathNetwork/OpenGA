@@ -1,4 +1,5 @@
 import OpenGALib.Manifold.Charts.CoordinateBall
+import OpenGALib.Manifold.Charts.PrecompactBasis
 
 /-!
 # Manifold
