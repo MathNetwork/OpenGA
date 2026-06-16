@@ -1,6 +1,6 @@
 import OpenGALib.Riemannian.Operators.Hessian
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import OpenGALib.Riemannian.Util.CovDerivBridges
+import OpenGALib.Riemannian.Util.CovDeriv.CovDerivBridges
 
 /-!
 # Laplace–Beltrami operator
@@ -92,8 +92,6 @@ The **scalar Laplacian** $\Delta_g f$ of a smooth function $f : M \to \mathbb{R}
 as the trace of the Hessian. Used in the Bochner identity. -/
 
 variable [IsLocallyConstantChartedSpace H M]
-
-set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** The **scalar Laplacian** $\Delta_g f(x)$ of a smooth function
 $f : M \to \mathbb{R}$ at $x$, the geometric trace of the Hessian:
 $\Delta_g f(x) = \sum_i \operatorname{Hess} f(x)(\varepsilon_i, \varepsilon_i)$
@@ -106,13 +104,6 @@ noncomputable def scalarLaplacian (g : RiemannianMetric I M) (f : M → ℝ) (x 
     (fun (_ : M) => (e i : TangentSpace I x))
     x
 
-/-- **Math.** Notation `Δ_g[I] f` for the scalar Laplacian
-$\mathrm{tr}_g(\mathrm{Hess}\,f)$. `I` bracketed since `f : M → ℝ` hides
-the model with corners. The notation pipes the ambient `[HasMetric I M]`
-metric so downstream code keeps using `Δ_g[I] f` during Phase 1
-(typeclass retained until #19). -/
-scoped[Riemannian] notation:max "Δ_g[" I "] " f:max =>
-  Operators.scalarLaplacian (I := I) HasMetric.metric f
 
 /-- **Math.** **Scalar Laplacian as Bilin-trace of the Hessian section.**
 Both unfold to $\sum_i \langle \nabla_{\varepsilon_i} \nabla f,\,

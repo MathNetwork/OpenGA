@@ -24,6 +24,11 @@ scalar-function ↔ `0`-multilinear-section equivalence.
 
 noncomputable section
 
+-- issue #8: strict `isDefEq` does not synthesize the
+-- `VectorBundle 𝕜 (ContinuousMultilinearMap 𝕜 (fun _ : Fin s => F) 𝕜)
+--   (Bundle.continuousMultilinearMap 𝕜 s F E)` instance used throughout this
+-- file. Keep the compatibility option at file scope until the multilinear
+-- bundle fiber instances are made explicit enough for strict synthesis.
 set_option backward.isDefEq.respectTransparency false
 
 open Bundle Set

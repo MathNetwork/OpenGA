@@ -1,6 +1,6 @@
 import OpenGALib.Riemannian.Connection.Koszul
-import OpenGALib.Riemannian.Util.TangentHelpers
-import OpenGALib.Riemannian.Util.MetricInnerSmoothness
+import OpenGALib.Riemannian.Util.Tangent.TangentHelpers
+import OpenGALib.Riemannian.Util.Metric.MetricInnerSmoothness
 /-!
 # Half-Koszul cotangent functional
 
@@ -132,7 +132,6 @@ lemma koszulCotangentFunctional_apply
     koszulCotangentFunctional g v Y y w = koszulCotangentScalar g v Y w y := rfl
 
 omit [FiniteDimensional ℝ E] in
-set_option backward.isDefEq.respectTransparency false in
 /-- **Eng.** Scalar smoothness of `koszulCotangentScalar g v Y w` in `y`,
 decomposed across the 6 Koszul terms (3 directional-derivative + 3
 mlieBracket-with-metric-inner). Used to lift `koszulCotangentFunctional` to a

@@ -10,7 +10,7 @@ import Mathlib.LinearAlgebra.Basis.Defs
 import Mathlib.LinearAlgebra.Dimension.Free
 
 /-!
-# Smoothness of chart-Jacobian-related continuous linear map-valued functions
+# Smoothness of chart-Jacobian CLM-valued functions
 
 For a smooth manifold `M` with model `(I : ModelWithCorners ℝ E H)` and a
 base point `α : M`, the tangent-bundle trivialization at `α` provides

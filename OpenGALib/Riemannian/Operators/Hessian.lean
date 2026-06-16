@@ -5,7 +5,8 @@ import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.LinearAlgebra.Dimension.Free
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import OpenGALib.Riemannian.Util.CovDerivBridges
+import OpenGALib.Riemannian.Util.CovDeriv.CovDerivBridges
+import OpenGALib.Riemannian.Util.Metric.MetricNotation
 
 /-!
 # Hessian on a Riemannian manifold
@@ -74,8 +75,6 @@ def IsPointwiseSymm (B : Bilin (M := M) I) : Prop :=
 on $T_x M$. Frobenius and trace against this frame are the **geometric**
 Hilbert-Schmidt norm and trace of $B$ at $x$ (basis-independent among
 $g$-orthonormal frames). -/
-
-set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** Frobenius squared norm $\sum_{i,j} B(x)(\varepsilon_i, \varepsilon_j)^2$
 in the $g$-orthonormal frame. -/
 def frobeniusSq (B : Bilin (M := M) I) (x : M) : ℝ :=
@@ -89,8 +88,6 @@ def frobeniusSq (B : Bilin (M := M) I) (x : M) : ℝ :=
         (B x ((stdOrthonormalBasis ℝ (TangentSpace I x)) i : TangentSpace I x)
              ((stdOrthonormalBasis ℝ (TangentSpace I x)) j : TangentSpace I x))^2 :=
   rfl
-
-set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** Trace $\sum_i B(x)(\varepsilon_i, \varepsilon_i)$ in the
 $g$-orthonormal frame. -/
 def trace (B : Bilin (M := M) I) (x : M) : ℝ :=
@@ -191,13 +188,6 @@ noncomputable def hessianBilin
           = c • g.metricInner x (covDerivAt g (manifoldGradient (I := I) g f) x v) w
       rw [g.metricInner_smul_right]; rfl)
 
-/-- **Math.** Notation `hess_g[I] f` for the Hessian as a `(0,2)`-tensor
-section. `I` is bracketed because `f : M → ℝ` does not expose the model.
-For the Frobenius squared norm use `‖hess_g[I] f‖²_g`. The notation pipes
-the ambient `[HasMetric I M]` metric so downstream code keeps writing
-`hess_g[I] f` during Phase 1 (typeclass retained until #19). -/
-scoped[Riemannian] notation:max "hess_g[" I "] " f:max =>
-  Operators.hessianBilin (I := I) HasMetric.metric f
 
 /-- **Math.** $(\operatorname{trace} B(x))^2 / n \le \operatorname{frobeniusSq} B(x)$. -/
 theorem trace_sq_div_dim_le_frobeniusSq
@@ -255,8 +245,6 @@ theorem hessian_eq_mDirDeriv_iterate_sub_chris
   linarith [h_compat]
 
 /-! ## Symmetry of the Hessian on scalar functions -/
-
-set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** **Hessian symmetry on scalar functions** (covariant Schwarz / Clairaut):
 $$\mathrm{Hess}\,f(x)(v, w) \;=\; \mathrm{Hess}\,f(x)(w, v).$$
 For $f \in C^2$ near $x$, with $\nabla^M f$ smooth at $x$ as a tangent
@@ -402,12 +390,5 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpa
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H} [I.Boundaryless]
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] [T2Space M]
   [HasMetric I M]
-
-/-- **Math.** Frobenius squared norm on `(0,2)`-tensor sections, w.r.t. a $g$-orthonormal
-frame: `‖B‖²_g x = ∑_{ij} B(x)(εᵢ, εⱼ)²` where $\{\varepsilon_i\}$ is the
-`stdOrthonormalBasis` of $T_x M$ (geometric Hilbert-Schmidt norm). -/
-noncomputable instance instMetricNormSqBilin :
-    MetricNormSq (Riemannian.Operators.Bilin (M := M) I) (M → ℝ) where
-  normSqG B := fun x => Riemannian.Operators.frobeniusSq (I := I) (M := M) B x
 
 end Riemannian

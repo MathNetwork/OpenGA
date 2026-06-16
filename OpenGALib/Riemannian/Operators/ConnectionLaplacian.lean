@@ -415,8 +415,8 @@ where $B_i := \mathrm{smoothOrthoFrame}\,g\,\alpha\,i$.
 noncomputable def connectionLaplacian
     (Z : VectorFieldSection I M) (α : M) : TangentSpace I α :=
   ∑ i, secondCovDerivSection (I := I) (M := M) g Z
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) g α i)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) g α i) α
 
 /-- **Math.** The connection Laplacian on the zero vector field is zero. -/
 @[simp] theorem connectionLaplacian_zero (α : M) :
@@ -427,15 +427,15 @@ noncomputable def connectionLaplacian
   intro i _
   show secondCovDerivSection g (I := I) (M := M)
         (0 : VectorFieldSection I M)
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i)
-        (Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) α = 0
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) g α i)
+        (Riemannian.Tensor.smoothOrthoFrame (I := I) g α i) α = 0
   unfold secondCovDerivSection
   have h_inner_zero : ∀ y v, covDerivAt g (0 : VectorFieldSection I M) y v = 0 := by
     intro y v
     show ((leviCivitaConnection (I := I) (M := M) g).toFun 0 y) v = 0
     rw [CovariantDerivative.zero]; rfl
   have h_section_zero : (fun y : M => covDerivAt g (0 : VectorFieldSection I M) y
-        ((Riemannian.Tensor.smoothOrthoFrame (I := I) hm.metric α i) y))
+        ((Riemannian.Tensor.smoothOrthoFrame (I := I) g α i) y))
       = (0 : VectorFieldSection I M) := by
     funext y; exact h_inner_zero y _
   rw [h_section_zero]

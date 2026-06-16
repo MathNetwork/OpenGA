@@ -10,11 +10,11 @@ import OpenGALib.Riemannian.Operators.Hessian
 import OpenGALib.Riemannian.Operators.Laplacian
 import OpenGALib.Riemannian.Operators.SecondFundamentalForm
 import OpenGALib.Riemannian.TensorBundle.BundleSectionContinuity
-import OpenGALib.Riemannian.Util.ChartJacobianSmooth
-import OpenGALib.Riemannian.Util.ChartJacobianSmoothness
-import OpenGALib.Riemannian.Util.CovDerivBridges
-import OpenGALib.Riemannian.Util.DivergenceSimp
-import OpenGALib.Riemannian.Util.MetricInnerSmoothness
+import OpenGALib.Riemannian.Util.Chart.ChartJacobianCLM
+import OpenGALib.Riemannian.Util.Chart.ChartJacobianEntries
+import OpenGALib.Riemannian.Util.CovDeriv.CovDerivBridges
+import OpenGALib.Riemannian.Util.Simp.OperatorSimp
+import OpenGALib.Riemannian.Util.Metric.MetricInnerSmoothness
 import OpenGALib.Riemannian.TensorBundle.Defs
 import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 import OpenGALib.Riemannian.Instances.EuclideanSpace

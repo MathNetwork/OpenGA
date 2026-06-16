@@ -17,14 +17,16 @@ import OpenGALib.Util.Notation
 open scoped Riemannian
 ```
 
-Notation summary (each definition file has the canonical comment):
+Remaining scoped notation:
 
-  * `∇[X] Y`, `⟦X, Y⟧`, `Riem(X, Y) Z`         — connection / curvature
-  * `⟪V, W⟫_g`, `‖V‖²_g`                       — polymorphic inner / sq norm
-  * `Ric(X, Y)`, `Ric_g(v, w) x`, `scal_g[I]`  — Ricci, scalar curvature
-  * `II(X, Y)`, `H_g[I]`                       — second fundamental form, mean curvature
-  * `grad_g[I] f`, `Δ_g[I] f`, `hess_g[I] f`   — gradient, Laplacian, Hessian
+  * `⟦X, Y⟧`  — manifold Lie bracket `VectorField.mlieBracket _ X Y`
+    (metric-independent; kept post-9g)
 
-Bracketed `[I]` is required where bare `M` does not expose the model with
-corners to typeclass synthesis.
+Previously hosted typeclass-dispatched `_g` notations
+(`∇[X] Y`, `Riem(X, Y) Z`, `Ric(X, Y)`, `Ric_g`, `scal_g[I]`, `II(X, Y)`,
+`H_g[I]`, `grad_g[I] f`, `Δ_g[I] f`, `hess_g[I] f`, `K_g[I](X, Y)`,
+`(∇R)[X](Y, Z) W`, `⟪V, W⟫_g`, `‖V‖²_g`) were dropped in 9g
+(umbrella #9) in favor of explicit `HasMetric.metric`/`g` forms, so that
+multiple metrics (Ricci flow, conformal change, comparison geometry)
+can coexist on the same manifold.
 -/

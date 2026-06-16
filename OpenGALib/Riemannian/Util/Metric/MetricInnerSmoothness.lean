@@ -13,7 +13,7 @@ Engineering parity API expanding the Math headlines
 
 into the full `_within_at / _at / _on / _` parity for both the
 explicit-metric form `g.metricInner_X` and the typeclass-bound form
-`metricInner_X` keyed on `[HasMetric I M]`. Each variant is a pointwise
+`HasMetric.metric.metricInner_X` keyed on `[HasMetric I M]`. Each variant is a pointwise
 reduction to the Math headline.
 -/
 
@@ -116,6 +116,17 @@ theorem metricInner_mdifferentiable
       (fun y => g.metricInner y (v y) (w y)) :=
   fun y => g.metricInner_mdifferentiableAt (hv y) (hw y)
 
+/-- **Eng.** `TangentSmoothAt`-form pointwise differentiability — convenience
+wrapper that converts the framework's `TangentSmoothAt` predicate to
+the underlying `MDifferentiableAt` bundle-section form. Explicit-`g` variant. -/
+theorem metricInner_mdifferentiableAt_of_tangentSmoothAt
+    (g : RiemannianMetric I M)
+    {Y Z : ∀ y : M, TangentSpace I y}
+    (hY : TangentSmoothAt Y x) (hZ : TangentSmoothAt Z x) :
+    MDifferentiableAt I 𝓘(ℝ, ℝ)
+      (fun y => g.metricInner y (Y y) (Z y)) x :=
+  g.metricInner_mdifferentiableAt hY.toBundleSection hZ.toBundleSection
+
 end Smoothness
 
 end Riemannian.RiemannianMetric
@@ -141,7 +152,7 @@ theorem metricInner_contMDiffAt
     (hw : ContMDiffAt I (I.prod 𝓘(ℝ, E)) n
       (fun y => (⟨y, w y⟩ : TangentBundle I M)) x) :
     ContMDiffAt I 𝓘(ℝ, ℝ) n
-      (fun y => metricInner y (v y) (w y)) x :=
+      (fun y => HasMetric.metric.metricInner y (v y) (w y)) x :=
   hm.metric.metricInner_contMDiffAt hv hw
 
 /-- **Eng.** Set-form variant. -/
@@ -151,7 +162,7 @@ theorem metricInner_contMDiffOn
     (hw : ContMDiffOn I (I.prod 𝓘(ℝ, E)) n
       (fun y => (⟨y, w y⟩ : TangentBundle I M)) s) :
     ContMDiffOn I 𝓘(ℝ, ℝ) n
-      (fun y => metricInner y (v y) (w y)) s :=
+      (fun y => HasMetric.metric.metricInner y (v y) (w y)) s :=
   hm.metric.metricInner_contMDiffOn hv hw
 
 /-- **Eng.** Global variant. -/
@@ -161,7 +172,7 @@ theorem metricInner_contMDiff
     (hw : ContMDiff I (I.prod 𝓘(ℝ, E)) n
       (fun y => (⟨y, w y⟩ : TangentBundle I M))) :
     ContMDiff I 𝓘(ℝ, ℝ) n
-      (fun y => metricInner y (v y) (w y)) :=
+      (fun y => HasMetric.metric.metricInner y (v y) (w y)) :=
   hm.metric.metricInner_contMDiff hv hw
 
 /-! ### `MDifferentiable` family — first-order differentiability -/
@@ -173,7 +184,7 @@ theorem metricInner_mdifferentiableWithinAt
     (hw : MDifferentiableWithinAt I (I.prod 𝓘(ℝ, E))
       (fun y => (⟨y, w y⟩ : TangentBundle I M)) s x) :
     MDifferentiableWithinAt I 𝓘(ℝ, ℝ)
-      (fun y => metricInner y (v y) (w y)) s x :=
+      (fun y => HasMetric.metric.metricInner y (v y) (w y)) s x :=
   hm.metric.metricInner_mdifferentiableWithinAt hv hw
 
 /-- **Eng.** Pointwise differentiability. -/
@@ -183,7 +194,7 @@ theorem metricInner_mdifferentiableAt
     (hw : MDifferentiableAt I (I.prod 𝓘(ℝ, E))
       (fun y => (⟨y, w y⟩ : TangentBundle I M)) x) :
     MDifferentiableAt I 𝓘(ℝ, ℝ)
-      (fun y => metricInner y (v y) (w y)) x :=
+      (fun y => HasMetric.metric.metricInner y (v y) (w y)) x :=
   hm.metric.metricInner_mdifferentiableAt hv hw
 
 /-- **Eng.** Set-form differentiability. -/
@@ -193,7 +204,7 @@ theorem metricInner_mdifferentiableOn
     (hw : MDifferentiableOn I (I.prod 𝓘(ℝ, E))
       (fun y => (⟨y, w y⟩ : TangentBundle I M)) s) :
     MDifferentiableOn I 𝓘(ℝ, ℝ)
-      (fun y => metricInner y (v y) (w y)) s :=
+      (fun y => HasMetric.metric.metricInner y (v y) (w y)) s :=
   hm.metric.metricInner_mdifferentiableOn hv hw
 
 /-- **Eng.** Global differentiability. -/
@@ -203,7 +214,7 @@ theorem metricInner_mdifferentiable
     (hw : MDifferentiable I (I.prod 𝓘(ℝ, E))
       (fun y => (⟨y, w y⟩ : TangentBundle I M))) :
     MDifferentiable I 𝓘(ℝ, ℝ)
-      (fun y => metricInner y (v y) (w y)) :=
+      (fun y => HasMetric.metric.metricInner y (v y) (w y)) :=
   hm.metric.metricInner_mdifferentiable hv hw
 
 /-- **Eng.** `TangentSmoothAt`-form pointwise differentiability — convenience
@@ -213,8 +224,8 @@ theorem metricInner_mdifferentiableAt_of_tangentSmoothAt
     {Y Z : ∀ y : M, TangentSpace I y} {x : M}
     (hY : TangentSmoothAt Y x) (hZ : TangentSmoothAt Z x) :
     MDifferentiableAt I 𝓘(ℝ, ℝ)
-      (fun y => metricInner y (Y y) (Z y)) x :=
-  metricInner_mdifferentiableAt hY.toBundleSection hZ.toBundleSection
+      (fun y => HasMetric.metric.metricInner y (Y y) (Z y)) x :=
+  HasMetric.metric.metricInner_mdifferentiableAt hY.toBundleSection hZ.toBundleSection
 
 end MetricInnerSmoothness
 

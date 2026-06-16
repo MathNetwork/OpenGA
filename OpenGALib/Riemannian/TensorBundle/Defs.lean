@@ -18,6 +18,11 @@ smooth-vector-bundle structure inherited from the tangent bundle.
 namespace Tensor0SBundle
 noncomputable section
 
+-- issue #8: strict `isDefEq` does not synthesize the topology, normed-space,
+-- and `ContMDiffVectorBundle` instances for the tensor-bundle fiber aliases
+-- (`Tensor0SModel`, `TensorRSSpace`, etc.). Keep this option locally to this
+-- foundational tensor-bundle file until those aliases are replaced by explicit
+-- instance bridges.
 set_option backward.isDefEq.respectTransparency false
 
 open Bundle Set IsManifold ContinuousLinearMap

@@ -205,10 +205,10 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M]
 
-set_option backward.isDefEq.respectTransparency false in
 instance instFiniteDimensionalTangent [FiniteDimensional ℝ E] (x : M) :
-    FiniteDimensional ℝ (TangentSpace I x) :=
-  inferInstanceAs (FiniteDimensional ℝ E)
+    FiniteDimensional ℝ (TangentSpace I x) := by
+  show FiniteDimensional ℝ E
+  infer_instance
 
 end TangentSpaceInstances
 

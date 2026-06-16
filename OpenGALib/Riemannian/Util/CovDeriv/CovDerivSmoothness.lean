@@ -1,13 +1,13 @@
 import Mathlib.Geometry.Manifold.VectorBundle.Tensoriality
 import Mathlib.Geometry.Manifold.VectorField.LieBracket
 import OpenGALib.Riemannian.Manifold.SmoothManifold
-import OpenGALib.Riemannian.Util.MetricInnerSmoothness
+import OpenGALib.Riemannian.Util.Metric.MetricInnerSmoothness
 import OpenGALib.Riemannian.TangentBundle.TangentSmooth
 import OpenGALib.Riemannian.TensorBundle.MusicalIso
-import OpenGALib.Riemannian.Util.MfderivApplySection
+import OpenGALib.Riemannian.Util.Tangent.MfderivApplySection
 import OpenGALib.Riemannian.Connection.Koszul
 import OpenGALib.Riemannian.Connection.RieszExtraction
-import OpenGALib.Riemannian.Util.TangentHelpers
+import OpenGALib.Riemannian.Util.Tangent.TangentHelpers
 
 /-!
 # Tensoriality + smoothness machinery for `koszulCovDeriv`
@@ -125,7 +125,6 @@ theorem koszulCovDerivAux_tensorialAt
 
 /-! ### Bridge: smoothness of `koszulCovDeriv g X.toFun Y.toFun y` at `x` -/
 
-set_option backward.isDefEq.respectTransparency false in
 /-- **Mixed.** For `X, Y : SmoothVectorField I M`, the section
 `y ↦ koszulCovDeriv g X.toFun Y.toFun y` is `TangentSmoothAt` everywhere.
 

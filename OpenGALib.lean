@@ -1,4 +1,5 @@
 import OpenGALib.Algebraic
+import OpenGALib.Manifold
 import OpenGALib.Tensor
 import OpenGALib.MetricGeometry
 import OpenGALib.Riemannian

@@ -29,8 +29,6 @@ smoothness via `inverse` composition). The four public theorems are
 open scoped ContDiff Manifold Topology
 
 namespace TangentBundle
-
-set_option backward.isDefEq.respectTransparency false in
 /-- **Eng.** Flat-codomain inverse trivialization: `(trivAt x).symmL ℝ y` retyped
 as `E →L[ℝ] E` via `TangentSpace I y = E`. -/
 noncomputable def symmLFlat
@@ -39,8 +37,6 @@ noncomputable def symmLFlat
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     (x y : M) : E →L[ℝ] E :=
   (trivializationAt E (TangentSpace I) x).symmL ℝ y
-
-set_option backward.isDefEq.respectTransparency false in
 /-- **Eng.** Flat-codomain forward chart-mfderiv:
 `(trivAt x₀).continuousLinearMapAt ℝ y` retyped as `E →L[ℝ] E`. -/
 noncomputable def continuousLinearMapAtFlat
@@ -49,8 +45,6 @@ noncomputable def continuousLinearMapAtFlat
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     (x₀ y : M) : E →L[ℝ] E :=
   (trivializationAt E (TangentSpace I) x₀).continuousLinearMapAt ℝ y
-
-set_option backward.isDefEq.respectTransparency false in
 /-- **Eng.** Flat-codomain `mfderivWithin (range I) (extChartAt I x).symm e₀`. -/
 private noncomputable def mfderivWithinFlat
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
@@ -354,8 +348,6 @@ private theorem mfderivWithinFlat_mdifferentiableWithinAt
       (mfderivWithinFlat x) (extChartAt I x).target (extChartAt I x x) :=
     h_on _ (mem_extChartAt_target x)
   exact h_at_target.mono_of_mem_nhdsWithin (extChartAt_target_mem_nhdsWithin x)
-
-set_option backward.isDefEq.respectTransparency false in
 private theorem symmLFlat_eventuallyEq_mfderivWithinFlat
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
