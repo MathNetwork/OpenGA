@@ -23,7 +23,8 @@ function hsl2hex(h: number, s: number, l: number): string {
 function atomicColor(sort: string): string {
     if (_cache[sort]) return _cache[sort]
     const h = hash(sort)
-    const color = hsl2hex(h % 360, (50 + (h >> 8) % 30) / 100, (45 + (h >> 16) % 20) / 100)
+    // 高饱和、中等亮度 → 鲜艳不透灰。
+    const color = hsl2hex(h % 360, (72 + (h >> 8) % 23) / 100, (50 + (h >> 16) % 12) / 100)
     _cache[sort] = color
     return color
 }

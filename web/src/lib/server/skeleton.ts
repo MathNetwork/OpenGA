@@ -69,7 +69,8 @@ function hslToHex(h: number, s: number, l: number): string {
 function sortToColor(sort: string): string {
   let h = 0
   for (const c of sort) h = (Math.imul(h, 31) + c.charCodeAt(0)) >>> 0
-  return hslToHex(h % 360, 50 + ((h >>> 8) % 30), 45 + ((h >>> 16) % 20))
+  // 高饱和、中等亮度 → 鲜艳不透灰(与前端 sortColors 一致)。
+  return hslToHex(h % 360, 72 + ((h >>> 8) % 23), 50 + ((h >>> 16) % 12))
 }
 
 function blendHex(a: string, b: string): string {
@@ -120,13 +121,13 @@ export function buildSkeletonView(
   let radii: NumMap = {}
   if (['degree', 'in-degree', 'out-degree'].includes(size)) {
     const mode = size === 'degree' ? 'total' : size === 'in-degree' ? 'in' : 'out'
-    radii = normalize(perSource(ents, (g) => degreeMetric(g, mode as 'total' | 'in' | 'out')), 3, 14)
+    radii = normalize(perSource(ents, (g) => degreeMetric(g, mode as 'total' | 'in' | 'out')), 4, 16)
   } else if (['pagerank', 'betweenness', 'katz', 'hub', 'authority'].includes(size)) {
-    radii = normalize(perSource(ents, (g) => centralityMetric(g, size)), 3, 14)
+    radii = normalize(perSource(ents, (g) => centralityMetric(g, size)), 4, 16)
   } else if (['depth', 'reachability'].includes(size)) {
-    radii = normalize(perSource(ents, (g) => dagMetric(g, size as 'depth' | 'reachability')), 3, 14)
+    radii = normalize(perSource(ents, (g) => dagMetric(g, size as 'depth' | 'reachability')), 4, 16)
   } else {
-    for (const id of nodes.keys()) radii[id] = 6.0 // uniform
+    for (const id of nodes.keys()) radii[id] = 9.0 // uniform
   }
 
   // ── colour ──

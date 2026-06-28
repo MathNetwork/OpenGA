@@ -18,8 +18,6 @@ export function LeanNetsSettings() {
 
     const set = (key: string, value: any) => {
         usePluginStore.setState({ [key]: value } as any)
-        if (!(window as any).__pluginStore) (window as any).__pluginStore = {}
-        ;(window as any).__pluginStore[key] = value
         if (key === 'mnSource' || key === 'mnMergeProofs') {
             window.dispatchEvent(new CustomEvent('mn-source-changed'))
         } else {
