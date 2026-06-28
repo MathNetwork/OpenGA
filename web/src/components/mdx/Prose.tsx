@@ -3,11 +3,12 @@
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
-import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import { preprocess } from './preprocess'
+import { katexWith } from './katexOptions'
 import { EntryLink } from './EntryLink'
 import { useViewStore } from '@/stores/viewStore'
+import { useDataStore } from '@/stores/dataStore'
 
 function extractText(node: any): string {
     if (typeof node === 'string') return node
@@ -43,11 +44,12 @@ const components: any = {
  *  and `\entryref` links. */
 export function Prose({ children }: { children: any }) {
     const numbering = useViewStore(s => s.numbering)
+    const macros = useDataStore(s => s.katexMacros)
     const text = preprocess(extractText(children), numbering)
     return (
         <ReactMarkdown
             remarkPlugins={[remarkGfm, remarkMath]}
-            rehypePlugins={[rehypeRaw, rehypeKatex]}
+            rehypePlugins={[rehypeRaw, katexWith(macros)]}
             components={components}
         >
             {text}

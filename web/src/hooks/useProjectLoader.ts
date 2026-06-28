@@ -39,13 +39,15 @@ export function useProjectLoader(projectPath: string | null) {
         Promise.all([
             safeFetch(`${API_BASE}/api/astrolabe/ref-graph?path=${p}`, { nodes: [], links: [] }),
             safeFetch(`${API_BASE}/api/project/files?path=${p}`, []),
-        ]).then(([graph, projectFiles]) => {
+            safeFetch<Record<string, string>>(`${API_BASE}/api/docs/macros?path=${p}`, {}),
+        ]).then(([graph, projectFiles, macros]) => {
             if (cancelled) return
             setObjects((graph as any).nodes || [])
             setMorphisms((graph as any).links || [])
             if (Array.isArray(projectFiles)) {
                 setProjectFiles(projectFiles)
             }
+            useDataStore.getState().setKatexMacros(macros || {})
             setLoading(false)
             hasLoadedRef.current = true
         })

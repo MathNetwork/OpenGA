@@ -4,16 +4,17 @@ import { memo, useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
-import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import 'katex/dist/katex.min.css'
 import { getSortStyle } from '@/lib/sortColors'
 import { preprocess } from './mdx/preprocess'
 import { rehypeStatementCards } from './mdx/rehypeStatementCards'
+import { katexWith } from './mdx/katexOptions'
 import { EntriesContext } from './mdx/EntriesContext'
 import { CurrentChapterContext } from './mdx/CurrentChapterContext'
 import { chapterOf } from './mdx/numbering'
 import { useViewStore } from '@/stores/viewStore'
+import { useDataStore } from '@/stores/dataStore'
 import { InlineMath } from './mdx/InlineMath'
 import { EntryBlock } from './mdx/EntryBlock'
 import { EntryLink } from './mdx/EntryLink'
@@ -92,10 +93,6 @@ const components: Record<string, any> = {
 }
 
 const remarkPlugins = [remarkGfm, remarkMath]
-// rehypeRaw MUST run before rehypeKatex: it parses the raw HTML emitted by
-// `preprocess` (entryblock/entryref spans); running it after KaTeX re-parses and
-// corrupts KaTeX's output (breaking display math such as `\begin{aligned}`).
-const rehypePlugins = [rehypeRaw, rehypeStatementCards, rehypeKatex]
 
 interface Props {
     content: string
@@ -111,8 +108,16 @@ export default memo(function MarkdownRenderer({ content, className, filename, en
     // here we only consume it. The chapter of this doc lets cross-chapter refs
     // render "of Chapter C".
     const numbering = useViewStore(s => s.numbering)
+    const macros = useDataStore(s => s.katexMacros)
     const chapter = useMemo(() => chapterOf(content, filename || ''), [content, filename])
     const rendered = useMemo(() => preprocess(content, numbering), [content, numbering])
+    // rehypeRaw MUST run before rehypeKatex: it parses the raw HTML emitted by
+    // `preprocess` (entryblock/entryref spans); running it after KaTeX re-parses
+    // and corrupts KaTeX's output (breaking display math like `\begin{aligned}`).
+    const rehypePlugins = useMemo(
+        () => [rehypeRaw, rehypeStatementCards, katexWith(macros)],
+        [macros],
+    )
 
     return (
         <EntriesContext.Provider value={entries}>

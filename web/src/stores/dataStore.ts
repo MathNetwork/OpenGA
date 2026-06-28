@@ -35,12 +35,15 @@ interface DataState {
   morphisms: KnowledgeMorphism[]
   objectMap: Map<string, KnowledgeObject>
   projectFiles: FileEntry[]
+  /** KaTeX macro table for the project (from .astrolabe/katex-macros.json). */
+  katexMacros: Record<string, string>
 
   refreshTrigger: number
 
   setObjects: (objects: KnowledgeObject[]) => void
   setMorphisms: (morphisms: KnowledgeMorphism[]) => void
   setProjectFiles: (files: FileEntry[]) => void
+  setKatexMacros: (macros: Record<string, string>) => void
   triggerRefresh: () => void
   getObjectById: (id: string) => KnowledgeObject | undefined
 }
@@ -50,6 +53,7 @@ export const useDataStore = create<DataState>((set, get) => ({
   morphisms: [],
   objectMap: new Map(),
   projectFiles: [],
+  katexMacros: {},
   refreshTrigger: 0,
 
   setObjects: (objects) => {
@@ -58,6 +62,7 @@ export const useDataStore = create<DataState>((set, get) => ({
   },
   setMorphisms: (morphisms) => set({ morphisms }),
   setProjectFiles: (files) => set({ projectFiles: files }),
+  setKatexMacros: (macros) => set({ katexMacros: macros }),
   triggerRefresh: () => set((s) => ({ refreshTrigger: s.refreshTrigger + 1 })),
   getObjectById: (id) => get().objectMap.get(id),
 }))
