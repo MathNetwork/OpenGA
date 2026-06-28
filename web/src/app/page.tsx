@@ -12,7 +12,7 @@ export default function Home() {
     <div className="h-full flex flex-col bg-[#0a0a0f] text-white">
       <Navbar />
       <main className="flex-1 relative overflow-y-auto">
-        <ParticleBackground particleCount={260} mouseRadius={250} />
+        <ParticleBackground particleCount={300} mouseRadius={400} />
         <div className="relative z-10 max-w-3xl mx-auto px-8 py-24">
           <h2 className="text-xs uppercase tracking-wider text-white/30 mb-4">Current activity</h2>
           <Link
