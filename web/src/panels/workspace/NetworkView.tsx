@@ -200,7 +200,7 @@ export const NetworkView = memo(function NetworkView() {
             }
 
             // Dashed outline for non-atoms (degree >= 1)
-            const degree = (node as any).degree as number | undefined
+            const degree = node.degree
             if (degree != null && degree >= 1) {
                 ctx.beginPath()
                 ctx.arc(node.x, node.y, r, 0, 2 * Math.PI)
@@ -299,7 +299,12 @@ export const NetworkView = memo(function NetworkView() {
             .subject((event) => {
                 const w = screenToWorld(event.x, event.y)
                 const node = hitTestNode(nodesRef.current, w.x, w.y)
-                if (node) return { x: node.x, y: node.y, node }
+                if (node) {
+                    // subject 必须用屏幕坐标:d3-drag 后续以 subject + 屏幕位移算
+                    // event.x,若这里返回世界坐标会与屏幕位移混用 → 节点一拖即飞。
+                    const t = transformRef.current
+                    return { x: (node.x ?? 0) * t.k + t.x, y: (node.y ?? 0) * t.k + t.y, node }
+                }
                 return null
             })
             .on('start', (event) => {
@@ -427,13 +432,18 @@ export const NetworkView = memo(function NetworkView() {
         } catch {}
 
         const activeMode = usePluginStore.getState().getActiveNetworkMode()
+        // 在 effect 内读取最新模式,避免用到闭包里 stale 的 networkMode。
+        const networkMode = usePluginStore.getState().isAnyModeActive()
         const url = activeMode
             ? `${API_BASE}${activeMode.endpoint}?path=${encodeURIComponent(path)}&source=${sourceFilter}&merge=${mergeProofs}&size=${sizeBy}&color=${colorBy}&cluster=${clusterBy}`
             : `${API_BASE}/api/astrolabe/ref-graph?path=${encodeURIComponent(path)}`
 
+        // 竞态守卫:effect 重跑/卸载后,先发的旧请求回来不再写入。
+        let alive = true
         fetch(url)
             .then(r => r.json())
             .then(data => {
+                if (!alive) return
                 let forceNodes: ForceNode[]
                 let forceLinks: ForceLink[]
 
@@ -441,6 +451,7 @@ export const NetworkView = memo(function NetworkView() {
                     // Backend already computed nodes with radius/color/cluster
                     forceNodes = (data.nodes || []).map((n: any) => ({
                         id: n.id, name: n.title || n.id, sort: n.sort || '', color: n.color, radius: n.radius,
+                        ...(n.degree !== undefined ? { degree: n.degree } : {}),
                         ...(n.cluster !== undefined ? { cluster: n.cluster } : {}),
                         ...(n.state ? { state: n.state } : {}),
                     }))
@@ -456,6 +467,7 @@ export const NetworkView = memo(function NetworkView() {
                     fetch(`${API_BASE}${activeMode!.endpoint}?path=${p}&source=all&size=uniform&color=${colorBy}`)
                         .then(r => r.ok ? r.json() : null)
                         .then(allData => {
+                            if (!alive) return
                             const colorMap: Record<string, string> = {}
                             for (const n of (allData?.nodes || data.nodes || [])) colorMap[n.id] = n.color
                             ;(window as any).__skeletonColors = colorMap
@@ -468,7 +480,7 @@ export const NetworkView = memo(function NetworkView() {
                     const refNodes = buildRefViewNodes(data.nodes || [])
                     const refLinks = buildRefViewLinks(data.links || [])
                     forceNodes = refNodes.map(n => ({
-                        id: n.id, name: n.name || n.id, sort: n.sort || `degree-${n.degree}`, color: n.color, radius: n.radius,
+                        id: n.id, name: n.name || n.id, sort: n.sort || `degree-${n.degree}`, color: n.color, radius: n.radius, degree: n.degree,
                     }))
                     forceLinks = refLinks.map(l => ({
                         id: `ref-${l.source}-${l.target}-${l.position}`,
@@ -517,11 +529,12 @@ export const NetworkView = memo(function NetworkView() {
                 sim.alpha(1).restart()
             })
             .catch(err => console.warn('[NetworkView] fetch failed:', err))
+        return () => { alive = false }
     }, [loadKey])
 
     // ── Style-only update: re-fetch skeleton graph and update radius/color in place ──
     useEffect(() => {
-        if (styleKey === 0 || !networkMode) return
+        if (styleKey === 0 || !usePluginStore.getState().isAnyModeActive()) return
         const path = new URLSearchParams(window.location.search).get('path')
         if (!path) return
 
@@ -533,9 +546,12 @@ export const NetworkView = memo(function NetworkView() {
 
         const modeForStyle = usePluginStore.getState().getActiveNetworkMode()
         if (!modeForStyle) return
+        // 竞态守卫:同加载路径。
+        let alive = true
         fetch(`${API_BASE}${modeForStyle.endpoint}?path=${encodeURIComponent(path)}&source=${sourceFilter}&merge=${mergeProofs}&size=${sizeBy}&color=${colorBy}&cluster=${clusterBy}`)
             .then(r => r.json())
             .then(data => {
+                if (!alive) return
                 const newNodes = data.nodes || []
                 const newEdges = data.edges || []
                 const nodeMap: Record<string, any> = {}
@@ -557,6 +573,7 @@ export const NetworkView = memo(function NetworkView() {
                 fetch(`${API_BASE}${modeForStyle.endpoint}?path=${p2}&source=all&size=uniform&color=${colorBy}`)
                     .then(r => r.ok ? r.json() : null)
                     .then(allData => {
+                        if (!alive) return
                         const fullMap: Record<string, string> = {}
                         for (const n of (allData?.nodes || [])) fullMap[n.id] = n.color
                         // Merge with current nodes (they may have updated colors)
@@ -609,6 +626,7 @@ export const NetworkView = memo(function NetworkView() {
                 renderRef.current()
             })
             .catch(() => {})
+        return () => { alive = false }
     }, [styleKey])
 
     // ── flyTo on external selection ──
