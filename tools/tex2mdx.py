@@ -154,15 +154,25 @@ def collect_macros(texts):
 
 
 def convert_font_switches(s: str) -> str:
-    """{\\bf x} -> **x**, {\\it x} -> *x*, etc. Innermost first (handles nesting)."""
+    """{\\bf x} -> **x**, {\\it x} -> *x*, etc. Balanced over the group, so the
+    content may itself contain braces (e.g. inline math `$x_{k}$`) and nested
+    switches."""
     names = '|'.join(sorted(FONT_SWITCHES, key=len, reverse=True))
-    pat = re.compile(r'\{\\(' + names + r')\b\s*([^{}]*)\}')
-    prev = None
-    while prev != s:
-        prev = s
-        s = pat.sub(lambda m: f'{FONT_SWITCHES[m.group(1)]}{m.group(2).strip()}{FONT_SWITCHES[m.group(1)]}'
-                    if m.group(2).strip() else '', s)
-    return s
+    pat = re.compile(r'\{\\(' + names + r')\b[ \t\n]*')
+    out, i = [], 0
+    while True:
+        m = pat.search(s, i)
+        if not m:
+            out.append(s[i:])
+            break
+        out.append(s[i:m.start()])
+        kind = m.group(1)
+        inner, end = _balanced(s, m.start())          # m.start() is the '{'
+        content = convert_font_switches(inner[len('\\' + kind):].strip())
+        mark = FONT_SWITCHES[kind]
+        out.append(f'{mark}{content}{mark}' if content else '')
+        i = end
+    return ''.join(out)
 
 
 def strip_comments(s: str) -> str:
@@ -213,6 +223,44 @@ def convert_math(s: str) -> str:
         s = re.sub(rf'\\begin\{{{re.escape(env)}\}}(.*?)\\end\{{{re.escape(env)}\}}',
                    lambda m: f'\n$$\n\\begin{{aligned}}\n{m.group(1).strip()}\n\\end{{aligned}}\n$$\n',
                    s, flags=re.S)
+    # bare TeX display math `$$ ... $$` (incl. ones glued to surrounding text):
+    # isolate each onto its own block so remark-math parses it and the dollar
+    # pairing of the surrounding prose never breaks. Runs last so it also
+    # re-normalizes the `$$` we just emitted above.
+    s = re.sub(r'\$\$(.+?)\$\$', lambda m: f'\n\n$$\n{m.group(1).strip()}\n$$\n\n', s, flags=re.S)
+    return s
+
+
+def convert_lists(s: str) -> str:
+    """\\begin{enumerate|itemize|description} ... \\item ... -> markdown lists.
+
+    Resolves innermost lists first (so nesting unwinds); each \\item becomes a
+    line item. An optional `\\item[label]` keeps the label in bold.
+    """
+    inner = re.compile(
+        r'\\begin\{(enumerate|itemize|description)\}'
+        r'((?:(?!\\begin\{(?:enumerate|itemize|description)\}).)*?)'
+        r'\\end\{\1\}', re.S)
+
+    def repl(m):
+        kind, body = m.group(1), m.group(2)
+        marker = '1.' if kind == 'enumerate' else '-'
+        items = re.split(r'\\item\b', body)[1:]   # text before first \item dropped
+        lines = []
+        for it in items:
+            it = it.strip()
+            mo = re.match(r'\[([^\]]*)\]', it)
+            if mo:
+                label, rest = mo.group(1).strip(), it[mo.end():].strip()
+                lines.append(f'- **{label}** {rest}'.rstrip())
+            else:
+                lines.append(f'{marker} {it}'.rstrip())
+        return '\n\n' + '\n'.join(lines) + '\n\n'
+
+    prev = None
+    while prev != s:
+        prev = s
+        s = inner.sub(repl, s)
     return s
 
 
@@ -278,6 +326,7 @@ def convert(tex: str) -> str:
     s = drop_environments(s, DROP_ENVS)
     s = convert_sections(s)
     s = strip_definitions(s)     # remove any \newcommand/\def in the body
+    s = convert_lists(s)         # list envs before math/theorem so \item is gone
     s = convert_math(s)          # math envs before theorem bodies/inline
     s = convert_theoremlike(s)
     s = convert_inline(s)
