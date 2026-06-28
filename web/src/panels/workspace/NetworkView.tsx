@@ -26,6 +26,13 @@ import { getSortFill, parseSortFromRecord } from '@/lib/sortColors'
 import { NetworkSettings } from './NetworkSettings'
 import { usePluginStore } from '@/plugins/registry'
 
+// 常规节点半径(refView 的 degreeRadius 基准值)——连线粗细以此为锚等比缩放。
+const BASE_NODE_RADIUS = 8
+// 连线粗细 = 常规节点半径的固定比例(世界单位),随缩放与节点同步放大。
+const LINK_WIDTH_RATIO = 0.1
+// 默认连线颜色:亮灰色。
+const LINK_COLOR = 'rgba(200,200,210,0.5)'
+
 // ── ref 模式箭头绘制 ──
 function drawArrow(ctx: CanvasRenderingContext2D, sx: number, sy: number, tx: number, ty: number, headLen: number) {
     const dx = tx - sx
@@ -109,7 +116,7 @@ export const NetworkView = memo(function NetworkView() {
 
         const hoveredNode = hoveredNodeRef.current
 
-        // ── Draw links (directed arrows) ──
+        // ── Draw links (thin lines; arrow only on selected edges) ──
         for (const link of linksRef.current) {
             const s = link.source as ForceNode
             const t = link.target as ForceNode
@@ -133,16 +140,20 @@ export const NetworkView = memo(function NetworkView() {
             ctx.beginPath()
             ctx.moveTo(ax, ay)
             ctx.lineTo(bx, by)
-            const edgeColor = link.color || 'rgba(255,255,255,0.15)'
+            const edgeColor = link.color || LINK_COLOR
             ctx.strokeStyle = isSelected ? 'rgba(255,255,255,0.5)' : edgeColor
-            ctx.lineWidth = (isSelected ? 1.5 : 0.8) / transform.k
+            // 线宽 = 常规节点半径 × 固定比例(世界单位),随缩放与节点同步。
+            ctx.lineWidth = BASE_NODE_RADIUS * LINK_WIDTH_RATIO * (isSelected ? 1.8 : 1)
             if (link.dashed) ctx.setLineDash([4 / transform.k, 3 / transform.k])
             ctx.stroke()
             if (link.dashed) ctx.setLineDash([])
 
-            const headLen = Math.min(6 / transform.k, len * 0.3)
-            ctx.fillStyle = isSelected ? 'rgba(255,255,255,0.5)' : edgeColor
-            drawArrow(ctx, ax, ay, bx, by, headLen)
+            // 默认就是一条细线;方向箭头仅在选中节点的边上出现。
+            if (isSelected) {
+                const headLen = Math.min(6 / transform.k, len * 0.3)
+                ctx.fillStyle = 'rgba(255,255,255,0.5)'
+                drawArrow(ctx, ax, ay, bx, by, headLen)
+            }
             ctx.globalAlpha = 1
         }
 
@@ -435,7 +446,9 @@ export const NetworkView = memo(function NetworkView() {
                     }))
                     forceLinks = (data.edges || []).map((e: any) => ({
                         id: e.hash || `${e.source}-${e.target}`,
-                        source: e.source, target: e.target, color: e.color || 'rgba(255,255,255,0.15)',
+                        // sort(默认语义着色)下边统一灰,降噪;选了算法着色
+                        // (community/depth/pagerank…)时保留后端算出的边色。
+                        source: e.source, target: e.target, color: colorBy === 'sort' ? LINK_COLOR : (e.color || LINK_COLOR),
                         ...(e.dashed ? { dashed: true } : {}),
                     }))
                     // Propagate colors to ALL atoms (not just filtered)
@@ -459,7 +472,7 @@ export const NetworkView = memo(function NetworkView() {
                     }))
                     forceLinks = refLinks.map(l => ({
                         id: `ref-${l.source}-${l.target}-${l.position}`,
-                        source: l.source, target: l.target, color: 'rgba(255,255,255,0.15)',
+                        source: l.source, target: l.target, color: LINK_COLOR,
                     }))
                 }
 
@@ -588,7 +601,8 @@ export const NetworkView = memo(function NetworkView() {
                     const s = typeof link.source === 'string' ? link.source : (link.source as any).id
                     const t = typeof link.target === 'string' ? link.target : (link.target as any).id
                     const updated = edgeMap[`${s}-${t}`]
-                    if (updated) link.color = updated.color
+                    // 与加载路径一致:sort 模式边统一灰,算法着色时用后端边色。
+                    if (updated) link.color = colorBy === 'sort' ? LINK_COLOR : (updated.color || LINK_COLOR)
                 }
 
                 // Just re-render, no simulation restart

@@ -9,72 +9,97 @@ import { LeanCode } from './LeanHighlight'
 import { LeanBadge } from './LeanBadge'
 import { SORT_LABELS, parseRecord } from './utils'
 
-/** Find the cross-source lean counterpart for a tex atom. */
+interface LeanRecord { hash: string; record: Record<string, any> }
+interface LeanIndex {
+    /** tex atom hash → its cross-source lean counterpart */
+    counterpart: Map<string, LeanRecord>
+    /** lean theorem hash → its proof entries */
+    proofs: Map<string, LeanRecord[]>
+}
+
+// Per-project lean index, built ONCE from a single atoms+edges fetch and shared
+// by every card. Previously each card re-fetched the whole degree-1 edge set
+// (megabytes) on mount, twice — the dominant source of read-view lag. Keyed by
+// project path; the promise is cached so concurrent mounts dedupe to one build.
+const leanIndexCache = new Map<string, Promise<LeanIndex>>()
+
+async function buildLeanIndex(projectPath: string): Promise<LeanIndex> {
+    const counterpart = new Map<string, LeanRecord>()
+    const proofs = new Map<string, LeanRecord[]>()
+    const p = encodeURIComponent(projectPath)
+    try {
+        const [atomsRes, edgesRes] = await Promise.all([
+            fetch(`${API_BASE}/api/astrolabe/entries?path=${p}&degree=0`),
+            fetch(`${API_BASE}/api/astrolabe/entries?path=${p}&degree=1`),
+        ])
+        const atoms: Record<string, any> = atomsRes.ok ? await atomsRes.json() : {}
+        const edges: Record<string, any> = edgesRes.ok ? await edgesRes.json() : {}
+
+        // Parse atom records once; index source + record for in-memory lookups.
+        const atomRec = new Map<string, Record<string, any>>()
+        for (const [h, e] of Object.entries(atoms)) {
+            const rec = parseRecord((e as any).record)
+            if (rec) atomRec.set(h, rec)
+        }
+        const isLean = (h: string) => atomRec.get(h)?.source === 'lean'
+
+        for (const edge of Object.values(edges) as any[]) {
+            const ref = edge.ref as string[]
+            if (!ref || ref.length !== 2) continue
+            const [a, b] = ref
+            // Cross-source counterpart: exactly one side is lean → map tex→lean.
+            const aLean = isLean(a), bLean = isLean(b)
+            if (aLean !== bLean) {
+                const leanH = aLean ? a : b
+                const texH = aLean ? b : a
+                const leanR = atomRec.get(leanH)
+                if (leanR && !counterpart.has(texH)) counterpart.set(texH, { hash: leanH, record: leanR })
+            }
+            // Proof edge: ref[0] is the lean theorem, sort ends in ", proof)".
+            if (isLean(ref[0])) {
+                let sort = ''
+                try { sort = JSON.parse(edge.record).sort || '' } catch { /* skip */ }
+                const proofR = sort.endsWith(', proof)') ? atomRec.get(ref[1]) : undefined
+                if (proofR) {
+                    const list = proofs.get(ref[0]) ?? []
+                    list.push({ hash: ref[1], record: proofR })
+                    proofs.set(ref[0], list)
+                }
+            }
+        }
+    } catch { /* leave index empty on failure */ }
+    return { counterpart, proofs }
+}
+
+function loadLeanIndex(projectPath: string): Promise<LeanIndex> {
+    let cached = leanIndexCache.get(projectPath)
+    if (!cached) { cached = buildLeanIndex(projectPath); leanIndexCache.set(projectPath, cached) }
+    return cached
+}
+
+/** Find the cross-source lean counterpart for a tex atom (in-memory lookup). */
 function useLeanCounterpart(hash: string, source: string | undefined, projectPath: string) {
-    const [leanEntry, setLeanEntry] = useState<{ hash: string; record: Record<string, any> } | null>(null)
+    const [leanEntry, setLeanEntry] = useState<LeanRecord | null>(null)
 
     useEffect(() => {
         if (source !== 'tex' || !hash || !projectPath) { setLeanEntry(null); return }
-        fetch(`${API_BASE}/api/astrolabe/entries?path=${encodeURIComponent(projectPath)}&degree=1`)
-            .then(r => r.ok ? r.json() : {})
-            .then(async (edges: Record<string, any>) => {
-                // Find degree-1 entry where one ref is this hash, other is a lean atom
-                for (const [, edge] of Object.entries(edges)) {
-                    const ref = (edge as any).ref as string[]
-                    if (ref.length !== 2) continue
-                    const otherHash = ref[0] === hash ? ref[1] : ref[1] === hash ? ref[0] : null
-                    if (!otherHash) continue
-                    try {
-                        const r = await fetch(`${API_BASE}/api/astrolabe/entries/${otherHash}?path=${encodeURIComponent(projectPath)}`)
-                        if (!r.ok) continue
-                        const otherEntry = await r.json()
-                        if (!otherEntry?.record) continue
-                        const parsed = parseRecord(otherEntry.record)
-                        if (parsed?.source === 'lean') {
-                            setLeanEntry({ hash: otherHash, record: parsed })
-                            return
-                        }
-                    } catch { continue }
-                }
-                setLeanEntry(null)
-            })
-            .catch(() => setLeanEntry(null))
+        let alive = true
+        loadLeanIndex(projectPath).then(idx => { if (alive) setLeanEntry(idx.counterpart.get(hash) ?? null) })
+        return () => { alive = false }
     }, [hash, source, projectPath])
 
     return leanEntry
 }
 
-/** Find proof entries for a lean theorem via (theorem, proof) edges. */
+/** Find proof entries for a lean theorem via (theorem, proof) edges (in-memory). */
 function useLeanProofs(leanHash: string | undefined, projectPath: string) {
-    const [proofEntries, setProofEntries] = useState<{ hash: string; record: Record<string, any> }[]>([])
+    const [proofEntries, setProofEntries] = useState<LeanRecord[]>([])
 
     useEffect(() => {
         if (!leanHash || !projectPath) { setProofEntries([]); return }
-        fetch(`${API_BASE}/api/astrolabe/entries?path=${encodeURIComponent(projectPath)}&degree=1`)
-            .then(r => r.ok ? r.json() : {})
-            .then(async (edges: Record<string, any>) => {
-                const proofHashes: string[] = []
-                for (const [, edge] of Object.entries(edges) as [string, any][]) {
-                    if (edge.ref[0] === leanHash) {
-                        try {
-                            const s = JSON.parse(edge.record).sort || ''
-                            if (s.endsWith(', proof)')) proofHashes.push(edge.ref[1])
-                        } catch { /* skip */ }
-                    }
-                }
-                if (proofHashes.length === 0) { setProofEntries([]); return }
-                const results = await Promise.all(proofHashes.map(async h => {
-                    try {
-                        const r = await fetch(`${API_BASE}/api/astrolabe/entries/${h}?path=${encodeURIComponent(projectPath)}`)
-                        if (!r.ok) return null
-                        const e = await r.json()
-                        if (!e?.record) return null
-                        return { hash: h, record: parseRecord(e.record) }
-                    } catch { return null }
-                }))
-                setProofEntries(results.filter((r): r is { hash: string; record: Record<string, any> } => r !== null))
-            })
-            .catch(() => setProofEntries([]))
+        let alive = true
+        loadLeanIndex(projectPath).then(idx => { if (alive) setProofEntries(idx.proofs.get(leanHash) ?? []) })
+        return () => { alive = false }
     }, [leanHash, projectPath])
 
     return proofEntries
