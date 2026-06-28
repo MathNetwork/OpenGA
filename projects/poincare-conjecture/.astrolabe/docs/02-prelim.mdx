@@ -1,0 +1,1742 @@
+# Preliminaries from Riemannian
+geometry
+
+In this chapter we will recall some basic facts in Riemannian
+geometry. For more details we refer the reader to  and
+. Throughout, we always adopt Einstein's summation
+convention on repeated indices and `manifold' means a paracompact,
+Hausdorff, smooth manifold.
+
+## Riemannian metrics and the Levi-Civita connection
+
+Let $M$ be a manifold and let $p$ be a point of $M$. Then $TM$
+denotes the tangent bundle of $M$ and $T_pM$ is the tangent space at
+$p$. Similarly, $T^*M$ denotes the cotangent bundle of $M$ and
+$T^*_pM$ is the cotangent space at $p$. For any vector bundle
+${\mathcal V}$ over $M$ we denote by $\Gamma({\mathcal V})$ the
+vector space of smooth sections of ${\mathcal V}$.
+
+**Definition.** Let $M$ be an $n$-dimensional manifold. A \it Riemannian metric \rm
+$g$ on $M$ is a smooth section of $T^*M\otimes T^*M$ defining a
+positive definite symmetric bilinear form on $T_pM$ for each $p\in
+M$. In local coordinates $(x^1,\cdots, x^n)$, one has a natural
+local basis $\{\partial_1,\cdots,\partial_n\}$ for $TM$, where
+$\partial_i=\frac{\partial}{\partial x^i}$. The metric tensor
+$g=g_{ij} dx^i\otimes dx^j$ is represented by a smooth matrix-valued
+function
+
+$$
+g_{ij}=g(\partial_i,\partial_j).
+$$
+
+ The
+pair $(M,g)$ is a *Riemannian manifold*. We denote by $(g^{ij})$
+the inverse of the matrix $(g_{ij})$.
+
+Using a partition of unity one can easily see that any manifold
+admits a Riemannian metric. A Riemannian metric on $M$ allows us to
+measure lengths of smooth paths in $M$ and hence to define a
+distance function by setting $d(p,q)$ equal to the infimum of the
+lengths of smooth paths from $p$ to $q$. This makes $M$ a metric
+space. For a point $p$ in a Riemannian manifold $(M,g)$ and for $r>
+0$ we denote the metric ball of radius $r$ centered at $p$ in $M$ by
+$B(p,r)$ or by $B_g(p,r)$ if the metric needs specifying or
+emphasizing. It is defined by
+$$B(p,r)=\{q\in M\left|\right. d(p,q)<r\}.$$
+
+**Theorem.** Given a Riemannian metric $g$ on $M$, there uniquely exists a
+torsion-free connection on $TM$ making $g$ parallel, i.e., there is
+a unique $\mathbb{R}$-linear mapping $\nabla\colon
+\Gamma(TM)\rightarrow \Gamma(T^*M\otimes TM)$ satisfying the Leibniz
+formula
+
+$$
+\nabla(fX)=df\otimes X+f\nabla X,
+$$
+
+and the following two additional conditions for all vector fields
+$X$ and $Y$:
+\begin{itemize}
+\item[$\bullet$] ($g$ orthogonal) $d(g(X,Y))=g(\nabla X,Y)+g(X,\nabla
+Y)$.
+\item[$\bullet$] (Torsion-free) $\nabla_XY-\nabla_YX-[X,Y]=0$
+(where, as is customary, we denote $\nabla Y(X)$ by $\nabla_XY$);
+\end{itemize}
+
+ We call the
+above connection the *Levi-Civita connection* of the metric and $\nabla X$ the *covariant
+derivative* of $X$. On a Riemannian manifold we always use the
+Levi-Civita connection.
+
+In local coordinates $(x^1,\ldots,x^n)$ the Levi-Civita connection
+$\nabla$ is given by the $\nabla_{\partial_i}(\partial_j) =
+\Gamma^{k}_{ij}\partial_k$, where the Christoffel symbols
+$\Gamma^k_{ij}$ are the smooth functions
+
+$$
+
+\Gamma^{k}_{ij}= \frac{1}{2}g^{kl}(\partial_i g_{l j} +\partial_j
+g_{il}-\partial_l g_{ij}).
+$$
+
+ Note that the above two
+additional conditions for the Levi-Civita connection $\nabla$
+correspond respectively to
+
+$\bullet$ $\Gamma^k_{ij}=\Gamma^k_{ji}$,
+
+$\bullet$ $\partial_k g_{ij}=g_{l j}\Gamma^l_{ki}+g_{il
+}\Gamma^l_{kj}$.
+
+The covariant derivative extends to all tensors. In the special case
+of a function $f$ we have $\nabla( f)=df$. Note that there is a
+possible confusion between this and  the notation in the literature
+since one often sees $\nabla f$ written for the gradient of $f$,
+which is the vector field dual to $df$. We always use $\nabla f$ to
+mean $df$, and we will denote the gradient of $f$ by $(\nabla f)^*$,
+
+The covariant derivative allows us to define the Hessian of a smooth
+function at any point, not just a critical point. Let $f$ be a
+smooth real-valued function on $M$.  We define the
+Hessian  of $f$, denoted $Hess(f)$, as
+follows:
+
+$$
+
+Hess(f)(X,Y)=X(Y(f))-\nabla_XY(f).
+$$
+
+**Lemma.**
+ The Hessian is a contravariant, symmetric two-tensor, i.e., for
+ vector fields $X$ and $Y$ we have
+$$Hess(f)(X,Y)=Hess(f)(Y,X)$$
+and
+$$Hess(f)(\phi X,\psi Y)=\phi\psi Hess(f)(X,Y)$$
+for all smooth functions $\phi,\psi$. Other formulas for the Hessian
+are
+$$Hess(f)(X,Y)=\langle \nabla_X(\nabla f),Y\rangle=\nabla_X(\nabla_Y(f))=\nabla^2f(X,Y).$$
+Also, in local coordinates  we have
+$$Hess(f)_{ij}=\partial_i\partial_jf-(\partial_kf)\Gamma^k_{ij}.$$
+
+**Proof.** The proof of symmetry is direct from the torsion-free assumption:
+$$Hess(f)(X,Y)-Hess(f)(Y,X)=[X,Y](f)-(\nabla_XY-\nabla_YX)(f)=0.$$
+ The fact that
+$Hess(f)$ is a tensor is also established by direct
+computation. The equivalence of the various formulas is also
+immediate:
+
+$$
+
+$$
+\begin{aligned}
+
+\langle\nabla_X(\nabla f),Y\rangle & = & X(\langle \nabla
+f,Y\rangle)-\langle\nabla f,\nabla_XY\rangle
+\\ & = & X(Y(f))-\nabla_XY(f)=Hess(f)(X,Y).\nonumber
+\end{aligned}
+$$
+
+$$
+
+Since $df=(\partial_rf) dx^r$ and
+$\nabla(dx^k)=-\Gamma_{ij}^kdx^i\otimes dx^j$, it follows that
+$$\nabla(df)=\left(\partial_i\partial_jf-(\partial_kf)\Gamma^k_{ij}\right)dx^i\otimes
+dx^j.$$ It is direct from the definition that
+$$Hess(f)_{ij}=Hess(f)(\partial_i,\partial_j)=\partial_i\partial_jf-(\partial_kf)\Gamma_{ij}^k.$$
+
+When the metric that we are using to define the Hessian is not clear
+from the context, we introduce it into the notation and write $Hess_g(f)$ to denote the Hessian of $f$ with respect to the metric
+$g$.
+
+The Laplacian $\triangle f$ is defined as the
+trace of the Hessian: That is to say, in local coordinates near $p$
+we have
+$$\triangle f(p)=\sum_{ij}g^{ij}Hess(f)(\partial_i,\partial_j).$$
+Thus, if $\{X_i\}$ is an orthonormal basis for $T_pM$ then
+
+$$
+
+\triangle f(p)=\sum_iHess(f)(X_i,X_i).
+$$
+ Notice that this is
+the form of the Laplacian that is non-negative at a local minimum, and
+consequently has a non-positive spectrum.
+
+## Curvature of a Riemannian manifold
+
+For the rest of this chapter $(M,g)$ is a Riemannian manifold.
+
+**Definition.** The *Riemann curvature tensor* of $M$} is the  $(1,3)$-tensor on $M$
+
+$$
+{\mathcal R}(X,Y)Z = \nabla^{2}_{X,Y}Z
+- \nabla^{2}_{Y,X}Z = \nabla_{X}\nabla_{Y}Z-\nabla_{Y}\nabla_{X}Z
+-\nabla_{[X,Y]}Z,
+$$
+ where
+$\nabla^2_{X,Y}Z=\nabla_{X}\nabla_{Y}Z-\nabla_{\nabla_XY}Z$.
+
+In local coordinates the curvature tensor can be represented as
+$$
+{\mathcal R}(\partial_i,\partial_j)\partial_k=
+{{{R}_{ij}}^l}_k\partial_l,
+$$
+ where
+$${{R_{ij}}^l}_k=
+\partial_i \Gamma^{l}_{jk}- \partial_j
+\Gamma^{l}_{ik}+
+\Gamma^{s}_{jk}\Gamma^{l}_{is}-\Gamma^{s}_{ik}\Gamma^{l}_{js}.$$
+Using the metric tensor $g$, we can change ${\mathcal R}$ to a
+$(0,4)$-tensor as follows:
+
+$$
+{\mathcal R}(X,Y,Z,W)=g({\mathcal R}(X,Y)W,Z).
+$$
+
+(Notice the change of order in the last two variables.) Notice that
+we use the same symbol and the same name for both the $(1,3)$ tensor
+and the $(0,4)$ tensor; which one we are dealing with in a given
+context is indicated by the index structure or the variables to
+which the tensor is applied.  In local coordinates, the Riemann
+curvature tensor can be represented as
+
+$$
+
+$$
+\begin{aligned}
+{\mathcal R}(\partial_i,\partial_j,\partial_k,\partial_l) & = R_{ijkl}\\
+&=g_{ks}{{R_{ij}}^s}_l\\
+&=g_{ks}(\partial_i \Gamma^{s}_{jl}- \partial_j \Gamma^{s}_{il}+
+\Gamma^{t}_{jl}\Gamma^{s}_{it}-\Gamma^{t}_{il}\Gamma^{s}_{jt}).
+\end{aligned}
+$$
+
+$$
+
+One can easily verify the following:
+
+**Claim.**
+The Riemann curvature tensor ${\mathcal R}$ satisfies the following
+properties:
+
+$\bullet$ (Symmetry) $R_{ijkl}=-R_{jikl}$, $R_{ijkl}=-R_{ijlk}$,
+$R_{ijkl}=R_{klij}$,
+
+$\bullet$ (1st Bianchi identity) The sum of
+$R_{ijkl}$ over the cyclic permutation of
+
+\quad any three indices vanishes,
+
+$\bullet$ (2nd Bianchi identity)
+$R_{ijkl,h}+R_{ijlh,k}+R_{ijhk,l}=0$, where
+$$R_{ijkl,h}=(\nabla_{\partial_h}{\mathcal R})_{ijkl}.$$
+
+There are many important related curvatures.
+
+**Definition.** The *sectional curvature* of a
+2-plane $P\subset T_pM$ is defined as
+
+$$
+K(P) = {\mathcal R}(X,Y,X,Y),
+$$
+
+where $\{X,Y\}$ is an orthonormal basis of $P$. We say that $(M,g)$
+has *positive sectional curvature* (resp., *negative
+sectional curvature*) if $K(P)>0$ (resp., $K(P)<0$) for every
+2-plane $P$.  There are analogous notions of non-negative and
+non-positive sectional curvature.
+
+In local coordinates, suppose that $X = X^{i}\partial_i$ and $Y =
+Y^{i}\partial_i$. Then we have
+
+$$
+K(P) = R_{ijkl}X^{i}Y^{j}X^{k}Y^{l}.
+$$
+
+A Riemannian manifold is said to have *constant sectional
+curvature* if $K(P)$ is the same for all $p\in M$ and all $2$-planes
+$P\subset T_pM$. One can show that a manifold $(M,g)$ has constant
+sectional curvature $\lambda$ if and only if
+$$
+R_{ijkl} =
+\lambda(g_{ik}g_{jl}-g_{il}g_{jk}).
+$$
+ Of course, the sphere of
+radius $r$ in $\Ar^n$ has constant sectional curvature $1/r^2$,
+$\Ar^n$ with the Euclidean metric has constant sectional curvature
+$0$, and the hyperbolic space ${\mathbb H}^n$, which, in the
+Poincar\'e model, is given by the unit disk with the metric
+$$\frac{4(dx^{2}_{1}+\cdots+
+dx^{2}_{n})}{(1-\abs{x}^{2})^{2}},$$ or in the upper half-space
+model with coordinates $(x^1,\ldots,x^n)$ is given by
+$$\frac{ds^2}{(x^n)^2}$$ has constant sectional curvature $-1$. In all
+three cases we denote the constant curvature metric by $g_st$.
+
+**Definition.** Using the metric, one can replace the Riemann curvature tensor
+${\mathcal R}$ by  a symmetric bilinear form $Rm$ on
+$\wedge^2TM$. In local coordinates let
+$\varphi=\varphi^{ij}\partial_i\wedge\partial _j$ and
+$\psi=\psi^{kl}\partial _k\wedge\partial_l$ be local sections of
+$\wedge^2TM$. The formula for $Rm$ is
+
+$$
+Rm(\varphi, \psi)=R_{ijkl}\varphi^{ij}\psi^{kl}.
+$$
+
+We call $Rm$ the *curvature
+operator*. We say $(M,g)$ has
+*positive curvature operator* if $Rm(\varphi,\varphi)>0$ for any nonzero 2-form $\varphi =
+\varphi^{ij}\partial_{i}\wedge
+\partial_{j}$ and has *nonnegative curvature operator* if
+$Rm(\varphi,\varphi)\geq0$ for any  $\varphi\in \wedge^2TM$.
+
+Clearly, if the curvature operator is a positive (resp.,
+non-negative) operator then the manifold is positively (resp.,
+non-negatively) curved.
+
+**Definition.** The *Ricci curvature tensor*,
+denoted $Ric$ or $Ric_g$ when it is necessary to specify
+the metric, is a symmetric contravariant two-tensor. In local
+coordinates it is defined by
+
+$$
+Ric(X,Y)=g^{kl}R(X,\partial_k,Y,\partial_l).
+$$
+
+The value of this tensor at a point $p\in M$ is  given by
+$\sum_{i=1}^nR(X(p),e_i,Y(p),e_i)$ where $\{e_{1},\cdots,e_{n}\}$ is
+an orthonormal basis of $T_pM$. Clearly $Ric$ is a symmetric
+bilinear form on $TM$, given in local coordinates by
+$$Ric=Ric_{ij}dx^i\otimes dx^j,$$ where
+$Ric_{ij}=Ric(\partial_i,\partial _j)$. The
+*scalar curvature* is defined by:
+$$R=R_g=tr_g Ric=g^{ij}Ric_{ij}.$$ We will say that $Ric \geq
+k$ (or $\leq k$) if all the eigenvalues of $Ric$ are $\geq k$
+(or $\leq k$).
+
+Clearly, the curvatures are natural in the sense that if $F\colon N
+\rightarrow M$ is a diffeomorphism and if $g$ is a Riemannian metric
+on $M$, then $F^*g$ is a Riemannian metric on $N$ and we have $Rm(F^*g)=F^*(Rm(g))$, $Ric(F^{*}g) = F^{*}(Ric(g))$, and $R(F^*g)=F^*(R(g))$.
+
+### Consequences of the Bianchi identities
+
+There is one consequence of the second Bianchi identity that will be
+important later. For any contravariant two-tensor $\omega$ on $M$
+(such as $Ric$ or $Hess(f)$) we define the contravariant
+one-tensor $div(\omega)$ as follows: For any vector field $X$
+we set
+$$div(\omega)(X)=\nabla^*\omega(X)=g^{rs}\nabla_r(\omega)(X,\partial_s).$$
+
+**Lemma.**
+$$dR=2div(Ric)=2\nabla^*Ric.$$
+
+For a proof see Proposition 6 of Chapter 2 on page 40 of .
+
+We shall also need a formula relating the connection Laplacian on
+contravariant one-tensors with the Ricci curvature. Recall that for
+a smooth function $f$, we defined the symmetric two-tensor
+$\nabla^2f$ by
+$$\nabla^2f(X,Y)=\nabla_X\nabla_Y(f)-\nabla_{\nabla_X(Y)}(f)=Hess(f)(X,Y),$$
+and then defined the Laplacian
+$$\triangle f=tr\nabla^2f=g^{ij}(\nabla^2f)_{ij}.$$ These operators extend to tensors of any
+rank. Suppose that $\omega$ is a contravariant tensor of rank $k$. Then we
+define $\nabla^2\omega$ to be a contravariant tensor of rank $k+2$ given by
+$$\nabla^2\omega(\cdot,X,Y)=(\nabla_{X}\nabla_{Y}\omega)(\cdot)
+-\nabla_{\nabla_X(Y)}\omega(\cdot).$$ This expression is not
+symmetric in the vector fields $X,Y$ but the commutator is given by
+evaluating the curvature operator ${\mathcal R}(X,Y)$ on $\omega$.
+We define the connection Laplacian on the tensor $\omega$ to be
+$$\triangle \omega=g^{ij}\nabla^2(\omega)(\partial_i,\partial_j).$$
+Direct computation gives the standard Bochner formula relating these
+Laplacians with the Ricci curvature; see for example Proposition
+4.36 on page 168 of .
+
+**Lemma.**
+ Let $f$ be a smooth function on a Riemannian manifold.
+Then we have the following formula for contravariant one-tensors:
+$$ \triangle df=d\triangle f+Ric((\nabla f)^*,\cdot).$$
+
+### First examples
+
+The most homogeneous Riemannian manifolds are those of constant
+sectional curvature. These are easy to classify; see Corollary 10 of
+Chapter 5 on page 147 of .
+
+**Theorem.** **(Uniformization Theorem)** If
+$(M^n,g)$ is a complete, simply-connected Riemannian manifold of
+constant sectional curvature $\lambda$, then:
+\begin{enumerate}
+\item If $\lambda=0$, then $M^n$ is isometric to Euclidean $n$-space.
+\item If $\lambda>0$ there is a diffeomorphism $\phi \colon M \rightarrow S^{n}$
+ such that g = $\lambda^{-1}\phi^{*}(g_st)$ where $g_{st}$ is the usual metric on the unit sphere in $\Ar^{n+1}$.
+\item If $\lambda<0$ there is a diffeomorphism $\phi \colon M \rightarrow {\mathbb H}^{n}$
+ such that g = $\abs{\lambda}^{-1}\phi^{*}(g_st)$ where $g_{st}$ is the Poincar\'e metric of constant curvature
+$-1$ on ${\mathbb H}^n$.
+\end{enumerate}
+
+Of course, if $(M^n,g)$ is a complete manifold of constant sectional
+curvature then its universal covering satisfies the hypothesis of
+the theorem and hence is one of $S^n, \Ar^n$, or ${\mathbb H}^n$, up
+to a constant scale factor. This implies that $(M,g)$ is isometric
+to a quotient of one of these simply connected spaces of constant
+curvature by the free action of a discrete group of isometries. Such
+a Riemannian manifold is called a
+*space-form*.
+
+**Definition.** The Riemannian manifold
+$(M,g)$ is said to be an *Einstein manifold with Einstein
+constant* $\lambda$ if $Ric(g)=\lambda g$.
+
+\begin{exam} Let $M$ be an $n$-dimensional manifold with $n$ being either $2$ or $3$.
+If $(M,g)$ is Einstein with Einstein constant $\lambda$, one can
+easily show that $M$ has constant sectional curvature
+$\frac{\lambda}{n-1}$, so that in fact $M$ is  a space-form.
+\end{exam}
+
+### Cones
+
+Another class of examples that will play an important role in our
+study of the Ricci flow is that of cones.
+
+**Definition.**
+Let $(N,g)$ be a Riemannian manifold. We define the *open cone*
+over $(N,g)$ to be the manifold $N\times (0,\infty)$ with the metric
+$\tilde g$ defined as follows: For any $(x,s)\in N\times (0,\infty)$
+we have
+$$\tilde g(x,s)=s^2g(x)+ds^2.$$
+
+Fix local coordinates $(x^1,\ldots,x^n)$ on $N$. Let
+$\Gamma_{ij}^k;\ 1\le i,j,k\le n$, be the Christoffel symbols for
+the Levi-Civita connection on $N$. Set $x^0=s$. In the local
+coordinates $(x^0,x^1,\ldots,x^n)$ for the cone we have the
+Christoffel symbols $\widetilde \Gamma_{ij}^k;\ 0\le i,j,k\le n$,
+for $\tilde g$. The relation between the metrics gives the following
+relations between the two sets of Christoffel symbols:
+
+$$
+
+$$
+\begin{aligned}
+\widetilde
+\Gamma_{ij}^k & = & \Gamma_{ij}^k; \ \ \ \ 1\le i,j,k\le n \\
+\widetilde \Gamma_{ij}^0 & = & -sg_{ij}; \ \ \ \ 1\le i,j\le n \\
+\widetilde\Gamma_{i0}^j & = & \widetilde\Gamma_{0i}^j =
+s^{-1}\delta^j_i; \ \ \ \ 1\le i,j\le n \\
+\widetilde \Gamma_{i0}^0 & = & 0;\ \ \ \ 0\le i\le n \\
+\widetilde \Gamma_{00}^i & = & 0;\ \  \ \ 0\le i\le n.
+\end{aligned}
+$$
+
+$$
+
+Denote by ${\mathcal R}_g$ the curvature tensor for $g$ and by
+${\mathcal R}_{\tilde g}$ the curvature tensor for $\tilde g$. Then
+the above formulas lead directly to:
+
+$$
+
+$$
+\begin{aligned}
+{\mathcal R}_{\tilde g}(\partial_i,\partial_j)(\partial_0) & = & 0;\ \ \ \  0\le i,j\le n \\
+{\mathcal R}_{\tilde g}(\partial_i,\partial_j)(\partial_i) & = &
+{\mathcal
+R}_g(\partial_i,\partial_j)(\partial_i)+g_{ii}\partial_j-g_{ji}\partial_i;\
+\ \ \  1\le i,j\le n \\
+\end{aligned}
+$$
+
+$$
+
+This allows us to compute the Riemann curvatures of the cone in
+terms of those of $N$.
+
+**Proposition.**
+Let $N$ be a Riemannian manifold of dimension $n-1$. Fix $(x,s)\in
+c(N)=N\times (0,\infty)$. With respect to the coordinates
+$(x^0,\ldots,x^n)$ the curvature operator ${Rm}_{\tilde
+g}(p,s)$ of the cone decomposes as
+$$\begin{pmatrix} 0 & 0 \\ s^2(Rm_g(p)-\wedge^2g(p)) & 0
+\end{pmatrix},$$
+where $\wedge^2g(p)$ is the symmetric form on $\wedge^2T_pN$ induced
+by $g$.
+
+**Corollary.** For any $p\in N$ let $\lambda_1,\ldots,\lambda_{(n-1)(n-2)/2}$ be
+the eigenvalues of $Rm_g(p)$. Then for any $s>0$  there are
+$(n-1)$ zero eigenvalues of $Rm_{\tilde g}(p,s)$. The other
+$(n-1)(n-2)/2$ eigenvalues of $Rm_{\tilde g}(p,s)$ are
+$s^{-2}(\lambda_i-1)$.
+
+**Proof.** Clearly from Proposition~, we see that under the
+orthogonal decomposition $\wedge^2T_{(p,s)}c(N)=\wedge^2T_pN\oplus
+T_pN$ the second subspace is contained in the null space of $ Rm_{\tilde g}(p,s)$, and hence contributes $(n-1)$ zero
+eigenvalues. Likewise, from this proposition we see that the
+eigenvalues of the restriction of $Rm_{\tilde g}(p,s)$ to the
+subspace $\wedge^2T_pN$ are  given by
+$s^{-4}(s^2(\lambda_i-1))=s^{-2}(\lambda_i-1)$.
+
+## Geodesics and the exponential map
+
+Here we review standard material about geodesics, Jacobi fields, and
+the exponential map.
+
+### Geodesics and the energy functional
+
+**Definition.** Let $I$ be an open interval.
+A smooth curve $\gamma\colon I \rightarrow M$ is called a
+*geodesic* if $\nabla_{\dot \gamma}\dot
+\gamma =0$.
+
+In local coordinates, we write $\gamma(t)=(x^1(t),\ldots,x^n(t))$
+and this equation becomes
+$$0=\nabla_{\dot \gamma}\dot \gamma(t) =
+\left(\sum\limits_k\left(\ddot x^k(t) +\dot x^i(t)\dot
+x^j(t)\Gamma^{k}_{ij}(\gamma(t))\right)\partial_k\right).$$ This is
+a system of $2^{nd}$ order ODE's. The local existence, uniqueness
+and smoothness of a geodesic through any point $p\in M$ with initial
+velocity vector $v\in T_pM$ follow from the classical ODE theory.
+Given any two points in a complete manifold, a standard limiting
+argument shows that there is a rectifiable curve of minimal length
+between these points. Any such curve is a geodesic. We call
+geodesics that minimize the length between their endpoints *minimizing geodesics*.
+
+We have the classical theorem showing that on a complete manifold
+all geodesics are defined for all time (see Theorem 16 of Chapter 5
+on p. 137 of ).
+
+**Theorem.** (Hopf-Rinow) If $(M,g)$ is complete as a metric space, then every
+geodesic extends to a geodesic defined for all time.
+
+Geodesics are critical points of the energy functional. Let $(M,g)$
+be a complete Riemannian manifold. Consider the space of $C^1$-paths
+in $M$ parameterized by the unit interval. On this space we have the
+energy functional
+$$E(\gamma)=\frac{1}{2}\int_{0}^{1}\langle \gamma'(t),\gamma'(t)\rangle dt.$$
+ Suppose that we have a one-parameter family of  paths parameterized by
+ $[0,1]$,
+ all having the same initial point $p$ and the same final point $q$.
+ By this we mean that we have a surface $\tilde\gamma(t,u)$ with the property that for each
+ $u$ the path $\gamma_u=\tilde\gamma(\cdot,u)$ is a path from $p$ to $q$ parameterized by $[0,1]$.
+ Let $\widetilde X=\partial\tilde \gamma/\partial t$ and
+ $\widetilde Y=\partial\tilde \gamma/\partial u$ be the corresponding vector
+ fields along the surface swept out by $\tilde \gamma$, and denote by $X$ and $Y$ the restriction
+ of these vector fields along $\gamma_0$.
+ We compute
+
+$$
+
+$$
+\begin{aligned}
+\frac{dE(\gamma_u)}{du}\Bigl|_{u=0}\Bigr.& = & \left( \int_0^1\langle \nabla_{\widetilde Y}\widetilde X,\widetilde
+ X\rangle dt\right)\left|_{u=0}\right. \\
+ & = & \left(\int_0^1\langle\nabla_{\widetilde X}\widetilde Y,\widetilde
+ X\rangle dt \right)\left|_{u=0}\right.\\
+ & = & -\left( \int_0^1\langle\nabla_{\widetilde X}\widetilde X,\widetilde
+ Y\rangle dt\right)\left|_{u=0}\right.=-\int_0^1\langle\nabla_XX,Y\rangle,
+\end{aligned}
+$$
+
+$$
+
+where the first equality in the last line comes from integration by
+parts and the fact that $\widetilde Y$ vanishes at the endpoints.
+Given any vector field $Y$ along $\gamma_0$ there is a one-parameter
+family $\tilde \gamma(t,u)$ of paths from $p$ to $q$ with $\tilde
+\gamma(t,0)=\gamma_0$ and with $\widetilde Y(t,0)=Y$. Thus, from the
+above expression we see that $\gamma_0$ is a critical point for the
+energy functional on the space of paths from $p$ to $q$
+parameterized by the interval $[0,1]$ if and only if $\gamma_0$ is a
+geodesic.
+
+Notice that it follows immediately from the geodesic equation that
+the length of a tangent vector along a geodesic is constant. Thus,
+if a geodesic is parameterized by $[0,1]$ we have
+$$E(\gamma)=\frac{1}{2}L(\gamma)^2.$$
+It is immediate from the Cauchy-Schwarz inequality that for any
+curve $\mu$ parameterized by $[0,1]$ we have
+$$E(\mu)\ge \frac{1}{2}L(\mu)^2$$
+with equality if and only if $|\mu'|$ is constant. In particular, a
+curve parameterized by $[0,1]$ minimizes distance between its
+endpoints if it is a minimum for the energy functional on all paths
+parameterized by $[0,1]$ with the given endpoints.
+
+### Families of geodesics and Jacobi fields
+
+Consider a family of geodesics $\tilde\gamma(u,t)=\gamma_u(t)$
+parameterized by the interval  $[0,1]$ with $\gamma_u(0)=p$ for all
+$u$. Here, unlike the discussion above, we allow $\gamma_u(1)$ to
+vary with $u$. As before define vector fields along the surface
+swept out by $\tilde \gamma$:  $\widetilde X=\partial
+\tilde\gamma/\partial t$ and let $\tilde
+Y=\partial\tilde\gamma/\partial u$.  We denote by $X$ and $Y$ the
+restriction of these vector fields to the geodesic
+$\gamma_0=\gamma$.
+ Since each
+$\gamma_u$ is a geodesic, we have $\nabla_{\widetilde X}{\widetilde
+X}=0$. Differentiating this equation in the $\widetilde Y$-direction
+yields $\nabla_{\widetilde Y}\nabla_{\widetilde X}\widetilde X=0$.
+Interchanging the order of differentiation, using
+$\nabla_{\widetilde X}\widetilde Y=\nabla_{\widetilde Y}{\widetilde
+X}$, and then restricting to $\gamma$, we get the *Jacobi
+equation*:
+$$\nabla_X\nabla_XY+{\mathcal R}(Y,X)X=0.$$
+Notice that the left-hand side of the equation depends only on the
+value of $Y$ along $\gamma$, not on the entire family. We denote the
+left-hand side of this equation by ${rm Jac}(Y)$, so that the Jacobi
+equation now reads
+$${rm Jac}(Y)=0.$$
+ The fact that all the geodesics begin at the same point at time
+$0$ means that $Y(0)=0$. A vector field $Y$ along a geodesic
+$\gamma$ is said to be a *Jacobi field* if
+it satisfies this equation and vanishes at the initial point $p$. A
+Jacobi field is determined by its first derivative at $p$, i.e., by
+$\nabla_XY(0)$. We have just seen that this is the equation
+describing, to first order, variations of $\gamma$ by a family of
+geodesics with the same starting point.
+
+Jacobi fields are also determined by the energy functional. Consider
+the space of paths parameterized by $[0,1]$ starting at a given
+point $p$ but free to end anywhere in the manifold. Let $\gamma$ be
+a geodesic (parameterized by $[0,1]$) from $p$ to $q$. Associated to
+any one-parameter family $\tilde \gamma(t,u)$ of paths parameterized
+by $[0,1]$ starting at $p$ we associate the second derivative of the
+energy at $u=0$. Straightforward computation gives
+$$\frac{d^2E(\gamma_u)}{du^2}\Bigl|_{u=0}\Bigr.=\langle \nabla_XY(1),Y(1)\rangle+\langle
+X(1),\nabla_Y\widetilde Y(1,0)\rangle-\int_0^1\langle {rm
+Jac}(Y),Y\rangle dt.$$
+
+Notice that the first term is a boundary term from the integration
+by parts, and it depends not just on the value of $Y$ (i.e., on
+$\widetilde Y$ restricted to $\gamma$) but also on the first-order
+variation of $\widetilde Y$ in the $Y$ direction. There is the
+associated bilinear form that comes from two-parameter families
+$\tilde \gamma(t,u_1,u_2)$ whose value at $u_1=u_1=0$ is $\gamma$.
+It is
+$$\frac{d^2E}{du_1du_2}\Bigl|_{u_1=u_2=0}\Bigr.=\langle \nabla_XY_1(1),Y_2(1)\rangle+\langle
+X(1),\nabla_{Y_1}\widetilde Y_2(1,0)\rangle-\int_0^1\langle {rm
+Jac}(Y_1),Y_2\rangle dt.$$ Notice that restricting to the space of
+vector fields that vanish at both endpoints, the second derivatives
+depend only on $Y_1$ and $Y_2$ and the formula is
+$$\frac{d^2E}{du_1du_2}\Bigl|_{u_1=u_2=0}\Bigr.=-\int_0^1\langle {rm Jac}(Y_1),Y_2\rangle dt,$$
+so that this expression is symmetric in $Y_1$ and $Y_2$. The
+associated quadratic form on the space of vector fields along
+$\gamma$ vanishing at both endpoints
+$$-\int_0^1\langle {rm Jac}(Y),Y\rangle dt$$
+is the second derivative of the energy function at $\gamma$ for any
+one-parameter family whose value at $0$ is $\gamma$ and whose first
+variation is given by $Y$.
+
+### Minimal geodesics
+
+**Definition.** Let $\gamma$ be a geodesic beginning at $p\in M$. For any $t>0$ we
+say that $q=\gamma(t)$ is a *conjugate point along
+$\gamma$* if there is a non-zero Jacobi field
+along $\gamma$ vanishing at $\gamma(t)$.
+
+**Proposition.**
+Suppose that $\gamma\colon [0,1]\to M$ is a minimal geodesic. Then
+for any $t<1$ the restriction of $\gamma$ to $[0,t]$ is the unique
+minimal geodesic between its endpoints and there are no conjugate
+points on $\gamma([0,1))$, i.e., there is no non-zero Jacobi field
+along $\gamma$ vanishing at any $t\in [0,1)$.
+
+We shall sketch the proof. For more details see Proposition 19 and Lemma 14 of
+Chapter 5 on pp. 139 and 140 of .
+
+**Proof.** (Sketch)
+Fix $0<t_0<1$. Suppose that there were a different geodesic
+$\mu\colon [0,t_0]\to M$ from $\gamma(0)$ to $\gamma(t_0)$, whose
+length was at most that of $\gamma|_{[0,t_0]}$. The fact that $\mu$
+and $\gamma|_{[0,t_0]}$ are distinct means that
+$\mu'(t_0)\not=\gamma'(t_0)$. Then the curve formed by concatenating
+$\mu$ with $\gamma|_{[t_0,1]}$ is a curve from $\gamma(0)$ to
+$\gamma(1)$ whose length is at most that of $\gamma$. But this
+concatenated curve is not smooth at $\mu(t_0)$, and hence it is not
+a geodesic, and in particular there is a curve with shorter length
+(a minimal geodesic) between these points. This is contrary to our
+assumption that $\gamma$ was minimal.
+
+To establish that there are no conjugate points at $\gamma(t_0)$ for
+$t_0<1$ we need the following claim.
+
+**Claim.** Suppose that $\gamma$ is a minimal geodesic and $Y$ is a field
+vanishing at both endpoints. Let $\tilde\gamma(t,u)$ be any
+one-parameter family of curves parameterized by $[0,1]$, with
+$\gamma_0=\gamma$ and with $\gamma_u(0)=\gamma_0(0)$ for all $u$.
+Suppose that the first-order variation of $\tilde \gamma$ at $u=0$
+is given by $Y$. Then
+$$\frac{d^2E(\gamma_u)}{du^2}\Bigl|_{u=0}\Bigr.=0$$
+if and only if $Y$ is a Jacobi field.
+
+\begin{proof}
+Suppose that $\tilde\gamma(u,t)$ is a one-parameter family of curves
+from $\gamma(0)$ to $\gamma(1)$ with $\gamma_0=\gamma$ and $Y$ is
+the first-order variation of this family along $\gamma$.  Since
+$\gamma$ is a minimal geodesic we have
+$$-\int_0^1\langle {rm Jac}(Y),Y\rangle dt=\frac{d^2E(\gamma_u)}{du^2}\Bigl|_{u=0}\Bigr.\ge 0.$$
+ The associated symmetric bilinear form is
+$$B_\gamma(Y_1,Y_2)=-\int_\gamma\langle {rm Jac}(Y_1),Y_2\rangle dt$$
+is symmetric when $Y_1$ and $Y_2$ are constrained to vanish at both
+endpoints. Since the associated quadratic form is non-negative, we
+see by the usual argument for symmetric bilinear forms that
+$B_\gamma(Y,Y)=0$ if and only if $B_\gamma(Y,\cdot)=0$ as a linear
+functional on the space of vector fields along $\gamma$ vanishing at
+point endpoints. This of course occurs if and only if ${rm
+Jac}(Y)=0$.
+
+Now let us use this claim to show that there are no conjugate points
+on $\gamma|_{(0,1)}$. If for some $t_0<1$, $\gamma(t_0)$ is a
+conjugate point along $\gamma$, then there is a non-zero Jacobi
+field $Y(t)$ along $\gamma$ with $Y(t_0)=0$. Notice that since $Y$
+is non-trivial $\nabla_XY(t_0)\not= 0$. Extend $Y(t)$ to a vector
+field $\hat Y$ along all of $\gamma$ by setting it equal to $0$ on
+$\gamma|_{[t_0,1]}$. Since the restriction of $Y$ to
+$\gamma([0,t_0])$ is a Jacobi field vanishing at both ends and since
+$\gamma|_{[0,t_0]}$ is a minimal geodesic, the second-order
+variation of length of $\gamma|_{[0,t_0]}$ in the $Y$-direction is
+zero. It follows that the second-order variation of length along
+$\hat Y$ vanishes. But $\hat Y$ is not smooth (at $\gamma(t_0)$) and
+hence it is not a Jacobi field along $\gamma$. This contradicts the
+fact discussed in the previous paragraph that for minimal geodesics
+the null space of the quadratic form is exactly the space of Jacobi
+fields.
+\end{proof}
+
+### The exponential mapping
+
+**Definition.** For any $p\in M$, we can define the *exponential
+map* at $p$, $exp_{p}$. It is
+defined on an open neighborhood $O_{p}$ of the origin in $T_{p}M$
+and is defined by $exp_{p}(v)=\gamma_v(1)$, the endpoint of
+the unique geodesic $\gamma_v\colon [0,1]\rightarrow M$ starting
+from $p$ with initial velocity vector $v$. We always take
+$O_{p}\subset T_{p}M$ to be the maximal domain on which $exp_p$ is defined, so that $O_{p}$ is a star-shaped open
+neighborhood of $0\in T_pM$. By the Hopf-Rinow Theorem, if $M$ is
+complete, then the exponential map is define on all of $T_pM$.
+
+By the inverse function theorem there exists $r_0=r_{0}(p,M)
+> 0$, such that the restriction of $exp_p$ to the ball
+$B_{g|T_pM}(0,r_0)$ in $T_pM$  is a diffeomorphism  onto
+$B_g(p,r_0)$. Fix $g$-orthonormal linear coordinates on $T_pM$.
+Transferring these coordinates via $exp_p$ to coordinates on
+$B(p,r_0)$ gives us *Gaussian normal coordinates* on $B(p,r_0)\subset M$.
+
+Suppose now that  $M$ is complete, and fix a point $p\in M$. For
+every $q\in M$, there is a length-minimizing path from $p$ to $q$.
+When parameterized at constant speed equal to its length, this path
+is a geodesic with domain  interval $[0,1]$. Consequently, $exp_p\colon T_pM\to M$ is onto. The differential of the exponential
+mapping is given by Jacobi fields:
+ Let
+$\gamma\colon [0,1]\to M$ be a geodesic from $p$ to $q$, and let
+ $X\in T_pM$ be $\gamma'(0)$. Then the exponential
+mapping at $p$ is a smooth map from $T_p(M)\to M$ sending $X$ to
+$q$. Fix $Z\in T_pM$. Then there is a unique Jacobi field $Y_Z$
+along $\gamma$ with $\nabla_XY_Z(0)=Z$. The association $Z\mapsto
+Y_Z(1)\in T_qM$ is a linear map from $T_p(M)\to T_qM$. Under the
+natural identification of $T_pM$ with the tangent plane to $T_pM$ at
+the point $Z$, this linear mapping is the differential of $exp_p\colon T_pM\to M$ at the point $X\in T_pM$.
+
+**Corollary.**
+Suppose that $\gamma$ is a minimal geodesic parameterized by $[0,1]$
+starting at $p$. Let $X(0)=\gamma'(0)\in T_pM$. Then for each
+$t_0<1$ the restriction $\gamma|_{[0,t_0]}$ is a minimal geodesic
+and $exp_p\colon T_pM\to M$ is a local diffeomorphism near
+$t_0X(0)$.
+
+**Proof.** Of course, $exp_p(t_0X(0))=\gamma(t_0)$. According to the
+previous discussion, the kernel of the differential of the
+exponential mapping at $t_0X(0)$ is identified with the space of
+Jacobi fields along $\gamma$ vanishing at $\gamma(t_0)$. According
+to  Proposition~ the only such Jacobi field is the
+trivial one. Hence, the differential of $exp_p$ at $t_0X(0)$
+is an isomorphism, completing the proof.
+
+**Definition.** There is an open neighborhood  $U_p\subset T_pM$ of $0$ consisting
+of all $v\in T_pM$ for which: (i) $\gamma_v$ is the unique minimal
+geodesic from $p$ to $\gamma_v(1)$, and (ii) $ exp_p$ is a
+local diffeomorphism at $v$.  We set ${\mathcal C}_p\subset M$ equal
+to $M\setminus exp_p(U_p)$. Then ${\mathcal C}_p$ is called
+the *cut locus from $p$*. It is a closed subset
+of measure $0$.
+
+It follows from Corollary~ that  $U\subset T_pM$ is a
+star-shaped open neighborhood  of $0\in T_pM$.
+
+**Proposition.** The map
+$$exp_p\colon U_p\to M\setminus {\mathcal C}_p$$
+is a diffeomorphism.
+
+ For a proof see p. 139 of .
+
+**Definition.** The *injectivity radius $inj_M(p)$ of $M$ at $p$* is the
+supremum of the $r> 0$ for which the restriction of $exp_p\colon T_pM\to M$ to the ball $B(0,r)$ of radius $r$ in $T_pM$
+is a diffeomorphism into $M$. Clearly, $inj_M(p)$ is the
+distance in $T_pM$ from $0$ to the frontier of $U_p$. It is also the
+distance in $M$ from $p$ to the cut locus ${\mathcal C}_p$.
+
+Suppose that  $inj_M(p)=r$. There are two possibilities:
+Either there is a broken, closed geodesic through $p$, broken only
+at $p$, of length $2r$, or there is a geodesic $\gamma$ of length
+$r$ emanating from $p$ whose endpoint is a conjugate point along
+$\gamma$. The first case happens when the exponential mapping is not
+one-to-one of the closed ball of radius $r$ in $T_pM$, and the
+second happens when there is a tangent vector in $T_pM$ of length
+$r$ at which $exp_p$ is not a local diffeomorphism.
+
+## Computations in Gaussian normal coordinates
+
+In this section we compute the metric and the Laplacian (on
+functions) in local Gaussian coordinates. A direct computation shows
+that in Gaussian normal coordinates on a metric ball about $p\in M$
+the metric takes the form
+
+$$
+
+$$
+\begin{aligned}
+
+g_{ij}(x)& = & \delta_{ij} + \frac{1}{3}R_{iklj}x^kx^l +
+\frac{1}{6}R_{iklj,s}x^kx^lx^s \\
+& & +(\frac{1}{20}R_{iklj,st} +\frac{2}{45}\sum_m
+R_{iklm}R_{jstm})x^kx^lx^sx^t + O(r^{5}), \nonumber
+\end{aligned}
+$$
+
+$$
+
+where $r$ is the distance from $p$. (See, for example Proposition
+3.1 on page 41 of~, with the understanding that, with
+the conventions there, the quantity $R_{ijkl}$ there differs by sign
+from ours.)
+
+Let $\gamma$ be a geodesic in $M$ emanating from $p$ in the direction $v$.
+Choose local coordinates $\theta^1,\ldots,\theta^{n-1}$ on the unit sphere in
+$T_pM$ in a neighborhood of $v/|v|$. Then $(r, \theta^{1}, ... ,\theta^{n-1})$
+are local coordinates at any point of the ray emanating from the origin in the
+$v$ direction (except at $p$). Transferring these via $exp_p$ produces
+local coordinates $(r,\theta^{1}, ... ,\theta^{n-1})$ along $\gamma$. Using
+Gauss's lemma (Lemma 12 of Chapter 5 on p. 133 of ), we can
+write the metric locally as
+
+$$
+g=dr^{2}+
+r^{2}h_{ij}(r,\theta)d\theta^{i}\otimes d\theta^{j}.
+$$
+ Then the
+volume form
+
+$$
+
+$$
+\begin{aligned}
+dV &= \sqrt{det(g_{ij})}dr\wedge d\theta^{1}
+\wedge\cdots\wedge
+d\theta^{n-1}\\
+& = r^{n-1}\sqrt{det(h_{ij})}dr\wedge d\theta^{1}
+\wedge\cdots\wedge d\theta^{n-1}.
+\end{aligned}
+$$
+
+$$
+
+**Lemma.** The *Laplacian operator* acting on scalar
+functions on $M$ is given in local coordinates by
+
+$$
+\triangle  = \frac{1}{\sqrt{det(g)}}\partial_i
+\left(g^{ij}\sqrt{det(g)}\partial_j\right).
+$$
+
+**Proof.** Let us compute the derivative at a point $p$. We have
+$$\frac{1}{\sqrt{det(g)}}\partial_i
+\left(g^{ij}\sqrt{det(g)}\partial_j\right)f=g^{ij}\partial_i\partial_jf+\partial_ig^{ij}\partial_jf+
+\frac{1}{2}g^{ij}\partial_iTr(\tilde g)\partial_jf,$$ where $\tilde
+g=g(p)^{-1}g$. On the other hand from the definition of the
+Laplacian, Equation~(), and
+Equation~() we have
+$$\triangle
+f=g^{ij}Hess(f)(\partial_i,\partial_j)=g^{ij}\left(\partial_i\partial_j(f)-
+\nabla_{\partial_i}\partial_jf\right)
+=g^{ij}\partial_i\partial_jf-g^{ij}\Gamma_{ij}^k\partial_kf.$$ Thus,
+to prove the claim it suffices to show that
+$$g^{ij}\Gamma_{ij}^k=-(\partial_ig^{ik}+\frac{1}{2}g^{ik}Tr(\partial_i\tilde g)).$$
+From the definition of the Christoffel symbols we have
+$$g^{ij}\Gamma_{ij}^k=\frac{1}{2}g^{ij}g^{kl}(\partial_ig_{jl}+\partial_jg_{il}-\partial_lg_{ij}).$$
+Of course, $g^{ij}\partial_ig_{jl}=-\partial_ig^{ij}g_{jl}$, so that
+ $g^{ij}g^{kl}\partial_ig_{jl}=-\partial_ig^{ik}$. It follows by symmetry that $g^{ij}g^{jl}\partial_jg_{il}
+ =-\partial_ig^{ik}$. The last term is clearly $-\frac{1}{2}g^{ik}Tr(\partial_i\tilde g).$
+
+Using Gaussian local coordinates near $p$, we have
+
+$$
+
+$$
+\begin{aligned}
+\triangle r &=
+\frac{1}{r^{n-1}\sqrt{det(h)}}\partial_r\left(r^{n-1}\sqrt{det(h)}\right)\\
+&= \frac{n-1}{r}
+ + \partial_r\log\left(\sqrt{det(h)}\right).
+\end{aligned}
+$$
+
+$$
+
+From this one computes directly that
+
+$$
+\triangle r
+ = \frac{n-1}{r} - \frac{r}{3}Ric(v,v)+ O(r^{2}),
+$$
+
+ where $v = \dot r(0)$, cf,  p.265-268 of . So
+ $$\triangle r \leq
+ \frac{n-1}{r}\ \ when\ \ r \ll 1\ \ and\ Ric > 0.$$
+This local computation has the following global analogue.
+
+\begin{ex}(E.Calabi, 1958)
+Let $f(x)=d(p,x)$ be the distance function from $p$. If $(M, g)$ has
+$Ric \geq 0$, then
+
+$$
+\triangle f \leq \frac{n-1}{f}
+$$
+
+ in the sense of distributions.
+\end{ex}
+ [Compare , p. 284 Lemma 42].
+
+**Remark.**
+The statement that $\triangle f\leq \frac{n-1}{f}$ in *the sense
+of distributions* (or equivalently *in the weak sense*) means
+that for any non-negative test function $\phi$, that is to say for
+any compactly supported $C^\infty$-function $\phi$, we have
+$$\int_Mf\triangle \phi dvol\le \int_M\left(\frac{n-1}{f}\right)\phi dvol.$$
+Since  the triangle inequality implies that $|f(x)-f(y)|\le d(x,y)$, it follows
+that $f$ is Lipschitz, and hence that the restriction of $\nabla f$ to any
+compact subset of $M$ is an $L^2$ one-form. Integration by parts then shows
+that
+$$\int_Mf\triangle
+\phi dvol=-\int_M\langle \nabla f,\nabla\phi\rangle dvol.$$
+
+Since $\abs{\nabla f} = 1$ and $\triangle f$ is the mean curvature
+of the geodesic sphere $\partial B(x,r)$, $Ric(v,v)$ measures
+the difference of the mean curvature between the standard Euclidean
+sphere and the geodesic sphere in the direction $v$. Another
+important geometric object  is the shape operator associated to $f$,
+denoted $S$. By definition it is the Hessian of $f$; i.e.,
+$S=\nabla^2f=Hess(f)$.
+
+## Basic curvature comparison results
+
+In this section we will recall some of the basic curvature
+comparison results in Riemannian geometry. The reader can refer to
+, Section 1 of Chapter 9 for details.
+
+We fix a point $p\in M$. For any real number $k\ge 0$ let $H^n_k$ denote the
+simply connected, complete Riemannian $n$-manifold of constant sectional
+curvature $-k$. Fix a point $q_k\in H^n_k$, and consider the exponential map
+$exp_{q_k}\colon T_{q_k}(H^n_k)\to H^n_k$. This map is a global
+diffeomorphism. Let us consider the pullback, $\tilde h_k$, of the Riemannian
+metric on $H^n_k$ to $T_{q_k}H^n_k$. A formula for this tensor is easily given
+in polar coordinates on $T_{q_k}(H^n_k)$ in terms of the following function.
+
+**Definition.** We define a function $sn_k$ as follows:$$sn_k(r)=\begin{cases}
+r \ \  & if\ \k=0 \\
+\frac{1}{\sqrt{k}}sinh(\sqrt{k}r) \ \ & if \ \ k>0.
+\end{cases}$$
+
+The function $sn_{k}(r)$ is the solution to the equation
+
+$$
+
+$$
+\begin{aligned}
+\varphi'' - k\varphi &= 0,\\
+\varphi(0) &= 0,\\
+\varphi'(0) &= 1.
+\end{aligned}
+$$
+
+$$
+
+We define
+ $ct_{k}(r) = \frac{sn_{k}^{'}(r)}{\sqrt{k}sn_{k}(r)}$.
+
+Now we can compare manifolds of varying sectional curvature with
+those of constant curvature.
+
+**Theorem.**
+(Sectional Curvature Comparison) Fix $k\ge 0$. Let $(M, g)$ be a
+Riemannian manifold with the property that $-k \leq K(P)$ for every
+$2$-plane $P$ in $TM$. Fix a minimizing geodesic $\gamma\colon
+[0,r_0)\to M$ parameterized at unit speed with $\gamma(0)=p$. Impose
+Gaussian polar coordinates $(r,\theta^1,\ldots,\theta^{n-1})$ on a
+neighborhood of $\gamma$ so that $g=dr^2+g_{ij}\theta^i\otimes
+\theta^j$. Then for all $0<r<r_0$ we have
+$$ (g_{ij}(r,\theta))_{1 \leq
+i,j \leq n-1} \leq sn_{k}^{2}(r),$$ and the shape operator
+associated to  the distance function from $p$, $f$, satisfies
+$$(S_{ij}(r,\theta))_{1 \leq i,j \leq n-1} \leq \sqrt{k}ct_{k}(r).$$
+
+There is also an analogous result for a positive upper bound to the
+sectional curvature, but in fact all we shall need is the local
+diffeomorphism property of the exponential mapping.
+
+**Lemma.**  Fix $K\ge 0$.
+If $|Rm(x)|\le K$ for all  $x\in B(p,\pi/\sqrt{K})$, then
+$exp_p$ is a local diffeomorphism from the ball
+$B(0,\pi/\sqrt{K})$ in $T_pM$  to the  ball $B(p,\pi/\sqrt{K})$ in
+$M$.
+
+There is a crucial comparison result for volume which involves the
+Ricci curvature.
+
+**Theorem.**
+**(Ricci curvature comparison)** Fix $k\ge 0$. Assume that $(M,
+g)$ satisfies $Ric \geq -(n-1)k$. Let $\gamma\colon [0,r_0)\to
+M$ be a minimal geodesic of unit speed. Then for any $r<r_0$ at
+$\gamma(r)$ we have
+$$\sqrt{det\, g(r,\theta)} \leq sn^{n-1}_{k}(r)$$ and
+$$Tr(S)(r,\theta) \leq (n-1)\frac{sn_{k}^{'}(r)}{sn_{k}(r)}.$$
+
+Note that the inequality in Remark~ follows from this
+theorem.
+
+The comparison result in Theorem~ holds out to
+every radius, a fact that will be used repeatedly in our arguments.
+This result evolved over the period 1964-1980 and now is referred to
+as the Bishop-Gromov inequality; see
+Proposition 4.1 of
+
+**Theorem.**
+(Relative Volume Comparison, Bishop-Gromov 1964-1980) Suppose $(M,
+g)$ is a Riemannian manifold. Fix a point $p\in M$, and suppose that
+$B(p,R)$ has compact closure in $M$. Suppose that for some $k\ge 0$
+we have $Ric \geq -(n-1)k$ on $B(p,R)$. Recall that $H^n_k$ is
+the simply connected, complete manifold of constant curvature $-k$
+and $q_k\in H^n_k$ is a point. Then
+
+$$
+\frac{Vol\,B(p,r)}{Vol\, B_{H^n_k}B(q_k,r)}
+$$
+
+is a non-increasing function of $r$ for $r<R$, whose limit as $r\rightarrow 0$
+is 1. In particular, if the Ricci curvature of $(M,g)$ is $\ge 0$ on $B(p,R)$,
+then $Vol\,B(p,r)/r^n$ is a non-increasing function of $r$ for $r<R$.
+
+## Local volume and the injectivity radius
+
+As the following results show, in the presence of bounded curvature the volume
+of a ball $B(p,r)$ in $M$ is bounded away from zero if and only if the
+injectivity radius of $M$ at $p$ is bounded away from zero.
+
+**Proposition.**
+Fix an integer $n>0$. For every $\epsilon>0$ there is $\delta>0$
+depending on $n$ and $\epsilon$ such that the following holds.
+Suppose that $(M^n,g)$ is a complete Riemannian manifold of
+dimension $n$ and that $p\in M$. Suppose that $|Rm(x)|\le
+r^{-2}$ for all $x\in B(p,r)$. If the injectivity radius of $M$ at
+$p$ is at least $\epsilon r$, then $Vol(B(p,r))\ge \delta
+r^n$.
+
+**Proof.** Suppose that $|Rm(x)|\le r^{-2}$ for all $x\in B(p,r)$.
+Replacing $g$ by $r^2 g$ allows us to assume that $r=1$. Without
+loss of generality we can assume that $\epsilon\le 1$. The map $exp_p$ is a diffeomorphism on the ball $B(0,\epsilon)$ in the
+tangent space, and by Theorem~ the volume of
+$B(p,\epsilon)$ is at least that of the ball of radius $\epsilon$ in
+the $n$-sphere of radius $1$. This gives a lower bound to the volume
+of $B(p,\epsilon)$, and a fortiori to $B(p,1)$, in terms of $n$ and
+$\epsilon$.
+
+ We shall normally work with volume, which behaves nicely under Ricci
+flow, but in order to take limits we need to bound the injectivity
+radius away from zero. Thus, the more important, indeed crucial,
+result for our purposes is the converse to the previous proposition;
+see Theorem 4.3, especially Inequality (4.22), on page 46 of
+, or see Theorem 5.8 on page 96 of
+.
+
+**Theorem.**
+Fix an integer $n>0$. For every $\epsilon>0$ there is $\delta>0$
+depending on $n$ and $\epsilon$ such that the following holds.
+Suppose that $(M^n,g)$ is a complete Riemannian manifold of
+dimension $n$ and that $p\in M$. Suppose that $|Rm(x)|\le
+r^{-2}$ for all $x\in B(p,r)$. If $Vol(B(p,r))\ge \epsilon r^n$ then
+the injectivity radius of $M$ at $p$ is at least $\delta r$.
+
+# Manifolds of non-negative curvature
+
+In studying singularity development in $3$-dimensional Ricci flows
+one forms blow-up limits. By this we mean the following. One
+considers a sequence of points $x_k$ in the flow converging to the
+singularity. It will be the case that $R(x_k)$ tends to $\infty$ as
+$k$ tends to $\infty$. We form a sequence of based Riemannian
+manifolds labeled by $k$, where the $k^{th}$ Riemannian manifold is
+obtained by taking the time-slice of $x_k$, rescaling its metric by
+$R(x_k)$, and then taking $x_k$ as the base point. This creates a
+sequence with the property that for each member of the sequence the
+scalar curvature at the base point is one. Because of a pinching
+result of Hamilton's (see Chapter~), if there is a
+geometric limit of this sequence, or of any subsequence of it, then
+that limit is non-negatively curved. Hence, it is important to
+understand the basic properties of Riemannian manifolds of
+non-negative curvature in order to study singularity development. In
+this chapter we review the properties that we shall need. We suppose
+that $M$ is non-compact and of positive (resp., non-negative)
+curvature. The key to understanding these manifolds is the Busemann
+function associated to a minimizing geodesic ray.
+
+## Busemann functions
+
+A geodesic ray $\lambda\colon [0,\infty)\to M$  is said to be *minimizing* if the restriction of $\lambda$ to every compact
+subinterval of $[0,\infty)$ is a length-minimizing geodesic arc,
+i.e., a geodesic arc whose length is equal to the distance between
+its endpoints. Likewise, a geodesic line $\lambda\colon
+(-\infty,\infty)\to M$ is said to be *minimizing* if its
+restriction to every compact sub-interval of $\Ar$ is a length
+minimizing geodesic arc.
+
+Clearly, if a sequence of minimizing geodesic arcs $\lambda_k$
+converges to a geodesic arc, then the limiting geodesic arc is also
+minimizing. More generally, if $\lambda_k$ is a sequence of length
+minimizing geodesic arcs whose initial points converge and whose
+lengths go to infinity, then, after passing to a subsequence, there
+is a limit which is a minimizing geodesic ray. (The existence of a
+limit of a subsequence is a consequence of the fact that a geodesic
+ray is determined by its initial point and its initial tangent
+direction.) Similarly, if $I_k$ is an sequence of compact intervals
+with the property that every compact subset of $\Ar$ is contained in
+$I_k$ for all sufficiently large $k$, if for each $k$ the map
+$\lambda_k\colon I_k\to M$ is a minimizing geodesic arc, and if
+$lim_{k\rightarrow \infty}\lambda_k(0)$ exists, then, after
+passing to a subsequence there is a limit which is a minimizing
+geodesic line. Using these facts one establishes the following
+elementary lemma.
+
+**Lemma.**
+Suppose that $M$ is a complete, connected, non-compact Riemannian
+manifold and let $p$ be a point of $M$. Then $M$ has a minimizing
+geodesic ray emanating from $p$. If $M$ has more than one end, then
+it has a minimizing line.
+
+**Definition.** Suppose that $\lambda\colon [0,\infty)\to M$ is a minimizing
+geodesic ray with initial point $p$. For each $t\ge 0$ we consider
+$B_{\lambda,t}(x)=d(\lambda(t),x)-t$. This is a family of functions
+satisfying $|B_{\lambda,t}(x)-B_{\lambda,t}(y)|\le d(x,y)$. Since
+$\lambda$ is a minimizing geodesic, $B_{\lambda,t}(p)=0$ for all
+$t$. It follows that $B_{\lambda,t}(x)\ge -d(x,p)$ for all $x\in M$.
+Thus,  the family of functions $B_{\lambda,t}$ is pointwise bounded
+below. The triangle inequality shows that for each $x\in M$ the
+function $B_{\lambda,t}(x)$ is a non-increasing function of $t$.
+ It follows that, for
+each $x\in M$, $lim_{t\rightarrow \infty} B_{\lambda,t}(x)$
+exists. We denote this limit by $B_\lambda(x)$. This is the *Busemann function* for $\lambda$.
+
+Clearly, $B_\lambda(x)\ge -d(x,\lambda(0))$. By equicontinuity
+$B_\lambda(x)$ is a continuous function of $x$ and in fact a
+Lipschitz function satisfying $|B_\lambda(x)-B_\lambda(y)|\le
+d(x,y)$ for all $x,y\in X$. Clearly $B_\lambda(\lambda(s))=-s$ for
+all $s\ge 0$. Since $B_\lambda$ is Lipschitz, $\nabla B_\lambda$ is
+well-defined as an $L^2$-vector field.
+
+**Proposition.**
+Suppose that $M$ is complete and of non-negative Ricci curvature.
+Then, for any minimizing geodesic ray $\lambda$, the Busemann
+function $B_\lambda$ satisfies $\Delta B_\lambda\le 0$ in the weak
+sense.
+
+**Proof.** First notice that since $B_\lambda$ is Lipschitz, $\nabla B_\lambda$
+is an $L^2$-vector field on $M$. That is to say, $B_\lambda\in
+W_loc^{1,2}$, i.e., $B_\lambda$ locally has one derivative in
+$L^2$. Hence, there is a sequence of $C^\infty$-functions $f_n$
+converging to $B_\lambda$ in $W^{1,2}_{loc}$. Let $\varphi$ be a
+test function (i.e., a compactly supported $C^\infty$-function).
+Integrating by parts yields
+$$-\int_M\langle \nabla
+f_n,\nabla\varphi\rangle dvol=\int_Mf_n\triangle \varphi dvol.$$ Using the fact that $f_n$ converges to $B_\lambda$ in
+$W^{1,2}_{loc}$ and taking limits yields
+$$-\int_M\langle \nabla B_\lambda,\nabla \varphi\rangle dvol= \int_M
+B_\lambda\triangle \varphi dvol.$$
+
+Thus, to prove the proposition we need only show that if $\varphi$
+is a non-negative test function, then
+$$-\int_M \langle\nabla B_\lambda,\nabla\varphi\rangle dvol\le 0.$$
+For a proof of this see
+ Proposition 1.1  and its proof on pp. 7 and 8 in .
+
+## Comparison results in non-negative curvature
+
+Let us review some elementary comparison results for manifolds of
+non-negative curvature. These form the basis for Toponogov
+theory,  . For any pair
+of points $x,y$ in a complete Riemannian manifold $s_{xy}$ denotes a
+minimizing geodesic from $x$ to $y$. We set $|s_{xy}|=d(x,y)$ and
+call it the *length* of the side. A *triangle* in a
+Riemannian manifold consists of three vertices $a,b,c$ and three
+sides $s_{ab}$,$s_{ac}$,$s_{bc}$. We denote by $\angle_a$ the angle
+of the triangle at $a$, i.e., the angle at $a$ between the geodesic
+rays $s_{ab}$ and $s_{ac}$.
+
+**Theorem.** **(Length comparison)**
+Let $(M,g)$ be a manifold of non-negative curvature. Suppose that
+$\triangle(a,b,c)$ is a triangle in $M$  and let
+$\triangle(a',b',c')$ be a Euclidean triangle.
+\begin{enumerate}
+\item  Suppose that the corresponding
+sides of $\triangle(a,b,c)$ and $\triangle(a',b',c')$ have the same
+lengths. Then the angle at each vertex of the Euclidean triangle is
+no larger than the corresponding angle of $\triangle(a,b,c)$.
+Furthermore, for any $\alpha$ and $\beta$ less than $|s_{ab}|$ and
+$|s_{ac}|$ respectively, let $x$, resp. $x'$, be the point on
+$s_{ab}$, resp. $s_{a'b'}$, at distance $\alpha$ from $a$, resp.
+$a'$, and let $y$, resp. $y'$, be the point on $s_{ac}$, resp.
+$s_{a'c'}$, at distance $\beta$ from $a$, resp. $a'$. Then
+$d(x,y)\ge d(x',y')$.
+\item Suppose that $|s_{ab}|=|s_{a'b'}|$, that
+$|s_{ac}|=|s_{a'c'}|$ and that $\angle_a=\angle_{a'}$. Then
+$|s_{b'c'}|\ge |s_{bc}|$.
+\end{enumerate}
+
+See Fig.~. For a proof of this result see
+Theorem 4.2 on page 161 of , or Theorem 2.2 on page 42
+of .
+
+One corollary  is a monotonicity result. Suppose that
+$\triangle(a,b,c)$ is a triangle in a complete manifold of
+non-negative curvature. Define a function $EA(u,v)$ defined for
+$0\le u\le |s_{ab}|$ and $0\le v\le |s_{ac}|$ as follows. For $u$
+and $v$ in the indicated ranges, let $x(u)$ be the point on $s_{ab}$
+at distance $u$ from $a$ and let $y(v)$ be the point of $s_{ac}$ at
+distance $v$ from $a$. Let  $EA(u,v)$ be the angle at $a'$ of the
+Euclidean triangle with side lengths $|s_{a'b'}|=u$, $|s_{a'c'}|=v$
+and $|s_{b'c'}|=d(x(u),y(v))$.
+
+**Corollary.**
+Under the assumptions of the previous theorem, $EA(u,v)$ is a
+monotone non-increasing function of each variable $u$ and $v$ when
+the other variable is held fixed.
+
+ Suppose that $\alpha, \beta,\gamma$ are three geodesics
+emanating from a point $p$ in a Riemannian manifold. Let $\angle_p
+(\alpha,\beta)$, $\angle_p(\beta,\gamma)$ and
+$\angle_p(\alpha,\gamma)$ be the angles of these geodesics at $p$ as
+measured by the Riemannian metric. Then of course
+$$\angle_p(\alpha,\beta)+\angle_p(\beta,\gamma)+\angle_p(\alpha,\gamma)\le
+2\pi$$ since this inequality holds for the angles between straight
+lines in Euclidean $n$-space. There is a  second corollary of
+Theorem~ which gives an analogous result for the
+associated Euclidean angles.
+
+**Corollary.**
+Let $(M,g)$ be a complete Riemannian manifold of non-negative
+curvature. Let $p,a,b,c$ be four points in $M$ and let
+$\alpha,\beta,\gamma$ be minimizing geodesic arcs  from the point
+$p$ to $a,b,c$ respectively. Let $T(a,p,b)$, $T(b,p,c)$ and
+$T(c,p,a)$ be the triangles in $M$ made out of these minimizing
+geodesics and minimizing geodesics between $a,b,c$. Let
+$T(a',p',b')$, $T(b',p',c')$ and $T(c',p',a')$ be planar triangles
+with the same side lengths. Then
+$$\angle_{p'}T(a',p',b')+\angle_{p'}T(b',p',c')+\angle_{p'}T(c',p',a')\le 2\pi.$$
+
+**Proof.** Consider the sum of these angles as the geodesic arcs in $M$ are
+shortened without changing their direction. By the first property of
+Theorem~ the sum of the angles of these triangles
+is a monotone decreasing function of the lengths. Of course, the
+limit as the lengths all go to zero is the corresponding Euclidean
+angle. The result is now clear.
+
+## The soul theorem
+
+A subset $X$  of a Riemannian manifold $(M,g)$ is said to be *totally convex* if every geodesic segment with endpoints in $X$ is
+contained in $X$. Thus, a point $p$ in $M$ is totally convex if and
+only if there is no broken geodesic arc in $M$ broken exactly at
+$x$.
+
+**Theorem.**  (Cheeger-Gromoll, see
+ and ) Suppose that
+$(M,g)$ is a connected, complete, non-compact Riemannian manifold of
+non-negative sectional curvature. Then $M$ contains a soul $S\subset
+M$. By definition a *soul* is a compact, totally
+geodesic, totally convex submanifold (automatically of positive
+codimension). Furthermore, $M$ is diffeomorphic to the total space
+of the normal bundle of the $S$ in $M$. If $(M,g)$ has positive
+curvature, then any soul for it is a point, and consequently $M$ is
+diffeomorphic to $\Ar^n$.
+
+**Remark.** We only use the soul theorem for manifolds with positive curvature
+and the fact that any soul of such a manifold is a point. A proof of
+this result  first appears in .
+
+The rest of this section is devoted to a sketch of the proof of this
+result. Our discussion follows closely that in
+starting on  p.~349. We shall need more information about complete,
+non-compact manifolds of non-negative curvature, so we review a
+little of their theory as we sketch the proof of the soul theorem.
+
+**Lemma.** Let $(M,g)$ be a complete, non-compact Riemannian manifold of
+non-negative sectional curvature and let $p\in M$. For every
+$\epsilon>0$ there is a compact subset $K=K(p,\epsilon)\subset M$
+such that for all points $q\notin K$, if $\gamma$ and $\mu$ are
+minimizing geodesics from $p$ to $q$, then the angle that $\gamma$
+and $\mu$ make at $q$ is less than $\epsilon$.
+
+See Fig.~.
+
+**Proof.** The proof is by contradiction. Fix $0<\epsilon<1$ sufficiently small
+so that $cos(\epsilon/2)<1-\epsilon^2/12$. Suppose that there
+is a sequence of points $q_n$ tending to infinity such that for each
+$n$ there are minimizing geodesics $\gamma_n$ and $\mu_n$ from $p$
+to $q_n$ making angle at least $\epsilon$ at $q_n$. For each $n$ let
+$d_n=d(p,q_n)$. By passing to a subsequence we can suppose that for
+all $n$ and $m$ the cosine of the angle at $p$ between $\gamma_n$
+and $\gamma_m$ at least $1-\epsilon^2/24$, and the cosine of the
+angle at $p$ between $\mu_n$ and $\mu_m$ is at least
+$1-\epsilon^2/24$. We can also assume that for all $n\ge 1$ we have
+$d_{n+1}\ge (100/\epsilon^2) d_n$. Let $\delta_n=d(q_n,q_{n+1})$.
+Applying the first Toponogov property at $p$, we see that
+$\delta_n^2\le d_n^2+d_{n+1}^2-2d_nd_{n+1}(1-\epsilon^2/24)$.
+Applying the same property at $q_n$ we have
+$$d_{n+1}^2\le d_n^2+\delta_n^2-2d_n\delta_ncos(\theta),$$ where
+$\theta\le \pi$ is the angle at $q_n$ between $\gamma_n$ and a
+minimal geodesic joining $q_n$ to $q_{n+1}$. Thus,
+$$cos(\theta)\le
+\frac{d_n-d_{n+1}(1-\epsilon^2/24)}{\delta_n}.$$ By the triangle
+inequality (and the fact that $\epsilon<1$) we have $\delta_n\ge
+(99/\epsilon)d_n$ and $\delta_n\ge d_{n+1}(1-(\epsilon^2/100))$.
+Thus,
+$$cos(\theta)\le
+\epsilon^2/99-(1-\epsilon^2/24)/(1-(\epsilon^2/100))<-(1-\epsilon^2/12).$$
+This implies that $cos(\pi-\theta)>(1-\epsilon^2/12)$, which
+implies that $\pi-\theta<\epsilon/2$. That is to say, the angle at
+$q_n$ between $\gamma_n$ and a shortest geodesic from $q_n$ to
+$q_{n+1}$ is between $\pi-\epsilon/2$ and $\pi$. By symmetry, the
+same is true for the angle between $\mu_n$ and the same shortest
+geodesic from $q_n$ to $q_{n+1}$. Thus, the angle between $\gamma_n$
+and $\mu_n$ at $q_n$ is less than $\epsilon$, contradicting our
+assumption.
+
+**Corollary.**
+Let $(M,g)$ be a complete, non-compact manifold of non-negative
+sectional curvature. Let $p\in M$ and define a function $f\colon
+M\to \Ar$ by $f(q)=d(p,q)$. Then there is $R<\infty$ such that for
+$R\le s<s'$ we have:
+\begin{enumerate}
+\item $f^{-1}([s,s'])$ is homeomorphic to $f^{-1}(s)\times[s,s']$ and
+in particular the level sets $f^{-1}(s)$ and $f^{-1}(s')$ are
+homeomorphic; \item  $f^{-1}([s,\infty)$ is homeomorphic to
+$f^{-1}(s)\times[s,\infty)$.
+\end{enumerate}
+
+**Proof.** Given $(M,g)$ and $p\in M$ as in the statement of the corollary, choose  a
+constant $R<\infty$ such that any two minimal geodesics from $p$ to a point $q$
+with $d(p,q)\ge R/2$ make an angle at most $\pi/6$ at $q$. Now following
+ p. 335, it is possible to find a smooth unit vector field $X$
+on $U=M-\overline{B(p,R/2)}$ with the property that $f(\cdot)=d(p,\cdot)$ is
+increasing along any integral curve for $X$ at a rate bounded below by $cos(\pi/3)$. In particular, for any $s\ge R$ each integral curve of $X$
+crosses the level set $f^{-1}(s)$  in a single point. Using this vector field
+we see that for any $s,s'>R$, the pre-image $f^{-1}([s,s'])$ is homeomorphic to
+$f^{-1}(s)\times[s,s']$ and that the end $f^{-1}\left([s,\infty)\right)$ is
+homeomorphic to $f^{-1}(s)\times [s,\infty)$.
+
+In a complete, non-compact $n$-manifold of positive curvature any soul is a
+point.  While the proof of this result uses the same ideas as discussed above,
+we shall not give a proof. Rather we refer the reader to Theorem 84 of
+ on  p. 349. A soul has the property that if two minimal
+geodesics emanate from $p$ and end at the same point $q\not= p$, then the angle
+that they make at $q$ is less than $\pi/2$. Also, of course, the exponential
+mapping is a diffeomorphism sufficiently close to the soul. Applying the above
+lemma and a standard compactness argument, we see that in fact there is
+$\epsilon>0$ such that all such pairs of minimal geodesics from $p$ ending at
+the same point make angle less than $\pi/2-\epsilon$ at that point. Hence, in
+this case there is a vector field $X$ on all of $M$ vanishing only at the soul,
+and agreeing with the gradient of the distance function near the soul, so that
+the distance function from $p$ is strictly increasing to infinity along each
+flow line of $X$ (except the fixed point). Using $X$ one establishes that $M$
+is diffeomorphic to $\Ar^n$. It also follows that all the level surfaces
+$f^{-1}(s)$ for $s>0$ are homeomorphic to $S^{n-1}$ and for $0<s<s'$ the
+preimage $f^{-1}([s,s'])$ is homeomorphic to $S^{n-1}\times[s,s']$.
+
+There is an analogue of this result for the distance function from
+any point, not just a soul.
+
+**Corollary.**
+Let $(M,g)$ be a complete, non-compact Riemannian $n$-manifold of positive
+curvature. Then for any point $p\in M$ there is a constant $R=R(p)$ such that
+for any $s<s'$ with $R\le s$ both $f^{-1}(s,s')$ and $f^{-1}(s,\infty)$ are
+homotopy equivalent to $S^{n-1}$.
+
+**Proof.** Given $(M,g)$ and $p$ fix $R<\infty$ sufficiently large so that
+Corollary~ holds. Since $M$ is diffeomorphic to $\Ar^n$
+it has only one end and hence the level sets $f^{-1}(s)$ for $s\ge
+R$ are connected. Given any compact subset $K\subset M$ there is a
+larger compact set $B$ (a ball) such that $M\setminus B$ has trivial
+fundamental group and trivial homology groups $H_i$ for $i<n-1$.
+Hence for any subset $Z\subset M\setminus B$, the inclusion of $Z\to
+M\setminus K$ induces the trivial map on $\pi_1$ and on $H_i$ for
+$i<n-1$. Clearly, for any $R\le s<b$ the inclusion
+$f^{-1}(b,\infty)\to f^{-1}(s,\infty)$ is a homotopy equivalence.
+Thus, it must be the case that $f^{-1}(b,\infty)$ has trivial
+fundamental group and $H_i$ for $i<n-1$. Hence, the same is true for
+$f^{-1}(s,\infty)$ for any $s\ge R$. Lastly, since
+$f^{-1}(s,\infty)$ is connected and simply connected ( hence
+orientable) and has two ends, it follows by the non-compact form of
+Poincar\'e duality that $H_{n-1}(f^{-1}(s,\infty))\cong \Zee$.
+Hence, by the Hurewicz theorem $f^{-1}(s,\infty)$ is homotopy
+equivalent to $S^{n-1}$ for any $s\ge R$. Of course, it is also true
+for $R\le s\le s'$ that $f^{-1}(s,s')$ is homotopy equivalent to
+$S^{n-1}$.
+
+## Ends of a manifold
+
+Let us review the basic notions about ends of a manifold.
+
+**Definition.** Let $M$ be a connected manifold.  Consider the inverse system of
+spaces indexed by the compact, codimension-$0$ submanifolds
+$K\subset M$, where the space associated to $K$ is the finite set
+$\pi_0(M\setminus K)$ with the discrete topology. The inverse limit
+of this inverse system is the *space of ends* of $M$. It is a
+compact space. An *end* of $M$ is a
+point of the space of ends. An end ${\mathcal E}$ determines a
+complementary component of each compact, codimension-$0$ submanifold
+$K\subset M$, called a *neighborhood* of the end. Conversely, by
+definition these neighborhoods are cofinal in the set of all
+neighborhoods of the end. A sequence $\{x_n\}$ in $M$ *converges
+to the end* ${\mathcal E}$ if it is eventually in every neighborhood
+of the end. In fact, what we are doing is defining a topology on the
+union of $M$ and its space of ends that makes this union a compact,
+connected Hausdorff space which is a compactification of $M$.
+
+A proper map between topological manifolds induces a map on the
+space of ends, and in fact induces a map on the compactifications
+sending the subspace of ends of the compactification of the domain
+to the subspace of ends of the compactification of the range.
+
+We say that a path $\gamma\colon [a,b)\to M$ is a path {\em to the
+end ${\mathcal E}$} if it is a proper map and it sends the end
+$\{b\}$ of $[a,b)$ to the end ${\mathcal E}$ of $M$. This condition
+is equivalent to saying that given a neighborhood $U$ of ${\mathcal
+E}$ there is a neighborhood of the end $\{b\}$ of $[a,b)$ that maps
+to $U$.
+
+Now suppose that $M$ has a Riemannian metric $g$. Then we can
+distinguish between ends at finite and infinite distance. An end is
+at *finite distance* if there is a rectifiable path of finite
+length to the end. Otherwise, the end is at infinite distance. If an
+end is at finite distance we have the notion of the distance from a
+point $x\in M$ to the end. It is the infimum of the lengths of
+rectifiable paths from $x$ to the end. This distance is always
+positive. Also, notice that the Riemannian manifold is complete if
+and only if has no end at finite distance.
+
+## The splitting theorem
+
+In this section we give a proof of the following theorem which is
+originally due to Cheeger-Gromoll . The weaker
+version giving the same conclusion under the stronger hypothesis of
+non-negative sectional curvature (which is in fact all we need in
+this work) was proved earlier by Toponogov, see .
+
+**Theorem.**
+Suppose that $M$ is complete, of
+non-negative Ricci curvature and suppose that $M$ has at least two
+ends. Then $M$ is isometric to a product $N\times \Ar$ where $N$ is
+a compact manifold.
+
+**Proof.** We begin the proof by establishing a result of independent interest,
+which was formulated as the main theorem in ..
+
+**Lemma.**
+Any complete Riemannian manifold $X$ of non-negative Ricci curvature
+containing a minimizing line is isometric to a product $N\times \Ar$
+for some Riemannian manifold $N$.
+
+\begin{proof}
+Given a minimizing line $\lambda\colon \Ar\to X$, define
+$\lambda_\pm\colon [0,\infty)\to X$ by $\lambda_+(t)=\lambda(t)$ and
+$\lambda_-(t)=\lambda(-t)$. Then we have the Busemann functions
+$B_+=B_{\lambda_+}$ and $B_-=B_{\lambda_-}$.
+Proposition~ applies to both $B_+$ and $B_-$ and shows
+that $\Delta (B_+ +B_-)\le 0$. On the other hand, using the fact
+that $\lambda$ is distance minimizing, we see that for any $s,t>0$
+and for any $x\in M$ we have $d(x,\lambda(t))+d(x,\lambda(-s))\ge
+s+t$, and hence $B_+(x)+B_-(x)\ge 0$. Clearly, $B_+(x)+B_-(x)=0$ for
+any $x$ in the image of $\lambda$. Thus, the function $B_++B_-$  is
+everywhere $\ge 0$, vanishes at at a least one point and satisfies
+$\Delta (B_++B_-)\le 0$ in the weak sense. This is exactly the
+set-up for the maximum principle, cf. , p. 279.
+
+**Theorem.** **(The Maximum Principle)**
+Let $f$ be a real-valued continuous function on a connected
+Riemannian manifold with $\Delta f\ge 0$ in the weak sense. Then $f$
+is locally constant near any local maximum. In particular, if $f$
+achieves its maximum then it is a constant.
+
+Applying this result to $-(B_++B_-)$, we see that $B_++B_-=0$, so that
+$B_-=-B_+$. It now follows that $\Delta B_+=0$ in the weak sense. By standard
+elliptic regularity results this implies that $B_+$ is a smooth harmonic
+function.
+
+Next, we show that  for all $x\in M$ we have $|\nabla B_+(x)|=1$.
+Fix $x\in M$. Take a sequence $t_n$ tending to infinity and consider
+minimizing geodesics $\mu_{+,n}$ from $x$ to $\lambda_+(t_n)$. By
+passing to a subsequence we can assume that there is a limit as
+$n\rightarrow \infty$. This limit  is a minimizing geodesic ray
+$\mu_+$ from $x$, which we think of as being `asymptotic at
+infinity' to $\lambda_+$. Similarly, we construct a minimizing
+geodesic ray $\mu_-$ from $x$ asymptotic at infinity to $\lambda_+$.
+ Since
+$\mu_+$ is a minimal geodesic ray, it follows that for any $t$ the
+restriction $\mu_+|_{[0,t]}$ is the unique length minimizing
+geodesic from $x$ to $\mu_+(t)$ and that $\mu_+(t)$ is not a
+conjugate point along $\mu_+$. It follows  by symmetry that $x$ is
+not a conjugate point along the reversed geodesic $-\mu_+|_{[0,t]}$
+and hence that $x\in U_{\mu_+(t)}$. This means that the function
+$d(\mu_+(t),\cdot)$ is smooth at $x$ with gradient equal to the unit
+tangent vector in the negative direction at $x$ to $\mu_+$, and
+consequently that $B_{\mu_+,t}$ is smooth at $x$. Symmetrically, for
+any $t>0$ the function $B_{\mu_-,t}$ is smooth at $x$ with the
+opposite gradient. Notice that these gradients have norm one. We
+have
+$$B_{\mu_+,t}+B_+(x)\ge B_+=-B_-\ge -(B_{\mu_-,t}+B_-(x)).$$
+Of course, $B_{\mu_+,t}(x)=0$ and $B_{\mu_-,t}(x)=0$, so that
+$$B_{\mu_+,t}(x)+B_+(x)=-(B_{\mu_-,t}(x)+B_-(x)).$$
+This squeezes $B_+$ between two smooth functions with the same value
+and same gradient at $x$ and hence shows that  $B_+$ is $C^1$ at $x$
+and $|\nabla B_+(x)|$ is of norm one.
+
+Thus, $B$ defines a smooth Riemannian submersion from $M\to \Ar$
+which implies that $M$ is isometric to a product of the fiber over
+the origin with $\Ar$.
+
+This result together with Lemma~ shows  that if $M$
+satisfies the hypothesis of  the theorem, then it can be written as
+a Riemannian product $M=N\times \Ar$. Since $M$ has at least two
+ends, it follows immediately that $N$ is compact. This completes the
+proof of the theorem.
+\end{proof}
+
+## $\epsilon$-necks
+
+Certain types of (incomplete) Riemannian manifolds play an
+especially important role in our analysis. The purpose of this
+section is to introduce these manifolds and use them to prove one
+essential result in Riemannian geometry.
+
+For all of the following definitions we fix $0<\epsilon<1/2$. Set
+$k$ equal to the greatest integer less than or equal to
+$\epsilon^{-1}$. In particular, $k\ge 2$.
+
+**Definition.**
+Suppose that we have a fixed metric $g_0$ on a manifold $M$ and an
+open submanifold $X\subset M$. We say that another metric $g$ on $X$
+is {\em within $\epsilon$ of $g_0|_X$ in the
+$C^{[1/\epsilon]}$-topology} if, setting $k=[1/\epsilon]$ we have
+
+$$
+sup_{x\in X}\left(|g(x)-g_0(x)|_{g_0}^2+
+\sum_{\ell=1}^k|\nabla_{g_0}^\ell g(x)|_{g_0}^2\right)<
+\epsilon^2,
+$$
+ where the covariant derivative
+$\nabla^\ell_{g_0}$ is the Levi-Civita connection of  $g_0$ and
+norms are  the pointwise $g_0$-norms on
+$$Sym^2T^*M\otimes \underbrace{T^*M\otimes\cdots\otimes
+T^*M}_{\ell-times}.$$
+
+More generally, given two smooth families of metrics $g(t)$ and
+$g_0(t)$ on  $M$ defined for $t$ in some interval $I$ we say that
+the family $g(t)|_X$ is within $\epsilon$ of the family $g_0(t)|_X$
+in the $C^{[1/\epsilon]}$-topology if  we have
+$$sup_{(x,t)\in X\times I}\left(\left| g(x,t)
+-g_0(x,t)\right|_{g_0(t)}^2 +\sum_{\ell=1}^k\left|\nabla_{g_0}^\ell
+g(x,t)\right|_{g_0}^2\right)<\epsilon^2.$$
+
+**Remark.** Notice that if we view a one-parameter family of metrics $g(t)$ as a
+curve in the space of metrics on $X$ with the
+$C^{[1/\epsilon]}$-topology then this is the statement that the two
+paths are pointwise within $\epsilon$ of each other. It says nothing
+about the derivatives of the paths, or equivalently about the time
+derivatives of the metrics and of their covariant derivatives. We
+will always be considering paths of metrics satisfying the Ricci
+flow equation. In this context two one-parameter families of metrics
+that are close in the $C^{2k}$-topology exactly when  the $r^{th}$
+time derivatives of the $s^{th}$-covariant derivatives are close for
+all $r,s$ with $s+2r\le 2k$.
+
+The first object of interest is one that, up to scale, is close to a
+long, round cylinder.
+
+**Definition.**
+Let $(N,g)$ be a Riemannian manifold and $x\in N$ a point. Then {\em
+an $\epsilon$-neck structure on $(N,g)$
+centered at $x$} consists of a diffeomorphism
+$$\varphi\colon  S^2\times (-\epsilon^{-1},\epsilon^{-1})\to N,$$
+with $x\in \varphi(S^2\times\{0\})$, such that the metric
+$R(x)\varphi^*g$  is within $\epsilon$ in the
+$C^{[1/\epsilon]}$-topology of the product of the usual Euclidean
+metric on the open interval with the metric of constant Gaussian
+curvature $1/2$ on $S^2$. We also use the terminology *$N$ is an
+$\epsilon$-neck centered at $x$*.  The image under $\varphi$ of the
+family of submanifolds $S^2\times \{t\}$ is called the *family
+of $2$-spheres of the $\epsilon$-neck*. The submanifold
+$\varphi(S^2\times \{0\})$ is called *the central $2$-sphere* of
+the $\epsilon$-neck structure.  We denote by $s_N\colon N\to \Ar$
+the composition $p_2\circ \varphi^{-1}$, where $p_2$ is the
+projection of $S^2\times (-\epsilon^{-1},\epsilon^{-1})$ to the
+second factor. There is also the vector field $\partial/\partial
+s_N$ on $N$ which is $\varphi_*$ of the standard vector field in the
+interval-direction of the product. We also use the terminology of
+the *plus* and *minus* end of the $\epsilon$-neck in the
+obvious sense. The opposite (or reversed) $\epsilon$-neck structure
+is the one obtained by composing the structure map with $Id_{S^2}\times -1$. We define the
+ *positive half of the neck* to be the region
+$s_N^{-1}(0,\epsilon^{-1})$ and the *negative half* to be the
+region $s_N^{-1} (-\epsilon^{-1},0)$. For any other fraction, e.g.,
+the left-hand three-quarters, the right-hand one-quarter, there are
+analogous notions, all measured with respect to $s_N\colon N\to
+(-\epsilon^{-1},\epsilon^{-1})$. We also use the terminology the
+middle one-half, or middle one-third of the $\epsilon$-neck; again
+these regions have their obvious meaning when measured via $s_N$.
+
+*An $\epsilon$-neck* in a Riemannian manifold $X$ is a
+codimension-zero submanifold $N$ and an $\epsilon$-structure on $N$
+centered at some point $x\in N$.
+
+The *scale* of an $\epsilon$-neck $N$ centered
+at $x$ is $R(x)^{-1/2}$. The scale of $N$ is denoted $r_N$. Intuitively, this
+is a measure of the radius of the cross-sectional $S^2$ in the neck. In fact,
+the extrinsic diameter of any $S^2$ factor in the neck is close to $\sqrt{2}\pi
+r_N$. See Fig.~ in the introduction.
+
+Here is the result that will be so important in our later arguments.
+
+**Proposition.**  The following
+holds for any $\epsilon>0$ sufficiently small.
+ Let $(M,g)$ be a complete, positively curved Riemannian
+$3$-manifold. Then $(M,g)$ does not contain $\epsilon$-necks of
+arbitrarily small scale.
+
+**Proof.** The result is obvious if $M$ is compact, so we assume that $M$ is
+non-compact. Let $p\in M$ be a soul for $M$ (Theorem~),
+and let $f$ be the distance function from $p$. Then $f^{-1}(s)$ is
+connected for all $s>0$.
+
+**Lemma.**
+Suppose that $\epsilon>0$ is sufficiently small that Lemma~  from
+the appendix holds. Let $(M,g)$ be a non-compact $3$-manifold of positive
+curvature and let $p\in M$ be a soul for it. Then for any $\epsilon$-neck $N$
+disjoint from $p$
+ the central $2$-sphere of $N$  separates the soul from the end of the manifold. In particular, if
+ two $\epsilon$-necks $N_1$ and $N_2$ in $M$ are disjoint from each other and from $p$, then
+the central $2$-spheres of $N_1$ and $N_2$ are the boundary
+components of a region in $M$ diffeomorphic to $S^2\times I$.
+
+\begin{proof}
+Let $N$ be an $\epsilon$-neck disjoint from $p$. By
+Lemma~ for any point $z$ in the middle third of $N$, the
+boundary of the metric ball $B(p,d(z,p))$ is a topological
+$2$-sphere in $N$ isotopic in $N$ to the central $2$-sphere of $N$.
+Hence, the central $2$-sphere separates the soul from the end of
+$M$. The second statement follows immediately by applying this to
+$N_1$ and $N_2$.
+
+Let $N_1$ and $N_2$ be disjoint $\epsilon$-necks, each disjoint from
+the soul. By the previous lemma, the central $2$-spheres $S_1$ and
+$S_2$ of these necks are smoothly isotopic to each other and they
+are the boundary components of a region  diffeomorphic to $S^2\times
+I$. Reversing the indices if necessary we can assume that $N_2$ is
+closer to $\infty$ than $N_1$, i.e., further from the soul.
+Reversing the directions of the necks if necessary, we can arrange
+that for $i=1,2$ the function $s_{N_i}$ is increasing as we go away
+from the soul. We define $C^\infty$- functions $\psi_i$ on $N_i$,
+functions depending only on $s_{N_i}$, as follows. The function
+$\psi_1$ is zero on the negative side of the middle third of $N_1$
+and increases to be identically one on the positive side of the
+middle third. The function $\psi_2$ is one on the negative side of
+the middle third of $N_2$ and decreases to be zero on the positive
+side. We extend $\psi_1,\psi_2$ to a function $\psi$ defined on all
+of $M$ by requiring that it be identically one on the region $X$
+between $N_1$ and $N_2$ and to be identically zero on $M\setminus
+(N_1\cup X\cup N_2)$.
+
+Let $\lambda$ be a geodesic ray from the soul of $M$ to infinity,
+and $B_\lambda$ its Busemann function. Let $N$ be any
+$\epsilon$-neck disjoint from the soul, with $ s_N$ direction chosen
+so that it points away from the soul. At any point of the middle
+third of $N$ where $B_\lambda$ is smooth,  $\nabla B_\lambda$ is a
+unit vector in the direction of the unique minimal geodesic ray from
+the end of $\lambda$ to this point. Invoking Lemma~
+from the appendix we see that at such points $\nabla B_\lambda$ is
+close to $-R(x)^{1/2}\partial/\partial s_N$, where $x\in N$ is the
+center of the $\epsilon$-neck. Since $\nabla B_\lambda$ is $L^2$ its
+non-smooth points have measure zero and hence, the restriction of
+$\nabla B_\lambda$ to the middle third of $N$ is close in the
+$L^2$-sense to $-R(x)^{1/2}\partial/\partial s_N$.
+
+Applying this to $N_1$ and $N_2$ we see that
+
+$$
+
+\int_M\langle \nabla B_\lambda,\nabla\psi\rangle dvol=\left(\alpha_2R(x_2)^{-1}-\alpha_1R(x_1)^{-1}\right)Vol_{h_0}(S^2)),
+$$
+ where $h(0)$ is the round metric of
+scalar curvature $1$ and where each of $\alpha_1$ and $\alpha_2$
+limits to $1$ as $\epsilon$ goes to zero. Since $\psi\ge 0$,
+Proposition~ tells us that the left-hand side of
+Equation~() must be $\ge 0$. This shows that,
+provided that $\epsilon$ is sufficiently small, $R(x_2)$ is bounded
+above by $2R(x_1)$. This completes the proof of the proposition.
+\end{proof}
+
+**Corollary.**
+Fix $\epsilon>0$ sufficiently small so that Lemma~ holds. Then
+there is a constant $C<\infty$ depending on $\epsilon$ such that the following
+holds. Suppose that $M$ is a non-compact $3$-manifold of positive sectional
+curvature. Suppose that $N$ is an $\epsilon$-neck in $M$  centered at a point
+$x$ and disjoint from a soul $p$ of $M$. Then for any $\epsilon$-neck $N'$ that
+is separated from $p$ by $N$ with center $x'$ we have $R(x')\le CR(x)$.
+
+## Forward difference quotients
+
+Let us review quickly some standard material on forward difference quotients.
+
+Let $f\colon [a,b]\to \Ar$ be a continuous function on an interval.
+We say that the {\em forward difference quotient of $f$ at a point
+$t\in [a,b)$, denoted $\frac{df}{dt}(t)$, is less than
+$c$} provided that
+$$\overlinelim_{\triangle t\rightarrow
+0^+}\frac{f(t+\triangle t)-f(t)}{\triangle t}\le c.$$ We say that it
+is greater than or equal to $c'$ if $$c'\le  \underlinelim_{\triangle t\rightarrow 0^+}\frac{f(t+\triangle
+t)-f(t)}{\triangle t}.$$ Standard comparison arguments show:
+
+**Lemma.**
+Suppose that $f\colon [a,b]\to \Ar$ is a continuous function. Suppose that
+$\psi$ is a $C^1$-function on $[a,b]\times \Ar$ and suppose that
+$\frac{df}{dt}(t)\le \psi(t,f(t))$ for  every $t\in [a,b)$ in the sense of
+forward difference quotients. Suppose also that there is a function  $G(t)$
+defined on $[a,b]$ that satisfies the differential equation
+$G'(t)=\psi(t,G(t))$ and has $f(a)\le G(a)$. Then $f(t)\le G(t)$ for all $t\in
+[a,b]$.
+
+The application we shall make of these results is the following.
+
+**Proposition.**
+Let $M$ be a smooth manifold with a smooth vector field $\chi$ and a
+smooth function $**t**\colon M\to [a,b]$ with $\chi(**t**)=1$.
+Suppose also that $F\colon M\to \Ar$ is a smooth function with the
+properties:
+\begin{enumerate}
+\item  for each $t_0\in [a,b]$ the restriction of $F$ to the level set $**t**^{-1}(t_0)$ achieves its maximum, and \item the subset ${\mathcal Z}$ of $M$
+consisting of all $x$ for which $F(x)\ge F(y)$ for all $y\in **t**^{-1}(**t**(x))$ is a compact set.
+\end{enumerate}
+ Suppose also that at each $x\in {\mathcal Z}$ we have $\chi(F(x))\le \psi(**t**(x),F(x))$. Set $F_max(t)=max_{x\in **t**^{-1}(t)}F(x)$. Then $F_max(t)$ is a continuous function and
+$$\frac{dF_max}{dt}(t)\le \psi(t,F_max(t))$$
+in the sense of forward difference quotients.
+ Suppose that $G(t)$ satisfies the
+differential equation
+$$G'(t)=\psi(t,G(t))$$ and has initial condition $F_max(a)\le G(a)$.  Then for all $t\in [a,b]$ we have
+$$F_max(t)\le G(t).$$
+
+**Proof.** Under the given hypothesis it is a standard and easy exercise to
+establish the statement about the forward difference quotient of
+$F_max$. The second statement then is an immediate corollary
+of the previous result.
