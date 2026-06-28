@@ -1,16 +1,30 @@
-# OpenGA
+<h1 align="center">Riemannian Geometry Challenge</h1>
 
-A Lean 4 library for geometric analysis.
+<p align="center"><em>In progress.</em></p>
 
-## Quick Start
+<p align="center">
+A public, open initiative to build Riemannian geometry into a living,<br/>
+machine-verified textbook — a shared foundation anyone can learn from,<br/>
+contribute to, reuse, and build on. Made for everyone.
+</p>
 
-Add the following dependency to your Lean project's `lakefile.lean`:
+<p align="center">
+  <a href="https://github.com/MathNetwork/Astrolabe"><img src="https://img.shields.io/badge/Powered_by-Astrolabe-669aba?style=for-the-badge&labelColor=11111b&logoColor=white" alt="Powered by Astrolabe"></a>
+  &nbsp;
+  <a href="https://events.astrolabe.network/"><img src="https://img.shields.io/badge/Website-events.astrolabe.network-be1420?style=for-the-badge&labelColor=11111b" alt="Website"></a>
+  &nbsp;
+  <a href="https://discord.com/invite/CvfrT34ra"><img src="https://img.shields.io/badge/Discord-Join-5865F2?style=for-the-badge&logo=discord&logoColor=white&labelColor=11111b" alt="Join our Discord"></a>
+</p>
+
+## Use the Lean library
+
+Add the dependency to your `lakefile.lean`:
 
 ```
 require OpenGALib from git "https://github.com/MathNetwork/OpenGA.git" @ "main"
 ```
 
-## Build
+Build:
 
 ```
 lake exe cache get
@@ -21,13 +35,14 @@ Requires Mathlib at the SHA pinned in `lake-manifest.json`.
 
 ## Status
 
-Pre-`v0.1.0`, experimental. PRE-PAPER `sorry`'d statements and narrow structural axioms are tracked with explicit repair plans in module docstrings (search for `**Sorry status**:` / `axiom`).
+Pre-`v0.1.0`, experimental. PRE-PAPER `sorry`'d statements and narrow structural
+axioms are tracked with explicit repair plans in module docstrings (search for
+`**Sorry status**:` / `axiom`).
 
 ## Contributing
 
-The library is designed for downstream research consumption, teaching use, and Mathlib upstream candidacy. Issues and PRs welcome.
+Issues and PRs welcome.
 
 ## License
 
-OpenGA is released under the Apache 2.0 License.
-See the LICENSE file for details.
+Released under the Apache 2.0 License. See the LICENSE file for details.
