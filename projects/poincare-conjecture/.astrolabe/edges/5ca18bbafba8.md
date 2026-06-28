@@ -1,0 +1,45 @@
+---
+confidence: 0.25
+edgeClass: structural
+evidence:
+  sourceStatement:
+    chapter: 10
+    file: bddcurvbdddist.tex
+    label: ''
+    mtref: '10.17'
+    sort: definition
+    span:
+      coordinateSpace: comment-stripped-tex
+      end: 42249
+      sourceTransform: tex2mdx.strip_comments
+      start: 41852
+  targetStatement:
+    chapter: 10
+    file: bddcurvbdddist.tex
+    label: morethanone
+    mtref: '10.18'
+    sort: lemma
+    span:
+      coordinateSpace: comment-stripped-tex
+      end: 42343
+      sourceTransform: tex2mdx.strip_comments
+      start: 42251
+  type: section-reading-order-adjacency
+  via:
+  - section-sequence
+generator: tools/poincare_tex_extract.py
+inference: navigational
+kind: sequence
+ref:
+- e98dee3d7485
+- dda8a7c7acb6
+rel: in-section
+reviewStatus: accepted
+scope: section
+sort: (morgan-tian, morgan-tian)
+source: tex
+src: morgan-tian
+via:
+- section-sequence
+---
+Morgan--Tian reading-order adjacency within a section.

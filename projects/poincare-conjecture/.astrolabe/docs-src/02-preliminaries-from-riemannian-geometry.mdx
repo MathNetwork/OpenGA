@@ -1,0 +1,1285 @@
+<!-- generated: tools/poincare_tex_extract.py -->
+
+# Chapter 1 -- Preliminaries from Riemannian geometry
+
+In this chapter we will recall some basic facts in Riemannian
+geometry. For more details we refer the reader to [doCarmo] and
+[Petersen]. Throughout, we always adopt Einstein's summation
+convention on repeated indices and 'manifold' means a paracompact,
+Hausdorff, smooth manifold.
+
+## Riemannian metrics and the Levi-Civita connection
+
+Let $M$ be a manifold and let $p$ be a point of $M$. Then $TM$
+denotes the tangent bundle of $M$ and $T_pM$ is the tangent space at
+$p$. Similarly, $T^*M$ denotes the cotangent bundle of $M$ and
+$T^*_pM$ is the cotangent space at $p$. For any vector bundle
+${\mathcal V}$ over $M$ we denote by $\Gamma({\mathcal V})$ the
+vector space of smooth sections of ${\mathcal V}$.
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="1.1" -->
+**Definition.** Let $M$ be an $n$-dimensional manifold. A Riemannian metric $g$ on $M$ is a smooth section of $T^*M\otimes T^*M$ defining a
+positive definite symmetric bilinear form on $T_pM$ for each $p\in
+M$. In local coordinates $(x^1,\cdots, x^n)$, one has a natural
+local basis $\{\partial_1,\cdots,\partial_n\}$ for $TM$, where
+$\partial_i=\frac{\partial}{\partial x^i}$. The metric tensor
+$g=g_{ij} dx^i\otimes dx^j$ is represented by a smooth matrix-valued
+function
+
+$$
+g_{ij}=g(\partial_i,\partial_j).
+$$
+
+ The
+pair $(M,g)$ is a *Riemannian manifold*. We denote by $(g^{ij})$
+the inverse of the matrix $(g_{ij})$.
+<!-- astrolabe:end -->
+
+Using a partition of unity one can easily see that any manifold
+admits a Riemannian metric. A Riemannian metric on $M$ allows us to
+measure lengths of smooth paths in $M$ and hence to define a
+distance function by setting $d(p,q)$ equal to the infimum of the
+lengths of smooth paths from $p$ to $q$. This makes $M$ a metric
+space. For a point $p$ in a Riemannian manifold $(M,g)$ and for $r>
+0$ we denote the metric ball of radius $r$ centered at $p$ in $M$ by
+$B(p,r)$ or by $B_g(p,r)$ if the metric needs specifying or
+emphasizing. It is defined by
+
+$$
+B(p,r)=\{q\in M\left|\right. d(p,q)<r\}.
+$$
+
+<!-- astrolabe:begin kind="theorem" src="morgan-tian" mtref="1.2" -->
+**Theorem.** Given a Riemannian metric $g$ on $M$, there uniquely exists a
+torsion-free connection on $TM$ making $g$ parallel, i.e., there is
+a unique $\mathbb{R}$-linear mapping $\nabla\colon
+\Gamma(TM)\rightarrow \Gamma(T^*M\otimes TM)$ satisfying the Leibniz
+formula
+
+$$
+\nabla(fX)=df\otimes X+f\nabla X,
+$$
+
+and the following two additional conditions for all vector fields
+$X$ and $Y$:
+
+- **$\bullet$** ($g$ orthogonal) $d(g(X,Y))=g(\nabla X,Y)+g(X,\nabla
+Y)$.
+- **$\bullet$** (Torsion-free) $\nabla_XY-\nabla_YX-[X,Y]=0$
+(where, as is customary, we denote $\nabla Y(X)$ by $\nabla_XY$);
+<!-- astrolabe:end -->
+
+We call the
+above connection the *Levi-Civita connection* of the metric and $\nabla X$ the *covariant
+derivative* of $X$. On a Riemannian manifold we always use the
+Levi-Civita connection.
+
+In local coordinates $(x^1,\ldots,x^n)$ the Levi-Civita connection
+$\nabla$ is given by the $\nabla_{\partial_i}(\partial_j) =
+\Gamma^{k}_{ij}\partial_k$, where the Christoffel symbols
+$\Gamma^k_{ij}$ are the smooth functions
+
+$$
+\Gamma^{k}_{ij}= \frac{1}{2}g^{kl}(\partial_i g_{l j} +\partial_j
+g_{il}-\partial_l g_{ij}).
+$$
+
+ Note that the above two
+additional conditions for the Levi-Civita connection $\nabla$
+correspond respectively to
+
+$\bullet$ $\Gamma^k_{ij}=\Gamma^k_{ji}$,
+
+$\bullet$ $\partial_k g_{ij}=g_{l j}\Gamma^l_{ki}+g_{il
+}\Gamma^l_{kj}$.
+
+The covariant derivative extends to all tensors. In the special case
+of a function $f$ we have $\nabla( f)=df$. Note that there is a
+possible confusion between this and the notation in the literature
+since one often sees $\nabla f$ written for the gradient of $f$,
+which is the vector field dual to $df$. We always use $\nabla f$ to
+mean $df$, and we will denote the gradient of $f$ by $(\nabla f)^*$,
+
+The covariant derivative allows us to define the Hessian of a smooth
+function at any point, not just a critical point. Let $f$ be a
+smooth real-valued function on $M$. We define the
+Hessian of $f$, denoted $\mathit{Hess}(f)$, as
+follows:
+
+$$
+\mathit{Hess}(f)(X,Y)=X(Y(f))-\nabla_XY(f).
+$$
+
+<!-- astrolabe:begin kind="lemma" src="morgan-tian" mtref="1.3" label="Hessformula" -->
+**Lemma.** The Hessian is a contravariant, symmetric two-tensor, i.e., for
+ vector fields $X$ and $Y$ we have
+
+$$
+\mathit{Hess}(f)(X,Y)=\mathit{Hess}(f)(Y,X)
+$$
+
+and
+
+$$
+\mathit{Hess}(f)(\phi X,\psi Y)=\phi\psi \mathit{Hess}(f)(X,Y)
+$$
+
+for all smooth functions $\phi,\psi$. Other formulas for the Hessian
+are
+
+$$
+\mathit{Hess}(f)(X,Y)=\langle \nabla_X(\nabla f),Y\rangle=\nabla_X(\nabla_Y(f))=\nabla^2f(X,Y).
+$$
+
+Also, in local coordinates we have
+
+$$
+\mathit{Hess}(f)_{ij}=\partial_i\partial_jf-(\partial_kf)\Gamma^k_{ij}.
+$$
+<!-- astrolabe:end -->
+
+**Proof.** The proof of symmetry is direct from the torsion-free assumption:
+
+$$
+\mathit{Hess}(f)(X,Y)-\mathit{Hess}(f)(Y,X)=[X,Y](f)-(\nabla_XY-\nabla_YX)(f)=0.
+$$
+
+ The fact that
+$\mathit{Hess}(f)$ is a tensor is also established by direct
+computation. The equivalence of the various formulas is also
+immediate:
+
+$$
+\begin{aligned}
+\langle\nabla_X(\nabla f),Y\rangle & = & X(\langle \nabla
+f,Y\rangle)-\langle\nabla f,\nabla_XY\rangle
+\\ & = & X(Y(f))-\nabla_XY(f)=\mathit{Hess}(f)(X,Y).\nonumber
+\end{aligned}
+$$
+
+Since $df=(\partial_rf) dx^r$ and
+$\nabla(dx^k)=-\Gamma_{ij}^kdx^i\otimes dx^j$, it follows that
+
+$$
+\nabla(df)=\left(\partial_i\partial_jf-(\partial_kf)\Gamma^k_{ij}\right)dx^i\otimes
+dx^j.
+$$
+
+ It is direct from the definition that
+
+$$
+\mathit{Hess}(f)_{ij}=\mathit{Hess}(f)(\partial_i,\partial_j)=\partial_i\partial_jf-(\partial_kf)\Gamma_{ij}^k.
+$$
+
+When the metric that we are using to define the Hessian is not clear
+from the context, we introduce it into the notation and write $\mathit{Hess}_g(f)$ to denote the Hessian of $f$ with respect to the metric
+$g$.
+
+The Laplacian $\triangle f$ is defined as the
+trace of the Hessian: That is to say, in local coordinates near $p$
+we have
+
+$$
+\triangle f(p)=\sum_{ij}g^{ij}\mathit{Hess}(f)(\partial_i,\partial_j).
+$$
+
+Thus, if $\{X_i\}$ is an orthonormal basis for $T_pM$ then
+
+$$
+\triangle f(p)=\sum_i\mathit{Hess}(f)(X_i,X_i).
+$$
+
+ Notice that this is
+the form of the Laplacian that is non-negative at a local minimum, and
+consequently has a non-positive spectrum.
+
+## Curvature of a Riemannian manifold
+
+For the rest of this chapter $(M,g)$ is a Riemannian manifold.
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="1.4" -->
+**Definition.** The *Riemann curvature tensor* of $M$ is the $(1,3)$-tensor on $M$
+
+$$
+{\mathcal R}(X,Y)Z = \nabla^{2}_{X,Y}Z
+- \nabla^{2}_{Y,X}Z = \nabla_{X}\nabla_{Y}Z-\nabla_{Y}\nabla_{X}Z
+-\nabla_{[X,Y]}Z,
+$$
+
+ where
+$\nabla^2_{X,Y}Z=\nabla_{X}\nabla_{Y}Z-\nabla_{\nabla_XY}Z$.
+<!-- astrolabe:end -->
+
+In local coordinates the curvature tensor can be represented as
+
+$$
+{\mathcal R}(\partial_i,\partial_j)\partial_k=
+{{{R}_{ij}}^l}_k\partial_l,
+$$
+
+ where
+
+$$
+{{R_{ij}}^l}_k=
+\partial_i \Gamma^{l}_{jk}- \partial_j
+\Gamma^{l}_{ik}+
+\Gamma^{s}_{jk}\Gamma^{l}_{is}-\Gamma^{s}_{ik}\Gamma^{l}_{js}.
+$$
+
+Using the metric tensor $g$, we can change ${\mathcal R}$ to a
+$(0,4)$-tensor as follows:
+
+$$
+{\mathcal R}(X,Y,Z,W)=g({\mathcal R}(X,Y)W,Z).
+$$
+
+(Notice the change of order in the last two variables.) Notice that
+we use the same symbol and the same name for both the $(1,3)$ tensor
+and the $(0,4)$ tensor; which one we are dealing with in a given
+context is indicated by the index structure or the variables to
+which the tensor is applied. In local coordinates, the Riemann
+curvature tensor can be represented as
+
+$$
+\begin{aligned}
+{\mathcal R}(\partial_i,\partial_j,\partial_k,\partial_l) & = R_{ijkl}\\
+&=g_{ks}{{R_{ij}}^s}_l\\
+&=g_{ks}(\partial_i \Gamma^{s}_{jl}- \partial_j \Gamma^{s}_{il}+
+\Gamma^{t}_{jl}\Gamma^{s}_{it}-\Gamma^{t}_{il}\Gamma^{s}_{jt}).
+\end{aligned}
+$$
+
+One can easily verify the following:
+
+<!-- astrolabe:begin kind="claim" src="morgan-tian" mtref="1.5" label="Bianchi" -->
+**Claim.** The Riemann curvature tensor ${\mathcal R}$ satisfies the following
+properties:
+
+$\bullet$ (Symmetry) $R_{ijkl}=-R_{jikl}$, $R_{ijkl}=-R_{ijlk}$,
+$R_{ijkl}=R_{klij}$,
+
+$\bullet$ (1st Bianchi identity) The sum of
+$R_{ijkl}$ over the cyclic permutation of
+
+ any three indices vanishes,
+
+$\bullet$ (2nd Bianchi identity)
+$R_{ijkl,h}+R_{ijlh,k}+R_{ijhk,l}=0$, where
+
+$$
+R_{ijkl,h}=(\nabla_{\partial_h}{\mathcal R})_{ijkl}.
+$$
+<!-- astrolabe:end -->
+
+There are many important related curvatures.
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="1.6" -->
+**Definition.** The *sectional curvature* of a
+2-plane $P\subset T_pM$ is defined as
+
+$$
+K(P) = {\mathcal R}(X,Y,X,Y),
+$$
+
+where $\{X,Y\}$ is an orthonormal basis of $P$. We say that $(M,g)$
+has *positive sectional curvature* (resp., *negative
+sectional curvature*) if $K(P)>0$ (resp., $K(P)<0$) for every
+2-plane $P$. There are analogous notions of non-negative and
+non-positive sectional curvature.
+<!-- astrolabe:end -->
+
+In local coordinates, suppose that $X = X^{i}\partial_i$ and $Y =
+Y^{i}\partial_i$. Then we have
+
+$$
+K(P) = R_{ijkl}X^{i}Y^{j}X^{k}Y^{l}.
+$$
+
+A Riemannian manifold is said to have *constant sectional
+curvature* if $K(P)$ is the same for all $p\in M$ and all $2$-planes
+$P\subset T_pM$. One can show that a manifold $(M,g)$ has constant
+sectional curvature $\lambda$ if and only if
+
+$$
+R_{ijkl} =
+\lambda(g_{ik}g_{jl}-g_{il}g_{jk}).
+$$
+
+ Of course, the sphere of
+radius $r$ in $\Ar^n$ has constant sectional curvature $1/r^2$,
+$\Ar^n$ with the Euclidean metric has constant sectional curvature
+$0$, and the hyperbolic space ${\mathbb H}^n$, which, in the
+Poincaré model, is given by the unit disk with the metric
+
+$$
+\frac{4(dx^{2}_{1}+\cdots+
+dx^{2}_{n})}{(1-\abs{x}^{2})^{2}},
+$$
+
+ or in the upper half-space
+model with coordinates $(x^1,\ldots,x^n)$ is given by
+
+$$
+\frac{ds^2}{(x^n)^2}
+$$
+
+ has constant sectional curvature $-1$. In all
+three cases we denote the constant curvature metric by $g_\mathit{st}$.
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="1.7" -->
+**Definition.** Using the metric, one can replace the Riemann curvature tensor
+${\mathcal R}$ by a symmetric bilinear form $\mathit{Rm}$ on
+$\wedge^2TM$. In local coordinates let
+$\varphi=\varphi^{ij}\partial_i\wedge\partial _j$ and
+$\psi=\psi^{kl}\partial _k\wedge\partial_l$ be local sections of
+$\wedge^2TM$. The formula for $\mathit{Rm}$ is
+
+$$
+\mathit{Rm}(\varphi, \psi)=R_{ijkl}\varphi^{ij}\psi^{kl}.
+$$
+
+We call $\mathit{Rm}$ the *curvature
+operator*. We say $(M,g)$ has
+*positive curvature operator* if $\mathit{Rm}(\varphi,\varphi)>0$ for any nonzero 2-form $\varphi =
+\varphi^{ij}\partial_{i}\wedge
+\partial_{j}$ and has *nonnegative curvature operator* if
+$\mathit{Rm}(\varphi,\varphi)\geq0$ for any $\varphi\in \wedge^2TM$.
+<!-- astrolabe:end -->
+
+Clearly, if the curvature operator is a positive (resp.,
+non-negative) operator then the manifold is positively (resp.,
+non-negatively) curved.
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="1.8" -->
+**Definition.** The *Ricci curvature tensor*,
+denoted $\mathit{Ric}$ or $\mathit{Ric}_g$ when it is necessary to specify
+the metric, is a symmetric contravariant two-tensor. In local
+coordinates it is defined by
+
+$$
+\mathit{Ric}(X,Y)=g^{kl}R(X,\partial_k,Y,\partial_l).
+$$
+
+The value of this tensor at a point $p\in M$ is given by
+$\sum_{i=1}^nR(X(p),e_i,Y(p),e_i)$ where $\{e_{1},\cdots,e_{n}\}$ is
+an orthonormal basis of $T_pM$. Clearly $\mathit{Ric}$ is a symmetric
+bilinear form on $TM$, given in local coordinates by
+
+$$
+\mathit{Ric}=\mathit{Ric}_{ij}dx^i\otimes dx^j,
+$$
+
+ where
+$\mathit{Ric}_{ij}=\mathit{Ric}(\partial_i,\partial _j)$. The
+*scalar curvature* is defined by:
+
+$$
+R=R_g=\mathit{tr}_g \mathit{Ric}=g^{ij}\mathit{Ric}_{ij}.
+$$
+
+ We will say that $\mathit{Ric} \geq
+k$ (or $\leq k$) if all the eigenvalues of $\mathit{Ric}$ are $\geq k$
+(or $\leq k$).
+<!-- astrolabe:end -->
+
+Clearly, the curvatures are natural in the sense that if $F\colon N
+\rightarrow M$ is a diffeomorphism and if $g$ is a Riemannian metric
+on $M$, then $F^*g$ is a Riemannian metric on $N$ and we have $\mathit{Rm}(F^*g)=F^*(\mathit{Rm}(g))$, $\mathit{Ric}(F^{*}g) = F^{*}(\mathit{Ric}(g))$, and $R(F^*g)=F^*(R(g))$.
+
+### Consequences of the Bianchi identities
+
+There is one consequence of the second Bianchi identity that will be
+important later. For any contravariant two-tensor $\omega$ on $M$
+(such as $\mathit{Ric}$ or $\mathit{Hess}(f)$) we define the contravariant
+one-tensor $\mathit{div}(\omega)$ as follows: For any vector field $X$
+we set
+
+$$
+\mathit{div}(\omega)(X)=\nabla^*\omega(X)=g^{rs}\nabla_r(\omega)(X,\partial_s).
+$$
+
+<!-- astrolabe:begin kind="lemma" src="morgan-tian" mtref="1.9" label="divRic" -->
+**Lemma.**
+
+$$
+dR=2\mathit{div}(\mathit{Ric})=2\nabla^*\mathit{Ric}.
+$$
+<!-- astrolabe:end -->
+
+For a proof see Proposition 6 of Chapter 2 on page 40 of [Petersen].
+
+We shall also need a formula relating the connection Laplacian on
+contravariant one-tensors with the Ricci curvature. Recall that for
+a smooth function $f$, we defined the symmetric two-tensor
+$\nabla^2f$ by
+
+$$
+\nabla^2f(X,Y)=\nabla_X\nabla_Y(f)-\nabla_{\nabla_X(Y)}(f)=\mathit{Hess}(f)(X,Y),
+$$
+
+and then defined the Laplacian
+
+$$
+\triangle f=\mathit{tr}\nabla^2f=g^{ij}(\nabla^2f)_{ij}.
+$$
+
+ These operators extend to tensors of any
+rank. Suppose that $\omega$ is a contravariant tensor of rank $k$. Then we
+define $\nabla^2\omega$ to be a contravariant tensor of rank $k+2$ given by
+
+$$
+\nabla^2\omega(\cdot,X,Y)=(\nabla_{X}\nabla_{Y}\omega)(\cdot)
+-\nabla_{\nabla_X(Y)}\omega(\cdot).
+$$
+
+ This expression is not
+symmetric in the vector fields $X,Y$ but the commutator is given by
+evaluating the curvature operator ${\mathcal R}(X,Y)$ on $\omega$.
+We define the connection Laplacian on the tensor $\omega$ to be
+
+$$
+\triangle \omega=g^{ij}\nabla^2(\omega)(\partial_i,\partial_j).
+$$
+
+Direct computation gives the standard Bochner formula relating these
+Laplacians with the Ricci curvature; see for example Proposition
+4.36 on page 168 of [Gallot].
+
+<!-- astrolabe:begin kind="lemma" src="morgan-tian" mtref="1.10" label="lapformula" -->
+**Lemma.** Let $f$ be a smooth function on a Riemannian manifold.
+Then we have the following formula for contravariant one-tensors:
+
+$$
+\triangle df=d\triangle f+\mathit{Ric}((\nabla f)^*,\cdot).
+$$
+<!-- astrolabe:end -->
+
+### First examples
+
+The most homogeneous Riemannian manifolds are those of constant
+sectional curvature. These are easy to classify; see Corollary 10 of
+Chapter 5 on page 147 of [Petersen].
+
+<!-- astrolabe:begin kind="theorem" src="morgan-tian" mtref="1.11" -->
+**Theorem.** **(Uniformization Theorem)** If
+$(M^n,g)$ is a complete, simply-connected Riemannian manifold of
+constant sectional curvature $\lambda$, then:
+
+1. If $\lambda=0$, then $M^n$ is isometric to Euclidean $n$-space.
+1. If $\lambda>0$ there is a diffeomorphism $\phi \colon M \rightarrow S^{n}$
+ such that g = $\lambda^{-1}\phi^{*}(g_\mathit{st})$ where $g_{st}$ is the usual metric on the unit sphere in $\Ar^{n+1}$.
+1. If $\lambda<0$ there is a diffeomorphism $\phi \colon M \rightarrow {\mathbb H}^{n}$
+ such that g = $\abs{\lambda}^{-1}\phi^{*}(g_\mathit{st})$ where $g_{st}$ is the Poincaré metric of constant curvature
+$-1$ on ${\mathbb H}^n$.
+<!-- astrolabe:end -->
+
+Of course, if $(M^n,g)$ is a complete manifold of constant sectional
+curvature then its universal covering satisfies the hypothesis of
+the theorem and hence is one of $S^n, \Ar^n$, or ${\mathbb H}^n$, up
+to a constant scale factor. This implies that $(M,g)$ is isometric
+to a quotient of one of these simply connected spaces of constant
+curvature by the free action of a discrete group of isometries. Such
+a Riemannian manifold is called a
+*space-form*.
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="1.12" -->
+**Definition.** The Riemannian manifold
+$(M,g)$ is said to be an *Einstein manifold with Einstein
+constant* $\lambda$ if $\mathit{Ric}(g)=\lambda g$.
+<!-- astrolabe:end -->
+
+<!-- astrolabe:begin kind="example" src="morgan-tian" mtref="1.13" -->
+**Example.** Let $M$ be an $n$-dimensional manifold with $n$ being either $2$ or $3$.
+If $(M,g)$ is Einstein with Einstein constant $\lambda$, one can
+easily show that $M$ has constant sectional curvature
+$\frac{\lambda}{n-1}$, so that in fact $M$ is a space-form.
+<!-- astrolabe:end -->
+
+### Cones
+
+Another class of examples that will play an important role in our
+study of the Ricci flow is that of cones.
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="1.14" label="conedefn" -->
+**Definition.** Let $(N,g)$ be a Riemannian manifold. We define the *open cone*
+over $(N,g)$ to be the manifold $N\times (0,\infty)$ with the metric
+$\tilde g$ defined as follows: For any $(x,s)\in N\times (0,\infty)$
+we have
+
+$$
+\tilde g(x,s)=s^2g(x)+ds^2.
+$$
+<!-- astrolabe:end -->
+
+Fix local coordinates $(x^1,\ldots,x^n)$ on $N$. Let
+$\Gamma_{ij}^k;\ 1\le i,j,k\le n$, be the Christoffel symbols for
+the Levi-Civita connection on $N$. Set $x^0=s$. In the local
+coordinates $(x^0,x^1,\ldots,x^n)$ for the cone we have the
+Christoffel symbols $\widetilde \Gamma_{ij}^k;\ 0\le i,j,k\le n$,
+for $\tilde g$. The relation between the metrics gives the following
+relations between the two sets of Christoffel symbols:
+
+$$
+\begin{aligned}
+\widetilde
+\Gamma_{ij}^k & = & \Gamma_{ij}^k; \ \ \ \ 1\le i,j,k\le n \\
+\widetilde \Gamma_{ij}^0 & = & -sg_{ij}; \ \ \ \ 1\le i,j\le n \\
+\widetilde\Gamma_{i0}^j & = & \widetilde\Gamma_{0i}^j =
+s^{-1}\delta^j_i; \ \ \ \ 1\le i,j\le n \\
+\widetilde \Gamma_{i0}^0 & = & 0;\ \ \ \ 0\le i\le n \\
+\widetilde \Gamma_{00}^i & = & 0;\ \  \ \ 0\le i\le n.
+\end{aligned}
+$$
+
+Denote by ${\mathcal R}_g$ the curvature tensor for $g$ and by
+${\mathcal R}_{\tilde g}$ the curvature tensor for $\tilde g$. Then
+the above formulas lead directly to:
+
+$$
+\begin{aligned}
+{\mathcal R}_{\tilde g}(\partial_i,\partial_j)(\partial_0) & = & 0;\ \ \ \  0\le i,j\le n \\
+{\mathcal R}_{\tilde g}(\partial_i,\partial_j)(\partial_i) & = &
+{\mathcal
+R}_g(\partial_i,\partial_j)(\partial_i)+g_{ii}\partial_j-g_{ji}\partial_i;\
+\ \ \  1\le i,j\le n \\
+\end{aligned}
+$$
+
+This allows us to compute the Riemann curvatures of the cone in
+terms of those of $N$.
+
+<!-- astrolabe:begin kind="proposition" src="morgan-tian" mtref="1.15" label="conecurv" -->
+**Proposition.** Let $N$ be a Riemannian manifold of dimension $n-1$. Fix $(x,s)\in
+c(N)=N\times (0,\infty)$. With respect to the coordinates
+$(x^0,\ldots,x^n)$ the curvature operator ${\mathit{Rm}}_{\tilde
+g}(p,s)$ of the cone decomposes as
+
+$$
+\begin{pmatrix} 0 & 0 \\ s^2(\mathit{Rm}_g(p)-\wedge^2g(p)) & 0
+\end{pmatrix},
+$$
+
+where $\wedge^2g(p)$ is the symmetric form on $\wedge^2T_pN$ induced
+by $g$.
+<!-- astrolabe:end -->
+
+<!-- astrolabe:begin kind="corollary" src="morgan-tian" mtref="1.16" -->
+**Corollary.** For any $p\in N$ let $\lambda_1,\ldots,\lambda_{(n-1)(n-2)/2}$ be
+the eigenvalues of $\mathit{Rm}_g(p)$. Then for any $s>0$ there are
+$(n-1)$ zero eigenvalues of $\mathit{Rm}_{\tilde g}(p,s)$. The other
+$(n-1)(n-2)/2$ eigenvalues of $\mathit{Rm}_{\tilde g}(p,s)$ are
+$s^{-2}(\lambda_i-1)$.
+<!-- astrolabe:end -->
+
+**Proof.** Clearly from \entryref{1b517dfd4bd7}, we see that under the
+orthogonal decomposition $\wedge^2T_{(p,s)}c(N)=\wedge^2T_pN\oplus
+T_pN$ the second subspace is contained in the null space of $ \mathit{Rm}_{\tilde g}(p,s)$, and hence contributes $(n-1)$ zero
+eigenvalues. Likewise, from this proposition we see that the
+eigenvalues of the restriction of $\mathit{Rm}_{\tilde g}(p,s)$ to the
+subspace $\wedge^2T_pN$ are given by
+$s^{-4}(s^2(\lambda_i-1))=s^{-2}(\lambda_i-1)$.
+
+## Geodesics and the exponential map
+
+Here we review standard material about geodesics, Jacobi fields, and
+the exponential map.
+
+### Geodesics and the energy functional
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="1.17" -->
+**Definition.** Let $I$ be an open interval.
+A smooth curve $\gamma\colon I \rightarrow M$ is called a
+*geodesic* if $\nabla_{\dot \gamma}\dot
+\gamma =0$.
+<!-- astrolabe:end -->
+
+In local coordinates, we write $\gamma(t)=(x^1(t),\ldots,x^n(t))$
+and this equation becomes
+
+$$
+0=\nabla_{\dot \gamma}\dot \gamma(t) =
+\left(\sum\limits_k\left(\ddot x^k(t) +\dot x^i(t)\dot
+x^j(t)\Gamma^{k}_{ij}(\gamma(t))\right)\partial_k\right).
+$$
+
+ This is
+a system of $2^{nd}$ order ODE's. The local existence, uniqueness
+and smoothness of a geodesic through any point $p\in M$ with initial
+velocity vector $v\in T_pM$ follow from the classical ODE theory.
+Given any two points in a complete manifold, a standard limiting
+argument shows that there is a rectifiable curve of minimal length
+between these points. Any such curve is a geodesic. We call
+geodesics that minimize the length between their endpoints *minimizing geodesics*.
+
+We have the classical theorem showing that on a complete manifold
+all geodesics are defined for all time (see Theorem 16 of Chapter 5
+on p. 137 of [Petersen]).
+
+<!-- astrolabe:begin kind="theorem" src="morgan-tian" mtref="1.18" -->
+**Theorem.** (Hopf-Rinow) If $(M,g)$ is complete as a metric space, then every
+geodesic extends to a geodesic defined for all time.
+<!-- astrolabe:end -->
+
+Geodesics are critical points of the energy functional. Let $(M,g)$
+be a complete Riemannian manifold. Consider the space of $C^1$-paths
+in $M$ parameterized by the unit interval. On this space we have the
+energy functional
+
+$$
+E(\gamma)=\frac{1}{2}\int_{0}^{1}\langle \gamma'(t),\gamma'(t)\rangle dt.
+$$
+
+ Suppose that we have a one-parameter family of paths parameterized by
+ $[0,1]$,
+ all having the same initial point $p$ and the same final point $q$.
+ By this we mean that we have a surface $\tilde\gamma(t,u)$ with the property that for each
+ $u$ the path $\gamma_u=\tilde\gamma(\cdot,u)$ is a path from $p$ to $q$ parameterized by $[0,1]$.
+ Let $\widetilde X=\partial\tilde \gamma/\partial t$ and
+ $\widetilde Y=\partial\tilde \gamma/\partial u$ be the corresponding vector
+ fields along the surface swept out by $\tilde \gamma$, and denote by $X$ and $Y$ the restriction
+ of these vector fields along $\gamma_0$.
+ We compute
+
+$$
+\begin{aligned}
+\frac{dE(\gamma_u)}{du}\Bigl|_{u=0}\Bigr.& = & \left( \int_0^1\langle \nabla_{\widetilde Y}\widetilde X,\widetilde
+ X\rangle dt\right)\left|_{u=0}\right. \\
+ & = & \left(\int_0^1\langle\nabla_{\widetilde X}\widetilde Y,\widetilde
+ X\rangle dt \right)\left|_{u=0}\right.\\
+ & = & -\left( \int_0^1\langle\nabla_{\widetilde X}\widetilde X,\widetilde
+ Y\rangle dt\right)\left|_{u=0}\right.=-\int_0^1\langle\nabla_XX,Y\rangle,
+\end{aligned}
+$$
+
+where the first equality in the last line comes from integration by
+parts and the fact that $\widetilde Y$ vanishes at the endpoints.
+Given any vector field $Y$ along $\gamma_0$ there is a one-parameter
+family $\tilde \gamma(t,u)$ of paths from $p$ to $q$ with $\tilde
+\gamma(t,0)=\gamma_0$ and with $\widetilde Y(t,0)=Y$. Thus, from the
+above expression we see that $\gamma_0$ is a critical point for the
+energy functional on the space of paths from $p$ to $q$
+parameterized by the interval $[0,1]$ if and only if $\gamma_0$ is a
+geodesic.
+
+Notice that it follows immediately from the geodesic equation that
+the length of a tangent vector along a geodesic is constant. Thus,
+if a geodesic is parameterized by $[0,1]$ we have
+
+$$
+E(\gamma)=\frac{1}{2}L(\gamma)^2.
+$$
+
+It is immediate from the Cauchy-Schwarz inequality that for any
+curve $\mu$ parameterized by $[0,1]$ we have
+
+$$
+E(\mu)\ge \frac{1}{2}L(\mu)^2
+$$
+
+with equality if and only if $|\mu'|$ is constant. In particular, a
+curve parameterized by $[0,1]$ minimizes distance between its
+endpoints if it is a minimum for the energy functional on all paths
+parameterized by $[0,1]$ with the given endpoints.
+
+### Families of geodesics and Jacobi fields
+
+Consider a family of geodesics $\tilde\gamma(u,t)=\gamma_u(t)$
+parameterized by the interval $[0,1]$ with $\gamma_u(0)=p$ for all
+$u$. Here, unlike the discussion above, we allow $\gamma_u(1)$ to
+vary with $u$. As before define vector fields along the surface
+swept out by $\tilde \gamma$: $\widetilde X=\partial
+\tilde\gamma/\partial t$ and let $\tilde
+Y=\partial\tilde\gamma/\partial u$. We denote by $X$ and $Y$ the
+restriction of these vector fields to the geodesic
+$\gamma_0=\gamma$.
+ Since each
+$\gamma_u$ is a geodesic, we have $\nabla_{\widetilde X}{\widetilde
+X}=0$. Differentiating this equation in the $\widetilde Y$-direction
+yields $\nabla_{\widetilde Y}\nabla_{\widetilde X}\widetilde X=0$.
+Interchanging the order of differentiation, using
+$\nabla_{\widetilde X}\widetilde Y=\nabla_{\widetilde Y}{\widetilde
+X}$, and then restricting to $\gamma$, we get the *Jacobi
+equation*:
+
+$$
+\nabla_X\nabla_XY+{\mathcal R}(Y,X)X=0.
+$$
+
+Notice that the left-hand side of the equation depends only on the
+value of $Y$ along $\gamma$, not on the entire family. We denote the
+left-hand side of this equation by ${rm Jac}(Y)$, so that the Jacobi
+equation now reads
+
+$$
+{rm Jac}(Y)=0.
+$$
+
+ The fact that all the geodesics begin at the same point at time
+$0$ means that $Y(0)=0$. A vector field $Y$ along a geodesic
+$\gamma$ is said to be a *Jacobi field* if
+it satisfies this equation and vanishes at the initial point $p$. A
+Jacobi field is determined by its first derivative at $p$, i.e., by
+$\nabla_XY(0)$. We have just seen that this is the equation
+describing, to first order, variations of $\gamma$ by a family of
+geodesics with the same starting point.
+
+Jacobi fields are also determined by the energy functional. Consider
+the space of paths parameterized by $[0,1]$ starting at a given
+point $p$ but free to end anywhere in the manifold. Let $\gamma$ be
+a geodesic (parameterized by $[0,1]$) from $p$ to $q$. Associated to
+any one-parameter family $\tilde \gamma(t,u)$ of paths parameterized
+by $[0,1]$ starting at $p$ we associate the second derivative of the
+energy at $u=0$. Straightforward computation gives
+
+$$
+\frac{d^2E(\gamma_u)}{du^2}\Bigl|_{u=0}\Bigr.=\langle \nabla_XY(1),Y(1)\rangle+\langle
+X(1),\nabla_Y\widetilde Y(1,0)\rangle-\int_0^1\langle {rm
+Jac}(Y),Y\rangle dt.
+$$
+
+Notice that the first term is a boundary term from the integration
+by parts, and it depends not just on the value of $Y$ (i.e., on
+$\widetilde Y$ restricted to $\gamma$) but also on the first-order
+variation of $\widetilde Y$ in the $Y$ direction. There is the
+associated bilinear form that comes from two-parameter families
+$\tilde \gamma(t,u_1,u_2)$ whose value at $u_1=u_1=0$ is $\gamma$.
+It is
+
+$$
+\frac{d^2E}{du_1du_2}\Bigl|_{u_1=u_2=0}\Bigr.=\langle \nabla_XY_1(1),Y_2(1)\rangle+\langle
+X(1),\nabla_{Y_1}\widetilde Y_2(1,0)\rangle-\int_0^1\langle {rm
+Jac}(Y_1),Y_2\rangle dt.
+$$
+
+ Notice that restricting to the space of
+vector fields that vanish at both endpoints, the second derivatives
+depend only on $Y_1$ and $Y_2$ and the formula is
+
+$$
+\frac{d^2E}{du_1du_2}\Bigl|_{u_1=u_2=0}\Bigr.=-\int_0^1\langle {rm Jac}(Y_1),Y_2\rangle dt,
+$$
+
+so that this expression is symmetric in $Y_1$ and $Y_2$. The
+associated quadratic form on the space of vector fields along
+$\gamma$ vanishing at both endpoints
+
+$$
+-\int_0^1\langle {rm Jac}(Y),Y\rangle dt
+$$
+
+is the second derivative of the energy function at $\gamma$ for any
+one-parameter family whose value at $0$ is $\gamma$ and whose first
+variation is given by $Y$.
+
+### Minimal geodesics
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="1.19" -->
+**Definition.** Let $\gamma$ be a geodesic beginning at $p\in M$. For any $t>0$ we
+say that $q=\gamma(t)$ is a *conjugate point along
+$\gamma$* if there is a non-zero Jacobi field
+along $\gamma$ vanishing at $\gamma(t)$.
+<!-- astrolabe:end -->
+
+<!-- astrolabe:begin kind="proposition" src="morgan-tian" mtref="1.20" label="jacmin" -->
+**Proposition.** Suppose that $\gamma\colon [0,1]\to M$ is a minimal geodesic. Then
+for any $t<1$ the restriction of $\gamma$ to $[0,t]$ is the unique
+minimal geodesic between its endpoints and there are no conjugate
+points on $\gamma([0,1))$, i.e., there is no non-zero Jacobi field
+along $\gamma$ vanishing at any $t\in [0,1)$.
+<!-- astrolabe:end -->
+
+We shall sketch the proof. For more details see Proposition 19 and Lemma 14 of
+Chapter 5 on pp. 139 and 140 of [Petersen].
+
+**Proof.** (Sketch)
+Fix $0<t_0<1$. Suppose that there were a different geodesic
+$\mu\colon [0,t_0]\to M$ from $\gamma(0)$ to $\gamma(t_0)$, whose
+length was at most that of $\gamma|_{[0,t_0]}$. The fact that $\mu$
+and $\gamma|_{[0,t_0]}$ are distinct means that
+$\mu'(t_0)\not=\gamma'(t_0)$. Then the curve formed by concatenating
+$\mu$ with $\gamma|_{[t_0,1]}$ is a curve from $\gamma(0)$ to
+$\gamma(1)$ whose length is at most that of $\gamma$. But this
+concatenated curve is not smooth at $\mu(t_0)$, and hence it is not
+a geodesic, and in particular there is a curve with shorter length
+(a minimal geodesic) between these points. This is contrary to our
+assumption that $\gamma$ was minimal.
+
+To establish that there are no conjugate points at $\gamma(t_0)$ for
+$t_0<1$ we need the following claim.
+
+<!-- astrolabe:begin kind="claim" src="morgan-tian" mtref="1.21" -->
+**Claim.** Suppose that $\gamma$ is a minimal geodesic and $Y$ is a field
+vanishing at both endpoints. Let $\tilde\gamma(t,u)$ be any
+one-parameter family of curves parameterized by $[0,1]$, with
+$\gamma_0=\gamma$ and with $\gamma_u(0)=\gamma_0(0)$ for all $u$.
+Suppose that the first-order variation of $\tilde \gamma$ at $u=0$
+is given by $Y$. Then
+
+$$
+\frac{d^2E(\gamma_u)}{du^2}\Bigl|_{u=0}\Bigr.=0
+$$
+
+if and only if $Y$ is a Jacobi field.
+<!-- astrolabe:end -->
+
+**Proof.** Suppose that $\tilde\gamma(u,t)$ is a one-parameter family of curves
+from $\gamma(0)$ to $\gamma(1)$ with $\gamma_0=\gamma$ and $Y$ is
+the first-order variation of this family along $\gamma$. Since
+$\gamma$ is a minimal geodesic we have
+
+$$
+-\int_0^1\langle {rm Jac}(Y),Y\rangle dt=\frac{d^2E(\gamma_u)}{du^2}\Bigl|_{u=0}\Bigr.\ge 0.
+$$
+
+ The associated symmetric bilinear form is
+
+$$
+B_\gamma(Y_1,Y_2)=-\int_\gamma\langle {rm Jac}(Y_1),Y_2\rangle dt
+$$
+
+is symmetric when $Y_1$ and $Y_2$ are constrained to vanish at both
+endpoints. Since the associated quadratic form is non-negative, we
+see by the usual argument for symmetric bilinear forms that
+$B_\gamma(Y,Y)=0$ if and only if $B_\gamma(Y,\cdot)=0$ as a linear
+functional on the space of vector fields along $\gamma$ vanishing at
+point endpoints. This of course occurs if and only if ${rm
+Jac}(Y)=0$.
+
+Now let us use this claim to show that there are no conjugate points
+on $\gamma|_{(0,1)}$. If for some $t_0<1$, $\gamma(t_0)$ is a
+conjugate point along $\gamma$, then there is a non-zero Jacobi
+field $Y(t)$ along $\gamma$ with $Y(t_0)=0$. Notice that since $Y$
+is non-trivial $\nabla_XY(t_0)\not= 0$. Extend $Y(t)$ to a vector
+field $\hat Y$ along all of $\gamma$ by setting it equal to $0$ on
+$\gamma|_{[t_0,1]}$. Since the restriction of $Y$ to
+$\gamma([0,t_0])$ is a Jacobi field vanishing at both ends and since
+$\gamma|_{[0,t_0]}$ is a minimal geodesic, the second-order
+variation of length of $\gamma|_{[0,t_0]}$ in the $Y$-direction is
+zero. It follows that the second-order variation of length along
+$\hat Y$ vanishes. But $\hat Y$ is not smooth (at $\gamma(t_0)$) and
+hence it is not a Jacobi field along $\gamma$. This contradicts the
+fact discussed in the previous paragraph that for minimal geodesics
+the null space of the quadratic form is exactly the space of Jacobi
+fields.
+
+### The exponential mapping
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="1.22" -->
+**Definition.** For any $p\in M$, we can define the *exponential
+map* at $p$, $\mathit{exp}_{p}$. It is
+defined on an open neighborhood $O_{p}$ of the origin in $T_{p}M$
+and is defined by $\mathit{exp}_{p}(v)=\gamma_v(1)$, the endpoint of
+the unique geodesic $\gamma_v\colon [0,1]\rightarrow M$ starting
+from $p$ with initial velocity vector $v$. We always take
+$O_{p}\subset T_{p}M$ to be the maximal domain on which $\mathit{exp}_p$ is defined, so that $O_{p}$ is a star-shaped open
+neighborhood of $0\in T_pM$. By the Hopf-Rinow Theorem, if $M$ is
+complete, then the exponential map is define on all of $T_pM$.
+<!-- astrolabe:end -->
+
+By the inverse function theorem there exists $r_0=r_{0}(p,M)
+> 0$, such that the restriction of $\mathit{exp}_p$ to the ball
+$B_{g|T_pM}(0,r_0)$ in $T_pM$ is a diffeomorphism onto
+$B_g(p,r_0)$. Fix $g$-orthonormal linear coordinates on $T_pM$.
+Transferring these coordinates via $\mathit{exp}_p$ to coordinates on
+$B(p,r_0)$ gives us *Gaussian normal coordinates* on $B(p,r_0)\subset M$.
+
+Suppose now that $M$ is complete, and fix a point $p\in M$. For
+every $q\in M$, there is a length-minimizing path from $p$ to $q$.
+When parameterized at constant speed equal to its length, this path
+is a geodesic with domain interval $[0,1]$. Consequently, $\mathit{exp}_p\colon T_pM\to M$ is onto. The differential of the exponential
+mapping is given by Jacobi fields:
+ Let
+$\gamma\colon [0,1]\to M$ be a geodesic from $p$ to $q$, and let
+ $X\in T_pM$ be $\gamma'(0)$. Then the exponential
+mapping at $p$ is a smooth map from $T_p(M)\to M$ sending $X$ to
+$q$. Fix $Z\in T_pM$. Then there is a unique Jacobi field $Y_Z$
+along $\gamma$ with $\nabla_XY_Z(0)=Z$. The association $Z\mapsto
+Y_Z(1)\in T_qM$ is a linear map from $T_p(M)\to T_qM$. Under the
+natural identification of $T_pM$ with the tangent plane to $T_pM$ at
+the point $Z$, this linear mapping is the differential of $\mathit{exp}_p\colon T_pM\to M$ at the point $X\in T_pM$.
+
+<!-- astrolabe:begin kind="corollary" src="morgan-tian" mtref="1.23" label="star" -->
+**Corollary.** Suppose that $\gamma$ is a minimal geodesic parameterized by $[0,1]$
+starting at $p$. Let $X(0)=\gamma'(0)\in T_pM$. Then for each
+$t_0<1$ the restriction $\gamma|_{[0,t_0]}$ is a minimal geodesic
+and $\mathit{exp}_p\colon T_pM\to M$ is a local diffeomorphism near
+$t_0X(0)$.
+<!-- astrolabe:end -->
+
+**Proof.** Of course, $\mathit{exp}_p(t_0X(0))=\gamma(t_0)$. According to the
+previous discussion, the kernel of the differential of the
+exponential mapping at $t_0X(0)$ is identified with the space of
+Jacobi fields along $\gamma$ vanishing at $\gamma(t_0)$. According
+to \entryref{50646105e5e0} the only such Jacobi field is the
+trivial one. Hence, the differential of $\mathit{exp}_p$ at $t_0X(0)$
+is an isomorphism, completing the proof.
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="1.24" -->
+**Definition.** There is an open neighborhood $U_p\subset T_pM$ of $0$ consisting
+of all $v\in T_pM$ for which: (i) $\gamma_v$ is the unique minimal
+geodesic from $p$ to $\gamma_v(1)$, and (ii) $ \mathit{exp}_p$ is a
+local diffeomorphism at $v$. We set ${\mathcal C}_p\subset M$ equal
+to $M\setminus \mathit{exp}_p(U_p)$. Then ${\mathcal C}_p$ is called
+the *cut locus from $p$*. It is a closed subset
+of measure $0$.
+<!-- astrolabe:end -->
+
+It follows from \entryref{8141585de23a} that $U\subset T_pM$ is a
+star-shaped open neighborhood of $0\in T_pM$.
+
+<!-- astrolabe:begin kind="proposition" src="morgan-tian" mtref="1.25" -->
+**Proposition.** The map
+
+$$
+\mathit{exp}_p\colon U_p\to M\setminus {\mathcal C}_p
+$$
+
+is a diffeomorphism.
+<!-- astrolabe:end -->
+
+For a proof see p. 139 of [Petersen].
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="1.26" -->
+**Definition.** The *injectivity radius $\mathit{inj}_M(p)$ of $M$ at $p$* is the
+supremum of the $r> 0$ for which the restriction of $\mathit{exp}_p\colon T_pM\to M$ to the ball $B(0,r)$ of radius $r$ in $T_pM$
+is a diffeomorphism into $M$. Clearly, $\mathit{inj}_M(p)$ is the
+distance in $T_pM$ from $0$ to the frontier of $U_p$. It is also the
+distance in $M$ from $p$ to the cut locus ${\mathcal C}_p$.
+<!-- astrolabe:end -->
+
+Suppose that $\mathit{inj}_M(p)=r$. There are two possibilities:
+Either there is a broken, closed geodesic through $p$, broken only
+at $p$, of length $2r$, or there is a geodesic $\gamma$ of length
+$r$ emanating from $p$ whose endpoint is a conjugate point along
+$\gamma$. The first case happens when the exponential mapping is not
+one-to-one of the closed ball of radius $r$ in $T_pM$, and the
+second happens when there is a tangent vector in $T_pM$ of length
+$r$ at which $\mathit{exp}_p$ is not a local diffeomorphism.
+
+## Computations in Gaussian normal coordinates
+
+In this section we compute the metric and the Laplacian (on
+functions) in local Gaussian coordinates. A direct computation shows
+that in Gaussian normal coordinates on a metric ball about $p\in M$
+the metric takes the form
+
+$$
+\begin{aligned}
+g_{ij}(x)& = & \delta_{ij} + \frac{1}{3}R_{iklj}x^kx^l +
+\frac{1}{6}R_{iklj,s}x^kx^lx^s \\
+& & +(\frac{1}{20}R_{iklj,st} +\frac{2}{45}\sum_m
+R_{iklm}R_{jstm})x^kx^lx^sx^t + O(r^{5}), \nonumber
+\end{aligned}
+$$
+
+where $r$ is the distance from $p$. (See, for example Proposition
+3.1 on page 41 of [Sakai], with the understanding that, with
+the conventions there, the quantity $R_{ijkl}$ there differs by sign
+from ours.)
+
+Let $\gamma$ be a geodesic in $M$ emanating from $p$ in the direction $v$.
+Choose local coordinates $\theta^1,\ldots,\theta^{n-1}$ on the unit sphere in
+$T_pM$ in a neighborhood of $v/|v|$. Then $(r, \theta^{1}, ... ,\theta^{n-1})$
+are local coordinates at any point of the ray emanating from the origin in the
+$v$ direction (except at $p$). Transferring these via $\mathit{exp}_p$ produces
+local coordinates $(r,\theta^{1}, ... ,\theta^{n-1})$ along $\gamma$. Using
+Gauss's lemma (Lemma 12 of Chapter 5 on p. 133 of [Petersen]), we can
+write the metric locally as
+
+$$
+g=dr^{2}+
+r^{2}h_{ij}(r,\theta)d\theta^{i}\otimes d\theta^{j}.
+$$
+
+ Then the
+volume form
+
+$$
+\begin{aligned}
+dV &= \sqrt{\mathit{det}(g_{ij})}dr\wedge d\theta^{1}
+\wedge\cdots\wedge
+d\theta^{n-1}\\
+& = r^{n-1}\sqrt{\mathit{det}(h_{ij})}dr\wedge d\theta^{1}
+\wedge\cdots\wedge d\theta^{n-1}.
+\end{aligned}
+$$
+
+<!-- astrolabe:begin kind="lemma" src="morgan-tian" mtref="1.27" -->
+**Lemma.** The *Laplacian operator* acting on scalar
+functions on $M$ is given in local coordinates by
+
+$$
+\triangle  = \frac{1}{\sqrt{\mathit{det}(g)}}\partial_i
+\left(g^{ij}\sqrt{\mathit{det}(g)}\partial_j\right).
+$$
+<!-- astrolabe:end -->
+
+**Proof.** Let us compute the derivative at a point $p$. We have
+
+$$
+\frac{1}{\sqrt{\mathit{det}(g)}}\partial_i
+\left(g^{ij}\sqrt{\mathit{det}(g)}\partial_j\right)f=g^{ij}\partial_i\partial_jf+\partial_ig^{ij}\partial_jf+
+\frac{1}{2}g^{ij}\partial_iTr(\tilde g)\partial_jf,
+$$
+
+ where $\tilde
+g=g(p)^{-1}g$. On the other hand from the definition of the
+Laplacian, Equation (1.4), and
+Equation (\entryref{98af9c99c3c2}) we have
+
+$$
+\triangle
+f=g^{ij}\mathit{Hess}(f)(\partial_i,\partial_j)=g^{ij}\left(\partial_i\partial_j(f)-
+\nabla_{\partial_i}\partial_jf\right)
+=g^{ij}\partial_i\partial_jf-g^{ij}\Gamma_{ij}^k\partial_kf.
+$$
+
+ Thus,
+to prove the claim it suffices to show that
+
+$$
+g^{ij}\Gamma_{ij}^k=-(\partial_ig^{ik}+\frac{1}{2}g^{ik}\mathit{Tr}(\partial_i\tilde g)).
+$$
+
+From the definition of the Christoffel symbols we have
+
+$$
+g^{ij}\Gamma_{ij}^k=\frac{1}{2}g^{ij}g^{kl}(\partial_ig_{jl}+\partial_jg_{il}-\partial_lg_{ij}).
+$$
+
+Of course, $g^{ij}\partial_ig_{jl}=-\partial_ig^{ij}g_{jl}$, so that
+ $g^{ij}g^{kl}\partial_ig_{jl}=-\partial_ig^{ik}$. It follows by symmetry that $g^{ij}g^{jl}\partial_jg_{il}
+ =-\partial_ig^{ik}$. The last term is clearly $-\frac{1}{2}g^{ik}\mathit{Tr}(\partial_i\tilde g).$
+
+Using Gaussian local coordinates near $p$, we have
+
+$$
+\begin{aligned}
+\triangle r &=
+\frac{1}{r^{n-1}\sqrt{\mathit{det}(h)}}\partial_r\left(r^{n-1}\sqrt{\mathit{det}(h)}\right)\\
+&= \frac{n-1}{r}
+ + \partial_r\log\left(\sqrt{\mathit{det}(h)}\right).
+\end{aligned}
+$$
+
+From this one computes directly that
+
+$$
+\triangle r
+ = \frac{n-1}{r} - \frac{r}{3}\mathit{Ric}(v,v)+ O(r^{2}),
+$$
+
+ where $v = \dot r(0)$, cf, p.265-268 of [Petersen]. So
+
+$$
+\triangle r \leq
+ \frac{n-1}{r}\ \ \mathit{when\ \} r \ll 1\ \ \mathit{and\} \mathit{Ric} > 0.
+$$
+
+This local computation has the following global analogue.
+
+<!-- astrolabe:begin kind="exercise" src="morgan-tian" mtref="1.28" -->
+**Exercise.** (E.Calabi, 1958)
+Let $f(x)=d(p,x)$ be the distance function from $p$. If $(M, g)$ has
+$\mathit{Ric} \geq 0$, then
+
+$$
+\triangle f \leq \frac{n-1}{f}
+$$
+
+ in the sense of distributions.
+<!-- astrolabe:end -->
+
+[Compare [Petersen], p. 284 Lemma 42].
+
+<!-- astrolabe:begin kind="remark" src="morgan-tian" mtref="1.29" label="calabi" -->
+**Remark.** The statement that $\triangle f\leq \frac{n-1}{f}$ in *the sense
+of distributions* (or equivalently *in the weak sense*) means
+that for any non-negative test function $\phi$, that is to say for
+any compactly supported $C^\infty$-function $\phi$, we have
+
+$$
+\int_Mf\triangle \phi d\mathit{vol}\le \int_M\left(\frac{n-1}{f}\right)\phi d\mathit{vol}.
+$$
+
+Since the triangle inequality implies that $|f(x)-f(y)|\le d(x,y)$, it follows
+that $f$ is Lipschitz, and hence that the restriction of $\nabla f$ to any
+compact subset of $M$ is an $L^2$ one-form. Integration by parts then shows
+that
+
+$$
+\int_Mf\triangle
+\phi d\mathit{vol}=-\int_M\langle \nabla f,\nabla\phi\rangle d\mathit{vol}.
+$$
+<!-- astrolabe:end -->
+
+Since $\abs{\nabla f} = 1$ and $\triangle f$ is the mean curvature
+of the geodesic sphere $\partial B(x,r)$, $\mathit{Ric}(v,v)$ measures
+the difference of the mean curvature between the standard Euclidean
+sphere and the geodesic sphere in the direction $v$. Another
+important geometric object is the shape operator associated to $f$,
+denoted $S$. By definition it is the Hessian of $f$; i.e.,
+$S=\nabla^2f=\mathit{Hess}(f)$.
+
+## Basic curvature comparison results
+
+In this section we will recall some of the basic curvature
+comparison results in Riemannian geometry. The reader can refer to
+[Petersen], Section 1 of Chapter 9 for details.
+
+We fix a point $p\in M$. For any real number $k\ge 0$ let $H^n_k$ denote the
+simply connected, complete Riemannian $n$-manifold of constant sectional
+curvature $-k$. Fix a point $q_k\in H^n_k$, and consider the exponential map
+$\mathit{exp}_{q_k}\colon T_{q_k}(H^n_k)\to H^n_k$. This map is a global
+diffeomorphism. Let us consider the pullback, $\tilde h_k$, of the Riemannian
+metric on $H^n_k$ to $T_{q_k}H^n_k$. A formula for this tensor is easily given
+in polar coordinates on $T_{q_k}(H^n_k)$ in terms of the following function.
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="1.30" -->
+**Definition.** We define a function $\mathit{sn}_k$ as follows:
+
+$$
+\mathit{sn}_k(r)=\begin{cases}
+r \ \  & \mathit{if\ \}k=0 \\
+\frac{1}{\sqrt{k}}\mathit{sinh}(\sqrt{k}r) \ \ & \mathit{if \ \} k>0.
+\end{cases}
+$$
+<!-- astrolabe:end -->
+
+The function $\mathit{sn}_{k}(r)$ is the solution to the equation
+
+$$
+\begin{aligned}
+\varphi'' - k\varphi &= 0,\\
+\varphi(0) &= 0,\\
+\varphi'(0) &= 1.
+\end{aligned}
+$$
+
+We define
+ $\mathit{ct}_{k}(r) = \frac{\mathit{sn}_{k}^{'}(r)}{\sqrt{k}\mathit{sn}_{k}(r)}$.
+
+Now we can compare manifolds of varying sectional curvature with
+those of constant curvature.
+
+<!-- astrolabe:begin kind="theorem" src="morgan-tian" mtref="1.31" label="SCC" -->
+**Theorem.** (Sectional Curvature Comparison) Fix $k\ge 0$. Let $(M, g)$ be a
+Riemannian manifold with the property that $-k \leq K(P)$ for every
+$2$-plane $P$ in $TM$. Fix a minimizing geodesic $\gamma\colon
+[0,r_0)\to M$ parameterized at unit speed with $\gamma(0)=p$. Impose
+Gaussian polar coordinates $(r,\theta^1,\ldots,\theta^{n-1})$ on a
+neighborhood of $\gamma$ so that $g=dr^2+g_{ij}\theta^i\otimes
+\theta^j$. Then for all $0<r<r_0$ we have
+
+$$
+(g_{ij}(r,\theta))_{1 \leq
+i,j \leq n-1} \leq \mathit{sn}_{k}^{2}(r),
+$$
+
+ and the shape operator
+associated to the distance function from $p$, $f$, satisfies
+
+$$
+(S_{ij}(r,\theta))_{1 \leq i,j \leq n-1} \leq \sqrt{k}\mathit{ct}_{k}(r).
+$$
+<!-- astrolabe:end -->
+
+There is also an analogous result for a positive upper bound to the
+sectional curvature, but in fact all we shall need is the local
+diffeomorphism property of the exponential mapping.
+
+<!-- astrolabe:begin kind="lemma" src="morgan-tian" mtref="1.32" label="localdiffeo" -->
+**Lemma.** Fix $K\ge 0$.
+If $|\mathit{Rm}(x)|\le K$ for all $x\in B(p,\pi/\sqrt{K})$, then
+$\mathit{exp}_p$ is a local diffeomorphism from the ball
+$B(0,\pi/\sqrt{K})$ in $T_pM$ to the ball $B(p,\pi/\sqrt{K})$ in
+$M$.
+<!-- astrolabe:end -->
+
+There is a crucial comparison result for volume which involves the
+Ricci curvature.
+
+<!-- astrolabe:begin kind="theorem" src="morgan-tian" mtref="1.33" label="riccurvcomp" -->
+**Theorem.** **(Ricci curvature comparison)** Fix $k\ge 0$. Assume that $(M,
+g)$ satisfies $\mathit{Ric} \geq -(n-1)k$. Let $\gamma\colon [0,r_0)\to
+M$ be a minimal geodesic of unit speed. Then for any $r<r_0$ at
+$\gamma(r)$ we have
+
+$$
+\sqrt{\mathit{det} g(r,\theta)} \leq \mathit{sn}^{n-1}_{k}(r)
+$$
+
+ and
+
+$$
+\mathit{Tr}(S)(r,\theta) \leq (n-1)\frac{\mathit{sn}_{k}^{'}(r)}{\mathit{sn}_{k}(r)}.
+$$
+<!-- astrolabe:end -->
+
+Note that the inequality in \entryref{9f5db77333af} follows from this
+theorem.
+
+The comparison result in \entryref{569be40ea88e} holds out to
+every radius, a fact that will be used repeatedly in our arguments.
+This result evolved over the period 1964-1980 and now is referred to
+as the Bishop-Gromov inequality; see
+Proposition 4.1 of [CheegerGromovTaylor]
+
+<!-- astrolabe:begin kind="theorem" src="morgan-tian" mtref="1.34" label="BishopGromov" -->
+**Theorem.** (Relative Volume Comparison, Bishop-Gromov 1964-1980) Suppose $(M,
+g)$ is a Riemannian manifold. Fix a point $p\in M$, and suppose that
+$B(p,R)$ has compact closure in $M$. Suppose that for some $k\ge 0$
+we have $\mathit{Ric} \geq -(n-1)k$ on $B(p,R)$. Recall that $H^n_k$ is
+the simply connected, complete manifold of constant curvature $-k$
+and $q_k\in H^n_k$ is a point. Then
+
+$$
+\frac{\mathit{Vol} B(p,r)}{\mathit{Vol} B_{H^n_k}B(q_k,r)}
+$$
+
+is a non-increasing function of $r$ for $r<R$, whose limit as $r\rightarrow 0$
+is 1. In particular, if the Ricci curvature of $(M,g)$ is $\ge 0$ on $B(p,R)$,
+then $\mathit{Vol} B(p,r)/r^n$ is a non-increasing function of $r$ for $r<R$.
+<!-- astrolabe:end -->
+
+## Local volume and the injectivity radius
+
+As the following results show, in the presence of bounded curvature the volume
+of a ball $B(p,r)$ in $M$ is bounded away from zero if and only if the
+injectivity radius of $M$ at $p$ is bounded away from zero.
+
+<!-- astrolabe:begin kind="proposition" src="morgan-tian" mtref="1.35" label="injvol" -->
+**Proposition.** Fix an integer $n>0$. For every $\epsilon>0$ there is $\delta>0$
+depending on $n$ and $\epsilon$ such that the following holds.
+Suppose that $(M^n,g)$ is a complete Riemannian manifold of
+dimension $n$ and that $p\in M$. Suppose that $|\mathit{Rm}(x)|\le
+r^{-2}$ for all $x\in B(p,r)$. If the injectivity radius of $M$ at
+$p$ is at least $\epsilon r$, then $\mathit{Vol}(B(p,r))\ge \delta
+r^n$.
+<!-- astrolabe:end -->
+
+**Proof.** Suppose that $|\mathit{Rm}(x)|\le r^{-2}$ for all $x\in B(p,r)$.
+Replacing $g$ by $r^2 g$ allows us to assume that $r=1$. Without
+loss of generality we can assume that $\epsilon\le 1$. The map $\mathit{exp}_p$ is a diffeomorphism on the ball $B(0,\epsilon)$ in the
+tangent space, and by \entryref{95de178b529d} the volume of
+$B(p,\epsilon)$ is at least that of the ball of radius $\epsilon$ in
+the $n$-sphere of radius $1$. This gives a lower bound to the volume
+of $B(p,\epsilon)$, and a fortiori to $B(p,1)$, in terms of $n$ and
+$\epsilon$.
+
+ We shall normally work with volume, which behaves nicely under Ricci
+flow, but in order to take limits we need to bound the injectivity
+radius away from zero. Thus, the more important, indeed crucial,
+result for our purposes is the converse to the previous proposition;
+see Theorem 4.3, especially Inequality (4.22), on page 46 of
+[CheegerGromovTaylor], or see Theorem 5.8 on page 96 of
+[CheegerEbin].
+
+<!-- astrolabe:begin kind="theorem" src="morgan-tian" mtref="1.36" label="volinj" -->
+**Theorem.** Fix an integer $n>0$. For every $\epsilon>0$ there is $\delta>0$
+depending on $n$ and $\epsilon$ such that the following holds.
+Suppose that $(M^n,g)$ is a complete Riemannian manifold of
+dimension $n$ and that $p\in M$. Suppose that $|\mathit{Rm}(x)|\le
+r^{-2}$ for all $x\in B(p,r)$. If $Vol(B(p,r))\ge \epsilon r^n$ then
+the injectivity radius of $M$ at $p$ is at least $\delta r$.
+<!-- astrolabe:end -->

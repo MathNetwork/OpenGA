@@ -1,0 +1,84 @@
+---
+confidence: 1.0
+edgeClass: semantic
+evidence:
+  refTriggers:
+  - context: proof
+    label: '9.1'
+    proofSpan:
+      bodyEnd: 54348
+      bodyStart: 52734
+      coordinateSpace: comment-stripped-tex
+      depth: 1
+      end: 54359
+      file: temp2kappa.tex
+      ownerLabel: ''
+      sourceTransform: tex2mdx.strip_comments
+      start: 52721
+    sourceSpan:
+      coordinateSpace: comment-stripped-tex
+      end: 53755
+      file: temp2kappa.tex
+      sourceTransform: tex2mdx.strip_comments
+      start: 53746
+    via: proof
+  - context: proof
+    label: '9.1'
+    proofSpan:
+      bodyEnd: 54348
+      bodyStart: 52734
+      coordinateSpace: comment-stripped-tex
+      depth: 1
+      end: 54359
+      file: temp2kappa.tex
+      ownerLabel: ''
+      sourceTransform: tex2mdx.strip_comments
+      start: 52721
+    sourceSpan:
+      coordinateSpace: comment-stripped-tex
+      end: 53871
+      file: temp2kappa.tex
+      sourceTransform: tex2mdx.strip_comments
+      start: 53862
+    via: proof
+  sourceStatement:
+    chapter: 9
+    file: temp2kappa.tex
+    label: gradshrink
+    mtref: '9.32'
+    sort: proposition
+    span:
+      coordinateSpace: comment-stripped-tex
+      end: 52719
+      sourceTransform: tex2mdx.strip_comments
+      start: 52484
+  targetStatement:
+    chapter: 9
+    file: temp2kappa.tex
+    label: '9.1'
+    mtref: '9.33'
+    sort: lemma
+    span:
+      coordinateSpace: comment-stripped-tex
+      end: 53478
+      sourceTransform: tex2mdx.strip_comments
+      start: 52780
+  type: tex-reference
+  via:
+  - proof
+generator: tools/poincare_tex_extract.py
+inference: explicit
+kind: reference
+ref:
+- 07232fc42f3a
+- ba1adbac0a75
+rel: references
+reviewStatus: accepted
+scope: statement-or-proof
+sort: (morgan-tian, morgan-tian)
+source: tex
+src: morgan-tian
+via:
+- proof
+---
+Morgan--Tian cross-reference.

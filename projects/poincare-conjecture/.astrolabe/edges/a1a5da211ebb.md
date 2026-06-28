@@ -1,0 +1,65 @@
+---
+confidence: 1.0
+edgeClass: semantic
+evidence:
+  refTriggers:
+  - context: proof
+    label: zkbound
+    proofSpan:
+      bodyEnd: 137114
+      bodyStart: 136498
+      coordinateSpace: comment-stripped-tex
+      depth: 2
+      end: 137125
+      file: temp2kappa.tex
+      ownerLabel: ''
+      sourceTransform: tex2mdx.strip_comments
+      start: 136485
+    sourceSpan:
+      coordinateSpace: comment-stripped-tex
+      end: 136820
+      file: temp2kappa.tex
+      sourceTransform: tex2mdx.strip_comments
+      start: 136807
+    via: proof
+  sourceStatement:
+    chapter: 9
+    file: temp2kappa.tex
+    label: bdnearxk
+    mtref: '9.69'
+    sort: claim
+    span:
+      coordinateSpace: comment-stripped-tex
+      end: 136482
+      sourceTransform: tex2mdx.strip_comments
+      start: 136184
+  targetStatement:
+    chapter: 9
+    file: temp2kappa.tex
+    label: zkbound
+    mtref: '9.68'
+    sort: claim
+    span:
+      coordinateSpace: comment-stripped-tex
+      end: 134931
+      sourceTransform: tex2mdx.strip_comments
+      start: 134780
+  type: tex-reference
+  via:
+  - proof
+generator: tools/poincare_tex_extract.py
+inference: explicit
+kind: reference
+ref:
+- 7c6182738b78
+- f61f72020102
+rel: references
+reviewStatus: accepted
+scope: statement-or-proof
+sort: (morgan-tian, morgan-tian)
+source: tex
+src: morgan-tian
+via:
+- proof
+---
+Morgan--Tian cross-reference.

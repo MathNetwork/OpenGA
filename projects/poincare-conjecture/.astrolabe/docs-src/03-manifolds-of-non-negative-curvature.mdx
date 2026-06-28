@@ -1,0 +1,782 @@
+<!-- generated: tools/poincare_tex_extract.py -->
+
+# Chapter 2 -- Manifolds of non-negative curvature
+
+In studying singularity development in $3$-dimensional Ricci flows
+one forms blow-up limits. By this we mean the following. One
+considers a sequence of points $x_k$ in the flow converging to the
+singularity. It will be the case that $R(x_k)$ tends to $\infty$ as
+$k$ tends to $\infty$. We form a sequence of based Riemannian
+manifolds labeled by $k$, where the $k^{th}$ Riemannian manifold is
+obtained by taking the time-slice of $x_k$, rescaling its metric by
+$R(x_k)$, and then taking $x_k$ as the base point. This creates a
+sequence with the property that for each member of the sequence the
+scalar curvature at the base point is one. Because of a pinching
+result of Hamilton's (see Chapter 4), if there is a
+geometric limit of this sequence, or of any subsequence of it, then
+that limit is non-negatively curved. Hence, it is important to
+understand the basic properties of Riemannian manifolds of
+non-negative curvature in order to study singularity development. In
+this chapter we review the properties that we shall need. We suppose
+that $M$ is non-compact and of positive (resp., non-negative)
+curvature. The key to understanding these manifolds is the Busemann
+function associated to a minimizing geodesic ray.
+
+## Busemann functions
+
+A geodesic ray $\lambda\colon [0,\infty)\to M$ is said to be *minimizing* if the restriction of $\lambda$ to every compact
+subinterval of $[0,\infty)$ is a length-minimizing geodesic arc,
+i.e., a geodesic arc whose length is equal to the distance between
+its endpoints. Likewise, a geodesic line $\lambda\colon
+(-\infty,\infty)\to M$ is said to be *minimizing* if its
+restriction to every compact sub-interval of $\Ar$ is a length
+minimizing geodesic arc.
+
+Clearly, if a sequence of minimizing geodesic arcs $\lambda_k$
+converges to a geodesic arc, then the limiting geodesic arc is also
+minimizing. More generally, if $\lambda_k$ is a sequence of length
+minimizing geodesic arcs whose initial points converge and whose
+lengths go to infinity, then, after passing to a subsequence, there
+is a limit which is a minimizing geodesic ray. (The existence of a
+limit of a subsequence is a consequence of the fact that a geodesic
+ray is determined by its initial point and its initial tangent
+direction.) Similarly, if $I_k$ is an sequence of compact intervals
+with the property that every compact subset of $\Ar$ is contained in
+$I_k$ for all sufficiently large $k$, if for each $k$ the map
+$\lambda_k\colon I_k\to M$ is a minimizing geodesic arc, and if
+$\mathit{lim}_{k\rightarrow \infty}\lambda_k(0)$ exists, then, after
+passing to a subsequence there is a limit which is a minimizing
+geodesic line. Using these facts one establishes the following
+elementary lemma.
+
+<!-- astrolabe:begin kind="lemma" src="morgan-tian" mtref="2.1" label="ends" -->
+**Lemma.** Suppose that $M$ is a complete, connected, non-compact Riemannian
+manifold and let $p$ be a point of $M$. Then $M$ has a minimizing
+geodesic ray emanating from $p$. If $M$ has more than one end, then
+it has a minimizing line.
+<!-- astrolabe:end -->
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="2.2" -->
+**Definition.** Suppose that $\lambda\colon [0,\infty)\to M$ is a minimizing
+geodesic ray with initial point $p$. For each $t\ge 0$ we consider
+$B_{\lambda,t}(x)=d(\lambda(t),x)-t$. This is a family of functions
+satisfying $|B_{\lambda,t}(x)-B_{\lambda,t}(y)|\le d(x,y)$. Since
+$\lambda$ is a minimizing geodesic, $B_{\lambda,t}(p)=0$ for all
+$t$. It follows that $B_{\lambda,t}(x)\ge -d(x,p)$ for all $x\in M$.
+Thus, the family of functions $B_{\lambda,t}$ is pointwise bounded
+below. The triangle inequality shows that for each $x\in M$ the
+function $B_{\lambda,t}(x)$ is a non-increasing function of $t$.
+ It follows that, for
+each $x\in M$, $\mathit{lim}_{t\rightarrow \infty} B_{\lambda,t}(x)$
+exists. We denote this limit by $B_\lambda(x)$. This is the *Busemann function* for $\lambda$.
+<!-- astrolabe:end -->
+
+Clearly, $B_\lambda(x)\ge -d(x,\lambda(0))$. By equicontinuity
+$B_\lambda(x)$ is a continuous function of $x$ and in fact a
+Lipschitz function satisfying $|B_\lambda(x)-B_\lambda(y)|\le
+d(x,y)$ for all $x,y\in X$. Clearly $B_\lambda(\lambda(s))=-s$ for
+all $s\ge 0$. Since $B_\lambda$ is Lipschitz, $\nabla B_\lambda$ is
+well-defined as an $L^2$-vector field.
+
+<!-- astrolabe:begin kind="proposition" src="morgan-tian" mtref="2.3" label="Blambda" -->
+**Proposition.** Suppose that $M$ is complete and of non-negative Ricci curvature.
+Then, for any minimizing geodesic ray $\lambda$, the Busemann
+function $B_\lambda$ satisfies $\Delta B_\lambda\le 0$ in the weak
+sense.
+<!-- astrolabe:end -->
+
+**Proof.** First notice that since $B_\lambda$ is Lipschitz, $\nabla B_\lambda$
+is an $L^2$-vector field on $M$. That is to say, $B_\lambda\in
+W_\mathit{loc}^{1,2}$, i.e., $B_\lambda$ locally has one derivative in
+$L^2$. Hence, there is a sequence of $C^\infty$-functions $f_n$
+converging to $B_\lambda$ in $W^{1,2}_{loc}$. Let $\varphi$ be a
+test function (i.e., a compactly supported $C^\infty$-function).
+Integrating by parts yields
+
+$$
+-\int_M\langle \nabla
+f_n,\nabla\varphi\rangle d\mathit{vol}=\int_Mf_n\triangle \varphi d\mathit{vol}.
+$$
+
+ Using the fact that $f_n$ converges to $B_\lambda$ in
+$W^{1,2}_{loc}$ and taking limits yields
+
+$$
+-\int_M\langle \nabla B_\lambda,\nabla \varphi\rangle d\mathit{vol}= \int_M
+B_\lambda\triangle \varphi d\mathit{vol}.
+$$
+
+Thus, to prove the proposition we need only show that if $\varphi$
+is a non-negative test function, then
+
+$$
+-\int_M \langle\nabla B_\lambda,\nabla\varphi\rangle d\mathit{vol}\le 0.
+$$
+
+For a proof of this see
+ Proposition 1.1 and its proof on pp. 7 and 8 in [SchoenYau].
+
+## Comparison results in non-negative curvature
+
+Let us review some elementary comparison results for manifolds of
+non-negative curvature. These form the basis for Toponogov
+theory, [Toponogov]. For any pair
+of points $x,y$ in a complete Riemannian manifold $s_{xy}$ denotes a
+minimizing geodesic from $x$ to $y$. We set $|s_{xy}|=d(x,y)$ and
+call it the *length* of the side. A *triangle* in a
+Riemannian manifold consists of three vertices $a,b,c$ and three
+sides $s_{ab}$,$s_{ac}$,$s_{bc}$. We denote by $\angle_a$ the angle
+of the triangle at $a$, i.e., the angle at $a$ between the geodesic
+rays $s_{ab}$ and $s_{ac}$.
+
+<!-- astrolabe:begin kind="theorem" src="morgan-tian" mtref="2.4" label="lengthcompar" -->
+**Theorem.** **(Length comparison)**
+Let $(M,g)$ be a manifold of non-negative curvature. Suppose that
+$\triangle(a,b,c)$ is a triangle in $M$ and let
+$\triangle(a',b',c')$ be a Euclidean triangle.
+
+1. Suppose that the corresponding
+sides of $\triangle(a,b,c)$ and $\triangle(a',b',c')$ have the same
+lengths. Then the angle at each vertex of the Euclidean triangle is
+no larger than the corresponding angle of $\triangle(a,b,c)$.
+Furthermore, for any $\alpha$ and $\beta$ less than $|s_{ab}|$ and
+$|s_{ac}|$ respectively, let $x$, resp. $x'$, be the point on
+$s_{ab}$, resp. $s_{a'b'}$, at distance $\alpha$ from $a$, resp.
+$a'$, and let $y$, resp. $y'$, be the point on $s_{ac}$, resp.
+$s_{a'c'}$, at distance $\beta$ from $a$, resp. $a'$. Then
+$d(x,y)\ge d(x',y')$.
+1. Suppose that $|s_{ab}|=|s_{a'b'}|$, that
+$|s_{ac}|=|s_{a'c'}|$ and that $\angle_a=\angle_{a'}$. Then
+$|s_{b'c'}|\ge |s_{bc}|$.
+<!-- astrolabe:end -->
+
+See Fig. 2.1. For a proof of this result see
+Theorem 4.2 on page 161 of [Sakai], or Theorem 2.2 on page 42
+of [CheegerEbin].
+
+One corollary is a monotonicity result. Suppose that
+$\triangle(a,b,c)$ is a triangle in a complete manifold of
+non-negative curvature. Define a function $EA(u,v)$ defined for
+$0\le u\le |s_{ab}|$ and $0\le v\le |s_{ac}|$ as follows. For $u$
+and $v$ in the indicated ranges, let $x(u)$ be the point on $s_{ab}$
+at distance $u$ from $a$ and let $y(v)$ be the point of $s_{ac}$ at
+distance $v$ from $a$. Let $EA(u,v)$ be the angle at $a'$ of the
+Euclidean triangle with side lengths $|s_{a'b'}|=u$, $|s_{a'c'}|=v$
+and $|s_{b'c'}|=d(x(u),y(v))$.
+
+<!-- astrolabe:begin kind="corollary" src="morgan-tian" mtref="2.5" label="anglemono" -->
+**Corollary.** Under the assumptions of the previous theorem, $EA(u,v)$ is a
+monotone non-increasing function of each variable $u$ and $v$ when
+the other variable is held fixed.
+<!-- astrolabe:end -->
+
+Suppose that $\alpha, \beta,\gamma$ are three geodesics
+emanating from a point $p$ in a Riemannian manifold. Let $\angle_p
+(\alpha,\beta)$, $\angle_p(\beta,\gamma)$ and
+$\angle_p(\alpha,\gamma)$ be the angles of these geodesics at $p$ as
+measured by the Riemannian metric. Then of course
+
+$$
+\angle_p(\alpha,\beta)+\angle_p(\beta,\gamma)+\angle_p(\alpha,\gamma)\le
+2\pi
+$$
+
+ since this inequality holds for the angles between straight
+lines in Euclidean $n$-space. There is a second corollary of
+\entryref{04518fa1ac2f} which gives an analogous result for the
+associated Euclidean angles.
+
+<!-- astrolabe:begin kind="corollary" src="morgan-tian" mtref="2.6" label="anglecompar" -->
+**Corollary.** Let $(M,g)$ be a complete Riemannian manifold of non-negative
+curvature. Let $p,a,b,c$ be four points in $M$ and let
+$\alpha,\beta,\gamma$ be minimizing geodesic arcs from the point
+$p$ to $a,b,c$ respectively. Let $T(a,p,b)$, $T(b,p,c)$ and
+$T(c,p,a)$ be the triangles in $M$ made out of these minimizing
+geodesics and minimizing geodesics between $a,b,c$. Let
+$T(a',p',b')$, $T(b',p',c')$ and $T(c',p',a')$ be planar triangles
+with the same side lengths. Then
+
+$$
+\angle_{p'}T(a',p',b')+\angle_{p'}T(b',p',c')+\angle_{p'}T(c',p',a')\le 2\pi.
+$$
+<!-- astrolabe:end -->
+
+**Proof.** Consider the sum of these angles as the geodesic arcs in $M$ are
+shortened without changing their direction. By the first property of
+\entryref{04518fa1ac2f} the sum of the angles of these triangles
+is a monotone decreasing function of the lengths. Of course, the
+limit as the lengths all go to zero is the corresponding Euclidean
+angle. The result is now clear.
+
+## The soul theorem
+
+A subset $X$ of a Riemannian manifold $(M,g)$ is said to be *totally convex* if every geodesic segment with endpoints in $X$ is
+contained in $X$. Thus, a point $p$ in $M$ is totally convex if and
+only if there is no broken geodesic arc in $M$ broken exactly at
+$x$.
+
+<!-- astrolabe:begin kind="theorem" src="morgan-tian" mtref="2.7" label="soul" -->
+**Theorem.** (Cheeger-Gromoll, see
+[CheegerGromollbul] and [CheegerGromoll]) Suppose that
+$(M,g)$ is a connected, complete, non-compact Riemannian manifold of
+non-negative sectional curvature. Then $M$ contains a soul $S\subset
+M$. By definition a *soul* is a compact, totally
+geodesic, totally convex submanifold (automatically of positive
+codimension). Furthermore, $M$ is diffeomorphic to the total space
+of the normal bundle of the $S$ in $M$. If $(M,g)$ has positive
+curvature, then any soul for it is a point, and consequently $M$ is
+diffeomorphic to $\Ar^n$.
+<!-- astrolabe:end -->
+
+<!-- astrolabe:begin kind="remark" src="morgan-tian" mtref="2.8" -->
+**Remark.** We only use the soul theorem for manifolds with positive curvature
+and the fact that any soul of such a manifold is a point. A proof of
+this result first appears in [GromollMeyer].
+<!-- astrolabe:end -->
+
+The rest of this section is devoted to a sketch of the proof of this
+result. Our discussion follows closely that in [Petersen]
+starting on p. 349. We shall need more information about complete,
+non-compact manifolds of non-negative curvature, so we review a
+little of their theory as we sketch the proof of the soul theorem.
+
+<!-- astrolabe:begin kind="lemma" src="morgan-tian" mtref="2.9" -->
+**Lemma.** Let $(M,g)$ be a complete, non-compact Riemannian manifold of
+non-negative sectional curvature and let $p\in M$. For every
+$\epsilon>0$ there is a compact subset $K=K(p,\epsilon)\subset M$
+such that for all points $q\notin K$, if $\gamma$ and $\mu$ are
+minimizing geodesics from $p$ to $q$, then the angle that $\gamma$
+and $\mu$ make at $q$ is less than $\epsilon$.
+<!-- astrolabe:end -->
+
+See Fig. 2.2.
+
+**Proof.** The proof is by contradiction. Fix $0<\epsilon<1$ sufficiently small
+so that $\mathit{cos}(\epsilon/2)<1-\epsilon^2/12$. Suppose that there
+is a sequence of points $q_n$ tending to infinity such that for each
+$n$ there are minimizing geodesics $\gamma_n$ and $\mu_n$ from $p$
+to $q_n$ making angle at least $\epsilon$ at $q_n$. For each $n$ let
+$d_n=d(p,q_n)$. By passing to a subsequence we can suppose that for
+all $n$ and $m$ the cosine of the angle at $p$ between $\gamma_n$
+and $\gamma_m$ at least $1-\epsilon^2/24$, and the cosine of the
+angle at $p$ between $\mu_n$ and $\mu_m$ is at least
+$1-\epsilon^2/24$. We can also assume that for all $n\ge 1$ we have
+$d_{n+1}\ge (100/\epsilon^2) d_n$. Let $\delta_n=d(q_n,q_{n+1})$.
+Applying the first Toponogov property at $p$, we see that
+$\delta_n^2\le d_n^2+d_{n+1}^2-2d_nd_{n+1}(1-\epsilon^2/24)$.
+Applying the same property at $q_n$ we have
+
+$$
+d_{n+1}^2\le d_n^2+\delta_n^2-2d_n\delta_n\mathit{cos}(\theta),
+$$
+
+ where
+$\theta\le \pi$ is the angle at $q_n$ between $\gamma_n$ and a
+minimal geodesic joining $q_n$ to $q_{n+1}$. Thus,
+
+$$
+\mathit{cos}(\theta)\le
+\frac{d_n-d_{n+1}(1-\epsilon^2/24)}{\delta_n}.
+$$
+
+ By the triangle
+inequality (and the fact that $\epsilon<1$) we have $\delta_n\ge
+(99/\epsilon)d_n$ and $\delta_n\ge d_{n+1}(1-(\epsilon^2/100))$.
+Thus,
+
+$$
+\mathit{cos}(\theta)\le
+\epsilon^2/99-(1-\epsilon^2/24)/(1-(\epsilon^2/100))<-(1-\epsilon^2/12).
+$$
+
+This implies that $\mathit{cos}(\pi-\theta)>(1-\epsilon^2/12)$, which
+implies that $\pi-\theta<\epsilon/2$. That is to say, the angle at
+$q_n$ between $\gamma_n$ and a shortest geodesic from $q_n$ to
+$q_{n+1}$ is between $\pi-\epsilon/2$ and $\pi$. By symmetry, the
+same is true for the angle between $\mu_n$ and the same shortest
+geodesic from $q_n$ to $q_{n+1}$. Thus, the angle between $\gamma_n$
+and $\mu_n$ at $q_n$ is less than $\epsilon$, contradicting our
+assumption.
+
+<!-- astrolabe:begin kind="corollary" src="morgan-tian" mtref="2.10" label="homeo" -->
+**Corollary.** Let $(M,g)$ be a complete, non-compact manifold of non-negative
+sectional curvature. Let $p\in M$ and define a function $f\colon
+M\to \Ar$ by $f(q)=d(p,q)$. Then there is $R<\infty$ such that for
+$R\le s<s'$ we have:
+
+1. $f^{-1}([s,s'])$ is homeomorphic to $f^{-1}(s)\times[s,s']$ and
+in particular the level sets $f^{-1}(s)$ and $f^{-1}(s')$ are
+homeomorphic;
+1. $f^{-1}([s,\infty)$ is homeomorphic to
+$f^{-1}(s)\times[s,\infty)$.
+<!-- astrolabe:end -->
+
+**Proof.** Given $(M,g)$ and $p\in M$ as in the statement of the corollary, choose a
+constant $R<\infty$ such that any two minimal geodesics from $p$ to a point $q$
+with $d(p,q)\ge R/2$ make an angle at most $\pi/6$ at $q$. Now following
+[Petersen] p. 335, it is possible to find a smooth unit vector field $X$
+on $U=M-\overline{B(p,R/2)}$ with the property that $f(\cdot)=d(p,\cdot)$ is
+increasing along any integral curve for $X$ at a rate bounded below by $\mathit{cos}(\pi/3)$. In particular, for any $s\ge R$ each integral curve of $X$
+crosses the level set $f^{-1}(s)$ in a single point. Using this vector field
+we see that for any $s,s'>R$, the pre-image $f^{-1}([s,s'])$ is homeomorphic to
+$f^{-1}(s)\times[s,s']$ and that the end $f^{-1}\left([s,\infty)\right)$ is
+homeomorphic to $f^{-1}(s)\times [s,\infty)$.
+
+In a complete, non-compact $n$-manifold of positive curvature any soul is a
+point. While the proof of this result uses the same ideas as discussed above,
+we shall not give a proof. Rather we refer the reader to Theorem 84 of
+[Petersen] on p. 349. A soul has the property that if two minimal
+geodesics emanate from $p$ and end at the same point $q\not= p$, then the angle
+that they make at $q$ is less than $\pi/2$. Also, of course, the exponential
+mapping is a diffeomorphism sufficiently close to the soul. Applying the above
+lemma and a standard compactness argument, we see that in fact there is
+$\epsilon>0$ such that all such pairs of minimal geodesics from $p$ ending at
+the same point make angle less than $\pi/2-\epsilon$ at that point. Hence, in
+this case there is a vector field $X$ on all of $M$ vanishing only at the soul,
+and agreeing with the gradient of the distance function near the soul, so that
+the distance function from $p$ is strictly increasing to infinity along each
+flow line of $X$ (except the fixed point). Using $X$ one establishes that $M$
+is diffeomorphic to $\Ar^n$. It also follows that all the level surfaces
+$f^{-1}(s)$ for $s>0$ are homeomorphic to $S^{n-1}$ and for $0<s<s'$ the
+preimage $f^{-1}([s,s'])$ is homeomorphic to $S^{n-1}\times[s,s']$.
+
+There is an analogue of this result for the distance function from
+any point, not just a soul.
+
+<!-- astrolabe:begin kind="corollary" src="morgan-tian" mtref="2.11" label="htpytype" -->
+**Corollary.** Let $(M,g)$ be a complete, non-compact Riemannian $n$-manifold of positive
+curvature. Then for any point $p\in M$ there is a constant $R=R(p)$ such that
+for any $s<s'$ with $R\le s$ both $f^{-1}(s,s')$ and $f^{-1}(s,\infty)$ are
+homotopy equivalent to $S^{n-1}$.
+<!-- astrolabe:end -->
+
+**Proof.** Given $(M,g)$ and $p$ fix $R<\infty$ sufficiently large so that
+\entryref{64a0f82323d3} holds. Since $M$ is diffeomorphic to $\Ar^n$
+it has only one end and hence the level sets $f^{-1}(s)$ for $s\ge
+R$ are connected. Given any compact subset $K\subset M$ there is a
+larger compact set $B$ (a ball) such that $M\setminus B$ has trivial
+fundamental group and trivial homology groups $H_i$ for $i<n-1$.
+Hence for any subset $Z\subset M\setminus B$, the inclusion of $Z\to
+M\setminus K$ induces the trivial map on $\pi_1$ and on $H_i$ for
+$i<n-1$. Clearly, for any $R\le s<b$ the inclusion
+$f^{-1}(b,\infty)\to f^{-1}(s,\infty)$ is a homotopy equivalence.
+Thus, it must be the case that $f^{-1}(b,\infty)$ has trivial
+fundamental group and $H_i$ for $i<n-1$. Hence, the same is true for
+$f^{-1}(s,\infty)$ for any $s\ge R$. Lastly, since
+$f^{-1}(s,\infty)$ is connected and simply connected ( hence
+orientable) and has two ends, it follows by the non-compact form of
+Poincaré duality that $H_{n-1}(f^{-1}(s,\infty))\cong \Zee$.
+Hence, by the Hurewicz theorem $f^{-1}(s,\infty)$ is homotopy
+equivalent to $S^{n-1}$ for any $s\ge R$. Of course, it is also true
+for $R\le s\le s'$ that $f^{-1}(s,s')$ is homotopy equivalent to
+$S^{n-1}$.
+
+## Ends of a manifold
+
+Let us review the basic notions about ends of a manifold.
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="2.12" -->
+**Definition.** Let $M$ be a connected manifold. Consider the inverse system of
+spaces indexed by the compact, codimension-$0$ submanifolds
+$K\subset M$, where the space associated to $K$ is the finite set
+$\pi_0(M\setminus K)$ with the discrete topology. The inverse limit
+of this inverse system is the *space of ends* of $M$. It is a
+compact space. An *end* of $M$ is a
+point of the space of ends. An end ${\mathcal E}$ determines a
+complementary component of each compact, codimension-$0$ submanifold
+$K\subset M$, called a *neighborhood* of the end. Conversely, by
+definition these neighborhoods are cofinal in the set of all
+neighborhoods of the end. A sequence $\{x_n\}$ in $M$ *converges
+to the end* ${\mathcal E}$ if it is eventually in every neighborhood
+of the end. In fact, what we are doing is defining a topology on the
+union of $M$ and its space of ends that makes this union a compact,
+connected Hausdorff space which is a compactification of $M$.
+<!-- astrolabe:end -->
+
+A proper map between topological manifolds induces a map on the
+space of ends, and in fact induces a map on the compactifications
+sending the subspace of ends of the compactification of the domain
+to the subspace of ends of the compactification of the range.
+
+We say that a path $\gamma\colon [a,b)\to M$ is a path *to the
+end ${\mathcal E}$* if it is a proper map and it sends the end
+$\{b\}$ of $[a,b)$ to the end ${\mathcal E}$ of $M$. This condition
+is equivalent to saying that given a neighborhood $U$ of ${\mathcal
+E}$ there is a neighborhood of the end $\{b\}$ of $[a,b)$ that maps
+to $U$.
+
+Now suppose that $M$ has a Riemannian metric $g$. Then we can
+distinguish between ends at finite and infinite distance. An end is
+at *finite distance* if there is a rectifiable path of finite
+length to the end. Otherwise, the end is at infinite distance. If an
+end is at finite distance we have the notion of the distance from a
+point $x\in M$ to the end. It is the infimum of the lengths of
+rectifiable paths from $x$ to the end. This distance is always
+positive. Also, notice that the Riemannian manifold is complete if
+and only if has no end at finite distance.
+
+## The splitting theorem
+
+In this section we give a proof of the following theorem which is
+originally due to Cheeger-Gromoll [CheegerGromoll2]. The weaker
+version giving the same conclusion under the stronger hypothesis of
+non-negative sectional curvature (which is in fact all we need in
+this work) was proved earlier by Toponogov, see [Toponogov].
+
+<!-- astrolabe:begin kind="theorem" src="morgan-tian" mtref="2.13" label="splitting" -->
+**Theorem.** Suppose that $M$ is complete, of
+non-negative Ricci curvature and suppose that $M$ has at least two
+ends. Then $M$ is isometric to a product $N\times \Ar$ where $N$ is
+a compact manifold.
+<!-- astrolabe:end -->
+
+**Proof.** We begin the proof by establishing a result of independent interest,
+which was formulated as the main theorem in [CheegerGromoll2]..
+
+<!-- astrolabe:begin kind="lemma" src="morgan-tian" mtref="2.14" label="line" -->
+**Lemma.** Any complete Riemannian manifold $X$ of non-negative Ricci curvature
+containing a minimizing line is isometric to a product $N\times \Ar$
+for some Riemannian manifold $N$.
+<!-- astrolabe:end -->
+
+**Proof.** Given a minimizing line $\lambda\colon \Ar\to X$, define
+$\lambda_\pm\colon [0,\infty)\to X$ by $\lambda_+(t)=\lambda(t)$ and
+$\lambda_-(t)=\lambda(-t)$. Then we have the Busemann functions
+$B_+=B_{\lambda_+}$ and $B_-=B_{\lambda_-}$.
+\entryref{7c06c4b22b84} applies to both $B_+$ and $B_-$ and shows
+that $\Delta (B_+ +B_-)\le 0$. On the other hand, using the fact
+that $\lambda$ is distance minimizing, we see that for any $s,t>0$
+and for any $x\in M$ we have $d(x,\lambda(t))+d(x,\lambda(-s))\ge
+s+t$, and hence $B_+(x)+B_-(x)\ge 0$. Clearly, $B_+(x)+B_-(x)=0$ for
+any $x$ in the image of $\lambda$. Thus, the function $B_++B_-$ is
+everywhere $\ge 0$, vanishes at at a least one point and satisfies
+$\Delta (B_++B_-)\le 0$ in the weak sense. This is exactly the
+set-up for the maximum principle, cf. [Petersen], p. 279.
+
+<!-- astrolabe:begin kind="theorem" src="morgan-tian" mtref="2.15" -->
+**Theorem.** **(The Maximum Principle)**
+Let $f$ be a real-valued continuous function on a connected
+Riemannian manifold with $\Delta f\ge 0$ in the weak sense. Then $f$
+is locally constant near any local maximum. In particular, if $f$
+achieves its maximum then it is a constant.
+<!-- astrolabe:end -->
+
+Applying this result to $-(B_++B_-)$, we see that $B_++B_-=0$, so that
+$B_-=-B_+$. It now follows that $\Delta B_+=0$ in the weak sense. By standard
+elliptic regularity results this implies that $B_+$ is a smooth harmonic
+function.
+
+Next, we show that for all $x\in M$ we have $|\nabla B_+(x)|=1$.
+Fix $x\in M$. Take a sequence $t_n$ tending to infinity and consider
+minimizing geodesics $\mu_{+,n}$ from $x$ to $\lambda_+(t_n)$. By
+passing to a subsequence we can assume that there is a limit as
+$n\rightarrow \infty$. This limit is a minimizing geodesic ray
+$\mu_+$ from $x$, which we think of as being `asymptotic at
+infinity' to $\lambda_+$. Similarly, we construct a minimizing
+geodesic ray $\mu_-$ from $x$ asymptotic at infinity to $\lambda_+$.
+ Since
+$\mu_+$ is a minimal geodesic ray, it follows that for any $t$ the
+restriction $\mu_+|_{[0,t]}$ is the unique length minimizing
+geodesic from $x$ to $\mu_+(t)$ and that $\mu_+(t)$ is not a
+conjugate point along $\mu_+$. It follows by symmetry that $x$ is
+not a conjugate point along the reversed geodesic $-\mu_+|_{[0,t]}$
+and hence that $x\in U_{\mu_+(t)}$. This means that the function
+$d(\mu_+(t),\cdot)$ is smooth at $x$ with gradient equal to the unit
+tangent vector in the negative direction at $x$ to $\mu_+$, and
+consequently that $B_{\mu_+,t}$ is smooth at $x$. Symmetrically, for
+any $t>0$ the function $B_{\mu_-,t}$ is smooth at $x$ with the
+opposite gradient. Notice that these gradients have norm one. We
+have
+
+$$
+B_{\mu_+,t}+B_+(x)\ge B_+=-B_-\ge -(B_{\mu_-,t}+B_-(x)).
+$$
+
+Of course, $B_{\mu_+,t}(x)=0$ and $B_{\mu_-,t}(x)=0$, so that
+
+$$
+B_{\mu_+,t}(x)+B_+(x)=-(B_{\mu_-,t}(x)+B_-(x)).
+$$
+
+This squeezes $B_+$ between two smooth functions with the same value
+and same gradient at $x$ and hence shows that $B_+$ is $C^1$ at $x$
+and $|\nabla B_+(x)|$ is of norm one.
+
+Thus, $B$ defines a smooth Riemannian submersion from $M\to \Ar$
+which implies that $M$ is isometric to a product of the fiber over
+the origin with $\Ar$.
+
+This result together with \entryref{89a6041c42b9} shows that if $M$
+satisfies the hypothesis of the theorem, then it can be written as
+a Riemannian product $M=N\times \Ar$. Since $M$ has at least two
+ends, it follows immediately that $N$ is compact. This completes the
+proof of the theorem.
+
+## $\epsilon$-necks
+
+Certain types of (incomplete) Riemannian manifolds play an
+especially important role in our analysis. The purpose of this
+section is to introduce these manifolds and use them to prove one
+essential result in Riemannian geometry.
+
+For all of the following definitions we fix $0<\epsilon<1/2$. Set
+$k$ equal to the greatest integer less than or equal to
+$\epsilon^{-1}$. In particular, $k\ge 2$.
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="2.16" label="epsclose" -->
+**Definition.** Suppose that we have a fixed metric $g_0$ on a manifold $M$ and an
+open submanifold $X\subset M$. We say that another metric $g$ on $X$
+is *within $\epsilon$ of $g_0|_X$ in the
+$C^{[1/\epsilon]}$-topology* if, setting $k=[1/\epsilon]$ we have
+
+$$
+\mathit{sup}_{x\in X}\left(|g(x)-g_0(x)|_{g_0}^2+
+\sum_{\ell=1}^k|\nabla_{g_0}^\ell g(x)|_{g_0}^2\right)<
+\epsilon^2,
+$$
+
+ where the covariant derivative
+$\nabla^\ell_{g_0}$ is the Levi-Civita connection of $g_0$ and
+norms are the pointwise $g_0$-norms on
+
+$$
+\mathit{Sym}^2T^*M\otimes \underbrace{T^*M\otimes\cdots\otimes
+T^*M}_{\ell-\mathit{times}}.
+$$
+
+More generally, given two smooth families of metrics $g(t)$ and
+$g_0(t)$ on $M$ defined for $t$ in some interval $I$ we say that
+the family $g(t)|_X$ is within $\epsilon$ of the family $g_0(t)|_X$
+in the $C^{[1/\epsilon]}$-topology if we have
+
+$$
+\mathit{sup}_{(x,t)\in X\times I}\left(\left| g(x,t)
+-g_0(x,t)\right|_{g_0(t)}^2 +\sum_{\ell=1}^k\left|\nabla_{g_0}^\ell
+g(x,t)\right|_{g_0}^2\right)<\epsilon^2.
+$$
+<!-- astrolabe:end -->
+
+<!-- astrolabe:begin kind="remark" src="morgan-tian" mtref="2.17" -->
+**Remark.** Notice that if we view a one-parameter family of metrics $g(t)$ as a
+curve in the space of metrics on $X$ with the
+$C^{[1/\epsilon]}$-topology then this is the statement that the two
+paths are pointwise within $\epsilon$ of each other. It says nothing
+about the derivatives of the paths, or equivalently about the time
+derivatives of the metrics and of their covariant derivatives. We
+will always be considering paths of metrics satisfying the Ricci
+flow equation. In this context two one-parameter families of metrics
+that are close in the $C^{2k}$-topology exactly when the $r^{th}$
+time derivatives of the $s^{th}$-covariant derivatives are close for
+all $r,s$ with $s+2r\le 2k$.
+<!-- astrolabe:end -->
+
+The first object of interest is one that, up to scale, is close to a
+long, round cylinder.
+
+<!-- astrolabe:begin kind="definition" src="morgan-tian" mtref="2.18" label="epsneck" -->
+**Definition.** Let $(N,g)$ be a Riemannian manifold and $x\in N$ a point. Then *an $\epsilon$-neck structure on $(N,g)$
+centered at $x$* consists of a diffeomorphism
+
+$$
+\varphi\colon  S^2\times (-\epsilon^{-1},\epsilon^{-1})\to N,
+$$
+
+with $x\in \varphi(S^2\times\{0\})$, such that the metric
+$R(x)\varphi^*g$ is within $\epsilon$ in the
+$C^{[1/\epsilon]}$-topology of the product of the usual Euclidean
+metric on the open interval with the metric of constant Gaussian
+curvature $1/2$ on $S^2$. We also use the terminology *$N$ is an
+$\epsilon$-neck centered at $x$*. The image under $\varphi$ of the
+family of submanifolds $S^2\times \{t\}$ is called the *family
+of $2$-spheres of the $\epsilon$-neck*. The submanifold
+$\varphi(S^2\times \{0\})$ is called *the central $2$-sphere* of
+the $\epsilon$-neck structure. We denote by $s_N\colon N\to \Ar$
+the composition $p_2\circ \varphi^{-1}$, where $p_2$ is the
+projection of $S^2\times (-\epsilon^{-1},\epsilon^{-1})$ to the
+second factor. There is also the vector field $\partial/\partial
+s_N$ on $N$ which is $\varphi_*$ of the standard vector field in the
+interval-direction of the product. We also use the terminology of
+the *plus* and *minus* end of the $\epsilon$-neck in the
+obvious sense. The opposite (or reversed) $\epsilon$-neck structure
+is the one obtained by composing the structure map with $\mathit{Id}_{S^2}\times -1$. We define the
+ *positive half of the neck* to be the region
+$s_N^{-1}(0,\epsilon^{-1})$ and the *negative half* to be the
+region $s_N^{-1} (-\epsilon^{-1},0)$. For any other fraction, e.g.,
+the left-hand three-quarters, the right-hand one-quarter, there are
+analogous notions, all measured with respect to $s_N\colon N\to
+(-\epsilon^{-1},\epsilon^{-1})$. We also use the terminology the
+middle one-half, or middle one-third of the $\epsilon$-neck; again
+these regions have their obvious meaning when measured via $s_N$.
+
+*An $\epsilon$-neck* in a Riemannian manifold $X$ is a
+codimension-zero submanifold $N$ and an $\epsilon$-structure on $N$
+centered at some point $x\in N$.
+
+The *scale* of an $\epsilon$-neck $N$ centered
+at $x$ is $R(x)^{-1/2}$. The scale of $N$ is denoted $r_N$. Intuitively, this
+is a measure of the radius of the cross-sectional $S^2$ in the neck. In fact,
+the extrinsic diameter of any $S^2$ factor in the neck is close to $\sqrt{2}\pi
+r_N$. See Fig. 0.1 in the introduction.
+<!-- astrolabe:end -->
+
+Here is the result that will be so important in our later arguments.
+
+<!-- astrolabe:begin kind="proposition" src="morgan-tian" mtref="2.19" label="narrows" -->
+**Proposition.** The following
+holds for any $\epsilon>0$ sufficiently small.
+ Let $(M,g)$ be a complete, positively curved Riemannian
+$3$-manifold. Then $(M,g)$ does not contain $\epsilon$-necks of
+arbitrarily small scale.
+<!-- astrolabe:end -->
+
+**Proof.** The result is obvious if $M$ is compact, so we assume that $M$ is
+non-compact. Let $p\in M$ be a soul for $M$ (\entryref{2b5f18292e62}),
+and let $f$ be the distance function from $p$. Then $f^{-1}(s)$ is
+connected for all $s>0$.
+
+<!-- astrolabe:begin kind="lemma" src="morgan-tian" mtref="2.20" label="neckseparate" -->
+**Lemma.** Suppose that $\epsilon>0$ is sufficiently small that \entryref{04dd3c3ea1c8} from
+the appendix holds. Let $(M,g)$ be a non-compact $3$-manifold of positive
+curvature and let $p\in M$ be a soul for it. Then for any $\epsilon$-neck $N$
+disjoint from $p$
+ the central $2$-sphere of $N$ separates the soul from the end of the manifold. In particular, if
+ two $\epsilon$-necks $N_1$ and $N_2$ in $M$ are disjoint from each other and from $p$, then
+the central $2$-spheres of $N_1$ and $N_2$ are the boundary
+components of a region in $M$ diffeomorphic to $S^2\times I$.
+<!-- astrolabe:end -->
+
+**Proof.** Let $N$ be an $\epsilon$-neck disjoint from $p$. By
+\entryref{04dd3c3ea1c8} for any point $z$ in the middle third of $N$, the
+boundary of the metric ball $B(p,d(z,p))$ is a topological
+$2$-sphere in $N$ isotopic in $N$ to the central $2$-sphere of $N$.
+Hence, the central $2$-sphere separates the soul from the end of
+$M$. The second statement follows immediately by applying this to
+$N_1$ and $N_2$.
+
+Let $N_1$ and $N_2$ be disjoint $\epsilon$-necks, each disjoint from
+the soul. By the previous lemma, the central $2$-spheres $S_1$ and
+$S_2$ of these necks are smoothly isotopic to each other and they
+are the boundary components of a region diffeomorphic to $S^2\times
+I$. Reversing the indices if necessary we can assume that $N_2$ is
+closer to $\infty$ than $N_1$, i.e., further from the soul.
+Reversing the directions of the necks if necessary, we can arrange
+that for $i=1,2$ the function $s_{N_i}$ is increasing as we go away
+from the soul. We define $C^\infty$- functions $\psi_i$ on $N_i$,
+functions depending only on $s_{N_i}$, as follows. The function
+$\psi_1$ is zero on the negative side of the middle third of $N_1$
+and increases to be identically one on the positive side of the
+middle third. The function $\psi_2$ is one on the negative side of
+the middle third of $N_2$ and decreases to be zero on the positive
+side. We extend $\psi_1,\psi_2$ to a function $\psi$ defined on all
+of $M$ by requiring that it be identically one on the region $X$
+between $N_1$ and $N_2$ and to be identically zero on $M\setminus
+(N_1\cup X\cup N_2)$.
+
+Let $\lambda$ be a geodesic ray from the soul of $M$ to infinity,
+and $B_\lambda$ its Busemann function. Let $N$ be any
+$\epsilon$-neck disjoint from the soul, with $ s_N$ direction chosen
+so that it points away from the soul. At any point of the middle
+third of $N$ where $B_\lambda$ is smooth, $\nabla B_\lambda$ is a
+unit vector in the direction of the unique minimal geodesic ray from
+the end of $\lambda$ to this point. Invoking \entryref{88a5a2233418}
+from the appendix we see that at such points $\nabla B_\lambda$ is
+close to $-R(x)^{1/2}\partial/\partial s_N$, where $x\in N$ is the
+center of the $\epsilon$-neck. Since $\nabla B_\lambda$ is $L^2$ its
+non-smooth points have measure zero and hence, the restriction of
+$\nabla B_\lambda$ to the middle third of $N$ is close in the
+$L^2$-sense to $-R(x)^{1/2}\partial/\partial s_N$.
+
+Applying this to $N_1$ and $N_2$ we see that
+
+$$
+\int_M\langle \nabla B_\lambda,\nabla\psi\rangle d\mathit{vol}=\left(\alpha_2R(x_2)^{-1}-\alpha_1R(x_1)^{-1}\right)\mathit{Vol}_{h_0}(S^2)),
+$$
+
+ where $h(0)$ is the round metric of
+scalar curvature $1$ and where each of $\alpha_1$ and $\alpha_2$
+limits to $1$ as $\epsilon$ goes to zero. Since $\psi\ge 0$,
+\entryref{7c06c4b22b84} tells us that the left-hand side of
+Equation (2.2) must be $\ge 0$. This shows that,
+provided that $\epsilon$ is sufficiently small, $R(x_2)$ is bounded
+above by $2R(x_1)$. This completes the proof of the proposition.
+
+<!-- astrolabe:begin kind="corollary" src="morgan-tian" mtref="2.21" label="strnarrows" -->
+**Corollary.** Fix $\epsilon>0$ sufficiently small so that \entryref{04dd3c3ea1c8} holds. Then
+there is a constant $C<\infty$ depending on $\epsilon$ such that the following
+holds. Suppose that $M$ is a non-compact $3$-manifold of positive sectional
+curvature. Suppose that $N$ is an $\epsilon$-neck in $M$ centered at a point
+$x$ and disjoint from a soul $p$ of $M$. Then for any $\epsilon$-neck $N'$ that
+is separated from $p$ by $N$ with center $x'$ we have $R(x')\le CR(x)$.
+<!-- astrolabe:end -->
+
+## Forward difference quotients
+
+Let us review quickly some standard material on forward difference quotients.
+
+Let $f\colon [a,b]\to \Ar$ be a continuous function on an interval.
+We say that the *forward difference quotient of $f$ at a point
+$t\in [a,b)$, denoted $\frac{df}{dt}(t)$, is less than
+$c$* provided that
+
+$$
+\overline\mathit{lim}_{\triangle t\rightarrow
+0^+}\frac{f(t+\triangle t)-f(t)}{\triangle t}\le c.
+$$
+
+ We say that it
+is greater than or equal to $c'$ if
+
+$$
+c'\le  \underline\mathit{lim}_{\triangle t\rightarrow 0^+}\frac{f(t+\triangle
+t)-f(t)}{\triangle t}.
+$$
+
+ Standard comparison arguments show:
+
+<!-- astrolabe:begin kind="lemma" src="morgan-tian" mtref="2.22" label="fordiffquot" -->
+**Lemma.** Suppose that $f\colon [a,b]\to \Ar$ is a continuous function. Suppose that
+$\psi$ is a $C^1$-function on $[a,b]\times \Ar$ and suppose that
+$\frac{df}{dt}(t)\le \psi(t,f(t))$ for every $t\in [a,b)$ in the sense of
+forward difference quotients. Suppose also that there is a function $G(t)$
+defined on $[a,b]$ that satisfies the differential equation
+$G'(t)=\psi(t,G(t))$ and has $f(a)\le G(a)$. Then $f(t)\le G(t)$ for all $t\in
+[a,b]$.
+<!-- astrolabe:end -->
+
+The application we shall make of these results is the following.
+
+<!-- astrolabe:begin kind="proposition" src="morgan-tian" mtref="2.23" label="fordiffmax" -->
+**Proposition.** Let $M$ be a smooth manifold with a smooth vector field $\chi$ and a
+smooth function $\mathbf{t}\colon M\to [a,b]$ with $\chi(\mathbf{t})=1$.
+Suppose also that $F\colon M\to \Ar$ is a smooth function with the
+properties:
+
+1. for each $t_0\in [a,b]$ the restriction of $F$ to the level set $\mathbf{t}^{-1}(t_0)$ achieves its maximum, and
+1. the subset ${\mathcal Z}$ of $M$
+consisting of all $x$ for which $F(x)\ge F(y)$ for all $y\in \mathbf{t}^{-1}(\mathbf{t}(x))$ is a compact set.
+
+ Suppose also that at each $x\in {\mathcal Z}$ we have $\chi(F(x))\le \psi(\mathbf{t}(x),F(x))$. Set $F_\mathit{max}(t)=\mathit{max}_{x\in \mathbf{t}^{-1}(t)}F(x)$. Then $F_\mathit{max}(t)$ is a continuous function and
+
+$$
+\frac{dF_\mathit{max}}{dt}(t)\le \psi(t,F_\mathit{max}(t))
+$$
+
+in the sense of forward difference quotients.
+ Suppose that $G(t)$ satisfies the
+differential equation
+
+$$
+G'(t)=\psi(t,G(t))
+$$
+
+ and has initial condition $F_\mathit{max}(a)\le G(a)$. Then for all $t\in [a,b]$ we have
+
+$$
+F_\mathit{max}(t)\le G(t).
+$$
+<!-- astrolabe:end -->
+
+**Proof.** Under the given hypothesis it is a standard and easy exercise to
+establish the statement about the forward difference quotient of
+$F_\mathit{max}$. The second statement then is an immediate corollary
+of the previous result.

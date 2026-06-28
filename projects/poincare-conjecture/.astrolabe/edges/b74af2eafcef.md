@@ -1,0 +1,62 @@
+---
+confidence: 0.9
+edgeClass: structural
+evidence:
+  containmentDepth: 1
+  proofSpan:
+    bodyEnd: 14787
+    bodyStart: 6954
+    coordinateSpace: comment-stripped-tex
+    depth: 1
+    end: 14798
+    file: singlimit2.tex
+    ownerLabel: smlmtflow
+    sourceTransform: tex2mdx.strip_comments
+    start: 6941
+  sourceStatement:
+    chapter: 11
+    file: singlimit2.tex
+    label: smlmtflow
+    mtref: '11.1'
+    sort: theorem
+    span:
+      coordinateSpace: comment-stripped-tex
+      end: 3459
+      sourceTransform: tex2mdx.strip_comments
+      start: 1498
+  targetContainedSpan:
+    coordinateSpace: comment-stripped-tex
+    end: 10094
+    file: singlimit2.tex
+    sourceTransform: tex2mdx.strip_comments
+    start: 9927
+  targetStatement:
+    chapter: 11
+    file: singlimit2.tex
+    label: ''
+    mtref: '11.6'
+    sort: claim
+    span:
+      coordinateSpace: comment-stripped-tex
+      end: 10094
+      sourceTransform: tex2mdx.strip_comments
+      start: 9927
+  type: proof-containment
+  via:
+  - proof-contains
+generator: tools/poincare_tex_extract.py
+inference: structural
+kind: containment
+ref:
+- d51aab8a8065
+- 9f8eade55fcd
+rel: contains
+reviewStatus: accepted
+scope: proof
+sort: (morgan-tian, morgan-tian)
+source: tex
+src: morgan-tian
+via:
+- proof-contains
+---
+Morgan--Tian proof containment. The source is the statement whose proof contains the target statement.

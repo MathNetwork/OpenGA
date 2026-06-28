@@ -1,0 +1,62 @@
+---
+confidence: 0.9
+edgeClass: structural
+evidence:
+  containmentDepth: 1
+  proofSpan:
+    bodyEnd: 54967
+    bodyStart: 37263
+    coordinateSpace: comment-stripped-tex
+    depth: 1
+    end: 54978
+    file: energy1.tex
+    ownerLabel: W_2
+    sourceTransform: tex2mdx.strip_comments
+    start: 37250
+  sourceStatement:
+    chapter: 18
+    file: energy1.tex
+    label: W_2
+    mtref: '18.11'
+    sort: lemma
+    span:
+      coordinateSpace: comment-stripped-tex
+      end: 36484
+      sourceTransform: tex2mdx.strip_comments
+      start: 36186
+  targetContainedSpan:
+    coordinateSpace: comment-stripped-tex
+    end: 51926
+    file: energy1.tex
+    sourceTransform: tex2mdx.strip_comments
+    start: 51222
+  targetStatement:
+    chapter: 18
+    file: energy1.tex
+    label: W_3fordiff
+    mtref: '18.18'
+    sort: proposition
+    span:
+      coordinateSpace: comment-stripped-tex
+      end: 51926
+      sourceTransform: tex2mdx.strip_comments
+      start: 51222
+  type: proof-containment
+  via:
+  - proof-contains
+generator: tools/poincare_tex_extract.py
+inference: structural
+kind: containment
+ref:
+- 7bb0fa0c9412
+- b187c06d1432
+rel: contains
+reviewStatus: accepted
+scope: proof
+sort: (morgan-tian, morgan-tian)
+source: tex
+src: morgan-tian
+via:
+- proof-contains
+---
+Morgan--Tian proof containment. The source is the statement whose proof contains the target statement.

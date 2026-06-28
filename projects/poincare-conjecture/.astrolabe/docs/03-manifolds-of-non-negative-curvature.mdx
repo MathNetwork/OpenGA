@@ -1,0 +1,508 @@
+<!-- generated: tools/poincare_tex_extract.py -->
+
+# Chapter 2 -- Manifolds of non-negative curvature
+
+In studying singularity development in $3$-dimensional Ricci flows
+one forms blow-up limits. By this we mean the following. One
+considers a sequence of points $x_k$ in the flow converging to the
+singularity. It will be the case that $R(x_k)$ tends to $\infty$ as
+$k$ tends to $\infty$. We form a sequence of based Riemannian
+manifolds labeled by $k$, where the $k^{th}$ Riemannian manifold is
+obtained by taking the time-slice of $x_k$, rescaling its metric by
+$R(x_k)$, and then taking $x_k$ as the base point. This creates a
+sequence with the property that for each member of the sequence the
+scalar curvature at the base point is one. Because of a pinching
+result of Hamilton's (see Chapter 4), if there is a
+geometric limit of this sequence, or of any subsequence of it, then
+that limit is non-negatively curved. Hence, it is important to
+understand the basic properties of Riemannian manifolds of
+non-negative curvature in order to study singularity development. In
+this chapter we review the properties that we shall need. We suppose
+that $M$ is non-compact and of positive (resp., non-negative)
+curvature. The key to understanding these manifolds is the Busemann
+function associated to a minimizing geodesic ray.
+
+## Busemann functions
+
+A geodesic ray $\lambda\colon [0,\infty)\to M$ is said to be *minimizing* if the restriction of $\lambda$ to every compact
+subinterval of $[0,\infty)$ is a length-minimizing geodesic arc,
+i.e., a geodesic arc whose length is equal to the distance between
+its endpoints. Likewise, a geodesic line $\lambda\colon
+(-\infty,\infty)\to M$ is said to be *minimizing* if its
+restriction to every compact sub-interval of $\Ar$ is a length
+minimizing geodesic arc.
+
+Clearly, if a sequence of minimizing geodesic arcs $\lambda_k$
+converges to a geodesic arc, then the limiting geodesic arc is also
+minimizing. More generally, if $\lambda_k$ is a sequence of length
+minimizing geodesic arcs whose initial points converge and whose
+lengths go to infinity, then, after passing to a subsequence, there
+is a limit which is a minimizing geodesic ray. (The existence of a
+limit of a subsequence is a consequence of the fact that a geodesic
+ray is determined by its initial point and its initial tangent
+direction.) Similarly, if $I_k$ is an sequence of compact intervals
+with the property that every compact subset of $\Ar$ is contained in
+$I_k$ for all sufficiently large $k$, if for each $k$ the map
+$\lambda_k\colon I_k\to M$ is a minimizing geodesic arc, and if
+$\mathit{lim}_{k\rightarrow \infty}\lambda_k(0)$ exists, then, after
+passing to a subsequence there is a limit which is a minimizing
+geodesic line. Using these facts one establishes the following
+elementary lemma.
+
+\entryblock{89a6041c42b9}
+
+\entryblock{4d6e47f3ec09}
+
+Clearly, $B_\lambda(x)\ge -d(x,\lambda(0))$. By equicontinuity
+$B_\lambda(x)$ is a continuous function of $x$ and in fact a
+Lipschitz function satisfying $|B_\lambda(x)-B_\lambda(y)|\le
+d(x,y)$ for all $x,y\in X$. Clearly $B_\lambda(\lambda(s))=-s$ for
+all $s\ge 0$. Since $B_\lambda$ is Lipschitz, $\nabla B_\lambda$ is
+well-defined as an $L^2$-vector field.
+
+\entryblock{7c06c4b22b84}
+
+**Proof.** First notice that since $B_\lambda$ is Lipschitz, $\nabla B_\lambda$
+is an $L^2$-vector field on $M$. That is to say, $B_\lambda\in
+W_\mathit{loc}^{1,2}$, i.e., $B_\lambda$ locally has one derivative in
+$L^2$. Hence, there is a sequence of $C^\infty$-functions $f_n$
+converging to $B_\lambda$ in $W^{1,2}_{loc}$. Let $\varphi$ be a
+test function (i.e., a compactly supported $C^\infty$-function).
+Integrating by parts yields
+
+$$
+-\int_M\langle \nabla
+f_n,\nabla\varphi\rangle d\mathit{vol}=\int_Mf_n\triangle \varphi d\mathit{vol}.
+$$
+
+ Using the fact that $f_n$ converges to $B_\lambda$ in
+$W^{1,2}_{loc}$ and taking limits yields
+
+$$
+-\int_M\langle \nabla B_\lambda,\nabla \varphi\rangle d\mathit{vol}= \int_M
+B_\lambda\triangle \varphi d\mathit{vol}.
+$$
+
+Thus, to prove the proposition we need only show that if $\varphi$
+is a non-negative test function, then
+
+$$
+-\int_M \langle\nabla B_\lambda,\nabla\varphi\rangle d\mathit{vol}\le 0.
+$$
+
+For a proof of this see
+ Proposition 1.1 and its proof on pp. 7 and 8 in [SchoenYau].
+
+## Comparison results in non-negative curvature
+
+Let us review some elementary comparison results for manifolds of
+non-negative curvature. These form the basis for Toponogov
+theory, [Toponogov]. For any pair
+of points $x,y$ in a complete Riemannian manifold $s_{xy}$ denotes a
+minimizing geodesic from $x$ to $y$. We set $|s_{xy}|=d(x,y)$ and
+call it the *length* of the side. A *triangle* in a
+Riemannian manifold consists of three vertices $a,b,c$ and three
+sides $s_{ab}$,$s_{ac}$,$s_{bc}$. We denote by $\angle_a$ the angle
+of the triangle at $a$, i.e., the angle at $a$ between the geodesic
+rays $s_{ab}$ and $s_{ac}$.
+
+\entryblock{04518fa1ac2f}
+
+See Fig. 2.1. For a proof of this result see
+Theorem 4.2 on page 161 of [Sakai], or Theorem 2.2 on page 42
+of [CheegerEbin].
+
+One corollary is a monotonicity result. Suppose that
+$\triangle(a,b,c)$ is a triangle in a complete manifold of
+non-negative curvature. Define a function $EA(u,v)$ defined for
+$0\le u\le |s_{ab}|$ and $0\le v\le |s_{ac}|$ as follows. For $u$
+and $v$ in the indicated ranges, let $x(u)$ be the point on $s_{ab}$
+at distance $u$ from $a$ and let $y(v)$ be the point of $s_{ac}$ at
+distance $v$ from $a$. Let $EA(u,v)$ be the angle at $a'$ of the
+Euclidean triangle with side lengths $|s_{a'b'}|=u$, $|s_{a'c'}|=v$
+and $|s_{b'c'}|=d(x(u),y(v))$.
+
+\entryblock{c81962d31706}
+
+Suppose that $\alpha, \beta,\gamma$ are three geodesics
+emanating from a point $p$ in a Riemannian manifold. Let $\angle_p
+(\alpha,\beta)$, $\angle_p(\beta,\gamma)$ and
+$\angle_p(\alpha,\gamma)$ be the angles of these geodesics at $p$ as
+measured by the Riemannian metric. Then of course
+
+$$
+\angle_p(\alpha,\beta)+\angle_p(\beta,\gamma)+\angle_p(\alpha,\gamma)\le
+2\pi
+$$
+
+ since this inequality holds for the angles between straight
+lines in Euclidean $n$-space. There is a second corollary of
+\entryref{04518fa1ac2f} which gives an analogous result for the
+associated Euclidean angles.
+
+\entryblock{dc263832416c}
+
+**Proof.** Consider the sum of these angles as the geodesic arcs in $M$ are
+shortened without changing their direction. By the first property of
+\entryref{04518fa1ac2f} the sum of the angles of these triangles
+is a monotone decreasing function of the lengths. Of course, the
+limit as the lengths all go to zero is the corresponding Euclidean
+angle. The result is now clear.
+
+## The soul theorem
+
+A subset $X$ of a Riemannian manifold $(M,g)$ is said to be *totally convex* if every geodesic segment with endpoints in $X$ is
+contained in $X$. Thus, a point $p$ in $M$ is totally convex if and
+only if there is no broken geodesic arc in $M$ broken exactly at
+$x$.
+
+\entryblock{2b5f18292e62}
+
+\entryblock{8e408e4f9091}
+
+The rest of this section is devoted to a sketch of the proof of this
+result. Our discussion follows closely that in [Petersen]
+starting on p. 349. We shall need more information about complete,
+non-compact manifolds of non-negative curvature, so we review a
+little of their theory as we sketch the proof of the soul theorem.
+
+\entryblock{dc7704c76958}
+
+See Fig. 2.2.
+
+**Proof.** The proof is by contradiction. Fix $0<\epsilon<1$ sufficiently small
+so that $\mathit{cos}(\epsilon/2)<1-\epsilon^2/12$. Suppose that there
+is a sequence of points $q_n$ tending to infinity such that for each
+$n$ there are minimizing geodesics $\gamma_n$ and $\mu_n$ from $p$
+to $q_n$ making angle at least $\epsilon$ at $q_n$. For each $n$ let
+$d_n=d(p,q_n)$. By passing to a subsequence we can suppose that for
+all $n$ and $m$ the cosine of the angle at $p$ between $\gamma_n$
+and $\gamma_m$ at least $1-\epsilon^2/24$, and the cosine of the
+angle at $p$ between $\mu_n$ and $\mu_m$ is at least
+$1-\epsilon^2/24$. We can also assume that for all $n\ge 1$ we have
+$d_{n+1}\ge (100/\epsilon^2) d_n$. Let $\delta_n=d(q_n,q_{n+1})$.
+Applying the first Toponogov property at $p$, we see that
+$\delta_n^2\le d_n^2+d_{n+1}^2-2d_nd_{n+1}(1-\epsilon^2/24)$.
+Applying the same property at $q_n$ we have
+
+$$
+d_{n+1}^2\le d_n^2+\delta_n^2-2d_n\delta_n\mathit{cos}(\theta),
+$$
+
+ where
+$\theta\le \pi$ is the angle at $q_n$ between $\gamma_n$ and a
+minimal geodesic joining $q_n$ to $q_{n+1}$. Thus,
+
+$$
+\mathit{cos}(\theta)\le
+\frac{d_n-d_{n+1}(1-\epsilon^2/24)}{\delta_n}.
+$$
+
+ By the triangle
+inequality (and the fact that $\epsilon<1$) we have $\delta_n\ge
+(99/\epsilon)d_n$ and $\delta_n\ge d_{n+1}(1-(\epsilon^2/100))$.
+Thus,
+
+$$
+\mathit{cos}(\theta)\le
+\epsilon^2/99-(1-\epsilon^2/24)/(1-(\epsilon^2/100))<-(1-\epsilon^2/12).
+$$
+
+This implies that $\mathit{cos}(\pi-\theta)>(1-\epsilon^2/12)$, which
+implies that $\pi-\theta<\epsilon/2$. That is to say, the angle at
+$q_n$ between $\gamma_n$ and a shortest geodesic from $q_n$ to
+$q_{n+1}$ is between $\pi-\epsilon/2$ and $\pi$. By symmetry, the
+same is true for the angle between $\mu_n$ and the same shortest
+geodesic from $q_n$ to $q_{n+1}$. Thus, the angle between $\gamma_n$
+and $\mu_n$ at $q_n$ is less than $\epsilon$, contradicting our
+assumption.
+
+\entryblock{64a0f82323d3}
+
+**Proof.** Given $(M,g)$ and $p\in M$ as in the statement of the corollary, choose a
+constant $R<\infty$ such that any two minimal geodesics from $p$ to a point $q$
+with $d(p,q)\ge R/2$ make an angle at most $\pi/6$ at $q$. Now following
+[Petersen] p. 335, it is possible to find a smooth unit vector field $X$
+on $U=M-\overline{B(p,R/2)}$ with the property that $f(\cdot)=d(p,\cdot)$ is
+increasing along any integral curve for $X$ at a rate bounded below by $\mathit{cos}(\pi/3)$. In particular, for any $s\ge R$ each integral curve of $X$
+crosses the level set $f^{-1}(s)$ in a single point. Using this vector field
+we see that for any $s,s'>R$, the pre-image $f^{-1}([s,s'])$ is homeomorphic to
+$f^{-1}(s)\times[s,s']$ and that the end $f^{-1}\left([s,\infty)\right)$ is
+homeomorphic to $f^{-1}(s)\times [s,\infty)$.
+
+In a complete, non-compact $n$-manifold of positive curvature any soul is a
+point. While the proof of this result uses the same ideas as discussed above,
+we shall not give a proof. Rather we refer the reader to Theorem 84 of
+[Petersen] on p. 349. A soul has the property that if two minimal
+geodesics emanate from $p$ and end at the same point $q\not= p$, then the angle
+that they make at $q$ is less than $\pi/2$. Also, of course, the exponential
+mapping is a diffeomorphism sufficiently close to the soul. Applying the above
+lemma and a standard compactness argument, we see that in fact there is
+$\epsilon>0$ such that all such pairs of minimal geodesics from $p$ ending at
+the same point make angle less than $\pi/2-\epsilon$ at that point. Hence, in
+this case there is a vector field $X$ on all of $M$ vanishing only at the soul,
+and agreeing with the gradient of the distance function near the soul, so that
+the distance function from $p$ is strictly increasing to infinity along each
+flow line of $X$ (except the fixed point). Using $X$ one establishes that $M$
+is diffeomorphic to $\Ar^n$. It also follows that all the level surfaces
+$f^{-1}(s)$ for $s>0$ are homeomorphic to $S^{n-1}$ and for $0<s<s'$ the
+preimage $f^{-1}([s,s'])$ is homeomorphic to $S^{n-1}\times[s,s']$.
+
+There is an analogue of this result for the distance function from
+any point, not just a soul.
+
+\entryblock{68624c3d26bd}
+
+**Proof.** Given $(M,g)$ and $p$ fix $R<\infty$ sufficiently large so that
+\entryref{64a0f82323d3} holds. Since $M$ is diffeomorphic to $\Ar^n$
+it has only one end and hence the level sets $f^{-1}(s)$ for $s\ge
+R$ are connected. Given any compact subset $K\subset M$ there is a
+larger compact set $B$ (a ball) such that $M\setminus B$ has trivial
+fundamental group and trivial homology groups $H_i$ for $i<n-1$.
+Hence for any subset $Z\subset M\setminus B$, the inclusion of $Z\to
+M\setminus K$ induces the trivial map on $\pi_1$ and on $H_i$ for
+$i<n-1$. Clearly, for any $R\le s<b$ the inclusion
+$f^{-1}(b,\infty)\to f^{-1}(s,\infty)$ is a homotopy equivalence.
+Thus, it must be the case that $f^{-1}(b,\infty)$ has trivial
+fundamental group and $H_i$ for $i<n-1$. Hence, the same is true for
+$f^{-1}(s,\infty)$ for any $s\ge R$. Lastly, since
+$f^{-1}(s,\infty)$ is connected and simply connected ( hence
+orientable) and has two ends, it follows by the non-compact form of
+Poincaré duality that $H_{n-1}(f^{-1}(s,\infty))\cong \Zee$.
+Hence, by the Hurewicz theorem $f^{-1}(s,\infty)$ is homotopy
+equivalent to $S^{n-1}$ for any $s\ge R$. Of course, it is also true
+for $R\le s\le s'$ that $f^{-1}(s,s')$ is homotopy equivalent to
+$S^{n-1}$.
+
+## Ends of a manifold
+
+Let us review the basic notions about ends of a manifold.
+
+\entryblock{7e6aacfbf7d2}
+
+A proper map between topological manifolds induces a map on the
+space of ends, and in fact induces a map on the compactifications
+sending the subspace of ends of the compactification of the domain
+to the subspace of ends of the compactification of the range.
+
+We say that a path $\gamma\colon [a,b)\to M$ is a path *to the
+end ${\mathcal E}$* if it is a proper map and it sends the end
+$\{b\}$ of $[a,b)$ to the end ${\mathcal E}$ of $M$. This condition
+is equivalent to saying that given a neighborhood $U$ of ${\mathcal
+E}$ there is a neighborhood of the end $\{b\}$ of $[a,b)$ that maps
+to $U$.
+
+Now suppose that $M$ has a Riemannian metric $g$. Then we can
+distinguish between ends at finite and infinite distance. An end is
+at *finite distance* if there is a rectifiable path of finite
+length to the end. Otherwise, the end is at infinite distance. If an
+end is at finite distance we have the notion of the distance from a
+point $x\in M$ to the end. It is the infimum of the lengths of
+rectifiable paths from $x$ to the end. This distance is always
+positive. Also, notice that the Riemannian manifold is complete if
+and only if has no end at finite distance.
+
+## The splitting theorem
+
+In this section we give a proof of the following theorem which is
+originally due to Cheeger-Gromoll [CheegerGromoll2]. The weaker
+version giving the same conclusion under the stronger hypothesis of
+non-negative sectional curvature (which is in fact all we need in
+this work) was proved earlier by Toponogov, see [Toponogov].
+
+\entryblock{e5b196773169}
+
+**Proof.** We begin the proof by establishing a result of independent interest,
+which was formulated as the main theorem in [CheegerGromoll2]..
+
+\entryblock{006e42ef5bb5}
+
+**Proof.** Given a minimizing line $\lambda\colon \Ar\to X$, define
+$\lambda_\pm\colon [0,\infty)\to X$ by $\lambda_+(t)=\lambda(t)$ and
+$\lambda_-(t)=\lambda(-t)$. Then we have the Busemann functions
+$B_+=B_{\lambda_+}$ and $B_-=B_{\lambda_-}$.
+\entryref{7c06c4b22b84} applies to both $B_+$ and $B_-$ and shows
+that $\Delta (B_+ +B_-)\le 0$. On the other hand, using the fact
+that $\lambda$ is distance minimizing, we see that for any $s,t>0$
+and for any $x\in M$ we have $d(x,\lambda(t))+d(x,\lambda(-s))\ge
+s+t$, and hence $B_+(x)+B_-(x)\ge 0$. Clearly, $B_+(x)+B_-(x)=0$ for
+any $x$ in the image of $\lambda$. Thus, the function $B_++B_-$ is
+everywhere $\ge 0$, vanishes at at a least one point and satisfies
+$\Delta (B_++B_-)\le 0$ in the weak sense. This is exactly the
+set-up for the maximum principle, cf. [Petersen], p. 279.
+
+\entryblock{0d534e8417eb}
+
+Applying this result to $-(B_++B_-)$, we see that $B_++B_-=0$, so that
+$B_-=-B_+$. It now follows that $\Delta B_+=0$ in the weak sense. By standard
+elliptic regularity results this implies that $B_+$ is a smooth harmonic
+function.
+
+Next, we show that for all $x\in M$ we have $|\nabla B_+(x)|=1$.
+Fix $x\in M$. Take a sequence $t_n$ tending to infinity and consider
+minimizing geodesics $\mu_{+,n}$ from $x$ to $\lambda_+(t_n)$. By
+passing to a subsequence we can assume that there is a limit as
+$n\rightarrow \infty$. This limit is a minimizing geodesic ray
+$\mu_+$ from $x$, which we think of as being `asymptotic at
+infinity' to $\lambda_+$. Similarly, we construct a minimizing
+geodesic ray $\mu_-$ from $x$ asymptotic at infinity to $\lambda_+$.
+ Since
+$\mu_+$ is a minimal geodesic ray, it follows that for any $t$ the
+restriction $\mu_+|_{[0,t]}$ is the unique length minimizing
+geodesic from $x$ to $\mu_+(t)$ and that $\mu_+(t)$ is not a
+conjugate point along $\mu_+$. It follows by symmetry that $x$ is
+not a conjugate point along the reversed geodesic $-\mu_+|_{[0,t]}$
+and hence that $x\in U_{\mu_+(t)}$. This means that the function
+$d(\mu_+(t),\cdot)$ is smooth at $x$ with gradient equal to the unit
+tangent vector in the negative direction at $x$ to $\mu_+$, and
+consequently that $B_{\mu_+,t}$ is smooth at $x$. Symmetrically, for
+any $t>0$ the function $B_{\mu_-,t}$ is smooth at $x$ with the
+opposite gradient. Notice that these gradients have norm one. We
+have
+
+$$
+B_{\mu_+,t}+B_+(x)\ge B_+=-B_-\ge -(B_{\mu_-,t}+B_-(x)).
+$$
+
+Of course, $B_{\mu_+,t}(x)=0$ and $B_{\mu_-,t}(x)=0$, so that
+
+$$
+B_{\mu_+,t}(x)+B_+(x)=-(B_{\mu_-,t}(x)+B_-(x)).
+$$
+
+This squeezes $B_+$ between two smooth functions with the same value
+and same gradient at $x$ and hence shows that $B_+$ is $C^1$ at $x$
+and $|\nabla B_+(x)|$ is of norm one.
+
+Thus, $B$ defines a smooth Riemannian submersion from $M\to \Ar$
+which implies that $M$ is isometric to a product of the fiber over
+the origin with $\Ar$.
+
+This result together with \entryref{89a6041c42b9} shows that if $M$
+satisfies the hypothesis of the theorem, then it can be written as
+a Riemannian product $M=N\times \Ar$. Since $M$ has at least two
+ends, it follows immediately that $N$ is compact. This completes the
+proof of the theorem.
+
+## $\epsilon$-necks
+
+Certain types of (incomplete) Riemannian manifolds play an
+especially important role in our analysis. The purpose of this
+section is to introduce these manifolds and use them to prove one
+essential result in Riemannian geometry.
+
+For all of the following definitions we fix $0<\epsilon<1/2$. Set
+$k$ equal to the greatest integer less than or equal to
+$\epsilon^{-1}$. In particular, $k\ge 2$.
+
+\entryblock{755d47f17b43}
+
+\entryblock{bdfb2841e15e}
+
+The first object of interest is one that, up to scale, is close to a
+long, round cylinder.
+
+\entryblock{d91d54ddbd1c}
+
+Here is the result that will be so important in our later arguments.
+
+\entryblock{cb9ca6d6db9f}
+
+**Proof.** The result is obvious if $M$ is compact, so we assume that $M$ is
+non-compact. Let $p\in M$ be a soul for $M$ (\entryref{2b5f18292e62}),
+and let $f$ be the distance function from $p$. Then $f^{-1}(s)$ is
+connected for all $s>0$.
+
+\entryblock{818772530e5a}
+
+**Proof.** Let $N$ be an $\epsilon$-neck disjoint from $p$. By
+\entryref{04dd3c3ea1c8} for any point $z$ in the middle third of $N$, the
+boundary of the metric ball $B(p,d(z,p))$ is a topological
+$2$-sphere in $N$ isotopic in $N$ to the central $2$-sphere of $N$.
+Hence, the central $2$-sphere separates the soul from the end of
+$M$. The second statement follows immediately by applying this to
+$N_1$ and $N_2$.
+
+Let $N_1$ and $N_2$ be disjoint $\epsilon$-necks, each disjoint from
+the soul. By the previous lemma, the central $2$-spheres $S_1$ and
+$S_2$ of these necks are smoothly isotopic to each other and they
+are the boundary components of a region diffeomorphic to $S^2\times
+I$. Reversing the indices if necessary we can assume that $N_2$ is
+closer to $\infty$ than $N_1$, i.e., further from the soul.
+Reversing the directions of the necks if necessary, we can arrange
+that for $i=1,2$ the function $s_{N_i}$ is increasing as we go away
+from the soul. We define $C^\infty$- functions $\psi_i$ on $N_i$,
+functions depending only on $s_{N_i}$, as follows. The function
+$\psi_1$ is zero on the negative side of the middle third of $N_1$
+and increases to be identically one on the positive side of the
+middle third. The function $\psi_2$ is one on the negative side of
+the middle third of $N_2$ and decreases to be zero on the positive
+side. We extend $\psi_1,\psi_2$ to a function $\psi$ defined on all
+of $M$ by requiring that it be identically one on the region $X$
+between $N_1$ and $N_2$ and to be identically zero on $M\setminus
+(N_1\cup X\cup N_2)$.
+
+Let $\lambda$ be a geodesic ray from the soul of $M$ to infinity,
+and $B_\lambda$ its Busemann function. Let $N$ be any
+$\epsilon$-neck disjoint from the soul, with $ s_N$ direction chosen
+so that it points away from the soul. At any point of the middle
+third of $N$ where $B_\lambda$ is smooth, $\nabla B_\lambda$ is a
+unit vector in the direction of the unique minimal geodesic ray from
+the end of $\lambda$ to this point. Invoking \entryref{88a5a2233418}
+from the appendix we see that at such points $\nabla B_\lambda$ is
+close to $-R(x)^{1/2}\partial/\partial s_N$, where $x\in N$ is the
+center of the $\epsilon$-neck. Since $\nabla B_\lambda$ is $L^2$ its
+non-smooth points have measure zero and hence, the restriction of
+$\nabla B_\lambda$ to the middle third of $N$ is close in the
+$L^2$-sense to $-R(x)^{1/2}\partial/\partial s_N$.
+
+Applying this to $N_1$ and $N_2$ we see that
+
+$$
+\int_M\langle \nabla B_\lambda,\nabla\psi\rangle d\mathit{vol}=\left(\alpha_2R(x_2)^{-1}-\alpha_1R(x_1)^{-1}\right)\mathit{Vol}_{h_0}(S^2)),
+$$
+
+ where $h(0)$ is the round metric of
+scalar curvature $1$ and where each of $\alpha_1$ and $\alpha_2$
+limits to $1$ as $\epsilon$ goes to zero. Since $\psi\ge 0$,
+\entryref{7c06c4b22b84} tells us that the left-hand side of
+Equation (2.2) must be $\ge 0$. This shows that,
+provided that $\epsilon$ is sufficiently small, $R(x_2)$ is bounded
+above by $2R(x_1)$. This completes the proof of the proposition.
+
+\entryblock{554068bff2cf}
+
+## Forward difference quotients
+
+Let us review quickly some standard material on forward difference quotients.
+
+Let $f\colon [a,b]\to \Ar$ be a continuous function on an interval.
+We say that the *forward difference quotient of $f$ at a point
+$t\in [a,b)$, denoted $\frac{df}{dt}(t)$, is less than
+$c$* provided that
+
+$$
+\overline\mathit{lim}_{\triangle t\rightarrow
+0^+}\frac{f(t+\triangle t)-f(t)}{\triangle t}\le c.
+$$
+
+ We say that it
+is greater than or equal to $c'$ if
+
+$$
+c'\le  \underline\mathit{lim}_{\triangle t\rightarrow 0^+}\frac{f(t+\triangle
+t)-f(t)}{\triangle t}.
+$$
+
+ Standard comparison arguments show:
+
+\entryblock{67c378f87457}
+
+The application we shall make of these results is the following.
+
+\entryblock{37d7d059a526}
+
+**Proof.** Under the given hypothesis it is a standard and easy exercise to
+establish the statement about the forward difference quotient of
+$F_\mathit{max}$. The second statement then is an immediate corollary
+of the previous result.
