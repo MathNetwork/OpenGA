@@ -11,5 +11,5 @@ title: Jacobi
 Let $\gamma:[0,a]\to M$ be a geodesic segment on $M$ such that $\gamma(a)$ is not
 conjugate to $\gamma(0)$. Then $\gamma$ has no conjugate points on $(0,a)$ if and
 only if for all proper variations of $\gamma$ there exists a $\delta>0$ such that
-$E(s)<E(\delta)$ for $0<|s|<\delta$. In particular, if $\gamma$ is minimizing,
+$E(0)\leq E(s)$ for $|s|<\delta$. In particular, if $\gamma$ is minimizing,
 $\gamma$ has no conjugate points on $(0,a)$.

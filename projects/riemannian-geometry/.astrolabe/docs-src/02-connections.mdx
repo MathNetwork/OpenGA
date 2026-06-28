@@ -101,10 +101,12 @@ $c(t_0)$, $t_0\in I$ (i.e. $V_0\in T_{c(t_0)}M$). Then there exists a unique
 parallel vector field $V$ along $c$ with $V(t_0)=V_0$; $V(t)$ is called the
 *parallel transport* of $V(t_0)$ along $c$.
 
-*Proof.* By compactness $c([t_0,t_1])$ can be covered by finitely many coordinate
-neighborhoods, and uniqueness makes the local definitions coincide on overlaps,
-so it suffices to prove the theorem when $c(I)$ lies in one coordinate
-neighborhood $\mathbf{x}(U)$. Writing $V=\sum v^j X_j$, parallelism gives
+*Proof.* Suppose first that the theorem is proved when $c(I)$ is contained in a
+local coordinate neighborhood. By compactness, for any $t_1\in I$,
+$c([t_0,t_1])$ can be covered by finitely many coordinate neighborhoods, and
+uniqueness makes the local definitions coincide on overlaps, so it suffices to
+prove the theorem when $c(I)$ lies in one coordinate neighborhood
+$\mathbf{x}(U)$. Writing $V=\sum v^j X_j$, parallelism gives
 $0=\frac{DV}{dt}=\sum_j\frac{dv^j}{dt}X_j+\sum_{i,j}\frac{dx_i}{dt}v^j\nabla_{X_i}X_j$.
 Putting $\nabla_{X_i}X_j=\sum_k\Gamma_{ij}^k X_k$ yields the system of $n$ linear
 ODEs in $v^k(t)$,

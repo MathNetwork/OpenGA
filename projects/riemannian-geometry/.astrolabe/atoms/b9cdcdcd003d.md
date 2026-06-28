@@ -28,7 +28,13 @@ The spaces of constant curvature have an important role in the historical
 development of Riemannian Geometry, due to their relationship with non-Euclidean
 geometry. A non-Euclidean geometry is a complete Riemannian manifold $M$ together
 with a transitive group of isometries $G$ (the non-Euclidean motions) satisfying
-the *Axiom of free mobility*. This implies that $M$ has constant sectional
-curvature, so the spaces of non-Euclidean Geometry are included among the space
-forms. The cases of $S^n$, $P^n$ and $H^n$ are called *spherical*, *elliptic* and
-*hyperbolic* geometry, respectively.
+the *Axiom of free mobility*: if $p,\tilde p\in M$, if $\gamma_1,\gamma_2$ are
+geodesics starting at $p$ and forming an angle $\alpha$, and if
+$\tilde\gamma_1,\tilde\gamma_2$ are geodesics starting at $\tilde p$ and forming
+the same angle $\alpha$, then there is a $g\in G$ with $g(p)=\tilde p$,
+$g(\gamma_1)=\tilde\gamma_1$, and $g(\gamma_2)=\tilde\gamma_2$. This corresponds
+to the side-angle-side condition for congruence of triangles in Euclidean geometry
+and implies that $M$ has constant sectional curvature, so the spaces of
+non-Euclidean Geometry are included among the space forms. The cases of $S^n$,
+$P^n$ and $H^n$ are called *spherical*, *elliptic* and *hyperbolic* geometry,
+respectively.

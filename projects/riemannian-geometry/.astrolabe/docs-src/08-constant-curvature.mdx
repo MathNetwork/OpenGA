@@ -116,7 +116,7 @@ version was given by W. Ambrose in 1956.
 ### 2.2 Corollary
 Let $M$ and $\tilde{M}$ be spaces with the same constant curvature and the same
 dimension $n$. Let $p\in M$ and $\tilde{p}\in\tilde{M}$. Choose arbitrary
-orthonormal bases $\{e_j\}\in T_p(M)$ and $\{\tilde{e}_j\}\in T_{\tilde{p}}(\tilde{M})$,
+orthonormal bases $\{e_j\}$ of $T_p(M)$ and $\{\tilde{e}_j\}$ of $T_{\tilde{p}}(\tilde{M})$,
 $j=1,\dots,n$. Then there exist a neighborhood $V\subset M$ of $p$, a neighborhood
 $\tilde{V}\subset\tilde{M}$ of $\tilde{p}$, and an isometry $f:V\to\tilde{V}$ such
 that $df_p(e_j)=\tilde{e}_j$.
@@ -305,14 +305,18 @@ transformations.
 If $M$ is a Riemannian manifold and $\Gamma$ is a subgroup of the group of
 isometries acting in a totally discontinuous manner, then $M/\Gamma$ has a
 differentiable structure in which $\pi:M\to M/\Gamma$ is a local diffeomorphism,
-and a Riemannian metric making $\pi$ a local isometry, defined by
+and a Riemannian metric making $\pi$ a local isometry. Given $p\in M/\Gamma$,
+choose $\tilde p\in\pi^{-1}(p)$; for $u,v\in T_p(M/\Gamma)$, define
 
 $$
 \langle u,v\rangle=\langle d\pi^{-1}(u),d\pi^{-1}(v)\rangle_{\tilde{p}},
 $$
 
-called the *metric on $M/\Gamma$ induced by the covering $\pi$*. $M/\Gamma$ is
-complete iff $M$ is, and has constant curvature iff $M$ does. Taking $M=S^n$,
+Since $\pi$ is a regular covering, $\Gamma$ is transitive on $\pi^{-1}(p)$, and
+because $\Gamma$ consists of isometries the definition is independent of the
+choice of $\tilde p$. This is called the *metric on $M/\Gamma$ induced by the
+covering $\pi$*. $M/\Gamma$ is complete iff $M$ is, and has constant curvature iff
+$M$ does. Taking $M=S^n$,
 $\mathbb{R}^n$ or $H^n$, we conclude that $M/\Gamma$ is a complete manifold of
 constant curvature $1$, $0$ or $-1$, respectively.
 
@@ -379,10 +383,16 @@ The spaces of constant curvature have an important role in the historical
 development of Riemannian Geometry, due to their relationship with non-Euclidean
 geometry. A non-Euclidean geometry is a complete Riemannian manifold $M$ together
 with a transitive group of isometries $G$ (the non-Euclidean motions) satisfying
-the *Axiom of free mobility*. This implies that $M$ has constant sectional
-curvature, so the spaces of non-Euclidean Geometry are included among the space
-forms. The cases of $S^n$, $P^n$ and $H^n$ are called *spherical*, *elliptic* and
-*hyperbolic* geometry, respectively.
+the *Axiom of free mobility*: if $p,\tilde p\in M$, if $\gamma_1,\gamma_2$ are
+geodesics starting at $p$ and forming an angle $\alpha$, and if
+$\tilde\gamma_1,\tilde\gamma_2$ are geodesics starting at $\tilde p$ and forming
+the same angle $\alpha$, then there is a $g\in G$ with $g(p)=\tilde p$,
+$g(\gamma_1)=\tilde\gamma_1$, and $g(\gamma_2)=\tilde\gamma_2$. This corresponds
+to the side-angle-side condition for congruence of triangles in Euclidean geometry
+and implies that $M$ has constant sectional curvature, so the spaces of
+non-Euclidean Geometry are included among the space forms. The cases of $S^n$,
+$P^n$ and $H^n$ are called *spherical*, *elliptic* and *hyperbolic* geometry,
+respectively.
 
 ## §5 Isometries of the hyperbolic space; Theorem of Liouville
 
@@ -499,11 +509,12 @@ $$
 $$
 
 which we write as $1/\lambda=\rho=a_1|p-p_0|^2+k_1$ with $a_1=\sigma/2$,
-$k_1=\text{const.}$, $p_0\in\mathbb{R}^n$. Taking the inversion
+$k_1=\text{const.}$, $p_0\in\mathbb{R}^n$. The proof in this case will be complete
+once we show $k_1=0$: if $k_1=0$, taking the inversion
 $g(p)=\frac{p-p_0}{|p-p_0|^2}+p_0$ and $h=g\circ f^{-1}$, $h$ is conformal with
 coefficient $a_1$, hence an isometry followed by a dilatation; thus
 $f=h^{-1}\circ g$ is an inversion followed by a dilatation, followed by an
-isometry. To show $k_1=0$: applying the argument to $f^{-1}$,
+isometry. To show $k_1=0$, apply the argument to $f^{-1}$:
 $\lambda=a_2|f(p)-q_0|^2+k_2$, hence
 
 $$
@@ -519,7 +530,8 @@ $$
 $$
 
 If $k_1\neq 0$, the left side is a transcendental function of $|p(s_0)-p_0|$, while
-$(11)$ implies it is algebraic. This contradiction shows $k_1=0$.
+$(11)$ implies it is algebraic. This contradiction shows $k_1=0$, completing the
+case $\sigma\neq0$.
 
 *Case $\sigma=0$.* Here $\rho=1/\lambda=\sum a_i x_i+c_1=A_1(x)+c_1$. Applying the
 initial argument to $f^{-1}$,
@@ -551,16 +563,17 @@ onto $H^n$. Conversely, let $f:H^n\to H^n$ be a conformal transformation of $H^n
 onto $H^n$ and let $e_1,\dots,e_n$ be an orthonormal basis (in $g_{ij}$) at
 $p\in H^n$. Since $g_{ij}=\delta_{ij}/x_n^2$ and $f$ is conformal, there exists
 $\lambda^2>0$ with $\langle df_p(e_i),df_p(e_j)\rangle=\lambda^2\delta_{ij}$, so
-$\{df_p(e_i)/\lambda\}$ is orthonormal at $f(p)$. By Corollary 2.3 of Cartan's
-Theorem, there exists an isometry $g$ of $H^n$ taking $p$ to $f(p)$ with
-$dg(e_i)=df(e_i)/\lambda$. By the first part, $g$ is conformal. Hence
+$\{df_p(e_i)/\lambda\}$ is orthonormal at $f(p)$. Corollary 2.3 of Cartan's
+Theorem, together with the global construction after Theorem 2.1 (the exponential
+maps of $H^n$ are global diffeomorphisms), gives an isometry $g$ of $H^n$ taking
+$p$ to $f(p)$ with $dg(e_i)=df(e_i)/\lambda$. By the first part, $g$ is conformal. Hence
 $h=g^{-1}\circ f$ is the restriction to $H^n$ of a conformal map of $\mathbb{R}^n$
 taking $H^n$ onto $H^n$, leaving $p$ fixed and satisfying $dh_p=\lambda I$. It
 remains to show $h=\text{identity}$.
 
 Let $P$ be a hyperplane through $p$. By Liouville's theorem, $h(P)$ is a hyperplane
 or a sphere through $p$; since $dh_p$ is a multiple of the identity, $P$ and $h(P)$
-are tangent at $P$. Since $h$ takes $\partial H^n$ into itself and is conformal,
+are tangent at $p$. Since $h$ takes $\partial H^n$ into itself and is conformal,
 the angle of $P$ with $\partial H^n$ equals the angle of $h(P)$ with $\partial H^n$.
 We claim $h(P)=P$. Consider a line $r_1$ through $p$ perpendicular to
 $\partial H^n$, $q_1=r_1\cap\partial H^n$. Since $h(r_1)$ is a circle or a line
@@ -576,15 +589,18 @@ onto $H^n$, $h$ is the identity.
 For $n=2$, a simple calculation shows the conformal transformations of the form
 
 $$
-f(z)=\frac{az+b}{cz+d},\quad z\in H^2\subset\mathbb{C},\ a,b,c,d\in\mathbb{R},\ ad-bc\neq 0\qquad(12)
+f(z)=\frac{az+b}{cz+d},\quad z\in H^2\subset\mathbb{C},\ a,b,c,d\in\mathbb{R},\ ad-bc>0\qquad(12)
 $$
 
 (which map $H^2$ onto $H^2$) are isometries of $H^2$ with the metric $g_{ij}$.
 Moreover, for a fixed point $p_0\in H^2$ and unit vector $v_0$ at $p_0$, there
 exists a transformation $(12)$ taking an arbitrary $(p,v)$ to $(p_0,v_0)$ ($p$ and
 $v$ are determined by three parameters, the number of parameters of $f$). Since
-there is a unique isometry of $H^2$ taking $(p,v)$ to $(p_0,v_0)$, all isometries
-of $H^2$ are of the form $(12)$. $\square$
+there is a unique orientation-preserving isometry of $H^2$ taking $(p,v)$ to
+$(p_0,v_0)$, all orientation-preserving isometries of $H^2$ are of the form (12).
+Composing these with $z\mapsto-\bar z$ gives the orientation-reversing
+anti-holomorphic isometries, so together they give all isometries of $H^2$.
+$\square$
 
 To conclude this section, we identify some important hypersurfaces of $H^n$. The
 intersection with $H^n$ of hyperplanes of $\mathbb{R}^n$ orthogonal to $\partial H^n$,
@@ -608,9 +624,9 @@ since $\langle df_p(v),df_p(v)\rangle=16\langle v,v\rangle/|p-p_0|^4$ and
 $f_n(p)=(4-|p|^2)/|p-p_0|^2$ give
 $\langle df_p(v),df_p(v)\rangle/(f_n(p))^2=\langle v,v\rangle/(1-\tfrac14|p|^2)^2$.
 Because $f$ is injective, $f$ is an isometry of $B^n$ into $H^n$, taking
-$\partial B^n-\{p_0\}$ into $\partial H^n$. By Liouville's Theorem, $g:B^n\to B^n$
-is an isometry in $h_{ij}$ iff $g$ is the restriction of a conformal transformation
-of $\mathbb{R}^n$ taking $B^n$ onto $B^n$.
+$\partial B^n-\{p_0\}$ into $\partial H^n$. Conjugating by (13) and applying
+Theorem 5.3, $g:B^n\to B^n$ is an isometry in $h_{ij}$ iff $g$ is the restriction
+of a conformal transformation of $\mathbb{R}^n$ taking $B^n$ onto $B^n$.
 
 Let $S\subset H^n$ be an $(n-1)$-sphere of Euclidean space completely contained in
 $H^n$. Then $S$ is a *geodesic sphere* of $H^n$: its image $f^{-1}(S)\subset B^n$ is
@@ -625,15 +641,17 @@ metric on $P$ is a multiple of the Euclidean metric, so $P$ has constant curvatu
 zero, as does $S-\{p\}$. Such submanifolds are called *horospheres* of $H^n$.
 
 Let $S$ be a Euclidean sphere cutting $\partial H^n$ at an angle $\alpha$, and
-denote $S\cap H^n=\sum$. Through an inversion at a point of $S\cap\partial H^n$,
-$\sum$ is mapped isometrically into the intersection with $H^n$ of a hyperplane $P$
+denote $S\cap H^n=\Sigma$. Through an inversion at a point of $S\cap\partial H^n$,
+$\Sigma$ is mapped isometrically into the intersection with $H^n$ of a hyperplane $P$
 cutting $\partial H^n$ at the same angle $\alpha$. Let $Q$ be the hyperplane
 orthogonal to $\partial H^n$ containing $P\cap\partial H^n$. Then $P$ is a
 hypersurface equidistant from the totally geodesic hypersurface $Q$: for a geodesic
-$\gamma_r$ (semi-circle of radius $r$ with center $0\in P\cap\partial H^n$), a
+$\gamma_r$ (a semi-circle of radius $r$ with center $0\in P\cap\partial H^n$,
+lying in the plane perpendicular to $P\cap\partial H^n$), a
 homothety with center $0$ takes the circle of radius $r$ into one of any radius, so
 the length of $\gamma_r$ between its intersections with $P$ and $Q$ does not depend
-on $r$. We conclude that $P$, or its isometric image $\sum$, is obtained by taking
+on $r$. We conclude that $P$, or its isometric image $\Sigma$, is obtained by taking
 geodesics perpendicular to $Q$ and marking a fixed distance. Such hypersurfaces are
 called *equidistant surfaces* (or *hyperspheres*). In Exercise 6 it is shown that
-the hypersurfaces above are exactly the umbilic ones.
+the hypersurfaces above are exactly the umbilic ones, and their mean and sectional
+curvatures are calculated.

@@ -40,6 +40,8 @@ $s\in(-\varepsilon,\varepsilon)$. If $f$ is differentiable, the variation is sai
 *differentiable*. For each $s\in(-\varepsilon,\varepsilon)$, the parametrized curve
 $f_s:[0,a]\to M$ given by $f_s(t)=f(s,t)$ is called a *curve in the variation*, so
 a variation determines a family $f_s(t)$ of neighboring curves of $f_0(t)=c(t)$.
+The variation is proper exactly when the curves in this family have the same
+initial point $c(0)$ and endpoint $c(a)$.
 The parametrized differentiable curve given by $f_t(s)=f(s,t)$, $t$ fixed, is a
 *transversal curve of the variation*. The velocity vector of a transversal curve
 at $s=0$, defined by $V(t)=\frac{\partial f}{\partial s}(0,t)$, is a (piecewise
@@ -157,7 +159,8 @@ every proper variation $f$ of $c$, we have $\frac{dE}{ds}(0)=0$.
 for $f$ proper, $V(0)=V(a)=0$, and all terms of (1) are zero. Conversely, suppose
 $\frac{dE}{ds}(0)=0$ for all proper variations. Let
 $V(t)=g(t)\frac{D}{dt}\frac{dc}{dt}$, where $g:[0,a]\to\mathbf{R}$ is piecewise
-differentiable with $g(t)>0$ if $t\ne t_i$ and $g(t_i)=0$. Constructing a variation
+differentiable with $g(t)>0$ if $t\ne t_i$ and $g(t_i)=0$, $i=0,\dots,k+1$.
+Constructing a variation
 with this $V(t)$,
 
 $$
@@ -247,7 +250,8 @@ $$
 $$
 
 ### 2.10 Remark (the index form)
-It is often convenient to write (5) using
+It is often convenient to write (5) using, on each interval where $V$ is
+differentiable,
 $\frac{d}{dt}\langle V,\frac{DV}{dt}\rangle=\langle V,\frac{D^2 V}{dt^2}\rangle+\langle\frac{DV}{dt},\frac{DV}{dt}\rangle$.
 Taking a geodesic $\gamma:[0,a]\to M$ and a partition
 $0=t_0<t_1<\cdots<t_{k+1}=a$, this gives

@@ -55,7 +55,7 @@ $$
 $$
 
 Sturm's Theorem asserts that if $f'(0)=\tilde f'(0)>0$, $\tilde f(t)\neq 0$ on
-$(0,\ell)$, and $\widetilde{K}(t)\geq K(t)$, then $\tilde f(t)\leq f(t)$.
+$(0,\ell]$, and $\widetilde{K}(t)\geq K(t)$, then $\tilde f(t)\leq f(t)$.
 
 In dimension higher than two the proof is much less simple; a presentation of
 the theorem was made for the first time in 1951 by Rauch. The proof presented in
@@ -376,6 +376,8 @@ $$
 \tilde J(t)=\frac{\sinh(t\sqrt{-b})}{\sinh(\ell\sqrt{-b})}\tilde w(t)\ (b<0),\qquad\tilde J(t)=\frac{t}{\ell}\tilde w(t)\ (b=0),
 $$
 
+where $\tilde w$ is the parallel vector field along $\tilde\gamma$ with
+$\tilde w(\ell)=\tilde v$. Thus
 one obtains from the proof of the Index Lemma
 
 $$
@@ -636,7 +638,7 @@ orthogonal complement of $\gamma'(0)$. We say that $\gamma$ is *focal point free
 at $(0,a]$ if there exists some $\varepsilon>0$ such that $\gamma$ has no focal
 points relative to the submanifold $\Sigma_\varepsilon=\exp_{\gamma(0)}(B_\varepsilon(0))$.
 
-Observe that since $\Sigma_\varepsilon$ is geodesic at $p$, any Jacobi field $J$
+Observe that since $\Sigma_\varepsilon$ is geodesic at $\gamma(0)$, any Jacobi field $J$
 along $\gamma$, with $J(0)\neq 0$ and $J'(0)=0$, automatically satisfies
 $S_{\gamma'(0)}(J(0))=0$.
 
@@ -664,7 +666,7 @@ geodesics, with the same velocity, and let $J$ and $\tilde J$ be Jacobi fields
 along $\gamma$ and $\tilde\gamma$, such that
 
 $$
-0=J'(0)=\tilde J'(0),\quad\langle J(0),\gamma'(0)\rangle=\langle J(0),\tilde\gamma'(0)\rangle,\quad|J(0)|=|\tilde J(0)|.
+0=J'(0)=\tilde J'(0),\quad\langle J(0),\gamma'(0)\rangle=\langle \tilde J(0),\tilde\gamma'(0)\rangle,\quad|J(0)|=|\tilde J(0)|.
 $$
 
 Assume that $\tilde\gamma$ is focal point free on $(0,a]$ and that, for all $t$
@@ -683,6 +685,12 @@ for all $t\in[0,t_o]$.
 modifications: $\frac{|J|^2}{|\tilde J|^2}$ is well-defined, since $\tilde\gamma$
 is focal point free, and $I_{t_o}(\phi(U),\phi(U))\geq I_{t_o}(\tilde U,\tilde U)$
 by Lemma 4.8. $\blacksquare$
+
+Other useful extensions of the Rauch comparison theorem can be found in F. Warner,
+"Extensions of the Rauch comparison theorem to submanifolds", Trans. A.M.S. 122
+(1966), 341-356, and in E. Heintze and H. Karcher, "A general comparison theorem
+with applications to volume estimates for submanifolds", Ann. Sci. Ecole Norm.
+Sup. 11 (1978), 451-470.
 
 Rauch's theorem admits an extremely important global generalization, called the
 Theorem of Toponogov. One of its versions: let $M$ be a Riemannian manifold which

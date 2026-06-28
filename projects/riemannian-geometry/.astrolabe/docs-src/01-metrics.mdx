@@ -29,7 +29,9 @@ A *Riemannian metric* (or *Riemannian structure*) on a differentiable manifold
 $M$ associates to each $p\in M$ an inner product $\langle\ ,\ \rangle_p$ (a
 symmetric, bilinear, positive-definite form) on $T_pM$, varying differentiably:
 if $\mathbf{x}:U\subset\mathbb{R}^n\to M$ is a coordinate system around $p$ with
-$\frac{\partial}{\partial x_i}(q)=d\mathbf{x}_q(0,\dots,1,\dots,0)$, then
+$q=\mathbf{x}(x_1,\dots,x_n)\in\mathbf{x}(U)$ and
+$\frac{\partial}{\partial x_i}(q)=d\mathbf{x}_{(x_1,\dots,x_n)}(0,\dots,1,\dots,0)$,
+then
 
 $$
 g_{ij}(x_1,\dots,x_n)=\Big\langle\frac{\partial}{\partial x_i}(q),\frac{\partial}{\partial x_j}(q)\Big\rangle_q
@@ -111,12 +113,14 @@ differential $\mathrm{Ad}(a)=dR_{a^{-1}}dL_a:\mathcal{G}\to\mathcal{G}$, so
 $\mathrm{Ad}(a)Y=dR_{a^{-1}}Y$. Let $x_t$ be the flow of $X$. From Proposition 5.4
 of Chapter 0, $[Y,X]=\lim_{t\to0}\frac1t(dx_t(Y)-Y)$. Since $X$ is left invariant,
 $L_y\circ x_t=x_t\circ L_y$, giving $x_t(y)=R_{x_t(e)}(y)$, hence $dx_t=dR_{x_t(e)}$
-and $[Y,X]=\lim_{t\to0}\frac1t(\mathrm{Ad}(x_t^{-1}(e))Y-Y)$. With $\langle\ ,\ \rangle$
+and $[Y,X]=\lim_{t\to0}\frac1t(\mathrm{Ad}((x_t(e))^{-1})Y-Y)$. With $\langle\ ,\ \rangle$
 bi-invariant, $\langle U,V\rangle=\langle dR_{x_t(e)}U,dR_{x_t(e)}V\rangle$;
 differentiating in $t$ at $t=0$ gives $0=\langle[U,X],V\rangle+\langle U,[V,X]\rangle$,
-which is (3). The relation (3) characterizes bi-invariant metrics: a positive
-bilinear form on $\mathcal{G}$ satisfying (3) yields, via (2), a bi-invariant
-metric. $\blacksquare$
+which is (3). $\blacksquare$
+
+The relation (3) characterizes bi-invariant metrics: a positive bilinear form on
+$\mathcal{G}$ satisfying (3) yields, via (2), a bi-invariant metric. This last
+fact is not proved here.
 
 ### 2.7 Example (the product metric)
 Let $M_1,M_2$ be Riemannian manifolds and $\pi_1,\pi_2$ the natural projections
@@ -152,25 +156,13 @@ A differentiable manifold $M$ (Hausdorff with countable basis) has a Riemannian
 metric.
 *Proof.* Let $\{f_\alpha\}$ be a differentiable partition of unity subordinate to
 a covering $\{V_\alpha\}$ of $M$ by coordinate neighborhoods (see Chap. 0, Sec. 5),
-so $\{V_\alpha\}$ is locally finite, $f_\alpha\ge0$, $f_\alpha=0$ off
-$\overline{V_\alpha}$, and $\sum_\alpha f_\alpha\equiv1$. On each $V_\alpha$ take
-the metric $\langle\ ,\ \rangle^\alpha$ induced by the local coordinates, and set
-$\langle u,v\rangle_p=\sum_\alpha f_\alpha(p)\langle u,v\rangle_p^\alpha$; this
-defines a Riemannian metric on $M$. $\square$
-
-### 2.11 Remark (volume form)
-The reader familiar with differential forms will note that equation (4) implies
-the integrand in the volume formula (5) is a positive differential form of degree
-$n$, the *volume form (volume element)* $\nu$ on $M$. For a compact region $R$ not
-contained in one coordinate neighborhood, take a partition of unity $\{\varphi_i\}$
-subordinate to a finite covering by coordinate neighborhoods $\mathbf{x}(U_i)$ and
-set $\mathrm{vol}(R)=\sum_i\int_{\mathbf{x}_i^{-1}(R)}\varphi_i\nu$, independent of
-the partition.
-
-### 2.12 Remark (volume from a volume element)
-The existence of a globally defined positive differential form of degree $n$
-(volume element) yields a notion of volume on a differentiable manifold. A
-Riemannian metric is only one of the ways a volume element can be obtained.
+so $\{V_\alpha\}$ is locally finite, $f_\alpha\ge0$,
+$\mathrm{supp}\,f_\alpha\subset V_\alpha$, and
+$\sum_\alpha f_\alpha\equiv1$. On each $V_\alpha$ take the metric
+$\langle\ ,\ \rangle^\alpha$ induced by the local coordinates, and set
+$\langle u,v\rangle_p=\sum_\alpha f_\alpha(p)\langle u,v\rangle_p^\alpha$, where
+only terms with $f_\alpha(p)\ne0$ are evaluated; this defines a Riemannian metric
+on $M$. $\square$
 
 ### Volume on an oriented manifold (between 2.10 and 2.11)
 For a positive parametrization $\mathbf{x}:U\to M$ about $p$, take a positive
@@ -186,7 +178,7 @@ $$
 For another positive parametrization $\mathbf{y}:V\to M$ with $h_{ij}=\langle Y_i,Y_j\rangle$,
 
 $$
-\sqrt{\det(g_{ij})}(p)=J\sqrt{\det(h_{ij})}(p),\qquad J=\det\big(\tfrac{\partial x_i}{\partial y_j}\big)>0.\qquad\text{(4)}
+\sqrt{\det(g_{ij})}(p)=J\sqrt{\det(h_{ij})}(p),\qquad J=\det\big(\tfrac{\partial y_i}{\partial x_j}\big)>0.\qquad\text{(4)}
 $$
 
 For a region $R\subset M$ (open, connected, compact closure) contained in a
@@ -199,3 +191,17 @@ $$
 
 By the change-of-variables theorem and (4) this is independent of the chart
 (orientability guarantees $\mathrm{vol}(R)$ does not change sign).
+
+### 2.11 Remark (volume form)
+The reader familiar with differential forms will note that equation (4) implies
+the integrand in the volume formula (5) is a positive differential form of degree
+$n$, the *volume form (volume element)* $\nu$ on $M$. For a compact region $R$ not
+contained in one coordinate neighborhood, take a partition of unity $\{\varphi_i\}$
+subordinate to a finite covering by coordinate neighborhoods $\mathbf{x}(U_i)$ and
+set $\mathrm{vol}(R)=\sum_i\int_{\mathbf{x}_i^{-1}(R)}\varphi_i\nu$, independent of
+the partition.
+
+### 2.12 Remark (volume from a volume element)
+The existence of a globally defined positive differential form of degree $n$
+(volume element) yields a notion of volume on a differentiable manifold. A
+Riemannian metric is only one of the ways a volume element can be obtained.

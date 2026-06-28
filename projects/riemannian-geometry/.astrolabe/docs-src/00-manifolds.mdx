@@ -295,7 +295,7 @@ dimension $n-m=k$, hence (Example 4.2) a submanifold of $\mathbb{R}^n$.
 *Proof.* For $p\in F^{-1}(a)$, writing $q=(y_1,\dots,y_m,x_1,\dots,x_k)$ and
 $F(q)=(f_1(q),\dots,f_m(q))$, since $dF_p$ is surjective suppose
 $\frac{\partial(f_1,\dots,f_m)}{\partial(y_1,\dots,y_m)}(p)\neq0$. Define
-$\varphi:U\to\mathbb{R}^{n=m+k}$ by
+$\varphi:U\to\mathbb{R}^{m+k}$ by
 $\varphi(y,x)=(f_1(q),\dots,f_m(q),x_1,\dots,x_k)$, with
 $\det(d\varphi)_p=\frac{\partial(f_1,\dots,f_m)}{\partial(y_1,\dots,y_m)}(p)\neq0$.
 By the inverse function theorem $\varphi$ is a diffeomorphism of a neighborhood
@@ -336,9 +336,12 @@ $\pi_1(x)=\big(\frac{x_1}{1-x_{n+1}},\dots,\frac{x_n}{1-x_{n+1}}\big)$, and
 $\pi_2:S^n-\{S\}\to\mathbb{R}^n$ (from the south pole) are differentiable
 injections onto $x_{n+1}=0$. The parametrizations
 $(\mathbb{R}^n,\pi_1^{-1}),(\mathbb{R}^n,\pi_2^{-1})$ cover $S^n$ with change of
-coordinates $y_j'=\frac{y_j}{\sum_{i=1}^n y_i^2}$, differentiable, and
-$\pi_1^{-1}(\mathbb{R}^n)\cap\pi_2^{-1}(\mathbb{R}^n)=S^n-\{N\cup S\}$ connected;
-by Example 4.5, $S^n$ is orientable. The antipodal map $A:S^n\to S^n$, $A(p)=-p$,
+coordinates $y_j'=\frac{y_j}{\sum_{i=1}^n y_i^2}$, differentiable. For $n\geq2$,
+$\pi_1^{-1}(\mathbb{R}^n)\cap\pi_2^{-1}(\mathbb{R}^n)=S^n-\{N,S\}$ is connected,
+so by Example 4.5, $S^n$ is orientable. For $n=1$, the same atlas is orientable
+directly: on the two components of $S^1-\{N,S\}$, the change of coordinates is
+$y'=1/y$ with derivative $-1/y^2<0$, and changing the sign of one coordinate makes
+both transition derivatives positive. The antipodal map $A:S^n\to S^n$, $A(p)=-p$,
 is a diffeomorphism ($A^2=\mathrm{id}$); it reverses the orientation of $S^n$ when
 $n$ is even and preserves it when $n$ is odd.
 
@@ -385,8 +388,9 @@ situation of Example 4.7 is this one with $M=S^n$, $G=\{A,I=A^2\}$.
 
 ### 4.9 Example (special cases of Example 4.8)
 
-**4.9 (a) (the $k$-torus).** $G$ = group of "integral" translations of
-$\mathbb{R}^k$, $G(x_1,\dots,x_k)=(x_1+n_1,\dots,x_k+n_k)$, $n_i\in\mathbb{Z}$.
+**4.9 (a) (the $k$-torus).** Let $G$ be the group of "integral" translations of
+$\mathbb{R}^k$: for $(n_1,\dots,n_k)\in\mathbb{Z}^k$, the corresponding
+translation sends $(x_1,\dots,x_k)$ to $(x_1+n_1,\dots,x_k+n_k)$.
 This is a properly discontinuous action; $\mathbb{R}^k/G$ (with the structure of
 Example 4.8) is the *$k$-torus $T^k$*. For $k=2$, $T^2$ is diffeomorphic to the
 torus of revolution in $\mathbb{R}^3$, the inverse image of $0$ of
@@ -412,7 +416,9 @@ X(p)=\sum_{i=1}^n a_i(p)\frac{\partial}{\partial x_i},\qquad\text{(4)}
 $$
 
 $a_i:U\to\mathbb{R}$; $X$ is differentiable iff the $a_i$ are differentiable for
-some (hence any) parametrization. Thinking of $X:\mathcal{D}\to\mathcal{F}$,
+some (hence any) parametrization. Let $\mathcal{D}$ be the differentiable
+functions on $M$ and $\mathcal{F}$ the functions on $M$; thinking of
+$X:\mathcal{D}\to\mathcal{F}$,
 
 $$
 (Xf)(p)=\sum_i a_i(p)\frac{\partial f}{\partial x_i}(p),\qquad\text{(5)}
@@ -542,8 +548,8 @@ $$
 
 For $r=2$ take $U=B_1(p)$ and $f(q)=\beta(-|p-q|)$, where
 $\beta(t)=\frac{\int_{-\infty}^t\alpha(s)\,ds}{\int_{-2}^{-1}\alpha(s)\,ds}$ and
-$\alpha:\mathbb{R}\to\mathbb{R}$ equals $\exp\big(-\frac{1}{(t+2)(-1-t)}\big)$ on
-$[-2,-1]$ and zero off it. The same holds on $M$: if $V\subset M$ is a
+$\alpha:\mathbb{R}\to\mathbb{R}$ equals $\exp\big(-\frac{1}{(t+2)(-1-t)}\big)$ for
+$-2<t<-1$ and zero otherwise. The same holds on $M$: if $V\subset M$ is a
 neighborhood of $p$ contained in a coordinate neighborhood diffeomorphic to an
 open ball, there exist $U$ with $\overline U\subset V$ and differentiable
 $f:M\to\mathbb{R}$, $0\le f\le1$, $f=1$ on $\overline U$, $f=0$ off $V$. This

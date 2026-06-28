@@ -238,7 +238,7 @@ $0<K_{\min}\leq K\leq K_{\max}$, then:
 
 *Proof.* By Bonnet–Myers (Theor. 3.1 of Chap. 9), $M$ is compact. Since $T_1M$ is
 compact, Proposition 2.9 gives $p\in M$ with $d(p,C_m(p))=\inf_{r\in M}d(r,C_m(r))$,
-and $C_m(p)$ compact gives $q\in C_m(p)$ assuming this distance. If $q$ is conjugate
+and $C_m(p)$ compact gives $q\in C_m(p)$ realizing this distance. If $q$ is conjugate
 to $p$, then $d(p,q)\geq\pi/\sqrt{K_{\max}}$ by Proposition 2.4 of Chapter 10 — case
 (a). If $q$ is not conjugate to $p$, by Proposition 2.12 there are two minimizing
 geodesics $\mu,\sigma$ from $p$ to $q$ with $\mu'(\ell)=-\sigma'(\ell)$,
@@ -271,6 +271,26 @@ $|W(t)|=|\bar W(t)|$, $\langle W',W'\rangle=\langle\bar W',\bar W'\rangle$. Sinc
 $\sup\bar K\leq\inf K$, $I(W,W)\leq I(\bar W,\bar W)$; so $I(\bar W,\bar W)<0$ forces
 $I(W,W)<0$. $\square$
 
+For the next lemma we need the following facts. Let $f:M^n\to\mathbb{R}$ be a
+differentiable function on a differentiable manifold $M$. A point $p\in M$ is a
+critical point of $f$ if $df(p)=0$; $f(p)$ is then called a critical value of $f$.
+If $p$ is a critical point and $(x_1,\dots,x_n)$ is a coordinate system on $M$
+around $p$, the hessian of $f$, defined by the matrix
+$(\partial^2f/\partial x_i\partial x_j)(p)$, represents a symmetric bilinear form
+on $T_pM$ that does not depend on the chosen system of coordinates. We say that
+the critical point is non-degenerate if the determinant of this matrix is
+different from zero. Such a critical point is isolated, and it is possible to
+choose a coordinate system $(x_1,\dots,x_{n-\lambda},y_1,\dots,y_\lambda)$ in such
+a way that, in the coordinate neighborhood considered,
+
+$$
+f(x_1,\dots,x_{n-\lambda},y_1,\dots,y_\lambda)
+=f(p)+x_1^2+\cdots+x_{n-\lambda}^2-y_1^2-\cdots-y_\lambda^2.
+$$
+
+The integer $\lambda$ is called the index of the non-degenerate critical point
+$p$. (For more details see Milnor [Mi].)
+
 ### 3.3 Lemma (Morse-theoretic deformation)
 Let $M^n$ be a differentiable manifold and $f:M^n\to\mathbb{R}$ a function whose
 critical points are all non-degenerate. Given $p,q\in M$ and a differentiable curve
@@ -292,8 +312,9 @@ $\bar\gamma_1$ off $L$ within $H$ fixing endpoints; the gradient flow then retra
 into $M^{c_1-\varepsilon}$. Proceeding inductively yields
 $\bar\gamma\subset M^{a+\delta}$. $\square$
 
-(Remark after Lemma 3.3: if instead the largest critical value $c$ in $f^{-1}([a,b])$
-has index zero or one, then $\gamma$ is homotopic to $\bar\gamma$ with
+(Remark after Lemma 3.3: if there are critical points of index zero or one in
+$f^{-1}([a,b])$ and $c$ is the largest value of such critical points, then
+$\gamma$ is homotopic to $\bar\gamma$ with
 $\bar\gamma([0,1])\subset M^{c+\delta}$.)
 
 *Proof of Proposition 3.1.* Suppose $i(M)<\pi$. By Proposition 2.13 there is a
@@ -388,7 +409,7 @@ M=B_\rho(p)\cup B_\rho(q),
 $$
 
 where $B_r(p)$ denotes the open geodesic ball of radius $r$ and center $p$, and
-$\rho$ is such that $\pi/2\sqrt\delta<\rho<\pi$.
+$\rho$ is such that $\pi/(2\sqrt\delta)<\rho<\pi$.
 
 *Proof.* By the injectivity-radius estimate of Section 3, $B_\rho(p)$ contains no
 points of $C_m(p)$, so it is diffeomorphic via $\exp$ to a Euclidean ball, and
@@ -405,14 +426,14 @@ $r_o$; by Berger's Lemma there is $\gamma$ minimizing from $p$ to $q$ with
 $\langle\gamma'(0),\lambda'(0)\rangle\geq0$. Let $s\in\gamma$ with $d(p,s)=\rho$.
 Applying Rauch's Theorem (Proposition 2.5 of Chap. 10), comparing $M^n$ with a
 sphere $S^n$ of curvature $\delta$: since the angle
-$\sphericalangle r_o p s\leq\pi/2$, $d(r_o,s)\leq\pi/2\sqrt\delta$. As
+$\sphericalangle r_o p s\leq\pi/2$, $d(r_o,s)\leq\pi/(2\sqrt\delta)$. As
 $d(r_o,p)=d(r_o,q)=\rho$ and some $s$ has $d(r_o,s)<\rho$, the distance from $r_o$ to
 $\gamma$ is realized by an interior point $s_o$, with the minimizing geodesic from
 $r_o$ to $s_o$ orthogonal to $\gamma$ and
-$d(r_o,\gamma)=d(r_o,s_o)\leq\pi/2\sqrt\delta$. Since $d(p,q)\leq\pi/\sqrt\delta$,
-either $d(p,s_o)\leq\pi/2\sqrt\delta$ or $d(q,s_o)\leq\pi/2\sqrt\delta$; in the
-former case, since $d(r_o,s_o)\leq\pi/2\sqrt\delta$ and
-$\sphericalangle p s_o r_o=\pi/2$, Rauch gives $d(p,r_o)\leq\pi/2\sqrt\delta<\rho$,
+$d(r_o,\gamma)=d(r_o,s_o)\leq\pi/(2\sqrt\delta)$. Since $d(p,q)\leq\pi/\sqrt\delta$,
+either $d(p,s_o)\leq\pi/(2\sqrt\delta)$ or $d(q,s_o)\leq\pi/(2\sqrt\delta)$; in the
+former case, since $d(r_o,s_o)\leq\pi/(2\sqrt\delta)$ and
+$\sphericalangle p s_o r_o=\pi/2$, Rauch gives $d(p,r_o)\leq\pi/(2\sqrt\delta)<\rho$,
 contradicting $d(p,r_o)=\rho$ (the other case is analogous). $\square$
 
 ### 4.3 Lemma (the equator)

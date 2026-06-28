@@ -238,7 +238,7 @@ Using (2) and (3) we obtain (1). $\square$
 
 ### 2.6 Remark (Gauss formula for a hypersurface)
 In the case of a hypersurface $f:M^n\to\overline{M}^{n+1}$, let $p\in M$,
-$\eta\in(T_pM)^\perp$, and $\{e_1,\dots,e_n\}$ an orthonormal basis of $T_pM$ in
+$\eta\in(T_pM)^\perp$, $|\eta|=1$, and $\{e_1,\dots,e_n\}$ an orthonormal basis of $T_pM$ in
 which $S_\eta=S$ is diagonal, $S(e_i)=\lambda_ie_i$. Then $H(e_i,e_i)=\lambda_i$
 and $H(e_i,e_j)=0$ if $i\neq j$, so (1) becomes
 
@@ -302,7 +302,7 @@ $\sigma$, then $M$ has constant sectional curvature.
 
 ### 2.10 Definition (minimal immersion; mean curvature vector)
 An immersion $f:M\to\overline{M}$ is called *minimal* if for every $p\in M$ and
-every $\eta\in(T_pM)^\perp$ the trace of $S_\eta=0$. Choosing an orthonormal frame
+every $\eta\in(T_pM)^\perp$ the trace of $S_\eta$ is zero. Choosing an orthonormal frame
 $E_1,\dots,E_m$ of vectors in $\mathcal{X}(U)^\perp$, where $U$ is a neighborhood
 of $p$ in which $f$ is an embedding, we write at $p$
 
@@ -452,11 +452,12 @@ $$
 (\overline{\nabla}_X B)(Y,Z,\eta)=(\overline{\nabla}_Y B)(X,Z,\eta).
 $$
 
-If, in addition, the codimension of the immersion is $1$, then
+If, in addition, the codimension of the immersion is $1$ and $\eta$ is chosen as a
+local unit normal field, then
 $\nabla_X^\perp\eta=0$, hence
 
 $$
-\overline{\nabla}_X B(Y,Z,\eta)=X\langle S_\eta(Y),Z\rangle-\langle S_\eta(\nabla_X Y),Z\rangle-\langle S_\eta(Y),\nabla_X Z\rangle=\langle\nabla_X(S_\eta(Y)),Z\rangle-\langle S_\eta(\nabla_X Y),Z\rangle.
+(\overline{\nabla}_X B)(Y,Z,\eta)=X\langle S_\eta(Y),Z\rangle-\langle S_\eta(\nabla_X Y),Z\rangle-\langle S_\eta(Y),\nabla_X Z\rangle=\langle\nabla_X(S_\eta(Y)),Z\rangle-\langle S_\eta(\nabla_X Y),Z\rangle.
 $$
 
 Therefore, in this case, the Codazzi equation can be written

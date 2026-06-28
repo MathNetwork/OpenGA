@@ -218,6 +218,8 @@ follows. Here $\exp_p$ is defined on all of $T_p S^n$: it maps $B_\pi(0)$
 injectively onto $S^n-\{q\}$ ($q$ the antipode of $p$), collapses
 $\partial B_\pi(0)$ to $q$, maps the annulus $B_{2\pi}(0)-\overline{B_\pi(0)}$
 injectively onto $S^n-\{p,q\}$, and collapses $\partial B_{2\pi}(0)$ to $p$.
+For the manifold $S^n-\{q\}$, however, $\exp_p$ is defined only on
+$B_\pi(0)\subset T_p(S^n-\{q\})$.
 
 ## §3 Minimizing properties of geodesics
 
@@ -240,9 +242,14 @@ open, such that $\partial A$ is a piecewise differentiable curve with vertex
 angles different from $\pi$. A *parametrized surface* in $M$ is a differentiable
 map $s:A\subset\mathbb{R}^2\to M$ (differentiable on $A$ meaning extendable to an
 open $U\supset A$; the vertex-angle condition ensures $ds$ is independent of the
-extension). For cartesian $(u,v)$ on $\mathbb{R}^2$, the partial velocity fields
-$\frac{\partial s}{\partial u},\frac{\partial s}{\partial v}$ and covariant
-derivatives $\frac{D}{\partial u},\frac{D}{\partial v}$ are defined along $s$.
+extension). A vector field $V$ along $s$ assigns to each $q\in A$ a vector
+$V(q)\in T_{s(q)}M$; it is differentiable if $q\mapsto V(q)f$ is differentiable
+for every differentiable function $f$ on $M$. For cartesian $(u,v)$ on
+$\mathbb{R}^2$, $\frac{\partial s}{\partial u}(u_0,v_0)$ is the velocity of
+$u\mapsto s(u,v_0)$ at $u_0$, and $\frac{\partial s}{\partial v}$ is analogous.
+If $V$ is a vector field along $s$, $\frac{DV}{\partial u}(u_0,v_0)$ is the
+covariant derivative along $u\mapsto s(u,v_0)$ of the restriction of $V$, and
+$\frac{DV}{\partial v}$ is defined analogously.
 
 ### 3.4 Lemma (symmetry)
 If $M$ has a symmetric connection and $s:A\to M$ is a parametrized surface, then
@@ -277,8 +284,10 @@ $$
 $d\exp_p$ is linear and
 $\langle(d\exp_p)_v(v),(d\exp_p)_v(w_T)\rangle=\langle v,w_T\rangle$, it suffices
 to prove (2) for $w=w_N$ ($w_N\ne 0$). Pick a curve $v(s)$ in $T_pM$ with
-$v(0)=v$, $v'(0)=w_N$, $|v(s)|=\text{const}$, and consider the parametrized
-surface $f(t,s)=\exp_p tv(s)$ whose curves $t\mapsto f(t,s_0)$ are geodesics.
+$v(0)=v$, $v'(0)=w_N$, $|v(s)|=\text{const}$. Since $\exp_p v$ is defined,
+choose $\varepsilon>0$ so that $\exp_p(tv(s))$ is defined for $0\le t\le 1$,
+$|s|<\varepsilon$, and consider the parametrized surface
+$f(t,s)=\exp_p tv(s)$ whose curves $t\mapsto f(t,s_0)$ are geodesics.
 Then $\langle\frac{\partial f}{\partial s},\frac{\partial f}{\partial t}\rangle(1,0)=\langle(d\exp_p)_v(w_N),(d\exp_p)_v(v)\rangle$.
 Since $\frac{\partial f}{\partial t}$ is the tangent of a geodesic and by symmetry
 of the connection,
@@ -375,7 +384,8 @@ The isometries of a Riemannian manifold take geodesics into geodesics.
 ### 3.10 Example (the Lobatchevski plane)
 Let $G=\{(x,y)\in\mathbb{R}^2;\ y>0\}$ with metric $g_{11}=g_{22}=\frac{1}{y^2}$,
 $g_{12}=g_{21}=0$. The $y$-axis segment $\gamma(t)=(0,t)$, $a\le t\le b$ ($a>0$),
-is a geodesic: for any arc $c(t)=(x(t),y(t))$ with $c(a)=(0,a)$, $c(b)=(0,b)$,
+is the image of a geodesic: for any arc $c(t)=(x(t),y(t))$ with $c(a)=(0,a)$,
+$c(b)=(0,b)$,
 
 $$
 \ell(c)=\int_a^b\sqrt{(x')^2+(y')^2}\,\frac{dt}{y}\ge\int_a^b\frac{|y'|}{y}\,dt\ge\int_a^b\frac{dy}{y}=\ell(\gamma),
@@ -404,7 +414,10 @@ $q\in M$ to the geodesic sphere $S_r(p)$ of radius $r<c$ stays outside the
 geodesic ball $B_r(p)$ in some neighborhood of $q$.
 *Proof.* Let $W$ be a totally normal neighborhood of $p$; by the lemma of
 homogeneity restrict to unit-speed geodesics, so to the unit bundle
-$T_1W=\{(q,v);\ q\in W,\ v\in T_qM,\ |v|=1\}$. Let
+$T_1W=\{(q,v);\ q\in W,\ v\in T_qM,\ |v|=1\}$. After shrinking $W$, assume that
+$\overline{W}$ is compactly contained in a normal neighborhood $U$ of $p$; since
+$T_1\overline{W}$ is compact, decrease $I$ so that
+$\gamma(I\times T_1W)\subset U$. Let
 $\gamma:I\times T_1W\to M$, $I=(-\varepsilon,\varepsilon)$, be the differentiable
 map with $t\mapsto\gamma(t,q,v)$ the unit-speed geodesic through $q$ with velocity
 $v$ at $t=0$. Set $u(t,q,v)=\exp_p^{-1}(\gamma(t,q,v))$ and
@@ -430,7 +443,7 @@ $(0,q,v)$, so in a neighborhood of $q$ its points stay outside $B_r(p)$. $\squar
 For any $p\in M$ there exists $\beta>0$ such that the geodesic ball $B_\beta(p)$ is
 strongly convex.
 *Proof.* Let $c$ be as in Lemma 4.1. Choose $\delta>0$ and $W$ as in Theorem 3.7
-with $\delta<\frac{c}{2}$, and take $\beta<\delta$ with $B_\beta(p)\subset W$. Let
+with $\delta<\frac{c}{2}$, and take $\beta<\delta$ with $\overline{B_\beta(p)}\subset W$. Let
 $q_1,q_2\in\overline{B_\beta(p)}$ and let $\gamma$ be the unique geodesic of length
 $<2\delta<c$ joining them; then $\gamma\subset B_c(p)$. If the interior of
 $\gamma$ is not contained in $B_\beta(p)$, there is an interior point $m$ where the

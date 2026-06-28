@@ -19,8 +19,10 @@ $$
 $d\exp_p$ is linear and
 $\langle(d\exp_p)_v(v),(d\exp_p)_v(w_T)\rangle=\langle v,w_T\rangle$, it suffices
 to prove (2) for $w=w_N$ ($w_N\ne 0$). Pick a curve $v(s)$ in $T_pM$ with
-$v(0)=v$, $v'(0)=w_N$, $|v(s)|=\text{const}$, and consider the parametrized
-surface $f(t,s)=\exp_p tv(s)$ whose curves $t\mapsto f(t,s_0)$ are geodesics.
+$v(0)=v$, $v'(0)=w_N$, $|v(s)|=\text{const}$. Since $\exp_p v$ is defined,
+choose $\varepsilon>0$ so that $\exp_p(tv(s))$ is defined for $0\le t\le 1$,
+$|s|<\varepsilon$, and consider the parametrized surface
+$f(t,s)=\exp_p tv(s)$ whose curves $t\mapsto f(t,s_0)$ are geodesics.
 Then $\langle\frac{\partial f}{\partial s},\frac{\partial f}{\partial t}\rangle(1,0)=\langle(d\exp_p)_v(w_N),(d\exp_p)_v(v)\rangle$.
 Since $\frac{\partial f}{\partial t}$ is the tangent of a geodesic and by symmetry
 of the connection,
