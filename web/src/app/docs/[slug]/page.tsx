@@ -8,7 +8,7 @@ import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
 import { Navbar } from '@/components/Navbar'
 import { DocsShell, type TocItem } from '@/components/DocsShell'
-import { StorageTree, NumberingFlow, AtomExample, EdgeExample } from '@/components/docs/DocDiagrams'
+import { StorageTree, NumberingFlow, AtomExample, EdgeExample } from '@/components/mdx/DataModelDiagrams'
 import { DOCS } from '@/lib/docs'
 
 export function generateStaticParams() {

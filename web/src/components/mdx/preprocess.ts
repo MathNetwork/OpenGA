@@ -18,6 +18,11 @@ export function preprocess(content: string, numbering?: Numbering): string {
     result = result.replace(/\\status\b/g, '<div data-status="true"></div>')
     // \chapters → a live chapter list (derived from the project's docs)
     result = result.replace(/\\chapters\b/g, '<div data-chapters="true"></div>')
+    // data-model schematic diagrams
+    result = result.replace(/\\storageTree\b/g, '<div data-storage-tree="true"></div>')
+    result = result.replace(/\\atomExample\b/g, '<div data-atom-example="true"></div>')
+    result = result.replace(/\\edgeExample\b/g, '<div data-edge-example="true"></div>')
+    result = result.replace(/\\numberingFlow\b/g, '<div data-numbering-flow="true"></div>')
     return result
 }
 

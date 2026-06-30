@@ -19,6 +19,7 @@ import { EntryBlock } from './mdx/EntryBlock'
 import { EntryLink } from './mdx/EntryLink'
 import { ProjectStatus } from './ProjectStatus'
 import { ProjectChapters } from './ProjectChapters'
+import { StorageTree, AtomExample, EdgeExample, NumberingFlow } from './mdx/DataModelDiagrams'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const components: Record<string, any> = {
@@ -48,6 +49,10 @@ const components: Record<string, any> = {
     div: ({ node, children, ...props }: any) => {
         if (node?.properties?.dataStatus) return <ProjectStatus />
         if (node?.properties?.dataChapters) return <ProjectChapters />
+        if (node?.properties?.dataStorageTree) return <StorageTree />
+        if (node?.properties?.dataAtomExample) return <AtomExample />
+        if (node?.properties?.dataEdgeExample) return <EdgeExample />
+        if (node?.properties?.dataNumberingFlow) return <NumberingFlow />
         const entryId = node?.properties?.dataEntry
         if (entryId) {
             const collapsible = node?.properties?.dataCollapsible
