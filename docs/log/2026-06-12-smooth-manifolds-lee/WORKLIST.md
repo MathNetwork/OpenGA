@@ -33,7 +33,7 @@ wrappers / recall) and are skipped; the 187 new files are the porting body.
    manifold domain that happens to be `namespace Manifold`, and sharing a root
    namespace with Mathlib is consistent with how we extend
    `TangentBundle`/`ContinuousLinearMap`, so **no new namespace is needed**. File
-   structure is reorganized per `../../archive/NAMING_CONVENTION.md`.
+   structure is reorganized per `../../archive/CONVENTIONS.md`.
    - **Docstring house style (established merging #65):** anchor files (outside
      `Util/`) use single `**Math.**` tags only — the `AnchorPurity` linter
      forbids `**Eng.**`/`**Mixed.**`, so engineering detail is dropped or moved
@@ -42,7 +42,7 @@ wrappers / recall) and are skipped; the 187 new files are the porting body.
      Exemplar on develop: `OpenGALib/Manifold/Charts/CoordinateBall.lean`
      (db767b1). The earlier PLAN wording "Math./Eng. dual docstring" was a
      misread and is retired.
-   - **defs still require lowerCamelCase** (`NAMING_CONVENTION.md` line 42): the
+   - **defs still require lowerCamelCase** (`CONVENTIONS.md`, Naming & style → Naming case): the
      staged source's snake_case (e.g. `curve_velocity`,
      `chart_coordinate_vectors_basis`) must be renamed when ported.
 3. **Fold bundled classes into the existing system.** Classes like
