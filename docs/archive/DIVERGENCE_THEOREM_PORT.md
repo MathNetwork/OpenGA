@@ -1,7 +1,7 @@
 # Divergence-theorem port — worklist and assessment
 
 Scoped port plan for the closed-manifold divergence theorem, the keystone
-(`docs/COMPARISON_GEOMETRY_ROADMAP.md` #6) that unlocks Bishop–Gromov and the
+(`docs/archive/COMPARISON_GEOMETRY_ROADMAP.md` #6) that unlocks Bishop–Gromov and the
 Lichnerowicz estimate. **Assessment only — no code yet.**
 
 ## Source and stance

@@ -33,7 +33,7 @@ wrappers / recall) and are skipped; the 187 new files are the porting body.
    manifold domain that happens to be `namespace Manifold`, and sharing a root
    namespace with Mathlib is consistent with how we extend
    `TangentBundle`/`ContinuousLinearMap`, so **no new namespace is needed**. File
-   structure is reorganized per `../../NAMING_CONVENTION.md`.
+   structure is reorganized per `../../archive/NAMING_CONVENTION.md`.
    - **Docstring house style (established merging #65):** anchor files (outside
      `Util/`) use single `**Math.**` tags only — the `AnchorPurity` linter
      forbids `**Eng.**`/`**Mixed.**`, so engineering detail is dropped or moved
