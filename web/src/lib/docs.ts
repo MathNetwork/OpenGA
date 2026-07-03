@@ -1,8 +1,8 @@
-// The documentation registry — one entry per MDX file in `web/content/`.
+// The documentation registry — one entry per MDX file in `web/content/<section>/`.
 // Drives the dynamic /docs/[slug] route and the left "Documentation" nav,
 // which groups entries by `section`.
 export interface DocMeta {
-  slug: string // file is content/<slug>.mdx
+  slug: string // file is content/<section>/<slug>.mdx (section lowercased)
   title: string
   eyebrow: string
   section: 'About' | 'Docs'

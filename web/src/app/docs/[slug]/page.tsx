@@ -72,7 +72,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const doc = DOCS.find((d) => d.slug === s)
   if (!doc) notFound()
 
-  const source = fs.readFileSync(path.join(process.cwd(), `content/${doc.slug}.mdx`), 'utf8')
+  // content/ mirrors the nav sections: content/<section>/<slug>.mdx
+  const source = fs.readFileSync(
+    path.join(process.cwd(), `content/${doc.section.toLowerCase()}/${doc.slug}.mdx`), 'utf8')
   const { content } = await compileMDX({
     source,
     components,
