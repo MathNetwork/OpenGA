@@ -24,7 +24,6 @@ interface ViewState {
   decreaseFontSize: () => void
   setNumbering: (map: Numbering) => void
   getNumber: (hash: string) => string | undefined
-  getChapter: (hash: string) => number | undefined
 }
 
 export const useViewStore = create<ViewState>((set, get) => ({
@@ -47,5 +46,4 @@ export const useViewStore = create<ViewState>((set, get) => ({
   decreaseFontSize: () => set((s) => ({ fontSize: Math.max(10, s.fontSize - 1) })),
   setNumbering: (map) => set({ numbering: map }),
   getNumber: (hash) => get().numbering.get(hash)?.num,
-  getChapter: (hash) => get().numbering.get(hash)?.chapter,
 }))

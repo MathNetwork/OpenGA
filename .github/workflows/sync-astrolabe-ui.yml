@@ -40,7 +40,7 @@ jobs:
 
           # Whole directories that are shared UI (mirrored exactly, including
           # deletions). These contain no Astrolabe-only files.
-          for d in panels plugins components/mdx stores types; do
+          for d in panels plugins components/mdx stores; do
             mkdir -p "$DST/$d"
             rsync -a --delete "$SRC/$d/" "$DST/$d/"
           done
@@ -72,7 +72,7 @@ jobs:
             [MathNetwork/OpenGA](https://github.com/MathNetwork/OpenGA) `web/src`.
 
             **Synced:** `panels/`, `plugins/`, `components/mdx/`, `stores/`,
-            `types/`, `components/MarkdownRenderer.tsx`,
+            `components/MarkdownRenderer.tsx`,
             `components/ParticleBackground.tsx`, `lib/refView.ts`,
             `lib/sortColors.ts`.
 

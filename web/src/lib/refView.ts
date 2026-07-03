@@ -31,7 +31,7 @@ export interface ForceLink extends SimulationLinkDatum<ForceNode> {
 
 // ── Degree radius ──
 
-export function degreeRadius(degree: number, baseRadius: number = 12): number {
+function degreeRadius(degree: number, baseRadius: number = 12): number {
   return Math.max(4, baseRadius - degree * 1.5)
 }
 
@@ -147,19 +147,4 @@ export function mapPhysicsToD3(physics: {
         linkDistance: Math.max(10, physics.linkDistance * 2.5),
         velocityDecay: Math.max(0.05, Math.min(0.95, physics.friction / 100)),
     }
-}
-
-// ── Collapse geometry ──
-
-export function computeCollapseTarget(
-  ref: string[],
-  nodePositions: Record<string, { x: number; y: number }>,
-): { x: number; y: number } {
-  let sumX = 0, sumY = 0, count = 0
-  for (const h of ref) {
-    const pos = nodePositions[h]
-    if (pos) { sumX += pos.x; sumY += pos.y; count++ }
-  }
-  if (count === 0) return { x: 0, y: 0 }
-  return { x: sumX / count, y: sumY / count }
 }

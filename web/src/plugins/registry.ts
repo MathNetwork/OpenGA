@@ -7,7 +7,6 @@ interface PluginState {
     activeMode: Record<string, boolean>  // plugin id → mode active
     register: (plugin: AstrolabePlugin) => void
     toggle: (id: string) => void
-    isEnabled: (id: string) => boolean
     setMode: (id: string, active: boolean) => void
     isModeActive: (id: string) => boolean
 
@@ -53,8 +52,6 @@ export const usePluginStore = create<PluginState>((set, get) => ({
         }
         return { enabled: next }
     }),
-
-    isEnabled: (id) => get().enabled.has(id),
 
     setMode: (id, active) => set(s => ({
         activeMode: { ...s.activeMode, [id]: active }

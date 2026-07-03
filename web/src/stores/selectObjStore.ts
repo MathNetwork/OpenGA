@@ -12,11 +12,8 @@
  *   - CardStack:    滚动到选中卡片
  *   - NetworkView:  高亮节点 + 飞相机
  *   - DetailView:   显示 obj 详情
- *
- * 支持 undo/redo（temporal 中间件）。
  */
 import { create } from 'zustand'
-import { temporal } from 'zundo'
 
 interface SelectObjState {
   selectedHash: string | null
@@ -24,10 +21,8 @@ interface SelectObjState {
 }
 
 export const useSelectObjStore = create<SelectObjState>()(
-    temporal(
-        (set) => ({
-            selectedHash: null,
-            select: (hash) => set({ selectedHash: hash }),
-        })
-    )
+    (set) => ({
+        selectedHash: null,
+        select: (hash) => set({ selectedHash: hash }),
+    })
 )

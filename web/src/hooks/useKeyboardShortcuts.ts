@@ -6,7 +6,6 @@
  */
 import { useEffect } from 'react'
 import { useSelectObjStore } from '@/stores/selectObjStore'
-import { useSelectMorStore } from '@/stores/selectMorStore'
 import { useViewStore } from '@/stores/viewStore'
 
 export function useKeyboardShortcuts() {
@@ -20,7 +19,6 @@ export function useKeyboardShortcuts() {
 
             if (e.key === 'Escape') {
                 useSelectObjStore.getState().select(null)
-                useSelectMorStore.getState().select(null)
             }
         }
         window.addEventListener('keydown', handler)

@@ -13,11 +13,8 @@ export function ProjectStatus() {
 
   const lean: LeanRec[] = []
   for (const o of objects) {
-    let r: any = o
-    const rec = (o as any).record
-    if (typeof rec === 'string') {
-      try { r = JSON.parse(rec) } catch { continue }
-    }
+    let r: LeanRec & { source?: string }
+    try { r = JSON.parse(o.record) } catch { continue }
     if (r?.source !== 'lean') continue
     lean.push(r)
   }

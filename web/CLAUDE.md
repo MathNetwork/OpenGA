@@ -9,7 +9,7 @@ way, by the `.github/workflows/sync-astrolabe-ui.yml` workflow: every push to
 opens a `sync/openga-ui` PR for review.
 
 - **Synced (UI core):** `src/panels/`, `src/plugins/`, `src/components/mdx/`,
-  `src/stores/`, `src/types/`, `src/components/MarkdownRenderer.tsx`,
+  `src/stores/`, `src/components/MarkdownRenderer.tsx`,
   `src/components/ParticleBackground.tsx`, `src/lib/refView.ts`,
   `src/lib/sortColors.ts`.
 - **NOT synced (per-app):** the data/API layer (`lib/api.ts`, `lib/apiBase.ts`,

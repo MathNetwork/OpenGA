@@ -20,7 +20,6 @@ export function useProjectLoader(projectPath: string | null) {
     const [loading, setLoading] = useState(false)
     const hasLoadedRef = useRef(false)
     const setObjects = useDataStore(s => s.setObjects)
-    const setMorphisms = useDataStore(s => s.setMorphisms)
     const setProjectFiles = useDataStore(s => s.setProjectFiles)
     const refreshTrigger = useDataStore(s => s.refreshTrigger)
 
@@ -42,7 +41,6 @@ export function useProjectLoader(projectPath: string | null) {
         ]).then(([graph, projectFiles]) => {
             if (cancelled) return
             setObjects((graph as any).nodes || [])
-            setMorphisms((graph as any).links || [])
             if (Array.isArray(projectFiles)) {
                 setProjectFiles(projectFiles)
             }
@@ -51,7 +49,7 @@ export function useProjectLoader(projectPath: string | null) {
         })
 
         return () => { cancelled = true }
-    }, [projectPath, setObjects, setMorphisms, refreshTrigger])
+    }, [projectPath, setObjects, refreshTrigger])
 
     // Build the project-wide DERIVED numbering: read every chapter doc and
     // assign each card a "§.item" from where it first appears. Rebuilds on any

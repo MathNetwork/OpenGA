@@ -9,7 +9,7 @@ export interface EdgeInfo {
     ref: string[]
 }
 
-export interface GroupedEdges {
+interface GroupedEdges {
     outgoing: EdgeInfo[]  // ref[0] = selected atom
     incoming: EdgeInfo[]  // ref[1] = selected atom
 }

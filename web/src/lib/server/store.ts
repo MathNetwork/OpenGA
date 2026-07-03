@@ -103,7 +103,7 @@ export function storeMtime(projectDir: string): number {
 
 /** Stage decomposition: atoms = 0; an entry whose refs are all resolved gets
  *  the next stage; cyclic entries get -1. Mirrors the Python algorithm. */
-export function stages(data: Store): Record<string, number> {
+function stages(data: Store): Record<string, number> {
   const result: Record<string, number> = {}
   for (const [h, e] of Object.entries(data)) if (e.ref.length === 1) result[h] = 0
 

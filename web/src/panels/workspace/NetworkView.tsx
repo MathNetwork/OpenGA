@@ -9,14 +9,12 @@
 import { memo, useState, useEffect, useRef } from 'react'
 import * as d3 from 'd3'
 import { useSelectObjStore } from '@/stores/selectObjStore'
-import { useSelectMorStore } from '@/stores/selectMorStore'
 import { usePhysicsStore } from '@/stores/physicsStore'
 import { useViewStore } from '@/stores/viewStore'
 import {
     buildRefViewNodes,
     buildRefViewLinks,
     hitTestNode,
-    hitTestEdge,
     mapPhysicsToD3,
     type ForceNode,
     type ForceLink,
@@ -114,7 +112,6 @@ export const NetworkView = memo(function NetworkView() {
     // ── Store 订阅 ──
     const selectedObjHash = useSelectObjStore(s => s.selectedHash)
     const selectObj = useSelectObjStore(s => s.select)
-    const selectMor = useSelectMorStore(s => s.select)
     const physics = usePhysicsStore()
     const showLabels = useViewStore(s => s.showLabels)
     const [loadKey, setLoadKey] = useState(0)
@@ -409,20 +406,11 @@ export const NetworkView = memo(function NetworkView() {
             if (node) {
                 selfClickRef.current = true
                 selectObj(node.id)
-                selectMor(null)
-                return
-            }
-
-            const edge = hitTestEdge(linksRef.current, w.x, w.y, 8 / transformRef.current.k)
-            if (edge) {
-                selfClickRef.current = true
-                selectMor(edge.id)
                 return
             }
 
             selfClickRef.current = true
             selectObj(null)
-            selectMor(null)
         }
 
         // ── Hover tooltip ──
