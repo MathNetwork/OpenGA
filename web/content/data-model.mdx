@@ -12,8 +12,11 @@ An Astrolabe store is a flat set of **entries**. Each entry is a triple
 - **`ref`** — an ordered list of the hashes this entry points to.
 - **`record`** — an opaque payload, read by a domain plugin (here: a mathematical
   statement, or a Lean declaration).
-- **`hash`** — `SHA-256(ref₁ ‖ 0x00 ‖ … ‖ record)`, truncated. Identity *is*
-  content: the same content always yields the same hash, everywhere it appears.
+- **`hash`** — a truncated SHA-256 over the canonical record: for an edge,
+  `SHA-256(ref₁ ‖ 0x00 ‖ … ‖ record)`; for an atom, whose only ref is itself, a
+  fixed placeholder stands in for the circular self-reference,
+  `SHA-256("__self__" ‖ 0x00 ‖ record)`. Identity *is* content: the same
+  content always yields the same hash, everywhere it appears.
 
 The length of `ref` is what an entry *is*. Two kinds are primitive:
 
@@ -30,10 +33,12 @@ On disk this is just one file per node, named by its hash; documents reference t
 
 <StorageTree />
 
-As an entry, each is `hash`, `ref`, and a `record`. An entry's `sort` is just the `source`
-of its refs — its own for an atom, the pair for an edge — while the edge's `rel` says *how*
-the two ends relate. A real atom (the *geodesic sphere* definition) and a real `(lean, tex)`
-edge whose `rel` is *formalizes*:
+As an entry, each is `hash`, `ref`, and a `record`. An atom's record carries its own
+`sort` (*definition*, *theorem*, *corollary*, …); an edge's record carries a `rel`
+saying *how* the two ends relate — and, in the legacy store, a pair label built from
+its endpoints' sources, so a Lean↔tex bridge is labelled `(lean, tex)`. A real atom
+(the *geodesic sphere* definition) and a real `(lean, tex)` edge whose `rel` is
+*formalizes*:
 
 <AtomExample />
 
@@ -47,21 +52,31 @@ The same store holds both sides of the mathematics:
 - **lean atoms** — the formal declarations that prove them.
 
 They are joined by **cross-source edges** typed `(lean, tex)`: a Lean node that
-*formalizes* a tex concept. An edge's `sort` is not its own — it is the pair of its
-endpoints' sources, `(ref[0].source, ref[1].source)`, so a Lean↔tex bridge is typed
-`(lean, tex)` automatically. Such an edge is a first-class, hash-identified entry,
+*formalizes* a tex concept. Such an edge is a first-class, hash-identified entry,
 exactly like any other.
 
-## Stable identity
+## Identity: pinned vs. pure
 
-So re-running the pipeline never churns the graph, identity is pinned to what a
-node *is*, not its current text:
+The hash function is fixed; what has changed between eras is *which part of the
+record* it runs over.
+
+The **legacy scheme** (the Riemannian Geometry store) pins identity to what a
+node *is*, not its current text, so re-running the extraction pipeline never
+churns the graph:
 
 - a **tex** node hashes over `{source, src, dcref}` — which do Carmo statement;
 - a **lean** node hashes over `{source, name}` — which declaration.
 
-A proof going from `sorry` to `proven`, or a line number moving, updates the
-record in place; the hash — and every reference to it — is unchanged.
+There, a proof going from `sorry` to `proven`, or a line number moving, updates
+the record in place; the hash — and every reference to it — is unchanged.
+
+**Current cards** (the shared hypergraph pool) are purely content-addressed: the
+hash runs over the full record, so *any* change of content is a new identity,
+and every reference to the old hash is repointed in the same operation.
+Provenance no longer needs pinned fields — each card carries a `from` pointer
+inside its record, `{ref, at}`: the hash of the source work's bibliography atom
+plus the statement's number in that work. Edges hash their full record in both
+schemes.
 
 ## Typed relations
 
@@ -75,8 +90,9 @@ graph is a typed network, not a bare dependency tree.
 A card's identity is its hash, not a number — but a reader still wants to see
 "Theorem 7.2.8". So numbers are **derived, never stored**. Within a project, the
 documents are scanned in order and each hash is assigned a number the first time it
-appears: `chapter.section.item`, where the chapter comes from the document's
-position and the rest from the order of entries inside it.
+appears: `chapter.section.item`, where the chapter comes from the document, the
+section is the ordinal of the heading the card sits under, and the item from the
+order of entries inside it.
 
 <NumberingFlow />
 

@@ -1,7 +1,8 @@
-// Graph analysis for the LeanNets skeleton — the Node port of the Python
-// analysis/* modules. Heavy algorithms use graphology (pagerank, betweenness,
+// Graph analysis for the LeanNets skeleton — a Node port, result-compatible
+// with the original Python implementation (now living in MathNetwork/
+// Astrolabe's backend). Heavy algorithms use graphology (pagerank, betweenness,
 // hits, louvain) and ml-matrix/ml-kmeans (spectral); the rest are direct ports.
-// Metrics run independently per source group, mirroring the Python backend.
+// Metrics run independently per source group, mirroring the original.
 import Graph from 'graphology'
 import { pagerank, betweenness, hits } from 'graphology-metrics/centrality'
 import louvain from 'graphology-communities-louvain'
@@ -53,7 +54,7 @@ function splitBySource(entries: Store): Store[] {
   })
 }
 
-/** Run a graph metric independently per source group and merge (Python parity). */
+/** Run a graph metric independently per source group and merge (parity with the original). */
 export function perSource(entries: Store, fn: (g: Graph) => NumMap, offsetIds = false): NumMap {
   const merged: NumMap = {}
   let offset = 0

@@ -74,7 +74,8 @@ const rehypePlugins = [rehypeRaw, rehypeKatex]
 interface Props {
     content: string
     className?: string
-    /** Entry data for proof exclusion from numbering */
+    /** Pre-loaded entry records (EntriesContext): lets entryblock cards render
+     *  synchronously instead of each firing its own fetch. */
     entries?: Record<string, { record: string }>
 }
 

@@ -21,7 +21,7 @@ html.light .no-invert {
 
 /* ============================================
  * Astrolabe Color System CSS Variables
- * Synchronized with src/lib/colors.ts
+ * (network node/edge colors live in src/lib/sortColors.ts)
  * ============================================ */
 
 :root {
@@ -38,61 +38,6 @@ html.light .no-invert {
   --core-cream: #fbf0d9;
   --core-deep-blue: #012f48;
   --core-steel-blue: #669aba;
-
-  /* Status Colors */
-  --status-proven: #2ecc71;
-  --status-sorry: #e67e22;
-  --status-stated: #636e72;
-  --status-error: #e74c3c;
-  --status-unknown: #95a5a6;
-
-  /* Node Type Colors — Network Nodes (polyhedra) */
-  --node-definition: #5B8FB9;
-  --node-theorem: #D4A843;
-  --node-lemma: #3AAFA9;
-  --node-proposition: #B8963E;
-  --node-corollary: #9B72CF;
-  --node-example: #2ECC71;
-  --node-axiom: #4A90D9;
-  /* Node Type Colors — Meta-cognitive (organic/rounded) */
-  --node-remark: #7B68AE;
-  --node-conjecture: #D4A843;
-  --node-insight: #E8D44D;
-  --node-question: #E74C6F;
-  --node-connection: #2EC4B6;
-  --node-summary: #9B59B6;
-  --node-gap: #E06C5F;
-  --node-motivation: #5EBA7D;
-  /* Lean node types */
-  --node-structure: #1abc9c;
-  --node-class: #3498db;
-  --node-instance: #669aba;
-
-  /* Edge Colors */
-  --edge-default: #4a5568;
-  --edge-verified: #2ecc71;
-  --edge-hover: #669aba;
-
-  /* Neutral Colors */
-  --neutral-deep-space: #0a0a0f;
-  --neutral-panel: #111118;
-  --neutral-border: #1a1a22;
-  --neutral-dark-gray: #2c3e50;
-  --neutral-mid-gray: #636e72;
-  --neutral-light-gray: #95a5a6;
-  --neutral-silver: #bdc3c7;
-  --neutral-cloud: #ecf0f1;
-
-  /* Semantic Colors */
-  --semantic-error: #e74c3c;
-  --semantic-warning: #e67e22;
-  --semantic-success: #2ecc71;
-  --semantic-info: #3498db;
-
-  /* Highlight Colors */
-  --highlight-source: #00d4ff;
-  --highlight-sink: #ff6b35;
-  --highlight-selected: #ffffff;
 }
 
 /* ============================================
@@ -136,139 +81,8 @@ body {
 }
 
 /* ============================================
- * React Flow Overrides
+ * KaTeX
  * ============================================ */
-
-.react-flow__node {
-  cursor: pointer;
-}
-
-.react-flow__edge-path {
-  stroke-width: 2;
-}
-
-.react-flow__controls {
-  background: var(--neutral-panel) !important;
-  border: 1px solid var(--neutral-border) !important;
-  border-radius: 8px !important;
-}
-
-.react-flow__controls-button {
-  background: var(--neutral-panel) !important;
-  border-color: var(--neutral-border) !important;
-  color: var(--neutral-light-gray) !important;
-}
-
-.react-flow__controls-button:hover {
-  background: var(--neutral-dark-gray) !important;
-}
-
-.react-flow__minimap {
-  background: var(--neutral-panel) !important;
-  border: 1px solid var(--neutral-border) !important;
-  border-radius: 8px !important;
-}
-
-/* ============================================
- * Custom Animations
- * ============================================ */
-
-/* Slow pulsing green glow for "add to canvas" eye icon */
-@keyframes pulse-glow {
-  0%, 100% {
-    filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.8));
-    opacity: 1;
-  }
-  50% {
-    filter: drop-shadow(0 0 2px rgba(74, 222, 128, 0.3));
-    opacity: 0.5;
-  }
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-/* ============================================
- * Blueprint READ View Styles
- * ============================================ */
-
-.blueprint-content {
-  font-family: "Latin Modern Roman", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
-  font-size: var(--read-font-size, 1.125rem);
-  line-height: 1.75;
-  font-weight: normal;
-  contain: layout style;
-}
-
-.blueprint-content a {
-  color: #93b4d4;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(147, 180, 212, 0.3);
-  transition: color 0.15s, border-color 0.15s;
-}
-
-.blueprint-content a:hover {
-  color: #b8d4f0;
-  border-bottom-color: rgba(184, 212, 240, 0.6);
-}
-
-.blueprint-content h1 {
-  font-size: 1.8em;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.blueprint-content h2 {
-  font-size: 1.4em;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
-}
-
-.blueprint-content h3 {
-  font-size: 1.15em;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.blueprint-content h4 {
-  font-size: 1em;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.6);
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.blueprint-content p {
-  margin-bottom: 0.75rem;
-  text-indent: 2em;
-}
-
-.blueprint-content blockquote {
-  border-left: 3px solid rgba(212, 168, 67, 0.7) !important;
-  background: rgba(212, 168, 67, 0.06) !important;
-  padding: 1rem 1.25rem !important;
-  margin: 1rem 0 !important;
-  border-radius: 0 6px 6px 0;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.blueprint-content blockquote p,
-.blueprint-content div[style] p {
-  text-indent: 0 !important;
-}
-
-.blueprint-content .katex-display {
-  margin: 1rem 0;
-  text-align: center;
-}
 
 /* Display math everywhere (objblock, detail panel, etc.) */
 .katex-display {
@@ -285,11 +99,6 @@ p .katex-display {
   text-align: center !important;
 }
 
-.blueprint-content .katex {
-  color: rgba(255, 255, 255, 0.85);
-}
-
-/* KaTeX color in non-blueprint contexts */
 .katex {
   color: rgba(255, 255, 255, 0.9);
 }
@@ -299,30 +108,4 @@ button .katex,
 button .katex .mord,
 button .katex .mop {
   color: inherit !important;
-}
-
-/* ============================================
- * Theme Modes
- * ============================================ */
-
-/* Light mode: invert + slight warmth & reduced brightness for comfort */
-html.theme-light {
-  filter: invert(1) hue-rotate(180deg) brightness(0.95) sepia(0.06);
-}
-html.theme-light canvas,
-html.theme-light video,
-html.theme-light img,
-html.theme-light .no-invert {
-  filter: invert(1) hue-rotate(180deg);
-}
-
-/* Warm mode: stronger sepia tint, lower brightness — easy on the eyes at night */
-html.theme-warm {
-  filter: invert(1) hue-rotate(180deg) brightness(0.88) sepia(0.3) saturate(1.15);
-}
-html.theme-warm canvas,
-html.theme-warm video,
-html.theme-warm img,
-html.theme-warm .no-invert {
-  filter: invert(1) hue-rotate(180deg);
 }

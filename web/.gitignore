@@ -8,19 +8,6 @@ out/
 dist/
 build/
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-.venv/
-venv/
-*.egg-info/
-
-# Rust/Tauri
-src-tauri/target/
-*.rlib
-*.rmeta
-
 # IDE
 .idea/
 .vscode/
@@ -43,19 +30,7 @@ npm-debug.log*
 # Testing
 coverage/
 .nyc_output/
-
-# LaTeX build artifacts
-paper/*.aux
-paper/*.bbl
-paper/*.blg
-paper/*.log
-paper/*.out
-paper/*.pdf
-paper/*.synctex.gz
-paper/*.toc
-paper/*.fdb_latexmk
-paper/*.fls
-paper/_minted/
+.pytest_cache/
 
 # Generated/local
 next-env.d.ts
@@ -65,19 +40,6 @@ tsconfig.tsbuildinfo
 # Misc
 *.tgz
 .turbo/
-
-# Local dev scripts
-run-dev.sh
-run-dev.bat
-
-# Sidecar binaries (built by PyInstaller)
-src-tauri/binaries/
-backend/dist/
-backend/build/
-.reference/
-# /docs/ — no longer ignored
-# /paper/ — no longer ignored
-binaries/
 
 # Build-time copy of project data (see prebuild)
 /projects

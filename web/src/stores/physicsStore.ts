@@ -5,7 +5,7 @@
  *
  * 订阅者：
  *   - NetworkView: 控制节点布局的物理引擎参数
- *   - ControlsPanel: UI 滑块调整参数
+ *   - NetworkSettings: UI 滑块调整参数
  */
 import { create } from 'zustand'
 

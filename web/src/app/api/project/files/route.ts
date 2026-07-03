@@ -15,7 +15,7 @@ interface Node { name: string; type: 'file' | 'directory'; path: string; size?: 
 function scan(dir: string): Node[] {
   let items: fs.Dirent[]
   try { items = fs.readdirSync(dir, { withFileTypes: true }) } catch { return [] }
-  // directories first within each kind? Python sorts (is_file, name): dirs before files, then by name.
+  // Directories before files, then by name.
   const sorted = items.sort((a, b) => {
     const af = a.isFile() ? 1 : 0, bf = b.isFile() ? 1 : 0
     return af - bf || a.name.localeCompare(b.name)

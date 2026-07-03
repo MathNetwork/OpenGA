@@ -1,7 +1,8 @@
-// Server-side reader for the Astrolabe md store — the Node/TS counterpart of the
-// Python AstrolabeStorage (read-only). Each node is a `.md` file (YAML
-// front-matter + body); the entry is reconstructed as { ref, record } where
-// record is JSON of the front-matter (minus ref) plus the body as `notes`.
+// Server-side reader for the Astrolabe md store (read-only) — byte-compatible
+// with the original Python implementation (now living in MathNetwork/
+// Astrolabe's backend), which is what keeps hashes stable. Each node is a `.md`
+// file (YAML front-matter + body); the entry is reconstructed as { ref, record }
+// where record is JSON of the front-matter (minus ref) plus the body as `notes`.
 //
 // Two layouts:
 // - Legacy, self-contained: `.astrolabe/{atoms,edges,nodes}` inside the project
@@ -35,7 +36,7 @@ function nodeDirs(projectDir: string): string[] {
   ]
 }
 
-/** Inverse of the Python _record_to_md: md text → (ref, canonical record JSON). */
+/** Inverse of the original _record_to_md: md text → (ref, canonical record JSON). */
 function mdToEntry(text: string): Entry {
   let front: any = {}
   let body = text
@@ -98,11 +99,11 @@ export function storeMtime(projectDir: string): number {
       try { m = Math.max(m, fs.statSync(path.join(dir, f)).mtimeMs) } catch { /* ignore */ }
     }
   }
-  return m / 1000 // seconds, matching Python st_mtime
+  return m / 1000 // seconds, matching the original st_mtime semantics
 }
 
 /** Stage decomposition: atoms = 0; an entry whose refs are all resolved gets
- *  the next stage; cyclic entries get -1. Mirrors the Python algorithm. */
+ *  the next stage; cyclic entries get -1. Mirrors the original algorithm. */
 function stages(data: Store): Record<string, number> {
   const result: Record<string, number> = {}
   for (const [h, e] of Object.entries(data)) if (e.ref.length === 1) result[h] = 0
@@ -124,7 +125,7 @@ function stages(data: Store): Record<string, number> {
   return result
 }
 
-/** All entries as nodes, ref entries as links — matches Python to_ref_graph. */
+/** All entries as nodes, ref entries as links — matches the original to_ref_graph. */
 export function refGraph(data: Store) {
   const st = stages(data)
   const nodes: Array<{ id: string; degree: number; stage: number; record: string }> = []

@@ -1,5 +1,6 @@
 /**
- * useFileWatcher — poll astrolabe.json mtime for external changes.
+ * useFileWatcher — poll /api/astrolabe/mtime (latest mtime across the store's
+ * node dirs and .md files) and trigger a dataStore refresh on external changes.
  */
 import { useEffect, useRef } from 'react'
 import { useDataStore } from '@/stores/dataStore'

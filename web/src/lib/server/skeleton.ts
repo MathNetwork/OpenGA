@@ -1,8 +1,9 @@
-// Skeleton view for the LeanNets NETWORK mode — the Node port of the Python
-// analysis/skeleton_graph.build_skeleton_view. Atoms become nodes, |ref|>=2
-// entries become directed edges; size/colour/cluster are computed (per source
-// group) via the analysis library. All UI modes are supported — nothing is
-// silently degraded.
+// Skeleton view for the LeanNets NETWORK mode — a Node port of
+// build_skeleton_view, result-compatible with the original Python
+// implementation (now living in MathNetwork/Astrolabe's backend). Atoms become
+// nodes, |ref|>=2 entries become directed edges; size/colour/cluster are
+// computed (per source group) via the analysis library. All UI modes are
+// supported — nothing is silently degraded.
 import type { Store } from './store'
 import { getSortFill } from '../sortColors'
 import {

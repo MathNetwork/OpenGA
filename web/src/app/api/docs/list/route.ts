@@ -34,10 +34,5 @@ export async function GET(req: Request) {
     })
     .filter((f) => fs.statSync(f.path).isFile())
 
-  files.sort((a, b) => {
-    const ai = a.name === 'index.mdx' || a.name === '_index.mdx' ? 0 : 1
-    const bi = b.name === 'index.mdx' || b.name === '_index.mdx' ? 0 : 1
-    return ai - bi || a.name.localeCompare(b.name)
-  })
   return Response.json({ files })
 }

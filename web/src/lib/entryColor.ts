@@ -2,11 +2,13 @@
  * Unified entry color lookup.
  *
  * Priority:
- * 1. Skeleton color (if skeleton mode active and has computed color)
- * 2. Sort-based color (default)
+ * 1. `window.__skeletonColors[id]` — the per-entry map NetworkView publishes
+ *    (and clears) from its skeleton computation; read here so docs cards match
+ *    the network coloring without a store dependency.
+ * 2. Sort-based color from the record (default).
  *
- * All UI components (NetworkView, EntryBlock, EntryLink, EntryDetail)
- * call getEntryColor(id) for consistent coloring.
+ * All UI components (NetworkView, EntryBlock, EntryLink, EntryDetail,
+ * DetailEdges) call getEntryColor(id) for consistent coloring.
  */
 import { getSortFill, parseSortFromRecord } from './sortColors'
 

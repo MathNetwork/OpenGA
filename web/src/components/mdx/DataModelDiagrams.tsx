@@ -82,12 +82,10 @@ export function AtomExample() {
       hash="38c99016b279"
       refs={['38c99016b279']}
       record={[
-        ['sort', <>(ref[0].source)<Dim>{'  = (tex)'}</Dim></>],
+        ['sort', 'definition'],
         ['source', 'tex'],
-        ['content', [
-          ['title', 'Geodesic sphere'],
-          ['notes', String.raw`$S_\delta = \exp_p(\{v : \lVert v\rVert = \delta\})$`],
-        ]],
+        ['title', 'Geodesic sphere'],
+        ['notes', String.raw`$S_\delta = \exp_p(\{v : \lVert v\rVert = \delta\})$`],
       ]}
     />
   )
@@ -100,7 +98,7 @@ export function EdgeExample() {
       hash="014c1e2a49fe"
       refs={['264fbf8cb406', '6e6c552589c3']}
       record={[
-        ['sort', <>(ref[0].source, ref[1].source)<Dim>{'  = (lean, tex)'}</Dim></>],
+        ['sort', <>(lean, tex)<Dim>{'  ← its endpoints’ sources'}</Dim></>],
         ['rel', 'formalizes'],
       ]}
     />
