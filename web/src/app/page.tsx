@@ -23,11 +23,8 @@ const PROJECTS = [
       'textbook — a shared foundation anyone can learn from, contribute to, reuse, and build on. ' +
       'Made for everyone.',
   },
-  {
-    slug: 'poincare-network',
-    title: 'Poincaré Network',
-    blurb: 'Poincaré Conjecture as a Network.',
-  },
+  // poincare-network exists (cards in projects/hypergraph) but is not listed
+  // on the homepage yet — reach it via /local/edit?path=…/poincare-network.
 ]
 
 export default function Home() {
