@@ -18,6 +18,9 @@ export function Navbar() {
         <Link href="/docs/challenge" className="hover:text-white/75 transition-colors">
           About us
         </Link>
+        <Link href="/docs/data-model" className="hover:text-white/75 transition-colors">
+          Docs
+        </Link>
         <a
           href="https://github.com/MathNetwork/OpenGA"
           target="_blank"

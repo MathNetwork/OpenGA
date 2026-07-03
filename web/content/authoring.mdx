@@ -1,0 +1,59 @@
+# Writing with Cards
+
+A project's documents are not where the mathematics lives — the [data model](/docs/data-model)
+stores every statement as a content-addressed **card**. Documents are `.mdx` files
+(in the project's `.astrolabe/docs/`) that *compose* those cards into readable
+chapters: ordinary prose and math, with two macros that pull cards in.
+
+## `\entryblock` — place a card
+
+`\entryblock{hash}` renders the full card at that spot: its sort-colored frame,
+derived number, title, and statement body. Clicking a card selects it in the
+network view. Three forms:
+
+- `\entryblock{hash}` — the card, as a block.
+- `\entryblock{hash}{collapsible}` — collapsed by default; the reader expands it.
+- `\entryblock{hash}{ …nested content… }` — a card with content inside its body,
+  including other `\entryblock`s. Nesting is purely visual — it does not create
+  any relation between the cards, and a nested card is numbered exactly as if it
+  stood alone.
+
+Where a card's `\entryblock` first appears is what gives it its number (below).
+
+## `\entryref` — cite a card inline
+
+`\entryref` is a link, not a placement — it never affects numbering:
+
+- `\entryref{hash}` — automatic display: the card's sort and number
+  ("Theorem 7.2.8"), or its citation key for a bibliography card ("[MT07]").
+- `\entryref{hash}{text}` — your own link text.
+
+Either way the reference resolves to the card's *home* number — where its
+`\entryblock` first appears in the project — so a citation in chapter 3 to a
+card placed in chapter 7 reads "7.2.8" everywhere.
+
+## How numbers are assigned
+
+Numbers are **derived, never stored** — a pure positional coordinate
+`chapter.section.item` computed from the documents alone:
+
+- **chapter** — the document's `# Chapter N` title (or its filename prefix);
+- **section** — the ordinal of the `##` heading the card sits under: the first
+  `##` heading opens section 1, the second section 2, and so on. Headings do
+  not need numbers in their text; content before the first heading is section 0.
+- **item** — the card's order among the section's `\entryblock`s.
+
+Three rules complete the picture: a hash is numbered at its **first** occurrence
+project-wide (documents scanned in filename order; later occurrences reuse that
+number); **proof** cards are neither numbered nor consume an item slot; and
+`\entryref` never counts. Reorder sections or move a card, and everything
+renumbers itself consistently — nothing to maintain by hand.
+
+The same card can therefore carry different numbers in different projects: the
+number is the project's view, the hash is the identity.
+
+## Everything else is Markdown
+
+Documents are standard MDX: GitHub-flavored Markdown, `$…$` and `$$…$$` KaTeX
+math (macros included), headings, lists, tables. One more macro is available:
+`\status` renders a live formalization-status summary of the project's store.

@@ -30,35 +30,39 @@ export function DocsShell({
 
   return (
     <div className="flex max-w-7xl mx-auto w-full">
-      {/* left — master TOC: every doc, with the current doc's sections inline */}
+      {/* left — master TOC: docs grouped by section, current doc's headings inline */}
       <nav className="hidden lg:block w-60 shrink-0 sticky top-0 self-start max-h-[calc(100vh-3.5rem)] overflow-y-auto px-6 py-12 border-r border-white/5">
-        <div className="text-[10px] uppercase tracking-[0.2em] text-white/25 mb-4">Documentation</div>
-        <ul className="space-y-2 text-[13px]">
-          {docs.map((d) => (
-            <li key={d.slug}>
-              <Link
-                href={`/docs/${d.slug}`}
-                className={`block font-medium transition-colors ${d.slug === current ? 'text-white/85' : 'text-white/45 hover:text-white/70'}`}
-              >
-                {d.title}
-              </Link>
-              {d.slug === current && sections.length > 0 && (
-                <ul className="mt-1.5 ml-2 space-y-1 border-l border-white/10">
-                  {sections.map((s) => (
-                    <li key={s.id}>
-                      <a
-                        href={`#${s.id}`}
-                        className={`block pl-3 -ml-px border-l transition-colors ${active === s.id ? 'border-white/60 text-white/80' : 'border-transparent text-white/35 hover:text-white/60'}`}
-                      >
-                        {s.text}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
+        {[...new Set(docs.map((d) => d.section))].map((group) => (
+          <div key={group} className="mb-8 last:mb-0">
+            <div className="text-[10px] uppercase tracking-[0.2em] text-white/25 mb-4">{group}</div>
+            <ul className="space-y-2 text-[13px]">
+              {docs.filter((d) => d.section === group).map((d) => (
+                <li key={d.slug}>
+                  <Link
+                    href={`/docs/${d.slug}`}
+                    className={`block font-medium transition-colors ${d.slug === current ? 'text-white/85' : 'text-white/45 hover:text-white/70'}`}
+                  >
+                    {d.title}
+                  </Link>
+                  {d.slug === current && sections.length > 0 && (
+                    <ul className="mt-1.5 ml-2 space-y-1 border-l border-white/10">
+                      {sections.map((s) => (
+                        <li key={s.id}>
+                          <a
+                            href={`#${s.id}`}
+                            className={`block pl-3 -ml-px border-l transition-colors ${active === s.id ? 'border-white/60 text-white/80' : 'border-transparent text-white/35 hover:text-white/60'}`}
+                          >
+                            {s.text}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </nav>
 
       {/* center — MDX content */}
