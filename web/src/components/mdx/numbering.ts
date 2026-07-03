@@ -1,12 +1,15 @@
 /**
  * Entry numbering — DERIVED, never stored.
  *
- * A statement's number is a function of WHERE its card first appears in the
- * project, not a value copied from the source text. Within a chapter we follow
- * do Carmo's scheme: `§section.item`, where the item counter resets at each
- * `## §N` heading and runs across all sorts (Definition 2.1, Proposition 2.2,
- * Theorem 2.8 …). First occurrence of a hash wins; later `\entryref`s to the
- * same hash resolve to that same number. Proofs are not numbered.
+ * A card's number is a pure POSITIONAL coordinate `chapter.section.item`:
+ * the section is the ORDINAL of the `## ` heading the card sits under (first
+ * `## ` heading in the doc → section 1; content before any `## ` heading →
+ * section 0). Heading TEXT is irrelevant — named sections and `## §N` sections
+ * number identically — and `from.at` / source labels must never influence it.
+ * The item counter runs per section across all sorts (Definition 2.1,
+ * Proposition 2.2, Theorem 2.8 …). First occurrence of a hash wins; later
+ * `\entryref`s to the same hash resolve to that same number. Proofs are not
+ * numbered.
  *
  * The map is built once across ALL chapter docs so a cross-chapter reference
  * resolves to the target's own number (+ the chapter it lives in).
@@ -19,7 +22,6 @@ export interface EntryNumber {
 export type Numbering = Map<string, EntryNumber>
 
 const CHAPTER_RE = /^#\s+Chapter\s+(\d+)\b/m
-const SECTION_RE = /^##\s+§?\s*(\d+)\b/
 const ENTRYBLOCK_RE = /\\entryblock\{([^}]+)\}/g
 
 /** Chapter number for a doc, from its `# Chapter N` title (else filename prefix). */
@@ -41,8 +43,9 @@ function numberDoc(mdx: string, entries?: Record<string, { record: string }>): M
     const counters = new Map<number, number>()   // §section → running item count
     let section = 0
     for (const line of mdx.split('\n')) {
-        const sm = line.match(SECTION_RE)
-        if (sm) { section = parseInt(sm[1], 10); continue }
+        // Section = ordinal of `## ` headings (`###` fails ^##\s, so deeper
+        // headings never open a section).
+        if (/^##\s/.test(line)) { section++; continue }
         ENTRYBLOCK_RE.lastIndex = 0
         let m: RegExpExecArray | null
         while ((m = ENTRYBLOCK_RE.exec(line)) !== null) {
