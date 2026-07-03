@@ -74,11 +74,9 @@ export function RecordRenderer({ record, color, entryId, projectPath }: {
                 </div>
             )}
 
-            {/* content — Lean code with syntax highlighting */}
-            {content && (source === 'lean'
-                ? <LeanCode>{content}</LeanCode>
-                : <pre className="font-mono text-white/40 bg-black/30 rounded overflow-x-auto whitespace-pre-wrap" style={{ fontSize: '0.85em', padding: '0.5em' }}>{content}</pre>
-            )}
+            {/* content — only lean atoms carry a separate code body; for tex/bib
+                `content` IS the prose, already rendered above via notes. */}
+            {content && source === 'lean' && <LeanCode>{content}</LeanCode>}
 
             {/* Lean source — marker (file:line) + fetch the real .lean lines on demand */}
             {source === 'lean' && (parsed as any).path && (
@@ -182,9 +180,8 @@ function NestedProofs({ proofHashes }: { proofHashes: string[] }) {
                             <InlineMath>{p.notes}</InlineMath>
                         </div>
                     )}
-                    {p.content && (p.source === 'lean'
-                        ? <div style={{ marginTop: '0.25em' }}><LeanCode>{p.content}</LeanCode></div>
-                        : <pre className="font-mono text-white/30 bg-black/30 rounded overflow-x-auto whitespace-pre-wrap" style={{ fontSize: '0.8em', padding: '0.4em', marginTop: '0.25em' }}>{p.content}</pre>
+                    {p.content && p.source === 'lean' && (
+                        <div style={{ marginTop: '0.25em' }}><LeanCode>{p.content}</LeanCode></div>
                     )}
                 </div>
             ))}
