@@ -7,19 +7,21 @@ Each `sorry` carries its closure plan in its docstring. This file lists the open
 - **PRE-PAPER** — Mathlib API gap or framework primitive missing; closure path is self-build or Mathlib upstream.
 - **CITED-BLACK-BOX** — theorem quoted from a paper as given; body never proven in the framework. The named theorem is the value.
 
-## Open sorries (current)
+## Open sorries (current: 3)
 
-| Module | PRE-PAPER | CITED-BLACK-BOX | Total |
-|--------|-----------|------------------|-------|
-| Algebraic | 5 | 0 | 5 |
-| Tensor | 9 | 0 | 9 |
-| MetricGeometry | 0 | 0 | 0 |
-| Riemannian | varies | 0 | — |
-| Bridges | 1 | 0 | 1 |
-| Comparison | 1 | 0 | 1 |
-| GeometricMeasureTheory | 5 | 10 | 15 |
+All three live in `OpenGALib/Riemannian/Geodesic/HopfRinow.lean` — the statement-only
+Hopf–Rinow file (theorem + two corollaries, each with its do Carmo Ch. 7 proof plan
+inline). Classification: PRE-PAPER (the classical proofs are scoped upstream work).
 
-The Riemannian count drifts as feature branches add statement-only sorries. CI `EXPECTED` is the authoritative current value. For per-file location and repair plans, `grep -rn "sorry" OpenGALib/` and read each docstring.
+| Location | Statement |
+|----------|-----------|
+| HopfRinow.lean `hopfRinow` | complete ↔ geodesically complete |
+| HopfRinow.lean `complete_of_geodesicallyComplete_at` | `exp_p` total at one point ⟹ complete |
+| HopfRinow.lean `exists_minimizing_geodesic` | minimizing geodesic between any two points |
+
+The old per-module table (35 sorries across Algebraic/Tensor/GMT/…) described the
+pre-restructure tree and was retired with it. CI `EXPECTED` is the authoritative
+current value; for repair plans read the docstrings in place.
 
 ## Discipline
 
