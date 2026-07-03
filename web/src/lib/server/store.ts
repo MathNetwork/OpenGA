@@ -1,8 +1,17 @@
 // Server-side reader for the Astrolabe md store — the Node/TS counterpart of the
 // Python AstrolabeStorage (read-only). Each node is a `.md` file (YAML
-// front-matter + body) under .astrolabe/{atoms,edges,nodes}; the entry is
-// reconstructed as { ref, record } where record is JSON of the front-matter
-// (minus ref) plus the body as `notes`.
+// front-matter + body); the entry is reconstructed as { ref, record } where
+// record is JSON of the front-matter (minus ref) plus the body as `notes`.
+//
+// Two layouts:
+// - Legacy, self-contained: `.astrolabe/{atoms,edges,nodes}` inside the project
+//   (riemannian-geometry). Having its own `atoms/` marks a project as private —
+//   it reads nothing else.
+// - Hypergraph-sharing: a project without its own `atoms/` reads the union of
+//   the shared pool `<projectsRoot>/hypergraph/{atoms,edges}` (sibling of the
+//   project folder) and its optional project layer
+//   `.astrolabe/hypergraph/{atoms,edges}`. Content-addressing makes the union
+//   conflict-free (same hash ⇒ same bytes); on overlap the project layer wins.
 import fs from 'node:fs'
 import path from 'node:path'
 import { parse as parseYaml } from 'yaml'
@@ -12,8 +21,18 @@ export interface Entry { ref: string[]; record: string }
 export type Store = Record<string, Entry>
 
 function nodeDirs(projectDir: string): string[] {
-  const base = path.join(resolveFs(projectDir), '.astrolabe')
-  return [path.join(base, 'atoms'), path.join(base, 'edges'), path.join(base, 'nodes')]
+  const root = resolveFs(projectDir)
+  const base = path.join(root, '.astrolabe')
+  const legacy = [path.join(base, 'atoms'), path.join(base, 'edges'), path.join(base, 'nodes')]
+  if (fs.existsSync(path.join(base, 'atoms'))) return legacy // private project
+  const pool = path.join(path.dirname(root), 'hypergraph')
+  return [
+    path.join(pool, 'atoms'),
+    path.join(pool, 'edges'),
+    path.join(base, 'hypergraph', 'atoms'),
+    path.join(base, 'hypergraph', 'edges'),
+    ...legacy,
+  ]
 }
 
 /** Inverse of the Python _record_to_md: md text → (ref, canonical record JSON). */
@@ -30,9 +49,26 @@ function mdToEntry(text: string): Entry {
     }
   }
   const ref: string[] = front.ref ?? []
-  const rec: Record<string, unknown> = { ...front }
-  delete rec.ref
-  if (body !== '') rec.notes = body
+  let rec: Record<string, unknown>
+  if (front.record && typeof front.record === 'object') {
+    // Canonical nested format: { ref, record: {...} }. Surface the prose as
+    // `notes` so renderers that read `notes` keep working during migration.
+    rec = { ...front.record }
+    if (rec.notes == null) {
+      const c = rec.content as any
+      if (typeof c === 'string') rec.notes = c
+      else if (c && typeof c === 'object') {
+        rec.notes = (c.title
+          ? `${c.author ? c.author + '. ' : ''}${c.title}.${c.year ? ' ' + c.year + '.' : ''}`
+          : '').trim()
+      }
+    }
+  } else {
+    // Legacy flat format: record fields sit at top level, prose in the body.
+    rec = { ...front }
+    delete rec.ref
+    if (body !== '') rec.notes = body
+  }
   return { ref, record: JSON.stringify(rec) }
 }
 
