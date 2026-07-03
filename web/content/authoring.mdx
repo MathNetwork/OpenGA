@@ -34,23 +34,10 @@ card placed in chapter 7 reads "7.2.8" everywhere.
 
 ## How numbers are assigned
 
-Numbers are **derived, never stored** — a pure positional coordinate
-`chapter.section.item` computed from the documents alone:
-
-- **chapter** — the document's `# Chapter N` title (or its filename prefix);
-- **section** — the ordinal of the `##` heading the card sits under: the first
-  `##` heading opens section 1, the second section 2, and so on. Headings do
-  not need numbers in their text; content before the first heading is section 0.
-- **item** — the card's order among the section's `\entryblock`s.
-
-Three rules complete the picture: a hash is numbered at its **first** occurrence
-project-wide (documents scanned in filename order; later occurrences reuse that
-number); **proof** cards are neither numbered nor consume an item slot; and
-`\entryref` never counts. Reorder sections or move a card, and everything
-renumbers itself consistently — nothing to maintain by hand.
-
-The same card can therefore carry different numbers in different projects: the
-number is the project's view, the hash is the identity.
+Numbers are **derived, never stored**: a card gets a positional coordinate
+`chapter.section.item` from where its `\entryblock` first appears in the
+project's documents — proofs and `\entryref`s never count. The full rules have
+their own page: [derived numbering](/docs/numbering).
 
 ## Everything else is Markdown
 

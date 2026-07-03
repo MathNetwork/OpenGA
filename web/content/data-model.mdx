@@ -88,16 +88,7 @@ graph is a typed network, not a bare dependency tree.
 ## Derived numbering
 
 A card's identity is its hash, not a number — but a reader still wants to see
-"Theorem 7.2.8". So numbers are **derived, never stored**. Within a project, the
-documents are scanned in order and each hash is assigned a number the first time it
-appears: `chapter.section.item`, where the chapter comes from the document, the
-section is the ordinal of the heading the card sits under, and the item from the
-order of entries inside it.
-
-<NumberingFlow />
-
-Because the number is a function of where a hash first occurs *in that project*, the
-same content-addressed card can carry different numbers in different projects, yet
-stays perfectly consistent within one. Reorder a section, move a card, or drop in a
-new one, and everything renumbers itself at once — there is nothing to keep in sync
-by hand, and no number to ever go stale.
+"Theorem 7.2.8". So numbers are **derived, never stored**: a positional
+coordinate computed from where a card first appears in the project's documents,
+never a field in the store. How the coordinate is built has its own page:
+[derived numbering](/docs/numbering).

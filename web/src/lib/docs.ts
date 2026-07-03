@@ -27,4 +27,10 @@ export const DOCS: DocMeta[] = [
     eyebrow: 'Documents, entryblock & entryref',
     section: 'Docs',
   },
+  {
+    slug: 'numbering',
+    title: 'Derived Numbering',
+    eyebrow: 'Positional coordinates, never stored',
+    section: 'Docs',
+  },
 ]
