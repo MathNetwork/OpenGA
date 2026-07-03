@@ -21,9 +21,8 @@ const components: any = {
         const entryId = node?.properties?.dataEntry
         if (entryId) {
             const number = node?.properties?.dataNumber
-            const chapter = node?.properties?.dataChapter
             const auto = node?.properties?.dataAuto === 'true'
-            return <EntryLink id={entryId} number={number} chapter={chapter} auto={auto}>{children}</EntryLink>
+            return <EntryLink id={entryId} number={number} auto={auto}>{children}</EntryLink>
         }
         return <span {...props}>{children}</span>
     },

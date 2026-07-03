@@ -3,7 +3,7 @@
 /** Lean formalization badge — ∀ symbol indicating formal counterpart exists. */
 export function LeanBadge({ interactive, state, onClick }: {
     interactive?: boolean
-    state?: 'proven' | 'stated' | 'sorry' | string
+    state?: 'proven' | 'sorry' | string
     onClick?: () => void
 }) {
     const bg = state === 'sorry' ? 'bg-yellow-500/20' : state === 'proven' ? 'bg-green-500/20' : 'bg-green-500/15'

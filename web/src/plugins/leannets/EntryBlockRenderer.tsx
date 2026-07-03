@@ -124,7 +124,7 @@ export function LeanNetsEntryBlock({ hash, record, color, number, collapsible, c
 
     const label = SORT_LABELS[parsed.sort] || parsed.sort || ''
     const displayText = parsed.notes || parsed.content || ''
-    const isLean = parsed.sort?.startsWith('lean-') || parsed.source === 'lean'
+    const isLean = parsed.source === 'lean'
     const isTex = parsed.source === 'tex'
     const showBody = !collapsible || open
     // `number` is the DERIVED project-wide "§.item" (from where this card first

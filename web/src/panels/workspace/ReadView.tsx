@@ -213,7 +213,7 @@ export function ReadView() {
                 onScroll={(e) => useReadStore.getState().setScrollTop((e.target as HTMLDivElement).scrollTop)}
             >
                 {content && entries !== undefined ? (
-                    <MarkdownRenderer content={content} filename={selected ? selected.split('/').pop() : undefined} entries={entries} />
+                    <MarkdownRenderer content={content} entries={entries} />
                 ) : (
                     <div className="text-xs text-white/20">{content ? 'Loading…' : 'Select a file'}</div>
                 )}

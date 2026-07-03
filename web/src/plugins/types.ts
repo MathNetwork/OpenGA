@@ -38,6 +38,5 @@ export interface AstrolabePlugin {
         color: string
         number?: string
         displayText?: string
-        ofChapter?: string
     }>
 }

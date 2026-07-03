@@ -7,18 +7,12 @@ import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import 'katex/dist/katex.min.css'
-import { getSortStyle } from '@/lib/sortColors'
 import { preprocess } from './mdx/preprocess'
-import { rehypeStatementCards } from './mdx/rehypeStatementCards'
 import { EntriesContext } from './mdx/EntriesContext'
-import { CurrentChapterContext } from './mdx/CurrentChapterContext'
-import { chapterOf } from './mdx/numbering'
 import { useViewStore } from '@/stores/viewStore'
-import { InlineMath } from './mdx/InlineMath'
 import { EntryBlock } from './mdx/EntryBlock'
 import { EntryLink } from './mdx/EntryLink'
 import { ProjectStatus } from './ProjectStatus'
-import { ProjectChapters } from './ProjectChapters'
 import { StorageTree, AtomExample, EdgeExample, NumberingFlow } from './mdx/DataModelDiagrams'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,7 +42,6 @@ const components: Record<string, any> = {
     // Entry components
     div: ({ node, children, ...props }: any) => {
         if (node?.properties?.dataStatus) return <ProjectStatus />
-        if (node?.properties?.dataChapters) return <ProjectChapters />
         if (node?.properties?.dataStorageTree) return <StorageTree />
         if (node?.properties?.dataAtomExample) return <AtomExample />
         if (node?.properties?.dataEdgeExample) return <EdgeExample />
@@ -59,81 +52,49 @@ const components: Record<string, any> = {
             const number = node?.properties?.dataNumber
             return <EntryBlock id={entryId} collapsible={collapsible} number={number}>{children}</EntryBlock>
         }
-        const cls = node?.properties?.className
-        const isCard = Array.isArray(cls) ? cls.includes('statement-card') : cls === 'statement-card'
-        if (isCard) {
-            const kind: string = node?.properties?.dataStmtKind || ''
-            const num: string = node?.properties?.dataStmtNum || ''
-            const name: string = node?.properties?.dataStmtName || ''
-            const s = getSortStyle(kind)
-            const label = kind ? kind.charAt(0).toUpperCase() + kind.slice(1) : ''
-            return (
-                <div className="my-3 pl-3 py-1 rounded-r" style={{ ...s.borderStyle, background: 'rgba(255,255,255,0.015)' }}>
-                    <div className="text-xs font-semibold mb-1" style={s.textStyle}>
-                        {label} {num}{name ? ` (${name})` : ''}
-                    </div>
-                    <div className="text-white/70">{children}</div>
-                </div>
-            )
-        }
         return <div {...props}>{children}</div>
     },
     span: ({ node, children, ...props }: any) => {
         const entryId = node?.properties?.dataEntry
         if (entryId) {
             const number = node?.properties?.dataNumber
-            const chapter = node?.properties?.dataChapter
             const auto = node?.properties?.dataAuto === 'true'
-            return <EntryLink id={entryId} number={number} chapter={chapter} auto={auto}>{children}</EntryLink>
+            return <EntryLink id={entryId} number={number} auto={auto}>{children}</EntryLink>
         }
         return <span {...props}>{children}</span>
     },
-
-    // Fallback theorem environments
-    definition: ({ number, title, children }: any) => { const s = getSortStyle('definition'); return <div className="my-3 pl-3" style={s.borderStyle}><div className="text-xs font-semibold mb-1" style={s.textStyle}>Definition{number ? ` ${number}` : ''}{title ? ` (${title})` : ''}</div><div className="text-white/70"><InlineMath>{children}</InlineMath></div></div> },
-    theorem: ({ number, title, children }: any) => { const s = getSortStyle('theorem'); return <div className="my-3 pl-3" style={s.borderStyle}><div className="text-xs font-semibold mb-1" style={s.textStyle}>Theorem{number ? ` ${number}` : ''}{title ? ` (${title})` : ''}</div><div className="text-white/70"><InlineMath>{children}</InlineMath></div></div> },
-    lemma: ({ number, title, children }: any) => { const s = getSortStyle('lemma'); return <div className="my-3 pl-3" style={s.borderStyle}><div className="text-xs font-semibold mb-1" style={s.textStyle}>Lemma{number ? ` ${number}` : ''}{title ? ` (${title})` : ''}</div><div className="text-white/70"><InlineMath>{children}</InlineMath></div></div> },
-    proposition: ({ number, title, children }: any) => { const s = getSortStyle('proposition'); return <div className="my-3 pl-3" style={s.borderStyle}><div className="text-xs font-semibold mb-1" style={s.textStyle}>Proposition{number ? ` ${number}` : ''}{title ? ` (${title})` : ''}</div><div className="text-white/70"><InlineMath>{children}</InlineMath></div></div> },
-    corollary: ({ number, title, children }: any) => { const s = getSortStyle('corollary'); return <div className="my-3 pl-3" style={s.borderStyle}><div className="text-xs font-semibold mb-1" style={s.textStyle}>Corollary{number ? ` ${number}` : ''}{title ? ` (${title})` : ''}</div><div className="text-white/70"><InlineMath>{children}</InlineMath></div></div> },
-    proof: ({ children }: any) => { const s = getSortStyle('proof'); return <div className="my-2 pl-3" style={s.borderStyle}><div className="text-xs italic mb-1" style={s.textStyle}>Proof.</div><div className="text-white/60 text-sm"><InlineMath>{children}</InlineMath></div><div className="text-right text-white/30 text-xs">∎</div></div> },
 }
 
 const remarkPlugins = [remarkGfm, remarkMath]
 // rehypeRaw MUST run before rehypeKatex: it parses the raw HTML emitted by
 // `preprocess` (entryblock/entryref spans); running it after KaTeX re-parses and
 // corrupts KaTeX's output (breaking display math such as `\begin{aligned}`).
-const rehypePlugins = [rehypeRaw, rehypeStatementCards, rehypeKatex]
+const rehypePlugins = [rehypeRaw, rehypeKatex]
 
 interface Props {
     content: string
     className?: string
-    /** Filename for section number extraction (e.g. "02-connectivity.mdx" → section 2) */
-    filename?: string
     /** Entry data for proof exclusion from numbering */
     entries?: Record<string, { record: string }>
 }
 
-export default memo(function MarkdownRenderer({ content, className, filename, entries }: Props) {
+export default memo(function MarkdownRenderer({ content, className, entries }: Props) {
     // Numbering is project-wide and derived (built once in useProjectLoader);
-    // here we only consume it. The chapter of this doc lets cross-chapter refs
-    // render "of Chapter C".
+    // here we only consume it.
     const numbering = useViewStore(s => s.numbering)
-    const chapter = useMemo(() => chapterOf(content, filename || ''), [content, filename])
     const rendered = useMemo(() => preprocess(content, numbering), [content, numbering])
 
     return (
         <EntriesContext.Provider value={entries}>
-            <CurrentChapterContext.Provider value={chapter}>
-                <div className={className}>
-                    <ReactMarkdown
-                        remarkPlugins={remarkPlugins}
-                        rehypePlugins={rehypePlugins}
-                        components={components}
-                    >
-                        {rendered}
-                    </ReactMarkdown>
-                </div>
-            </CurrentChapterContext.Provider>
+            <div className={className}>
+                <ReactMarkdown
+                    remarkPlugins={remarkPlugins}
+                    rehypePlugins={rehypePlugins}
+                    components={components}
+                >
+                    {rendered}
+                </ReactMarkdown>
+            </div>
         </EntriesContext.Provider>
     )
 })

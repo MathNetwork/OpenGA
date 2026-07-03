@@ -3,8 +3,8 @@
 import { useSelectObjStore } from '@/stores/selectObjStore'
 import { SORT_LABELS, parseRecord } from './utils'
 
-export function LeanNetsEntryRef({ hash, record, color, number, displayText, ofChapter }: {
-    hash: string; record: string; color: string; number?: string; displayText?: string; ofChapter?: string
+export function LeanNetsEntryRef({ hash, record, color, number, displayText }: {
+    hash: string; record: string; color: string; number?: string; displayText?: string
 }) {
     const selectObj = useSelectObjStore(s => s.select)
 
