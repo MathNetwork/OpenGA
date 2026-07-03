@@ -18,18 +18,18 @@ import * as fs from 'fs'
 
 const entryBlockRenderer = fs.readFileSync('src/plugins/leannets/EntryBlockRenderer.tsx', 'utf-8')
 const recordRenderer = fs.readFileSync('src/plugins/leannets/RecordRenderer.tsx', 'utf-8')
+const leanIndex = fs.readFileSync('src/plugins/leannets/leanIndex.ts', 'utf-8')
 
 describe('Lean proof nesting in EntryBlockRenderer', () => {
     it('has a hook or effect to find proofs for the lean counterpart', () => {
-        // Must look up proofs via edges, like RecordRenderer does
+        // Must look up proofs via edges, through the shared per-project index
         expect(entryBlockRenderer).toMatch(/proof/i)
-        // Must search degree-1 edges for proof relationships
-        expect(entryBlockRenderer).toMatch(/degree=1|degree%3D1/)
+        expect(entryBlockRenderer).toContain("./leanIndex")
     })
 
     it('matches proof edges by sort ending with ", proof)"', () => {
-        // Same pattern as RecordRenderer line 32: s.endsWith(', proof)')
-        expect(entryBlockRenderer).toContain(", proof)")
+        // The shared index detects proof edges the same way for every consumer
+        expect(leanIndex).toContain(", proof)")
     })
 
     it('renders lean proof content with LeanCode component', () => {
@@ -48,15 +48,15 @@ describe('Lean proof nesting in EntryBlockRenderer', () => {
 
 describe('Consistency between RecordRenderer and EntryBlockRenderer proof lookup', () => {
     it('both use the same edge sort pattern for proof detection', () => {
-        // RecordRenderer: s.endsWith(', proof)')
-        const rrPattern = recordRenderer.includes(", proof)")
-        const ebrPattern = entryBlockRenderer.includes(", proof)")
-        expect(rrPattern).toBe(true)
-        expect(ebrPattern).toBe(true)
+        // Both route proof detection through the shared index's single pattern
+        expect(recordRenderer).toContain("./leanIndex")
+        expect(entryBlockRenderer).toContain("./leanIndex")
+        expect(leanIndex).toContain(", proof)")
     })
 
-    it('both fetch degree-1 entries to find proof edges', () => {
-        expect(recordRenderer).toMatch(/degree=1|degree%3D1/)
-        expect(entryBlockRenderer).toMatch(/degree=1|degree%3D1/)
+    it('neither re-fetches edges per card — one store fetch in the index', () => {
+        expect(recordRenderer).not.toMatch(/degree=1|degree%3D1/)
+        expect(entryBlockRenderer).not.toMatch(/degree=1|degree%3D1/)
+        expect(leanIndex).toContain('/api/astrolabe/entries')
     })
 })

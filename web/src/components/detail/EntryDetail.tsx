@@ -63,7 +63,8 @@ export const EntryDetail = memo(function EntryDetail({ id }: { id: string }) {
 
     // ── Derived values (safe after all hooks) ──
     const sortColor = entry ? getEntryColor(id, entry.record) : '#888'
-    const PluginRecordRenderer = usePluginStore.getState().getRecordRenderer()
+    // Subscribed (not getState()) so toggling the plugin re-renders the detail.
+    const PluginRecordRenderer = usePluginStore(s => s.getRecordRenderer())
     const parsed = useMemo(() => {
         if (!entry) return null
         try { return JSON.parse(entry.record) as Record<string, string> } catch { return null }

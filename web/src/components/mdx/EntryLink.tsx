@@ -42,7 +42,8 @@ export function EntryLink({ id, number, auto, children }: { id: string; number?:
     // Manual mode: \entryref{hash}{text} — children contains the display text
     const displayText = !auto && children ? (typeof children === 'string' ? children : undefined) : undefined
 
-    const PluginRenderer = usePluginStore.getState().getEntryRefRenderer()
+    // Subscribed (not getState()) so toggling the plugin re-renders mounted links.
+    const PluginRenderer = usePluginStore(s => s.getEntryRefRenderer())
     if (PluginRenderer && (record !== null || auto)) {
         return (
             <PluginRenderer

@@ -23,6 +23,9 @@ export function EntryBlock({ id, collapsible, number, children: nested }: { id?:
         ? new URLSearchParams(window.location.search).get('path') || ''
         : ''
 
+    // Subscribed (not getState()) so toggling the plugin re-renders mounted cards.
+    const PluginRenderer = usePluginStore(s => s.getEntryBlockRenderer())
+
     useEffect(() => onColorsUpdated(() => rerender(n => n + 1)), [])
 
     // Always track the latest context record — so a re-registration (records
@@ -45,7 +48,6 @@ export function EntryBlock({ id, collapsible, number, children: nested }: { id?:
     }
 
     const color = getEntryColor(id || '', record)
-    const PluginRenderer = usePluginStore.getState().getEntryBlockRenderer()
 
     if (PluginRenderer) {
         return (

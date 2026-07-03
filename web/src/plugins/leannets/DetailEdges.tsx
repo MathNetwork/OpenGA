@@ -1,36 +1,28 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { useSelectObjStore } from '@/stores/selectObjStore'
 import { usePluginStore } from '@/plugins/registry'
-import { API_BASE } from '@/lib/apiBase'
 import { getEntryColor } from '@/lib/entryColor'
-import { groupEdgesBySort, type EdgeInfo } from './transform'
+import type { EdgeInfo } from './transform'
+import { useLeanIndex } from './leanIndex'
 
 /** Skeleton plugin detail section: shows edges grouped by sort. Only visible in skeleton mode. */
 export function DetailEdges({ entryId }: { entryId: string }) {
     const modeActive = usePluginStore(s => s.isModeActive('leannets'))
-    const [edges, setEdges] = useState<{ outgoing: EdgeInfo[]; incoming: EdgeInfo[] } | null>(null)
     const selectObj = useSelectObjStore(s => s.select)
 
     const projectPath = typeof window !== 'undefined'
         ? new URLSearchParams(window.location.search).get('path') || ''
         : ''
 
-    const [mySource, setMySource] = useState('')
-
-    useEffect(() => {
-        if (!modeActive || !entryId || !projectPath) return
-        fetch(`${API_BASE}/api/astrolabe/entries?path=${encodeURIComponent(projectPath)}`)
-            .then(r => r.ok ? r.json() : {})
-            .then((allEntries: Record<string, any>) => {
-                const entry = allEntries[entryId]
-                if (!entry || entry.ref.length !== 1) { setEdges(null); return }
-                try { setMySource(JSON.parse(entry.record).source || '') } catch { setMySource('') }
-                setEdges(groupEdgesBySort(entryId, allEntries))
-            })
-            .catch(() => setEdges(null))
-    }, [modeActive, entryId, projectPath])
+    // Edges + own source come from the shared per-project index (one store
+    // fetch for the whole plugin, not one per selection).
+    const index = useLeanIndex(modeActive && entryId ? projectPath : '')
+    const isAtom = !!index?.atoms.has(entryId)
+    const mySource = index?.atoms.get(entryId)?.source || ''
+    const edges = index && isAtom
+        ? { outgoing: index.edgesOut.get(entryId) ?? [], incoming: index.edgesIn.get(entryId) ?? [] }
+        : null
 
     const isMergeOn = usePluginStore(s => (s as any).mnMergeProofs || false)
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { API_BASE } from '@/lib/apiBase'
 import { usePluginStore } from '@/plugins/registry'
 import { useViewStore } from '@/stores/viewStore'
@@ -8,6 +8,7 @@ import { InlineMath } from '@/components/mdx/InlineMath'
 import { Prose } from '@/components/mdx/Prose'
 import { LeanCode } from './LeanHighlight'
 import { SORT_LABELS, parseRecord } from './utils'
+import { useLeanIndex, type LeanRecord } from './leanIndex'
 
 /** LeanNets record renderer — parses JSON record and renders sort/source/title/notes/content/state. */
 export function RecordRenderer({ record, color, entryId, projectPath }: {
@@ -15,37 +16,19 @@ export function RecordRenderer({ record, color, entryId, projectPath }: {
 }) {
     const parsed = parseRecord(record)
 
-    // Find proofs for this statement via edges (frontend lookup)
-    const [proofHashes, setProofHashes] = useState<string[]>([])
+    // Find proofs for this statement via edges (shared in-memory index)
     const isMergeOn = usePluginStore(s => (s as any).mnMergeProofs || false)
     const isAtom = parsed && parsed.sort !== 'proof'
-
-    useEffect(() => {
-        if (!isMergeOn || !isAtom || !entryId || !projectPath) { setProofHashes([]); return }
-        fetch(`${API_BASE}/api/astrolabe/entries?path=${encodeURIComponent(projectPath)}&degree=1`)
-            .then(r => r.ok ? r.json() : {})
-            .then(edges => {
-                const pHashes: string[] = []
-                for (const [, edge] of Object.entries(edges) as [string, any][]) {
-                    if (edge.ref[0] === entryId) {
-                        try {
-                            const s = JSON.parse(edge.record).sort || ''
-                            if (s.endsWith(', proof)')) pHashes.push(edge.ref[1])
-                        } catch {}
-                    }
-                }
-                setProofHashes(pHashes)
-            })
-            .catch(() => setProofHashes([]))
-    }, [isMergeOn, isAtom, entryId, projectPath])
+    const index = useLeanIndex(isMergeOn && isAtom && entryId && projectPath ? projectPath : '')
+    const proofs = (isMergeOn && isAtom && entryId && index?.proofs.get(entryId)) || []
+    // Derived project-wide number ("§.item" from first occurrence) — never stored.
+    const number = useViewStore(s => entryId ? s.getNumber(entryId) : undefined)
 
     if (!parsed || typeof parsed !== 'object') {
         return <div className="text-white/50">{record || '—'}</div>
     }
 
     const { sort, source, title, notes, content, state, key } = parsed
-    // Derived project-wide number ("§.item" from first occurrence) — never stored.
-    const number = useViewStore(s => entryId ? s.getNumber(entryId) : undefined)
     const sortLabel = sort ? (SORT_LABELS[sort] || sort) : ''
     const numberDisplay = sortLabel && number ? `${sortLabel} ${number}` : number ? `[${number}]` : null
 
@@ -89,7 +72,7 @@ export function RecordRenderer({ record, color, entryId, projectPath }: {
             )}
 
             {/* nested proofs (when merge is on, found via edges) */}
-            {proofHashes.length > 0 && <NestedProofs proofHashes={proofHashes} />}
+            {proofs.length > 0 && <NestedProofs proofs={proofs} />}
         </div>
     )
 }
@@ -135,32 +118,10 @@ function LeanSource({ path, line, file, state }: {
     )
 }
 
-function NestedProofs({ proofHashes }: { proofHashes: string[] }) {
-    const [proofs, setProofs] = useState<Record<string, any>>({})
+function NestedProofs({ proofs }: { proofs: LeanRecord[] }) {
     const [open, setOpen] = useState(false)
 
-    const projectPath = typeof window !== 'undefined'
-        ? new URLSearchParams(window.location.search).get('path') || ''
-        : ''
-
-    useEffect(() => {
-        if (!projectPath || proofHashes.length === 0) return
-        Promise.all(proofHashes.map(h =>
-            fetch(`${API_BASE}/api/astrolabe/entries/${h}?path=${encodeURIComponent(projectPath)}`)
-                .then(r => r.ok ? r.json() : null)
-                .then(e => {
-                    if (!e?.record) return null
-                    try { return [h, JSON.parse(e.record)] } catch { return null }
-                })
-                .catch(() => null)
-        )).then(results => {
-            const map: Record<string, any> = {}
-            for (const r of results) if (r) map[r[0]] = r[1]
-            setProofs(map)
-        })
-    }, [proofHashes, projectPath])
-
-    if (Object.keys(proofs).length === 0) return null
+    if (proofs.length === 0) return null
 
     return (
         <div className="border-l border-white/10" style={{ marginTop: '0.3em', paddingLeft: '0.5em' }}>
@@ -170,9 +131,9 @@ function NestedProofs({ proofHashes }: { proofHashes: string[] }) {
                 style={{ fontSize: '0.8em', gap: '0.3em' }}
             >
                 <span>{open ? '▾' : '▸'}</span>
-                <span>Proof ({Object.keys(proofs).length})</span>
+                <span>Proof ({proofs.length})</span>
             </button>
-            {open && Object.entries(proofs).map(([h, p]) => (
+            {open && proofs.map(({ hash: h, record: p }) => (
                 <div key={h} style={{ marginTop: '0.3em' }}>
                     {p.source && <span className="rounded bg-white/5 text-white/25" style={{ fontSize: '0.75em', padding: '0.1em 0.3em', marginRight: '0.3em' }}>{p.source}</span>}
                     {p.notes && (

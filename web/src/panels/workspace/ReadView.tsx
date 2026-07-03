@@ -107,14 +107,16 @@ export function ReadView() {
     // document. Reading position is decoupled from selection; only the outline
     // (below) moves the document, on explicit navigation.
 
-    // Load selected file content
+    // Load selected file content. `selected` is the doc's absolute path (docs
+    // dir is flat), so its basename is the docs-relative name the API takes.
     useEffect(() => {
-        if (!selected) return
-        fetch(`${API_BASE}/api/docs/read?path=${encodeURIComponent(selected)}`)
+        if (!selected || !projectPath) return
+        const file = selected.split('/').pop() || ''
+        fetch(`${API_BASE}/api/docs/read?path=${encodeURIComponent(projectPath)}&file=${encodeURIComponent(file)}`)
             .then(r => r.json())
             .then(d => setContent(d?.content || ''))
             .catch(() => setContent('Failed to load'))
-    }, [selected])
+    }, [selected, projectPath])
 
     // Restore the saved scroll position after content renders (so a remount —
     // pane/layout switch — lands you back where you were, not at the top).

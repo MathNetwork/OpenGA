@@ -68,7 +68,7 @@ export function useProjectLoader(projectPath: string | null) {
             const files = list.files || []
             const docs = await Promise.all(files.map(async f => ({
                 filename: f.name,
-                content: (await json<{ content?: string }>(`${API_BASE}/api/docs/read?path=${encodeURIComponent(f.path)}`, {})).content || '',
+                content: (await json<{ content?: string }>(`${API_BASE}/api/docs/read?path=${p}&file=${encodeURIComponent(f.name)}`, {})).content || '',
             })))
             if (cancelled) return
             useViewStore.getState().setNumbering(buildProjectNumbering(docs, entries))

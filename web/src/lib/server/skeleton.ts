@@ -4,6 +4,7 @@
 // group) via the analysis library. All UI modes are supported — nothing is
 // silently degraded.
 import type { Store } from './store'
+import { getSortFill } from '../sortColors'
 import {
   perSource, degreeMetric, centralityMetric, dagMetric, stageMetric,
   communityMetric, clusterByAttr, curvatureBuckets, spectralMetric,
@@ -54,7 +55,10 @@ function filterBySource(entries: Store, source: string): Store {
   return out
 }
 
-// ── colour helpers (match the Python backend) ──
+// ── colour helpers ──
+// Sort colours come from the shared client palette (lib/sortColors, pure/
+// isomorphic) so NETWORK nodes and read-view cards always agree; hslToHex
+// below only serves the gradient/palette metric colourings.
 
 function hslToHex(h: number, s: number, l: number): string {
   const sf = s / 100, lf = l / 100
@@ -64,13 +68,6 @@ function hslToHex(h: number, s: number, l: number): string {
     return Math.round((lf - a * Math.max(-1, Math.min(k - 3, 9 - k, 1))) * 255).toString(16).padStart(2, '0')
   }
   return `#${f(0)}${f(8)}${f(4)}`
-}
-
-function sortToColor(sort: string): string {
-  let h = 0
-  for (const c of sort) h = (Math.imul(h, 31) + c.charCodeAt(0)) >>> 0
-  // 高饱和、中等亮度 → 鲜艳不透灰(与前端 sortColors 一致)。
-  return hslToHex(h % 360, 72 + ((h >>> 8) % 23), 50 + ((h >>> 16) % 12))
 }
 
 function blendHex(a: string, b: string): string {
@@ -134,7 +131,7 @@ export function buildSkeletonView(
   const color = opts.color ?? 'sort'
   let colors: Record<string, string> = {}
   if (color === 'sort') {
-    for (const [id, n] of nodes) colors[id] = sortToColor(n.sort)
+    for (const [id, n] of nodes) colors[id] = getSortFill(n.sort)
   } else if (color === 'community') {
     colors = palette(perSource(ents, communityMetric, true), 137, 65, 55)
   } else if (color === 'spectral') {
@@ -151,7 +148,7 @@ export function buildSkeletonView(
     for (const id of nodes.keys()) colors[id] = '#888888'
   }
   // any node missing a colour (e.g. isolated, no metric) falls back to sort
-  for (const [id, n] of nodes) if (!colors[id]) colors[id] = sortToColor(n.sort)
+  for (const [id, n] of nodes) if (!colors[id]) colors[id] = getSortFill(n.sort)
 
   // ── cluster ──
   const cluster = opts.cluster ?? 'none'

@@ -1,11 +1,8 @@
 /**
  * Global Error Suppression
  *
- * Centralized handling for known harmless errors that should be suppressed.
- * These errors are typically caused by:
- * - Library internals during component unmount (Monaco "Canceled")
- * - Browser layout engines (ResizeObserver loop)
- * - Race conditions in async operations
+ * Centralized handling for known harmless browser errors that should be
+ * suppressed (e.g. the ResizeObserver loop layout warning).
  *
  * Usage:
  *   import '@/lib/errorSuppression'  // Auto-installs handlers on import
@@ -23,32 +20,12 @@ const HARMLESS_ERROR_PATTERNS: Array<{
   description: string;
 }> = [
   {
-    pattern: 'Canceled',
-    description: 'Monaco Editor async operation cancelled during unmount',
-  },
-  {
-    pattern: 'Canceled: Canceled',
-    description: 'Monaco Editor dispose error with full message',
-  },
-  {
     pattern: /ResizeObserver loop/,
     description: 'Browser ResizeObserver throttling - harmless layout warning',
   },
   {
     pattern: 'Script error.',
     description: 'Cross-origin script error with no details - usually harmless',
-  },
-  {
-    pattern: '[FileWatch] Error',
-    description: 'FileWatch WebSocket error - expected when backend is not running',
-  },
-  {
-    pattern: 'Computed radius is NaN',
-    description: 'Three.js bounding sphere calculation with invalid data - handled by edge guards',
-  },
-  {
-    pattern: "listeners[eventId].handlerId",
-    description: 'Tauri event listener cleanup race during HMR - harmless in development',
   },
 ];
 
@@ -126,8 +103,8 @@ export function installGlobalErrorHandlers(): void {
   window.addEventListener('error', handleError, true);
   window.addEventListener('unhandledrejection', handleUnhandledRejection, true);
 
-  // Patch console.error to filter out harmless errors
-  // This prevents Next.js error overlay from showing Monaco "Canceled" errors
+  // Patch console.error to filter out harmless errors, so the Next.js error
+  // overlay never surfaces them
   const originalConsoleError = console.error;
   console.error = (...args: unknown[]) => {
     // Check if any argument is a harmless error

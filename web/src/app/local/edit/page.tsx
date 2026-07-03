@@ -32,7 +32,7 @@ function EditorPage() {
             .then(d => {
                 const first = (d.files || [])[0]
                 if (!first) return
-                return fetch(`${API_BASE}/api/docs/read?path=${encodeURIComponent(first.path)}`).then(r => r.json())
+                return fetch(`${API_BASE}/api/docs/read?path=${p}&file=${encodeURIComponent(first.name)}`).then(r => r.json())
             })
             .then(d => {
                 const m = d?.content?.match(/^#\s+(.+?)\s*$/m)
