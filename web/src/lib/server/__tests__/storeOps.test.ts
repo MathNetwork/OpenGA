@@ -4,11 +4,11 @@ import os from 'node:os'
 import path from 'node:path'
 import { atomHash, StoreOps } from '../storeOps'
 
-// Identity is the content hash. The Morgan–Tian source atom lives on disk as
-// 2f407ff400c5.md, so atomHash of its record must reproduce that exact hash —
-// Node-written nodes share identity with the existing .md store.
+// Identity is the content hash. This record/hash pair is a known-good vector
+// produced by the original store implementation — atomHash must reproduce it
+// exactly so Node-written nodes share identity with any pre-existing .md store.
 describe('storeOps reproduces the stored content-address', () => {
-  it('atomHash(Morgan–Tian record) === 2f407ff400c5', () => {
+  it('atomHash(known-good bib record) === 2f407ff400c5', () => {
     const mt = {
       source: 'bib', sort: 'ref',
       content: {

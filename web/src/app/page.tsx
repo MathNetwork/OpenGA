@@ -18,13 +18,12 @@ const PROJECTS = [
   {
     slug: 'riemannian-geometry',
     title: 'Riemannian Geometry Challenge',
+    tag: 'experimental',
     blurb:
       'A public, open initiative to build Riemannian geometry into a living, machine-verified ' +
       'textbook — a shared foundation anyone can learn from, contribute to, reuse, and build on. ' +
       'Made for everyone.',
   },
-  // poincare-network exists (cards in projects/hypergraph) but is not listed
-  // on the homepage yet — reach it via /local/edit?path=…/poincare-network.
 ]
 
 export default function Home() {
@@ -43,6 +42,7 @@ export default function Home() {
                   className="group inline-flex items-center gap-3 text-2xl font-medium text-white/85 hover:text-white transition-colors"
                 >
                   {p.title}
+                  {p.tag && <span className="text-sm font-normal text-white/30">({p.tag})</span>}
                   <span className="text-white/25 group-hover:text-white/70 group-hover:translate-x-1 transition-all duration-200">→</span>
                 </Link>
                 <p className="text-sm text-white/40 mt-3 max-w-2xl">{p.blurb}</p>
