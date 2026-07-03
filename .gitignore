@@ -43,3 +43,6 @@ manifesto/
 # Python bytecode cache
 __pycache__/
 *.pyc
+
+# never track editor/server junk
+web/

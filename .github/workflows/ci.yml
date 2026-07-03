@@ -7,39 +7,6 @@ on:
     branches: [main]
 
 jobs:
-  web:
-    name: Web (vitest + tsc)
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-
-      # Path gating lives here (not in `on.paths`) so the Lean jobs still run
-      # on every push/PR; this job self-skips when nothing under web/ changed.
-      - name: Detect web/ changes
-        id: filter
-        uses: dorny/paths-filter@v3
-        with:
-          filters: |
-            web:
-              - 'web/**'
-
-      - name: Set up Node
-        if: steps.filter.outputs.web == 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-
-      - name: Install, test, typecheck
-        if: steps.filter.outputs.web == 'true'
-        working-directory: web
-        run: |
-          npm ci
-          npx vitest run
-          npx tsc --noEmit
-
   count-checks:
     name: Sorry / axiom count
     runs-on: ubuntu-latest

@@ -23,20 +23,17 @@ The whole project is one **content-addressed hypergraph** — not files and
 folders. Every node is a single file named by its hash; documents only reference
 them.
 
-\storageTree
 
 Every statement, declaration, and relation is one immutable entry
 `(hash, ref, record)`. Identity *is* content: the same content always hashes to
 the same id, so cards dedupe, merge, and re-reference without ambiguity. An
 **atom** (one self-reference) is a leaf — a statement or proof.
 
-\atomExample
 
 An **edge** (two references) is a *typed* relation between atoms — `references`,
 `uses`, `corollary-of`, `formalizes`, and more — a typed network, not a bare
 dependency tree.
 
-\edgeExample
 
 **Two layers, one graph.** *tex* atoms hold the natural-language statements;
 *lean* atoms hold the formal declarations that prove them, joined by cross-source
@@ -47,7 +44,6 @@ graph.
 Numbers like "Theorem 3.2.1" are **derived from where a card first appears, never
 stored** — reorder a section and everything renumbers itself.
 
-\numberingFlow
 
 ## Progress
 
