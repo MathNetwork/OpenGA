@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest'
 import * as fs from 'fs'
 
-const entryDetail = fs.readFileSync('src/components/detail/EntryDetail.tsx', 'utf-8')
+const entryDetail = fs.readFileSync('src/panels/workspace/EntryDetail.tsx', 'utf-8')
 const networkView = fs.readFileSync('src/panels/workspace/NetworkView.tsx', 'utf-8')
 const networkSettings = fs.readFileSync('src/panels/workspace/NetworkSettings.tsx', 'utf-8')
 const pluginTypes = fs.readFileSync('src/plugins/types.ts', 'utf-8')

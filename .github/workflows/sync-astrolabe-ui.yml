@@ -51,7 +51,7 @@ jobs:
             components/MarkdownRenderer.tsx \
             components/ParticleBackground.tsx \
             components/ProjectStatus.tsx \
-            components/ProjectChapters.tsx \
+            lib/entryColor.ts \
             lib/refView.ts \
             lib/sortColors.ts; do
             mkdir -p "$(dirname "$DST/$f")"
@@ -73,13 +73,13 @@ jobs:
 
             **Synced:** `panels/`, `plugins/`, `components/mdx/`, `stores/`,
             `components/MarkdownRenderer.tsx`,
-            `components/ParticleBackground.tsx`, `lib/refView.ts`,
-            `lib/sortColors.ts`.
+            `components/ParticleBackground.tsx`, `components/ProjectStatus.tsx`,
+            `lib/entryColor.ts`, `lib/refView.ts`, `lib/sortColors.ts`.
 
-            **Not synced (per-app):** the data/API layer (`lib/api.ts`,
-            `lib/apiBase.ts`, `lib/server/`, `app/api/`, `hooks/`), the site
-            shell (`app/page.tsx`, `app/layout.tsx`, `Navbar`, `ThemeToggle`,
-            `app/docs/`, `components/docs/`), and `content/` / `projects/`.
+            **Not synced (per-app):** the data/API layer (`lib/apiBase.ts`,
+            `lib/server/`, `app/api/`, `hooks/`), the site shell
+            (`app/page.tsx`, `app/layout.tsx`, `Navbar`, `ThemeToggle`,
+            `app/docs/`), and `content/` / `projects/`.
 
             Review for any conflicts with the Tauri data layer before merging.
 

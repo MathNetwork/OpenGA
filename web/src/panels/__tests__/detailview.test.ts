@@ -23,7 +23,7 @@ describe('DetailView — entry 详情', () => {
 })
 
 describe('EntryDetail — entry 展示组件', () => {
-    const source = fs.readFileSync('src/components/detail/EntryDetail.tsx', 'utf-8')
+    const source = fs.readFileSync('src/panels/workspace/EntryDetail.tsx', 'utf-8')
 
     it('fetch /api/astrolabe/entries/', () => {
         expect(source).toContain('/api/astrolabe/entries/')

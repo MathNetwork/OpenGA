@@ -8,7 +8,7 @@
  */
 import { memo } from 'react'
 import { useSelectObjStore } from '@/stores/selectObjStore'
-import { EntryDetail } from '@/components/detail/EntryDetail'
+import { EntryDetail } from './EntryDetail'
 
 export const DetailView = memo(function DetailView() {
     const selectedHash = useSelectObjStore(s => s.selectedHash)

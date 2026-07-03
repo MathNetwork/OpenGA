@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
-import { buildSkeletonView } from './skeleton'
-import { getSortFill } from '../sortColors'
-import type { Store } from './store'
+import { buildSkeletonView } from '../skeleton'
+import { getSortFill } from '../../sortColors'
+import type { Store } from '../store'
 
 const atom = (hash: string, sort: string): [string, Store[string]] =>
   [hash, { ref: [hash], record: JSON.stringify({ sort, source: 'tex', title: sort }) }]

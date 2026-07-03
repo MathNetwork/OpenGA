@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { loadStore } from './store'
+import { loadStore } from '../store'
 
 // Layered store: a project without its own atoms/ reads the shared sibling
 // pool `projects/hypergraph` plus its optional `.astrolabe/hypergraph` layer;

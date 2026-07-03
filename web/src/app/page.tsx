@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import ParticleBackground from '@/components/ParticleBackground'
-import { Navbar } from '@/components/Navbar'
+import { Navbar } from '@/components/site/Navbar'
 
 // Projects live outside the web app, each as its own folder under a shared root.
 // PROJECT_PATH points at one project; PROJECTS_ROOT is its parent. Resolved (in

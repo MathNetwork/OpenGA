@@ -1,7 +1,7 @@
 /**
  * Decoupling invariants — the two workspace "spec theorems".
  *
- * Source-level fitness functions: any change that breaks a theorem fails CI.
+ * Source-level fitness functions: any change that breaks a theorem fails the web CI job.
  * Prose statements + rationale: ../workspace/INVARIANTS.md
  *
  *   Theorem 1 (Container–Content): switching layout/view never unmounts a view;
@@ -36,6 +36,25 @@ describe('Theorem 1 — 切换容器不影响视图内部 (keep-alive)', () => {
 
     it('布局切换靠搬运 DOM 节点（appendChild），而非重挂', () => {
         expect(ws).toContain('appendChild')
+    })
+
+    it('用 CSS hidden 控制 view 可见性（不卸载）', () => {
+        expect(ws).toContain('hidden')
+    })
+
+    it('支持全部 6 种布局模式', () => {
+        for (const mode of ['single', 'split-right', 'split-left', 'split-bottom', 'split-top', 'three-equal'])
+            expect(ws).toContain(mode)
+    })
+
+    it('没有 single/multi 条件分支返回不同 JSX 树', () => {
+        const fnBody = ws.slice(ws.indexOf('function WorkspacePanel()'))
+        expect(fnBody).not.toMatch(/if\s*\(\s*layoutMode\s*===\s*'single'\s*\)/)
+    })
+
+    it('ReadView 不需要模块级 remount 保护（因为不会被卸载）', () => {
+        for (const guard of ['_cachedFiles', '_contentCache', '_savedScrollTop', '_savedActiveFile'])
+            expect(rv).not.toContain(guard)
     })
 })
 

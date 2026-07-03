@@ -19,7 +19,7 @@ describe('LeanBadge component', () => {
         const coreFiles = [
             'src/components/mdx/EntryBlock.tsx',
             'src/components/mdx/EntryLink.tsx',
-            'src/components/detail/EntryDetail.tsx',
+            'src/panels/workspace/EntryDetail.tsx',
         ]
         for (const f of coreFiles) {
             const content = fs.readFileSync(f, 'utf-8')
