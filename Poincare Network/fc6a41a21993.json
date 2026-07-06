@@ -1,0 +1,8 @@
+{
+  "ref": ["fc6a41a21993"],
+  "title": "Poincaré Conjecture",
+  "sort": "theorem",
+  "source": "tex",
+  "state": "proven",
+  "content": "Every simply connected, closed 3-manifold is homeomorphic to the 3-sphere S³."
+}
