@@ -1,0 +1,87 @@
+
+{
+  "08f271887ce9": {
+    "ref": [
+      "08f271887ce9"
+    ],
+    "statement": "M",
+    "notes": {
+      "title": "manifold M",
+      "content": "The manifold M (Skolem constant for the universally quantified object)."
+    }
+  },
+  "70fb700dcda1": {
+    "ref": [
+      "08f271887ce9"
+    ],
+    "statement": "\\mathrm{manifold3}(⟦08f271887ce9⟧)",
+    "notes": {
+      "title": "3-manifold",
+      "content": "M is a 3-dimensional manifold."
+    }
+  },
+  "53e017a25873": {
+    "ref": [
+      "08f271887ce9"
+    ],
+    "statement": "\\mathrm{closed}(⟦08f271887ce9⟧)",
+    "notes": {
+      "title": "closed",
+      "content": "M is closed: compact and without boundary."
+    }
+  },
+  "6b67d6146914": {
+    "ref": [
+      "08f271887ce9"
+    ],
+    "statement": "\\pi_1(⟦08f271887ce9⟧) = 1",
+    "notes": {
+      "title": "simply connected",
+      "content": "The fundamental group of M is trivial."
+    }
+  },
+  "ddc5d8071d26": {
+    "ref": [
+      "70fb700dcda1",
+      "53e017a25873",
+      "6b67d6146914"
+    ],
+    "statement": "⟦70fb700dcda1⟧ \\land ⟦53e017a25873⟧ \\land ⟦6b67d6146914⟧",
+    "notes": {
+      "title": "hypotheses",
+      "content": "M is a simply connected, closed 3-manifold."
+    }
+  },
+  "1e95f7258e4c": {
+    "ref": [
+      "1e95f7258e4c"
+    ],
+    "statement": "S^3",
+    "notes": {
+      "title": "3-sphere",
+      "content": "The 3-dimensional sphere S³."
+    }
+  },
+  "b2cd37106ef5": {
+    "ref": [
+      "08f271887ce9",
+      "1e95f7258e4c"
+    ],
+    "statement": "\\mathrm{homeomorphic}(⟦08f271887ce9⟧, ⟦1e95f7258e4c⟧)",
+    "notes": {
+      "title": "homeomorphic to S³",
+      "content": "M is homeomorphic to the 3-sphere S³."
+    }
+  },
+  "3dad30a9ab71": {
+    "ref": [
+      "ddc5d8071d26",
+      "b2cd37106ef5"
+    ],
+    "statement": "⟦ddc5d8071d26⟧ \\to ⟦b2cd37106ef5⟧",
+    "notes": {
+      "title": "Poincaré Conjecture",
+      "content": "Every simply connected, closed 3-manifold is homeomorphic to the 3-sphere S³."
+    }
+  }
+}
