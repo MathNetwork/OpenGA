@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Strip Claude Code attribution from commit messages.
+#
+# Rationale: this is a public release repo (MathNetwork/OpenGA); the
+# contributor list is curated by hand. Claude Code adds a trailer by
+# default; this hook drops it so authors don't have to remember.
+#
+# Activate per-clone:  git config core.hooksPath .githooks
+
+set -eu
+
+msg_file="$1"
+
+# Drop the Co-Authored-By: Claude ... trailer (case-sensitive on "Claude")
+# and any "🤖 Generated with [Claude Code]" tagline.
+# Use a tmp file to keep portability across BSD/GNU sed.
+tmp="$(mktemp)"
+awk '
+  /^Co-Authored-By: Claude/ { next }
+  /^🤖 Generated with \[Claude Code\]/ { next }
+  { print }
+' "$msg_file" > "$tmp"
+
+# Trim trailing blank lines (POSIX-friendly).
+awk 'NF { p = 1 } p { lines[NR] = $0 } END {
+  last = NR
+  while (last >= 1 && lines[last] == "") last--
+  for (i = 1; i <= last; i++) print lines[i]
+}' "$tmp" > "$msg_file"
+
+rm -f "$tmp"

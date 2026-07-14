@@ -1,0 +1,63 @@
+% Hopf–Rinow milestone blueprint.
+% Faithful transcription of do Carmo, *Riemannian Geometry*, restricted to the
+% chapters on the dependency path to the Hopf–Rinow theorem (Ch. 7).
+%
+% Build:  pdflatex main && pdflatex main   (twice, to resolve cross-references)
+\documentclass[11pt]{report}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref} % after hyperref; auto-supports \newtheorem defined below
+\usepackage[strings]{underscore} % let `_` print in text mode (\lean{...} args, titles)
+
+% --- Blueprint provenance / Lean-linkage macros -------------------------------
+% These are no-ops in the standalone PDF: they carry Lean/do-Carmo provenance
+% consumed by the (omitted) leanblueprint web toolchain, not by pdflatex.
+\providecommand{\dcref}[1]{}      % do Carmo statement number, e.g. \dcref{ch7:2.8}
+\providecommand{\entryref}[1]{}   % legacy provenance marker
+\newcommand{\lean}[1]{}           % Lean declaration name(s) formalizing the node
+\newcommand{\leanok}{}            % node is fully formalized (no sorry)
+\newcommand{\mathlibok}{}         % node is provided by mathlib
+\newcommand{\notready}{}          % node not yet ready to formalize
+\newcommand{\uses}[1]{}           % blueprint dependency edges (label list)
+
+% --- Theorem-like environments (numbered within chapter) ----------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{The Hopf--Rinow Theorem\\[0.4em]
+  \large A Lean blueprint slice of \emph{Riemannian Geometry} (do Carmo)}
+\author{OpenGA}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent
+This document is the mathematical blueprint for the Lean formalization of the
+Hopf--Rinow theorem in \texttt{OpenGALib}. It transcribes the chapters of do
+Carmo, \emph{Riemannian Geometry}, that lie on the dependency path to the theorem:
+differentiable manifolds (Ch.~0), Riemannian metrics (Ch.~1), affine and
+Riemannian connections (Ch.~2), geodesics and convex neighborhoods (Ch.~3), and
+complete manifolds and the Hopf--Rinow / Hadamard theorems (Ch.~7). Nodes carry
+\texttt{\textbackslash lean\{...\}} / \texttt{\textbackslash leanok} markers
+recording their correspondence with the Lean library.
+
+\tableofcontents
+
+\input{chapters/Ch00_DifferentiableManifolds}
+\input{chapters/Ch01_RiemannianMetrics}
+\input{chapters/Ch02_AffineConnectionsRiemannianConnections}
+\input{chapters/Ch03_GeodesicsConvexNeighborhoods}
+\input{chapters/Ch07_CompleteManifoldsHopfRinowHadamard}
+
+\end{document}
