@@ -2,6 +2,8 @@ import Lake
 open Lake DSL
 
 package OpenGALib where
+  lintDriver := "batteries/runLinter"
+  testDriver := "OpenGALibTest"
   leanOptions := #[
     ⟨`pp.unicode.fun, true⟩,
     ⟨`autoImplicit, false⟩
@@ -15,3 +17,6 @@ require mathlib from git
 lean_lib OpenGALib where
   roots := #[`OpenGALib]
   globs := #[.andSubmodules `OpenGALib]
+
+lean_lib OpenGALibTest where
+  globs := #[.submodules `OpenGALibTest]

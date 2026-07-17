@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main, feat/hopf-rinow]
+  pull_request:
+    branches: [main, feat/hopf-rinow]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          build: true
+          test: true
+          lint: true
+          use-mathlib-cache: true
+      - name: Lint text style
+        run: lake exe lint-style OpenGALib
