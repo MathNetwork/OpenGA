@@ -39,6 +39,20 @@ lake build              # builds OpenGALib
 Requires Mathlib at the revision pinned in `lake-manifest.json`
 (`leanprover-community/mathlib4 @ 5fc0241932dd6d465bc5549308cc39011772293a`).
 
+## Quality checks
+
+Run the same build, test, declaration-lint, and text-style checks used by CI:
+
+```bash
+lake build
+lake test
+lake lint
+lake exe lint-style OpenGALib
+```
+
+`OpenGALibTest/Axioms.lean` guards the axiom sets of the five Hopf--Rinow facade theorems. Each
+test fails if its theorem acquires an axiom beyond `propext`, `Classical.choice`, and `Quot.sound`.
+
 ## Build the blueprint PDF
 
 ```bash
@@ -57,18 +71,21 @@ defined as no-ops in `main.tex`, so no leanblueprint toolchain is needed.
 axiom-clean (each theorem depends only on `propext`, `Classical.choice`,
 `Quot.sound`; verified with `#print axioms`, not just a green build):
 
-| Theorem (do Carmo Ch. 7)                                | Statement |
+| Declaration (do Carmo Ch. 7)                            | Statement |
 | ------------------------------------------------------- | --------- |
-| `hopfRinow`                                             | `CompleteSpace M ↔ IsGeodesicallyComplete g` (the **c ⟺ d** equivalence) |
+| `IsGeodesicallyCompleteAt g p`                          | every initial velocity at `p` has a global geodesic |
+| `isGeodesicallyComplete_of_complete`                    | metrically complete ⟹ geodesically complete (**c ⟹ d**) |
 | `complete_of_isGeodesicallyComplete`                    | geodesically complete ⟹ metrically complete (**d ⟹ c**) |
-| `complete_of_geodesicallyComplete_at`                   | `exp_p` total at one point ⟹ complete (**a ⟹ c**) |
-| `exists_minimizing_geodesic`                            | any two points joined by a minimizing geodesic (**f**) |
-| `isGeodesicallyComplete_of_compactSpace`                | compact ⟹ complete (**Cor. 2.9**) |
+| `hopfRinow`                                             | `CompleteSpace M ↔ IsGeodesicallyComplete g` (the **c ⟺ d** equivalence) |
+| `complete_of_geodesicallyComplete_at`                   | geodesically complete at one point ⟹ complete (**a ⟹ c**) |
+| `exists_minimizing_geodesic`                            | any two points are joined by a minimizing geodesic (**f**) |
+| `isGeodesicallyComplete_of_compactSpace`                | compact ⟹ geodesically complete (**Cor. 2.9**) |
 
-All under the standing hypotheses `ConnectedSpace M` and `g.IsRiemannianDist`
-(the metric-space structure is the Riemannian distance of `g`). Blueprint nodes
-carry `\lean{…}` / `\leanok` markers recording their correspondence with the
-Lean side.
+Every result assumes `g.IsRiemannianDist` (the metric-space structure is the Riemannian
+distance of `g`). Connectedness is additionally required for the reverse implication,
+the equivalence, the one-point criterion, and the minimizing-geodesic theorem; it is not
+needed for the forward implication or the compact-space corollary. Blueprint nodes carry
+`\lean{…}` / `\leanok` markers recording their correspondence with the Lean side.
 
 ## License
 

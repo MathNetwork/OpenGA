@@ -40,7 +40,7 @@ e.g., the round circle, and is *not* geodesic completeness (see
 across chart changes is deferred).
 
 Status of the circle:
-* b) ⟺ e) is `OpenGA.properSpace_iff_exists_compact_exhaustion` (proved);
+* b) ↔ e) is `OpenGA.properSpace_iff_exists_compact_exhaustion` (proved);
 * b) ⟹ c) is mathlib's `ProperSpace → CompleteSpace` instance
   (`complete_of_proper`);
 * c) ⟹ d) is `isGeodesicallyComplete_of_complete` — geodesics have constant
@@ -63,7 +63,6 @@ Status of the circle:
   (`Exponential/ProperAssembly.lean`, `completeSpace_of_forall_geodesic`).
 -/
 
-set_option linter.unusedSectionVars false
 
 open Bundle Manifold Set
 open scoped Manifold Topology ContDiff
@@ -72,29 +71,29 @@ open Riemannian.Exponential
 namespace Riemannian.Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [CompleteSpace E]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H} [I.Boundaryless]
   {M : Type*} [MetricSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
-/-- **Math.** `(M, g)` is **geodesically complete**: for every `p ∈ M` and
-every `v ∈ T_pM` there is a *continuous* curve `γ : ℝ → M`, defined for *all*
-values of the parameter, which starts at `p` with velocity `v` (chart reading
-at `p`) and satisfies the geodesic equation at every time (do Carmo Ch. 7,
-Definition 2.2: "`exp_p` is defined on all of `T_pM` for every `p`"). By
-uniqueness of geodesics this is equivalent to every geodesic extending to all
-of `ℝ`. The geodesic equation is the intrinsic, moving-chart predicate
-`HasGeodesicEquationAt` (do Carmo Ch. 3, Definition 2.1), not the
-chart-of-`p`-anchored witness notion. Continuity of `γ` is demanded
-explicitly: `HasGeodesicEquationAt` reads `γ` through the junk-extended
-charts, so it does not by itself rule out pathological discontinuous
-witnesses, while every honestly constructed geodesic (in particular the
-witness produced by `exists_global_geodesic` in the c ⟹ d direction) is
-continuous. -/
-def IsGeodesicallyComplete (g : RiemannianMetric I M) : Prop :=
-  ∀ (p : M) (v : TangentSpace I p), ∃ γ : ℝ → M,
+/-- **Math.** `(M, g)` is **geodesically complete at `p`** if every
+`v ∈ T_pM` is the initial velocity of a continuous geodesic `γ : ℝ → M`
+defined for every real time. The geodesic equation is the intrinsic,
+moving-chart predicate `HasGeodesicEquationAt`; continuity is required
+explicitly because that predicate reads the curve through junk-extended
+charts. -/
+def IsGeodesicallyCompleteAt (g : RiemannianMetric I M) (p : M) : Prop :=
+  ∀ v : TangentSpace I p, ∃ γ : ℝ → M,
     γ 0 = p ∧ HasDerivAt (fun s ↦ extChartAt I p (γ s)) v 0 ∧ Continuous γ ∧
       IsGeodesic g γ
 
+/-- **Math.** `(M, g)` is **geodesically complete** if it is geodesically
+complete at every `p : M` (do Carmo Ch. 7, Definition 2.2: `exp_p` is defined
+on all of `T_pM` for every `p`). By uniqueness, this is equivalent to every
+geodesic extending to all of `ℝ`. -/
+def IsGeodesicallyComplete (g : RiemannianMetric I M) : Prop :=
+  ∀ p : M, IsGeodesicallyCompleteAt g p
+
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** do Carmo Ch. 7, Theorem 2.8, c) ⟹ d): if `M` is complete as a
 metric space (for the Riemannian distance of `g`), then `(M, g)` is
 geodesically complete. A geodesic has constant speed, hence is Lipschitz; if
@@ -110,6 +109,7 @@ theorem isGeodesicallyComplete_of_complete (g : RiemannianMetric I M)
   obtain ⟨γ, h0, hv, hcont, hgeo⟩ := exists_global_geodesic (I := I) g hg p v
   exact ⟨γ, h0, hv, hcont, hgeo⟩
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** do Carmo Ch. 7, Theorem 2.8, d) ⟹ c) (via f) and b)): if
 `(M, g)` is geodesically complete and `M` is connected, then `M` is complete
 as a metric space. Do Carmo's route, at any base point `p`: the growth
@@ -127,8 +127,9 @@ theorem complete_of_isGeodesicallyComplete (g : RiemannianMetric I M) [Connected
       tendsto_geodesic_eval_of_tendsto_initialData (I := I) g p hγgeo hγc hγ0 hgeo hc h0
         hγv hv hvs hts
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Hopf–Rinow theorem** (do Carmo Ch. 7, Theorem 2.8,
-c) ⟺ d)). A connected Riemannian manifold, metrized by the Riemannian
+c) ↔ d)). A connected Riemannian manifold, metrized by the Riemannian
 distance of `g`, is metrically complete iff it is geodesically complete. -/
 theorem hopfRinow (g : RiemannianMetric I M) [ConnectedSpace M]
     (hg : g.IsRiemannianDist) :
@@ -136,6 +137,7 @@ theorem hopfRinow (g : RiemannianMetric I M) [ConnectedSpace M]
   ⟨fun _ ↦ isGeodesicallyComplete_of_complete g hg,
     fun h ↦ complete_of_isGeodesicallyComplete g hg h⟩
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** do Carmo Ch. 7, Theorem 2.8, a) ⟹ c): if `exp_p` is defined on
 all of `T_pM` at a single point `p`, then `M` is metrically complete. The
 geodesic-sphere argument runs from the single point `p`: growth induction
@@ -146,15 +148,14 @@ so `M` is proper, hence complete — the assembly is
 `Riemannian.Exponential.completeSpace_of_forall_geodesic`. -/
 theorem complete_of_geodesicallyComplete_at (g : RiemannianMetric I M) [ConnectedSpace M]
     (hg : g.IsRiemannianDist)
-    (p : M) (hp : ∀ v : TangentSpace I p, ∃ γ : ℝ → M,
-      γ 0 = p ∧ HasDerivAt (fun s ↦ extChartAt I p (γ s)) v 0 ∧ Continuous γ ∧
-        IsGeodesic g γ) :
+    (p : M) (hp : IsGeodesicallyCompleteAt g p) :
     CompleteSpace M :=
   completeSpace_of_forall_geodesic (I := I) g hg p hp
     fun _γ _γs _v _vs _ts _t₀ hγgeo hγc hγ0 hgeo hc h0 hγv hv hvs hts =>
       tendsto_geodesic_eval_of_tendsto_initialData (I := I) g p hγgeo hγc hγ0 hgeo hc h0
         hγv hv hvs hts
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** do Carmo Ch. 7, Theorem 2.8, f): in a complete connected
 Riemannian manifold any two points `x, y` are joined by a **minimizing
 geodesic segment**: a geodesic `γ : [0, 1] → M` from `x` to `y`, parametrized
@@ -180,6 +181,7 @@ theorem exists_minimizing_geodesic (g : RiemannianMetric I M) [ConnectedSpace M]
       g hg x hp y
   exact ⟨γ, h0, h1, hgeo.isGeodesicOn _, hdist⟩
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** do Carmo Ch. 7, Corollary 2.9: a compact Riemannian manifold is
 (geodesically) complete. -/
 theorem isGeodesicallyComplete_of_compactSpace (g : RiemannianMetric I M)
