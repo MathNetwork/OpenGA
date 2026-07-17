@@ -1,7 +1,6 @@
 import OpenGALib.Riemannian.Geodesic.Equation
 import Mathlib.Geometry.Manifold.MFDeriv.Atlas
 
-set_option linter.unusedSectionVars false
 
 /-!
 # The fibre-scaling bundle map and the geodesic spray
@@ -55,7 +54,7 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
@@ -64,12 +63,15 @@ each tangent vector by `a` while fixing its foot point. -/
 def fiberScaling (a : ℝ) (p : TangentBundle I M) : TangentBundle I M :=
   ⟨p.proj, a • p.2⟩
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] in
 @[simp] lemma fiberScaling_proj (a : ℝ) (p : TangentBundle I M) :
     (fiberScaling (I := I) a p).proj = p.proj := rfl
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] in
 @[simp] lemma fiberScaling_snd (a : ℝ) (p : TangentBundle I M) :
     (fiberScaling (I := I) a p).2 = a • p.2 := rfl
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] in
 /-- **Math.** `fiberScaling` fixes the foot point, so it preserves the chart domain
 `geodesicChartDomain α`. -/
 lemma fiberScaling_mem_geodesicChartDomain {α : M} {a : ℝ}
@@ -78,6 +80,7 @@ lemma fiberScaling_mem_geodesicChartDomain {α : M} {a : ℝ}
 
 section FibreLinearity
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Fibre linearity of the chart-`α` fibre coordinate.** On the chart
 domain (where the trivialisation at `α` is genuinely linear on the fibre),
 the chart-`α` fibre coordinate of `fiberScaling a p` is `a` times that of `p`. -/
@@ -105,6 +108,7 @@ section Smoothness
 
 variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The chart-`α`-fixed fibre coordinate `p ↦ (e_α p).2` is smooth at every
 point whose foot lies in the trivialisation base set (obtained from the
 identity map via `Bundle.contMDiffAt_totalSpace`). -/
@@ -122,6 +126,7 @@ lemma contMDiffAt_trivializationAt_snd (α : M) {p₀ : TangentBundle I M}
   rw [hp₀] at h
   exact h
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** **Smoothness of the fibre-scaling bundle map.** `fiberScaling a` is
 `C^∞` as a self-map of the tangent bundle. -/
 theorem fiberScaling_contMDiff (a : ℝ) :
@@ -171,6 +176,7 @@ end Smoothness
 
 section CoordinatePushforward
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Coordinate pushforward.** The chart-fibre spray value at
 `fiberScaling a p` is the spray coordinate map evaluated at the scaled
 velocity `a·v`; by `geodesicSprayCoord_smul_velocity` this equals
@@ -233,9 +239,11 @@ section ChartReading
 def fiberScalingLinearMap (a : ℝ) : (E × E) →L[ℝ] E × E :=
   (ContinuousLinearMap.id ℝ E).prodMap (a • ContinuousLinearMap.id ℝ E)
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 @[simp] lemma fiberScalingLinearMap_apply (a : ℝ) (z : E × E) :
     fiberScalingLinearMap (E := E) a z = (z.1, a • z.2) := rfl
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The extended chart of the tangent bundle at a basepoint `b : TM` is the
 product of the base chart at `b.proj` and the fibre trivialization at `b.proj`:
 `φ_b(r) = (φ_{b.proj}(r.proj), (e_{b.proj} r).2)` for every `r` whose foot lies in
@@ -255,6 +263,7 @@ lemma extChartAt_tangent_apply (b : TangentBundle I M) {r : TangentBundle I M}
     Function.comp_apply]
   rfl
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** In the tangent-bundle chart at ANY basepoint `b : TM`, the fibre-scaling
 bundle map reads as the graded linear model map `Λ_a = fiberScalingLinearMap a`, at every
 point whose foot lies in the trivialization base set at `b.proj`. -/
@@ -280,12 +289,14 @@ section MFDerivFiberScaling
 
 variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The extended chart of `TM` at `fiberScaling a p` is the extended chart at
 `p` itself: tangent-bundle charts depend only on the foot point, which fibre scaling
 fixes. -/
 lemma extChartAt_tangent_fiberScaling_basepoint (a : ℝ) (p : TangentBundle I M) :
     extChartAt I.tangent (fiberScaling (I := I) a p) = extChartAt I.tangent p := rfl
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** **The manifold derivative of the fibre-scaling bundle map.**
 `fiberScaling a : TM → TM` has manifold derivative the graded linear map
 `Λ_a = fiberScalingLinearMap a` at every point, in the definitional `E × E` presentation
@@ -330,6 +341,7 @@ theorem hasMFDerivAt_fiberScaling (a : ℝ) (p : TangentBundle I M) :
   exact ((fiberScalingLinearMap (E := E) a).hasFDerivAt.hasFDerivWithinAt).congr_of_eventuallyEq
     hev heq_at
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The `mfderiv` of the fibre-scaling map is the graded linear map `Λ_a`. -/
 theorem mfderiv_fiberScaling (a : ℝ) (p : TangentBundle I M) :
     mfderiv I.tangent I.tangent (fiberScaling (I := I) (M := M) a) p =
@@ -342,6 +354,7 @@ section SymmLNaturality
 
 variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Graded naturality of the double-tangent trivialization under fibre
 scaling** (the keystone identity `(★)`). Writing `e₀` for the trivialization of
 `T(TM)` at `⟨α, 0⟩`, `S_a := fiberScaling a` and `Λ_a := fiberScalingLinearMap a`,
@@ -464,6 +477,7 @@ section SprayKeystone
 
 variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Degree-2 graded homogeneity of the chart-fixed geodesic spray in
 definitional coordinates** (do Carmo Ch. 3, the heart of Lemma 2.6). For every
 `q : TM` (no chart hypothesis — off the chart domain both sides are junk `0`):
@@ -520,6 +534,7 @@ theorem geodesicVectorFieldChart_fiberScaling (g : RiemannianMetric I M) (α : M
     rw [smul_zero]
     exact (map_zero _).symm
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Spray equivariance of the fibre-scaling tangent map**: the manifold
 derivative of `S_a = fiberScaling a` sends the time-rescaled spray `a • G` at `q` to
 the spray at `S_a q`. This is the exact identity consumed by the integral-curve

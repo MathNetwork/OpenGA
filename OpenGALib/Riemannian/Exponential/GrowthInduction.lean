@@ -45,7 +45,6 @@ noncomputable section
 open Bundle Manifold Set Filter Metric
 open scoped Manifold Topology ContDiff
 
-set_option linter.unusedSectionVars false
 
 namespace Riemannian
 
@@ -54,15 +53,16 @@ namespace Exponential
 open Riemannian.Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
 variable {M' : Type*} [MetricSpace M'] [ChartedSpace H M'] [IsManifold I ∞ M']
 variable [T2Space (TangentBundle I M')]
 
 /-! ## Helper lemmas: initial speed, unit-speed Lipschitz bound, uniqueness -/
 
+omit [T2Space (TangentBundle I M')] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The squared speed of a curve satisfying the geodesic equation at
 time `τ`, expressed through any chart velocity at the foot: if the chart-`γ τ`
 reading of `γ` has derivative `u` at `τ`, then
@@ -79,6 +79,7 @@ theorem speedSq_eq_chartMetricInner_of_hasDerivAt {g : RiemannianMetric I M'}
   rw [h, hderiv]
   rfl
 
+omit [T2Space (TangentBundle I M')] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** A continuous global geodesic with unit initial chart speed is
 `1`-Lipschitz: `d(γ a, γ b) ≤ b - a` (do Carmo Ch. 7, proof of Thm 2.8). -/
 theorem IsGeodesic.dist_le_of_speedSq_one (g : RiemannianMetric I M')
@@ -97,6 +98,7 @@ theorem IsGeodesic.dist_le_of_speedSq_one (g : RiemannianMetric I M')
   rw [hsp, Real.sqrt_one, one_mul] at h
   exact h
 
+omit [T2Space (TangentBundle I M')] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Uniqueness of intrinsic geodesics, `HasDerivAt` form: two
 continuous geodesics on an open preconnected time set which share their
 position at `t₀` and their chart-`β` velocity (as an actual derivative)
@@ -120,6 +122,7 @@ theorem IsGeodesicOn.eqOn_of_hasDerivAt_chartReading
 
 /-! ## The sup-pushing step -/
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **The growth step of the Hopf–Rinow induction** (do Carmo Ch. 7,
 proof of Theorem 2.8, the interior case): let `γ` be a continuous unit-speed
 global geodesic with `d(γ 0, γ s) = s` and `d(γ s, q) = r - s` for all
@@ -463,6 +466,7 @@ theorem exists_add_mem_of_lt (g : RiemannianMetric I M')
 
 /-! ## The growth induction -/
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Minimizing geodesics out of a geodesically complete point**
 (do Carmo Ch. 7, Theorem 2.8, a) ⟹ f)): if every tangent vector at `p`
 generates a continuous geodesic defined on all of `ℝ`, then for every `q`
@@ -686,6 +690,7 @@ theorem exists_minimizing_geodesic_of_forall_geodesic (g : RiemannianMetric I M'
         IsGeodesic.dist_le_of_speedSq_one (I := I) g hg hγgeo hγc hspeed hab,
       fun s hs => hupA s (by rw [hs₀eq]; exact hs)⟩
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** do Carmo Ch. 7, Theorem 2.8, f), unit-interval form: under the
 hypotheses of `exists_minimizing_geodesic_of_forall_geodesic`, the two points
 are joined by a geodesic segment `γ : [0,1] → M` parametrized proportionally

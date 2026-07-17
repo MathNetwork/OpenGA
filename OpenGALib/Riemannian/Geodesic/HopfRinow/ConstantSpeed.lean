@@ -36,7 +36,6 @@ hypothesis `g.IsRiemannianDist` (the ambient `edist` is the Riemannian
 distance of `g`), consuming `edist_le_pathELength_of_cmdiff`.
 -/
 
-set_option linter.unusedSectionVars false
 
 noncomputable section
 
@@ -47,13 +46,14 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 
 section Velocity
 
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Projection of the geodesic equation: the moving-foot chart curve
 has its own derivative at the base time. -/
 theorem HasGeodesicEquationAt.hasDerivAt_chartLocalCurve {g : RiemannianMetric I M}
@@ -63,6 +63,7 @@ theorem HasGeodesicEquationAt.hasDerivAt_chartLocalCurve {g : RiemannianMetric I
   obtain ⟨v, a, hv, -, -, -⟩ := h
   simpa [hv.deriv] using hv
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Projection of the geodesic equation: the moving-foot chart curve is
 differentiable in a neighbourhood of the base time. -/
 theorem HasGeodesicEquationAt.eventually_hasDerivAt_chartLocalCurve
@@ -73,6 +74,7 @@ theorem HasGeodesicEquationAt.eventually_hasDerivAt_chartLocalCurve
   obtain ⟨v, a, -, hev, -, -⟩ := h
   exact hev
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Projection of the geodesic equation: the chart velocity is
 continuous at the base time (it is even differentiable there, since the
 equation provides a second derivative). -/
@@ -83,6 +85,7 @@ theorem HasGeodesicEquationAt.continuousAt_deriv_chartLocalCurve
   obtain ⟨v, a, -, -, ha, -⟩ := h
   exact ha.differentiableAt.continuousAt
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The moving-foot chart derivative of a continuous solution of the
 geodesic equation *is* its manifold derivative: `γ` has intrinsic velocity
 `deriv (chartLocalCurve γ t) t ∈ T_{γ t} M` at the base time. This is the
@@ -104,6 +107,7 @@ theorem HasGeodesicEquationAt.hasMFDerivAt {g : RiemannianMetric I M}
   simpa [writtenInExtChartAt, extChartAt_model_space_eq_id, Function.comp_def,
     hasFDerivWithinAt_univ] using hf
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The manifold velocity of a geodesic at the base time, read in the
 chart at the foot, is the chart derivative. -/
 theorem HasGeodesicEquationAt.mfderiv_apply_one {g : RiemannianMetric I M}
@@ -113,6 +117,7 @@ theorem HasGeodesicEquationAt.mfderiv_apply_one {g : RiemannianMetric I M}
   rw [(h.hasMFDerivAt hcont).mfderiv]
   exact one_smul ℝ _
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Chart-change transfer for the velocity reading (first order).**
 If `γ` solves the geodesic equation at `σ`, is continuous at `σ`, and
 `γ σ` lies in the chart at a basepoint `β`, then near `σ` the reading of `γ`
@@ -148,6 +153,7 @@ theorem HasGeodesicEquationAt.eventually_hasDerivAt_extChartAt [I.Boundaryless]
   simp only [Function.comp_apply, chartLocalCurve_def]
   rw [(extChartAt I (γ σ)).left_inv h5]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Value form of the chart-change transfer at the base time:
 the `β`-chart velocity of a geodesic at `σ` is the coordinate change of the
 moving-foot chart velocity. -/
@@ -160,6 +166,7 @@ theorem HasGeodesicEquationAt.deriv_extChartAt_eq [I.Boundaryless]
           (deriv (chartLocalCurve (I := I) γ σ) σ) :=
   ((h.eventually_hasDerivAt_extChartAt hcont hsrc).self_of_nhds).deriv
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The `β`-chart velocity of a geodesic is continuous at the base
 time: it is the (continuous) tangent coordinate change applied along the
 (continuous) curve to the (continuous-at-`σ`) moving-foot chart velocity. -/
@@ -179,6 +186,7 @@ theorem HasGeodesicEquationAt.continuousAt_deriv_extChartAt [I.Boundaryless]
     ((continuousOn_tangentCoordChange (I := I) (γ σ) β).continuousAt hmem).comp hcont
   exact (hA.clm_apply h.continuousAt_deriv_chartLocalCurve).congr heq.symm
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Geodesics are `C¹`.** A continuous solution of the geodesic
 equation on an open set of times is continuously differentiable there as a
 curve into `M`. (do Carmo takes the regularity of geodesics for granted; it
@@ -234,10 +242,12 @@ where `γ` is not differentiable, as usual with `mfderiv`.) -/
 def speedSq (g : RiemannianMetric I M) (γ : ℝ → M) (t : ℝ) : ℝ :=
   g.metricInner (γ t) (mfderiv 𝓘(ℝ, ℝ) I γ t 1) (mfderiv 𝓘(ℝ, ℝ) I γ t 1)
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 @[simp] theorem speedSq_def (g : RiemannianMetric I M) (γ : ℝ → M) (t : ℝ) :
     speedSq (I := I) g γ t
       = g.metricInner (γ t) (mfderiv 𝓘(ℝ, ℝ) I γ t 1) (mfderiv 𝓘(ℝ, ℝ) I γ t 1) := rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Near a base time `t`, the intrinsic squared speed of a geodesic
 agrees with its chart-Gram expression in the FIXED chart at `γ t`: reading
 everything in one chart, the squared speed at `σ` is the Gram inner product
@@ -273,6 +283,7 @@ theorem HasGeodesicEquationAt.speedSq_eq_chartMetricInner
     (deriv (chartLocalCurve (I := I) γ t) σ) (deriv (chartLocalCurve (I := I) γ t) σ)
   rw [hbridge, hread]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** do Carmo Ch. 3, §2 (remark after Def. 2.1), intrinsic form: along
 a continuous geodesic on an open set of times, the intrinsic squared speed
 `t ↦ ⟨γ'(t), γ'(t)⟩_g` has vanishing derivative at every time. -/
@@ -290,6 +301,7 @@ theorem IsGeodesicOn.hasDerivAt_speedSq_zero {g : RiemannianMetric I M}
   exact (hγ τ h1).speedSq_eq_chartMetricInner
     ((hcont τ h1).continuousAt (hs.mem_nhds h1)) h2
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** do Carmo Ch. 3, §2: **geodesics have constant speed**, intrinsic
 form. Along a continuous geodesic on an open connected set of times, the
 intrinsic squared speed `⟨γ', γ'⟩_g` is constant. -/
@@ -309,6 +321,7 @@ section Lipschitz
 variable {M : Type*} [PseudoEMetricSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Geodesics are locally Lipschitz** (do Carmo Ch. 7, §2, the
 inequality `d(γ(s_n), γ(s_m)) ≤ |s_n - s_m|` in the proof of Theorem 2.8,
 c) ⟹ d), stated for arbitrary constant speed): on a connected open set of
@@ -346,6 +359,7 @@ section LipschitzDist
 variable {M : Type*} [MetricSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Geodesics are locally Lipschitz, `dist` form: the inequality
 consumed by the Cauchy-sequence argument of do Carmo Ch. 7, Theorem 2.8,
 c) ⟹ d). -/

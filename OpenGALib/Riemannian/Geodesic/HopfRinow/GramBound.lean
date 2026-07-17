@@ -2,7 +2,6 @@ import OpenGALib.Riemannian.Geodesic.EquationTransfer
 import OpenGALib.Riemannian.Geodesic.HopfRinow.ConstantSpeed
 import OpenGALib.Riemannian.Exponential.GaussLemma
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Local comparison of coordinate and Riemannian norms
@@ -40,11 +39,12 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Local coordinate-norm bound by the chart-Gram form.** Near the
 chart image of `p₀`, the positive-definite Gram form dominates a fixed
 positive multiple of the squared coordinate norm. -/
@@ -150,9 +150,9 @@ theorem exists_sq_norm_le_chartMetricInner (g : RiemannianMetric I M) (p₀ : M)
   -- Normalise `w` onto the sphere and scale the bound back up.
   have hnw : ‖w‖ ≠ 0 := norm_ne_zero_iff.mpr hw
   have hnwpos : (0 : ℝ) < ‖w‖ := norm_pos_iff.mpr hw
-  have hŵS : ‖w‖⁻¹ • w ∈ Metric.sphere (0 : E) 1 := by
+  have hwS : ‖w‖⁻¹ • w ∈ Metric.sphere (0 : E) 1 := by
     rw [mem_sphere_iff_norm, sub_zero, norm_smul, norm_inv, norm_norm, inv_mul_cancel₀ hnw]
-  have hmem : ((y, ‖w‖⁻¹ • w) : E × E) ∈ u ×ˢ v := ⟨hy.1, hSv hŵS⟩
+  have hmem : ((y, ‖w‖⁻¹ • w) : E × E) ∈ u ×ˢ v := ⟨hy.1, hSv hwS⟩
   have hgt : m / 2 < chartMetricInner (I := I) g p₀ y (‖w‖⁻¹ • w) (‖w‖⁻¹ • w) :=
     (huv hmem).2
   have hexp : chartMetricInner (I := I) g p₀ y (‖w‖⁻¹ • w) (‖w‖⁻¹ • w)
@@ -170,6 +170,7 @@ theorem exists_sq_norm_le_chartMetricInner (g : RiemannianMetric I M) (p₀ : M)
   rw [div_mul_eq_mul_div, le_div_iff₀ hm]
   linarith [hkey]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Pole-generalised speed bridge: the intrinsic squared speed of a
 geodesic at a time `σ` equals the chart-Gram reading in the chart at *any*
 basepoint `β` whose source contains the foot `γ σ`. (The `ConstantSpeed.lean`

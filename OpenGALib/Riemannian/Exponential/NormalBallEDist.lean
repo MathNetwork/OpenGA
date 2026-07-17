@@ -43,7 +43,6 @@ noncomputable section
 open Bundle Manifold MeasureTheory Set Filter Function Metric
 open scoped Manifold Topology ContDiff NNReal ENNReal
 
-set_option linter.unusedSectionVars false
 
 namespace Riemannian
 
@@ -52,11 +51,12 @@ namespace Exponential
 open Riemannian.Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** `exp_p` is an **open map on small balls** (do Carmo Ch. 3,
 Prop. 2.9, openness clause, localized): there is `ρ > 0` such that for every
 open `V ⊆ B_ρ(0) ⊂ T_pM`, both the chart reading `φ_p(exp_p(V))` and the image
@@ -115,6 +115,7 @@ theorem exists_isOpen_expMap_image (g : RiemannianMetric I M) (p : M) :
   exact (continuousOn_extChartAt (I := I) p).isOpen_inter_preimage
     (isOpen_extChartAt_source p) hopen_f
 
+omit [I.Boundaryless] [T2Space (TangentBundle I M)] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Smallness transfer at the base point: for any threshold `θ > 0`,
 coordinate vectors of small enough norm have `g_p`-squared-length below `θ`.
 The Gram quadratic form at the chart image of `p` is continuous and vanishes
@@ -144,6 +145,7 @@ theorem exists_forall_chartMetricInner_self_lt (g : RiemannianMetric I M) (p : M
   obtain ⟨ε, hε, hball⟩ := Metric.eventually_nhds_iff_ball.mp hev
   exact ⟨ε, hε, fun w hw => hball w (by rwa [mem_ball_zero_iff])⟩
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The radial curve is `C¹` with chart-read length `√⟨v, v⟩_p`**
 (do Carmo Ch. 3, the identity `ℓ(γ) = |v|` for the radial geodesic
 `γ(t) = exp_p(tv)`, expressed through mathlib's `pathELength` under the
@@ -242,6 +244,7 @@ theorem exists_pathELength_expMap_ray (g : RiemannianMetric I M) (p : M) :
     setIntegral_const]
   simp [Real.volume_real_Ioo]
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **The competitor bound** (do Carmo Ch. 3, Prop. 3.6 together with
 its escape case, single-`C¹`-piece form). There are `ε > 0` and a Gram
 comparison constant `c > 0` at `p` such that, with `exp_p` injective on
@@ -584,7 +587,7 @@ theorem exists_le_pathELength [T2Space M] (g : RiemannianMetric I M) (p : M) :
         exact hlinv v (hv.trans hεε₁)
       rwa [hwv] at hbound
     · -- escape case: the curve is longer than `r'/√c > √⟨v,v⟩_p`
-      push_neg at hstay
+      push Not at hstay
       have hbound := hexit σ hσ hσ0 hstay
       refine le_trans (ENNReal.ofReal_le_ofReal ?_) hbound
       have hQv : chartMetricInner (I := I) g p (extChartAt I p p) v v
@@ -626,7 +629,7 @@ theorem exists_le_pathELength [T2Space M] (g : RiemannianMetric I M) (p : M) :
         _ ≤ Real.sqrt (chartMetricInner (I := I) g p (extChartAt I p p) z₁ z₁) :=
             Real.sqrt_le_sqrt h2
     · -- escape case: leaving `U` costs `r'/√c ≥ r/√c`
-      push_neg at hstay
+      push Not at hstay
       refine le_trans (ENNReal.ofReal_le_ofReal ?_) (hexit σ hσ hσ0 hstay)
       gcongr
       exact hrε.trans hεr'
@@ -768,6 +771,7 @@ section MetricNormalBall
 variable {M' : Type*} [MetricSpace M'] [ChartedSpace H M'] [IsManifold I ∞ M']
 variable [T2Space (TangentBundle I M')]
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **The metric normal ball** (do Carmo Ch. 3, Prop. 3.6, metric form;
 the geometry consumed by the Hopf–Rinow theorem, do Carmo Ch. 7, Theorem 2.8).
 Under the standing hypothesis that the ambient distance is the Riemannian
@@ -837,7 +841,7 @@ theorem exists_edist_expMap_ball (g : RiemannianMetric I M')
       rw [IsRiemannianManifold.out (I := I) p
         (expMap (I := I) g p (v : TangentSpace I p))]
       by_contra hlt
-      push_neg at hlt
+      push Not at hlt
       obtain ⟨σ, hσ0, hσ1, hσC1, hσlen⟩ :=
         Manifold.exists_lt_of_riemannianEDist_lt hlt
       exact absurd hσlen (not_lt.mpr (hlower v hvB σ hσC1 hσ0 hσ1))
@@ -845,13 +849,14 @@ theorem exists_edist_expMap_ball (g : RiemannianMetric I M')
     intro q hq
     rw [IsRiemannianManifold.out (I := I) p q]
     by_contra hlt
-    push_neg at hlt
+    push Not at hlt
     obtain ⟨σ, hσ0, hσ1, hσC1, hσlen⟩ :=
       Manifold.exists_lt_of_riemannianEDist_lt hlt
     have hout : σ 1 ∉ (fun w : E => expMap (I := I) g p (w : TangentSpace I p)) ''
         ball (0 : E) ε := by rw [hσ1]; exact hq
     exact absurd hσlen (not_lt.mpr (hescape ε hε hεεB σ hσC1 hσ0 hout))
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Sphere-minimum distance decomposition** (do Carmo Ch. 7, proof
 of Theorem 2.8: the geodesic-sphere step). Under the standing hypothesis
 `g.IsRiemannianDist` there are `ε, c > 0` (depending only on `p`) such that for

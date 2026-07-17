@@ -2,7 +2,6 @@ import OpenGALib.Riemannian.Geodesic.UniformExistence
 import OpenGALib.Riemannian.Geodesic.FlowDependence
 import OpenGALib.Riemannian.Exponential.Ray
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Strict differentiability of the exponential map at the origin
@@ -46,11 +45,12 @@ namespace Exponential
 open Riemannian.Geodesic Riemannian.FlowDependence
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The two-step nilpotent linearization `A(u, w) = (w, 0)` of the geodesic
 spray squares to zero. -/
 lemma sprayLinearization_comp_self :
@@ -60,7 +60,7 @@ lemma sprayLinearization_comp_self :
   refine ContinuousLinearMap.ext fun z => ?_
   simp
 
-set_option maxHeartbeats 800000 in
+omit [T2Space (TangentBundle I M)] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The linearization of the geodesic spray at the zero section.** At the
 equilibrium `(φ_p(p), 0)`, the derivative of `F(x, w) = (w, -Γ_p(w, w)(x))` is the
 nilpotent map `A(u, w) = (w, 0)`: the Christoffel contraction is quadratic in `w`,
@@ -166,7 +166,9 @@ lemma fderiv_geodesicSprayCoord_equilibrium (g : RiemannianMetric I M) (p : M) :
   rw [huniq]
   simp
 
-set_option maxHeartbeats 1000000 in
+-- The implicit-function argument times out at 250000 heartbeats; 300000 is sufficient.
+set_option maxHeartbeats 300000 in
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **`exp_p` is strictly differentiable at `0` with derivative the
 identity** (do Carmo Ch. 3, Prop. 2.9, strict-derivative form). There is `ρ > 0`
 such that every `w` with `‖w‖ < ρ` lies in the exponential domain, `exp_p(w)`
@@ -431,6 +433,7 @@ theorem exists_hasStrictFDerivAt_extChartAt_expMap
   have hfinal := hcomp.congr_of_eventuallyEq hev.symm
   rwa [hDtot] at hfinal
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **`exp_p` maps neighbourhoods of `0` onto neighbourhoods of `p`**
 (do Carmo Ch. 3, Prop. 2.9, topological content): the exponential map at `p`
 sends the neighbourhood filter of `0 ∈ T_pM` exactly to the neighbourhood filter
@@ -468,6 +471,7 @@ theorem map_expMap_nhds (g : RiemannianMetric I M) (p : M) :
   have hsymm := map_extChartAt_symm_nhdsWithin_range (I := I) p
   rwa [I.range_eq_univ, nhdsWithin_univ] at hsymm
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **`exp_p` is injective near `0`** (do Carmo Ch. 3, Prop. 2.9,
 injectivity content): there is `ρ > 0` such that `exp_p` is injective on the
 ball of radius `ρ` in `T_pM`, whose points all lie in the exponential domain. -/

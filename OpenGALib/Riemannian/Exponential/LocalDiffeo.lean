@@ -2,7 +2,6 @@ import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
 import OpenGALib.Riemannian.Exponential.StrictDerivative
 import OpenGALib.Riemannian.Exponential.StrictDerivativeBall
 
-set_option linter.unusedSectionVars false
 
 /-!
 # The exponential map is a `C¹` local diffeomorphism
@@ -45,11 +44,12 @@ namespace Exponential
 open Riemannian.Geodesic Riemannian.FlowDependence
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The derivative of `exp_p` is invertible at every point of a ball
 around the origin** (do Carmo Ch. 3, Prop. 2.9, invertibility clause). There is
 `ρ > 0` such that every `w` with `‖w‖ < ρ` lies in the exponential domain,
@@ -118,7 +118,7 @@ theorem exists_hasStrictFDerivAt_equiv_extChartAt_expMap_ball
   rw [hcoe]
   exact hstrict' v₀ (mem_ball_zero_iff.mpr hv₀ρ)
 
-set_option maxHeartbeats 800000 in
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **`exp_p` is a `C¹` diffeomorphism of a ball around `0 ∈ T_pM` onto an
 open subset of `M`** (do Carmo Ch. 3, Prop. 2.9, at `C¹` regularity). There is
 `ε > 0` such that:

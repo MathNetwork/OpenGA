@@ -1,6 +1,5 @@
 import OpenGALib.Riemannian.TensorBundle.MusicalIso
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Chart-coordinate Christoffel symbols
@@ -45,12 +44,14 @@ def chartGramOnE (g : RiemannianMetric I M) (α : M)
     (i j : Fin (Module.finrank ℝ E)) : E → ℝ :=
   fun y => chartGramMatrix (I := I) g α ((extChartAt I α).symm y) i j
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 @[simp] lemma chartGramOnE_def
     (g : RiemannianMetric I M) (α : M)
     (i j : Fin (Module.finrank ℝ E)) (y : E) :
     chartGramOnE (I := I) g α i j y =
       chartGramMatrix (I := I) g α ((extChartAt I α).symm y) i j := rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Symmetry of the chart Gram entries pulled back to `E`. -/
 lemma chartGramOnE_symm
     (g : RiemannianMetric I M) (α : M)
@@ -72,6 +73,7 @@ def chartChristoffel (g : RiemannianMetric I M) (α : M)
        partialDeriv (E := E) j (chartGramOnE (I := I) g α l i) y -
        partialDeriv (E := E) l (chartGramOnE (I := I) g α i j) y)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 @[simp] lemma chartChristoffel_def
     (g : RiemannianMetric I M) (α : M)
     (i j k : Fin (Module.finrank ℝ E)) (y : E) :
@@ -82,6 +84,7 @@ def chartChristoffel (g : RiemannianMetric I M) (α : M)
            partialDeriv (E := E) j (chartGramOnE (I := I) g α l i) y -
            partialDeriv (E := E) l (chartGramOnE (I := I) g α i j) y) := rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Symmetry of the Christoffel symbol** in the lower indices — the
 torsion-free property of the Levi-Civita connection, read off the coordinate
 formula. -/
@@ -104,6 +107,7 @@ theorem chartChristoffel_symm
     rw [hsym]]
   ring
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Christoffel contraction with the Gram matrix.** Contracting the
 Christoffel symbol `Γᵐ_{ki}` against the Gram matrix `G_{am}` recovers half the
 metric-derivative combination: `Σ_m G_{am} Γᵐ_{ki} = ½(∂_k G_{ai} + ∂_i G_{ak} −
@@ -156,6 +160,7 @@ lemma chartGram_christoffel_contraction (g : RiemannianMetric I M) (α : M)
         congr 1
         simp only [ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Metric-compatibility in chart components.** The derivative of the
 Gram matrix is recovered from the Christoffel symbols:
 `∂_k G_{ij} = Σ_m (G_{mj} Γᵐ_{ki} + G_{im} Γᵐ_{kj})`. This is the coordinate form

@@ -1,6 +1,5 @@
 import OpenGALib.Riemannian.Geodesic.ChartFlow
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Uniform-time existence for geodesics with small initial velocity
@@ -178,11 +177,12 @@ end GenericFlow
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
+omit [I.Boundaryless] [T2Space (TangentBundle I M)] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The coordinate geodesic spray vanishes at the zero section:
 `F(φ_p(p), 0) = (0, 0)`. -/
 lemma geodesicSprayCoord_zero_velocity (g : RiemannianMetric I M) (p : M) (x : E) :
@@ -190,6 +190,7 @@ lemma geodesicSprayCoord_zero_velocity (g : RiemannianMetric I M) (p : M) (x : E
   rw [geodesicSprayCoord_def, chartChristoffelContraction_zero_left]
   simp
 
+omit [T2Space (TangentBundle I M)] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The coordinate geodesic spray is `C^1` at the zero section point
 `(φ_p(p), 0)`. -/
 lemma contDiffAt_geodesicSprayCoord_zero (g : RiemannianMetric I M) (p : M) :
@@ -203,6 +204,7 @@ lemma contDiffAt_geodesicSprayCoord_zero (g : RiemannianMetric I M) (p : M) :
   exact ((contDiffOn_geodesicSprayCoord_prod (I := I) g p).contDiffAt
     (hopen.mem_nhds hmem)).of_le (by norm_num)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Uniform-time local geodesic flow** (the uniform-in-velocity clause
 of do Carmo Ch. 3, Prop. 2.7, at a fixed base point). There are `r, ε > 0` and a
 local flow `Z` of the coordinate spray at `p` such that:

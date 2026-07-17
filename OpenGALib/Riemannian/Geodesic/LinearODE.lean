@@ -7,7 +7,7 @@ import Mathlib.Analysis.ODE.Gronwall
 Mathlib's Picard–Lindelöf theory (`Mathlib.Analysis.ODE.PicardLindelof`) proves only
 *local* existence: from `IsPicardLindelof` one gets a solution on a time interval short
 enough that the a-priori bound keeps the trajectory inside a fixed ball. For a **linear**
-ODE `V̇(t) = A(t) V(t)` with a continuous bounded coefficient `A : ℝ → (E →L[ℝ] E)` the
+ODE `V'(t) = A(t) V(t)` with a continuous bounded coefficient `A : ℝ → (E →L[ℝ] E)` the
 solution exists on *any* compact interval, but that global statement is not in mathlib.
 
 This file supplies it, as reusable infrastructure:
@@ -19,15 +19,14 @@ This file supplies it, as reusable infrastructure:
   compact `[a,b]`, obtained by chopping `[a,b]` into finitely many short pieces, solving
   each with the short-time lemma, and gluing the pieces at the junctions.
 
-The parallel-transport ODE `V̇ = -Γ(u̇, V)(u)` (do Carmo Ch. 2, Prop. 2.6) is the special
-case `A(t) = -chartChristoffelContractionRight g α (u̇ t) (u t)`; see
+The parallel-transport ODE `V' = -Γ(u', V)(u)` (do Carmo Ch. 2, Prop. 2.6) is the special
+case `A(t) = -chartChristoffelContractionRight g α (u' t) (u t)`; see
 `OpenGALib/Riemannian/Geodesic/CovariantDerivative.lean`.
 -/
 
 open scoped Topology NNReal
 open Set Metric
 
-set_option linter.unusedSectionVars false
 
 noncomputable section
 
@@ -38,7 +37,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E
 /-- **Short-time existence for a linear ODE.** If the coefficient `A : ℝ → (E →L[ℝ] E)` is
 continuous on `[a,b]`, bounded there by `K`, and the interval is short in the sense
 `(b-a)·K ≤ 1/2`, then for any initial value `x₀` there is a curve `V` with `V a = x₀`
-solving `V̇(t) = A(t) V(t)` on `[a,b]`. -/
+solving `V'(t) = A(t) V(t)` on `[a,b]`. -/
 theorem exists_hasDerivWithinAt_of_small {a b : ℝ} (hab : a ≤ b) (A : ℝ → E →L[ℝ] E)
     (x₀ : E) {K : ℝ≥0} (hcont : ContinuousOn A (Icc a b))
     (hK : ∀ t ∈ Icc a b, ‖A t‖₊ ≤ K) (hsmall : (b - a) * (K : ℝ) ≤ 1 / 2) :
@@ -75,7 +74,8 @@ theorem exists_hasDerivWithinAt_of_small {a b : ℝ} (hab : a ≤ b) (A : ℝ �
   obtain ⟨V, hV0, hVd⟩ := hPL.exists_eq_forall_mem_Icc_hasDerivWithinAt₀
   exact ⟨V, hV0, hVd⟩
 
-/-- **Gluing two solutions of a linear ODE.** If `V₁` solves `V̇ = A(t)V` on `[a,c]` and
+omit [CompleteSpace E] in
+/-- **Gluing two solutions of a linear ODE.** If `V₁` solves `V' = A(t)V` on `[a,c]` and
 `V₂` solves it on `[c,b]` with the same value at the junction `c`, the concatenation
 `t ↦ if t ≤ c then V₁ t else V₂ t` solves it on all of `[a,b]`, keeping the left-endpoint
 value `V₁ a`. This is the continuation step that upgrades short-time to global existence. -/
@@ -136,7 +136,7 @@ theorem exists_hasDerivWithinAt_glue {a c b : ℝ} (hac : a ≤ c) (hcb : c ≤ 
 /-- **Global existence for a linear ODE with continuous bounded coefficient.** On *any*
 compact interval `[a,b]`, for a coefficient `A : ℝ → (E →L[ℝ] E)` continuous and bounded by
 `K`, and any initial value `x₀`, there is a curve `V` with `V a = x₀` solving
-`V̇(t) = A(t) V(t)` on `[a,b]`. The interval is cut into `⌈2(b-a)K⌉+1` short pieces, each
+`V'(t) = A(t) V(t)` on `[a,b]`. The interval is cut into `⌈2(b-a)K⌉+1` short pieces, each
 solved by `exists_hasDerivWithinAt_of_small`, and the pieces are glued with
 `exists_hasDerivWithinAt_glue`. This is the global-existence half missing from mathlib's
 (purely local) Picard–Lindelöf theory, and the existence half of parallel transport
@@ -213,10 +213,11 @@ The existence engine above produces *a* solution; for a *linear* ODE it is uniqu
 a linear isomorphism (its inverse runs the ODE backwards). This is the abstract
 content behind do Carmo's parallel transport `P_c` (Ch. 2, Prop. 2.6). -/
 
-/-- `V` **solves** the linear ODE `V̇ = A(t) V` on the compact interval `[a,b]`. -/
+/-- `V` **solves** the linear ODE `V' = A(t) V` on the compact interval `[a,b]`. -/
 def IsSolOn (A : ℝ → E →L[ℝ] E) (a b : ℝ) (V : ℝ → E) : Prop :=
   ∀ t ∈ Icc a b, HasDerivWithinAt V (A t (V t)) (Icc a b) t
 
+omit [CompleteSpace E] in
 theorem IsSolOn.continuousOn {A : ℝ → E →L[ℝ] E} {a b : ℝ} {V : ℝ → E}
     (h : IsSolOn A a b V) : ContinuousOn V (Icc a b) :=
   fun t ht => (h t ht).continuousWithinAt
@@ -236,7 +237,8 @@ theorem Icc_mem_nhdsWithin_Iic {a b t : ℝ} (ht : t ∈ Ioc a b) : Icc a b ∈ 
   rintro x ⟨hxa, hxt⟩
   exact ⟨le_of_lt hxa, le_trans hxt ht.2⟩
 
-/-- **Forward uniqueness.** Two solutions of `V̇ = A(t) V` on `[a,b]` that agree at the
+omit [CompleteSpace E] in
+/-- **Forward uniqueness.** Two solutions of `V' = A(t) V` on `[a,b]` that agree at the
 left endpoint `a` agree on all of `[a,b]` (Grönwall via
 `ODE_solution_unique_of_mem_Icc_right`; the Lipschitz constant of the RHS is the operator
 norm bound `K` on `A`). -/
@@ -254,7 +256,8 @@ theorem IsSolOn.eqOn_of_left {A : ℝ → E →L[ℝ] E} {a b : ℝ} {K : ℝ≥
     (fun t ht => (hW t ⟨ht.1, ht.2.le⟩).mono_of_mem_nhdsWithin (Icc_mem_nhdsWithin_Ici ht))
     (fun _ _ => mem_univ _) ha
 
-/-- **Backward uniqueness.** Two solutions of `V̇ = A(t) V` on `[a,b]` that agree at the
+omit [CompleteSpace E] in
+/-- **Backward uniqueness.** Two solutions of `V' = A(t) V` on `[a,b]` that agree at the
 right endpoint `b` agree on all of `[a,b]` (time-reversed Grönwall via
 `ODE_solution_unique_of_mem_Icc_left`). This is what makes the endpoint flow injective. -/
 theorem IsSolOn.eqOn_of_right {A : ℝ → E →L[ℝ] E} {a b : ℝ} {K : ℝ≥0}
@@ -271,6 +274,7 @@ theorem IsSolOn.eqOn_of_right {A : ℝ → E →L[ℝ] E} {a b : ℝ} {K : ℝ�
     (fun t ht => (hW t ⟨ht.1.le, ht.2⟩).mono_of_mem_nhdsWithin (Icc_mem_nhdsWithin_Iic ht))
     (fun _ _ => mem_univ _) hb
 
+omit [CompleteSpace E] in
 /-- Superposition: for a *linear* ODE the sum of two solutions is a solution (its value at
 the left endpoint is the sum of the two initial values). -/
 theorem IsSolOn.add {A : ℝ → E →L[ℝ] E} {a b : ℝ} {V W : ℝ → E}
@@ -279,6 +283,7 @@ theorem IsSolOn.add {A : ℝ → E →L[ℝ] E} {a b : ℝ} {V W : ℝ → E}
   have h := (hV t ht).add (hW t ht)
   simpa only [Pi.add_apply, map_add] using h
 
+omit [CompleteSpace E] in
 /-- Superposition: a scalar multiple of a solution is a solution. -/
 theorem IsSolOn.const_smul {A : ℝ → E →L[ℝ] E} {a b : ℝ} (c : ℝ) {V : ℝ → E}
     (hV : IsSolOn A a b V) : IsSolOn A a b (c • V) := by
@@ -288,7 +293,7 @@ theorem IsSolOn.const_smul {A : ℝ → E →L[ℝ] E} {a b : ℝ} (c : ℝ) {V 
 
 variable {A : ℝ → E →L[ℝ] E} {a b : ℝ} {K : ℝ≥0}
 
-/-- A chosen solution of `V̇ = A(t) V` on `[a,b]` with prescribed left-endpoint value `x₀`,
+/-- A chosen solution of `V' = A(t) V` on `[a,b]` with prescribed left-endpoint value `x₀`,
 extracted from global existence (`exists_hasDerivWithinAt_Icc`). -/
 noncomputable def solOf (hab : a ≤ b) (hcont : ContinuousOn A (Icc a b))
     (hK : ∀ t ∈ Icc a b, ‖A t‖₊ ≤ K) (x₀ : E) : ℝ → E :=
@@ -302,7 +307,7 @@ theorem solOf_isSolOn (hab : a ≤ b) (hcont : ContinuousOn A (Icc a b))
     (hK : ∀ t ∈ Icc a b, ‖A t‖₊ ≤ K) (x₀ : E) : IsSolOn A a b (solOf hab hcont hK x₀) :=
   (Classical.choose_spec (exists_hasDerivWithinAt_Icc hab A x₀ hcont hK)).2
 
-/-- **The linear flow map** `x₀ ↦ V(b)` of `V̇ = A(t) V`: the value at the right endpoint of
+/-- **The linear flow map** `x₀ ↦ V(b)` of `V' = A(t) V`: the value at the right endpoint of
 the solution starting at `x₀`. It is `ℝ`-linear because the ODE is linear (superposition +
 forward uniqueness). This is the abstract parallel transport operator. -/
 noncomputable def flowMap (hab : a ≤ b) (hcont : ContinuousOn A (Icc a b))

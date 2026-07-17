@@ -1,6 +1,5 @@
 import OpenGALib.Riemannian.Geodesic.EquationTransfer
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Coordinate spray solutions are intrinsic geodesics
@@ -38,7 +37,7 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 variable [I.Boundaryless]
@@ -48,6 +47,7 @@ component of `ζ : ℝ → E × E`, pulled back to `M` through the chart at `q`.
 def sprayBase (q : M) (ζ : ℝ → E × E) : ℝ → M :=
   fun τ => (extChartAt I q).symm (ζ τ).1
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 @[simp] lemma sprayBase_apply (q : M) (ζ : ℝ → E × E) (τ : ℝ) :
     sprayBase (I := I) q ζ τ = (extChartAt I q).symm (ζ τ).1 := rfl
 
@@ -55,6 +55,7 @@ section SprayBase
 
 variable {g : RiemannianMetric I M} {q : M} {ζ : ℝ → E × E} {J : Set ℝ}
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 /-- **Math.** The base curve of a spray solution confined to the chart target
 stays in the chart source at `q`. -/
 theorem sprayBase_mem_chart_source
@@ -63,6 +64,7 @@ theorem sprayBase_mem_chart_source
   have := (extChartAt I q).map_target (hmem τ hτ)
   rwa [extChartAt_source] at this
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 /-- **Math.** The chart-`q` reading of the base curve recovers the position
 component of the spray solution. -/
 theorem chartReading_sprayBase
@@ -70,6 +72,7 @@ theorem chartReading_sprayBase
     chartReading (I := I) q (sprayBase (I := I) q ζ) τ = (ζ τ).1 :=
   (extChartAt I q).right_inv (hmem τ hτ)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The base curve of a (differentiable) spray solution is continuous on
 the set where the ODE holds. -/
 theorem continuousOn_sprayBase
@@ -81,6 +84,7 @@ theorem continuousOn_sprayBase
     ((hd τ hτ).continuousAt.continuousWithinAt).fst
   exact (continuousOn_extChartAt_symm q).comp hpos hmem
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The chart-`q` reading of the base curve of a spray solution is
 differentiable at every time of the (open) ODE set, with derivative the
 velocity component of the solution: the spray ODE's first equation `x' = w`. -/
@@ -99,6 +103,7 @@ theorem hasDerivAt_chartReading_sprayBase (hJ : IsOpen J)
   filter_upwards [hJ.mem_nhds hτ] with τ' hτ'
   exact chartReading_sprayBase (I := I) hmem hτ'
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Spray solutions are intrinsic geodesics.** The base curve of a
 coordinate spray solution on an open set of times, confined to the chart
 target at `q`, satisfies the intrinsic (moving-foot) geodesic equation at

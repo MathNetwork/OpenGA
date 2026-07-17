@@ -37,7 +37,6 @@ noncomputable section
 open Bundle Manifold Set Filter Metric
 open scoped Manifold Topology ContDiff
 
-set_option linter.unusedSectionVars false
 
 namespace Riemannian
 
@@ -46,13 +45,14 @@ namespace Geodesic
 open Riemannian.Exponential
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
 variable {M' : Type*} [MetricSpace M'] [ChartedSpace H M'] [IsManifold I ∞ M']
 variable [T2Space (TangentBundle I M')]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Endpoint continuity of geodesics in their initial data**
 (do Carmo Ch. 7, proof of Theorem 2.8, f) ⟹ b)): if the global geodesics
 `γₙ` and `γ` all start at `p`, the initial chart velocities converge
@@ -75,7 +75,7 @@ theorem tendsto_geodesic_eval_of_tendsto_initialData (g : RiemannianMetric I M')
   subst hγ0
   -- base case: the invariant holds at time `0` — positions are constantly
   -- `γ 0`, and the chart velocities at `0` converge by hypothesis
-  have hbase : ConvAt (I := I) g γ γs 0 := by
+  have hbase : ConvAt (I := I) γ γs 0 := by
     constructor
     · simp only [h0]
       exact tendsto_const_nhds
@@ -84,21 +84,21 @@ theorem tendsto_geodesic_eval_of_tendsto_initialData (g : RiemannianMetric I M')
       rw [hseq, hγv.deriv]
       exact hvs
   -- clopen globalization: the invariant holds at every time
-  have hall : ∀ t : ℝ, ConvAt (I := I) g γ γs t := by
-    have hopen : IsOpen {t : ℝ | ConvAt (I := I) g γ γs t} := by
+  have hall : ∀ t : ℝ, ConvAt (I := I) γ γs t := by
+    have hopen : IsOpen {t : ℝ | ConvAt (I := I) γ γs t} := by
       rw [Metric.isOpen_iff]
       intro t ht
       obtain ⟨ρ, hρ, hstep⟩ := exists_conv_step (I := I) g hγgeo hγc hgeo hc t
       refine ⟨ρ, hρ, fun u hu => ?_⟩
       rw [Metric.mem_ball, Real.dist_eq] at hu
       exact hstep t u (by simpa using hρ.le) hu.le ht
-    have hclosed : IsClosed {t : ℝ | ConvAt (I := I) g γ γs t} := by
+    have hclosed : IsClosed {t : ℝ | ConvAt (I := I) γ γs t} := by
       refine isClosed_of_closure_subset fun t ht => ?_
       obtain ⟨ρ, hρ, hstep⟩ := exists_conv_step (I := I) g hγgeo hγc hgeo hc t
       obtain ⟨t', ht'S, ht'd⟩ := Metric.mem_closure_iff.mp ht ρ hρ
       rw [Real.dist_eq, abs_sub_comm] at ht'd
       exact hstep t' t ht'd.le (by simpa using hρ.le) ht'S
-    have huniv : {t : ℝ | ConvAt (I := I) g γ γs t} = Set.univ :=
+    have huniv : {t : ℝ | ConvAt (I := I) γ γs t} = Set.univ :=
       IsClopen.eq_univ ⟨hclosed, hopen⟩ ⟨0, hbase⟩
     exact fun t => Set.eq_univ_iff_forall.mp huniv t
   -- moving-time finish: the flow-box estimate at `t₀` evaluates the tail

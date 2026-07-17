@@ -25,7 +25,6 @@ API and `OrthonormalBasis` packaging live in the anchor
 
 noncomputable section
 
-set_option linter.unusedSectionVars false
 
 open Bundle Manifold Set FiberBundle Filter
 open scoped Manifold Topology ContDiff Bundle
@@ -52,6 +51,7 @@ of the chart-basis family (`chartBasisFamily_linearIndependent`) and
 the inductive span identity
 $e_0, \ldots, e_{i-1} \in \mathrm{span}(v_0, \ldots, v_{i-1})$. -/
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** Bilinear distribution of `g.inner b u (·)` over a finite sum. -/
 private lemma g_inner_sum_right
     (g : RiemannianMetric I M) (b : M) (v : TangentSpace I b)
@@ -70,6 +70,7 @@ private lemma g_inner_sum_right
       rw [map_smul]; rfl]
     rw [ih]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** Bilinear distribution of `g.inner b (·) w` over a finite sum. -/
 private lemma g_inner_sum_left
     (g : RiemannianMetric I M) (b : M)
@@ -89,6 +90,7 @@ private lemma g_inner_sum_left
       rw [map_smul]; rfl]
     rw [ih]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** Generic normalisation: scaling a positive-norm vector by
 $(\sqrt{\langle v, v\rangle})^{-1}$ in the **second** slot equals the
 analogous left-slot scaling, factored through the same helper. Used
@@ -99,6 +101,7 @@ private lemma g_inner_smul_right_normalised
     g.inner b u (s⁻¹ • v) = s⁻¹ * g.inner b u v := by
   rw [map_smul]; rfl
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Span identity** (recursion-structural): for every $m$ with
 $m.\mathrm{val} < i.\mathrm{val}$, the normalised Gram-Schmidt vector
 $e_m(b) = \mathrm{chartFrameNormFiber}\,g\,\alpha\,b\,m$ lies in the
@@ -149,6 +152,7 @@ private lemma chartFrameNormFiber_mem_span_chartBasis
           lt_trans hj_in_fin i.isLt
         exact ih_kk ⟨j.val, hj_lt_total⟩ hj_le_kk hj_in_fin
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Non-degeneracy of the unnormalised Gram-Schmidt step**: at any
 base-set point, $\mathrm{raw}_i \ne 0$.
 
@@ -217,6 +221,7 @@ lemma chartFrameRawFiber_ne_zero
     simp [Set.mem_setOf_eq]
   exact hLI.notMem_span_image hi_notin hvi_in_span
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Orthogonality of `raw_i` to each previous `e_j`**, given that
 $\{e_0, \ldots, e_{i-1}\}$ is already $g$-orthonormal at $b$.
 
@@ -295,6 +300,7 @@ private lemma chartFrameRawFiber_orth_to_orthonormal_prefix
     rw [hej_eq]
   rw [hc_eq, g.symm]; ring
 
+omit [InnerProductSpace ℝ E] in
 /-- **Eng.** The strong-induction package for the orthonormality of
 `chartFrameNormFiber`. The conclusion bundles three facts at every
 $i \le k$:
@@ -397,6 +403,7 @@ private theorem chartFrameNormFiber_orth_strong_aux
         exact g_inner_normalised (I := I) g b
           (chartFrameRawFiber (I := I) g α b i) hgpos
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Inductive orthonormality** of `chartFrameNormFiber` on the
 trivialization base set. For $b \in \mathrm{baseSet}$ and indices
 $i, j$, the inner product
@@ -425,6 +432,7 @@ theorem chartFrameNormFiber_orthonormal
     rw [if_neg hne, g.symm]
     exact horth_ji
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Orthonormality** of `chartFrameNorm` (the section form) on the
 trivialization base set. -/
 theorem chartFrameNorm_orthonormal

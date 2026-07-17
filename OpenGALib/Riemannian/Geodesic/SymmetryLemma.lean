@@ -18,15 +18,15 @@ open Bundle Manifold Set
 open scoped Manifold Topology ContDiff Matrix
 
 -- the chart machinery pulls in `Module.Finite ℝ E` which this thin lemma never names
-set_option linter.unusedSectionVars false
 
 namespace Riemannian.Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Symmetry lemma (do Carmo Ch. 3, Lemma 3.4), chart-coordinate form.**
 For a `C²` chart-coordinate surface `c : ℝ² → E` with derivative `Dc` (everywhere)
 and second derivative `D2c` at `x`, the covariant second derivative
@@ -42,6 +42,7 @@ theorem covariant_sndFDeriv_symm (g : RiemannianMetric I M) (α : M)
       = D2c w v + chartChristoffelContraction (I := I) g α (Dc x w) (Dc x v) (c x) := by
   rw [second_derivative_symmetric hc hc2 v w, chartChristoffelContraction_symm]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Symmetry lemma (do Carmo Ch. 3, Lemma 3.4), local chart-coordinate
 form.** The same covariant-second-derivative symmetry with the first-derivative
 hypothesis required only *near* `x` — the form needed for a surface (such as

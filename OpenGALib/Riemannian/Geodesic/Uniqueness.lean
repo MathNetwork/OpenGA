@@ -2,7 +2,6 @@ import OpenGALib.Riemannian.Geodesic.Equation
 import OpenGALib.Riemannian.Geodesic.Existence
 import Mathlib.Geometry.Manifold.IntegralCurve.ExistUnique
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Local uniqueness of geodesics via Picard-Lindelöf / Gronwall
@@ -49,15 +48,16 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
 
 section ChartFixedUniqueness
 
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Uniqueness of integral curves of the chart-fixed geodesic vector
 field.** Two `IsMIntegralCurveAt` witnesses `f₁, f₂` for the chart-fixed
 geodesic vector field `geodesicVectorFieldChart g α` at `t₀` that agree
@@ -94,6 +94,7 @@ theorem isMIntegralCurveAt_geodesicVectorFieldChart_eventuallyEq
       (γ := f₁) (γ' := f₂) (t₀ := t₀)
       hsmooth1 hf₁ hf₂ h0
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Projected uniqueness.** Under the same hypotheses, the base curves
 agree on a neighbourhood of `t₀`. -/
 theorem projectCurve_eventuallyEq_of_isMIntegralCurveAt_geodesicVectorFieldChart
@@ -116,8 +117,9 @@ end ChartFixedUniqueness
 
 section GeodesicUniqueness
 
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Uniqueness of geodesics with a fixed chart basepoint.** If two
 curves are local geodesics at `t₀` witnessed by the same chart basepoint
 `α : M` and lifts `f₁, f₂` with `f₁ t₀ = f₂ t₀`, and the common starting
@@ -144,6 +146,7 @@ theorem isGeodesicAt_eventuallyEq
   rw [projectCurve_apply, projectCurve_apply] at ht
   rw [← hproj₁ t, ← hproj₂ t]; exact ht
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Uniqueness of geodesics with matching initial data.** If the base
 curves `γ₁, γ₂` are projections of integral curves `f₁, f₂` of the
 chart-fixed geodesic vector field for the chart basepoint `γ₁ t₀`, and the

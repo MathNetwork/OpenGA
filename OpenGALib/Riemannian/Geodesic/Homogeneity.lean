@@ -1,7 +1,6 @@
 import OpenGALib.Riemannian.Geodesic.FiberScaling
 import OpenGALib.Riemannian.Geodesic.MaximalInterval
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Homogeneity of geodesics (do Carmo Ch. 3, Lemma 2.6)
@@ -48,7 +47,7 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
@@ -56,6 +55,7 @@ section IntegralCurveTransform
 
 variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Integral-curve homogeneity transform** (do Carmo Ch. 3, Lemma 2.6,
 bundle level). If `f` is an integral curve of the chart-fixed geodesic spray on
 `s`, then the fibre-scaled, time-rescaled lift `t ↦ S_a (f (a t))` is an integral
@@ -98,8 +98,9 @@ end IntegralCurveTransform
 
 section WitnessTransform
 
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Homogeneity of geodesics, witness level** (do Carmo Ch. 3,
 Lemma 2.6). If `γ` is a geodesic on `s` with initial data `(p, v)`, then the
 affine reparametrisation `t ↦ γ (a t)` is a geodesic on `{t | a t ∈ s}` with
@@ -121,6 +122,7 @@ theorem IsGeodesicOnWithInitial.fiberScale
     rw [mul_zero, hf0]
     rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Homogeneity of the maximal-interval witness**: if a geodesic with
 initial data `(p, v)` covers time `t`, then a geodesic with initial data
 `(p, a • v)` covers time `t / a` (for `a ≠ 0`). -/
@@ -148,6 +150,7 @@ theorem MaximalGeodesicWitness.fiberScale
   · show a * (t / a) ∈ J
     rwa [mul_div_cancel₀ _ ha]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Scaling of the maximal interval of definition** (do Carmo Ch. 3,
 Lemma 2.6, interval half): for `a ≠ 0`,
 `I_max(p, a • v) = {t | a t ∈ I_max(p, v)}`. In particular, if the geodesic with
@@ -173,6 +176,7 @@ theorem maximalGeodesicInterval_fiberScale
     rw [harg] at h
     exact h
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Pointwise uniform interval of definition** (do Carmo Ch. 3,
 Prop. 2.7, pointwise-in-`(p, v)` form). For every initial datum `(p, v)` and
 every time bound `T`, a positive rescaling `c • v` of the initial velocity makes
@@ -209,8 +213,9 @@ end WitnessTransform
 
 section ConnectedPropagation
 
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Connected-propagation uniqueness for spray integral curves.** Two
 integral curves of the chart-fixed geodesic vector field on an open preconnected
 set `J` that agree at some `t₀ ∈ J` agree on all of `J`, provided the foot of the
@@ -271,6 +276,7 @@ theorem isMIntegralCurveOn_geodesicVectorFieldChart_eqOn
     exact hU_eq _ (hVU hu)
   exact (IsClopen.eq_univ ⟨hTsub_closed, hTsub_open⟩ ⟨_, h0_mem⟩ :)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Agreement of initial-data geodesic witnesses.** Two geodesics with
 the same initial data `(p, v)` on open witness sets agree on any preconnected open
 subset of the overlap containing `0`, provided the first witness keeps its foot in
@@ -301,8 +307,9 @@ end ConnectedPropagation
 
 section ValueHomogeneity
 
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Homogeneity of the canonical maximal geodesic** (do Carmo Ch. 3,
 Lemma 2.6): `γ(t, p, a • v) = γ(a t, p, v)` for `a ≠ 0` and `a t` in the maximal
 interval of `(p, v)`.

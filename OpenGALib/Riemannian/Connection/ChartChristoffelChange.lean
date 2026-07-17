@@ -41,7 +41,6 @@ Reference: do Carmo, *Riemannian Geometry*, Ch. 2 (the connection in coordinates
 Lee, *Riemannian Manifolds*, Ch. 5 (transformation law for the Christoffel symbols).
 -/
 
-set_option linter.unusedSectionVars false
 
 noncomputable section
 
@@ -53,7 +52,7 @@ namespace Riemannian
 open Riemannian.Tensor
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
@@ -63,12 +62,14 @@ The coordinate functional `Geodesic.chartCoordFunctional` and the directional
 derivative expansion `fderiv_apply_eq_sum_partialDeriv` are provided by
 `Geodesic/CovariantDerivative.lean`. -/
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The chart coordinates of a basis vector are Kronecker deltas. -/
 lemma chartCoord_finBasis (a b : Fin (Module.finrank ℝ E)) :
     Geodesic.chartCoord (E := E) a ((Module.finBasis ℝ E) b)
       = if b = a then (1 : ℝ) else 0 := by
   rw [Geodesic.chartCoord_def, Module.Basis.repr_self, Finsupp.single_apply]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Expansion of a continuous linear map through the chart basis, in
 coordinates: `(f v)^a = Σ_k v^k (f e_k)^a`. -/
 lemma chartCoord_clm_eq_sum (f : E →L[ℝ] E) (a : Fin (Module.finrank ℝ E)) (v : E) :
@@ -97,6 +98,7 @@ moving foot. The argument order matches `tangentCoordChange I β α`. -/
 def chartTransition (β α : M) : E → E :=
   extChartAt I α ∘ (extChartAt I β).symm
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 @[simp] lemma chartTransition_def (β α : M) (y : E) :
     chartTransition (I := I) β α y = extChartAt I α ((extChartAt I β).symm y) := rfl
 
@@ -105,6 +107,7 @@ coordinates: the source of the transition `chartTransition β α`. -/
 def chartTransitionSource (β α : M) : Set E :=
   ((extChartAt I β).symm.trans (extChartAt I α)).source
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 lemma chartTransitionSource_eq (β α : M) :
     chartTransitionSource (I := I) (M := M) β α
       = (extChartAt I β).target
@@ -112,6 +115,7 @@ lemma chartTransitionSource_eq (β α : M) :
   unfold chartTransitionSource
   rw [PartialEquiv.trans_source, PartialEquiv.symm_source, extChartAt_source]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] in
 /-- **Math.** The chart overlap is open in `β`-chart coordinates (boundaryless). -/
 lemma isOpen_chartTransitionSource (β α : M) :
     IsOpen (chartTransitionSource (I := I) (M := M) β α) := by
@@ -119,6 +123,7 @@ lemma isOpen_chartTransitionSource (β α : M) :
   exact ContinuousOn.isOpen_inter_preimage (continuousOn_extChartAt_symm β)
     (isOpen_extChartAt_target β) (chartAt H α).open_source
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 /-- **Math.** On the overlap, the foot `(extChartAt I β).symm y` lies in the chart
 source at `β`. -/
 lemma extChartAt_symm_mem_chartAt_source_left {β α : M} {y : E}
@@ -128,6 +133,7 @@ lemma extChartAt_symm_mem_chartAt_source_left {β α : M} {y : E}
   have := (extChartAt I β).map_target hy.1
   rwa [extChartAt_source] at this
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 /-- **Math.** On the overlap, the foot `(extChartAt I β).symm y` lies in the chart
 source at `α`. -/
 lemma extChartAt_symm_mem_chartAt_source_right {β α : M} {y : E}
@@ -136,6 +142,7 @@ lemma extChartAt_symm_mem_chartAt_source_right {β α : M} {y : E}
   rw [chartTransitionSource_eq] at hy
   exact hy.2
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 /-- **Math.** On the overlap, the `β`-chart reading of the foot is `y` itself. -/
 lemma extChartAt_extChartAt_symm_of_mem {β α : M} {y : E}
     (hy : y ∈ chartTransitionSource (I := I) (M := M) β α) :
@@ -143,6 +150,7 @@ lemma extChartAt_extChartAt_symm_of_mem {β α : M} {y : E}
   rw [chartTransitionSource_eq] at hy
   exact (extChartAt I β).right_inv hy.1
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 /-- **Math.** On the overlap, the transition image lies in the `α`-chart target. -/
 lemma chartTransition_mem_target {β α : M} {y : E}
     (hy : y ∈ chartTransitionSource (I := I) (M := M) β α) :
@@ -151,6 +159,7 @@ lemma chartTransition_mem_target {β α : M} {y : E}
   rw [extChartAt_source]
   exact extChartAt_symm_mem_chartAt_source_right (I := I) hy
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 /-- **Math.** On the overlap, pulling the transition image back through the `α`-chart
 recovers the common foot. -/
 lemma extChartAt_symm_chartTransition {β α : M} {y : E}
@@ -161,6 +170,7 @@ lemma extChartAt_symm_chartTransition {β α : M} {y : E}
   rw [extChartAt_source]
   exact extChartAt_symm_mem_chartAt_source_right (I := I) hy
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 /-- **Math.** Entry point from a manifold point: if `x` lies in both chart sources,
 its `β`-chart image lies in the overlap. -/
 lemma extChartAt_mem_chartTransitionSource {β α : M} {x : M}
@@ -172,6 +182,7 @@ lemma extChartAt_mem_chartTransitionSource {β α : M} {x : M}
   rw [mem_preimage, (extChartAt I β).left_inv hxβ']
   exact hxα
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 /-- **Math.** At the `β`-chart image of a common point `x`, the transition reads off
 the `α`-chart image of `x`. -/
 lemma chartTransition_extChartAt {β α : M} {x : M}
@@ -180,12 +191,14 @@ lemma chartTransition_extChartAt {β α : M} {x : M}
   have hxβ' : x ∈ (extChartAt I β).source := by rw [extChartAt_source]; exact hxβ
   rw [chartTransition_def, (extChartAt I β).left_inv hxβ']
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The transition map is `C^∞` on the overlap. -/
 lemma contDiffOn_chartTransition (β α : M) :
     ContDiffOn ℝ ∞ (chartTransition (I := I) β α)
       (chartTransitionSource (I := I) (M := M) β α) :=
   contDiffOn_ext_coord_change (I := I) α β
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The transition map is `C^∞` at each point of the (open) overlap. -/
 lemma contDiffAt_chartTransition {β α : M} {y : E}
     (hy : y ∈ chartTransitionSource (I := I) (M := M) β α) :
@@ -193,6 +206,7 @@ lemma contDiffAt_chartTransition {β α : M} {y : E}
   (contDiffOn_chartTransition (I := I) β α).contDiffAt
     ((isOpen_chartTransitionSource (I := I) β α).mem_nhds hy)
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** On the overlap, the transition map differentiates to the tangent
 coordinate change at the moving foot. -/
 lemma hasFDerivAt_chartTransition {β α : M} {y : E}
@@ -208,6 +222,7 @@ lemma hasFDerivAt_chartTransition {β α : M} {y : E}
   rw [extChartAt_extChartAt_symm_of_mem (I := I) hy] at hw
   exact hasFDerivWithinAt_univ.mp hw
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The full-space `fderiv` of the transition on the overlap is the
 tangent coordinate change at the moving foot. -/
 lemma fderiv_chartTransition {β α : M} {y : E}
@@ -223,6 +238,7 @@ def transitionDeriv (β α : M) (a i : Fin (Module.finrank ℝ E)) (y : E) : ℝ
   Geodesic.chartCoord (E := E) a
     (fderiv ℝ (chartTransition (I := I) β α) y ((Module.finBasis ℝ E) i))
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 @[simp] lemma transitionDeriv_def (β α : M) (a i : Fin (Module.finrank ℝ E)) (y : E) :
     transitionDeriv (I := I) β α a i y
       = Geodesic.chartCoord (E := E) a
@@ -235,6 +251,7 @@ def transitionSndDeriv (β α : M) (a k i : Fin (Module.finrank ℝ E)) (y : E) 
     (fderiv ℝ (fderiv ℝ (chartTransition (I := I) β α)) y ((Module.finBasis ℝ E) k)
       ((Module.finBasis ℝ E) i))
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 @[simp] lemma transitionSndDeriv_def (β α : M)
     (a k i : Fin (Module.finrank ℝ E)) (y : E) :
     transitionSndDeriv (I := I) β α a k i y
@@ -242,6 +259,7 @@ def transitionSndDeriv (β α : M) (a k i : Fin (Module.finrank ℝ E)) (y : E) 
           (fderiv ℝ (fderiv ℝ (chartTransition (I := I) β α)) y
             ((Module.finBasis ℝ E) k) ((Module.finBasis ℝ E) i)) := rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Schwarz symmetry** of the transition second derivative in the two
 differentiation directions: `∂²x^a/∂y^k∂y^i = ∂²x^a/∂y^i∂y^k` on the overlap. -/
 lemma transitionSndDeriv_symm {β α : M} {y : E}
@@ -255,6 +273,7 @@ lemma transitionSndDeriv_symm {β α : M} {y : E}
     exact WithTop.coe_le_coe.2 le_top
   rw [transitionSndDeriv_def, transitionSndDeriv_def, hsymm.eq]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The moving transition derivative `y ↦ Dτ(y)` is differentiable on the
 overlap (as a map into continuous linear maps), with derivative the second
 derivative of the transition. -/
@@ -267,6 +286,7 @@ lemma hasFDerivAt_fderiv_chartTransition {β α : M} {y : E}
     exact WithTop.coe_le_coe.2 le_top
   exact (h1.differentiableAt one_ne_zero).hasFDerivAt
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The matrix-entry function `A^a_i` is differentiable on the overlap,
 with partial derivatives the second-derivative coefficients `B^a_{ki}`. -/
 lemma hasFDerivAt_transitionDeriv {β α : M} {y : E}
@@ -289,6 +309,7 @@ section GramChange
 
 variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The Gram change law through the transition map** (`E`-level form of
 `chartGramMatrix_change`): on the overlap, the `β`-chart Gram entry is the
 `α`-chart Gram entry at the transition image, conjugated by the transition
@@ -310,6 +331,7 @@ theorem chartGramOnE_chartTransition (g : RiemannianMetric I M) (α β : M) {y :
     transitionDeriv_def, transitionDeriv_def,
     fderiv_chartTransition (I := I) hy]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Derivative of the Gram change law** (the first-order layer): on the
 overlap,
 `∂_k G^β_{ij} = Σ_{ab} [(Σ_c ∂_c G^α_{ab}(τ y) A^c_k) A^a_i A^b_j
@@ -411,6 +433,7 @@ section Contraction
 
 variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Cancellation of the (invertible) transition derivative: a covector
 that annihilates every column `A e_a` of the transition derivative vanishes. -/
 lemma eq_zero_of_forall_sum_mul_transitionDeriv {β α : M} {y : E}
@@ -467,6 +490,7 @@ lemma eq_zero_of_forall_sum_mul_transitionDeriv {β α : M} {y : E}
   simp only [hite, mul_ite, mul_one, mul_zero] at hv2
   simpa [Fintype.sum_ite_eq] using hv2
 
+omit [I.Boundaryless] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Cancellation of the (invertible) Gram matrix: a vector annihilated by
 every row of `G^α` at a foot in the chart source vanishes. -/
 lemma eq_zero_of_forall_sum_chartGramOnE_mul (g : RiemannianMetric I M) {α : M}
@@ -511,6 +535,7 @@ lemma eq_zero_of_forall_sum_chartGramOnE_mul (g : RiemannianMetric I M) {α : M}
   simp only [step, h]
   simp
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The transported contraction identity** — the heart of the classical
 computation. Substituting the differentiated Gram change law into the
 `β`-contraction identity `Σ_m G^β_{am} Γ^{β,m}_{ki} = ½(∂_k G^β_{ai} + ∂_i G^β_{ak}
@@ -662,6 +687,7 @@ theorem sum_gram_mul_christoffel_transition (g : RiemannianMetric I M)
     (fun p c d => chartGram_christoffel_contraction (I := I) g α p c d
       (chartTransition (I := I) β α y) hfootα)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Direct expansion of the same contraction through the Gram change law:
 `Σ_m G^β_{am} Γ^{β,m}_{ki} = Σ_p A^p_a Σ_q G^α_{pq}(τ y) (Σ_m A^q_m Γ^{β,m}_{ki})`. -/
 theorem sum_gram_mul_christoffel_expand (g : RiemannianMetric I M)
@@ -703,6 +729,7 @@ theorem sum_gram_mul_christoffel_expand (g : RiemannianMetric I M)
   refine Finset.sum_congr rfl fun q _ => Finset.sum_congr rfl fun m _ => ?_
   ring
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Change-of-chart law for the chart Christoffel symbols, index form.**
 On the overlap, `Σ_m A^q_m Γ^{β,m}_{ki} = Σ_{cd} Γ^{α,q}_{cd}(τ y) A^c_k A^d_i
 + B^q_{ki}` — the classical inhomogeneous transformation law, with the second
@@ -780,6 +807,7 @@ section Bilinear
 
 variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Change-of-chart transformation law for the Christoffel contraction**
 (the toll-gate identity for chart-independence of the geodesic equation, inbox
 I-0100): at a common foot `x` of the charts at `β` and `α`, with

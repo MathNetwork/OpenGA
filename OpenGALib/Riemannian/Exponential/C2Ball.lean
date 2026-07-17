@@ -1,7 +1,6 @@
 import OpenGALib.Riemannian.Geodesic.FlowC2Dependence
 import OpenGALib.Riemannian.Exponential.Ray
 
-set_option linter.unusedSectionVars false
 set_option maxSynthPendingDepth 3
 
 /-!
@@ -43,12 +42,12 @@ namespace Exponential
 open Riemannian.Geodesic Riemannian.FlowDependence
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
-set_option maxHeartbeats 1000000 in
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **`exp_p` is `C²` on a ball around the origin** (do Carmo Ch. 3,
 Prop. 2.9, second-order regularity; the analytic input for the Gauss lemma 3.5).
 There is `ρ > 0` such that every `w` with `‖w‖ < ρ` lies in the exponential domain,

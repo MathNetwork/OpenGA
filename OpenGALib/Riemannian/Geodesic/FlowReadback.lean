@@ -1,7 +1,6 @@
 import OpenGALib.Riemannian.Geodesic.UniformExistence
 import OpenGALib.Riemannian.Geodesic.IntrinsicUniqueness
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Readback of intrinsic geodesics from the uniform geodesic flow
@@ -55,11 +54,12 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)] [T2Space M]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)] [T2Space M]
 
+omit [T2Space (TangentBundle I M)] [T2Space M] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Descent on the open window: flow segments of the chart-`p` spray
 are intrinsic geodesic segments on all of `(-(ε/T), ε/T)`** (the `Ioo`
 generalization of `isGeodesicOn_uniform_flow_segment`, whose statement
@@ -230,6 +230,7 @@ theorem isGeodesicOn_uniform_flow_segment_Ioo
     (hc s hs).congr_of_eventuallyEq (hread_ev s hs)
   exact ⟨hγ0, hγcont, hgeo, fun s hs => ⟨hγsrc s hs, hread s hs⟩, hvel, hvelJ⟩
 
+omit [T2Space (TangentBundle I M)] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Readback: every continuous intrinsic geodesic with initial data in
 the uniform flow ball is computed by the flow** (do Carmo Ch. 7, Theorem 2.8,
 the flow-box ingredient of f) ⟹ b)). Let `Z` be a local flow of the chart-`p`
@@ -296,6 +297,7 @@ theorem IsGeodesicOn.eq_uniform_flow_readback
     (hσ.mono hsub_a) (hgeo.mono hsub_J) (hσc.mono hsub_a) (hcont.mono hsub_J)
     h0b heq0 hβ (hvσ.trans hvf.symm)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The uniform flow box with descent and readback, packaged** (do
 Carmo Ch. 7, Theorem 2.8, groundwork for f) ⟹ b)). At every `p : M` there are
 `r, ε, T > 0` with `T < ε` and a local flow `Z` of the chart-`p` coordinate

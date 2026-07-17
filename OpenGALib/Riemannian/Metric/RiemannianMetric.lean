@@ -132,47 +132,47 @@ theorem metricInner_smul_right (g : RiemannianMetric I M)
   show g.inner x V (c • W) = c * g.inner x V W
   rw [(g.inner x V).map_smul]; rfl
 
-@[simp, metric_simp]
+@[metric_simp]
 theorem metricInner_zero_left (g : RiemannianMetric I M)
     (x : M) (W : TangentSpace I x) :
     g.metricInner x 0 W = 0 := by
   show g.inner x 0 W = 0
   rw [(g.inner x).map_zero]; rfl
 
-@[simp, metric_simp]
+@[metric_simp]
 theorem metricInner_zero_right (g : RiemannianMetric I M)
     (x : M) (V : TangentSpace I x) :
     g.metricInner x V 0 = 0 :=
   (g.inner x V).map_zero
 
-@[simp, metric_simp]
+@[metric_simp]
 theorem metricInner_neg_left (g : RiemannianMetric I M)
     (x : M) (V W : TangentSpace I x) :
     g.metricInner x (-V) W = -g.metricInner x V W := by
   show g.inner x (-V) W = -g.inner x V W
   rw [(g.inner x).map_neg]; rfl
 
-@[simp, metric_simp]
+@[metric_simp]
 theorem metricInner_neg_right (g : RiemannianMetric I M)
     (x : M) (V W : TangentSpace I x) :
     g.metricInner x V (-W) = -g.metricInner x V W :=
   (g.inner x V).map_neg W
 
-@[simp, metric_simp]
+@[metric_simp]
 theorem metricInner_sub_left (g : RiemannianMetric I M)
     (x : M) (V₁ V₂ W : TangentSpace I x) :
     g.metricInner x (V₁ - V₂) W = g.metricInner x V₁ W - g.metricInner x V₂ W := by
   show g.inner x (V₁ - V₂) W = g.inner x V₁ W - g.inner x V₂ W
   rw [(g.inner x).map_sub]; rfl
 
-@[simp, metric_simp]
+@[metric_simp]
 theorem metricInner_sub_right (g : RiemannianMetric I M)
     (x : M) (V W₁ W₂ : TangentSpace I x) :
     g.metricInner x V (W₁ - W₂) = g.metricInner x V W₁ - g.metricInner x V W₂ :=
   (g.inner x V).map_sub W₁ W₂
 
 /-- **Math.** $\langle V, V\rangle_g \ge 0$ for any $V$. -/
-@[simp, metric_simp]
+@[metric_simp]
 theorem metricInner_self_nonneg (g : RiemannianMetric I M)
     (x : M) (V : TangentSpace I x) :
     0 ≤ g.metricInner x V V := by
@@ -289,7 +289,6 @@ noncomputable def metricRiesz (g : RiemannianMetric I M) (x : M)
     ((φ : TangentSpace I x →ₗ[ℝ] ℝ))
 
 /-- **Math.** Defining property of Riesz: $\langle \text{metricRiesz}\,\varphi, W\rangle_g = \varphi(W)$. -/
-@[simp]
 theorem metricRiesz_inner (g : RiemannianMetric I M) (x : M)
     (φ : TangentSpace I x →L[ℝ] ℝ) (V : TangentSpace I x) :
     g.metricInner x (g.metricRiesz x φ) V = φ V :=

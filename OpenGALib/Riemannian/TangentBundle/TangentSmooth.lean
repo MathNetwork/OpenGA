@@ -211,12 +211,13 @@ namespace SmoothVectorField
 instance : CoeFun (SmoothVectorField I M) fun _ => Π y : M, TangentSpace I y :=
   ⟨toFun⟩
 
-@[simp] lemma coe_mk (f : Π y : M, TangentSpace I y) (h) :
+lemma coe_mk (f : Π y : M, TangentSpace I y) (h) :
     ⇑(⟨f, h⟩ : SmoothVectorField I M) = f := rfl
 
 theorem smoothAt (X : SmoothVectorField I M) (x : M) : TangentSmoothAt X x :=
   TangentSmoothAt.mk ((X.smooth x).mdifferentiableAt (by simp : (∞ : ℕ∞ω) ≠ 0))
 
+/-- The smooth vector field that is zero at every point. -/
 noncomputable def zero : SmoothVectorField I M where
   toFun := fun _ => 0
   smooth := Bundle.contMDiff_zeroSection ℝ (TangentSpace I (M := M)) (n := ∞)
@@ -225,6 +226,7 @@ noncomputable instance : Zero (SmoothVectorField I M) := ⟨zero⟩
 
 @[simp] lemma zero_apply (y : M) : (0 : SmoothVectorField I M) y = 0 := rfl
 
+/-- Pointwise addition of smooth vector fields. -/
 noncomputable def add (X Y : SmoothVectorField I M) : SmoothVectorField I M where
   toFun := fun y => X y + Y y
   smooth := ContMDiff.add_section X.smooth Y.smooth
@@ -234,6 +236,7 @@ noncomputable instance : Add (SmoothVectorField I M) := ⟨add⟩
 @[simp] lemma add_apply (X Y : SmoothVectorField I M) (y : M) :
     (X + Y) y = X y + Y y := rfl
 
+/-- Pointwise negation of a smooth vector field. -/
 noncomputable def neg (X : SmoothVectorField I M) : SmoothVectorField I M where
   toFun := fun y => -X y
   smooth := ContMDiff.neg_section X.smooth
@@ -243,6 +246,7 @@ noncomputable instance : Neg (SmoothVectorField I M) := ⟨neg⟩
 @[simp] lemma neg_apply (X : SmoothVectorField I M) (y : M) :
     (-X) y = -X y := rfl
 
+/-- Pointwise subtraction of smooth vector fields. -/
 noncomputable def sub (X Y : SmoothVectorField I M) : SmoothVectorField I M where
   toFun := fun y => X y - Y y
   smooth := ContMDiff.sub_section X.smooth Y.smooth
@@ -252,6 +256,7 @@ noncomputable instance : Sub (SmoothVectorField I M) := ⟨sub⟩
 @[simp] lemma sub_apply (X Y : SmoothVectorField I M) (y : M) :
     (X - Y) y = X y - Y y := rfl
 
+/-- Pointwise scalar multiplication of a smooth vector field by a constant real number. -/
 noncomputable def constSMul (a : ℝ) (X : SmoothVectorField I M) : SmoothVectorField I M where
   toFun := fun y => a • X y
   smooth := ContMDiff.const_smul_section (a := a) X.smooth
@@ -302,12 +307,12 @@ to the manifold side via `comp_of_preimage_mem_nhdsWithin`.
 namespace Riemannian
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-  [FiniteDimensional ℝ E] [CompleteSpace E]
+  [FiniteDimensional ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [IsLocallyConstantChartedSpace H M]
 
-omit [FiniteDimensional ℝ E] [CompleteSpace E] in
+omit [FiniteDimensional ℝ E] in
 /-- **Math.** Smoothness of $y \mapsto \mathrm{d}f_y(v)$ for chart-frame-constant $v$. -/
 theorem mfderiv_const_dir_smoothAt
     {f : M → ℝ} (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) (x : M) (v : E) :
@@ -384,7 +389,7 @@ theorem mfderiv_const_dir_smoothAt
   rw [h_written, h_extChart_eq]
   rfl
 
-omit [FiniteDimensional ℝ E] [CompleteSpace E] in
+omit [FiniteDimensional ℝ E] in
 /-- **Math.** Smoothness of $y \mapsto \mathrm{d}f_y(V(y))$ for smoothly-varying $V : M \to E$. -/
 theorem mfderiv_smoothDir_smoothAt
     {f : M → ℝ} (hf : ContMDiff I 𝓘(ℝ, ℝ) ∞ f) {x : M}

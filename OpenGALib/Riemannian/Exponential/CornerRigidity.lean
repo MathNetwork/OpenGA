@@ -27,7 +27,6 @@ noncomputable section
 open Bundle Manifold Set Filter Metric
 open scoped Manifold Topology ContDiff
 
-set_option linter.unusedSectionVars false
 
 namespace Riemannian
 
@@ -36,13 +35,14 @@ namespace Exponential
 open Riemannian.Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
 variable {M' : Type*} [MetricSpace M'] [ChartedSpace H M'] [IsManifold I ∞ M']
 variable [T2Space (TangentBundle I M')]
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Corner rigidity** (do Carmo Ch. 3, Cor. 3.9, equality case, as
 used in the Hopf–Rinow growth induction): if `u₁, u₂ ∈ T_xM` are `g_x`-unit
 vectors and the broken curve through `x` realizes the distance
@@ -118,7 +118,7 @@ theorem eq_neg_of_forall_edist_expMap_eq (g : RiemannianMetric I M')
   have hs2 : 2 ≤ Real.sqrt
       (chartMetricInner (I := I) g x (extChartAt I x x) (u₂ - u₁) (u₂ - u₁)) := by
     by_contra hlt
-    push_neg at hlt
+    push Not at hlt
     rcases eq_or_lt_of_le (Real.sqrt_nonneg
         (chartMetricInner (I := I) g x (extChartAt I x x) (u₂ - u₁) (u₂ - u₁)))
       with heq | hpos

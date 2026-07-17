@@ -1,7 +1,6 @@
 import OpenGALib.Riemannian.Geodesic.FlowC1Dependence
 import OpenGALib.Riemannian.Exponential.Ray
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Strict differentiability of the exponential map on a ball
@@ -43,12 +42,12 @@ namespace Exponential
 open Riemannian.Geodesic Riemannian.FlowDependence
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
-set_option maxHeartbeats 1000000 in
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **`exp_p` is strictly differentiable at every point of a ball around the
 origin** (do Carmo Ch. 3, Prop. 2.9, C¹-regularity content away from the origin).
 There is `ρ > 0` such that every `w` with `‖w‖ < ρ` lies in the exponential domain,
@@ -218,6 +217,7 @@ theorem exists_hasStrictFDerivAt_extChartAt_expMap_ball
     exact (key w (mem_ball_zero_iff.mp hw)).2.2
   exact ⟨_, hcomp.congr_of_eventuallyEq hev.symm⟩
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **`exp_p` is `C¹` on a ball around the origin** (do Carmo Ch. 3, Prop. 2.9,
 `C¹`-regularity clause). There is `ρ > 0` such that the ball `B_ρ(0) ⊂ T_pM` lies in the
 exponential domain, its image under `exp_p` stays in the chart at `p`, and the chart

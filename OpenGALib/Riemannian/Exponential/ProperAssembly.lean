@@ -44,7 +44,6 @@ noncomputable section
 open Bundle Manifold Set Filter Metric
 open scoped Manifold Topology ContDiff
 
-set_option linter.unusedSectionVars false
 
 namespace Riemannian
 
@@ -53,13 +52,14 @@ namespace Exponential
 open Riemannian.Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
 variable {M' : Type*} [MetricSpace M'] [ChartedSpace H M'] [IsManifold I ∞ M']
 variable [T2Space (TangentBundle I M')]
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Geodesic completeness at a point implies properness**
 (do Carmo Ch. 7, Theorem 2.8, f) ⟹ b)): if every tangent vector at `p`
 generates a continuous global geodesic, and geodesics from `p` depend
@@ -152,6 +152,7 @@ theorem properSpace_of_forall_geodesic (g : RiemannianMetric I M')
   exact (key (dist p x + r)).of_isClosed_subset isClosed_closedBall
     (Metric.closedBall_subset_closedBall' (by rw [dist_comm x p, add_comm]))
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Geodesic completeness at a point implies metric completeness**
 (do Carmo Ch. 7, Theorem 2.8, f) ⟹ c)): under the hypotheses of
 `properSpace_of_forall_geodesic`, the manifold is a complete metric space —

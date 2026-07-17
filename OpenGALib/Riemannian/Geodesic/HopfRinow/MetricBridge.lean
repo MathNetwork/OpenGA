@@ -16,8 +16,8 @@ Hopf–Rinow constant-speed layer needs to compare:
   vectors into the fibre `T_bM`.
 
 The core statement `chartMetricInner_extChartAt_eq_metricInner` shows these agree at
-`y = extChartAt I α b`, so the coordinate speed `chartMetricInner g α (φ_α c t) ċ ċ`
-of a curve is literally the intrinsic squared speed `g.metricInner (c t) ċ ċ`.
+`y = extChartAt I α b`, so the coordinate speed `chartMetricInner g α (φ_α c t) c' c'`
+of a curve is literally the intrinsic squared speed `g.metricInner (c t) c' c'`.
 
 Finally, under the `Bundle.RiemannianBundle` instance carried by `g`, the fibre
 `(e)norm` of a tangent vector is `√ (g.metricInner x v v)`
@@ -31,17 +31,17 @@ Reference: do Carmo, *Riemannian Geometry*, Ch. 7 §2 (distance/length) and Ch. 
 open scoped Manifold Topology ContDiff ENNReal
 open Set Bundle
 
-set_option linter.unusedSectionVars false
 
 noncomputable section
 
 namespace Riemannian
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Readback expansion: the inverse trivialization at `α`, applied at a
 foot `b` to a coordinate vector `a : E`, is the linear combination of chart-basis
 fibre vectors with the chart coordinates of `a`. Holds unconditionally: off the base
@@ -56,6 +56,7 @@ theorem trivializationAt_symm_eq_sum_chartBasisVecFiber (α : M) (b : M) (a : E)
   rw [map_smul]
   rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Bilinear expansion of the intrinsic metric against two readbacks:
 `g_b(e.symm b a, e.symm b c) = ∑ᵢⱼ G_{ij}(b) aⁱ cʲ`, where `G` is the chart Gram
 matrix. -/
@@ -74,6 +75,7 @@ theorem metricInner_trivializationAt_symm (g : RiemannianMetric I M) (α : M) (b
   rw [Tensor.chartGramMatrix_apply]
   ring
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The chart-Gram inner product equals the intrinsic inner product of the
 readbacks, at the chart image `extChartAt I α b` of a foot `b` in the chart source. -/
 theorem chartMetricInner_extChartAt_eq_metricInner (g : RiemannianMetric I M) (α : M) {b : M}
@@ -86,6 +88,7 @@ theorem chartMetricInner_extChartAt_eq_metricInner (g : RiemannianMetric I M) (�
   have hinv : (extChartAt I α).symm (extChartAt I α b) = b := (extChartAt I α).left_inv hsrc
   simp only [chartMetricInner_def, chartGramOnE_def, hinv]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** General foot version of the readback in terms of the tangent
 coordinate change: over a foot `b` in the chart source, the inverse trivialization
 at `α` is `tangentCoordChange I α b b`. -/
@@ -97,6 +100,7 @@ theorem trivializationAt_symm_eq_tangentCoordChange (α : M) {b : M}
         = (trivializationAt E (TangentSpace I) α).symmL ℝ b a from rfl, h]
   rfl
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** At the basepoint the readback is the identity: the inverse
 trivialization at `α`, evaluated over its own foot `α`, is the identity of the fibre. -/
 theorem trivializationAt_symm_self (α : M) (a : E) :
@@ -104,6 +108,7 @@ theorem trivializationAt_symm_self (α : M) (a : E) :
   rw [trivializationAt_symm_eq_tangentCoordChange α (mem_chart_source H α) a]
   exact tangentCoordChange_self (I := I) (x := α) (z := α) (v := a) (mem_extChartAt_source α)
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Fibre norm under the Riemannian-bundle instance of `g`:
 `‖v‖ = √ (g_x(v,v))`. -/
 theorem norm_tangent_eq_sqrt_metricInner (g : RiemannianMetric I M) (x : M)
@@ -114,6 +119,7 @@ theorem norm_tangent_eq_sqrt_metricInner (g : RiemannianMetric I M) (x : M)
   rw [norm_eq_sqrt_real_inner v]
   rfl
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Fibre enorm under the Riemannian-bundle instance of `g`:
 `‖v‖ₑ = ENNReal.ofReal (√ (g_x(v,v)))`. -/
 theorem enorm_tangent_eq_sqrt_metricInner (g : RiemannianMetric I M) (x : M)
@@ -133,6 +139,7 @@ This is the zeroth-order layer of the change-of-chart law for
 the chart coordinate, which brings in the second derivative of the
 transition). -/
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The β-chart frame vector at a common foot `x` is the α-readback of
 the tangent coordinate change of the model basis vector: the two chart frames of
 `T_xM` differ by the derivative of the chart transition. -/
@@ -151,6 +158,7 @@ theorem chartBasisVecFiber_eq_symm_tangentCoordChange (α β : M) {x : M}
     trivializationAt_symm_eq_tangentCoordChange α hxα,
     tangentCoordChange_comp (I := I) ⟨⟨hβ, hα⟩, hx⟩]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Change of chart for the Gram matrix** (`(0,2)`-tensor
 transformation law, the zeroth-order layer of the Christoffel change-of-chart
 law): at a common foot `x`,
@@ -170,6 +178,7 @@ theorem chartGramMatrix_change (g : RiemannianMetric I M) (α β : M) {x : M}
     ← chartBasisVecFiber_eq_symm_tangentCoordChange α β hxα hxβ j]
   rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Change of chart for the chart-Gram inner product**: reading the
 same foot `x` in two charts, the β-chart Gram pairing of two coordinate vectors
 is the α-chart Gram pairing of their tangent coordinate changes — the pairing
