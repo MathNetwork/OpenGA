@@ -1,6 +1,5 @@
 import OpenGALib.Riemannian.Connection.ChartChristoffel
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Smoothness of the chart Christoffel symbols
@@ -53,6 +52,7 @@ lemma extChartAt_target_subset_interior_of_boundaryless [I.Boundaryless] (α : M
 
 /-! ## Gram / inverse-Gram pulled-back smoothness -/
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The chart Gram entry pulled back to `E` is `C^∞` on the chart
 target. -/
 lemma chartGramOnE_contDiffOn
@@ -86,12 +86,14 @@ def chartInvGramOnE (g : RiemannianMetric I M) (α : M)
     (i j : Fin (Module.finrank ℝ E)) : E → ℝ :=
   fun y => chartInvGramMatrix (I := I) g α ((extChartAt I α).symm y) i j
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 @[simp] lemma chartInvGramOnE_def
     (g : RiemannianMetric I M) (α : M)
     (i j : Fin (Module.finrank ℝ E)) (y : E) :
     chartInvGramOnE (I := I) g α i j y =
       chartInvGramMatrix (I := I) g α ((extChartAt I α).symm y) i j := rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The pulled-back inverse Gram entry is `C^∞` on the chart target. -/
 lemma chartInvGramOnE_contDiffOn
     (g : RiemannianMetric I M) (α : M)
@@ -121,6 +123,7 @@ lemma chartInvGramOnE_contDiffOn
 
 /-! ## Christoffel smoothness -/
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Smoothness of `chartChristoffel`.** The chart Christoffel symbol
 is `C^∞` on the interior of the chart target. -/
 theorem chartChristoffel_contDiffOn_interior

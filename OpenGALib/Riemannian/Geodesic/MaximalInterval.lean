@@ -4,7 +4,6 @@ import OpenGALib.Riemannian.Geodesic.Uniqueness
 import Mathlib.Geometry.Manifold.Riemannian.PathELength
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Maximal interval of definition for a geodesic with prescribed initial data
@@ -68,10 +67,10 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
 
 /-- **Math.** `γ` is a geodesic on `s` with initial datum `(p, v)` at time `0` if
@@ -88,6 +87,7 @@ def IsGeodesicOnWithInitial
     f 0 = (⟨p, v⟩ : TangentBundle I M) ∧
     IsMIntegralCurveOn f (geodesicVectorFieldChart (I := I) g p) s
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** An initial-data geodesic on `s` is, at every interior point `t` of `s`
 (i.e. `s ∈ 𝓝 t`) whose foot `γ t` still lies in the base chart-source
 `(chartAt H p).source`, a local spray geodesic `IsGeodesicAt g γ t` with
@@ -110,6 +110,7 @@ lemma IsGeodesicOnWithInitial.isGeodesicAt
   refine ⟨p, f, hproj, ?_, hf.isMIntegralCurveAt ht⟩
   rw [hproj t]; exact ht_src
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The starting point is forced: if `IsGeodesicOnWithInitial g γ s p v`
 holds, then `γ 0 = p`. -/
 lemma IsGeodesicOnWithInitial.start_eq
@@ -122,6 +123,7 @@ lemma IsGeodesicOnWithInitial.start_eq
   simp [hf0] at h
   exact h.symm
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** `IsGeodesicOnWithInitial` is monotone in the set. -/
 lemma IsGeodesicOnWithInitial.mono
     {g : RiemannianMetric I M} {γ : ℝ → M} {s s' : Set ℝ}
@@ -153,6 +155,7 @@ def maximalGeodesicInterval
     Set ℝ :=
   {t : ℝ | MaximalGeodesicWitness (I := I) g p v t}
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** Membership unfolding. -/
 lemma mem_maximalGeodesicInterval_iff
     {g : RiemannianMetric I M} {p : M} {v : TangentSpace I p}
@@ -161,6 +164,7 @@ lemma mem_maximalGeodesicInterval_iff
       MaximalGeodesicWitness (I := I) g p v t :=
   Iff.rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** `maximalGeodesicInterval g p v` is open. The key observation: if
 `MaximalGeodesicWitness g p v t` holds with witness `(γ, J)`, then for
 every `t' ∈ J` we also have `MaximalGeodesicWitness g p v t'` (with the
@@ -179,6 +183,7 @@ theorem maximalGeodesicInterval_isOpen
 section LocalExistence
 
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The local geodesic produced by `exists_geodesic_with_initial_velocity_at` provides an open
 interval `J ∋ 0` on which a geodesic with initial data `(p, v)` exists.
 This is the basic witness for membership of `0` in the maximal interval. -/
@@ -194,12 +199,14 @@ lemma exists_maximalGeodesicWitness_zero
   · exact (convex_ball (0 : ℝ) ε).isPreconnected
   exact ⟨f, fun _ => rfl, hf0, hf_on⟩
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** `0` belongs to the maximal interval. -/
 theorem zero_mem_maximalGeodesicInterval
     (g : RiemannianMetric I M) (p : M) (v : TangentSpace I p) :
     (0 : ℝ) ∈ maximalGeodesicInterval (I := I) g p v :=
   exists_maximalGeodesicWitness_zero (I := I) g p v
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The maximal interval is nonempty. -/
 theorem maximalGeodesicInterval_nonempty
     (g : RiemannianMetric I M) (p : M) (v : TangentSpace I p) :
@@ -219,6 +226,7 @@ def maximalGeodesicChosenCurve
     ℝ → M :=
   Classical.choose h
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 lemma maximalGeodesicChosenCurve_spec
     (g : RiemannianMetric I M) (p : M) (v : TangentSpace I p)
     {t : ℝ} (h : MaximalGeodesicWitness (I := I) g p v t) :
@@ -239,6 +247,7 @@ def maximalGeodesic
     maximalGeodesicChosenCurve (I := I) g p v h t
   else p
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** Outside the maximal interval, `maximalGeodesic` takes the value `p`. -/
 lemma maximalGeodesic_of_not_mem
     {g : RiemannianMetric I M} {p : M} {v : TangentSpace I p}
@@ -248,6 +257,7 @@ lemma maximalGeodesic_of_not_mem
   letI : Decidable (MaximalGeodesicWitness (I := I) g p v t) := Classical.dec _
   exact dif_neg ht
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** On the maximal interval, `maximalGeodesic g p v` equals the chosen
 local geodesic. -/
 lemma maximalGeodesic_of_mem
@@ -264,6 +274,7 @@ end MaximalGeodesicDefinition
 section MaximalGeodesicValue
 
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** `maximalGeodesic g p v` starts at `p`. -/
 theorem maximalGeodesic_zero
     (g : RiemannianMetric I M) (p : M) (v : TangentSpace I p) :
@@ -279,6 +290,7 @@ end MaximalGeodesicValue
 section MaximalGeodesicAtTime
 
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The witness `γ` chosen at `t ∈ maximalGeodesicInterval g p v` is a
 local geodesic at `t` with the prescribed initial data, provided every
 witness curve covering `t` keeps its foot `γ t` in the base chart-source
@@ -302,6 +314,7 @@ theorem exists_isGeodesicAt_of_mem_maximalGeodesicInterval
   refine ⟨γ, J, hJ, h0, ht, hγ, ?_⟩
   exact hγ.isGeodesicAt (hJ.mem_nhds ht) (ht_src γ J hγ)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** For every `t` in the maximal interval, there exists a geodesic
 witness producing `IsGeodesicAt g (witness) t` with starting point `p`,
 provided every witness curve keeps its foot `γ t` in the base chart-source
@@ -327,6 +340,7 @@ end MaximalGeodesicAtTime
 section MaximalGeodesicMain
 
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Structural properties of the canonical maximal geodesic with initial
 datum `(p, v)`: writing `I_max := maximalGeodesicInterval g p v` and
 `γ_max := maximalGeodesic g p v`, the set `I_max` is open and contains `0`,

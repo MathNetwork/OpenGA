@@ -4,7 +4,6 @@ import OpenGALib.Riemannian.Geodesic.HopfRinow.GramBound
 import OpenGALib.Riemannian.Geodesic.UniformExistence
 import OpenGALib.Riemannian.Geodesic.InitialVelocity
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Metric completeness implies geodesic completeness (do Carmo Ch. 7, Thm 2.8, c ⟹ d)
@@ -51,7 +50,7 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 
 /-! ## Affine reparametrisation of the geodesic equation
@@ -65,6 +64,7 @@ section Reparam
 
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Pointwise time-translation of the geodesic equation.** If `γ`
 satisfies the moving-foot geodesic equation at `τ + c`, then the translate
 `s ↦ γ (s + c)` satisfies it at `τ`. (The pointwise content of
@@ -105,6 +105,7 @@ theorem hasGeodesicEquationAt_comp_add
     exact ha.comp_add_const τ c
   · exact hgeo
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Pointwise affine reparametrisation of the geodesic equation.**
 If `γ` satisfies the moving-foot geodesic equation at `κ·τ + c`, the affine
 reparametrisation `s ↦ γ (κ·s + c)` satisfies it at `τ`. -/
@@ -116,6 +117,7 @@ theorem hasGeodesicEquationAt_comp_affine
     (γ := fun s => γ (s + c)) (a := κ) (τ := τ)
     (hasGeodesicEquationAt_comp_add (τ := κ * τ) (c := c) hγ)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Affine reparametrisation of a geodesic on a set.** If `γ` is a
 geodesic on `s`, then `t ↦ γ (κ·t + c)` is a geodesic on the affine preimage
 of `s`. -/
@@ -136,6 +138,7 @@ section Endpoint
 variable {M : Type*} [MetricSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **A geodesic converges at a finite endpoint of its interval**
 (do Carmo Ch. 7, proof of Theorem 2.8, c) ⟹ d): the Cauchy step). A continuous
 geodesic on `(a, b)`, `b` finite, is `√(speedSq)`-Lipschitz, hence Cauchy at
@@ -206,8 +209,9 @@ end Endpoint
 section Extension
 
 variable {M : Type*} [MetricSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-  [I.Boundaryless] [CompleteSpace E]
+  [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **A geodesic on a bounded-above interval extends forward**
 (do Carmo Ch. 7, proof of Theorem 2.8, c) ⟹ d): the prolongation step). Under
 metric completeness, a continuous geodesic on `(a, b)` with `b` finite extends,
@@ -455,7 +459,7 @@ theorem IsGeodesicOn.exists_forward_extension (g : RiemannianMetric I M)
     by_cases htb : t < b
     · exact hasGeodesicEquationAt_congr_of_eventuallyEq
         (hglue₁ t ⟨ht.1, htb⟩) (hδgeo t ⟨ht.1, htb⟩)
-    · push_neg at htb
+    · push Not at htb
       exact hasGeodesicEquationAt_congr_of_eventuallyEq
         (hglue₂ t htb ht.2)
         (hσgeo t ⟨by linarith [ht₁ε, htb], ht.2⟩)
@@ -465,7 +469,7 @@ theorem IsGeodesicOn.exists_forward_extension (g : RiemannianMetric I M)
     by_cases htb : t < b
     · exact ((hδcont t ⟨ht.1, htb⟩).continuousAt
         (isOpen_Ioo.mem_nhds ⟨ht.1, htb⟩)).congr (hglue₁ t ⟨ht.1, htb⟩).symm
-    · push_neg at htb
+    · push Not at htb
       exact ((hσcont t ⟨by linarith [ht₁ε, htb], ht.2⟩).continuousAt
         (isOpen_Ioo.mem_nhds ⟨by linarith [ht₁ε, htb], ht.2⟩)).congr
         (hglue₂ t htb ht.2).symm
@@ -475,40 +479,25 @@ theorem IsGeodesicOn.exists_forward_extension (g : RiemannianMetric I M)
   have hδpos : 0 < δ := by
     rw [hδ_def]
     nlinarith [mul_pos hκ0 hε, hclose₁]
+  have hpre : Ioo a (b + δ) ⊆
+      (fun t => κ⁻¹ * t + -(κ⁻¹ * c₀)) ⁻¹' (Ioo a' (t₁ + ε)) := by
+    intro t ht
+    have hinv0 : (0 : ℝ) < κ⁻¹ := by positivity
+    constructor
+    · rw [ha'_def]
+      have := mul_lt_mul_of_pos_left ht.1 hinv0
+      linarith
+    · have hupper : t < t₁' + κ * ε := by
+        have := ht.2; rw [hδ_def] at this; linarith
+      have h2 : κ⁻¹ * t < κ⁻¹ * (t₁' + κ * ε) :=
+        mul_lt_mul_of_pos_left hupper hinv0
+      have h3 : κ⁻¹ * (t₁' + κ * ε) + -(κ⁻¹ * c₀) = t₁ + ε := by
+        rw [ht₁_def]; field_simp [hκ0.ne']; ring
+      linarith
   refine ⟨δ, hδpos, γ', ?_, ?_, ?_⟩
   · -- continuity of the extension
-    have hmapsTo : ∀ t ∈ Ioo a (b + δ),
-        κ⁻¹ * t + -(κ⁻¹ * c₀) ∈ Ioo a' (t₁ + ε) := by
-      intro t ht
-      have hinv0 : (0 : ℝ) < κ⁻¹ := by positivity
-      constructor
-      · rw [ha'_def]
-        have := mul_lt_mul_of_pos_left ht.1 hinv0
-        linarith
-      · have hupper : t < t₁' + κ * ε := by
-          have := ht.2; rw [hδ_def] at this; linarith
-        have h2 : κ⁻¹ * t < κ⁻¹ * (t₁' + κ * ε) :=
-          mul_lt_mul_of_pos_left hupper hinv0
-        have h3 : κ⁻¹ * (t₁' + κ * ε) + -(κ⁻¹ * c₀) = t₁ + ε := by
-          rw [ht₁_def]; field_simp [hκ0.ne']; ring
-        linarith
-    exact hγnew_cont.comp (Continuous.continuousOn (by fun_prop)) hmapsTo
+    exact hγnew_cont.comp (Continuous.continuousOn (by fun_prop)) hpre
   · -- the extension is a geodesic
-    have hpre : Ioo a (b + δ) ⊆
-        (fun t => κ⁻¹ * t + -(κ⁻¹ * c₀)) ⁻¹' (Ioo a' (t₁ + ε)) := by
-      intro t ht
-      have hinv0 : (0 : ℝ) < κ⁻¹ := by positivity
-      constructor
-      · rw [ha'_def]
-        have := mul_lt_mul_of_pos_left ht.1 hinv0
-        linarith
-      · have hupper : t < t₁' + κ * ε := by
-          have := ht.2; rw [hδ_def] at this; linarith
-        have h2 : κ⁻¹ * t < κ⁻¹ * (t₁' + κ * ε) :=
-          mul_lt_mul_of_pos_left hupper hinv0
-        have h3 : κ⁻¹ * (t₁' + κ * ε) + -(κ⁻¹ * c₀) = t₁ + ε := by
-          rw [ht₁_def]; field_simp [hκ0.ne']; ring
-        linarith
     exact (isGeodesicOn_comp_affine (I := I) hγnew_geo).mono hpre
   · -- the extension agrees with `γ` below `b`
     intro t ht
@@ -530,8 +519,9 @@ end Extension
 section Global
 
 variable {M : Type*} [MetricSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-  [I.Boundaryless] [CompleteSpace E]
+  [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Local existence, intrinsic symmetric-interval form** (do Carmo
 Ch. 3, Theorem 2.2 / Ch. 7 proof of Theorem 2.8). For every initial datum
 `(p, v)` there are `b > 0` and a continuous intrinsic geodesic on `(-b, b)`
@@ -640,6 +630,7 @@ theorem exists_seed_geodesic (g : RiemannianMetric I M) (p : M)
         linarith
     exact (isGeodesicOn_comp_mul_left (I := I) hσgeo).mono hpre
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Every initial datum generates a geodesic defined on all of `ℝ`**
 (do Carmo Ch. 7, Theorem 2.8, c) ⟹ d), the maximal-interval argument). Under
 metric completeness, the (uniqueness-coherent) family of symmetric-interval

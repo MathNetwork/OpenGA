@@ -1,7 +1,6 @@
 import OpenGALib.Riemannian.Geodesic.FlowC2Dependence
 import OpenGALib.Riemannian.Exponential.C2Ball
 
-set_option linter.unusedSectionVars false
 set_option maxSynthPendingDepth 3
 
 /-!
@@ -14,7 +13,7 @@ besides the `C²` regularity of the chart reading
 that each ray curve `t ↦ f(t·u)` satisfies the **chart-coordinate geodesic
 equation**: its velocity `V(t) = (df)_{t·u}(u)` obeys
 
-`V̇(t) = −Γ_p(V(t), V(t))(f(t·u))`,
+`V'(t) = −Γ_p(V(t), V(t))(f(t·u))`,
 
 and `(df)_0 = id`. This file provides these facts on a common ball:
 
@@ -43,12 +42,12 @@ namespace Exponential
 open Riemannian.Geodesic Riemannian.FlowDependence
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
-set_option maxHeartbeats 1000000 in
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The chart reading of `exp_p` is `C²` on a ball and satisfies the
 geodesic ODE along rays** (do Carmo Ch. 3, §2–3; the analytic package for the Gauss
 lemma 3.5). There are `ρ > 0` and `b > 1` such that, writing

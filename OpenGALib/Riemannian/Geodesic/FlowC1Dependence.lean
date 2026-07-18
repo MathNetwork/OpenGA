@@ -1,7 +1,6 @@
 import OpenGALib.Riemannian.Geodesic.UniformExistence
 import OpenGALib.Riemannian.Geodesic.FlowDependence
 
-set_option linter.unusedSectionVars false
 
 /-!
 # C¹ dependence of the local geodesic flow on its initial condition
@@ -52,11 +51,12 @@ namespace Geodesic
 open Riemannian.FlowDependence
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The local geodesic flow is strictly differentiable in its initial condition
 at every point of the flow ball** (do Carmo Ch. 3, Thm 2.2 / Prop. 2.7, pointwise C¹
 dependence for the geodesic spray). There are `r, ε > 0`, a local flow `Z` of the

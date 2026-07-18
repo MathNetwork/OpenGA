@@ -49,7 +49,6 @@ noncomputable section
 open Bundle Manifold Set Filter Metric
 open scoped Manifold Topology ContDiff NNReal
 
-set_option linter.unusedSectionVars false
 
 namespace Riemannian
 
@@ -58,13 +57,14 @@ namespace Geodesic
 open Riemannian.Exponential
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
 variable {M' : Type*} [MetricSpace M'] [ChartedSpace H M'] [IsManifold I ∞ M']
 variable [T2Space (TangentBundle I M')]
 
+omit [T2Space (TangentBundle I M')] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** A curve satisfying the geodesic equation at `t` has an honest
 chart-`β` velocity at `t` (the `deriv` is a `HasDerivAt`). -/
 theorem HasGeodesicEquationAt.hasDerivAt_extChartAt_deriv
@@ -82,24 +82,21 @@ theorem HasGeodesicEquationAt.hasDerivAt_extChartAt_deriv
 
 section Step
 
-variable {g : RiemannianMetric I M'}
+/- The step lemma uses `tendsto_deriv_extChartAt_transfer` from
+`DataTransfer.lean` to transfer velocity convergence between charts. -/
 
-/- The chart-to-chart transfer of velocity convergence used by the step lemma
-is the real, sorry-free `tendsto_deriv_extChartAt_transfer` of `DataTransfer.lean`
-(imported above); the earlier temporary stub has been removed. -/
-
-set_option linter.unusedVariables false in
 /-- **Math.** The convergence invariant of the flow-box chaining: positions
 and chart-at-the-limit-point velocities of the sequence converge to those of
-the limit geodesic at time `t`. (The metric `g` is carried for the sake of
-the statement's meaning — the invariant is about geodesics of `g` — even
-though the formula does not mention it.) -/
-def ConvAt (g : RiemannianMetric I M') (γ : ℝ → M') (γs : ℕ → ℝ → M')
+the limit geodesic at time `t`. -/
+def ConvAt (γ : ℝ → M') (γs : ℕ → ℝ → M')
     (t : ℝ) : Prop :=
   Tendsto (fun n => γs n t) atTop (𝓝 (γ t)) ∧
     Tendsto (fun n => deriv (fun τ => extChartAt I (γ t) (γs n τ)) t) atTop
       (𝓝 (deriv (fun τ => extChartAt I (γ t) (γ τ)) t))
 
+variable {g : RiemannianMetric I M'}
+
+omit [NormedSpace ℝ E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Flow evaluations converge along converging data and times.**
 If a local flow `Z` is Lipschitz in the initial condition uniformly in time
 on `closedBall c r × [-ε, ε]`, its line at the limit datum `z` is continuous
@@ -141,6 +138,7 @@ theorem tendsto_flow_eval {r ε : ℝ} {Z : E × E → ℝ → E × E} {L : ℝ�
     simpa using (h1.const_mul (L : ℝ)).add h2'
   exact squeeze_zero' (Eventually.of_forall fun n => dist_nonneg) hbound hlim
 
+omit [T2Space (TangentBundle I M')] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Affine readback of a global geodesic from the uniform flow.**
 Let `Z` be a uniform local flow of the chart-`x` coordinate spray (flow
 clauses as produced by `exists_uniform_geodesic_flow`), `0 < T < ε`, and let
@@ -229,6 +227,7 @@ theorem IsGeodesic.eq_uniform_flow_readback_affine
     simp only [Function.comp_apply, hσ'def, this]
   rwa [hfun] at hcomp
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The flow-box step, moving-time version**: around every base
 time `t✶` there is a radius `ρ > 0` such that the convergence invariant
 `ConvAt` at any time `t` of the `ρ`-interval around `t✶` propagates to every
@@ -241,12 +240,12 @@ theorem exists_conv_step_eval (g : RiemannianMetric I M')
     {γ : ℝ → M'} (hγgeo : IsGeodesic (I := I) g γ) (hγc : Continuous γ)
     {γs : ℕ → ℝ → M'} (hgeo : ∀ n, IsGeodesic (I := I) g (γs n))
     (hc : ∀ n, Continuous (γs n)) (tstar : ℝ) :
-    ∃ ρ : ℝ, 0 < ρ ∧ ∀ t : ℝ, |t - tstar| ≤ ρ → ConvAt (I := I) g γ γs t →
+    ∃ ρ : ℝ, 0 < ρ ∧ ∀ t : ℝ, |t - tstar| ≤ ρ → ConvAt (I := I) γ γs t →
       ∀ (us : ℕ → ℝ) (u₀ : ℝ), |u₀ - tstar| ≤ ρ →
         (∀ᶠ n in Filter.atTop, |us n - tstar| ≤ ρ) →
         Filter.Tendsto us Filter.atTop (𝓝 u₀) →
         Filter.Tendsto (fun n => γs n (us n)) Filter.atTop (𝓝 (γ u₀)) ∧
-          ConvAt (I := I) g γ γs u₀ := by
+          ConvAt (I := I) γ γs u₀ := by
   classical
   set x : M' := γ tstar with hxdef
   -- the uniform flow box at the base point
@@ -611,6 +610,7 @@ theorem exists_conv_step_eval (g : RiemannianMetric I M')
       (fun n => (hgeo n) u₀) (fun n => (hc n).continuousAt) (hγgeo u₀)
       hγc.continuousAt hsrc_u₀ (mem_chart_source H (γ u₀)) hpos_u₀ hvelx_u₀
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The flow-box step**: around every base time `t✶` there is a
 radius `ρ > 0` such that the convergence invariant `ConvAt` propagates from
 any time `t` to any time `u` in the `ρ`-interval around `t✶`. See the module
@@ -620,7 +620,7 @@ theorem exists_conv_step (g : RiemannianMetric I M')
     {γs : ℕ → ℝ → M'} (hgeo : ∀ n, IsGeodesic (I := I) g (γs n))
     (hc : ∀ n, Continuous (γs n)) (tstar : ℝ) :
     ∃ ρ : ℝ, 0 < ρ ∧ ∀ t u : ℝ, |t - tstar| ≤ ρ → |u - tstar| ≤ ρ →
-      ConvAt (I := I) g γ γs t → ConvAt (I := I) g γ γs u := by
+      ConvAt (I := I) γ γs t → ConvAt (I := I) γ γs u := by
   obtain ⟨ρ, hρ, hstep⟩ :=
     exists_conv_step_eval (I := I) g hγgeo hγc hgeo hc tstar
   exact ⟨ρ, hρ, fun t u ht hu hconv =>

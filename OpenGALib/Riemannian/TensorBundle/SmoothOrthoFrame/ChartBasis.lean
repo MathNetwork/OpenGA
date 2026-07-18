@@ -30,7 +30,6 @@ chain lives in `Tensor/SmoothOrthoFrame/Smoothness.lean`. Anchor
 
 noncomputable section
 
-set_option linter.unusedSectionVars false
 
 open Bundle Manifold Set FiberBundle Filter
 open scoped Manifold Topology ContDiff Bundle
@@ -60,14 +59,17 @@ def chartBasisVec (α : M) (i : Fin (Module.finrank ℝ E)) :
     M → TotalSpace E (TangentSpace I : M → Type _) :=
   fun b => TotalSpace.mk' E b (chartBasisVecFiber (I := I) α i b)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 @[simp] lemma chartBasisVec_proj
     (α : M) (i : Fin (Module.finrank ℝ E)) (b : M) :
     (chartBasisVec (I := I) α i b).proj = b := rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 @[simp] lemma chartBasisVec_snd
     (α : M) (i : Fin (Module.finrank ℝ E)) (b : M) :
     (chartBasisVec (I := I) α i b).2 = chartBasisVecFiber (I := I) α i b := rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** On the base set, the trivialization sends the chart-basis
 vector to the constant model-basis vector. -/
 lemma trivializationAt_chartBasisVec_snd
@@ -80,6 +82,7 @@ lemma trivializationAt_chartBasisVec_snd
     ((Module.finBasis ℝ E) i)
   simpa [chartBasisVecFiber] using congrArg Prod.snd h
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The chart-basis tangent-bundle section is smooth on the
 base set of the trivialization at $\alpha$. -/
 lemma chartBasisVec_contMDiffOn
@@ -108,6 +111,7 @@ def chartBasisFamily (α : M) {b : M}
     (ContinuousLinearEquiv.toLinearEquiv
       ((trivializationAt E (TangentSpace I) α).continuousLinearEquivAt ℝ b hb).symm)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 lemma chartBasisFamily_apply (α : M) {b : M}
     (hb : b ∈ (trivializationAt E (TangentSpace I) α).baseSet)
     (i : Fin (Module.finrank ℝ E)) :
@@ -117,6 +121,7 @@ lemma chartBasisFamily_apply (α : M) {b : M}
   rw [Module.Basis.map_apply]
   rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The chart-basis family is linearly independent at each
 base-set point. -/
 lemma chartBasisFamily_linearIndependent (α : M) {b : M}
@@ -183,6 +188,7 @@ noncomputable def chartFrameRawFiber
         chartFrameNormFiber (I := I) g α b
           ⟨j.val, lt_trans j.isLt i.isLt⟩
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** Recursive expansion of `chartFrameNormFiber` at index $i$.
 normalised vector is `(Real.sqrt (g.inner b raw raw))⁻¹ • raw`. -/
 lemma chartFrameNormFiber_eq
@@ -196,6 +202,7 @@ lemma chartFrameNormFiber_eq
   unfold chartFrameNormFiber chartFrameRawFiber
   rfl
 
+omit [InnerProductSpace ℝ E] in
 /-- **Eng.** At the zeroth index, the unnormalised Gram-Schmidt vector reduces to
 the chart-basis vector itself (the empty sum vanishes). -/
 lemma chartFrameRawFiber_at_zero
@@ -205,6 +212,7 @@ lemma chartFrameRawFiber_at_zero
   unfold chartFrameRawFiber
   simp
 
+omit [InnerProductSpace ℝ E] in
 /-- **Eng.** At the zeroth index, the normalised Gram-Schmidt vector is the
 chart-basis vector divided by its $g$-norm. -/
 lemma chartFrameNormFiber_at_zero
@@ -217,6 +225,7 @@ lemma chartFrameNormFiber_at_zero
         chartBasisVecFiber (I := I) α ⟨0, NeZero.pos _⟩ b := by
   rw [chartFrameNormFiber_eq, chartFrameRawFiber_at_zero]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** Generic normalisation calculation: for a vector $v$ in a fiber
 with positive $g$-self-inner-product $N$, scaling $v$ by
 $(\sqrt N)^{-1}$ gives a unit-norm vector. Pure continuous linear map/ring algebra in
@@ -246,6 +255,7 @@ lemma g_inner_normalised
     _ = (g.inner b v v)⁻¹ * g.inner b v v := by rw [hs_sq]
     _ = 1 := inv_mul_cancel₀ hpos.ne'
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** At a base-set point and at the zeroth index, the normalised
 Gram-Schmidt vector is $g$-unit-norm. -/
 lemma chartFrameNormFiber_at_zero_norm

@@ -5,7 +5,7 @@ import OpenGALib.Util.Attributes
 /-!
 # Properness via divergent compact exhaustions
 
-do Carmo, *Riemannian Geometry*, Ch. 7, Theorem 2.8, b) ⟺ e): a metric space
+do Carmo, *Riemannian Geometry*, Ch. 7, Theorem 2.8, b) ↔ e): a metric space
 has the Heine–Borel property (closed bounded sets are compact, i.e. it is a
 *proper* space) iff it admits a monotone exhaustion by compact sets `K n` such
 that every sequence escaping all the `K n` diverges in distance from a fixed
@@ -19,7 +19,7 @@ namespace OpenGA
 
 variable {α : Type*} [PseudoMetricSpace α]
 
-/-- **Math.** do Carmo Ch. 7, Theorem 2.8, b) ⟺ e). A pseudometric space is
+/-- **Math.** do Carmo Ch. 7, Theorem 2.8, b) ↔ e). A pseudometric space is
 **proper** (closed balls — equivalently closed bounded sets — are compact) iff
 there is a monotone exhaustion `K 0 ⊆ K 1 ⊆ ⋯`, `⋃ n, K n = univ`, by compact
 sets such that any sequence `q` with `q n ∉ K n` satisfies

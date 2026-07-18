@@ -1,13 +1,12 @@
 import OpenGALib.Riemannian.Geodesic.Equation
 import Mathlib.Geometry.Manifold.IntegralCurve.ExistUnique
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Local existence of geodesics via Picard-Lindelöf
 
 For a smooth Riemannian metric `g` on a smooth manifold `M` (boundaryless,
-modelled on a complete inner-product space `E`) and any initial datum
+modelled on a finite-dimensional inner-product space `E`) and any initial datum
 `(p : M, v : T_p M)`, there exists a curve `γ : ℝ → M` starting at `p`
 that is the projection of a local integral curve of the chart-fixed
 geodesic vector field `geodesicVectorFieldChart g p` on `T M`.
@@ -20,8 +19,9 @@ The construction proceeds in two steps:
    field is `C^∞` at `⟨p, v⟩ : TangentBundle I M` by
    `geodesicVectorFieldChart_contMDiffAt`; the tangent bundle is
    boundaryless because `(I.prod 𝓘(ℝ, E)).Boundaryless` is automatic
-   from `[I.Boundaryless]`; `[CompleteSpace E]` is a hypothesis of the
-   theorem. The output is a curve `f : ℝ → TangentBundle I M` with
+   from `[I.Boundaryless]`; finite-dimensional real normed spaces are complete,
+   as required by the existence theorem. The output is a curve
+   `f : ℝ → TangentBundle I M` with
    `f 0 = ⟨p, v⟩` and `IsMIntegralCurveAt f (gvfChart g p) 0`.
 
 2. **Projection to `M`.** Set `γ t := (f t).proj`. Then `γ 0 = p` and
@@ -43,18 +43,19 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Picard-Lindelöf lift.** For a smooth Riemannian metric `g`, point
 `p : M`, and tangent vector `v : T_p M`, on a boundaryless smooth manifold
 modelled on a complete inner-product space, there exists a curve
 `f : ℝ → TangentBundle I M` with `f 0 = ⟨p, v⟩` that is a local integral
 curve of `geodesicVectorFieldChart g p` at `0`. -/
 theorem exists_isMIntegralCurveAt_geodesicVectorFieldChart
-    (g : RiemannianMetric I M) [I.Boundaryless] [CompleteSpace E]
+    (g : RiemannianMetric I M) [I.Boundaryless]
     (p : M) (v : TangentSpace I p) :
     ∃ f : ℝ → TangentBundle I M,
       f 0 = (⟨p, v⟩ : TangentBundle I M) ∧
@@ -84,9 +85,11 @@ theorem exists_isMIntegralCurveAt_geodesicVectorFieldChart
 `γ : ℝ → M`, namely `γ t := (f t).proj`. -/
 def projectCurve (f : ℝ → TangentBundle I M) : ℝ → M := fun t => (f t).proj
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] in
 @[simp] lemma projectCurve_apply (f : ℝ → TangentBundle I M) (t : ℝ) :
     projectCurve (I := I) f t = (f t).proj := rfl
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] in
 /-- **Math.** If the lifted curve starts at `⟨p, v⟩`, its projection starts at `p`. -/
 lemma projectCurve_zero_of_lift {f : ℝ → TangentBundle I M} {p : M} {v : E}
     (hf0 : f 0 = (⟨p, v⟩ : TangentBundle I M)) :
@@ -95,8 +98,9 @@ lemma projectCurve_zero_of_lift {f : ℝ → TangentBundle I M} {p : M} {v : E}
 
 section ChartedPicardLindelof
 
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Local existence of geodesics with prescribed initial velocity.** For
 a smooth Riemannian metric `g`, an initial point `p : M`, and an initial
 velocity `v : T_p M`, there exists a curve `γ : ℝ → M` through `p`, together
@@ -130,6 +134,7 @@ theorem exists_geodesic_with_initial_velocity_at
   have h0 : (f 0).proj = p := projectCurve_zero_of_lift (I := I) hf0
   rw [h0]; exact mem_chart_source H p
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The manifold derivative of the lifted curve at `0`. -/
 theorem hasMFDerivAt_lift_zero
     {g : RiemannianMetric I M} {f : ℝ → TangentBundle I M}

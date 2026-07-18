@@ -43,7 +43,6 @@ follows an external `differential-geometry` lib analog.
 
 noncomputable section
 
-set_option linter.unusedSectionVars false
 
 open Bundle Manifold Set FiberBundle Filter
 open scoped Manifold Topology ContDiff Bundle
@@ -94,12 +93,14 @@ bump function equals $1$. -/
 noncomputable def smoothOrthoFrameNbhd (α : M) : Set M :=
   {b : M | (chartBumpAt (I := I) (M := M) α : M → ℝ) b = 1}
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] in
 /-- **Math.** The neighbourhood `smoothOrthoFrameNbhd α` is in `𝓝 α`. -/
 lemma smoothOrthoFrameNbhd_mem_nhds (α : M) :
     smoothOrthoFrameNbhd (I := I) (M := M) α ∈ 𝓝 α := by
   classical
   exact (chartBumpAt (I := I) (M := M) α).eventuallyEq_one
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] in
 /-- **Math.** The centre $\alpha$ belongs to `smoothOrthoFrameNbhd α`. -/
 lemma mem_smoothOrthoFrameNbhd_self (α : M) :
     α ∈ smoothOrthoFrameNbhd (I := I) (M := M) α := by
@@ -107,6 +108,7 @@ lemma mem_smoothOrthoFrameNbhd_self (α : M) :
   change (chartBumpAt (I := I) (M := M) α : M → ℝ) α = 1
   exact (chartBumpAt (I := I) (M := M) α).eq_one
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** On `smoothOrthoFrameNbhd α`, the smooth orthonormal
 frame agrees with the un-bumped Gram-Schmidt step. -/
 lemma smoothOrthoFrame_eq_on_nbhd
@@ -120,6 +122,7 @@ lemma smoothOrthoFrame_eq_on_nbhd
   have hb1 : (chartBumpAt (I := I) (M := M) α : M → ℝ) b = 1 := hb
   rw [hb1, one_smul]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] in
 /-- **Eng.** `smoothOrthoFrameNbhd α` is contained in the chart
 source `(chartAt H α).source`. -/
 lemma smoothOrthoFrameNbhd_subset_chartAt_source (α : M) :
@@ -132,6 +135,7 @@ lemma smoothOrthoFrameNbhd_subset_chartAt_source (α : M) :
     rw [hb1]; exact one_ne_zero
   exact (chartBumpAt (I := I) (M := M) α).support_subset_source hsupp
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** `smoothOrthoFrameNbhd α` is contained in the
 trivialization base set
 `(trivializationAt E (TangentSpace I) α).baseSet`. -/
@@ -151,6 +155,7 @@ yields orthonormality of `smoothOrthoFrame g α` on
 `smoothOrthoFrameNbhd α`, and (via $\alpha \in \mathrm{Nbhd}\,\alpha$)
 at the centre $\alpha$ itself. -/
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Orthonormality of `smoothOrthoFrame` on the bump-equals-1
 neighbourhood.** For $b \in \mathrm{smoothOrthoFrameNbhd}\,\alpha$,
 the smooth orthonormal frame at $b$ is $g$-orthonormal. -/
@@ -167,6 +172,7 @@ theorem smoothOrthoFrame_orthonormal
   exact chartFrameNorm_orthonormal (I := I) g α
     (smoothOrthoFrameNbhd_subset_baseSet (I := I) (M := M) α hb) i j
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Orthonormality of `smoothOrthoFrame` at the centre.** The frame
 `smoothOrthoFrame g α` is $g_\alpha$-orthonormal. Direct corollary of
 `smoothOrthoFrame_orthonormal` at $\alpha$, since
@@ -207,6 +213,7 @@ variable [hm : HasMetric I M]
 
 open scoped InnerProductSpace
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** Orthonormality of `smoothOrthoFrame hm.metric α · α` in the
 `InnerProductSpace ℝ` sense (via `⟪·, ·⟫_ℝ` rather than
 `hm.metric.inner α`). Direct from
@@ -223,6 +230,7 @@ theorem smoothOrthoFrame_inner_at_center (α : M)
   show hm.metric.inner α _ _ = _
   exact smoothOrthoFrame_orthonormal_at_center (I := I) hm.metric α i j
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** `smoothOrthoFrame hm.metric α · α` is an `Orthonormal` family in
 `TangentSpace I α`. -/
 theorem smoothOrthoFrame_orthonormal_family (α : M) :
@@ -253,6 +261,7 @@ noncomputable def smoothOrthoFrameOrthonormalBasis (α : M) :
   rw [coe_basisOfOrthonormalOfCardEqFinrank]
   exact hOrth
 
+omit [InnerProductSpace ℝ E] in
 @[simp] theorem smoothOrthoFrameOrthonormalBasis_apply (α : M)
     (i : Fin (Module.finrank ℝ E)) :
     smoothOrthoFrameOrthonormalBasis (I := I) α i =
@@ -263,6 +272,7 @@ noncomputable def smoothOrthoFrameOrthonormalBasis (α : M) :
     (coe_basisOfOrthonormalOfCardEqFinrank
       (smoothOrthoFrame_orthonormal_family (I := I) α) _) i
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Basis-change bridge at $\alpha$**: for any bilinear
 $B : T_\alpha M \to_\ell T_\alpha M \to_\ell W$ and any
 `OrthonormalBasis b` of `TangentSpace I α`, the diagonal sum over
@@ -287,6 +297,7 @@ theorem sum_diagonal_smoothOrthoFrame_eq_orthonormalBasis
   simp only [smoothOrthoFrameOrthonormalBasis_apply] at h
   exact h
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Basis-change bridge to `stdOrthonormalBasis`**: specialization of
 `sum_diagonal_smoothOrthoFrame_eq_orthonormalBasis` with
 $b = \mathrm{stdOrthonormalBasis}\,\mathbb{R}\,(T_\alpha M)$ — the
@@ -309,6 +320,7 @@ At any `b ∈ smoothOrthoFrameNbhd α`, the frame `(smoothOrthoFrame hm.metric �
 forms a `g_b`-orthonormal basis of `T_bM`. Same construction as
 `smoothOrthoFrameOrthonormalBasis α` but parameterised by the nbhd point. -/
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** `InnerProductSpace` form of `smoothOrthoFrame_orthonormal` at `b ∈ nbhd α`,
 routed through `HasMetric I M` → `InnerProductSpace ℝ (TangentSpace I b)`. -/
 theorem smoothOrthoFrame_inner_at_nbhd (α : M) {b : M}
@@ -320,6 +332,7 @@ theorem smoothOrthoFrame_inner_at_nbhd (α : M) {b : M}
   show hm.metric.inner b _ _ = _
   exact smoothOrthoFrame_orthonormal (I := I) hm.metric α hb i j
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** `smoothOrthoFrame hm.metric α · b` is an `Orthonormal` family in `T_bM`. -/
 theorem smoothOrthoFrame_orthonormal_family_at_nbhd (α : M) {b : M}
     (hb : b ∈ smoothOrthoFrameNbhd (I := I) (M := M) α) :
@@ -344,6 +357,7 @@ noncomputable def smoothOrthoFrameOrthonormalBasis_at_nbhd (α : M) {b : M}
   rw [coe_basisOfOrthonormalOfCardEqFinrank]
   exact hOrth
 
+omit [InnerProductSpace ℝ E] in
 @[simp] theorem smoothOrthoFrameOrthonormalBasis_at_nbhd_apply
     (α : M) {b : M} (hb : b ∈ smoothOrthoFrameNbhd (I := I) (M := M) α)
     (i : Fin (Module.finrank ℝ E)) :
@@ -355,6 +369,7 @@ noncomputable def smoothOrthoFrameOrthonormalBasis_at_nbhd (α : M) {b : M}
     (coe_basisOfOrthonormalOfCardEqFinrank
       (smoothOrthoFrame_orthonormal_family_at_nbhd (I := I) α hb) _) i
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **Basis-change bridge at `b ∈ nbhd α` (to `stdOrthonormalBasis`)**:
 the diagonal sum over the smooth orthonormal frame at any nbhd point `b`
 equals the diagonal sum over `stdOrthonormalBasis ℝ (T_bM)`. Parametric

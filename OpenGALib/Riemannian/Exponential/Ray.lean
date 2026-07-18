@@ -2,7 +2,6 @@ import OpenGALib.Riemannian.Exponential.Defs
 import OpenGALib.Riemannian.Geodesic.Homogeneity
 import OpenGALib.Riemannian.Geodesic.InitialVelocity
 
-set_option linter.unusedSectionVars false
 
 /-!
 # The exponential map along rays
@@ -35,11 +34,12 @@ namespace Exponential
 open Riemannian.Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The exponential map along a ray is the geodesic** (do Carmo Ch. 3,
 after Prop. 2.7): `exp_p (t • v) = γ(t, p, v)` whenever `t` lies in the maximal
 interval of the geodesic with initial data `(p, v)`. The chart-validity clause
@@ -60,6 +60,7 @@ theorem expMap_smul (g : RiemannianMetric I M) (p : M) (v : TangentSpace I p)
       (a := t) (t := 1) ht0 h1 hsrc
     rwa [mul_one] at h
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **`d(exp_p)_0 = id` along rays** (do Carmo Ch. 3, the computation in
 Prop. 2.9): read in the chart at `p`, the curve `t ↦ exp_p(t • v)` has derivative
 `v` at `t = 0`:

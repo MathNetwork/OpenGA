@@ -30,14 +30,11 @@ directions `u₁ ≠ -u₂` admits the strictly shorter chord
 `θ·|η u₂ − η u₁|_p < 2η` — see `CornerRigidity.lean`.
 -/
 
-set_option maxHeartbeats 800000
-
 noncomputable section
 
 open Bundle Manifold MeasureTheory Set Filter Metric
 open scoped Manifold Topology ContDiff
 
-set_option linter.unusedSectionVars false
 
 namespace Riemannian
 
@@ -46,13 +43,14 @@ namespace Exponential
 open Riemannian.Geodesic Riemannian.FlowDependence
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
 variable {M' : Type*} [MetricSpace M'] [ChartedSpace H M'] [IsManifold I ∞ M']
 variable [T2Space (TangentBundle I M')]
 
+omit [InnerProductSpace ℝ E] in
 /-- **Math.** **The chord upper bound at the pole of a normal ball** (do Carmo
 Ch. 3 §3, the `C⁰` comparability of `d` with the flat metric of `T_pM` near
 `p`). Under the standing hypothesis `g.IsRiemannianDist`, for every `θ > 1`

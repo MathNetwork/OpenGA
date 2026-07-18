@@ -75,37 +75,31 @@ theorem inner_smul_right (B : Form 𝕜 V) (c : 𝕜) (v w : V) :
   simp [inner_def, smul_eq_mul]
 
 /-- **Zero in left argument**. -/
-@[simp]
 theorem inner_zero_left (B : Form 𝕜 V) (w : V) :
     inner B 0 w = 0 := by
   simp [inner_def]
 
 /-- **Zero in right argument**. -/
-@[simp]
 theorem inner_zero_right (B : Form 𝕜 V) (v : V) :
     inner B v 0 = 0 := by
   simp [inner_def]
 
 /-- **Negation in left argument**. -/
-@[simp]
 theorem inner_neg_left (B : Form 𝕜 V) (v w : V) :
     inner B (-v) w = -inner B v w := by
   simp [inner_def, map_neg, LinearMap.neg_apply]
 
 /-- **Negation in right argument**. -/
-@[simp]
 theorem inner_neg_right (B : Form 𝕜 V) (v w : V) :
     inner B v (-w) = -inner B v w := by
   simp [inner_def, map_neg]
 
 /-- **Subtraction in left argument**. -/
-@[simp]
 theorem inner_sub_left (B : Form 𝕜 V) (v₁ v₂ w : V) :
     inner B (v₁ - v₂) w = inner B v₁ w - inner B v₂ w := by
   simp [inner_def, map_sub, LinearMap.sub_apply]
 
 /-- **Subtraction in right argument**. -/
-@[simp]
 theorem inner_sub_right (B : Form 𝕜 V) (v w₁ w₂ : V) :
     inner B v (w₁ - w₂) = inner B v w₁ - inner B v w₂ := by
   simp [inner_def, map_sub]

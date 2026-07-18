@@ -9,7 +9,6 @@ import Mathlib.Analysis.Calculus.ImplicitFunction.ProdDomain
 import Mathlib.Analysis.Calculus.ContDiff.Defs
 import Mathlib.Analysis.SpecificLimits.Normed
 
-set_option linter.unusedSectionVars false
 
 /-! # C¹ dependence of ODE solutions on the initial condition
 
@@ -92,9 +91,11 @@ linear operator `C(K, E) →L[ℝ] C(K, F)` on curve spaces, `(postcomp A) β = 
 def postcomp (A : E →L[ℝ] F) : C(K, E) →L[ℝ] C(K, F) :=
   A.compLeftContinuous ℝ K
 
+omit [CompleteSpace E] [CompactSpace K] in
 @[simp] lemma postcomp_apply (A : E →L[ℝ] F) (β : C(K, E)) (t : K) :
     postcomp A β t = A (β t) := rfl
 
+omit [CompleteSpace E] in
 /-- **Math.** Postcomposition is bounded in operator norm by the norm of the composing map:
 `‖postcomp A‖ ≤ ‖A‖` (in sup norm, `‖A ∘ β‖ ≤ ‖A‖ ‖β‖`). -/
 lemma norm_postcomp_le (A : E →L[ℝ] F) :
@@ -119,15 +120,18 @@ def postcompCurve (A : C(K, E →L[ℝ] F)) : C(K, E) →L[ℝ] C(K, F) :=
         (mul_le_mul (A.norm_coe_le_norm t) (β.norm_coe_le_norm t)
           (norm_nonneg _) (norm_nonneg _)))
 
+omit [CompleteSpace E] in
 @[simp] lemma postcompCurve_apply (A : C(K, E →L[ℝ] F)) (β : C(K, E)) (t : K) :
     postcompCurve A β t = A t (β t) := rfl
 
+omit [CompleteSpace E] in
 /-- **Math.** Postcomposition by an operator family is bounded in operator norm by the sup
 norm of the family: `‖postcompCurve A‖ ≤ ‖A‖` (in sup norms, `‖t ↦ A t (β t)‖ ≤ ‖A‖ ‖β‖`). -/
 lemma norm_postcompCurve_le (A : C(K, E →L[ℝ] F)) :
     ‖(postcompCurve A : C(K, E) →L[ℝ] C(K, F))‖ ≤ ‖A‖ :=
   LinearMap.mkContinuous_norm_le _ (norm_nonneg A) _
 
+omit [CompleteSpace E] in
 /-- **Math.** Postcomposition by the constant operator family is postcomposition by its
 value: `postcompCurve (const A) = postcomp A`. -/
 lemma postcompCurve_const (A : E →L[ℝ] F) :
@@ -143,6 +147,7 @@ on the curves of interest, whose values stay in the continuity set of `f`). -/
 def superposition (f : E → E) : C(K, E) → C(K, E) := fun α =>
   if h : Continuous (f ∘ α) then ⟨f ∘ α, h⟩ else 0
 
+omit [NormedSpace ℝ E] [CompleteSpace E] [CompactSpace K] in
 /-- **Math.** On a curve `α` whose values stay inside a set where `f` is continuous, the
 superposition operator is honest composition: `superposition f α t = f (α t)`. -/
 lemma superposition_apply_of_continuousOn {f : E → E} {s : Set E}
@@ -153,6 +158,7 @@ lemma superposition_apply_of_continuousOn {f : E → E} {s : Set E}
   rw [dif_pos h]
   rfl
 
+omit [NormedSpace ℝ E] [CompleteSpace E] [CompactSpace K] in
 /-- **Math.** Superposition sends the constant curve at `x` to the constant curve at `f x`. -/
 lemma superposition_const (f : E → E) (x : E) :
     superposition f (ContinuousMap.const K x) = ContinuousMap.const K (f x) := by
@@ -179,6 +185,7 @@ lemma _root_.IsCompact.exists_forall_dist_image_lt_of_continuousAt
     ⟨δ, hδ, H⟩
   exact ⟨δ, hδ, fun x hx y hxy => H hxy hx⟩
 
+omit [CompleteSpace E] in
 /-- **Math.** Strict differentiability of the superposition operator at an arbitrary base
 curve: if `f` is differentiable on an open set `u` containing the (compact) range of
 `α₀ : C(K, E)`, with derivative `f'` continuous at every point of that range, then `α ↦ f ∘ α`
@@ -260,6 +267,7 @@ theorem hasStrictFDerivAt_superposition
     rwa [ContinuousMap.sub_apply] at h3
   exact (key t _ (hval hα t) _ (hval hβ t)).trans (mul_le_mul_of_nonneg_left h2 hε.le)
 
+omit [CompleteSpace E] in
 /-- **Math.** Strict differentiability of the superposition operator at a constant curve: if
 `f` is differentiable on a ball around `x₀` with derivative `f'` continuous at `x₀`, then
 `α ↦ f ∘ α` is strictly differentiable at `const x₀` with derivative `postcomp (f' x₀)`.
@@ -308,15 +316,18 @@ def intervalPrimitive (hT : (0:ℝ) ≤ T) :
         _ = (t:ℝ) * ‖β‖ := by rw [sub_zero, abs_of_nonneg t.2.1, mul_comm]
         _ ≤ T * ‖β‖ := mul_le_mul_of_nonneg_right t.2.2 (norm_nonneg β))
 
+omit [CompleteSpace E] in
 @[simp] lemma intervalPrimitive_apply (hT : (0:ℝ) ≤ T) (β : C(Set.Icc (0:ℝ) T, E))
     (t : Set.Icc (0:ℝ) T) :
     intervalPrimitive hT β t = ∫ s in (0:ℝ)..(t:ℝ), β (Set.projIcc 0 T hT s) := rfl
 
+omit [CompleteSpace E] in
 /-- **Math.** The Volterra primitive over `[0,T]` has operator norm at most `T`. -/
 lemma norm_intervalPrimitive_le (hT : (0:ℝ) ≤ T) :
     ‖(intervalPrimitive hT : C(Set.Icc (0:ℝ) T, E) →L[ℝ] C(Set.Icc (0:ℝ) T, E))‖ ≤ T :=
   LinearMap.mkContinuous_norm_le _ hT _
 
+omit [CompleteSpace E] in
 /-- **Math.** Composite bound `‖J ∘ M‖ ≤ T ‖A‖` for the Volterra primitive `J` following
 postcomposition `M` with `A`; this is the contraction estimate making `1 - J ∘ M` invertible
 when `T ‖A‖ < 1`. -/
@@ -325,6 +336,7 @@ lemma norm_intervalPrimitive_comp_postcomp_le (hT : (0:ℝ) ≤ T) (A : E →L[�
   refine le_trans (ContinuousLinearMap.opNorm_comp_le _ _) ?_
   exact mul_le_mul (norm_intervalPrimitive_le hT) (norm_postcomp_le A) (norm_nonneg _) hT
 
+omit [CompleteSpace E] in
 /-- **Math.** Composite bound `‖J ∘ M‖ ≤ T ‖A₀‖` for the Volterra primitive `J` following
 postcomposition `M` with an operator curve `A₀`; this is the contraction estimate making
 `1 - J ∘ M` invertible when `T ‖A₀‖ < 1`, along an arbitrary base solution. -/
@@ -343,6 +355,7 @@ def picardResidual (hT : (0:ℝ) ≤ T) (f : E → E) :
     E × C(Set.Icc (0:ℝ) T, E) → C(Set.Icc (0:ℝ) T, E) := fun q =>
   q.2 - ContinuousMap.const _ q.1 - intervalPrimitive hT (superposition f q.2)
 
+omit [CompleteSpace E] in
 @[simp] lemma picardResidual_apply (hT : (0:ℝ) ≤ T) (f : E → E) (x : E)
     (α : C(Set.Icc (0:ℝ) T, E)) :
     picardResidual hT f (x, α)
@@ -390,6 +403,7 @@ theorem picardResidual_eq_zero_of_hasDerivWithinAt
     ContinuousMap.zero_apply, intervalPrimitive_apply, key, hσ t]
   abel
 
+omit [CompleteSpace E] in
 /-- **Math.** At an equilibrium `f x₀ = 0`, the constant curve at `x₀` is a zero of the Picard
 residual (the integrand vanishes identically). -/
 theorem picardResidual_const_eq_zero (hT : 0 < T) {f : E → E} {x₀ : E} (heq : f x₀ = 0) :
@@ -417,6 +431,7 @@ def linearRamp (hT : (0:ℝ) ≤ T) : E →L[ℝ] C(Set.Icc (0:ℝ) T, E) :=
             rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg t.2.1]
         _ ≤ T * ‖v‖ := mul_le_mul_of_nonneg_right t.2.2 (norm_nonneg v))
 
+omit [CompleteSpace E] in
 @[simp] lemma linearRamp_apply (hT : (0:ℝ) ≤ T) (v : E) (t : Set.Icc (0:ℝ) T) :
     linearRamp hT v t = (t : ℝ) • v := rfl
 

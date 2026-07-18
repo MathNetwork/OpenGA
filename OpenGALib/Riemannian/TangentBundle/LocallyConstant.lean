@@ -18,6 +18,8 @@ stack (`extChartAt_self_eventually_mem_closure_interior_range`).
 
 open scoped Manifold Topology
 
+/-- A charted space has locally constant chart selection if, near every base point, `chartAt H`
+chooses the same partial homeomorphism as it does at the base point. -/
 class IsLocallyConstantChartedSpace
     (H : Type*) [TopologicalSpace H]
     (M : Type*) [TopologicalSpace M] [ChartedSpace H M] : Prop where

@@ -3,7 +3,6 @@ import OpenGALib.Riemannian.Exponential.StrictDerivativeBall
 import OpenGALib.Riemannian.Exponential.LocalDiffeo
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 
-set_option linter.unusedSectionVars false
 set_option maxSynthPendingDepth 3
 
 /-!
@@ -27,10 +26,10 @@ everywhere with
 
 and the radial lower bound from the Gauss lemma
 (`exists_gauss_radial_lower_bound_ball`, do Carmo's
-`⟨v, ξ⟩_p² ≤ ⟨v, v⟩_p · |(d exp_p)_v ξ|²`) gives `|r_δ'(t)| ≤ |ċ(t)|_g`
+`⟨v, ξ⟩_p² ≤ ⟨v, v⟩_p · |(d exp_p)_v ξ|²`) gives `|r_δ'(t)| ≤ |c'(t)|_g`
 *at every* `t` — including zeros of `w`. The fundamental theorem of calculus
 and monotonicity of the interval integral yield
-`r_δ(b) - r_δ(a) ≤ ∫ |ċ|_g`, and `δ → 0⁺` recovers the radius comparison
+`r_δ(b) - r_δ(a) ≤ ∫ |c'|_g`, and `δ → 0⁺` recovers the radius comparison
 with no corner analysis.
 
 ## Main statements
@@ -64,10 +63,11 @@ namespace Riemannian
 section ChartMetricInnerCalculus
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Product rule for the chart Gram inner product at a **fixed** base
 point `y₀`: for differentiable vector paths `V, W : ℝ → E`,
 `d/dt ⟨V(t), W(t)⟩_{y₀} = ⟨V'(t), W(t)⟩_{y₀} + ⟨V(t), W'(t)⟩_{y₀}`.
@@ -111,6 +111,7 @@ theorem hasDerivAt_chartMetricInner_const_base (g : RiemannianMetric I M) (α : 
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Finset.sum_add_distrib]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Continuity of the chart Gram pairing along a continuous base curve
 in the chart target, against continuous vector paths: `t ↦ ⟨V(t), W(t)⟩_{u(t)}`
 is continuous on `s` whenever `u, V, W` are and `u` stays in the chart target
@@ -139,6 +140,7 @@ theorem continuousOn_chartMetricInner_along (g : RiemannianMetric I M) (α : M)
     simpa only [Geodesic.chartCoordFunctional_apply, Function.comp_def] using h
   exact (hG.mul hcV).mul hcW
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The chart Gram quadratic form is **positive semidefinite** at every
 base point `y` of the chart target: `0 ≤ ⟨a, a⟩_y`. The Gram pairing at `y` is
 the intrinsic inner product at the foot `(extChartAt I p).symm y`. -/
@@ -158,13 +160,14 @@ end ChartMetricInnerCalculus
 namespace Exponential
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
 open Riemannian.Geodesic
 
+omit [I.Boundaryless] [T2Space (TangentBundle I M)] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The smoothed-radius comparison** (do Carmo Ch. 3, the integral
 estimate (1)–(2) in the proof of Prop. 3.6), abstract in the chart reading
 `f` of the exponential map. Suppose on the ball `B_ρ(0)`:
@@ -178,9 +181,9 @@ open interval with derivative extending continuously to the endpoints, the
 `g_p`-radius gain is bounded by the chart-read length of the composed curve
 `c = f ∘ w`:
 
-`√⟨w(b), w(b)⟩_p − √⟨w(a), w(a)⟩_p ≤ ∫_a^b √⟨ċ(t), ċ(t)⟩_{c(t)} dt`,
+`√⟨w(b), w(b)⟩_p − √⟨w(a), w(a)⟩_p ≤ ∫_a^b √⟨c'(t), c'(t)⟩_{c(t)} dt`,
 
-with `ċ(t) = (df)_{w(t)} w'(t)` by the chain rule. The proof runs the estimate
+with `c'(t) = (df)_{w(t)} w'(t)` by the chain rule. The proof runs the estimate
 on the smoothed radius `r_δ = √(⟨w, w⟩_p + δ)`, which is differentiable even
 at zeros of `w`, and lets `δ → 0⁺`. Only interior differentiability is
 required (the fundamental theorem of calculus is applied in its
@@ -281,7 +284,7 @@ theorem gauss_radius_comparison (g : RiemannianMetric I M) (p : M)
       refine intervalIntegral.integral_eq_sub_of_hasDeriv_right_of_le
         (f := fun s => Real.sqrt (Q s + δ)) hab hφcont
         (fun t ht => (hφderiv t ht).hasDerivWithinAt) hφ'_int
-    -- the pointwise bound `r_δ'(t) ≤ |ċ(t)|_g`
+    -- the pointwise bound `r_δ'(t) ≤ |c'(t)|_g`
     have hbound : ∀ t ∈ Icc a b, P t / Real.sqrt (Q t + δ) ≤ S t := by
       intro t ht
       have hRt := hR_nonneg t ht
@@ -313,13 +316,14 @@ theorem gauss_radius_comparison (g : RiemannianMetric I M) (p : M)
   filter_upwards [self_mem_nhdsWithin] with δ hδ
   exact hkey δ hδ
 
+omit [I.Boundaryless] [T2Space (TangentBundle I M)] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The reach estimate** (do Carmo Ch. 3, the escape case
 `ℓ(c) ≥ ρ` in the proof of Prop. 3.6, polar form): under the hypotheses of
 `gauss_radius_comparison`, the `g_p`-radius reached by the polar lift at
 *any* intermediate time is dominated by the total length of the composed
 curve:
 
-`√⟨w(t₁), w(t₁)⟩_p − √⟨w(a), w(a)⟩_p ≤ ∫_a^b |ċ(t)| dt` for `t₁ ∈ [a, b]`.
+`√⟨w(t₁), w(t₁)⟩_p − √⟨w(a), w(a)⟩_p ≤ ∫_a^b |c'(t)| dt` for `t₁ ∈ [a, b]`.
 
 Radius comparison on `[a, t₁]`, then monotonicity of the integral of the
 (pointwise nonnegative) speed. With `w(a) = 0` this is do Carmo's escape
@@ -371,6 +375,7 @@ theorem gauss_radius_reach (g : RiemannianMetric I M) (p : M)
   filter_upwards with t
   exact Real.sqrt_nonneg _
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The radius comparison on the Gauss ball of `exp_p`** (do Carmo
 Ch. 3, the integral estimate (2) in the proof of Prop. 3.6). There is `ρ > 0`
 with the ball `B_ρ(0) ⊂ T_pM` in the exponential domain and its image in the
@@ -378,7 +383,7 @@ chart at `p`, such that for every differentiable path `w : [a, b] → B_ρ(0)`
 with continuous derivative, the `g_p`-radius gain of `w` is at most the
 chart-read length of the curve `c = exp_p ∘ w`:
 
-`√⟨w(b), w(b)⟩_p − √⟨w(a), w(a)⟩_p ≤ ∫_a^b √⟨ċ, ċ⟩_{c(t)} dt`. -/
+`√⟨w(b), w(b)⟩_p − √⟨w(a), w(a)⟩_p ≤ ∫_a^b √⟨c', c'⟩_{c(t)} dt`. -/
 theorem exists_gauss_radius_comparison_ball (g : RiemannianMetric I M) (p : M) :
     ∃ ρ : ℝ, 0 < ρ ∧
       (∀ u : E, ‖u‖ < ρ → (u : TangentSpace I p) ∈ expDomain (I := I) g p) ∧
@@ -415,12 +420,13 @@ theorem exists_gauss_radius_comparison_ball (g : RiemannianMetric I M) (p : M) :
     (fun v ξ hv => hradial v ξ (hv.trans_le (min_le_left _ _)))
     hab hwc hw hw' hwball
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The reach estimate on the Gauss ball of `exp_p`** (do Carmo
 Ch. 3, the escape case in the proof of Prop. 3.6, polar form). On the Gauss
 ball: a curve `c = exp_p ∘ w` starting at `p` (`w(a) = 0`) has length at
 least the `g_p`-radius its polar lift reaches at any time:
 
-`√⟨w(t₁), w(t₁)⟩_p ≤ ∫_a^b |ċ(t)| dt` for every `t₁ ∈ [a, b]`.
+`√⟨w(t₁), w(t₁)⟩_p ≤ ∫_a^b |c'(t)| dt` for every `t₁ ∈ [a, b]`.
 
 In do Carmo's escape case, a competitor leaving the normal ball of `g_p`-radius
 `ρ'` reaches radius `ρ'`, so its length is at least `ρ' > ℓ(γ)`. -/
@@ -462,6 +468,7 @@ theorem exists_gauss_radius_reach_ball (g : RiemannianMetric I M) (p : M) :
     hwc hw hw' hwball ht₁
   rwa [hwa, chartMetricInner_zero_left, Real.sqrt_zero, sub_zero] at hreach
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The radial geodesic has constant chart-read speed** (do Carmo
 Ch. 3, the identity `|∂f/∂r| = 1` in the proof of Prop. 3.6, unnormalized
 form). There is `ρ > 0` such that for every `v` with `‖v‖ < ρ` and every
@@ -513,6 +520,7 @@ theorem exists_expMap_ray_speed_ball (g : RiemannianMetric I M) (p : M) :
     rw [map_smul, chartMetricInner_smul_left, chartMetricInner_smul_left] at hg
     exact mul_left_cancel₀ ht0 hg
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Radial geodesics minimize on the Gauss ball** (do Carmo Ch. 3,
 Proposition 3.6, polar form). There is `ρ > 0` such that for every `v` with
 `‖v‖ < ρ` and every competing curve presented in polar form through the
@@ -520,7 +528,7 @@ exponential chart — a differentiable `w : [0, 1] → B_ρ(0) ⊂ T_pM` with
 continuous derivative, `w(0) = 0`, `w(1) = v` — the chart-read length of the
 radial geodesic `γ(t) = exp_p(t v)` is at most that of `c(t) = exp_p(w(t))`:
 
-`ℓ(γ) = ∫_0^1 √⟨γ̇, γ̇⟩ dt = √⟨v, v⟩_p ≤ ∫_0^1 √⟨ċ, ċ⟩ dt = ℓ(c)`.
+`ℓ(γ) = ∫_0^1 √⟨γ', γ'⟩ dt = √⟨v, v⟩_p ≤ ∫_0^1 √⟨c', c'⟩ dt = ℓ(c)`.
 
 The left-hand side is evaluated by the constant ray speed
 (`exists_expMap_ray_speed_ball`), the right-hand side is bounded below by the
@@ -589,6 +597,7 @@ theorem exists_minimizing_geodesic_ball (g : RiemannianMetric I M) (p : M) :
   rw [hLHS]
   exact hRHS
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Radial geodesics minimize among curves in a normal ball**
 (do Carmo Ch. 3, Proposition 3.6, the case `c([0,1]) ⊂ B`). There is `ε > 0`
 such that `exp_p` is injective on `B_ε(0) ⊂ T_pM` with open image (so

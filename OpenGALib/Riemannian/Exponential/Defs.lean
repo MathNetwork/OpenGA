@@ -4,7 +4,6 @@ import OpenGALib.Riemannian.Geodesic.MaximalInterval
 import OpenGALib.Riemannian.Geodesic.Uniqueness
 import Mathlib.Topology.Connected.Clopen
 
-set_option linter.unusedSectionVars false
 
 /-!
 # The exponential map of a smooth Riemannian metric
@@ -57,7 +56,7 @@ namespace Riemannian
 namespace Exponential
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
@@ -70,7 +69,8 @@ the constant junk value `p` of `maximalGeodesic`. -/
 def expMap (g : RiemannianMetric I M) (p : M) (v : TangentSpace I p) : M :=
   maximalGeodesic (I := I) g p v 1
 
-@[simp] lemma expMap_def (g : RiemannianMetric I M) (p : M)
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
+lemma expMap_def (g : RiemannianMetric I M) (p : M)
     (v : TangentSpace I p) :
     expMap (I := I) g p v = maximalGeodesic (I := I) g p v 1 := rfl
 
@@ -81,6 +81,7 @@ geodesic-flow value; outside, it reverts to `p`. -/
 def expDomain (g : RiemannianMetric I M) (p : M) : Set (TangentSpace I p) :=
   {v | (1 : ℝ) ∈ maximalGeodesicInterval (I := I) g p v}
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 @[simp] lemma mem_expDomain_iff
     {g : RiemannianMetric I M} {p : M} {v : TangentSpace I p} :
     v ∈ expDomain (I := I) g p ↔
@@ -88,8 +89,9 @@ def expDomain (g : RiemannianMetric I M) (p : M) : Set (TangentSpace I p) :=
 
 section StationaryWitness
 
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
+omit [I.Boundaryless] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** For the zero initial velocity, the constant geodesic at `p` is a
 `MaximalGeodesicWitness` at every time, witnessed on the preconnected set
 `Set.univ`. -/
@@ -106,11 +108,13 @@ theorem maximalGeodesicWitness_zero_all_times
       geodesicVectorFieldChart_zero_section (I := I) g p
     exact (isMIntegralCurve_const hvf_zero).isMIntegralCurveOn Set.univ
 
+omit [I.Boundaryless] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The zero vector is always in the natural domain of `expMap g p`. -/
 theorem zero_mem_expDomain (g : RiemannianMetric I M) (p : M) :
     (0 : TangentSpace I p) ∈ expDomain (I := I) g p :=
   maximalGeodesicWitness_zero_all_times (I := I) g p 1
 
+omit [I.Boundaryless] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The natural domain of `expMap g p` is nonempty (it always contains `0`). -/
 theorem expDomain_nonempty (g : RiemannianMetric I M) (p : M) :
     (expDomain (I := I) g p).Nonempty :=
@@ -120,8 +124,9 @@ end StationaryWitness
 
 section JunkValue
 
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** Outside the natural domain, `expMap` returns the junk value `p`. -/
 theorem expMap_of_not_mem_expDomain
     {g : RiemannianMetric I M} {p : M} {v : TangentSpace I p}
@@ -134,8 +139,9 @@ end JunkValue
 
 section ExpMapZeroWitnessLevel
 
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
+omit [I.Boundaryless] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The chosen geodesic witness curve for `(p, 0)` at time `1` starts at
 `p`. (This is `maximalGeodesicChosenCurve_spec` paired with the
 `start_eq` lemma.) -/
@@ -152,9 +158,10 @@ end ExpMapZeroWitnessLevel
 
 section ZeroVelocityPropagation
 
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
   [T2Space (TangentBundle I M)]
 
+omit [I.Boundaryless] [T2Space (TangentBundle I M)] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The constant lift `fun _ : ℝ => ⟨p, 0⟩` is a global integral curve
 of `geodesicVectorFieldChart g p`, since the vector field vanishes at the
 zero section over the chart basepoint. -/
@@ -164,6 +171,7 @@ private lemma isMIntegralCurve_const_zero_section
       (geodesicVectorFieldChart (I := I) g p) :=
   isMIntegralCurve_const (geodesicVectorFieldChart_zero_section (I := I) g p)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Zero-velocity propagation.** If `f : ℝ → TangentBundle I M` is an
 integral curve of `geodesicVectorFieldChart g p` on a preconnected open
 set `J ∋ 0` and satisfies the initial condition `f 0 = ⟨p, 0⟩`, then
@@ -247,9 +255,10 @@ end ZeroVelocityPropagation
 
 section ExpMapZero
 
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
   [T2Space (TangentBundle I M)]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** For any witness `(γ, J)` of a `MaximalGeodesicWitness` with zero
 initial velocity, the witness curve is identically `p` on `J`. -/
 theorem maximalGeodesicWitness_zero_curve_eq_p
@@ -267,6 +276,7 @@ theorem maximalGeodesicWitness_zero_curve_eq_p
   rw [hf_eq] at this
   exact this.symm
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **`expMap g p 0 = p`** — the value of the exponential map at the
 zero vector is the base point itself. -/
 @[simp] theorem expMap_zero

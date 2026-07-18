@@ -37,7 +37,6 @@ the `differential-geometry` external library (`Integral/Measure/ChartDensity`,
 
 noncomputable section
 
-set_option linter.unusedSectionVars false
 
 open Bundle Manifold Set
 open scoped Manifold Topology ContDiff Matrix
@@ -62,6 +61,7 @@ def chartGramMatrix (g : RiemannianMetric I M) (α : M) (x : M) :
       (chartBasisVecFiber (I := I) α i x)
       (chartBasisVecFiber (I := I) α j x)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 @[simp] lemma chartGramMatrix_apply
     (g : RiemannianMetric I M) (α : M) (x : M)
     (i j : Fin (Module.finrank ℝ E)) :
@@ -70,6 +70,7 @@ def chartGramMatrix (g : RiemannianMetric I M) (α : M) (x : M) :
         (chartBasisVecFiber (I := I) α i x)
         (chartBasisVecFiber (I := I) α j x) := rfl
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The Gram matrix is Hermitian (symmetric, real entries). -/
 lemma chartGramMatrix_isHermitian
     (g : RiemannianMetric I M) (α : M) (x : M) :
@@ -85,6 +86,7 @@ lemma chartGramMatrix_isHermitian
 
 /-! ## Stage 2: positive-definiteness on the base set -/
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The Gram-matrix quadratic form equals the metric-inner-product
 squared norm of the corresponding linear combination of chart-basis vectors. -/
 lemma chartGramMatrix_dotProduct_mulVec
@@ -138,6 +140,7 @@ lemma chartGramMatrix_dotProduct_mulVec
   intro j _
   ring
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The Gram matrix of the chart-basis family is positive-definite
 on the trivialization base set. -/
 lemma chartGramMatrix_posDef
@@ -159,6 +162,7 @@ lemma chartGramMatrix_posDef
     exact hc this
   exact g.pos x w hwnz
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The determinant of the Gram matrix is strictly positive on
 the trivialization base set. -/
 lemma chartGramMatrix_det_pos
@@ -169,6 +173,7 @@ lemma chartGramMatrix_det_pos
 
 /-! ## Stage 3: smoothness of Gram-matrix entries -/
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** Each Gram-matrix entry is smooth on the trivialization base set,
 via `ContMDiffOn.clm_bundle_apply₂` on `g.contMDiff` and two `chartBasisVec`. -/
 lemma chartGramMatrix_entry_contMDiffOn
@@ -200,6 +205,7 @@ lemma chartGramMatrix_entry_contMDiffOn
   rw [Bundle.contMDiffWithinAt_totalSpace] at hpx
   exact hpx.2
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** The determinant of the Gram matrix is smooth on the
 trivialization base set. Expands `Matrix.det` as a finite sum of
 finite products and chains entry smoothness. -/
@@ -227,6 +233,7 @@ lemma chartGramMatrix_det_contMDiffOn
 
 /-! ## Stage 4: smoothness of the adjugate entries -/
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** Each adjugate entry of the Gram matrix is smooth on the
 trivialization base set: a polynomial in the smooth Gram-matrix entries
 via `Matrix.adjugate_apply` + `updateRow`. -/
@@ -286,6 +293,7 @@ def chartInvGramMatrix (g : RiemannianMetric I M) (α : M) (x : M) :
     Matrix (Fin (Module.finrank ℝ E)) (Fin (Module.finrank ℝ E)) ℝ :=
   (chartGramMatrix (I := I) g α x)⁻¹
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** On the chart base set, the inverse Gram matrix is a one-sided inverse. -/
 lemma chartInvGramMatrix_mul_chartGramMatrix
     (g : RiemannianMetric I M) (α : M) {x : M}
@@ -297,6 +305,7 @@ lemma chartInvGramMatrix_mul_chartGramMatrix
   unfold chartInvGramMatrix
   exact Matrix.nonsing_inv_mul _ hdet_unit
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Symmetric form: Gram · inverse Gram = 1 on the base set. -/
 lemma chartGramMatrix_mul_chartInvGramMatrix
     (g : RiemannianMetric I M) (α : M) {x : M}
@@ -308,6 +317,7 @@ lemma chartGramMatrix_mul_chartInvGramMatrix
   unfold chartInvGramMatrix
   exact Matrix.mul_nonsing_inv _ hdet_unit
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** Each entry of the inverse Gram matrix is smooth on the chart
 base set, via the cofactor / adjugate formula. -/
 lemma chartInvGramMatrix_entry_contMDiffOn
@@ -365,6 +375,7 @@ the right-hand side is smooth on the base set (Gram-matrix inverse entries
 via Stage 5, chart-basis vectors via `SmoothOrthoFrame`, and the covector
 section by hypothesis), so the LHS is smooth too. -/
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 private lemma metricRiesz_chart_form_inner_e
     (g : RiemannianMetric I M) (α : M) {x : M}
     (hx : x ∈ (trivializationAt E (TangentSpace I) α).baseSet)
@@ -475,6 +486,7 @@ private lemma metricRiesz_chart_form_inner_e
     intro i _
     rw [map_smul]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Chart-coordinate form of the Riesz dual** at a base-set point $x$. -/
 private theorem metricRiesz_chart_form
     (g : RiemannianMetric I M) (α : M) {x : M}
@@ -505,6 +517,7 @@ private theorem metricRiesz_chart_form
 
 /-! ## Stage 7: chart-local smoothness and the musical-iso section primitive -/
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Eng.** **Chart-local smoothness** of the Riesz-section in chart-frame form.
 Given a covector field $\Phi$ whose action on each chart-basis vector
 $\Phi(y)(e_j(y))$ is smooth on the trivialization base set, the
@@ -585,6 +598,7 @@ lemma metricRiesz_chartLocal_total_contMDiffOn
     exact (hcoef i).smul (contMDiffOn_const (c := (Module.finBasis ℝ E i : E)))
   exact hRHS_smooth.congr (fun y hy => hsnd_eq y hy)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Smoothness of the musical isomorphism section** at a
 base-set point. Given $\Phi$ whose chart-basis evaluations are smooth on
 the trivialization base set, $y \mapsto \sharp_g\,\Phi(y)$ is smooth.
@@ -623,6 +637,7 @@ theorem metricRiesz_section_contMDiffAt
     (trivializationAt E (TangentSpace I) α).open_baseSet
   exact (hMR x hx).contMDiffAt (hopen.mem_nhds hx)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Per-point variant of `metricRiesz_section_contMDiffAt`.
 Math: same conclusion (Riesz section smooth at $x$). Eng: input hypothesis
 relaxed to `ContMDiffWithinAt baseSet x` per chart-basis index, easier

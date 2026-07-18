@@ -2,7 +2,6 @@ import OpenGALib.Riemannian.Geodesic.EquationTransfer
 import OpenGALib.Riemannian.Geodesic.ChartFlow
 import OpenGALib.Riemannian.Geodesic.HopfRinow.ConstantSpeed
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Uniqueness of intrinsic geodesics
@@ -55,11 +54,12 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Local uniqueness of intrinsic geodesics.** If two intrinsic
 geodesics on an open set `s` share their position and their chart-`β`
 velocity reading at a time `t₀ ∈ s` (for any chart basepoint `β` whose
@@ -182,6 +182,7 @@ private lemma eq_at_closure_eventuallyEq_of_t2 [T2Space M]
     exact (hτ : γ₁ =ᶠ[𝓝 τ] γ₂).eq_of_nhds
   exact tendsto_nhds_unique (h₁t.congr' heq) h₂t
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The open-closed propagation core of intrinsic geodesic uniqueness,
 with the closure-point position match supplied as a hypothesis `hclosurePos` —
 the only step of the clopen argument that needs a separation property of `M`.
@@ -267,6 +268,7 @@ private theorem eqOn_of_deriv_chartReading_eq_aux
     hconn.subset_of_closure_inter_subset hS_open ⟨t₀, ht₀, ht₀S⟩ hclosed
   exact fun t ht => ((hsS ht) : γ₁ =ᶠ[𝓝 t] γ₂).eq_of_nhds
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Uniqueness of intrinsic geodesics** (do Carmo Ch. 3, uniqueness in
 Theorem 2.2, intrinsic interval form). Two continuous intrinsic geodesics on
 an open preconnected set `s` of times that share their position and chart

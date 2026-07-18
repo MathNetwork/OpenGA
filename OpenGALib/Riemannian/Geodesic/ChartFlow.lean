@@ -1,6 +1,5 @@
 import OpenGALib.Riemannian.Geodesic.InitialVelocity
 
-set_option linter.unusedSectionVars false
 
 /-!
 # The chart-`p` geodesic flow: spray in chart coordinates and transfer of solutions
@@ -52,7 +51,7 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
@@ -60,6 +59,7 @@ section ChartTarget
 
 variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The tangent-bundle chart at a basepoint over `p` has target the product
 of the base chart target with the full fibre: `φ_{⟨p,0⟩}(TM) = φ_p(U_p) × E`. -/
 lemma extChartAt_tangent_target (p : M) :
@@ -72,6 +72,7 @@ lemma extChartAt_tangent_target (p : M) :
   rw [mem_preimage, TangentBundle.trivializationAt_baseSet, ← extChartAt_source I]
   exact (extChartAt I p).map_target hy
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The tangent-bundle chart at a basepoint over `p` has source the
 chart-`p` spray domain: the tangent vectors whose foot lies in the chart at `p`. -/
 lemma extChartAt_tangent_source (p : M) :
@@ -81,6 +82,7 @@ lemma extChartAt_tangent_source (p : M) :
   rw [extChartAt_source, TangentBundle.mem_chart_source_iff]
   exact Iff.rfl
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The tangent-bundle chart target at `⟨p, 0⟩` is open (the base chart
 target is open on a boundaryless manifold, and the fibre factor is everything). -/
 lemma isOpen_extChartAt_tangent_target (p : M) :
@@ -88,6 +90,7 @@ lemma isOpen_extChartAt_tangent_target (p : M) :
   rw [extChartAt_tangent_target]
   exact (isOpen_extChartAt_target p).prod isOpen_univ
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** Reading a tangent vector through the tangent-bundle chart at `⟨p, 0⟩`
 and back: the foot of `φ_{⟨p,0⟩}⁻¹(ζ)` has chart-`p` image the first component of
 `ζ`, for `ζ` in the chart target. -/
@@ -110,6 +113,7 @@ lemma extChartAt_proj_extChartAt_tangent_symm (p : M) {ζ : E × E}
   rw [happ] at hri
   exact congrArg Prod.fst hri
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The foot of a chart-read tangent vector stays in the chart at `p`:
 for `ζ` in the tangent-bundle chart target, the foot of `φ_{⟨p,0⟩}⁻¹(ζ)` lies in
 the chart source at `p`. -/
@@ -121,6 +125,7 @@ lemma proj_extChartAt_tangent_symm_mem_chartAt_source (p : M) {ζ : E × E}
   rw [extChartAt_tangent_source (I := I) p] at hsrc
   exact proj_mem_chartAt_source_of_mem_geodesicChartDomain (I := I) hsrc
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The tangent-bundle chart at `⟨p, 0⟩` sends the initial point `⟨p, v⟩`
 to `(φ_p(p), v)`; equivalently, its inverse sends `(φ_p(p), v)` back to `⟨p, v⟩`. -/
 lemma extChartAt_tangent_symm_mk (p : M) (v : TangentSpace I p) :
@@ -150,6 +155,7 @@ section SprayCoordSmooth
 
 variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** On the tangent-bundle chart target, the coordinate spray
 `(x, w) ↦ (w, -Γ_p(w, w)(x))` is the chart-fixed spray fibre read through the
 chart: `F = (geodesicVectorFieldChartFiber g p) ∘ φ_{⟨p,0⟩}⁻¹`. -/
@@ -180,6 +186,7 @@ lemma geodesicSprayCoord_eqOn_chartFiber_comp (g : RiemannianMetric I M) (p : M)
   have h2 : chartFiberCoord (I := I) p (Ψ.symm ζ) = ζ.2 := congrArg Prod.snd hri
   rw [h1, h2]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Smoothness of the coordinate geodesic spray.** The map
 `(x, w) ↦ (w, -Γ_p(w, w)(x)) : E × E → E × E` is `C^∞` on the chart target
 `φ_p(U_p) × E`: it is the chart reading of the chart-fixed spray fibre on `TM`,
@@ -212,6 +219,7 @@ section ReverseBridge
 
 variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Chart solutions of the spray ODE are integral curves of the
 chart-fixed spray.** If `z : ℝ → E × E` solves `z' = (z₂, -Γ_p(z₂, z₂)(z₁))` on an
 open set `J` with values in the tangent-bundle chart target at `⟨p, 0⟩`, then
@@ -278,6 +286,7 @@ theorem isMIntegralCurveOn_extChartAt_tangent_symm
   rw [← Ψ.right_inv hζ]
   exact hasFDerivWithinAt_tangentCoordChange ⟨hq_src, hq_self⟩
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Chart solutions descend to geodesic witnesses.** A solution
 `z : ℝ → E × E` of the coordinate spray ODE on an open `J ∋ 0` with values in the
 tangent-bundle chart target and initial value `z 0 = (φ_p(p), v)` projects to a
@@ -313,8 +322,9 @@ end ReverseBridge
 
 section UnconditionalValue
 
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The canonical maximal geodesic agrees with any in-chart witness,
 unconditionally.** If `γ₀` is a geodesic witness with initial data `(p, v)` on an
 open preconnected `J₀ ∋ 0` whose own foot stays in the chart at `p`, then the
@@ -342,6 +352,7 @@ theorem maximalGeodesic_eq_witness_of_mem_chart
     (fun t ht => hsrc₀ t (inter_subset_left ht))
   exact (heq ⟨hs, hs₁⟩).symm
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] [T2Space (TangentBundle I M)] in
 /-- **Math.** The interval of any geodesic witness is contained in the maximal
 interval. -/
 theorem subset_maximalGeodesicInterval_of_witness
@@ -352,6 +363,7 @@ theorem subset_maximalGeodesicInterval_of_witness
     J₀ ⊆ maximalGeodesicInterval (I := I) g p v :=
   fun _ hs => ⟨γ₀, J₀, hJo, hJc, h0, hs, hγ₀⟩
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The canonical maximal geodesic is computed by chart solutions of the
 spray ODE.** If `z` solves the coordinate spray ODE on an open preconnected
 `J ∋ 0` inside the chart target with `z 0 = (φ_p(p), v)`, then on `J` the
@@ -373,6 +385,7 @@ theorem maximalGeodesic_eq_of_hasDerivAt_sprayCoord
     isGeodesicOnWithInitial_of_hasDerivAt_sprayCoord (I := I) g p v hz0 hd hmem
   exact maximalGeodesic_eq_witness_of_mem_chart (I := I) hwit hJ hJc h0J hsrc hs
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The chart-`p` reading of the canonical maximal geodesic along a chart
 solution of the spray ODE: `φ_p(γ(s, p, v)) = (z s).1` on the solution interval. -/
 theorem extChartAt_maximalGeodesic_of_hasDerivAt_sprayCoord

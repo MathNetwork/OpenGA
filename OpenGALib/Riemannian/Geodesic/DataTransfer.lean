@@ -21,7 +21,6 @@ forms consumed by the Hopf–Rinow endpoint-continuity argument:
   containing the limit foot converge as well.
 -/
 
-set_option linter.unusedSectionVars false
 
 noncomputable section
 
@@ -32,11 +31,12 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Chart-to-chart transfer of the geodesic velocity reading.** If
 `σ` solves the geodesic equation at `t` and its foot `σ t` lies in the charts
 at `α` and at `β`, then the β-chart velocity reading is the tangent coordinate
@@ -56,6 +56,7 @@ theorem HasGeodesicEquationAt.deriv_extChartAt_transfer
   rw [h.deriv_extChartAt_eq hcont hβ, h.deriv_extChartAt_eq hcont hα,
     tangentCoordChange_comp (I := I) ⟨⟨hself, hα'⟩, hβ'⟩]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** **Joint sequential continuity of the tangent coordinate change.**
 If the feet `zs n` converge to a foot `x` lying in the charts at `α` and at
 `β`, and the vectors `us n` converge to `u`, then the coordinate changes
@@ -78,6 +79,7 @@ theorem tendsto_tangentCoordChange_of_tendsto {α β : M}
   exact (isBoundedBilinearMap_apply.continuous.tendsto
     (tangentCoordChange I α β x, u)).comp (hA.prodMk_nhds hus)
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Transfer of velocity convergence between charts.** If a
 sequence of geodesics at time `t` has feet converging to the foot of a limit
 geodesic and α-chart velocity readings converging to the limit's α-chart

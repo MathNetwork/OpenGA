@@ -1,6 +1,5 @@
 import OpenGALib.Riemannian.Geodesic.FlowDependence
 
-set_option linter.unusedSectionVars false
 -- the sup-norm instance on curves valued in operators of the extended state space
 -- `E × (E →L[ℝ] E)` needs nested pending instance synthesis beyond the default depth
 set_option maxSynthPendingDepth 3
@@ -78,6 +77,7 @@ def curveProd : C(K, E) × C(K, F) →L[ℝ] C(K, E × F) :=
       rw [Prod.norm_def, Prod.norm_def]
       exact max_le_max (q.1.norm_coe_le_norm t) (q.2.norm_coe_le_norm t))
 
+omit [CompleteSpace E] in
 @[simp] lemma curveProd_apply (α : C(K, E)) (β : C(K, F)) (t : K) :
     curveProd (α, β) t = (α t, β t) := rfl
 
@@ -104,9 +104,11 @@ def compRightCurve :
             mul_le_mul_of_nonneg_right (γ.norm_coe_le_norm t) (norm_nonneg W₀)
         _ = ‖W₀‖ * ‖γ‖ := mul_comm _ _)
 
+omit [CompleteSpace E] in
 @[simp] lemma compRightCurve_apply (W₀ : E →L[ℝ] E) (γ : C(K, E →L[ℝ] E)) (t : K) :
     compRightCurve W₀ γ t = (γ t).comp W₀ := rfl
 
+omit [CompleteSpace E] in
 /-- **Math.** Postcomposition by an operator-curve difference is the difference of the
 postcompositions: `postcompCurve (A - B) = postcompCurve A - postcompCurve B` (the
 assignment `A ↦ postcompCurve A` is linear). -/
@@ -117,6 +119,7 @@ lemma postcompCurve_sub (A B : C(K, E →L[ℝ] F)) :
   ext t
   simp
 
+omit [CompleteSpace E] in
 /-- **Math.** Left-composition curves do not increase the sup norm:
 `‖(t ↦ (A t) ∘L ·)‖ ≤ ‖A‖`, i.e. postcomposing an operator curve with the
 left-composition operator `compL` is bounded by the curve's own norm. -/
@@ -150,6 +153,7 @@ of `f` with the solution of the variational (linearized) equation along it. -/
 def variationalField (f : E → E) (f' : E → E →L[ℝ] E) :
     E × (E →L[ℝ] E) → E × (E →L[ℝ] E) := fun q => (f q.1, (f' q.1).comp q.2)
 
+omit [CompleteSpace E] in
 @[simp] lemma variationalField_apply (f : E → E) (f' : E → E →L[ℝ] E)
     (q : E × (E →L[ℝ] E)) :
     variationalField f f' q = (f q.1, (f' q.1).comp q.2) := rfl
@@ -167,6 +171,7 @@ def variationalFieldDeriv (f' : E → E →L[ℝ] E) (f'' : E → E →L[ℝ] E 
       + ((ContinuousLinearMap.compL ℝ E E E).flip q.2).comp
           ((f'' q.1).comp (ContinuousLinearMap.fst ℝ E (E →L[ℝ] E))))
 
+omit [CompleteSpace E] in
 /-- **Math.** The variational field is differentiable wherever `f` is twice differentiable,
 with derivative `variationalFieldDeriv`. -/
 theorem hasFDerivAt_variationalField {f : E → E} {f' : E → E →L[ℝ] E}
@@ -184,6 +189,7 @@ theorem hasFDerivAt_variationalField {f : E → E} {f' : E → E →L[ℝ] E}
   have h2 := hc.clm_comp (hasFDerivAt_snd (p := q))
   exact h1.prodMk h2
 
+omit [CompleteSpace E] in
 /-- **Math.** The derivative of the variational field is continuous wherever `f'` and `f''`
 are: `q ↦ variationalFieldDeriv f' f'' q` is continuous at every `q` with `f'` and `f''`
 continuous at `q.1`. -/
@@ -224,6 +230,7 @@ theorem continuousAt_variationalFieldDeriv {f' : E → E →L[ℝ] E}
   exact ((continuousAt_const.clm_comp hblock1).add
     (continuousAt_const.clm_comp (hblock2a.add hblock2b)))
 
+omit [CompleteSpace E] in
 /-- **Math.** The variational field is continuous on `u ×ˢ univ` when `f` is differentiable
 on the open set `u` (so both `f` and `f'` are continuous there). -/
 theorem continuousOn_variationalField {f : E → E} {f' : E → E →L[ℝ] E}
@@ -424,7 +431,6 @@ theorem flowDeriv_eq_applyCurve_opFlow
   simp only [hcancel] at hfin
   exact hfin
 
-set_option maxHeartbeats 1600000 in
 /-- **Math.** **Second-order dependence of a solution family on its initial condition** (the
 key step of `C²` dependence, do Carmo Ch. 3, §2 — the regularity behind Theorem 2.2 beyond
 `C¹`). Let `σ` be a solution family of `x' = f(x)` near `x₀` (zeros of the Picard residual,
@@ -538,6 +544,7 @@ theorem exists_hasStrictFDerivAt_opFlow_of_picardResidual_curve
 
 /-! ## Instantiation interface: norm bound and componentwise residual verification -/
 
+omit [CompleteSpace E] in
 /-- **Math.** Norm bound for the variational-field derivative: at `q = (z, W)` with
 `‖f' z‖ ≤ C`, `‖f'' z‖ ≤ C₂` and `‖W‖ ≤ B`,
 `‖D(variationalField)(q)‖ ≤ C + C₂ B` (max norm on the product). This is the estimate

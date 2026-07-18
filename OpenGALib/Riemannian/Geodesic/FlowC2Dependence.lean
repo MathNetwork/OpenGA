@@ -1,7 +1,6 @@
 import OpenGALib.Riemannian.Geodesic.VariationalEquation
 import OpenGALib.Riemannian.Geodesic.UniformExistence
 
-set_option linter.unusedSectionVars false
 -- the sup-norm instance on curves valued in operators of the extended state space
 -- needs nested pending instance synthesis beyond the default depth
 set_option maxSynthPendingDepth 3
@@ -50,13 +49,14 @@ namespace Geodesic
 open Riemannian.FlowDependence
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
-set_option maxHeartbeats 1600000 in
-set_option linter.unusedVariables false in
+-- The extended variational-flow construction times out at 300000 heartbeats; 400000 is sufficient.
+set_option maxHeartbeats 400000 in
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The local geodesic flow is `C²` in its initial condition at every point of
 the flow ball** (do Carmo Ch. 3, Thm 2.2 / Prop. 2.7, second-order dependence for the
 geodesic spray). There are `r, ε > 0`, a local flow `Z` of the coordinate spray at `p`
@@ -78,9 +78,8 @@ theorem exists_uniform_geodesic_flow_hasStrictFDerivAt_opFlow
     (g : RiemannianMetric I M) (p : M) :
     ∃ (r ε T : ℝ) (Z : E × E → ℝ → E × E) (L : ℝ≥0)
       (σ : E × E → C(Set.Icc (0:ℝ) T, E × E))
-      (τ : E × E → C(Set.Icc (0:ℝ) T, (E × E) →L[ℝ] (E × E)))
-      (hT : 0 < T),
-      0 < r ∧ 0 < ε ∧ T < ε ∧
+      (τ : E × E → C(Set.Icc (0:ℝ) T, (E × E) →L[ℝ] (E × E))),
+      0 < T ∧ 0 < r ∧ 0 < ε ∧ T < ε ∧
       (∀ z ∈ closedBall ((extChartAt I p p, (0 : E)) : E × E) r,
         Z z 0 = z ∧
         (∀ t ∈ Icc (-ε) ε, HasDerivWithinAt (Z z)

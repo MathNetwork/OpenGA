@@ -1,7 +1,6 @@
 import OpenGALib.Riemannian.Connection.ChartChristoffelChange
 import OpenGALib.Riemannian.Geodesic.Equation
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Chart-independence of the geodesic equation
@@ -48,7 +47,7 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 variable [I.Boundaryless]
@@ -59,9 +58,11 @@ variable [I.Boundaryless]
 def chartReading (α : M) (γ : ℝ → M) : ℝ → E :=
   fun τ => extChartAt I α (γ τ)
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 @[simp] lemma chartReading_def (α : M) (γ : ℝ → M) (τ : ℝ) :
     chartReading (I := I) α γ τ = extChartAt I α (γ τ) := rfl
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [IsManifold I ∞ M] [I.Boundaryless] in
 /-- **Math.** The chart-`α` reading anchored at the foot is the chart-local curve. -/
 lemma chartReading_foot (γ : ℝ → M) (t : ℝ) :
     chartReading (I := I) (γ t) γ = chartLocalCurve (I := I) γ t := rfl
@@ -81,6 +82,7 @@ def SolvesGeodesicODEAt (g : RiemannianMetric I M) (α : M) (γ : ℝ → M)
         (deriv (chartReading (I := I) α γ) t₀)
         (chartReading (I := I) α γ t₀) = 0
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The moving-foot geodesic equation at `t₀` is exactly the fixed-chart
 second-order geodesic ODE anchored at the foot `γ t₀` itself. -/
 theorem hasGeodesicEquationAt_iff_solvesGeodesicODEAt
@@ -104,6 +106,7 @@ section Transfer
 
 variable {g : RiemannianMetric I M} {γ : ℝ → M} {t₀ : ℝ} {α β : M}
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Change of chart for the second-order geodesic ODE** (the
 consequence of the Christoffel transformation law
 `chartChristoffelContraction_change`). If `γ` is continuous at `t₀`, its foot
@@ -212,6 +215,7 @@ section Corollaries
 
 variable {g : RiemannianMetric I M} {γ : ℝ → M} {t₀ : ℝ}
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** A geodesic solves the honest second-order geodesic ODE in *every*
 chart whose source contains its foot (do Carmo Ch. 3, the coordinate form of
 Definition 2.1, in an arbitrary chart). -/
@@ -222,6 +226,7 @@ theorem HasGeodesicEquationAt.solvesGeodesicODEAt
   (hasGeodesicEquationAt_iff_solvesGeodesicODEAt.mp h).transfer hcont
     (mem_chart_source H (γ t₀)) hβ
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** A curve solving the second-order geodesic ODE in one chart
 containing its foot satisfies the intrinsic (moving-foot) geodesic equation. -/
 theorem SolvesGeodesicODEAt.hasGeodesicEquationAt {α : M}

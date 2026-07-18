@@ -237,7 +237,7 @@ private theorem contMDiffOn_continuousLinearMapAtFlat
 
 private theorem contMDiffOn_mfderivWithinFlat
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-    [FiniteDimensional ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
@@ -310,7 +310,7 @@ private theorem contMDiffOn_mfderivWithinFlat
 
 private theorem mfderivWithinFlat_mdifferentiableWithinAt
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-    [FiniteDimensional ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]
@@ -344,7 +344,7 @@ private theorem symmLFlat_eventuallyEq_mfderivWithinFlat
 `TangentSpace I y = E` def-eq is hidden inside the definition. -/
 theorem symmLFlat_mdifferentiableAt
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
-    [FiniteDimensional ℝ E] [CompleteSpace E]
+    [FiniteDimensional ℝ E]
     {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
     {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
     [IsLocallyConstantChartedSpace H M]

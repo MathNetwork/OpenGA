@@ -17,12 +17,12 @@ the two along any interval on which the curve stays in one chart source:
 * `mfderiv_eq_of_hasDerivAt_extChartAt` — value form.
 * `enorm_mfderiv_eq_of_hasDerivAt_extChartAt` — under the Riemannian-bundle
   instance of `g`, the fibre enorm of the velocity is the chart-Gram norm
-  `√⟨u̇(t), u̇(t)⟩_{u(t)}` of the coordinate velocity.
+  `√⟨u'(t), u'(t)⟩_{u(t)}` of the coordinate velocity.
 * `ContMDiffOn.contDiffOn_extChartAt_comp` — the chart reading of a `C¹` curve
   is `C¹` (as a map `ℝ → E`) on any set mapped into the chart source.
 * `pathELength_eq_ofReal_integral_chartMetricInner` — **the length bridge**:
   for a `C¹` curve `γ` on `[a, b]` staying in the chart source at `α`,
-  `pathELength I γ a b = ∫_a^b √⟨u̇(t), u̇(t)⟩_{u(t)} dt` with
+  `pathELength I γ a b = ∫_a^b √⟨u'(t), u'(t)⟩_{u(t)} dt` with
   `u = φ_α ∘ γ` the chart reading (derivative taken within `[a, b]`).
 
 Reference: do Carmo, *Riemannian Geometry*, Ch. 7 §2 (Definition 2.4) and the
@@ -32,7 +32,6 @@ length computations in the proof of Ch. 3, Proposition 3.6.
 open Bundle Manifold MeasureTheory Set
 open scoped Manifold Topology ContDiff ENNReal
 
-set_option linter.unusedSectionVars false
 
 noncomputable section
 
@@ -40,10 +39,11 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** A curve whose reading in the chart at `α` has a derivative `ξ` at a
 time `t` (with `γ` continuous at `t` and `γ t` in the chart source) is manifold-
 differentiable at `t`, with intrinsic velocity the tangent-coordinate-change
@@ -80,6 +80,7 @@ theorem hasMFDerivAt_of_hasDerivAt_extChartAt {γ : ℝ → M} {t : ℝ} {ξ : E
   simpa [writtenInExtChartAt, extChartAt_model_space_eq_id, Function.comp_def,
     hasFDerivWithinAt_univ] using hf
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Value form: the intrinsic velocity of the curve is the tangent
 coordinate change of the coordinate velocity read in the chart at `α`. -/
 theorem mfderiv_eq_of_hasDerivAt_extChartAt {γ : ℝ → M} {t : ℝ} {ξ : E} {α : M}
@@ -89,9 +90,10 @@ theorem mfderiv_eq_of_hasDerivAt_extChartAt {γ : ℝ → M} {t : ℝ} {ξ : E} 
   rw [(hasMFDerivAt_of_hasDerivAt_extChartAt hcont hsrc hd).mfderiv]
   exact one_smul ℝ _
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Under the Riemannian-bundle instance of `g`, the fibre enorm of the
 intrinsic velocity of a curve equals the chart-Gram norm of its coordinate
-velocity, read in the fixed chart at `α`: `‖γ'(t)‖ₑ = √⟨u̇(t), u̇(t)⟩_{u(t)}`
+velocity, read in the fixed chart at `α`: `‖γ'(t)‖ₑ = √⟨u'(t), u'(t)⟩_{u(t)}`
 with `u = φ_α ∘ γ`. -/
 theorem enorm_mfderiv_eq_of_hasDerivAt_extChartAt (g : RiemannianMetric I M)
     {γ : ℝ → M} {t : ℝ} {ξ : E} {α : M}
@@ -107,6 +109,7 @@ theorem enorm_mfderiv_eq_of_hasDerivAt_extChartAt (g : RiemannianMetric I M)
     chartMetricInner_extChartAt_eq_metricInner (I := I) g α hsrc ξ ξ,
     trivializationAt_symm_eq_tangentCoordChange (I := I) α hsrc ξ]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The reading of a `C¹` curve in the chart at `α` is a `C¹` map
 `ℝ → E` on any set of times mapped into the chart source. -/
 theorem contDiffOn_extChartAt_comp {γ : ℝ → M} {s : Set ℝ} {α : M}
@@ -115,6 +118,7 @@ theorem contDiffOn_extChartAt_comp {γ : ℝ → M} {s : Set ℝ} {α : M}
   rw [← contMDiffOn_iff_contDiffOn]
   exact (contMDiffOn_extChartAt (n := 1)).comp hγ fun t ht => hsrc t ht
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The length bridge** (do Carmo Ch. 7, Definition 2.4, read in one
 chart): the mathlib path length of a `C¹` curve `γ` over `[a, b]`, along which
 `γ` stays in the chart source at `α`, is the interval integral of the chart-Gram

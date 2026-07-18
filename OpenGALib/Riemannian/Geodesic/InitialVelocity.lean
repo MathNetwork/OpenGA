@@ -1,6 +1,5 @@
 import OpenGALib.Riemannian.Geodesic.Homogeneity
 
-set_option linter.unusedSectionVars false
 
 /-!
 # Initial velocity and the geodesic equation at the initial time
@@ -45,7 +44,7 @@ namespace Riemannian
 namespace Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
@@ -53,6 +52,7 @@ section CoordinateBridges
 
 variable [I.Boundaryless]
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** The chart-`α` fibre coordinate of a tangent vector attached at `α`
 itself is the vector: the trivialization at a point is the identity on the fibre
 over that point. -/
@@ -63,6 +63,7 @@ lemma chartFiberCoord_mk (α : M) (w : TangentSpace I α) :
   rw [h]
   exact tangentCoordChange_self (I := I) (mem_extChartAt_source α)
 
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)] [I.Boundaryless] in
 /-- **Math.** One level up: the trivialization of `T(TM)` at `⟨α, 0⟩` is the identity
 on the fibre over any point `⟨α, w⟩` with the same foot `α` (the charts of `TM`
 at `⟨α, w⟩` and `⟨α, 0⟩` coincide, both being based at the foot `α`). -/
@@ -79,6 +80,7 @@ lemma trivializationAt_tangent_tangent_mk_snd (α : M) (w : E)
   rw [h]
   exact tangentCoordChange_self (I := I.tangent) (mem_extChartAt_source _)
 
+omit [I.Boundaryless] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Over its own foot, the chart-fixed geodesic spray in definitional
 coordinates IS its coordinate fibre value: at a point `⟨α, w⟩` attached at the
 chart basepoint `α`, the trivialization of `T(TM)` at `⟨α, 0⟩` is the identity. -/
@@ -92,6 +94,7 @@ lemma geodesicVectorFieldChart_mk (g : RiemannianMetric I M) (α : M) (w : E) :
   rw [trivializationAt_apply_geodesicVectorFieldChart (I := I) g α hmem] at h2
   exact h2.symm
 
+omit [I.Boundaryless] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The coordinate change from the chart of `TM` at a point `q` to the
 chart at the basepoint (any point with foot `α`) sends the definitional
 presentation of the chart-fixed geodesic spray to its coordinate fibre value. -/
@@ -113,8 +116,9 @@ end CoordinateBridges
 
 section EventualSystem
 
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
+omit [I.Boundaryless] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The chart-`p` reading of a geodesic lift solves the first-order
 geodesic system.** If `f` is an integral curve of the chart-`p`-fixed geodesic
 spray at `0` with `f 0 = ⟨p, v⟩`, then near `0` the pair
@@ -161,8 +165,9 @@ end EventualSystem
 
 section InitialData
 
-variable [I.Boundaryless] [CompleteSpace E]
+variable [I.Boundaryless]
 
+omit [I.Boundaryless] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **A geodesic leaves `p` with velocity `v`.** For a geodesic witness
 with initial data `(p, v)` defined on a neighbourhood of `0`, the chart-`p`
 reading `s ↦ φ_p(γ s)` has derivative `v` at `s = 0`. -/
@@ -194,6 +199,7 @@ theorem IsGeodesicOnWithInitial.hasDerivAt_extChartAt_zero
   rw [hval] at hfst
   exact hfst
 
+omit [I.Boundaryless] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **A geodesic witness satisfies the intrinsic geodesic equation at the
 initial time.** This bridges the spray/integral-curve formulation back to the
 second-order moving-foot geodesic equation, at `t = 0`: the chart-`p` reading
@@ -279,6 +285,7 @@ end InitialData
 
 section EquationCongruence
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The moving-foot geodesic equation at time `t` only depends on the curve
 near `t`: it transfers across eventual equality of curves. -/
 theorem hasGeodesicEquationAt_congr_of_eventuallyEq
@@ -308,8 +315,9 @@ end EquationCongruence
 
 section MaximalGeodesicTransfer
 
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The canonical maximal geodesic agrees with every witness** on the
 witness's interval, under the chart-validity clause that all witnesses with
 initial data `(p, v)` keep their foot in the chart at `p`. This is the
@@ -337,6 +345,7 @@ theorem maximalGeodesic_eq_witness
     (fun t ht => hsrc _ _ hγ₁ t (inter_subset_left ht))
   exact heq ⟨hs₁, hs⟩
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** Near `0`, the canonical maximal geodesic coincides with the chosen
 local witness (under the chart-validity clause). -/
 theorem maximalGeodesic_eventuallyEq_witness
@@ -354,6 +363,7 @@ theorem maximalGeodesic_eventuallyEq_witness
   filter_upwards [hJo.mem_nhds h0₀] with s hs
   exact maximalGeodesic_eq_witness (I := I) hsrc hγ₀ hJo hJc h0₀ hs
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The canonical maximal geodesic leaves `p` with velocity `v`**: read
 in the chart at `p`, `s ↦ φ_p(γ(s, p, v))` has derivative `v` at `s = 0` (under
 the chart-validity clause for `(p, v)`-witnesses). -/
@@ -370,6 +380,7 @@ theorem hasDerivAt_extChartAt_maximalGeodesic
   filter_upwards [hev] with s hs
   rw [hs]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The canonical maximal geodesic satisfies the intrinsic geodesic
 equation at the initial time** (under the chart-validity clause for
 `(p, v)`-witnesses). -/

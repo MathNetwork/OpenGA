@@ -3,7 +3,6 @@ import OpenGALib.Riemannian.Geodesic.SymmetryLemma
 import OpenGALib.Riemannian.Geodesic.CovariantDerivative
 import OpenGALib.Riemannian.Geodesic.HopfRinow.MetricBridge
 
-set_option linter.unusedSectionVars false
 set_option maxSynthPendingDepth 3
 
 /-!
@@ -44,22 +43,25 @@ namespace Riemannian
 section ChartMetricInnerAlgebra
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The chart Gram inner product vanishes when its first vector slot is
 zero. -/
 theorem chartMetricInner_zero_left (g : RiemannianMetric I M) (α : M) (y b : E) :
     chartMetricInner (I := I) g α y 0 b = 0 := by
   simp [chartMetricInner_def]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The chart Gram inner product vanishes when its second vector slot is
 zero. -/
 theorem chartMetricInner_zero_right (g : RiemannianMetric I M) (α : M) (y a : E) :
     chartMetricInner (I := I) g α y a 0 = 0 := by
   simp [chartMetricInner_def]
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The chart Gram inner product is homogeneous in its first vector
 slot. -/
 theorem chartMetricInner_smul_left (g : RiemannianMetric I M) (α : M) (y : E)
@@ -70,6 +72,7 @@ theorem chartMetricInner_smul_left (g : RiemannianMetric I M) (α : M) (y : E)
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The chart Gram inner product is homogeneous in its second vector
 slot. -/
 theorem chartMetricInner_smul_right (g : RiemannianMetric I M) (α : M) (y : E)
@@ -80,6 +83,7 @@ theorem chartMetricInner_smul_right (g : RiemannianMetric I M) (α : M) (y : E)
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   ring
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The chart Gram inner product is symmetric (the Gram matrix is,
 `chartGramOnE_symm`). -/
 theorem chartMetricInner_symm (g : RiemannianMetric I M) (α : M) (y a b : E) :
@@ -89,6 +93,7 @@ theorem chartMetricInner_symm (g : RiemannianMetric I M) (α : M) (y a b : E) :
   rw [chartGramOnE_symm (I := I) g α]
   ring
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** The derivative at `s = 0` of the quadratic form
 `s ↦ ⟨a + s·d, a + s·d⟩_y` is `⟨a, d⟩_y + ⟨d, a⟩_y`. This computes
 `∂_s |v + s w|²` in the Gauss-lemma argument. -/
@@ -127,17 +132,17 @@ namespace Exponential
 open Riemannian.Geodesic
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [InnerProductSpace ℝ E]
-  [Module.Finite ℝ E] [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
+  [FiniteDimensional ℝ E] [NeZero (Module.finrank ℝ E)]
 variable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
 variable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
-variable [I.Boundaryless] [CompleteSpace E] [T2Space (TangentBundle I M)]
+variable [I.Boundaryless] [T2Space (TangentBundle I M)]
 
-set_option maxHeartbeats 1600000 in
+omit [T2Space (TangentBundle I M)] [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The Gauss-lemma surface computation** (do Carmo Ch. 3, Lemma 3.5,
 the analytic core). Let `f : E → E` be a `C²` map on `B_ρ(0)` — think of the
 chart reading `w ↦ φ_p(exp_p w)` — whose values lie in the chart target, with
 `f(0) = φ_p(p)`, `(df)_0 = id`, and whose ray velocities satisfy the chart
-geodesic ODE `V̇ = −Γ_p(V,V)(f)` (the package of `exists_expMap_ray_ode_ball`).
+geodesic ODE `V' = −Γ_p(V,V)(f)` (the package of `exists_expMap_ray_ode_ball`).
 Then for `‖v‖ < ρ` and any `w`,
 
 `⟨(df)_v(v), (df)_v(w)⟩_{f(v)} = ⟨v, w⟩_{φ_p(p)}`
@@ -522,6 +527,7 @@ theorem gauss_surface_computation (g : RiemannianMetric I M) (p : M)
   rw [chartMetricInner_symm (I := I) g p (f v) (fderiv ℝ f v v) (fderiv ℝ f v w)]
   exact h10
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **The Gauss lemma** (do Carmo Ch. 3, Lemma 3.5). There is `ρ > 0`
 such that the ball `B_ρ(0) ⊂ T_pM` lies in the exponential domain, its image
 stays in the chart at `p`, and for every `v` with `‖v‖ < ρ` and every `w`,
@@ -581,6 +587,7 @@ theorem exists_gauss_lemma_ball (g : RiemannianMetric I M) (p : M) :
     rw [(extChartAt I p).left_inv hmem, TangentBundle.trivializationAt_baseSet]
     exact hsrc w' hw'
 
+omit [InnerProductSpace ℝ E] [NeZero (Module.finrank ℝ E)] in
 /-- **Math.** **Radial lower bound from the Gauss lemma** (do Carmo Ch. 3, the
 inequality driving Prop. 3.6). On the Gauss ball, for every `v` with `‖v‖ < ρ`
 and every direction `ξ`,
