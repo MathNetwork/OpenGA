@@ -40,9 +40,3 @@ Issues and PRs welcome.
 Released under the Apache 2.0 License. See the LICENSE file for details.
 
 ---
-
-<p align="center">
-  <a href="https://github.com/MathNetwork/Astrolabe"><img src="https://img.shields.io/badge/Powered_by-Astrolabe-669aba?style=flat-square&labelColor=11111b" alt="Powered by Astrolabe"></a>
-  <a href="https://events.astrolabe.network/"><img src="https://img.shields.io/badge/Website-events.astrolabe.network-be1420?style=flat-square&labelColor=11111b" alt="Website"></a>
-  <a href="https://discord.gg/nQdU4q3u9"><img src="https://img.shields.io/badge/Discord-Join-5865F2?style=flat-square&logo=discord&logoColor=white&labelColor=11111b" alt="Discord"></a>
-</p>
