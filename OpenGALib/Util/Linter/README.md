@@ -13,11 +13,11 @@ implementation we follow.
 
 ## Linters
 
-| File | Option | Rule |
-|---|---|---|
-| `MathTag.lean`      | `linter.openGA.mathTag`      | every doc must begin with `**Math.**`, `**Eng.**`, or `**Mixed.**` |
+| File                  | Option                         | Rule                                                                                  |
+| --------------------- | ------------------------------ | ------------------------------------------------------------------------------------- |
+| `MathTag.lean`      | `linter.openGA.mathTag`      | every doc must begin with `**Math.**`, `**Eng.**`, or `**Mixed.**`               |
 | `AnchorPurity.lean` | `linter.openGA.anchorPurity` | `**Eng.**` / `**Mixed.**` forbidden outside `Util/` (instance + private exempt) |
-| `Naming.lean`       | `linter.openGA.naming`       | bare initialisms `CLM`, `NACG`, `IPS` forbidden in declaration names |
+| `Naming.lean`       | `linter.openGA.naming`       | bare initialisms `CLM`, `NACG`, `IPS` forbidden in declaration names             |
 
 All three are bundled in the linter set `linter.openGA` defined in
 `OpenGALib/Util/Linter.lean`. To silence the entire set for one file:
@@ -45,6 +45,5 @@ def example_ : Nat := 0
      `Linter.logLint` for warnings
    - `initialize addLinter ...`
 2. Add the option to `OpenGALib/Util/Linter.lean`'s `register_linter_set`.
-3. Add a baseline check to `.github/workflows/ci.yml` (`Enforce linter
-   baselines` step) — grep for the linter's distinct warning prefix,
+3. Add a baseline check to `.github/workflows/ci.yml` (`Enforce linter baselines` step) — grep for the linter's distinct warning prefix,
    assert count ≤ baseline.
