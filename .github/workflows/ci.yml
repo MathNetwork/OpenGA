@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Count sorries against docs/archive/SORRY_CATALOG.md
+      - name: Count sorries against the expected baseline
         run: |
           # Tightened regex: match only standalone `sorry` (line is exactly
           # whitespace-then-sorry-then-whitespace), `by sorry`, `:= sorry`.
@@ -25,11 +25,11 @@ jobs:
           EXPECTED=3
           if [ "$ACTUAL" -ne "$EXPECTED" ]; then
             echo "::error::Sorry count drift: expected $EXPECTED, found $ACTUAL"
-            echo "If the change is intentional, update docs/archive/SORRY_CATALOG.md (and the EXPECTED constant in this workflow)."
+            echo "If the change is intentional, update the EXPECTED constant in this workflow."
             echo "If unintentional, close the new sorry or revert the regression."
             exit 1
           fi
-          echo "Sorry count: $ACTUAL (matches docs/archive/SORRY_CATALOG.md)"
+          echo "Sorry count: $ACTUAL (matches EXPECTED=$EXPECTED)"
 
       - name: Count axioms (expect zero)
         run: |
