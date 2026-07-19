@@ -1,9 +1,0 @@
----
-kind: concept
-ref:
-- 1bc6577d8e3a
-- dd2a18c3bee2
-rel: uses
-sort: (concept, definition)
----
-uses «sectional curvature»
