@@ -10,8 +10,6 @@ with unrelated names. Full Mathlib-style names are mandatory:
 * `CLM`  → `ContinuousLinearMap`
 * `NACG` → `NormedAddCommGroup`
 * `IPS`  → `InnerProductSpace`
-
-See CLAUDE.md "Code quality / Natural-language reading test".
 -/
 
 open Lean Elab Linter
@@ -64,7 +62,7 @@ def namingLinter : Linter where run := withSetOptionIn fun stx ↦ do
     Linter.logLint linter.openGA.naming nameStx
       m!"declaration name `{name}` contains the forbidden initialism `{bad}` — \
          expand to `{expandSuggestion bad}` (initialisms drop semantics and \
-         risk colliding with unrelated names; see CLAUDE.md naming test)."
+         risk colliding with unrelated names)."
 
 initialize addLinter namingLinter
 

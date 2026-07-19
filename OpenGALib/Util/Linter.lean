@@ -18,8 +18,7 @@ toggled in isolation via their own options
 (`linter.openGA.mathTag`, `linter.openGA.anchorPurity`,
 `linter.openGA.naming`).
 
-See CLAUDE.md "Fitness functions" for the full design and the per-
-linter docstrings for the rule each one enforces.
+See the per-linter docstrings for the rule each one enforces.
 -/
 
 /-- The OpenGALib fitness-function linter set, bundling `mathTag`,

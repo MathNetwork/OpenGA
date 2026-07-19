@@ -12,8 +12,6 @@ mandates a tag *if* a docstring exists, not the docstring itself.
 
 Activated by default. Silence locally with
 `set_option linter.openGA.mathTag false in <decl>`, or fix the tag.
-
-See CLAUDE.md "Code quality / Math-Eng-Mixed tagging".
 -/
 
 open Lean Elab Linter

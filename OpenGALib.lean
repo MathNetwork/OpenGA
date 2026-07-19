@@ -3,9 +3,8 @@ import OpenGALib.Riemannian.Geodesic.HopfRinow.EVariationLePathELength
 import OpenGALib.Riemannian.Geodesic.SymmetryLemma
 
 /-!
-# OpenGALib — Hopf–Rinow closed-loop slice
+# OpenGALib
 
-This branch keeps only the formal-verification cone of the Hopf–Rinow theorem,
-the result wired to the Astrolabe knowledge-graph frontend in `web/`.
-The full library lives on the development branch.
+A Lean 4 formalization of Riemannian geometry on top of Mathlib,
+centered on the Hopf–Rinow theorem and its supporting cone.
 -/

@@ -20,8 +20,6 @@ or framework-required plumbing. Two principled exemptions:
   documentation, not API drift.
 
 Declarations without docstrings and `**Math.**`-tagged ones pass silently.
-
-See CLAUDE.md "Code quality / Engineering tax encapsulation".
 -/
 
 open Lean Elab Linter

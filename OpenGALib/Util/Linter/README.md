@@ -4,8 +4,7 @@ Lean-native linters that enforce OpenGALib's architectural rules at
 elaboration time. Each linter:
 
 - runs on every `lake build` and shows inline in the editor via LSP;
-- gates every push / PR in `.github/workflows/ci.yml` via baseline grep;
-- has a unit test under `OpenGALib/Tests/Linter/` driven by `#guard_msgs`.
+- gates every push / PR in `.github/workflows/ci.yml` via baseline grep.
 
 Background: Neal Ford et al., *Building Evolutionary Architectures*
 (2017) — "fitness functions" name for executable architectural tests.
@@ -46,10 +45,6 @@ def example_ : Nat := 0
      `Linter.logLint` for warnings
    - `initialize addLinter ...`
 2. Add the option to `OpenGALib/Util/Linter.lean`'s `register_linter_set`.
-3. Add `OpenGALib/Tests/Linter/<Name>.lean` with `#guard_msgs (warning) in`
-   blocks for each trigger pattern.
-4. Add a baseline check to `.github/workflows/ci.yml` (`Enforce linter
+3. Add a baseline check to `.github/workflows/ci.yml` (`Enforce linter
    baselines` step) — grep for the linter's distinct warning prefix,
    assert count ≤ baseline.
-
-CLAUDE.md "Fitness functions" tracks the public-facing summary.
