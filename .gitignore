@@ -1,48 +1,14 @@
-、# LaTeX build artifacts
-*.aux
-*.log
-*.blg
-*.bbl
-*.fdb_latexmk
-*.fls
-*.out
-*.toc
-*.synctex.gz
-*.pdf
-
 # OS files
 .DS_Store
 
-# IDE / AI tooling (local config, not project content)
+# IDE / local tooling (not project content)
 .vscode/
 .claude/
-
-# Overleaf copy
-Thesis_Overleaf/
-
-# Backup files
-**/backup/
-
-# Reference papers
-resources/
-references/
 
 # Lean build artifacts (Mathlib oleans, ~7G)
 .lake/
 lake-packages/
 
-# External reference repos (cloned locally for study, not part of our lib).
-# We learn from them and re-implement in our own conventions; their files
-# never enter our git history.
-external/
-
-# Charter manifesto (kept in separate Overleaf project, not part of lib history)
-manifesto/
-
-
-# Python bytecode cache
-__pycache__/
-*.pyc
-
-# never track editor/server junk
+# Local-only material (cloned for study, never part of lib history)
+references/
 web/
