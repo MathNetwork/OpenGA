@@ -13,23 +13,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Count sorries against the expected baseline
+      - name: Enforce sorry-free main (release policy)
         run: |
-          # Tightened regex: match only standalone `sorry` (line is exactly
-          # whitespace-then-sorry-then-whitespace), `by sorry`, `:= sorry`.
-          # Excludes docstring text like "sorry'd" or "left as sorry".
+          # Release policy: main is a release-quality branch and carries NO
+          # sorry. Work-in-progress with sorry lives on a development branch
+          # and merges to main only once the proof is complete.
+          # Match only standalone `sorry`, `by sorry`, `:= sorry` (not
+          # docstring text like "sorry'd" or "left as sorry").
           ACTUAL=$(grep -rnE "^[[:space:]]*sorry[[:space:]]*$|by sorry|:= sorry" \
             --include="*.lean" \
             OpenGALib \
             2>/dev/null | wc -l | tr -d ' ')
-          EXPECTED=3
-          if [ "$ACTUAL" -ne "$EXPECTED" ]; then
-            echo "::error::Sorry count drift: expected $EXPECTED, found $ACTUAL"
-            echo "If the change is intentional, update the EXPECTED constant in this workflow."
-            echo "If unintentional, close the new sorry or revert the regression."
+          if [ "$ACTUAL" -ne 0 ]; then
+            echo "::error::main must be sorry-free — found $ACTUAL. Move sorry'd work to a development branch; merge to main only when the proof is complete."
             exit 1
           fi
-          echo "Sorry count: $ACTUAL (matches EXPECTED=$EXPECTED)"
+          echo "Sorry count: 0 — main is sorry-free."
 
       - name: Count axioms (expect zero)
         run: |
