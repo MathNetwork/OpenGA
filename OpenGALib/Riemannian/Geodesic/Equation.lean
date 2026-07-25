@@ -422,7 +422,8 @@ lemma geodesicVectorFieldChart_zero_section
   set e := trivializationAt (E × E) (TangentSpace I.tangent)
       (⟨α, (0 : E)⟩ : TangentBundle I M)
   have hcoe := Bundle.Trivialization.coe_symmₗ (R := ℝ) e
-    (⟨α, (0 : E)⟩ : TangentBundle I M)
+    (FiberBundle.mem_baseSet_trivializationAt (F := E × E)
+      (E := TangentSpace I.tangent) (⟨α, (0 : E)⟩ : TangentBundle I M))
   have : e.symm (⟨α, (0 : E)⟩ : TangentBundle I M) (0 : E × E) = 0 := by
     have h := congrFun hcoe (0 : E × E)
     rw [← h]
@@ -614,7 +615,8 @@ theorem hasGeodesicEquationAt_comp_neg
     have hinner : HasDerivAt (fun s => deriv u (-s)) ((-1 : ℝ) • a) τ := by
       have := (ha.scomp τ (hasDerivAt_neg τ))
       simpa [Function.comp_def] using this
-    have hfin := hinner.neg
+    have hfin : HasDerivAt (fun s => -(deriv u (-s))) (-((-1 : ℝ) • a)) τ :=
+      hinner.neg
     simpa using hfin
   · rw [chartChristoffelContraction_neg (I := I) g _ v]
     exact hgeo
