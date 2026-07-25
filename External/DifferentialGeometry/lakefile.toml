@@ -1,0 +1,40 @@
+name = "DifferentialGeometry"
+version = "1.2.1"
+keywords = ["math"]
+defaultTargets = ["DifferentialGeometry", "DeclIndex"]
+
+[leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+maxSynthPendingDepth = 3
+autoImplicit = false
+linter.style.longLine = false
+linter.style.emptyLine = false
+linter.style.whitespace = false
+linter.style.maxHeartbeats = false
+linter.style.setOption = false
+linter.unusedFintypeInType = false
+linter.unusedDecidableInType = false
+linter.flexible = false
+linter.unnecessarySimpa = false
+linter.style.cases = false
+weak.linter.unnecessarySeqFocus = false
+weak.linter.unreachableTactic = false
+weak.linter.unusedTactic = false
+weak.linter.style.multiGoal = false
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.29.0"
+
+[[lean_lib]]
+name = "DifferentialGeometry"
+
+# Declaration index: a bare `lake build` regenerates DECLS.ndjson (the generated
+# index is gitignored); the targeted `lake build DifferentialGeometry` does NOT
+# build this, so the proof-fill loop pays no indexing cost.
+[[lean_lib]]
+name = "DeclIndex"
+globs = ["DeclIndex"]

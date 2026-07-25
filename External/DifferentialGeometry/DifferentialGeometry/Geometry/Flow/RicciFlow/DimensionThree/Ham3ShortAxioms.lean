@@ -1,0 +1,7 @@
+import DifferentialGeometry.Geometry.Flow.RicciFlow.DimensionThree.HamiltonPositiveRicci
+
+open DifferentialGeometry.PDE.RicciFlow
+
+#print axioms ricci_flow_short_time_existence
+#print axioms HamiltonPositiveRicci.ham3_short_isSolution
+#print axioms HamiltonPositiveRicci.ham3_short_smooth_solution
