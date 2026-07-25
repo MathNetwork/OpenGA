@@ -27,7 +27,7 @@ weak.linter.style.multiGoal = false
 [[require]]
 name = "mathlib"
 scope = "leanprover-community"
-rev = "v4.29.0"
+rev = "v4.32.1"
 
 [[lean_lib]]
 name = "DifferentialGeometry"
