@@ -1,0 +1,578 @@
+{
+  "batch": "extinction_endgame",
+  "definitions": [
+    {
+      "definitions": [],
+      "id": "OpenGA_CoordinateBallConnectedSum",
+      "path": "Definitions/Def_OpenGA_CoordinateBallConnectedSum.lean",
+      "payload": {
+        "definition": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.Topology.Constructions\n\n/-!\n# Connected sums by gluing punctured coordinate balls\n\nThe definition uses an actual quotient space: remove an open coordinate ball\nfrom each manifold and identify the two boundary spheres by a homeomorphism.\nThe coordinate charts contain the closed balls in their open sources, so the\nboundaries have collars; arbitrary wild embedded balls are not allowed.\n\nOnly the topological connected sum is defined here. Orientations, smooth\nstructures on the quotient, independence of the choices, and the van Kampen\ntheorem for this construction are separate results.\n-/\n\nnamespace OpenGA\n\nabbrev EuclideanThree := EuclideanSpace ℝ (Fin 3)\nabbrev SphereTwo := ↥(Metric.sphere (0 : EuclideanThree) 1)\nabbrev SphereThree := ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)\nabbrev SphereOne := ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin 2)) 1)\n\nuniverse u\n\n/-- A coordinate chart defined on a neighborhood of the closed unit ball. -/\nstructure CoordinateBall (M : Type u) [TopologicalSpace M] where\n  chart : OpenPartialHomeomorph EuclideanThree M\n  closedBall_subset_source : Metric.closedBall 0 1 ⊆ chart.source\n\nnamespace CoordinateBall\n\nvariable {M : Type u} [TopologicalSpace M]\n\n/-- The manifold with the open coordinate ball removed. -/\ndef Punctured (B : CoordinateBall M) := ↥((B.chart '' Metric.ball 0 1)ᶜ)\n\ninstance (B : CoordinateBall M) : TopologicalSpace B.Punctured :=\n  inferInstanceAs (TopologicalSpace ↥((B.chart '' Metric.ball 0 1)ᶜ))\n\n/-- Boundary points remain in the punctured manifold. -/\ndef boundary (B : CoordinateBall M) (x : SphereTwo) : B.Punctured := by\n  refine ⟨B.chart x, ?_⟩\n  rintro ⟨y, hy, heq⟩\n  have hxy : y = (x : EuclideanThree) := B.chart.injOn\n    (B.closedBall_subset_source (Metric.ball_subset_closedBall hy))\n    (B.closedBall_subset_source (Metric.sphere_subset_closedBall x.property)) heq\n  have hdist := Metric.mem_sphere.mp x.property\n  have hlt := Metric.mem_ball.mp hy\n  rw [hxy, hdist] at hlt\n  exact lt_irrefl _ hlt\n\nend CoordinateBall\n\nnamespace ConnectedSum\n\nvariable {M N : Type u} [TopologicalSpace M] [TopologicalSpace N]\n\n/-- The generating identifications, before taking equivalence closure. -/\ndef BoundaryIdentification (B : CoordinateBall M) (C : CoordinateBall N)\n    (glue : SphereTwo ≃ₜ SphereTwo) :\n    (B.Punctured ⊕ C.Punctured) → (B.Punctured ⊕ C.Punctured) → Prop :=\n  fun a b => ∃ x : SphereTwo,\n    a = Sum.inl (B.boundary x) ∧ b = Sum.inr (C.boundary (glue x))\n\n/-- Gluing two punctured manifolds along their entire boundary spheres.\n`Quot` takes the equivalence closure, and its topology is the quotient topology. -/\ndef Space (B : CoordinateBall M) (C : CoordinateBall N)\n    (glue : SphereTwo ≃ₜ SphereTwo) := Quot (BoundaryIdentification B C glue)\n\ninstance (B : CoordinateBall M) (C : CoordinateBall N) (glue : SphereTwo ≃ₜ SphereTwo) :\n    TopologicalSpace (Space B C glue) :=\n  inferInstanceAs (TopologicalSpace (Quot (BoundaryIdentification B C glue)))\n\nend ConnectedSum\n\n/-- `X` is a topological connected sum of `M` and `N`, witnessed by coordinate\nballs, a boundary gluing map, and a homeomorphism to the resulting quotient. -/\ndef IsConnectedSum (M N X : Type u)\n    [TopologicalSpace M] [TopologicalSpace N] [TopologicalSpace X] : Prop :=\n  ∃ (B : CoordinateBall M) (C : CoordinateBall N) (glue : SphereTwo ≃ₜ SphereTwo),\n    Nonempty (X ≃ₜ ConnectedSum.Space B C glue)\n\nend OpenGA\n",
+        "definition_name": "OpenGA_CoordinateBallConnectedSum",
+        "definition_title": "Coordinate-ball connected sums of three-manifolds",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Remove open unit balls embedded by coordinate charts defined on their closed balls, then identify their boundary two-spheres through a homeomorphism. The construction carries the quotient topology. IsConnectedSum asks for a homeomorphism with this quotient; orientation is not imposed. The coordinate-ball condition gives collared boundaries. This is a topological construction, with no classification theorem built in.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/ConnectedSum.lean#L1-L85; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "connected-sum",
+          "openga-endgame"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-09T20:53:02.093089+00:00",
+        "job": {
+          "created_at": "2026-09-09T20:49:57.255917+00:00",
+          "definitions": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.Topology.Constructions\n\n/-!\n# Connected sums by gluing punctured coordinate balls\n\nThe definition uses an actual quotient space: remove an open coordinate ball\nfrom each manifold and identify the two boundary spheres by a homeomorphism.\nThe coordinate charts contain the closed balls in their open sources, so the\nboundaries have collars; arbitrary wild embedded balls are not allowed.\n\nOnly the topological connected sum is defined here. Orientations, smooth\nstructures on the quotient, independence of the choices, and the van Kampen\ntheorem for this construction are separate results.\n-/\n\nnamespace OpenGA\n\nabbrev EuclideanThree := EuclideanSpace ℝ (Fin 3)\nabbrev SphereTwo := ↥(Metric.sphere (0 : EuclideanThree) 1)\nabbrev SphereThree := ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)\nabbrev SphereOne := ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin 2)) 1)\n\nuniverse u\n\n/-- A coordinate chart defined on a neighborhood of the closed unit ball. -/\nstructure CoordinateBall (M : Type u) [TopologicalSpace M] where\n  chart : OpenPartialHomeomorph EuclideanThree M\n  closedBall_subset_source : Metric.closedBall 0 1 ⊆ chart.source\n\nnamespace CoordinateBall\n\nvariable {M : Type u} [TopologicalSpace M]\n\n/-- The manifold with the open coordinate ball removed. -/\ndef Punctured (B : CoordinateBall M) := ↥((B.chart '' Metric.ball 0 1)ᶜ)\n\ninstance (B : CoordinateBall M) : TopologicalSpace B.Punctured :=\n  inferInstanceAs (TopologicalSpace ↥((B.chart '' Metric.ball 0 1)ᶜ))\n\n/-- Boundary points remain in the punctured manifold. -/\ndef boundary (B : CoordinateBall M) (x : SphereTwo) : B.Punctured := by\n  refine ⟨B.chart x, ?_⟩\n  rintro ⟨y, hy, heq⟩\n  have hxy : y = (x : EuclideanThree) := B.chart.injOn\n    (B.closedBall_subset_source (Metric.ball_subset_closedBall hy))\n    (B.closedBall_subset_source (Metric.sphere_subset_closedBall x.property)) heq\n  have hdist := Metric.mem_sphere.mp x.property\n  have hlt := Metric.mem_ball.mp hy\n  rw [hxy, hdist] at hlt\n  exact lt_irrefl _ hlt\n\nend CoordinateBall\n\nnamespace ConnectedSum\n\nvariable {M N : Type u} [TopologicalSpace M] [TopologicalSpace N]\n\n/-- The generating identifications, before taking equivalence closure. -/\ndef BoundaryIdentification (B : CoordinateBall M) (C : CoordinateBall N)\n    (glue : SphereTwo ≃ₜ SphereTwo) :\n    (B.Punctured ⊕ C.Punctured) → (B.Punctured ⊕ C.Punctured) → Prop :=\n  fun a b => ∃ x : SphereTwo,\n    a = Sum.inl (B.boundary x) ∧ b = Sum.inr (C.boundary (glue x))\n\n/-- Gluing two punctured manifolds along their entire boundary spheres.\n`Quot` takes the equivalence closure, and its topology is the quotient topology. -/\ndef Space (B : CoordinateBall M) (C : CoordinateBall N)\n    (glue : SphereTwo ≃ₜ SphereTwo) := Quot (BoundaryIdentification B C glue)\n\ninstance (B : CoordinateBall M) (C : CoordinateBall N) (glue : SphereTwo ≃ₜ SphereTwo) :\n    TopologicalSpace (Space B C glue) :=\n  inferInstanceAs (TopologicalSpace (Quot (BoundaryIdentification B C glue)))\n\nend ConnectedSum\n\n/-- `X` is a topological connected sum of `M` and `N`, witnessed by coordinate\nballs, a boundary gluing map, and a homeomorphism to the resulting quotient. -/\ndef IsConnectedSum (M N X : Type u)\n    [TopologicalSpace M] [TopologicalSpace N] [TopologicalSpace X] : Prop :=\n  ∃ (B : CoordinateBall M) (C : CoordinateBall N) (glue : SphereTwo ≃ₜ SphereTwo),\n    Nonempty (X ≃ₜ ConnectedSum.Space B C glue)\n\nend OpenGA\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "1bcee360-0ff7-4eb0-88ea-824e98b3bf50",
+          "kind": "definition",
+          "natural_language_statement": "Remove open unit balls embedded by coordinate charts defined on their closed balls, then identify their boundary two-spheres through a homeomorphism. The construction carries the quotient topology. IsConnectedSum asks for a homeomorphism with this quotient; orientation is not imposed. The coordinate-ball condition gives collared boundaries. This is a topological construction, with no classification theorem built in.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/ConnectedSum.lean#L1-L85; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+          "status": "PENDING",
+          "tags": [
+            "poincare-conjecture",
+            "finite-extinction",
+            "connected-sum",
+            "openga-endgame"
+          ],
+          "theorem_id": null,
+          "theorem_name": "OpenGA_CoordinateBallConnectedSum",
+          "theorem_title": "Coordinate-ball connected sums of three-manifolds",
+          "updated_at": "2026-09-09T20:49:57.255917+00:00",
+          "visibility": "public"
+        },
+        "job_id": "1bcee360-0ff7-4eb0-88ea-824e98b3bf50",
+        "response": {
+          "definition_name": "OpenGA_CoordinateBallConnectedSum",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "1bcee360-0ff7-4eb0-88ea-824e98b3bf50",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/1bcee360-0ff7-4eb0-88ea-824e98b3bf50 until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-09T20:49:57.015995+00:00",
+        "status": "PENDING"
+      },
+      "sha256": "4beee1de6655a98b3cf80f42d0bb391104c08a18b9512993bb76603a4186429b"
+    },
+    {
+      "definitions": [
+        "OpenGA_CoordinateBallConnectedSum"
+      ],
+      "id": "OpenGA_SurgeryTopologyEvolution",
+      "path": "Definitions/Def_OpenGA_SurgeryTopologyEvolution.lean",
+      "payload": {
+        "definition": "import Definitions.Def_OpenGA_CoordinateBallConnectedSum\nimport Mathlib.Topology.Homotopy.Lifting\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\n/-!\n# The topological endpoint of finite surgery\n\nKleiner-Lott, Lemma 73.4 (p. 140), reconstructs the topology before a surgery\nby connected sums and restoration of specified discarded components. Lemma\n81.2 (p. 160) iterates this description backwards from an empty slice.\nSource: https://arxiv.org/pdf/math/0605667v5\n\nThis file proves that finite iteration explicitly. A `SurgeryReconstruction`\nrecords the topological consequence of an operation, not its metric surgery\nconstruction. Obtaining these records from a Kleiner-Lott flow remains a\ngeometric task.\n\nFor the topological conclusion we retain a weaker class than round spherical\nspace forms: closed three-manifolds covered by the standard three-sphere.\nEvery round spherical space form has such a covering. This weakening is\nsufficient for the simply connected endgame and does not assert that every\nsphere-covered manifold carries a round quotient metric.\n-/\n\nnamespace OpenGA\n\nuniverse u\n\n/-- A nonempty, connected, compact Hausdorff topological three-manifold\nwithout boundary. The topology and atlas are part of the data. -/\nstructure ClosedThreeManifold where\n  Carrier : Type u\n  topology : TopologicalSpace Carrier\n  hausdorff : @T2Space Carrier topology\n  charts : @ChartedSpace EuclideanThree _ Carrier topology\n  compact : @CompactSpace Carrier topology\n  connected : @ConnectedSpace Carrier topology\n\ninstance : CoeSort ClosedThreeManifold.{u} (Type u) := ⟨ClosedThreeManifold.Carrier⟩\nattribute [instance] ClosedThreeManifold.topology ClosedThreeManifold.hausdorff\n  ClosedThreeManifold.charts ClosedThreeManifold.compact ClosedThreeManifold.connected\n\nnamespace ClosedThreeManifold\n\ninstance (M : ClosedThreeManifold) : LocallyPathConnectedSpace M :=\n  ChartedSpace.locallyPathConnectedSpace EuclideanThree M\n\n/-- A topological consequence of being a round spherical space form. -/\ndef IsSphereCovered (M : ClosedThreeManifold) : Prop :=\n  ∃ p : SphereThree → M, IsCoveringMap p ∧ Function.Surjective p\n\n/-- The orientable sphere-bundle factor occurring in the surgery endgame. -/\ndef IsSphereHandle (M : ClosedThreeManifold) : Prop :=\n  Nonempty (M ≃ₜ (SphereOne × SphereTwo))\n\n/-- The allowed terminal factors, with spherical space forms weakened to\nthe covering property needed for the topological conclusion. -/\ndef IsStandardFactor (M : ClosedThreeManifold) : Prop :=\n  M.IsSphereCovered ∨ M.IsSphereHandle\n\n\n\nend ClosedThreeManifold\n\n/-- Finite, nonempty connected-sum expressions in factors satisfying `P`.\nThe operation is the actual quotient construction in `IsConnectedSum`.\nThere is deliberately no constructor declaring an arbitrary manifold to be\nthe empty connected sum. -/\ninductive ConnectedSumClosure (P : ClosedThreeManifold.{u} → Prop) :\n    ClosedThreeManifold.{u} → Prop\n  | factor {M : ClosedThreeManifold.{u}} : P M → ConnectedSumClosure P M\n  | homeomorph {M N : ClosedThreeManifold.{u}} : ConnectedSumClosure P M →\n      Nonempty (N ≃ₜ M) → ConnectedSumClosure P N\n  | sum {M N X : ClosedThreeManifold.{u}} : ConnectedSumClosure P M → ConnectedSumClosure P N →\n      IsConnectedSum M N X → ConnectedSumClosure P X\n\nnamespace ConnectedSumClosure\n\nvariable {P Q : ClosedThreeManifold.{u} → Prop} {M : ClosedThreeManifold.{u}}\n\n\n\nend ConnectedSumClosure\n\n/-- Topology recoverable from a later slice and the standard discarded factors. -/\ndef SurgeryReconstruction (before after : List ClosedThreeManifold.{u}) : Prop :=\n  ∀ M ∈ before, ConnectedSumClosure (fun N => N ∈ after ∨ N.IsStandardFactor) M\n\n/-- A finite chain of reconstruction records, in forward time order. -/\ninductive FiniteSurgeryHistory :\n    List ClosedThreeManifold.{u} → List ClosedThreeManifold.{u} → Prop\n  | refl (slice) : FiniteSurgeryHistory slice slice\n  | step {before middle after} : SurgeryReconstruction before middle →\n      FiniteSurgeryHistory middle after → FiniteSurgeryHistory before after\n\nnamespace FiniteSurgeryHistory\n\n\n\n\n\nend FiniteSurgeryHistory\n\n/-- Time-indexed component topology with finite reconstruction on each\nbounded horizon. This is extracted topological data, not a definition of\nRicci flow: no metric or Ricci equation is encoded here. -/\nstructure SurgeryTopologyEvolution (M : ClosedThreeManifold.{u}) where\n  components : ℝ → List ClosedThreeManifold.{u}\n  initial : components 0 = [M]\n  initial_interval : ∃ τ : ℝ, 0 < τ ∧ ∀ t ∈ Set.Icc 0 τ, components t = [M]\n  history : ∀ T, 0 ≤ T → FiniteSurgeryHistory (components 0) (components T)\n\nnamespace SurgeryTopologyEvolution\n\nvariable {M : ClosedThreeManifold.{u}}\n\n/-- Every component is absent from some positive time onward. -/\ndef FiniteExtinction (E : SurgeryTopologyEvolution M) : Prop :=\n  ∃ T : ℝ, 0 < T ∧ ∀ t : ℝ, T ≤ t → E.components t = []\n\n\n\nend SurgeryTopologyEvolution\n\nend OpenGA\n",
+        "definition_name": "OpenGA_SurgeryTopologyEvolution",
+        "definition_title": "Finite topological reconstruction data for surgery",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Bundle connected nonempty compact Hausdorff three-manifolds. Standard factors are manifolds covered surjectively by the unit three-sphere, or homeomorphic to S1 times S2. The first condition is weaker than being a round spherical space form. ConnectedSumClosure is a finite nonempty expression using actual coordinate-ball connected sums and homeomorphisms. A reconstruction record expresses each earlier component using later components and standard factors; it need not use each later component once. SurgeryTopologyEvolution supplies component lists, an initial positive interval on which the list is [M], and a finite reconstruction history from time zero to every nonnegative horizon. FiniteExtinction means that every slice is empty after some positive time. This is extracted topological data, not a metric Ricci flow or a claim of geometric existence.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/SurgeryReconstruction.lean#L1-L168; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "connected-sum",
+          "openga-endgame"
+        ]
+      },
+      "sha256": "b6ec59174acb352cb61ba878aa52f93a65471db0a7453d585bb5cf68be1d5d25"
+    },
+    {
+      "definitions": [
+        "OpenGA_SurgeryTopologyEvolution",
+        "OpenGA_WidthComparisonTrace"
+      ],
+      "id": "OpenGA_ExtinctionWidthControl",
+      "path": "Definitions/Def_OpenGA_ExtinctionWidthControl.lean",
+      "payload": {
+        "definition": "import Definitions.Def_OpenGA_SurgeryTopologyEvolution\nimport Definitions.Def_OpenGA_WidthComparisonTrace\n\n/-!\n# From width-controlled extinction to the Poincare endgame\n\nThe analytic and finite-topology links are proved. The last theorem lists\nthe remaining topology lemmas as explicit hypotheses. The separate mission\nworkspace declares those open problems and the geometric data-construction\nproblem; no unproved theorem is imported into this reusable library.\n\nReferences: Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7\nand Corollary 1.11; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5,\nSection 3.2 and Lemmas 73.4 and 81.2.\n-/\n\nnamespace OpenGA\n\nuniverse u\n\nnamespace SurgeryTopologyEvolution\n\nvariable {M : ClosedThreeManifold.{u}}\n\n/-- A single initial width bound works for every positive horizon whose\nfinal slice is nonempty. Supplying this property from geometric sweepouts\nand surgery is an open input, not part of the definition of an evolution. -/\ndef HasWidthControl (E : SurgeryTopologyEvolution M) (W : ℝ) : Prop :=\n  ∀ T : ℝ, 0 < T → E.components T ≠ [] → Nonempty (WidthComparisonTrace W T)\n\n\n\n\n\nend SurgeryTopologyEvolution\n\n\n\nend OpenGA\n",
+        "definition_name": "OpenGA_ExtinctionWidthControl",
+        "definition_title": "Uniform width control of nonempty component slices",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For an extracted SurgeryTopologyEvolution E and one real bound W, every positive time T with nonempty components must admit a WidthComparisonTrace W T. The same W is used for all horizons. The initial positive interval ensures this requirement is nonvacuous. The trace contains abstract analytic comparison data; realizing its fields by geometric sweepouts and a Ricci flow with surgery remains a separate open problem.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/ExtinctionEndgame.lean#L1-L83; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "connected-sum",
+          "openga-endgame"
+        ]
+      },
+      "sha256": "afe4ed0e6b0879f093815c8e7478a4dc256b1a4cd398b1ffbe072f1b84136d18"
+    },
+    {
+      "definitions": [],
+      "id": "OpenGA_WidthExtinctionTime",
+      "path": "Definitions/Def_OpenGA_WidthExtinctionTime.lean",
+      "payload": {
+        "definition": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Pow.Deriv\n\n/-!\n# The width inequality forces extinction\n\nA nonnegative continuous quantity `W` whose forward Dini derivative\nsatisfies\n$$\\frac{d}{dt} W(t) \\;\\le\\; -4\\pi + \\frac{3}{4(t+C)}\\, W(t)$$\ncannot live past the explicit deadline\n$$T^* \\;=\\; \\Big(C^{1/4} + \\frac{W(0)}{16\\pi\\, C^{3/4}}\\Big)^{4} - C .$$\n\nThis is the pure-calculus endpoint of the Colding–Minicozzi finite-time\nextinction argument: the width of a nontrivial sweepout class along a\nRicci flow satisfies the displayed inequality, is nonnegative by\ndefinition, and therefore the flow cannot be immortal. All geometry is\nupstream, in the two constants; this file is analysis only.\n\nThe differential inequality enters in the weakest useful sense — the\nliminf of forward difference quotients (`slope`), the form consumed by\nMathlib's fencing lemmas. It is implied both by the limsup-of-forward-\ndifference-quotients hypothesis of the blueprint and by any pointwise\nright-differentiable version, so every downstream supplier can\ninstantiate it.\n\n## Ground truth\n\nColding–Minicozzi, *Estimates for the extinction time for the Ricci\nflow on certain 3-manifolds and a question of Perelman*, §1 (the\nintegration displayed between Theorem 0.1 and its corollary).\nBlueprint: PoincareNet card `lem-width-inequality-forces-extinction`\n(id `aa4c3210ae78`).\n\n## Main declarations\n\n* `widthExtinctionTime C W₀` — the explicit deadline `T*(C, W₀)`.\n* `le_widthExtinctionTime_of_slope_le` — a nonnegative continuous `W`\n  satisfying the width differential inequality on `[0, t]` forces\n  `t ≤ widthExtinctionTime C (W 0)`.\n* `le_widthExtinctionTime_across_downward_jumps` — the same deadline for\n  finitely many continuous width profiles with downward jumps.\n\n## Proof shape\n\nNo integrating factor is applied to `W` itself (transporting Dini\nbounds through a product costs an epsilon-management detour). Instead,\nfor each `ε > 0` the *explicit* solution of the perturbed comparison\nequation `B' = 3/(4(t+C))·B - 4π + ε`, `B 0 = W 0 + ε`, is written\ndown in closed form and Mathlib's contact fencing lemma\n`image_le_of_liminf_slope_right_lt_deriv_boundary'` pins `W ≤ B`:\nat a contact point `W x = B x` the hypothesised Dini bound for `W` is\n*strictly* below `B'`. Letting `ε ↓ 0` and reading the sign of the\nlimit solution at `t` yields the deadline.\n-/\n\nopen Set Topology\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- **Math.** The **extinction deadline** $T^*(C, W_0) = \\big(C^{1/4} +\n\\frac{W_0}{16\\pi C^{3/4}}\\big)^4 - C$: past this time, no nonnegative\nquantity can satisfy the width differential inequality. -/\nnoncomputable def widthExtinctionTime (C W₀ : ℝ) : ℝ :=\n  (C ^ ((1 : ℝ)/4) + W₀ / (16 * Real.pi * C ^ ((3 : ℝ)/4))) ^ (4 : ℕ) - C\n\nnamespace WidthExtinction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nend WidthExtinction\n\n\n\n\n\n\n\nend OpenGA\n",
+        "definition_name": "OpenGA_WidthExtinctionTime",
+        "definition_title": "The explicit width extinction deadline",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Define T*(C,W) = (C^(1/4) + W/(16 pi C^(3/4)))^4 - C for real C and W. Its use as an extinction deadline requires C positive and the scalar/width comparison hypotheses; those conclusions are theorem nodes, not part of this definition.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Analysis/WidthExtinction.lean#L1-L368; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "connected-sum",
+          "openga-endgame"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-09T20:53:02.282451+00:00",
+        "job": {
+          "created_at": "2026-09-09T20:49:57.7397+00:00",
+          "definitions": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Pow.Deriv\n\n/-!\n# The width inequality forces extinction\n\nA nonnegative continuous quantity `W` whose forward Dini derivative\nsatisfies\n$$\\frac{d}{dt} W(t) \\;\\le\\; -4\\pi + \\frac{3}{4(t+C)}\\, W(t)$$\ncannot live past the explicit deadline\n$$T^* \\;=\\; \\Big(C^{1/4} + \\frac{W(0)}{16\\pi\\, C^{3/4}}\\Big)^{4} - C .$$\n\nThis is the pure-calculus endpoint of the Colding–Minicozzi finite-time\nextinction argument: the width of a nontrivial sweepout class along a\nRicci flow satisfies the displayed inequality, is nonnegative by\ndefinition, and therefore the flow cannot be immortal. All geometry is\nupstream, in the two constants; this file is analysis only.\n\nThe differential inequality enters in the weakest useful sense — the\nliminf of forward difference quotients (`slope`), the form consumed by\nMathlib's fencing lemmas. It is implied both by the limsup-of-forward-\ndifference-quotients hypothesis of the blueprint and by any pointwise\nright-differentiable version, so every downstream supplier can\ninstantiate it.\n\n## Ground truth\n\nColding–Minicozzi, *Estimates for the extinction time for the Ricci\nflow on certain 3-manifolds and a question of Perelman*, §1 (the\nintegration displayed between Theorem 0.1 and its corollary).\nBlueprint: PoincareNet card `lem-width-inequality-forces-extinction`\n(id `aa4c3210ae78`).\n\n## Main declarations\n\n* `widthExtinctionTime C W₀` — the explicit deadline `T*(C, W₀)`.\n* `le_widthExtinctionTime_of_slope_le` — a nonnegative continuous `W`\n  satisfying the width differential inequality on `[0, t]` forces\n  `t ≤ widthExtinctionTime C (W 0)`.\n* `le_widthExtinctionTime_across_downward_jumps` — the same deadline for\n  finitely many continuous width profiles with downward jumps.\n\n## Proof shape\n\nNo integrating factor is applied to `W` itself (transporting Dini\nbounds through a product costs an epsilon-management detour). Instead,\nfor each `ε > 0` the *explicit* solution of the perturbed comparison\nequation `B' = 3/(4(t+C))·B - 4π + ε`, `B 0 = W 0 + ε`, is written\ndown in closed form and Mathlib's contact fencing lemma\n`image_le_of_liminf_slope_right_lt_deriv_boundary'` pins `W ≤ B`:\nat a contact point `W x = B x` the hypothesised Dini bound for `W` is\n*strictly* below `B'`. Letting `ε ↓ 0` and reading the sign of the\nlimit solution at `t` yields the deadline.\n-/\n\nopen Set Topology\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- **Math.** The **extinction deadline** $T^*(C, W_0) = \\big(C^{1/4} +\n\\frac{W_0}{16\\pi C^{3/4}}\\big)^4 - C$: past this time, no nonnegative\nquantity can satisfy the width differential inequality. -/\nnoncomputable def widthExtinctionTime (C W₀ : ℝ) : ℝ :=\n  (C ^ ((1 : ℝ)/4) + W₀ / (16 * Real.pi * C ^ ((3 : ℝ)/4))) ^ (4 : ℕ) - C\n\nnamespace WidthExtinction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nend WidthExtinction\n\n\n\n\n\n\n\nend OpenGA\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "0b04854e-3e17-49e7-bed4-00b0843ada67",
+          "kind": "definition",
+          "natural_language_statement": "Define T*(C,W) = (C^(1/4) + W/(16 pi C^(3/4)))^4 - C for real C and W. Its use as an extinction deadline requires C positive and the scalar/width comparison hypotheses; those conclusions are theorem nodes, not part of this definition.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Analysis/WidthExtinction.lean#L1-L368; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+          "status": "PENDING",
+          "tags": [
+            "poincare-conjecture",
+            "finite-extinction",
+            "connected-sum",
+            "openga-endgame"
+          ],
+          "theorem_id": null,
+          "theorem_name": "OpenGA_WidthExtinctionTime",
+          "theorem_title": "The explicit width extinction deadline",
+          "updated_at": "2026-09-09T20:49:57.7397+00:00",
+          "visibility": "public"
+        },
+        "job_id": "0b04854e-3e17-49e7-bed4-00b0843ada67",
+        "response": {
+          "definition_name": "OpenGA_WidthExtinctionTime",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "0b04854e-3e17-49e7-bed4-00b0843ada67",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/0b04854e-3e17-49e7-bed4-00b0843ada67 until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-09T20:49:57.538531+00:00",
+        "status": "PENDING"
+      },
+      "sha256": "a02f23e506357ca800daf7629864e60452ffc1098d47aabd6c80630a9a451cf1"
+    }
+  ],
+  "existing": [
+    {
+      "id": "192cef90-169f-4470-b074-8392596cb487",
+      "name": "PoincareFormalization.covering_is_homeomorph",
+      "path": "Theorems/Thm_PoincareFormalization_covering_is_homeomorph.lean",
+      "sha256": "6790bbd0a6100b6044959645e115ac684867ccd37a3ecc5e354457957630d227"
+    },
+    {
+      "id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+      "name": "OpenGA.scalar_lower_bound_across_upward_jumps",
+      "path": "Theorems/Thm_OpenGA_scalar_lower_bound_across_upward_jumps.lean",
+      "sha256": "6ea88e0e428666de1c25fe065c7a1936431824199ce263ee52e7d24c1dd52621"
+    },
+    {
+      "id": "18265c01-abe4-486f-84f2-c88759ab91fc",
+      "name": "OpenGA.eventually_width_slope_lt_of_comparison",
+      "path": "Theorems/Thm_OpenGA_eventually_width_slope_lt_of_comparison.lean",
+      "sha256": "ab97369b4cd0410d1e122769f90e8c57d2b925f28ba39e57d28929b156ac2546"
+    },
+    {
+      "id": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+      "name": "OpenGA_WidthComparisonData",
+      "path": "Definitions/Def_OpenGA_WidthComparisonData.lean",
+      "sha256": "9a8c33f6132b66ab7cc3dd693b644b140b04c87c08bf140e8db81b160e0f5488"
+    },
+    {
+      "id": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+      "name": "OpenGA_WidthComparisonTrace",
+      "path": "Definitions/Def_OpenGA_WidthComparisonTrace.lean",
+      "sha256": "6713d3f63eea5cc92c91b8639ffef711ec0dbd81a14f5da53003796d465b9bb8"
+    },
+    {
+      "id": "16d46789-a853-4a33-a4a3-4134fe549c82",
+      "name": "OpenGA.le_width_deadline_across_downward_jumps",
+      "path": "Theorems/Thm_OpenGA_le_width_deadline_across_downward_jumps.lean",
+      "sha256": "1ad76d5518353e95cdc3642b2b18f662713c07684737d2ed603b3b5f81519662"
+    },
+    {
+      "id": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+      "name": "OpenGA_AreaEnergyDensities",
+      "path": "Definitions/Def_OpenGA_AreaEnergyDensities.lean",
+      "sha256": "2dab2dcf50f33f84e67badfd0cf7a68b71b8da53614a28c399ff529d40e0300e"
+    },
+    {
+      "id": "a15a21e2-9521-45ee-b36b-7db0df18ff13",
+      "name": "OpenGA_ScalarWidthTrace",
+      "path": "Definitions/Def_OpenGA_ScalarWidthTrace.lean",
+      "sha256": "8f601ae71ec55995167ff09f845daea0707e662608f45c127642dc98a0581933"
+    }
+  ],
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "schema_version": 1,
+  "scope": "Extracted topology and width data, three proved implications, four open inputs, a conditional topology sketch and a reduction of the existing root. The full KL/CM geometric construction remains open.",
+  "source_reviewed": true,
+  "source_revision": "20ce5fe376984e6628a05ab1622edd8dc64b3985",
+  "sources": [
+    {
+      "path": "OpenGALib/Topology/ConnectedSum.lean",
+      "sha256": "4beee1de6655a98b3cf80f42d0bb391104c08a18b9512993bb76603a4186429b"
+    },
+    {
+      "path": "OpenGALib/Topology/SurgeryReconstruction.lean",
+      "sha256": "fcbfc39df0965237b4b4208ecb05eb625c214fc790e0b819c5194068796e73e6"
+    },
+    {
+      "path": "OpenGALib/Topology/ExtinctionEndgame.lean",
+      "sha256": "59778334126ad2440992ac5d53fb464299f5b9acb4e80306e11d37af4cdd46c7"
+    },
+    {
+      "path": "OpenGALib/Analysis/ComparisonExtinction.lean",
+      "sha256": "efa9fd56da558a8452621ac255c13b6018ce2193dbfc7c54c391206ceb2515b6"
+    },
+    {
+      "path": "OpenGALib/Analysis/WidthExtinction.lean",
+      "sha256": "3ab81df4cce0b4b87124f0c54dea44126b5fcf72cd8007eb894071056e4c1dfc"
+    },
+    {
+      "path": "OpenGALib/Topology/SphereCovering.lean",
+      "sha256": "fe489ed5a5f2abba2238a514e2a71e963aa7a72a1caa260b5cdc6478dc7d27b0"
+    },
+    {
+      "path": "OpenGALib/Topology/CoveringSpace.lean",
+      "sha256": "b9d4575e09f68f21430abcde12b390b0f9790e7eb5e7eefbe965fa57eb3cc5fe"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/OpenProblems.lean",
+      "sha256": "5b8d398cb3b157d09fc426d5af57cf7821cf0a9326799d717dfb49e14bddf358"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Reduction.lean",
+      "sha256": "42a27e6550d9f2fd92074930731479c484c193bbbafc9d1fef09b2e86baea4a5"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/AuditDefinitions.lean",
+      "sha256": "5c75c0083cd59aaa9828839dc511dfed30f7e6930da52d3fd0877e5b68711acb"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/Audit_OpenGA_WidthComparisonTrace_le_extinctionTime.lean",
+      "sha256": "25190e35b7891162398bfac05cd7cac8346ae0eef0f36891d1004228daebd8a2"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/Audit_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_standard_decomposition.lean",
+      "sha256": "c10c0d903989dbd8eb92d3b88cf5248b442a236d4697c738729cb179f9021215"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/ExtractSketchInfo.lean",
+      "sha256": "e0a9164a476c61b6da70592e3c7e8f4267910ac3d433d9fd13e6ccca7b7e801b"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/ExportedTypes.lean",
+      "sha256": "51ae922c8f199459677d44f3852fa54d9cf0d57d386b416e948b35fd74767e7a"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/OriginalTypes.lean",
+      "sha256": "30f068b5a4dc1d25e34142cae669e762617fc2cecaf0c12aad500d9f42fed25d"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/Audit_OpenGA_SurgeryTopologyEvolution_finiteExtinction_of_width_control.lean",
+      "sha256": "52323cf55510132ab978341b5f68dd0099f9fb915c35f1cd5c54c63f73aba8a2"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/Audit_OpenGA_SurgeryTopologyEvolution_topology_from_extinction.lean",
+      "sha256": "d308e7ece8bd7aadcea367ec2eb5cf75357bb6156c3e6d9f8b002a896388905d"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/validate_exports.py",
+      "sha256": "68da6eb4f128b74d2edd308fd95865f56e47c46e08511d192d8548ce7c0c867a"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/finalize_endgame.py",
+      "sha256": "30999e83b0904dcc10916a988ac7b49ef2b3d311438dda13f82bc18600ed4743"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/Audit_PoincareFormalization_nonempty_homeomorph_sphere_three.lean",
+      "sha256": "15e25971b03962f8e5f804395a701669ede8368fc4b8a5be4a17f56e047a46a8"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/ExtractDeclarationGraph.lean",
+      "sha256": "9ed9bf283c3ff13399343c3f1b867ac5020375b0806b4e6e09fb32203d8a0441"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/extract.py",
+      "sha256": "59fdfe9a113606fbde4a616da0ce6fb73c7e43931e1a9b54d6fd561e9b58778e"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/Tools/export_endgame.py",
+      "sha256": "199a2cd84ab68e585a61e7fed9945591bf0b1ab16944c4ba813c4a4942a5c8e3"
+    }
+  ],
+  "status": "VALIDATED",
+  "theorems": [
+    {
+      "definitions": [
+        "OpenGA_ExtinctionWidthControl"
+      ],
+      "id": "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+      "imports": [],
+      "path": "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_exists_width_controlled_surgery_topology.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# Open geometric and topological inputs to the extinction endgame\n\nThese are open problems, with explicit `sorry` bodies. They are kept in the\nmission workspace, outside the reusable OpenGALib import tree. Successfully\nelaborating this file does not prove any of the four problems.\n\nThe geometry problem asks for data extracted from the intended Kleiner-Lott\nand Colding-Minicozzi construction. `SurgeryTopologyEvolution` is explicitly\nan abstraction of its topological output, not the full metric surgery flow.\nIn particular, this file does not claim to formalize the Ricci equation,\ncutoff conditions, or the analytic min-max construction.\n-/\n\nnamespace PoincareFormalization.ExtinctionEndgame\n\nopen OpenGA\n\nuniverse u\n\n\ntheorem exists_width_controlled_surgery_topology (M : ClosedThreeManifold.{u})\n    [SimplyConnectedSpace M] :\n    ∃ (E : SurgeryTopologyEvolution M) (W : ℝ), 0 ≤ W ∧ E.HasWidthControl W := by sorry\n\n\n\n\n\n\n\nend PoincareFormalization.ExtinctionEndgame\n",
+        "natural_language_statement": "For every closed simply connected topological three-manifold M, construct an extracted surgery topology E and one W >= 0 such that every nonempty positive-time slice supplies a WidthComparisonTrace W T. E must preserve [M] on an initial positive time interval and carry finite topological reconstruction records at every horizon. This statement requests extracted data, not a complete metric-flow object. The intended KL/CM construction must still provide smoothing, orientation, a normalized metric, controlled surgery, nontrivial sweepouts and the width estimates. These geometric obligations remain open.",
+        "preamble": "import Definitions.Def_OpenGA_ExtinctionWidthControl\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/OpenProblems.lean#L1-L67; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "connected-sum",
+          "openga-endgame"
+        ],
+        "theorem_name": "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+        "theorem_title": "Construct uniform width-controlled surgery topology"
+      },
+      "sha256": "1447851f3c52c15e4c4a0e72727ad0f95c1e521e54f89583ed53b5f79251dd85"
+    },
+    {
+      "definitions": [
+        "OpenGA_SurgeryTopologyEvolution"
+      ],
+      "id": "PoincareFormalization.ExtinctionEndgame.simply_connected_factors_of_connected_sum",
+      "imports": [],
+      "path": "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_simply_connected_factors_of_connected_sum.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# Open geometric and topological inputs to the extinction endgame\n\nThese are open problems, with explicit `sorry` bodies. They are kept in the\nmission workspace, outside the reusable OpenGALib import tree. Successfully\nelaborating this file does not prove any of the four problems.\n\nThe geometry problem asks for data extracted from the intended Kleiner-Lott\nand Colding-Minicozzi construction. `SurgeryTopologyEvolution` is explicitly\nan abstraction of its topological output, not the full metric surgery flow.\nIn particular, this file does not claim to formalize the Ricci equation,\ncutoff conditions, or the analytic min-max construction.\n-/\n\nnamespace PoincareFormalization.ExtinctionEndgame\n\nopen OpenGA\n\nuniverse u\n\n\n\n\ntheorem simply_connected_factors_of_connected_sum (M N X : ClosedThreeManifold.{u})\n    (hsum : IsConnectedSum M N X) (hX : SimplyConnectedSpace X) :\n    SimplyConnectedSpace M ∧ SimplyConnectedSpace N := by sorry\n\n\n\n\n\nend PoincareFormalization.ExtinctionEndgame\n",
+        "natural_language_statement": "For closed connected three-manifolds M, N, X with X a coordinate-ball connected sum of M and N, simple connectivity of X implies simple connectivity of both M and N. This is the van Kampen input; no such property is assumed in the connected-sum definition.",
+        "preamble": "import Definitions.Def_OpenGA_SurgeryTopologyEvolution\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/OpenProblems.lean#L1-L67; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "connected-sum",
+          "openga-endgame"
+        ],
+        "theorem_name": "PoincareFormalization.ExtinctionEndgame.simply_connected_factors_of_connected_sum",
+        "theorem_title": "Simply connected connected sums have simply connected factors"
+      },
+      "sha256": "83463d14d54580106bb844c7d77f664b73073a9abdbf0fa260d07ce99cb2d638"
+    },
+    {
+      "definitions": [
+        "OpenGA_SurgeryTopologyEvolution"
+      ],
+      "id": "PoincareFormalization.ExtinctionEndgame.not_simply_connected_sphere_handle",
+      "imports": [],
+      "path": "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_not_simply_connected_sphere_handle.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# Open geometric and topological inputs to the extinction endgame\n\nThese are open problems, with explicit `sorry` bodies. They are kept in the\nmission workspace, outside the reusable OpenGALib import tree. Successfully\nelaborating this file does not prove any of the four problems.\n\nThe geometry problem asks for data extracted from the intended Kleiner-Lott\nand Colding-Minicozzi construction. `SurgeryTopologyEvolution` is explicitly\nan abstraction of its topological output, not the full metric surgery flow.\nIn particular, this file does not claim to formalize the Ricci equation,\ncutoff conditions, or the analytic min-max construction.\n-/\n\nnamespace PoincareFormalization.ExtinctionEndgame\n\nopen OpenGA\n\nuniverse u\n\n\n\n\n\n\ntheorem not_simply_connected_sphere_handle (M : ClosedThreeManifold.{u})\n    (hhandle : M.IsSphereHandle) : ¬SimplyConnectedSpace M := by sorry\n\n\n\nend PoincareFormalization.ExtinctionEndgame\n",
+        "natural_language_statement": "A closed three-manifold homeomorphic to S1 times S2 is not simply connected. This excludes the handle factors from a simply connected connected-sum decomposition.",
+        "preamble": "import Definitions.Def_OpenGA_SurgeryTopologyEvolution\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/OpenProblems.lean#L1-L67; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "connected-sum",
+          "openga-endgame"
+        ],
+        "theorem_name": "PoincareFormalization.ExtinctionEndgame.not_simply_connected_sphere_handle",
+        "theorem_title": "The sphere handle is not simply connected"
+      },
+      "sha256": "8a09758a4598afa9733965cecdb5e5b5cb0de8f548a8b19d89003ea4d500e056"
+    },
+    {
+      "definitions": [
+        "OpenGA_SurgeryTopologyEvolution"
+      ],
+      "id": "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_connected_sum_spheres",
+      "imports": [],
+      "path": "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_connected_sum_spheres.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# Open geometric and topological inputs to the extinction endgame\n\nThese are open problems, with explicit `sorry` bodies. They are kept in the\nmission workspace, outside the reusable OpenGALib import tree. Successfully\nelaborating this file does not prove any of the four problems.\n\nThe geometry problem asks for data extracted from the intended Kleiner-Lott\nand Colding-Minicozzi construction. `SurgeryTopologyEvolution` is explicitly\nan abstraction of its topological output, not the full metric surgery flow.\nIn particular, this file does not claim to formalize the Ricci equation,\ncutoff conditions, or the analytic min-max construction.\n-/\n\nnamespace PoincareFormalization.ExtinctionEndgame\n\nopen OpenGA\n\nuniverse u\n\n\n\n\n\n\n\n\ntheorem nonempty_homeomorph_sphere_of_connected_sum_spheres\n    (M N X : ClosedThreeManifold.{u}) (hsum : IsConnectedSum M N X)\n    (hM : Nonempty (M ≃ₜ SphereThree)) (hN : Nonempty (N ≃ₜ SphereThree)) :\n    Nonempty (X ≃ₜ SphereThree) := by sorry\n\nend PoincareFormalization.ExtinctionEndgame\n",
+        "natural_language_statement": "If closed three-manifolds M and N are each homeomorphic to the unit three-sphere, then every coordinate-ball connected sum X of M and N is also homeomorphic to that sphere. The gluing may use any boundary homeomorphism.",
+        "preamble": "import Definitions.Def_OpenGA_SurgeryTopologyEvolution\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/OpenProblems.lean#L1-L67; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "connected-sum",
+          "openga-endgame"
+        ],
+        "theorem_name": "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_connected_sum_spheres",
+        "theorem_title": "A connected sum of three-spheres is a three-sphere"
+      },
+      "sha256": "d8fd0cdbf946bb3ca12e4e84fdae04bb781de174a3e7c299778e273a8701362c"
+    },
+    {
+      "definitions": [
+        "OpenGA_WidthComparisonTrace",
+        "OpenGA_WidthExtinctionTime"
+      ],
+      "expected_verdict": "ACCEPTED",
+      "explanation": "Every normalized finite scalar/width comparison trace with initial width bound W and final time T satisfies T <= T*(1/4,W). The proof combines the existing scalar lower bound, area-energy width comparison and finite downward-jump deadline. Existence of such traces is an explicit input. Reviewed source: https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Analysis/ComparisonExtinction.lean#L1-L52. Small adapters reuse the existing platform theorem interfaces; no proof holes are added.",
+      "id": "OpenGA.WidthComparisonTrace.le_extinctionTime",
+      "imports": [
+        "OpenGA.scalar_lower_bound_across_upward_jumps",
+        "OpenGA.eventually_width_slope_lt_of_comparison",
+        "OpenGA.le_width_deadline_across_downward_jumps"
+      ],
+      "path": "Theorems/Thm_OpenGA_WidthComparisonTrace_le_extinctionTime.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# The lifetime bound for scalar and width comparison traces\n\nThis packages the existing scalar lower bound, area-energy width comparison,\nand finite-jump deadline into one reusable theorem. No geometric existence\nclaim is made: the trace is an explicit input.\n-/\n\nnamespace OpenGA\n\nopen Set Filter\nopen scoped Topology\n\n\ntheorem WidthComparisonTrace.le_extinctionTime {W T : ℝ} (F : WidthComparisonTrace W T) :\n    T ≤ widthExtinctionTime (1 / 4) W := by sorry\n\nend OpenGA\n",
+        "natural_language_statement": "Every normalized finite scalar/width comparison trace with initial width bound W and final time T satisfies T <= T*(1/4,W). The proof combines the existing scalar lower bound, area-energy width comparison and finite downward-jump deadline. Existence of such traces is an explicit input.",
+        "preamble": "import Definitions.Def_OpenGA_WidthComparisonTrace\nimport Definitions.Def_OpenGA_WidthExtinctionTime\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Analysis/ComparisonExtinction.lean#L1-L52; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "connected-sum",
+          "openga-endgame"
+        ],
+        "theorem_name": "OpenGA.WidthComparisonTrace.le_extinctionTime",
+        "theorem_title": "A width comparison trace has a finite deadline"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_WidthComparisonTrace_le_extinctionTime.lean",
+      "proof_sha256": "980ca65bd817ead1a86b8e035c58f2749503d5defb96cf9aef8c97c19865154e",
+      "sha256": "4242242605cdf8c6476e1a2bfb694fd4517b33f2f204d98f7b85bb519597759b"
+    },
+    {
+      "definitions": [
+        "OpenGA_ExtinctionWidthControl",
+        "OpenGA_WidthExtinctionTime"
+      ],
+      "expected_verdict": "ACCEPTED",
+      "explanation": "If an extracted surgery topology E has width control with one bound W on every nonempty positive-time slice, all slices at and beyond max(T*(1/4,W),0)+1 are empty. This is a proved analytic implication; constructing the data from a geometric surgery flow remains open. Reviewed source: https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/ExtinctionEndgame.lean#L1-L83. Small adapters reuse the existing platform theorem interfaces; no proof holes are added.",
+      "id": "OpenGA.SurgeryTopologyEvolution.finiteExtinction_of_width_control",
+      "imports": [
+        "OpenGA.WidthComparisonTrace.le_extinctionTime"
+      ],
+      "path": "Theorems/Thm_OpenGA_SurgeryTopologyEvolution_finiteExtinction_of_width_control.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# From width-controlled extinction to the Poincare endgame\n\nThe analytic and finite-topology links are proved. The last theorem lists\nthe remaining topology lemmas as explicit hypotheses. The separate mission\nworkspace declares those open problems and the geometric data-construction\nproblem; no unproved theorem is imported into this reusable library.\n\nReferences: Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7\nand Corollary 1.11; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5,\nSection 3.2 and Lemmas 73.4 and 81.2.\n-/\n\nnamespace OpenGA\n\nuniverse u\n\nnamespace SurgeryTopologyEvolution\n\nvariable {M : ClosedThreeManifold.{u}}\n\n\n\n\ntheorem finiteExtinction_of_width_control (E : SurgeryTopologyEvolution M)\n    {W : ℝ} (h : E.HasWidthControl W) : E.FiniteExtinction := by sorry\n\n\n\nend SurgeryTopologyEvolution\n\n\n\nend OpenGA\n",
+        "natural_language_statement": "If an extracted surgery topology E has width control with one bound W on every nonempty positive-time slice, all slices at and beyond max(T*(1/4,W),0)+1 are empty. This is a proved analytic implication; constructing the data from a geometric surgery flow remains open.",
+        "preamble": "import Definitions.Def_OpenGA_ExtinctionWidthControl\nimport Definitions.Def_OpenGA_WidthExtinctionTime\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/ExtinctionEndgame.lean#L1-L83; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "connected-sum",
+          "openga-endgame"
+        ],
+        "theorem_name": "OpenGA.SurgeryTopologyEvolution.finiteExtinction_of_width_control",
+        "theorem_title": "Uniform width control forces finite extinction"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_SurgeryTopologyEvolution_finiteExtinction_of_width_control.lean",
+      "proof_sha256": "4b9738d885d25dc8d28eec99c31c0cd06fc606a35e5dd22cd87c5ba4d410a7ee",
+      "sha256": "3cbf8af35d63fa7f11dd9027e281d355fe9f3e6551e258168dbf5a2af5ed02ce"
+    },
+    {
+      "definitions": [
+        "OpenGA_SurgeryTopologyEvolution"
+      ],
+      "expected_verdict": "ACCEPTED",
+      "explanation": "If a SurgeryTopologyEvolution of M becomes empty after some positive time, M lies in the finite connected-sum closure of sphere-covered manifolds and S1 times S2 factors. The proof iterates its finite reconstruction history backwards from an empty slice. It formalizes the finite-induction step of KL Lemma 81.2 for explicitly supplied records; obtaining those records from metric surgery is still required. Reviewed source: https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/SurgeryReconstruction.lean#L1-L168. Small adapters reuse the existing platform theorem interfaces; no proof holes are added.",
+      "id": "OpenGA.SurgeryTopologyEvolution.topology_from_extinction",
+      "imports": [],
+      "path": "Theorems/Thm_OpenGA_SurgeryTopologyEvolution_topology_from_extinction.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# The topological endpoint of finite surgery\n\nKleiner-Lott, Lemma 73.4 (p. 140), reconstructs the topology before a surgery\nby connected sums and restoration of specified discarded components. Lemma\n81.2 (p. 160) iterates this description backwards from an empty slice.\nSource: https://arxiv.org/pdf/math/0605667v5\n\nThis file proves that finite iteration explicitly. A `SurgeryReconstruction`\nrecords the topological consequence of an operation, not its metric surgery\nconstruction. Obtaining these records from a Kleiner-Lott flow remains a\ngeometric task.\n\nFor the topological conclusion we retain a weaker class than round spherical\nspace forms: closed three-manifolds covered by the standard three-sphere.\nEvery round spherical space form has such a covering. This weakening is\nsufficient for the simply connected endgame and does not assert that every\nsphere-covered manifold carries a round quotient metric.\n-/\n\nnamespace OpenGA\n\nuniverse u\n\n\n\n\nattribute [instance] ClosedThreeManifold.topology ClosedThreeManifold.hausdorff\n  ClosedThreeManifold.charts ClosedThreeManifold.compact ClosedThreeManifold.connected\n\nnamespace ClosedThreeManifold\n\n\n\n\n\n\n\n\n\n\n\nend ClosedThreeManifold\n\n\n\nnamespace ConnectedSumClosure\n\nvariable {P Q : ClosedThreeManifold.{u} → Prop} {M : ClosedThreeManifold.{u}}\n\n\n\nend ConnectedSumClosure\n\n\n\n\n\nnamespace FiniteSurgeryHistory\n\n\n\n\n\nend FiniteSurgeryHistory\n\n\n\nnamespace SurgeryTopologyEvolution\n\nvariable {M : ClosedThreeManifold.{u}}\n\n\n\n\ntheorem topology_from_extinction (E : SurgeryTopologyEvolution M) (h : E.FiniteExtinction) :\n    ConnectedSumClosure ClosedThreeManifold.IsStandardFactor M := by sorry\n\nend SurgeryTopologyEvolution\n\nend OpenGA\n",
+        "natural_language_statement": "If a SurgeryTopologyEvolution of M becomes empty after some positive time, M lies in the finite connected-sum closure of sphere-covered manifolds and S1 times S2 factors. The proof iterates its finite reconstruction history backwards from an empty slice. It formalizes the finite-induction step of KL Lemma 81.2 for explicitly supplied records; obtaining those records from metric surgery is still required.",
+        "preamble": "import Definitions.Def_OpenGA_SurgeryTopologyEvolution\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/SurgeryReconstruction.lean#L1-L168; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "connected-sum",
+          "openga-endgame"
+        ],
+        "theorem_name": "OpenGA.SurgeryTopologyEvolution.topology_from_extinction",
+        "theorem_title": "Finite extinction reconstructs a connected sum of standard factors"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_SurgeryTopologyEvolution_topology_from_extinction.lean",
+      "proof_sha256": "ddedb41c8809646f4262c9587ebadab4a4585231ae10f745c1aa5425db0ca6df",
+      "sha256": "028542e721e41b71a85652de80062eabcc18013c0d1d09897ad9491d101e37a2"
+    },
+    {
+      "definitions": [
+        "OpenGA_SurgeryTopologyEvolution"
+      ],
+      "expected_verdict": "SKETCH_ACCEPTED",
+      "explanation": "A closed simply connected three-manifold with a finite connected-sum decomposition into sphere-covered factors and S1 times S2 factors is homeomorphic to S3. This conditional proof sketch uses three open topology lemmas: simple connectivity descends to factors, sphere handles are not simply connected, and the sum of two three-spheres is a three-sphere. The sphere-covering base case reuses salim's proved covering theorem. Reviewed source: https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/Reduction.lean#L1-L75. Small adapters reuse the existing platform theorem interfaces; no proof holes are added.",
+      "id": "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_standard_decomposition",
+      "imports": [
+        "PoincareFormalization.ExtinctionEndgame.simply_connected_factors_of_connected_sum",
+        "PoincareFormalization.ExtinctionEndgame.not_simply_connected_sphere_handle",
+        "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_connected_sum_spheres",
+        "PoincareFormalization.covering_is_homeomorph"
+      ],
+      "path": "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_standard_decomposition.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# The formal finite-extinction reduction of the Poincare goal\n\nThe proofs in this file have no holes of their own, but depend on the four\nexplicit open theorems in `OpenProblems.lean`. They are conditional proof\nsketches, not proofs of the Poincare conjecture or of geometric extinction.\n\nDependency chain:\n  geometric construction (open) -> width-controlled component evolution\n  -> finite extinction -> connected-sum reconstruction\n  -> simply connected endgame (three open topology lemmas) -> mission goal.\n\nThe auxiliary definitions and analytic/topological iteration theorems in\nOpenGALib have no project axioms or proof holes. The distinction is checked\nby `Audit.lean` and the reusable-library regression check.\n-/\n\nnamespace PoincareFormalization.ExtinctionEndgame\n\nopen OpenGA\n\nuniverse u\n\n\n\n\ntheorem nonempty_homeomorph_sphere_of_standard_decomposition\n    (M : ClosedThreeManifold.{u}) [SimplyConnectedSpace M]\n    (h : ConnectedSumClosure ClosedThreeManifold.IsStandardFactor M) :\n    Nonempty (M ≃ₜ SphereThree) := by sorry\n\n\n\n\n\nend PoincareFormalization.ExtinctionEndgame\n",
+        "natural_language_statement": "A closed simply connected three-manifold with a finite connected-sum decomposition into sphere-covered factors and S1 times S2 factors is homeomorphic to S3. This conditional proof sketch uses three open topology lemmas: simple connectivity descends to factors, sphere handles are not simply connected, and the sum of two three-spheres is a three-sphere. The sphere-covering base case reuses salim's proved covering theorem.",
+        "preamble": "import Definitions.Def_OpenGA_SurgeryTopologyEvolution\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/Reduction.lean#L1-L75; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "connected-sum",
+          "openga-endgame"
+        ],
+        "theorem_name": "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_standard_decomposition",
+        "theorem_title": "The simply connected endgame for a standard connected-sum decomposition"
+      },
+      "proof_path": "Solutions/Sol_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_standard_decomposition.lean",
+      "proof_sha256": "e7a5a90fd3863cc8082641fdeedc7d9a4006816b97be1776851a8a2d60ebdf02",
+      "sha256": "28ddbafc558136fb77c23697ee2f8c8e8af4b9528f4520b9f693ca3b0746a012"
+    },
+    {
+      "definitions": [],
+      "existing_target": true,
+      "expected_verdict": "SKETCH_ACCEPTED",
+      "explanation": "Finite-extinction endgame with the exact existing topological goal. The geometric extracted-data construction supplies uniform width control; the proved deadline forces extinction, and finite surgery histories reconstruct standard connected-sum factors. The standard decomposition sketch uses the three explicit open topology lemmas and the proved sphere-covering base case. Four open leaves remain; this submission is a conditional reduction. https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/Reduction.lean#L1-L75; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "id": "PoincareFormalization.nonempty_homeomorph_sphere_three",
+      "imports": [
+        "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+        "OpenGA.SurgeryTopologyEvolution.finiteExtinction_of_width_control",
+        "OpenGA.SurgeryTopologyEvolution.topology_from_extinction",
+        "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_standard_decomposition"
+      ],
+      "path": "Theorems/Thm_PoincareFormalization_nonempty_homeomorph_sphere_three.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "namespace PoincareFormalization\n\ntheorem nonempty_homeomorph_sphere_three (M : Type*) [TopologicalSpace M]\n    [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M] :\n    Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization",
+        "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "connected-sum",
+          "openga-endgame"
+        ],
+        "theorem_name": "PoincareFormalization.nonempty_homeomorph_sphere_three"
+      },
+      "proof_path": "Solutions/Sol_ExtinctionEndgameRoot.lean",
+      "proof_sha256": "a97ca9de32a9c314a89de5c3875973f44258ca044e8cd5589d49ba81dc3bc9e7",
+      "publication": {
+        "status": "PUBLISHED",
+        "theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+        "verified_at": "2026-09-09T20:53:02.511560+00:00"
+      },
+      "sha256": "985a9a5ff7b4debdcbee0cf819b32e3d3ab747d535eb597a085c88e2983288c1"
+    }
+  ],
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "validation": {
+    "build": "passed",
+    "checked_at": "2026-09-09T20:49:43.600626+00:00",
+    "exact_types_and_definition_bodies": 74,
+    "export_audit": "Exact solution types and no new axioms; declared imported theorem dependencies checked separately against their published proofs.",
+    "solutions": 5,
+    "source_kernel_audit": "122 declarations: only propext, Classical.choice, Quot.sound",
+    "status": "passed"
+  }
+}

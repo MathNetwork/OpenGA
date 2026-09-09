@@ -464,7 +464,7 @@
       "id": "finite_time_extinction",
       "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this plan.",
       "payload": {
-        "milestone_description": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.",
+        "milestone_description": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.\n\n**Colding-Minicozzi foundations.** [The mass of a parametrized surface varifold is bounded by its energy](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be) now connects the Euclidean varifold construction to the same integral area-energy theorem used by the width comparison branch. See the **Area-energy control of parametrized varifolds** milestone for the definitions and verified prerequisites. The geometric CM min-max and variation steps remain open; this foundation does not establish finite-time extinction.",
         "sort_order": 2,
         "title": "Finite-time extinction"
       },
@@ -492,7 +492,8 @@
           "title": "Width and Finite Extinction Time of Ricci Flow",
           "url": "https://arxiv.org/abs/0707.0108"
         }
-      ]
+      ],
+      "platform_verified_at": "2026-09-09T20:02:40.720058+00:00"
     },
     {
       "definition_references": [

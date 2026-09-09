@@ -1,0 +1,27 @@
+⚠ [2794/2819] Replayed Theorems.Thm_OpenGA_scalar_lower_bound_across_upward_jumps
+warning: Theorems/Thm_OpenGA_scalar_lower_bound_across_upward_jumps.lean:8:8: declaration uses `sorry`
+⚠ [2795/2819] Replayed Theorems.Thm_OpenGA_SurgeryTopologyEvolution_topology_from_extinction
+warning: Theorems/Thm_OpenGA_SurgeryTopologyEvolution_topology_from_extinction.lean:80:8: declaration uses `sorry`
+⚠ [2796/2819] Replayed Theorems.Thm_PoincareFormalization_ExtinctionEndgame_not_simply_connected_sphere_handle
+warning: Theorems/Thm_PoincareFormalization_ExtinctionEndgame_not_simply_connected_sphere_handle.lean:30:8: declaration uses `sorry`
+⚠ [2797/2819] Replayed Theorems.Thm_OpenGA_WidthComparisonTrace_le_extinctionTime
+warning: Theorems/Thm_OpenGA_WidthComparisonTrace_le_extinctionTime.lean:20:8: declaration uses `sorry`
+⚠ [2798/2819] Replayed Theorems.Thm_PoincareFormalization_covering_is_homeomorph
+warning: Theorems/Thm_PoincareFormalization_covering_is_homeomorph.lean:3:8: declaration uses `sorry`
+⚠ [2799/2819] Replayed Theorems.Thm_PoincareFormalization_ExtinctionEndgame_simply_connected_factors_of_connected_sum
+warning: Theorems/Thm_PoincareFormalization_ExtinctionEndgame_simply_connected_factors_of_connected_sum.lean:28:8: declaration uses `sorry`
+⚠ [2800/2819] Replayed Theorems.Thm_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_standard_decomposition
+warning: Theorems/Thm_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_standard_decomposition.lean:31:8: declaration uses `sorry`
+⚠ [2801/2819] Replayed Theorems.Thm_PoincareFormalization_ExtinctionEndgame_exists_width_controlled_surgery_topology
+warning: Theorems/Thm_PoincareFormalization_ExtinctionEndgame_exists_width_controlled_surgery_topology.lean:26:8: declaration uses `sorry`
+⚠ [2802/2819] Replayed Theorems.Thm_OpenGA_SurgeryTopologyEvolution_finiteExtinction_of_width_control
+warning: Theorems/Thm_OpenGA_SurgeryTopologyEvolution_finiteExtinction_of_width_control.lean:30:8: declaration uses `sorry`
+⚠ [2803/2819] Replayed Theorems.Thm_OpenGA_eventually_width_slope_lt_of_comparison
+warning: Theorems/Thm_OpenGA_eventually_width_slope_lt_of_comparison.lean:8:8: declaration uses `sorry`
+⚠ [2804/2819] Replayed Theorems.Thm_OpenGA_le_width_deadline_across_downward_jumps
+warning: Theorems/Thm_OpenGA_le_width_deadline_across_downward_jumps.lean:9:8: declaration uses `sorry`
+⚠ [2805/2819] Replayed Theorems.Thm_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_connected_sum_spheres
+warning: Theorems/Thm_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_connected_sum_spheres.lean:32:8: declaration uses `sorry`
+⚠ [2806/2819] Replayed Theorems.Thm_PoincareFormalization_nonempty_homeomorph_sphere_three
+warning: Theorems/Thm_PoincareFormalization_nonempty_homeomorph_sphere_three.lean:7:8: declaration uses `sorry`
+Build completed successfully (2819 jobs).
