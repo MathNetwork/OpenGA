@@ -142,14 +142,16 @@ def prove(client, record, entry):
     print("Proof:", entry["id"], result["status"], flush=True)
     if result["status"] in ("PENDING", "COMPILING"):
         return False
-    if result["status"] != "ACCEPTED":
+    expected = entry.get("expected_verdict", "ACCEPTED")
+    if result["status"] != expected:
         raise RuntimeError(result.get("error_message") or "Unexpected proof verdict")
     content = client.request("/submissions/" + submission["submission_id"] + "/solution")["content"]
     if digest(content.encode()) != entry["proof_sha256"]:
         raise RuntimeError("Accepted proof source differs from the validated source")
     theorem = verify_item(client, entry)
-    if theorem["status"] != "Proved":
-        raise RuntimeError("The accepted proof has not resolved its theorem")
+    expected_status = "Open" if expected == "SKETCH_ACCEPTED" else "Proved"
+    if theorem["status"] != expected_status:
+        raise RuntimeError("The theorem status differs from the expected proof or sketch result")
     submission.update(verified_at=now(), accepted_source_sha256=digest(content.encode()))
     save(record)
     return True
@@ -229,9 +231,10 @@ def main():
     global RECORD
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--apply", action="store_true", help="Publish and poll validated entries")
-    parser.add_argument("--batch", choices=("analytic", "model"), default="analytic")
+    parser.add_argument("--batch", choices=("analytic", "model", "bridge"), default="analytic")
     args = parser.parse_args()
-    RECORD = DIRECTORY / ("model_publication.json" if args.batch == "model" else "publication.json")
+    RECORD = DIRECTORY / {"analytic": "publication.json", "model": "model_publication.json",
+                          "bridge": "bridge_publication.json"}[args.batch]
     record = json.loads(RECORD.read_text())
     validate(record)
     if not args.apply:
@@ -243,6 +246,10 @@ def main():
     envs = client.request("/environments")["environments"]
     if not any(e["mathlib_rev"] == record["mathlib_rev"] and e["toolchain"] == record["toolchain"] for e in envs):
         raise RuntimeError("Platform environment no longer matches")
+    if args.batch == "bridge":
+        from publish_surgery_bridge import run_bridge
+        run_bridge(sys.modules[__name__], client, record)
+        return
     definitions_ready = {}
     for entry in record["definitions"]:
         if not all(definitions_ready.get(name, False) for name in entry.get("definitions", [])):

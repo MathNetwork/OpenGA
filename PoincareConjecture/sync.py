@@ -82,6 +82,39 @@ def module_name(name):
     return name
 
 
+def expand_dependency_graph(client, graph, max_expansions=100):
+    """Follow the API's folded child frontiers, retaining only server-returned edges."""
+    def node_key(node):
+        return node.get("theorem_id") or node["node_id"]
+
+    nodes = {node_key(node): node for node in graph["nodes"]}
+    edges = {(e["source"], e["target"], e.get("kind")): e for e in graph["edges"]}
+    visited, expanded = set(), []
+    while True:
+        pending = [n["theorem_id"] for n in nodes.values()
+                   if n.get("has_more_children") and n.get("theorem_id") not in visited]
+        if not pending:
+            break
+        for theorem_id in pending:
+            if len(expanded) >= max_expansions:
+                raise RuntimeError("Dependency graph expansion limit reached; snapshot is incomplete")
+            visited.add(theorem_id)
+            branch = client.request("/theorems/" + theorem_id + "/graph")
+            if not any(n.get("theorem_id") == theorem_id for n in branch["nodes"]):
+                raise RuntimeError("Expanded graph omitted its requested theorem")
+            expanded.append(theorem_id)
+            for node in branch["nodes"]:
+                key = node_key(node)
+                # A later, shallower response must not re-fold an expanded node.
+                if key in visited and key in nodes and key != theorem_id:
+                    continue
+                nodes[key] = node
+            for edge in branch["edges"]:
+                edges[(edge["source"], edge["target"], edge.get("kind"))] = edge
+    return dict(graph, nodes=list(nodes.values()), edges=list(edges.values()),
+                expanded_theorem_ids=expanded)
+
+
 def resolve_additional_theorems(client, names, revision):
     """Resolve explicit names in the mission environment, rejecting stale targets."""
     resolved = {}
@@ -106,7 +139,8 @@ def collect(client, additional_theorems=()):
     root_id = mission["main_theorem"]["theorem_id"]
     pending = [root_id] + [m["theorem"]["id"] for m in milestones if m.get("theorem")]
     nodes, submissions, decompositions, files = {}, {}, {}, {}
-    graph = client.request("/theorems/" + root_id + "/graph")
+    graph = expand_dependency_graph(client, client.request("/theorems/" + root_id + "/graph"))
+    pending.extend(node["theorem_id"] for node in graph["nodes"] if node.get("theorem_id"))
     root_revision = next(node["mathlib_rev"] for node in graph["nodes"]
                          if node.get("theorem_id") == root_id)
     additional = resolve_additional_theorems(client, additional_theorems, root_revision)

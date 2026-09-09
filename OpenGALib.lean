@@ -2,6 +2,7 @@ import OpenGALib.Analysis.AreaEnergy
 import OpenGALib.Analysis.AreaEnergy.LinearMap
 import OpenGALib.Analysis.IntegralComparison
 import OpenGALib.Analysis.ModelVolume
+import OpenGALib.Analysis.SurgeryComparison
 import OpenGALib.Analysis.ScalarLowerBound
 import OpenGALib.Analysis.WidthExtinction
 import OpenGALib.Analysis.WidthComparison

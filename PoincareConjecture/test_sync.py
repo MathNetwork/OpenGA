@@ -5,10 +5,59 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from sync import Client, install, module_name, resolve_additional_theorems, review_status
+from sync import Client, MISSION_ID, collect, expand_dependency_graph, install, module_name, resolve_additional_theorems, review_status
 
 
 class SyncTests(unittest.TestCase):
+    def test_structural_definitions_in_graph_are_mirrored_without_proof_imports(self):
+        client = Client.__new__(Client)
+        client.pages = lambda path, key, **params: ([{"id": MISSION_ID,
+            "main_theorem": {"theorem_id": "root"}}] if path == "/missions" else [])
+        graph = {"root_id": "root", "nodes": [
+            {"node_type": "theorem", "theorem_id": "root", "mathlib_rev": "rev"},
+            {"node_type": "theorem", "theorem_id": "definition", "status": "Definition"}],
+            "edges": [{"source": "definition", "target": "root", "kind": "structural"}]}
+        responses = {
+            "/theorems/root/graph": graph,
+            "/theorems/root": {"theorem_id": "root", "theorem_name": "Target",
+                "status": "Open", "mathlib_rev": "rev", "preamble": "", "formal_statement": "theorem Target : True := by sorry"},
+            "/theorems/definition": {"theorem_id": "definition", "theorem_name": "Data",
+                "status": "Definition", "mathlib_rev": "rev", "definition": "def Data := Nat\n"},
+            "/theorems/root/decompositions": {"decompositions": []},
+            "/environments": {"environments": [{"mathlib_rev": "rev"}]}}
+        client.request = responses.__getitem__
+        files, snapshot = collect(client)
+        self.assertEqual(files["Definitions/Def_Data.lean"], b"def Data := Nat\n")
+        self.assertIn("definition", snapshot["nodes"])
+
+    def test_folded_dependency_frontiers_are_expanded_without_inventing_edges(self):
+        root = {"root_id": "root", "nodes": [
+            {"theorem_id": "root"}, {"theorem_id": "budget", "has_more_children": True}],
+            "edges": [{"source": "budget", "target": "root", "kind": "structural"}]}
+        branches = {
+            "/theorems/budget/graph": {"nodes": [
+                {"theorem_id": "budget", "has_more_children": False},
+                {"theorem_id": "model", "has_more_children": True}],
+                "edges": [{"source": "model", "target": "budget", "kind": "structural"}]},
+            "/theorems/model/graph": {"nodes": [
+                {"theorem_id": "model", "has_more_children": False},
+                {"theorem_id": "density", "has_more_children": False}],
+                "edges": [{"source": "density", "target": "model", "kind": "structural"}]}}
+        client = Client.__new__(Client)
+        calls = []
+        def request(path):
+            calls.append(path)
+            return branches[path]
+        client.request = request
+        expanded = expand_dependency_graph(client, root)
+        self.assertEqual(calls, list(branches))
+        self.assertEqual({n["theorem_id"] for n in expanded["nodes"]},
+                         {"root", "budget", "model", "density"})
+        self.assertEqual(expanded["edges"], root["edges"] +
+                         branches[calls[0]]["edges"] + branches[calls[1]]["edges"])
+        with self.assertRaisesRegex(RuntimeError, "incomplete"):
+            expand_dependency_graph(client, root, max_expansions=1)
+
     def test_exact_bytes_and_repeat_sync(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

@@ -1,6 +1,6 @@
 {
   "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
-  "reviewed_at": "2026-09-09T17:44:39.811662+00:00",
+  "reviewed_at": "2026-09-09T18:35:20.588977+00:00",
   "reviews": {
     "01167772-943a-4c75-ab15-9f7b235777a8": {
       "declarations": [
@@ -17,6 +17,21 @@
       "source_theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
       "source_url": "https://prove2.me/api/v1/submissions/01167772-943a-4c75-ab15-9f7b235777a8/solution",
       "status": "integrated"
+    },
+    "0943befc-504f-4d6d-af2b-43ec35d7a1b3": {
+      "declarations": [],
+      "deferred_theorem_ids": [
+        "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+        "0347aa7b-4f24-4106-873e-c9b21fd9169f"
+      ],
+      "reason": "This main-graph reduction uses the explicitly Open geometric process construction. Only the complete analytic volume-loss and finite-partition proofs are integrated into OpenGA; this sketch is not an independent proof of geometric existence or Poincare.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "057a64c91aa190f23256f9d18f054b8ee7c653190f083c174a86840d7e87fa54",
+      "source_status": "SKETCH_ACCEPTED",
+      "source_theorem_id": "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+      "source_url": "https://prove2.me/api/v1/submissions/0943befc-504f-4d6d-af2b-43ec35d7a1b3/solution",
+      "status": "deferred"
     },
     "096644e2-0f01-45df-9752-41d89decd664": {
       "declarations": [
@@ -58,6 +73,22 @@
       "source_url": "https://prove2.me/api/v1/submissions/15a12bda-4d91-481f-9492-2022ec9bf42b/solution",
       "status": "integrated"
     },
+    "2283c781-4086-4880-9c6f-6556c635be55": {
+      "declarations": [
+        {
+          "name": "OpenGA.exists_event_free_partition",
+          "path": "OpenGALib/Analysis/FiniteEventPartition.lean"
+        }
+      ],
+      "scope": "Conditional analytic nonaccumulation from radial model comparison and a finite removed-volume budget, followed by a finite event-free partition and width comparison trace. Exact exported types and definition bodies match the main library. Complete proof closure uses only propext, Classical.choice and Quot.sound. Actual surgery geometry and construction of the analytic inputs remain Open.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "70700433e704d73144103a96cdd08ebf1eea6fccb3358f9b9a390b6b0911806b",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "2afae5fd-c4e2-4544-b37b-e819211739f1",
+      "source_url": "https://prove2.me/api/v1/submissions/2283c781-4086-4880-9c6f-6556c635be55/solution",
+      "status": "integrated"
+    },
     "2e402417-5f76-4df8-a6d5-b9f1ff27d93b": {
       "declarations": [
         {
@@ -88,6 +119,22 @@
       "source_theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
       "source_url": "https://prove2.me/api/v1/submissions/42885aae-9f1a-4edc-b4c4-d8e3820e630a/solution",
       "status": "deferred"
+    },
+    "4b0967cf-4f47-4150-9061-44c6425c704d": {
+      "declarations": [
+        {
+          "name": "OpenGA.RadialSurgeryVolumeBudget.events_finite",
+          "path": "OpenGALib/Analysis/SurgeryVolume.lean"
+        }
+      ],
+      "scope": "Conditional analytic nonaccumulation from radial model comparison and a finite removed-volume budget, followed by a finite event-free partition and width comparison trace. Exact exported types and definition bodies match the main library. Complete proof closure uses only propext, Classical.choice and Quot.sound. Actual surgery geometry and construction of the analytic inputs remain Open.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "f42e3b3557a7ea4157030ff9c2d1580c5927221773687eee8eabd712469dceff",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+      "source_url": "https://prove2.me/api/v1/submissions/4b0967cf-4f47-4150-9061-44c6425c704d/solution",
+      "status": "integrated"
     },
     "51179dae-3662-451e-b374-fe303c70b325": {
       "declarations": [],
@@ -155,6 +202,22 @@
       "source_status": "ACCEPTED",
       "source_theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
       "source_url": "https://prove2.me/api/v1/submissions/719f4cdd-1059-4091-9819-7926dbc5806e/solution",
+      "status": "integrated"
+    },
+    "7698ef55-8ed6-4ed1-a26d-f2854cf4ee04": {
+      "declarations": [
+        {
+          "name": "OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess",
+          "path": "OpenGALib/Analysis/SurgeryComparison.lean"
+        }
+      ],
+      "scope": "Conditional analytic nonaccumulation from radial model comparison and a finite removed-volume budget, followed by a finite event-free partition and width comparison trace. Exact exported types and definition bodies match the main library. Complete proof closure uses only propext, Classical.choice and Quot.sound. Actual surgery geometry and construction of the analytic inputs remain Open.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "6d216365e277eb8f413b1a33fe47d22d1c8fb7c6bbc702457c59581005abe631",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+      "source_url": "https://prove2.me/api/v1/submissions/7698ef55-8ed6-4ed1-a26d-f2854cf4ee04/solution",
       "status": "integrated"
     },
     "91cf1c6b-5ed5-463a-b593-6f385348e01e": {
@@ -292,6 +355,22 @@
       "source_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
       "source_url": "https://prove2.me/api/v1/submissions/d543d39b-4273-4b91-826f-1b9c8c6191ee/solution",
       "status": "deferred"
+    },
+    "e04116f7-6882-4385-adb2-3d369736d0a3": {
+      "declarations": [
+        {
+          "name": "OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower",
+          "path": "OpenGALib/Analysis/SurgeryVolume.lean"
+        }
+      ],
+      "scope": "Conditional analytic nonaccumulation from radial model comparison and a finite removed-volume budget, followed by a finite event-free partition and width comparison trace. Exact exported types and definition bodies match the main library. Complete proof closure uses only propext, Classical.choice and Quot.sound. Actual surgery geometry and construction of the analytic inputs remain Open.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "e671e1f80c3c23087a4eea790cbaf81b0a461dc6c696b3d46d4fe78ccc3af42a",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "ca66101a-7280-449f-ad5d-350153b56ffd",
+      "source_url": "https://prove2.me/api/v1/submissions/e04116f7-6882-4385-adb2-3d369736d0a3/solution",
+      "status": "integrated"
     },
     "e226c921-de2b-4b97-bc82-2365ef39853d": {
       "declarations": [

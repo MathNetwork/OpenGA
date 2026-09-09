@@ -4,12 +4,19 @@
     "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
     "DifferentialGeometry_HyperbolicModel": "5f12b4eb-73fe-4f5b-9eca-ea195943cb23",
     "DifferentialGeometry_ModelRadialVolume": "8f010cd2-75b6-40f7-abdf-ec788a788a40",
+    "OpenGA.RadialSurgeryVolumeBudget.events_finite": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+    "OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower": "ca66101a-7280-449f-ad5d-350153b56ffd",
     "OpenGA.antitoneOn_lintegral_Ioc_div": "00a47c26-3e61-4afc-91c7-117708e1baf9",
     "OpenGA.antitoneOn_lintegral_div_hypRadVol": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
     "OpenGA.areaDensity_basis_independent": "85285131-e406-453d-81b2-2e602a3e878d",
     "OpenGA.areaDensity_eq_normDet": "eddc764e-527d-4d07-a812-94f60b637407",
     "OpenGA.energyDensity_basis_independent": "1e7c607c-776e-41d3-8819-54cfe0543e69",
-    "OrthonormalBasis.sum_apply_diagonal_invariant": "a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784"
+    "OpenGA.exists_event_free_partition": "2afae5fd-c4e2-4544-b37b-e819211739f1",
+    "OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+    "OpenGA_RadialSurgeryVolumeBudget": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+    "OpenGA_SurgeryComparisonProcess": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+    "OrthonormalBasis.sum_apply_diagonal_invariant": "a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784",
+    "PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere": "0347aa7b-4f24-4106-873e-c9b21fd9169f"
   },
   "api_base": "https://prove2.me/api/v1",
   "decompositions": {
@@ -41,6 +48,25 @@
             "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
             "ordinal": 0,
             "theorem_title": "Cross-multiplied comparison of radial densities"
+          }
+        ],
+        "created_at": null,
+        "created_by": null,
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": null
+      }
+    ],
+    "0347aa7b-4f24-4106-873e-c9b21fd9169f": [
+      {
+        "children": [
+          {
+            "definition_id": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+            "definition_name": "OpenGA_SurgeryComparisonProcess",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "Scalar and width profiles with surgery volume control"
           }
         ],
         "created_at": null,
@@ -217,6 +243,7 @@
         "submission_id": "973f67d3-d234-4233-800f-35c83decf01c"
       }
     ],
+    "2afae5fd-c4e2-4544-b37b-e819211739f1": [],
     "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b": [
       {
         "children": [
@@ -234,6 +261,51 @@
         "deprecated_at": null,
         "deprecated_by": null,
         "submission_id": null
+      }
+    ],
+    "3aca5641-0de9-4b5b-b280-28243d1961cd": [
+      {
+        "children": [
+          {
+            "definition_id": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+            "definition_name": "OpenGA_RadialSurgeryVolumeBudget",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "Radial comparison and a surgery volume-loss budget"
+          }
+        ],
+        "created_at": null,
+        "created_by": null,
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": null
+      },
+      {
+        "children": [
+          {
+            "definition_id": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+            "definition_name": "OpenGA_RadialSurgeryVolumeBudget",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "Radial comparison and a surgery volume-loss budget"
+          },
+          {
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 1,
+            "status": "Proved",
+            "theorem_id": "ca66101a-7280-449f-ad5d-350153b56ffd",
+            "theorem_name": "OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower",
+            "theorem_title": "A uniform positive volume loss from model comparison"
+          }
+        ],
+        "created_at": "2026-09-09T18:21:28.80267+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": "4b0967cf-4f47-4150-9061-44c6425c704d"
       }
     ],
     "4de517bb-1125-48cf-b44f-de4ca093a0a5": [],
@@ -505,6 +577,121 @@
       }
     ],
     "c5c9092c-00f4-4939-893e-ea9cc075b564": [],
+    "ca00fe64-9dc8-4809-80cf-e824e93594b5": [
+      {
+        "children": [
+          {
+            "definition_id": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+            "definition_name": "OpenGA_SurgeryComparisonProcess",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "Scalar and width profiles with surgery volume control"
+          },
+          {
+            "definition_id": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+            "definition_name": "OpenGA_WidthComparisonTrace",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 1,
+            "theorem_title": "Width traces with area-energy comparison witnesses"
+          },
+          {
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 2,
+            "status": "Proved",
+            "theorem_id": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+            "theorem_name": "OpenGA.RadialSurgeryVolumeBudget.events_finite",
+            "theorem_title": "Finitely many events from a radial volume-loss budget"
+          },
+          {
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 3,
+            "status": "Proved",
+            "theorem_id": "2afae5fd-c4e2-4544-b37b-e819211739f1",
+            "theorem_name": "OpenGA.exists_event_free_partition",
+            "theorem_title": "An event-free partition for finitely many event times"
+          }
+        ],
+        "created_at": "2026-09-09T18:22:55.047906+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": "7698ef55-8ed6-4ed1-a26d-f2854cf4ee04"
+      },
+      {
+        "children": [
+          {
+            "definition_id": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+            "definition_name": "OpenGA_SurgeryComparisonProcess",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "Scalar and width profiles with surgery volume control"
+          },
+          {
+            "definition_id": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+            "definition_name": "OpenGA_WidthComparisonTrace",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 1,
+            "theorem_title": "Width traces with area-energy comparison witnesses"
+          }
+        ],
+        "created_at": null,
+        "created_by": null,
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": null
+      }
+    ],
+    "ca66101a-7280-449f-ad5d-350153b56ffd": [
+      {
+        "children": [
+          {
+            "definition_id": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+            "definition_name": "OpenGA_RadialSurgeryVolumeBudget",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "Radial comparison and a surgery volume-loss budget"
+          }
+        ],
+        "created_at": null,
+        "created_by": null,
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": null
+      },
+      {
+        "children": [
+          {
+            "definition_id": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+            "definition_name": "OpenGA_RadialSurgeryVolumeBudget",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "Radial comparison and a surgery volume-loss budget"
+          },
+          {
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 1,
+            "status": "Proved",
+            "theorem_id": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
+            "theorem_name": "OpenGA.antitoneOn_lintegral_div_hypRadVol",
+            "theorem_title": "Radial integral monotonicity with the model-volume denominator"
+          }
+        ],
+        "created_at": "2026-09-09T18:19:53.352804+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": "e04116f7-6882-4385-adb2-3d369736d0a3"
+      }
+    ],
     "d81e3640-8579-4396-babb-69edac82be33": [
       {
         "children": [
@@ -541,6 +728,41 @@
         "deprecated_at": null,
         "deprecated_by": null,
         "submission_id": null
+      },
+      {
+        "children": [
+          {
+            "definition_id": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+            "definition_name": "OpenGA_WidthComparisonTrace",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "Width traces with area-energy comparison witnesses"
+          },
+          {
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 1,
+            "status": "Open",
+            "theorem_id": "0347aa7b-4f24-4106-873e-c9b21fd9169f",
+            "theorem_name": "PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere",
+            "theorem_title": "Volume-controlled width profiles from a hypothetical Poincare counterexample"
+          },
+          {
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 2,
+            "status": "Proved",
+            "theorem_id": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+            "theorem_name": "OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess",
+            "theorem_title": "A finite width comparison trace from volume-controlled profiles"
+          }
+        ],
+        "created_at": "2026-09-09T18:26:27.188791+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": "0943befc-504f-4d6d-af2b-43ec35d7a1b3"
       }
     ],
     "eddc764e-527d-4d07-a812-94f60b637407": [
@@ -574,11 +796,15 @@
     "Definitions/Def_DifferentialGeometry_ModelRadialVolume.lean": "2f6f2a5deaa47418f8d9c399067b74bff35fa8d1f9055a3ffff5ee17dbe17f16",
     "Definitions/Def_DifferentialGeometry_RadialCrossComparison.lean": "6aa7f736ecfab7d375e80d7041dcaf55dd765bac79100fc2b763062fdd16b28e",
     "Definitions/Def_OpenGA_AreaEnergyDensities.lean": "2dab2dcf50f33f84e67badfd0cf7a68b71b8da53614a28c399ff529d40e0300e",
+    "Definitions/Def_OpenGA_RadialSurgeryVolumeBudget.lean": "36434b89fceb457986f7e2c722a6d3262108e1a10ebdb42f0be5fe214f83e073",
     "Definitions/Def_OpenGA_ScalarWidthTrace.lean": "8f601ae71ec55995167ff09f845daea0707e662608f45c127642dc98a0581933",
+    "Definitions/Def_OpenGA_SurgeryComparisonProcess.lean": "5ba3c6a7bd3c2360125eb754009e8698000043fb5c497db8be6d00d6a252e153",
     "Definitions/Def_OpenGA_WidthComparisonData.lean": "9a8c33f6132b66ab7cc3dd693b644b140b04c87c08bf140e8db81b160e0f5488",
     "Definitions/Def_OpenGA_WidthComparisonTrace.lean": "6713d3f63eea5cc92c91b8639ffef711ec0dbd81a14f5da53003796d465b9bb8",
     "Solutions/Sol_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross_2e4024175f764df8a6d5b9f1ff27d93b.lean": "08dc7ed4b87b0bf1538ea66406ba1333d2243069b11ed93bf0476bf6e1f99565",
     "Solutions/Sol_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le_e226c921de2b4b97bc822365ef39853d.lean": "c6d226aa11c99558d172d007c9390cac52289c110e82584165a2259c8a3b6320",
+    "Solutions/Sol_OpenGA_RadialSurgeryVolumeBudget_events_finite_4b0967cf4f474150906144c6425c704d.lean": "f42e3b3557a7ea4157030ff9c2d1580c5927221773687eee8eabd712469dceff",
+    "Solutions/Sol_OpenGA_RadialSurgeryVolumeBudget_removedVolume_lower_e04116f768824385adb23d369736d0a3.lean": "e671e1f80c3c23087a4eea790cbaf81b0a461dc6c696b3d46d4fe78ccc3af42a",
     "Solutions/Sol_OpenGA_antitoneOn_lintegral_Ioc_div_91cf1c6b5ed5463ab5936f385348e01e.lean": "cab8674f53f219f0acf85f1a16f62ab6f3f2ec304ac9b1c826179993024e8e25",
     "Solutions/Sol_OpenGA_antitoneOn_lintegral_div_hypRadVol_fd6f90da3fa348c495a0f36e42b9fe72.lean": "073b4b697338a6e09df7b2c113d5eb5c3e255c33cd241dea183cecbaa5157c62",
     "Solutions/Sol_OpenGA_areaDensity_basis_independent_59b54355c04b4077925bc7d3785054ad.lean": "3acc9ec58bc869ebd3e83af830f9b2e375260069cd7dcd0dc141ace9cf313331",
@@ -586,9 +812,11 @@
     "Solutions/Sol_OpenGA_areaDensity_eq_normDet_15a12bda4d91481f94922022ec9bf42b.lean": "2606761057aeff6659c525b9e726a059951d5abbb4efa8c650697d9cf4032bac",
     "Solutions/Sol_OpenGA_energyDensity_basis_independent_973f67d3d2344233800f35c83decf01c.lean": "674917b6fe9e146b436877c8027fc9af9b54197e3c6c7441ff7bfb484ffa507c",
     "Solutions/Sol_OpenGA_eventually_width_slope_lt_of_comparison_719f4cdd1059409198197926dbc5806e.lean": "2c2b9d9f07a54114a040c23bc011551e61343ff5262b43656141700ae37a0213",
+    "Solutions/Sol_OpenGA_exists_event_free_partition_2283c781408648809c6f6556c635be55.lean": "70700433e704d73144103a96cdd08ebf1eea6fccb3358f9b9a390b6b0911806b",
     "Solutions/Sol_OpenGA_integral_areaDensity_eq_energyDensity_iff_01167772943a4c75ab159f7b235777a8.lean": "9142fa4bbcfa3f67405caf7e279e1fd5316c8d2a681b195cdcfe2e676aa77456",
     "Solutions/Sol_OpenGA_integral_areaDensity_le_energyDensity_096644e20f0145df975241d89decd664.lean": "e7044f4473b40bbe1b6c33341b84c9756e218eef8b867e49b5954023ac90b866",
     "Solutions/Sol_OpenGA_le_width_deadline_across_downward_jumps_f0552af4769d4fe48754b9e01fd5718b.lean": "aeb6b786fd328e52c6be60acb2cf0cd441a9ee2595df316b1bc2382521512a08",
+    "Solutions/Sol_OpenGA_nonempty_widthComparisonTrace_of_surgeryComparisonProcess_7698ef558ed64ed1a26df2854cf4ee04.lean": "6d216365e277eb8f413b1a33fe47d22d1c8fb7c6bbc702457c59581005abe631",
     "Solutions/Sol_OpenGA_scalar_lower_bound_across_upward_jumps_6d178906611948c0b6720f3881b70643.lean": "e627dd2d5f006bb2bc42732cee611d2851a6e45bf399c55aa839ce1c9d093348",
     "Solutions/Sol_OrthonormalBasis_sum_apply_diagonal_invariant_98c16d588c4b4ec5aa867a1af0257775.lean": "5f0a22543750f96ef79fda02d9762ef353a30905c2b00358238adfa1258a7a7c",
     "Solutions/Sol_PoincareFormalization_covering_is_homeomorph_bbe6fec01a124ebabb852c00ebf62342.lean": "d5676b60bfa2501caa3f404c0f8c437605939295fb56fe7133b901ada89c51d2",
@@ -596,9 +824,12 @@
     "Solutions/Sol_PoincareFormalization_nonempty_homeomorph_sphere_three_97d3cac52b5e48c69651e94fe6c77fcd.lean": "b0555ccb503f050bd9855fcc82417bcbf069af8a993307920952aa41b9de6b0c",
     "Solutions/Sol_PoincareFormalization_nonempty_homeomorph_sphere_three_98612d40bcb74333afa769b60e20dfdc.lean": "50b9eda313389c99350477162fa37e175c678c40e8a69ccc76fd211be713eafe",
     "Solutions/Sol_PoincareFormalization_nonempty_homeomorph_sphere_three_d543d39b42734b91826f1b9c8c6191ee.lean": "f82e819e6892eccb42edc84434fd83ecca4ab929dbbd8edba8791948e44bdfa6",
+    "Solutions/Sol_PoincareFormalization_persistent_comparison_data_of_not_homeomorph_sphere_0943befc504f4d6daf2b43ec35d7a1b3.lean": "057a64c91aa190f23256f9d18f054b8ee7c653190f083c174a86840d7e87fa54",
     "Solutions/Sol_PoincareFormalization_persistent_profiles_of_not_homeomorph_sphere_42885aae9f1a4edcb4c4d8e3820e630a.lean": "dc8c042f755c5f45e7b206977229599b9df780414ad02643f249179daf410137",
     "Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross.lean": "fa5adeaadf1270c1f334d7ed330605e63432fcd1f952396bb1897b78e050a2e4",
     "Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le.lean": "ba37184924e7b600c4849fb75508f5cc012336c4b00b94f4812324b9b4014555",
+    "Theorems/Thm_OpenGA_RadialSurgeryVolumeBudget_events_finite.lean": "62afbd163c177bcb09ae92947a0155bd82972e50a51571db002440a94524f59e",
+    "Theorems/Thm_OpenGA_RadialSurgeryVolumeBudget_removedVolume_lower.lean": "586d7b728444cacdeecfe126dad49165731d819840d6ac4d1283cb1b5794057f",
     "Theorems/Thm_OpenGA_antitoneOn_lintegral_Ioc_div.lean": "1c0cc19aed6fef84e36caff19c8919f4bbcb6d4c186cde40b681b23d920fc8c7",
     "Theorems/Thm_OpenGA_antitoneOn_lintegral_div_hypRadVol.lean": "9c87f0e8660436b88e5e412e2440cd4878bdfc5126dfec08c75205573a8786dd",
     "Theorems/Thm_OpenGA_areaDensity_basis_independent.lean": "75e60d02bd1c944edd44a8b893699d1335122e0efebd77df18a496de86f79511",
@@ -606,9 +837,11 @@
     "Theorems/Thm_OpenGA_areaDensity_eq_normDet.lean": "3713ac03cc811c1859f50f188c79c6bb4930be3a2d928b62773ceb276584f993",
     "Theorems/Thm_OpenGA_energyDensity_basis_independent.lean": "7c9722636aa06d23939869810bc27f22c4f808b775a91fb3b65dd1e5b8cd6a9f",
     "Theorems/Thm_OpenGA_eventually_width_slope_lt_of_comparison.lean": "ab97369b4cd0410d1e122769f90e8c57d2b925f28ba39e57d28929b156ac2546",
+    "Theorems/Thm_OpenGA_exists_event_free_partition.lean": "b3fa127c1900630cb7953339d0585fc412dc7a15c72673f20ab82c4990a68673",
     "Theorems/Thm_OpenGA_integral_areaDensity_eq_energyDensity_iff.lean": "2dff317470d51ba09f2a6213a5c81e0faf71209dd37bc53858ee967f0f322c83",
     "Theorems/Thm_OpenGA_integral_areaDensity_le_energyDensity.lean": "2b39298ae34637e1a5caef96635defee125dc41f104cce140f0fb7afa0a458d6",
     "Theorems/Thm_OpenGA_le_width_deadline_across_downward_jumps.lean": "1ad76d5518353e95cdc3642b2b18f662713c07684737d2ed603b3b5f81519662",
+    "Theorems/Thm_OpenGA_nonempty_widthComparisonTrace_of_surgeryComparisonProcess.lean": "6244ee849226d27a538c73bb47d8c38f7574b949f49dbd879579f01b7c307a3f",
     "Theorems/Thm_OpenGA_scalar_lower_bound_across_upward_jumps.lean": "6ea88e0e428666de1c25fe065c7a1936431824199ce263ee52e7d24c1dd52621",
     "Theorems/Thm_OrthonormalBasis_sum_apply_diagonal_invariant.lean": "7a72326cf7012a9ba11972e3ab31b0111f3d4808e5e60eeea7624629c3248ae7",
     "Theorems/Thm_PoincareFormalization_covering_is_homeomorph.lean": "6790bbd0a6100b6044959645e115ac684867ccd37a3ecc5e354457957630d227",
@@ -620,6 +853,7 @@
     "Theorems/Thm_PoincareFormalization_persistent_comparison_data_of_not_homeomorph_sphere.lean": "7b6f25f0b5169dcfcf41ddfa7492381e79c7eadbb30ecba165511c3b0ee7a6b9",
     "Theorems/Thm_PoincareFormalization_persistent_profiles_of_not_homeomorph_sphere.lean": "4f17ba0354deea2a6da7565522f5e717991df214406957a7aa7faa763823dd54",
     "Theorems/Thm_PoincareFormalization_spherical_cover_of_finite_fundamental_group.lean": "a26c0b566779537cabe8fc7d925b75e6eeb69d880b219d739cbc74244e8eb4ea",
+    "Theorems/Thm_PoincareFormalization_surgery_comparison_process_of_not_homeomorph_sphere.lean": "5f0a0a3532cf6e83c74e619b0cd4caef52c9816e42f088fd7c9e2a55468ea598",
     "lake-manifest.json": "a80825c7af2fe7d15fc76dc274239c2c4f99ec82171d9db0de67d57c6b28b7f5",
     "lakefile.lean": "3178f5e739148a678add9ef77d985cd405325d629635530cf7d48547e6dada8f",
     "lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71"
@@ -698,6 +932,26 @@
       },
       {
         "kind": "sketch",
+        "source": "0347aa7b-4f24-4106-873e-c9b21fd9169f",
+        "target": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3"
+      },
+      {
+        "kind": "sketch",
+        "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+        "target": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3"
+      },
+      {
+        "kind": "sketch",
+        "source": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+        "target": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3",
+        "target": "ed56bd90-927e-45c1-81d1-b79a2ca8a034"
+      },
+      {
+        "kind": "sketch",
         "source": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b",
         "target": "sketch-01167772-943a-4c75-ab15-9f7b235777a8"
       },
@@ -710,6 +964,46 @@
         "kind": "sketch",
         "source": "sketch-01167772-943a-4c75-ab15-9f7b235777a8",
         "target": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7"
+      },
+      {
+        "kind": "sketch",
+        "source": "2afae5fd-c4e2-4544-b37b-e819211739f1",
+        "target": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04"
+      },
+      {
+        "kind": "sketch",
+        "source": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+        "target": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04"
+      },
+      {
+        "kind": "sketch",
+        "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+        "target": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04"
+      },
+      {
+        "kind": "sketch",
+        "source": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+        "target": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04",
+        "target": "ca00fe64-9dc8-4809-80cf-e824e93594b5"
+      },
+      {
+        "kind": "sketch",
+        "source": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+        "target": "sketch-4b0967cf-4f47-4150-9061-44c6425c704d"
+      },
+      {
+        "kind": "sketch",
+        "source": "ca66101a-7280-449f-ad5d-350153b56ffd",
+        "target": "sketch-4b0967cf-4f47-4150-9061-44c6425c704d"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-4b0967cf-4f47-4150-9061-44c6425c704d",
+        "target": "3aca5641-0de9-4b5b-b280-28243d1961cd"
       },
       {
         "kind": "structural",
@@ -725,6 +1019,11 @@
         "kind": "structural",
         "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
         "target": "ed56bd90-927e-45c1-81d1-b79a2ca8a034"
+      },
+      {
+        "kind": "structural",
+        "source": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+        "target": "0347aa7b-4f24-4106-873e-c9b21fd9169f"
       },
       {
         "kind": "structural",
@@ -748,6 +1047,16 @@
       },
       {
         "kind": "structural",
+        "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+        "target": "ca00fe64-9dc8-4809-80cf-e824e93594b5"
+      },
+      {
+        "kind": "structural",
+        "source": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+        "target": "ca00fe64-9dc8-4809-80cf-e824e93594b5"
+      },
+      {
+        "kind": "structural",
         "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
         "target": "d81e3640-8579-4396-babb-69edac82be33"
       },
@@ -755,10 +1064,136 @@
         "kind": "structural",
         "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
         "target": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b"
+      },
+      {
+        "kind": "structural",
+        "source": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+        "target": "3aca5641-0de9-4b5b-b280-28243d1961cd"
+      },
+      {
+        "kind": "structural",
+        "source": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+        "target": "c76baf4f-4a85-4508-8e03-574d04648ce3"
+      },
+      {
+        "kind": "structural",
+        "source": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+        "target": "c76baf4f-4a85-4508-8e03-574d04648ce3"
+      },
+      {
+        "kind": "sketch",
+        "source": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
+        "target": "sketch-e04116f7-6882-4385-adb2-3d369736d0a3"
+      },
+      {
+        "kind": "sketch",
+        "source": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+        "target": "sketch-e04116f7-6882-4385-adb2-3d369736d0a3"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-e04116f7-6882-4385-adb2-3d369736d0a3",
+        "target": "ca66101a-7280-449f-ad5d-350153b56ffd"
+      },
+      {
+        "kind": "sketch",
+        "source": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+        "target": "sketch-fd6f90da-3fa3-48c4-95a0-f36e42b9fe72"
+      },
+      {
+        "kind": "sketch",
+        "source": "8f010cd2-75b6-40f7-abdf-ec788a788a40",
+        "target": "sketch-fd6f90da-3fa3-48c4-95a0-f36e42b9fe72"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-fd6f90da-3fa3-48c4-95a0-f36e42b9fe72",
+        "target": "58a8c735-04e5-4c94-afef-0b03d5d80e0a"
+      },
+      {
+        "kind": "sketch",
+        "source": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+        "target": "sketch-91cf1c6b-5ed5-463a-b593-6f385348e01e"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-91cf1c6b-5ed5-463a-b593-6f385348e01e",
+        "target": "00a47c26-3e61-4afc-91c7-117708e1baf9"
+      },
+      {
+        "kind": "structural",
+        "source": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "target": "7b53cb40-bcab-4693-b755-615a06d5fb54"
+      },
+      {
+        "kind": "structural",
+        "source": "8f010cd2-75b6-40f7-abdf-ec788a788a40",
+        "target": "7b53cb40-bcab-4693-b755-615a06d5fb54"
+      },
+      {
+        "kind": "structural",
+        "source": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+        "target": "ca66101a-7280-449f-ad5d-350153b56ffd"
+      },
+      {
+        "kind": "structural",
+        "source": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "target": "58a8c735-04e5-4c94-afef-0b03d5d80e0a"
+      },
+      {
+        "kind": "structural",
+        "source": "8f010cd2-75b6-40f7-abdf-ec788a788a40",
+        "target": "58a8c735-04e5-4c94-afef-0b03d5d80e0a"
+      },
+      {
+        "kind": "structural",
+        "source": "5f12b4eb-73fe-4f5b-9eca-ea195943cb23",
+        "target": "8f010cd2-75b6-40f7-abdf-ec788a788a40"
+      },
+      {
+        "kind": "structural",
+        "source": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "target": "00a47c26-3e61-4afc-91c7-117708e1baf9"
+      },
+      {
+        "kind": "structural",
+        "source": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "target": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb"
       }
+    ],
+    "expanded_theorem_ids": [
+      "7b53cb40-bcab-4693-b755-615a06d5fb54",
+      "ca66101a-7280-449f-ad5d-350153b56ffd"
     ],
     "has_hidden_deprecated_sketches": false,
     "nodes": [
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:20:20.946761+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →\n      Nonempty (OpenGA.SurgeryComparisonProcess initialWidth finalTime) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $M$ be a compact, simply connected, Hausdorff topological three-manifold without boundary, hypothetically not homeomorphic to the unit three-sphere. Construct $W_0\\ge0$ such that for every $T>0$ there is a surgery comparison process with initial width bound $W_0$ and final time $T$.\n\nOpen geometric construction. It must supply all fields of the imported analytic process: smoothability and normalization, suitable surgery flow and uniform radial comparison data, containment of controlled regions in removed material, a finite volume-loss budget allowing smooth volume growth, and scalar/sweepout comparison profiles with the prescribed inequalities and jumps. It does not assume event finiteness; that follows from the separately proved volume argument. This refines the existing comparison-data target. The full Ricci-flow and Bishop-Gromov geometric developments remain open.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\nimport Definitions.Def_OpenGA_SurgeryComparisonProcess\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+        "source": "Kleiner-Lott, Section 3.5, p. 13 and Sublemma 79.23, p. 157, https://arxiv.org/pdf/math/0605667v5#page=13; Colding-Minicozzi finite-extinction width argument, https://arxiv.org/pdf/0707.0108v1#page=7. This is a composite OpenGA construction target, not a claim that a single cited lemma supplies all fields.",
+        "status": "Open",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "0347aa7b-4f24-4106-873e-c9b21fd9169f",
+        "theorem_name": "PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere",
+        "theorem_title": "Volume-controlled width profiles from a hypothetical Poincare counterexample",
+        "vote_count": 0
+      },
       {
         "audits": [],
         "created_at": "2026-09-09T03:18:25.623291+00:00",
@@ -837,6 +1272,33 @@
       },
       {
         "audits": [],
+        "created_at": "2026-09-09T18:18:56.042359+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.exists_event_free_partition {events : Set ℝ} {T : ℝ}\n    (hfinite : events.Finite) (hinside : events ⊆ Ioo 0 T) (hT : 0 < T) :\n    ∃ n : ℕ, 0 < n ∧ ∃ times : ℕ → ℝ,\n      times 0 = 0 ∧ times n = T ∧\n      (∀ i ≤ n, times i ∈ Icc 0 T) ∧\n      (∀ i < n, times i < times (i + 1)) ∧\n      (∀ i < n, Disjoint events (Ioo (times i) (times (i + 1)))) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "If a finite set of real event times is contained in $(0,T)$ with $T>0$, there is a finite strictly increasing partition $0=t_0<\\cdots<t_n=T$, $n>0$, all of whose open subintervals contain no event.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology",
+        "source": "OpenGA, OpenGALib/Analysis/FiniteEventPartition.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "2afae5fd-c4e2-4544-b37b-e819211739f1",
+        "theorem_name": "OpenGA.exists_event_free_partition",
+        "theorem_title": "An event-free partition for finitely many event times",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
         "created_at": "2026-09-09T03:18:22.203268+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
         "created_by_username": "Xinze-Li-Moqian",
@@ -858,6 +1320,33 @@
         "theorem_id": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b",
         "theorem_name": "OpenGA.areaDensity_eq_energyDensity_iff",
         "theorem_title": "Equality of area and energy densities",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:19:42.122989+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.RadialSurgeryVolumeBudget.events_finite (B : RadialSurgeryVolumeBudget) :\n    B.events.Finite := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Every radial surgery volume budget has a finite set of event times. No discreteness hypothesis is needed.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_RadialSurgeryVolumeBudget\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nopen OpenGA",
+        "source": "OpenGA, OpenGALib/Analysis/SurgeryVolume.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+        "theorem_name": "OpenGA.RadialSurgeryVolumeBudget.events_finite",
+        "theorem_title": "Finitely many events from a radial volume-loss budget",
         "vote_count": 0
       },
       {
@@ -934,6 +1423,33 @@
         "theorem_id": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
         "theorem_name": "OpenGA_WidthComparisonData",
         "theorem_title": "Finite-energy fields and width comparison data",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:19:01.078472+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "import Definitions.Def_DifferentialGeometry_ModelRadialVolume\nimport Definitions.Def_DifferentialGeometry_RadialCrossComparison\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\nnamespace OpenGA\n\n/-- **Math.** Uniform radial comparison data and a finite volume-loss budget.\nNo finiteness or discreteness is assumed for the set of event times. -/\nstructure RadialSurgeryVolumeBudget where\n  events : Set ℝ\n  modelParameter : ℝ\n  modelParameter_nonneg : 0 ≤ modelParameter\n  referenceRadius : ℝ\n  removalRadius : ℝ\n  removalRadius_pos : 0 < removalRadius\n  radius_le : removalRadius ≤ referenceRadius\n  anchor : ℝ\n  anchor_pos : 0 < anchor\n  totalBudget : ℝ\n  density : ℝ → ℝ → ℝ≥0∞\n  density_measurable : ∀ t ∈ events,\n    AEMeasurable (density t) (volume.restrict (Ioc 0 referenceRadius))\n  density_comparison : ∀ t ∈ events, CrossAnti referenceRadius (density t)\n    (fun r => ENNReal.ofReal (hypDensity modelParameter 2 r))\n  reference_lower : ∀ t ∈ events, ENNReal.ofReal anchor ≤\n    (∫⁻ r in Ioc (0 : ℝ) referenceRadius, density t r) /\n      ENNReal.ofReal (hypRadVol modelParameter 2 referenceRadius)\n  removedVolume : ℝ → ℝ\n  removedVolume_nonneg : ∀ t ∈ events, 0 ≤ removedVolume t\n  removal_contains : ∀ t ∈ events,\n    (∫⁻ r in Ioc (0 : ℝ) removalRadius, density t r) ≤ ENNReal.ofReal (removedVolume t)\n  volume_budget : ∀ s : Finset ℝ, (↑s : Set ℝ) ⊆ events →\n    ∑ t ∈ s, removedVolume t ≤ totalBudget\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "An arbitrary set of real event times carries nonnegative radial densities with cross-comparison against the three-dimensional model of curvature $-q^2$, where $q\\ge0$. Fix $0<r\\le R$ and $\\kappa>0$. At every event the normalized radial volume at $R$ is at least $\\kappa$, and the radial integral at $r$ is bounded by the nonnegative removed volume. Every finite subset of events has total removed volume bounded by a single finite real budget. No finiteness or discreteness of the event set is assumed.\n\nThis is an analytic interface for the nonaccumulation argument. A geometric application must construct the densities, identify their integrals with contained regions, justify uniform scales and the anchor, and bound all removed volume including allowance for smooth volume growth. It is not a definition of Ricci flow or surgery.",
+        "node_type": "theorem",
+        "source": "OpenGA derived analytic interface. Kleiner-Lott, Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; radial scale comparison in Sublemma 79.23, p. 157. Colding-Minicozzi width estimates: https://arxiv.org/pdf/0707.0108v1#page=7",
+        "status": "Definition",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+        "theorem_name": "OpenGA_RadialSurgeryVolumeBudget",
+        "theorem_title": "Radial comparison and a surgery volume-loss budget",
         "vote_count": 0
       },
       {
@@ -1082,6 +1598,87 @@
       },
       {
         "audits": [],
+        "created_at": "2026-09-09T18:19:41.570973+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "import Definitions.Def_OpenGA_RadialSurgeryVolumeBudget\nimport Definitions.Def_OpenGA_WidthComparisonData\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\nnamespace OpenGA\n\n/-- **Math.** An interval within a finite horizon whose interior contains\nno event. Its endpoints may be event times. -/\ndef EventFreeInterval (events : Set ℝ) (T a b : ℝ) : Prop :=\n  0 ≤ a ∧ a < b ∧ b ≤ T ∧ Disjoint events (Ioo a b)\n\n/-- **Math.** Scalar/width comparison profiles and volume-loss control before\none knows that the event times are finite. Every geometric interpretation,\nincluding the budget and radial density hypotheses, remains a separate input. -/\nstructure SurgeryComparisonProcess (initialWidth finalTime : ℝ) where\n  volumeControl : RadialSurgeryVolumeBudget\n  events_inside : volumeControl.events ⊆ Ioo 0 finalTime\n  finalTime_pos : 0 < finalTime\n  scalar : ℝ → ℝ → ℝ\n  width : ℝ → ℝ → ℝ\n  scalar_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (scalar a) (Icc a b)\n  width_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (width a) (Icc a b)\n  scalar_initial : -6 ≤ scalar 0 0\n  width_initial : width 0 0 ≤ initialWidth\n  width_nonneg : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Icc a b, 0 ≤ width a t\n  scalar_slope : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, ∀ q : ℝ, q < (2 / 3 : ℝ) * (scalar a t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar a) t s\n  comparison : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, Nonempty (WidthComparisonData (width a) t (scalar a t))\n  scalar_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → scalar a b ≤ scalar b b\n  width_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → width b b ≤ width a b\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For an initial width bound $W_0$ and positive horizon $T$, this bundle combines a radial volume-loss budget with event times in $(0,T)$ and scalar/width profiles on every event-free interval. Profiles are continuous on each closed interval, widths are nonnegative, initial scalar is at least $-6$, and initial width is at most $W_0$. The scalar right-slope inequality is $R^\\prime\\ge\\frac23R^2$; each time carries an area-energy width-comparison witness. Adjacent intervals allow upward scalar jumps and downward width jumps.\n\nThe event set need not be finite by definition. Its finiteness is a theorem derived from volume control. These are conditional analytic data, whose construction from a manifold remains an Open geometric problem.",
+        "node_type": "theorem",
+        "source": "OpenGA derived analytic interface. Kleiner-Lott, Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; radial scale comparison in Sublemma 79.23, p. 157. Colding-Minicozzi width estimates: https://arxiv.org/pdf/0707.0108v1#page=7",
+        "status": "Definition",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+        "theorem_name": "OpenGA_SurgeryComparisonProcess",
+        "theorem_title": "Scalar and width profiles with surgery volume control",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:20:12.744317+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess {W T : ℝ}\n    (P : SurgeryComparisonProcess W T) : Nonempty (WidthComparisonTrace W T) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For any initial bound and final horizon, a surgery comparison process yields a finite width comparison trace with the same bounds. The trace satisfies the existing scalar and width interface used by the Poincare width-extinction reduction.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_SurgeryComparisonProcess\nimport Definitions.Def_OpenGA_WidthComparisonTrace\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nopen OpenGA",
+        "source": "OpenGA, OpenGALib/Analysis/SurgeryComparison.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+        "theorem_name": "OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess",
+        "theorem_title": "A finite width comparison trace from volume-controlled profiles",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:19:47.411297+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower (B : RadialSurgeryVolumeBudget)\n    {t : ℝ} (ht : t ∈ B.events) :\n    B.anchor * hypRadVol B.modelParameter 2 B.removalRadius ≤ B.removedVolume t := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For every event of a radial surgery volume budget, its removed volume is at least $\\kappa V_{q,2}(r)>0$, where $\\kappa$ is the positive reference-scale anchor and $r$ the positive removal radius. The bound is uniform over all events.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_RadialSurgeryVolumeBudget\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nopen OpenGA",
+        "source": "OpenGA, OpenGALib/Analysis/SurgeryVolume.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "ca66101a-7280-449f-ad5d-350153b56ffd",
+        "theorem_name": "OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower",
+        "theorem_title": "A uniform positive volume loss from model comparison",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
         "created_at": "2026-09-09T03:17:38.845171+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
         "created_by_username": "Xinze-Li-Moqian",
@@ -1168,6 +1765,18 @@
         "username": "Xinze-Li-Moqian"
       },
       {
+        "child_count": 3,
+        "created_at": "2026-09-09T18:26:27.188791+00:00",
+        "deprecated_at": null,
+        "explanation": "This reduction retains one Open geometric child: constructing volume-controlled scalar and width profiles from a hypothetical counterexample. Given its data for each horizon, the proved trace constructor derives event finiteness from model radial comparison and the volume-loss budget, sorts the event times and restricts the profiles to a finite trace. Thus the Bishop-Gromov analytic prerequisites enter the existing width route through a proved nonaccumulation step. The geometric child, the parent and the Poincare goal remain Open; this is not a proof of Ricci-flow surgery or of the full geometric Bishop-Gromov theorem.",
+        "node_id": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3",
+        "node_type": "sketch",
+        "parent_theorem_id": "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+        "status": "SKETCH_ACCEPTED",
+        "submission_id": "0943befc-504f-4d6d-af2b-43ec35d7a1b3",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
         "child_count": 2,
         "created_at": "2026-09-09T03:41:14.183826+00:00",
         "deprecated_at": null,
@@ -1177,6 +1786,18 @@
         "parent_theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
         "status": "SKETCH_ACCEPTED",
         "submission_id": "42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-09T18:21:28.80267+00:00",
+        "deprecated_at": null,
+        "explanation": "The imported lower-loss theorem gives a uniform positive loss epsilon. An infinite event set would contain a finite subset with more than totalBudget/epsilon elements. Summing their losses contradicts the budget. This formalizes the analytic nonaccumulation mechanism in Kleiner-Lott Section 3.5; constructing a geometric budget is still required.",
+        "node_id": "sketch-4b0967cf-4f47-4150-9061-44c6425c704d",
+        "node_type": "sketch",
+        "parent_theorem_id": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+        "status": "ACCEPTED",
+        "submission_id": "4b0967cf-4f47-4150-9061-44c6425c704d",
         "username": "Xinze-Li-Moqian"
       },
       {
@@ -1204,6 +1825,18 @@
         "username": "Xinze-Li-Moqian"
       },
       {
+        "child_count": 4,
+        "created_at": "2026-09-09T18:22:55.047906+00:00",
+        "deprecated_at": null,
+        "explanation": "Use volume control to prove event finiteness, then construct an event-free partition. Restrict the supplied profiles to its intervals. Initial bounds, continuity, differential inequalities, area-energy comparison witnesses and jumps transfer directly to the trace. No new geometric theorem is claimed.",
+        "node_id": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04",
+        "node_type": "sketch",
+        "parent_theorem_id": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+        "status": "ACCEPTED",
+        "submission_id": "7698ef55-8ed6-4ed1-a26d-f2854cf4ee04",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
         "child_count": 3,
         "created_at": "2026-09-09T02:40:07.087888+00:00",
         "deprecated_at": null,
@@ -1213,6 +1846,198 @@
         "parent_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
         "status": "SKETCH_ACCEPTED",
         "submission_id": "d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:20:18.372121+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.antitoneOn_lintegral_Ioc_div {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g)\n    (hpos : ∀ r ∈ Ioc (0 : ℝ) R, 0 < ∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)\n    (hfin : ∀ r ∈ Ioc (0 : ℝ) R, (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ) < ⊤) :\n    AntitoneOn (fun r => (∫⁻ t in Ioc (0 : ℝ) r, f t ∂μ) /\n      (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)) (Ioc (0 : ℝ) R) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ whenever $0<a\\le b\\le R$. Write $F(r)=\\int_{(0,r]} f\\,d\\mu$ and $G(r)=\\int_{(0,r]} g\\,d\\mu$, and assume $0<G(r)<\\infty$ for every $0<r\\le R$. Then\n\n$$\\frac{F(s)}{G(s)}\\le\\frac{F(r)}{G(r)}\\qquad(0<r\\le s\\le R).$$\n\nThe numerator may be infinite. This is the analytic normalized-volume monotonicity step; its application to Riemannian balls additionally requires geometric density comparison and polar integration.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\n\n\n\nset_option autoImplicit false\n\nopen MeasureTheory Set\nopen scoped ENNReal\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+        "source": "OpenGA, OpenGALib/Analysis/IntegralComparison.lean, derived from DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le (DifferentialGeometry v0.1.2). https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/IntegralComparison.lean",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+        "theorem_name": "OpenGA.antitoneOn_lintegral_Ioc_div",
+        "theorem_title": "Monotonicity of normalized radial integrals",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:14:56.406714+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le {s : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g) (hs : 0 ≤ s) (hsR : s ≤ R) :\n    (∫⁻ t in Ioc (0 : ℝ) R, f t ∂μ) * (∫⁻ t in Ioc (0 : ℝ) s, g t ∂μ)\n      ≤ (∫⁻ t in Ioc (0 : ℝ) s, f t ∂μ) * ∫⁻ t in Ioc (0 : ℝ) R, g t ∂μ := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, let $0\\le s\\le R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ for $0<a\\le b\\le R$. Then\n\n$$\\left(\\int_{(0,R]} f\\,d\\mu\\right)\\left(\\int_{(0,s]} g\\,d\\mu\\right)\\le\\left(\\int_{(0,s]} f\\,d\\mu\\right)\\left(\\int_{(0,R]} g\\,d\\mu\\right).$$\n\nThe endpoint $s=0$ is included. This is the analytic density-to-volume step of radial comparison; identifying these integrals with Riemannian ball volumes requires the separate geometric polar integration theorem.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\n\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nset_option autoImplicit false",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L68-L109",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+        "theorem_name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+        "theorem_title": "Radial density comparison implies integrated comparison",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:13:16.952419+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n\ndef CrossAnti (R : ℝ) (f g : ℝ → ℝ≥0∞) : Prop :=\n  ∀ a b : ℝ, 0 < a → a ≤ b → b ≤ R → f b * g a ≤ f a * g b\n\n\n\n\n\n\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $R\\in\\mathbb R$ and let $f,g:\\mathbb R\\to[0,\\infty]$. The cross-comparison condition requires\n\n$$f(b)g(a)\\le f(a)g(b)\\qquad(0<a\\le b\\le R).$$\n\nWhen $g$ is finite and positive, this expresses that $f/g$ is nonincreasing. The cross-multiplied formulation also permits vanishing or infinite densities without division. It is an analytic input for radial volume comparison.",
+        "node_type": "theorem",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L65-L66",
+        "status": "Definition",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "theorem_name": "DifferentialGeometry_RadialCrossComparison",
+        "theorem_title": "Cross-multiplied comparison of radial densities",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:42:34.535496+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.antitoneOn_lintegral_div_hypRadVol {f : ℝ → ℝ≥0∞} {q R : ℝ} {d : ℕ}\n    (hq : 0 ≤ q)\n    (hf : AEMeasurable f (volume.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f (fun t => ENNReal.ofReal (hypDensity q d t))) :\n    AntitoneOn (fun r => (∫⁻ t in Ioc (0 : ℝ) r, f t) /\n      ENNReal.ofReal (hypRadVol q d r)) (Ioc (0 : ℝ) R) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $q\\ge0$, $d\\in\\mathbb N$, $R\\in\\mathbb R$, and let $f:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$ with respect to Lebesgue measure. Set $J(t)=s_q(t)^d$ and $V(r)=\\int_0^r J(t)\\,dt$. Assume $f(b)J(a)\\le f(a)J(b)$ for every $0<a\\le b\\le R$, interpreting the products in the extended nonnegative reals. Then\n\n$$\\frac{\\int_{(0,s]}f(t)\\,dt}{V(s)}\\le\\frac{\\int_{(0,r]}f(t)\\,dt}{V(r)}\\qquad(0<r\\le s\\le R).$$\n\nThe numerator may be infinite. For $d=n-1$, the denominator is the radial model volume at curvature $-q^2$. This supplies the analytic normalization step for volume comparison; identifying the numerator with Riemannian ball volume and deriving the density comparison from a Ricci bound are separate geometric steps.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_DifferentialGeometry_ModelRadialVolume\nimport Definitions.Def_DifferentialGeometry_RadialCrossComparison\n\nset_option autoImplicit false\n\nopen MeasureTheory Set\nopen scoped ENNReal\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+        "source": "OpenGA, OpenGALib/Analysis/ModelVolume.lean#L33-L55; derived from the published normalized integral comparison and the DifferentialGeometry model definitions. https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/ModelVolume.lean#L33",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
+        "theorem_name": "OpenGA.antitoneOn_lintegral_div_hypRadVol",
+        "theorem_title": "Radial integral monotonicity with the model-volume denominator",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:39:54.904436+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Mathlib.Analysis.Calculus.Deriv.Pow\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\n\nnoncomputable section\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\ndef hypSn (q r : ℝ) : ℝ :=\n  if q = 0 then r else Real.sinh (q * r) / q\n\ndef hypSnDeriv (q r : ℝ) : ℝ :=\n  if q = 0 then 1 else Real.cosh (q * r)\n\ndef hypDensity (q : ℝ) (d : ℕ) (r : ℝ) : ℝ :=\n  hypSn q r ^ d\n\ndef hypDensityDeriv (q : ℝ) (d : ℕ) (r : ℝ) : ℝ :=\n  (d : ℝ) * hypSn q r ^ (d - 1) * hypSnDeriv q r\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $q\\in\\mathbb R$ and $d\\in\\mathbb N$. Define the model radial function and density by\n\n$$s_q(r)=\\begin{cases}r,&q=0,\\\\\\sinh(qr)/q,&q\\ne0,\\end{cases}\\qquad J_{q,d}(r)=s_q(r)^d.$$\n\nFor $q\\ge0$ and $d=n-1$, these give the radial factors of the $n$-dimensional constant-curvature model with curvature $-q^2$. The bundle also defines their derivative expressions. The zero-curvature case is included; positive model curvature requires a separate trigonometric model.",
+        "node_type": "theorem",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/HyperbolicModel.lean#L17-L98",
+        "status": "Definition",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "5f12b4eb-73fe-4f5b-9eca-ea195943cb23",
+        "theorem_name": "DifferentialGeometry_HyperbolicModel",
+        "theorem_title": "Model radial function and density for nonpositive curvature",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:40:51.185784+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Definitions.Def_DifferentialGeometry_HyperbolicModel\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\n\nnoncomputable section\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\ndef hypRadVol (q : Real) (d : Nat) (R : Real) : Real :=\n  ∫ t in (0 : Real)..R, hypDensity q d t\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For $q\\in\\mathbb R$, $d\\in\\mathbb N$ and $r\\in\\mathbb R$, let $s_q$ be the model radial function and define\n\n$$V_{q,d}(r)=\\int_0^r s_q(t)^d\\,dt.$$\n\nFor $q\\ge0$, $r>0$ and $d=n-1$, this is the radial volume factor in the $n$-dimensional model of curvature $-q^2$. The constant angular factor is omitted because it cancels in volume ratios. The Lean definition uses the oriented interval integral, so it is defined for every real radius.",
+        "node_type": "theorem",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/BishopBall.lean#L272-L273",
+        "status": "Definition",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "8f010cd2-75b6-40f7-abdf-ec788a788a40",
+        "theorem_name": "DifferentialGeometry_ModelRadialVolume",
+        "theorem_title": "Radial model volume for nonpositive curvature",
+        "vote_count": 0
+      },
+      {
+        "child_count": 1,
+        "created_at": "2026-09-09T17:21:17.706683+00:00",
+        "deprecated_at": null,
+        "explanation": "Fix $0<r\\le s\\le R$. Restrict measurability and the density comparison to $(0,s]$. The proved radial integral comparison gives\n\n$$F(s)G(r)\\le F(r)G(s).$$\n\nBoth $G(r)$ and $G(s)$ are positive and finite. Division by these factors therefore preserves the inequality even for extended nonnegative numerators, yielding $F(s)/G(s)\\le F(r)/G(r)$. The Lean proof imports the separately verified radial comparison theorem, so this dependency is visible in the proof graph.",
+        "node_id": "sketch-91cf1c6b-5ed5-463a-b593-6f385348e01e",
+        "node_type": "sketch",
+        "parent_theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+        "status": "ACCEPTED",
+        "submission_id": "91cf1c6b-5ed5-463a-b593-6f385348e01e",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-09T18:19:53.352804+00:00",
+        "deprecated_at": null,
+        "explanation": "Apply the proved normalized radial integral comparison from the removal radius to the reference radius. Combine the anchor lower bound with containment in the removed material, then clear the positive finite model-volume denominator. This is a conditional analytic consequence; geometric containment and the anchor are inputs.",
+        "node_id": "sketch-e04116f7-6882-4385-adb2-3d369736d0a3",
+        "node_type": "sketch",
+        "parent_theorem_id": "ca66101a-7280-449f-ad5d-350153b56ffd",
+        "status": "ACCEPTED",
+        "submission_id": "e04116f7-6882-4385-adb2-3d369736d0a3",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-09T17:43:35.575473+00:00",
+        "deprecated_at": null,
+        "explanation": "Continuity and positivity of the model density give a positive finite model integral at every positive radius. The real interval integral agrees with its extended nonnegative Lebesgue integral. Apply the already proved normalized radial integral comparison and substitute this identity at both radii. The imported comparison theorem and both model definition bundles are genuine dependencies of this proof.",
+        "node_id": "sketch-fd6f90da-3fa3-48c4-95a0-f36e42b9fe72",
+        "node_type": "sketch",
+        "parent_theorem_id": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
+        "status": "ACCEPTED",
+        "submission_id": "fd6f90da-3fa3-48c4-95a0-f36e42b9fe72",
         "username": "Xinze-Li-Moqian"
       }
     ],
@@ -1306,7 +2131,7 @@
       "created_at": "2026-09-09T16:03:11.319685+00:00",
       "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
       "id": "cb96ab98-d517-4ecc-964b-b4b39a2d07a3",
-      "milestone_description": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).\n\n**Verified analytic prerequisites.** [Integral comparison on nested lower intervals](https://prove2.me/theorems/1b1a2764-46a8-4ccb-9220-d38a56f8a6a5); [Radial density comparison implies integrated comparison](https://prove2.me/theorems/0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb); [Monotonicity of normalized radial integrals](https://prove2.me/theorems/00a47c26-3e61-4afc-91c7-117708e1baf9). The first two results preserve the DifferentialGeometry proofs; the third is an OpenGA corollary. These establish the integral comparison step. The full geometric milestone remains open: geometric density comparison, polar integration, the ball-local hypotheses and positive model curvature still require a faithful platform development.\n\n**Verified model definitions.** [Model radial function and density for nonpositive curvature](https://prove2.me/theorems/5f12b4eb-73fe-4f5b-9eca-ea195943cb23); [Radial model volume for nonpositive curvature](https://prove2.me/theorems/8f010cd2-75b6-40f7-abdf-ec788a788a40). They are used in [Radial integral monotonicity with the model-volume denominator](https://prove2.me/theorems/58a8c735-04e5-4c94-afef-0b03d5d80e0a), connected to the earlier integral comparison proof. This model batch covers curvature $K=-q^2\\le0$ and uses radial exponent $d=n-1$. The angular constant cancels in ratios. The geometric milestone remains open, and this analytic component is not yet a dependency of the Poincare goal theorem.",
+      "milestone_description": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).\n\n**Verified analytic prerequisites.** [Integral comparison on nested lower intervals](https://prove2.me/theorems/1b1a2764-46a8-4ccb-9220-d38a56f8a6a5); [Radial density comparison implies integrated comparison](https://prove2.me/theorems/0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb); [Monotonicity of normalized radial integrals](https://prove2.me/theorems/00a47c26-3e61-4afc-91c7-117708e1baf9). The first two results preserve the DifferentialGeometry proofs; the third is an OpenGA corollary. These establish the integral comparison step. The full geometric milestone remains open: geometric density comparison, polar integration, the ball-local hypotheses and positive model curvature still require a faithful platform development.\n\n**Verified model definitions.** [Model radial function and density for nonpositive curvature](https://prove2.me/theorems/5f12b4eb-73fe-4f5b-9eca-ea195943cb23); [Radial model volume for nonpositive curvature](https://prove2.me/theorems/8f010cd2-75b6-40f7-abdf-ec788a788a40). They are used in [Radial integral monotonicity with the model-volume denominator](https://prove2.me/theorems/58a8c735-04e5-4c94-afef-0b03d5d80e0a), connected to the earlier integral comparison proof. This model batch covers curvature $K=-q^2\\le0$ and uses radial exponent $d=n-1$. The angular constant cancels in ratios. The geometric milestone remains open. The analytic component now enters the Poincare width route through the conditional volume-loss nonaccumulation argument linked below.\n\n**Volume-loss bridge to the mission graph.** [A uniform positive volume loss from model comparison](https://prove2.me/theorems/ca66101a-7280-449f-ad5d-350153b56ffd); [Finitely many events from a radial volume-loss budget](https://prove2.me/theorems/3aca5641-0de9-4b5b-b280-28243d1961cd); [An event-free partition for finitely many event times](https://prove2.me/theorems/2afae5fd-c4e2-4544-b37b-e819211739f1); [A finite width comparison trace from volume-controlled profiles](https://prove2.me/theorems/ca00fe64-9dc8-4809-80cf-e824e93594b5). These proved analytic results transfer a reference-scale volume lower bound to the removal scale, bound the number of events and construct the finite width comparison trace. [The geometric construction](https://prove2.me/theorems/0347aa7b-4f24-4106-873e-c9b21fd9169f) remains Open: it must supply surgery flow, uniform radial estimates and containment, a removed-volume budget allowing smooth volume growth, and scalar/sweepout profiles. The full geometric Bishop-Gromov milestone remains Open.",
       "sort_order": 7,
       "theorem": null,
       "title": "Bishop-Gromov volume comparison"
@@ -1443,6 +2268,31 @@
       "theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
       "theorem_name": "OpenGA.antitoneOn_lintegral_Ioc_div",
       "theorem_title": "Monotonicity of normalized radial integrals",
+      "visibility": "public",
+      "vote_count": 0
+    },
+    "0347aa7b-4f24-4106-873e-c9b21fd9169f": {
+      "audits": [],
+      "created_at": "2026-09-09T18:20:20.946761+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →\n      Nonempty (OpenGA.SurgeryComparisonProcess initialWidth finalTime) := by sorry",
+      "local_path": "Theorems/Thm_PoincareFormalization_surgery_comparison_process_of_not_homeomorph_sphere.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $M$ be a compact, simply connected, Hausdorff topological three-manifold without boundary, hypothetically not homeomorphic to the unit three-sphere. Construct $W_0\\ge0$ such that for every $T>0$ there is a surgery comparison process with initial width bound $W_0$ and final time $T$.\n\nOpen geometric construction. It must supply all fields of the imported analytic process: smoothability and normalization, suitable surgery flow and uniform radial comparison data, containment of controlled regions in removed material, a finite volume-loss budget allowing smooth volume growth, and scalar/sweepout comparison profiles with the prescribed inequalities and jumps. It does not assume event finiteness; that follows from the separately proved volume argument. This refines the existing comparison-data target. The full Ricci-flow and Bishop-Gromov geometric developments remain open.",
+      "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\nimport Definitions.Def_OpenGA_SurgeryComparisonProcess\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+      "readback": null,
+      "source": "Kleiner-Lott, Section 3.5, p. 13 and Sublemma 79.23, p. 157, https://arxiv.org/pdf/math/0605667v5#page=13; Colding-Minicozzi finite-extinction width argument, https://arxiv.org/pdf/0707.0108v1#page=7. This is a composite OpenGA construction target, not a claim that a single cited lemma supplies all fields.",
+      "status": "Open",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "0347aa7b-4f24-4106-873e-c9b21fd9169f",
+      "theorem_name": "PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere",
+      "theorem_title": "Volume-controlled width profiles from a hypothetical Poincare counterexample",
       "visibility": "public",
       "vote_count": 0
     },
@@ -1637,6 +2487,31 @@
       "visibility": "public",
       "vote_count": 0
     },
+    "2afae5fd-c4e2-4544-b37b-e819211739f1": {
+      "audits": [],
+      "created_at": "2026-09-09T18:18:56.042359+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem OpenGA.exists_event_free_partition {events : Set ℝ} {T : ℝ}\n    (hfinite : events.Finite) (hinside : events ⊆ Ioo 0 T) (hT : 0 < T) :\n    ∃ n : ℕ, 0 < n ∧ ∃ times : ℕ → ℝ,\n      times 0 = 0 ∧ times n = T ∧\n      (∀ i ≤ n, times i ∈ Icc 0 T) ∧\n      (∀ i < n, times i < times (i + 1)) ∧\n      (∀ i < n, Disjoint events (Ioo (times i) (times (i + 1)))) := by sorry",
+      "local_path": "Theorems/Thm_OpenGA_exists_event_free_partition.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "If a finite set of real event times is contained in $(0,T)$ with $T>0$, there is a finite strictly increasing partition $0=t_0<\\cdots<t_n=T$, $n>0$, all of whose open subintervals contain no event.",
+      "preamble": "import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology",
+      "readback": null,
+      "source": "OpenGA, OpenGALib/Analysis/FiniteEventPartition.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+      "status": "Proved",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "2afae5fd-c4e2-4544-b37b-e819211739f1",
+      "theorem_name": "OpenGA.exists_event_free_partition",
+      "theorem_title": "An event-free partition for finitely many event times",
+      "visibility": "public",
+      "vote_count": 0
+    },
     "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b": {
       "audits": [],
       "created_at": "2026-09-09T03:18:22.203268+00:00",
@@ -1681,6 +2556,31 @@
       "theorem_id": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
       "theorem_name": "DifferentialGeometry_RadialCrossComparison",
       "theorem_title": "Cross-multiplied comparison of radial densities",
+      "visibility": "public",
+      "vote_count": 0
+    },
+    "3aca5641-0de9-4b5b-b280-28243d1961cd": {
+      "audits": [],
+      "created_at": "2026-09-09T18:19:42.122989+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem OpenGA.RadialSurgeryVolumeBudget.events_finite (B : RadialSurgeryVolumeBudget) :\n    B.events.Finite := by sorry",
+      "local_path": "Theorems/Thm_OpenGA_RadialSurgeryVolumeBudget_events_finite.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Every radial surgery volume budget has a finite set of event times. No discreteness hypothesis is needed.",
+      "preamble": "import Definitions.Def_OpenGA_RadialSurgeryVolumeBudget\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nopen OpenGA",
+      "readback": null,
+      "source": "OpenGA, OpenGALib/Analysis/SurgeryVolume.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+      "status": "Proved",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+      "theorem_name": "OpenGA.RadialSurgeryVolumeBudget.events_finite",
+      "theorem_title": "Finitely many events from a radial volume-loss budget",
       "visibility": "public",
       "vote_count": 0
     },
@@ -1849,6 +2749,31 @@
       "theorem_id": "79da6e34-6c16-4bcf-bac0-c071f41d246d",
       "theorem_name": "PoincareFormalization.homotopy_three_sphere_nonempty_homeomorph",
       "theorem_title": "A homotopy 3-sphere is homeomorphic to the 3-sphere (Perelman)",
+      "visibility": "public",
+      "vote_count": 0
+    },
+    "7b53cb40-bcab-4693-b755-615a06d5fb54": {
+      "created_at": "2026-09-09T18:19:01.078472+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Definitions.Def_DifferentialGeometry_ModelRadialVolume\nimport Definitions.Def_DifferentialGeometry_RadialCrossComparison\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\nnamespace OpenGA\n\n/-- **Math.** Uniform radial comparison data and a finite volume-loss budget.\nNo finiteness or discreteness is assumed for the set of event times. -/\nstructure RadialSurgeryVolumeBudget where\n  events : Set ℝ\n  modelParameter : ℝ\n  modelParameter_nonneg : 0 ≤ modelParameter\n  referenceRadius : ℝ\n  removalRadius : ℝ\n  removalRadius_pos : 0 < removalRadius\n  radius_le : removalRadius ≤ referenceRadius\n  anchor : ℝ\n  anchor_pos : 0 < anchor\n  totalBudget : ℝ\n  density : ℝ → ℝ → ℝ≥0∞\n  density_measurable : ∀ t ∈ events,\n    AEMeasurable (density t) (volume.restrict (Ioc 0 referenceRadius))\n  density_comparison : ∀ t ∈ events, CrossAnti referenceRadius (density t)\n    (fun r => ENNReal.ofReal (hypDensity modelParameter 2 r))\n  reference_lower : ∀ t ∈ events, ENNReal.ofReal anchor ≤\n    (∫⁻ r in Ioc (0 : ℝ) referenceRadius, density t r) /\n      ENNReal.ofReal (hypRadVol modelParameter 2 referenceRadius)\n  removedVolume : ℝ → ℝ\n  removedVolume_nonneg : ∀ t ∈ events, 0 ≤ removedVolume t\n  removal_contains : ∀ t ∈ events,\n    (∫⁻ r in Ioc (0 : ℝ) removalRadius, density t r) ≤ ENNReal.ofReal (removedVolume t)\n  volume_budget : ∀ s : Finset ℝ, (↑s : Set ℝ) ⊆ events →\n    ∑ t ∈ s, removedVolume t ≤ totalBudget\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "local_path": "Definitions/Def_OpenGA_RadialSurgeryVolumeBudget.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "An arbitrary set of real event times carries nonnegative radial densities with cross-comparison against the three-dimensional model of curvature $-q^2$, where $q\\ge0$. Fix $0<r\\le R$ and $\\kappa>0$. At every event the normalized radial volume at $R$ is at least $\\kappa$, and the radial integral at $r$ is bounded by the nonnegative removed volume. Every finite subset of events has total removed volume bounded by a single finite real budget. No finiteness or discreteness of the event set is assumed.\n\nThis is an analytic interface for the nonaccumulation argument. A geometric application must construct the densities, identify their integrals with contained regions, justify uniform scales and the anchor, and bound all removed volume including allowance for smooth volume growth. It is not a definition of Ricci flow or surgery.",
+      "source": "OpenGA derived analytic interface. Kleiner-Lott, Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; radial scale comparison in Sublemma 79.23, p. 157. Colding-Minicozzi width estimates: https://arxiv.org/pdf/0707.0108v1#page=7",
+      "status": "Definition",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+      "theorem_name": "OpenGA_RadialSurgeryVolumeBudget",
+      "theorem_title": "Radial comparison and a surgery volume-loss budget",
       "visibility": "public",
       "vote_count": 0
     },
@@ -2058,6 +2983,81 @@
       "visibility": "public",
       "vote_count": 1
     },
+    "c76baf4f-4a85-4508-8e03-574d04648ce3": {
+      "created_at": "2026-09-09T18:19:41.570973+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Definitions.Def_OpenGA_RadialSurgeryVolumeBudget\nimport Definitions.Def_OpenGA_WidthComparisonData\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\nnamespace OpenGA\n\n/-- **Math.** An interval within a finite horizon whose interior contains\nno event. Its endpoints may be event times. -/\ndef EventFreeInterval (events : Set ℝ) (T a b : ℝ) : Prop :=\n  0 ≤ a ∧ a < b ∧ b ≤ T ∧ Disjoint events (Ioo a b)\n\n/-- **Math.** Scalar/width comparison profiles and volume-loss control before\none knows that the event times are finite. Every geometric interpretation,\nincluding the budget and radial density hypotheses, remains a separate input. -/\nstructure SurgeryComparisonProcess (initialWidth finalTime : ℝ) where\n  volumeControl : RadialSurgeryVolumeBudget\n  events_inside : volumeControl.events ⊆ Ioo 0 finalTime\n  finalTime_pos : 0 < finalTime\n  scalar : ℝ → ℝ → ℝ\n  width : ℝ → ℝ → ℝ\n  scalar_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (scalar a) (Icc a b)\n  width_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (width a) (Icc a b)\n  scalar_initial : -6 ≤ scalar 0 0\n  width_initial : width 0 0 ≤ initialWidth\n  width_nonneg : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Icc a b, 0 ≤ width a t\n  scalar_slope : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, ∀ q : ℝ, q < (2 / 3 : ℝ) * (scalar a t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar a) t s\n  comparison : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, Nonempty (WidthComparisonData (width a) t (scalar a t))\n  scalar_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → scalar a b ≤ scalar b b\n  width_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → width b b ≤ width a b\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "local_path": "Definitions/Def_OpenGA_SurgeryComparisonProcess.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For an initial width bound $W_0$ and positive horizon $T$, this bundle combines a radial volume-loss budget with event times in $(0,T)$ and scalar/width profiles on every event-free interval. Profiles are continuous on each closed interval, widths are nonnegative, initial scalar is at least $-6$, and initial width is at most $W_0$. The scalar right-slope inequality is $R^\\prime\\ge\\frac23R^2$; each time carries an area-energy width-comparison witness. Adjacent intervals allow upward scalar jumps and downward width jumps.\n\nThe event set need not be finite by definition. Its finiteness is a theorem derived from volume control. These are conditional analytic data, whose construction from a manifold remains an Open geometric problem.",
+      "source": "OpenGA derived analytic interface. Kleiner-Lott, Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; radial scale comparison in Sublemma 79.23, p. 157. Colding-Minicozzi width estimates: https://arxiv.org/pdf/0707.0108v1#page=7",
+      "status": "Definition",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+      "theorem_name": "OpenGA_SurgeryComparisonProcess",
+      "theorem_title": "Scalar and width profiles with surgery volume control",
+      "visibility": "public",
+      "vote_count": 0
+    },
+    "ca00fe64-9dc8-4809-80cf-e824e93594b5": {
+      "audits": [],
+      "created_at": "2026-09-09T18:20:12.744317+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess {W T : ℝ}\n    (P : SurgeryComparisonProcess W T) : Nonempty (WidthComparisonTrace W T) := by sorry",
+      "local_path": "Theorems/Thm_OpenGA_nonempty_widthComparisonTrace_of_surgeryComparisonProcess.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For any initial bound and final horizon, a surgery comparison process yields a finite width comparison trace with the same bounds. The trace satisfies the existing scalar and width interface used by the Poincare width-extinction reduction.",
+      "preamble": "import Definitions.Def_OpenGA_SurgeryComparisonProcess\nimport Definitions.Def_OpenGA_WidthComparisonTrace\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nopen OpenGA",
+      "readback": null,
+      "source": "OpenGA, OpenGALib/Analysis/SurgeryComparison.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+      "status": "Proved",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+      "theorem_name": "OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess",
+      "theorem_title": "A finite width comparison trace from volume-controlled profiles",
+      "visibility": "public",
+      "vote_count": 0
+    },
+    "ca66101a-7280-449f-ad5d-350153b56ffd": {
+      "audits": [],
+      "created_at": "2026-09-09T18:19:47.411297+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower (B : RadialSurgeryVolumeBudget)\n    {t : ℝ} (ht : t ∈ B.events) :\n    B.anchor * hypRadVol B.modelParameter 2 B.removalRadius ≤ B.removedVolume t := by sorry",
+      "local_path": "Theorems/Thm_OpenGA_RadialSurgeryVolumeBudget_removedVolume_lower.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For every event of a radial surgery volume budget, its removed volume is at least $\\kappa V_{q,2}(r)>0$, where $\\kappa$ is the positive reference-scale anchor and $r$ the positive removal radius. The bound is uniform over all events.",
+      "preamble": "import Definitions.Def_OpenGA_RadialSurgeryVolumeBudget\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nopen OpenGA",
+      "readback": null,
+      "source": "OpenGA, OpenGALib/Analysis/SurgeryVolume.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+      "status": "Proved",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "ca66101a-7280-449f-ad5d-350153b56ffd",
+      "theorem_name": "OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower",
+      "theorem_title": "A uniform positive volume loss from model comparison",
+      "visibility": "public",
+      "vote_count": 0
+    },
     "caf5e7f7-144e-4bc2-9730-695304525ad0": {
       "created_at": "2026-09-09T03:17:38.845171+00:00",
       "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
@@ -2173,6 +3173,21 @@
       "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
+    "0943befc-504f-4d6d-af2b-43ec35d7a1b3": {
+      "created_at": "2026-09-09T18:26:27.188791+00:00",
+      "deprecated_at": null,
+      "error_message": "",
+      "explanation": "This reduction retains one Open geometric child: constructing volume-controlled scalar and width profiles from a hypothetical counterexample. Given its data for each horizon, the proved trace constructor derives event finiteness from model radial comparison and the volume-loss budget, sorts the event times and restricts the profiles to a finite trace. Thus the Bishop-Gromov analytic prerequisites enter the existing width route through a proved nonaccumulation step. The geometric child, the parent and the Poincare goal remain Open; this is not a proof of Ricci-flow surgery or of the full geometric Bishop-Gromov theorem.",
+      "file_path": "ed56bd90-927e-45c1-81d1-b79a2ca8a034/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/0943befc-504f-4d6d-af2b-43ec35d7a1b3.lean",
+      "id": "0943befc-504f-4d6d-af2b-43ec35d7a1b3",
+      "local_path": "Solutions/Sol_PoincareFormalization_persistent_comparison_data_of_not_homeomorph_sphere_0943befc504f4d6daf2b43ec35d7a1b3.lean",
+      "status": "SKETCH_ACCEPTED",
+      "theorem_id": "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+      "updated_at": "2026-09-09T18:27:15.768347+00:00",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Xinze-Li-Moqian",
+      "vote_count": 0
+    },
     "096644e2-0f01-45df-9752-41d89decd664": {
       "created_at": "2026-09-09T03:18:37.171154+00:00",
       "deprecated_at": null,
@@ -2203,6 +3218,21 @@
       "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
+    "2283c781-4086-4880-9c6f-6556c635be55": {
+      "created_at": "2026-09-09T18:19:29.632475+00:00",
+      "deprecated_at": null,
+      "error_message": "",
+      "explanation": "Adjoin the endpoints 0 and T to the finite event set and enumerate the result in increasing order. An event strictly between adjacent partition points would have an index strictly between two consecutive natural numbers.",
+      "file_path": "2afae5fd-c4e2-4544-b37b-e819211739f1/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/2283c781-4086-4880-9c6f-6556c635be55.lean",
+      "id": "2283c781-4086-4880-9c6f-6556c635be55",
+      "local_path": "Solutions/Sol_OpenGA_exists_event_free_partition_2283c781408648809c6f6556c635be55.lean",
+      "status": "ACCEPTED",
+      "theorem_id": "2afae5fd-c4e2-4544-b37b-e819211739f1",
+      "updated_at": "2026-09-09T18:20:00.55666+00:00",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Xinze-Li-Moqian",
+      "vote_count": 0
+    },
     "2e402417-5f76-4df8-a6d5-b9f1ff27d93b": {
       "created_at": "2026-09-09T17:14:45.355984+00:00",
       "deprecated_at": null,
@@ -2229,6 +3259,21 @@
       "status": "SKETCH_ACCEPTED",
       "theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
       "updated_at": "2026-09-09T03:41:51.670231+00:00",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Xinze-Li-Moqian",
+      "vote_count": 0
+    },
+    "4b0967cf-4f47-4150-9061-44c6425c704d": {
+      "created_at": "2026-09-09T18:21:28.80267+00:00",
+      "deprecated_at": null,
+      "error_message": "",
+      "explanation": "The imported lower-loss theorem gives a uniform positive loss epsilon. An infinite event set would contain a finite subset with more than totalBudget/epsilon elements. Summing their losses contradicts the budget. This formalizes the analytic nonaccumulation mechanism in Kleiner-Lott Section 3.5; constructing a geometric budget is still required.",
+      "file_path": "3aca5641-0de9-4b5b-b280-28243d1961cd/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/4b0967cf-4f47-4150-9061-44c6425c704d.lean",
+      "id": "4b0967cf-4f47-4150-9061-44c6425c704d",
+      "local_path": "Solutions/Sol_OpenGA_RadialSurgeryVolumeBudget_events_finite_4b0967cf4f474150906144c6425c704d.lean",
+      "status": "ACCEPTED",
+      "theorem_id": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+      "updated_at": "2026-09-09T18:22:05.609117+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
       "username": "Xinze-Li-Moqian",
       "vote_count": 0
@@ -2289,6 +3334,21 @@
       "status": "ACCEPTED",
       "theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
       "updated_at": "2026-09-09T03:40:57.943241+00:00",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Xinze-Li-Moqian",
+      "vote_count": 0
+    },
+    "7698ef55-8ed6-4ed1-a26d-f2854cf4ee04": {
+      "created_at": "2026-09-09T18:22:55.047906+00:00",
+      "deprecated_at": null,
+      "error_message": "",
+      "explanation": "Use volume control to prove event finiteness, then construct an event-free partition. Restrict the supplied profiles to its intervals. Initial bounds, continuity, differential inequalities, area-energy comparison witnesses and jumps transfer directly to the trace. No new geometric theorem is claimed.",
+      "file_path": "ca00fe64-9dc8-4809-80cf-e824e93594b5/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/7698ef55-8ed6-4ed1-a26d-f2854cf4ee04.lean",
+      "id": "7698ef55-8ed6-4ed1-a26d-f2854cf4ee04",
+      "local_path": "Solutions/Sol_OpenGA_nonempty_widthComparisonTrace_of_surgeryComparisonProcess_7698ef558ed64ed1a26df2854cf4ee04.lean",
+      "status": "ACCEPTED",
+      "theorem_id": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+      "updated_at": "2026-09-09T18:23:37.352629+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
       "username": "Xinze-Li-Moqian",
       "vote_count": 0
@@ -2413,6 +3473,21 @@
       "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
+    "e04116f7-6882-4385-adb2-3d369736d0a3": {
+      "created_at": "2026-09-09T18:19:53.352804+00:00",
+      "deprecated_at": null,
+      "error_message": "",
+      "explanation": "Apply the proved normalized radial integral comparison from the removal radius to the reference radius. Combine the anchor lower bound with containment in the removed material, then clear the positive finite model-volume denominator. This is a conditional analytic consequence; geometric containment and the anchor are inputs.",
+      "file_path": "ca66101a-7280-449f-ad5d-350153b56ffd/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/e04116f7-6882-4385-adb2-3d369736d0a3.lean",
+      "id": "e04116f7-6882-4385-adb2-3d369736d0a3",
+      "local_path": "Solutions/Sol_OpenGA_RadialSurgeryVolumeBudget_removedVolume_lower_e04116f768824385adb23d369736d0a3.lean",
+      "status": "ACCEPTED",
+      "theorem_id": "ca66101a-7280-449f-ad5d-350153b56ffd",
+      "updated_at": "2026-09-09T18:20:43.991324+00:00",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Xinze-Li-Moqian",
+      "vote_count": 0
+    },
     "e226c921-de2b-4b97-bc82-2365ef39853d": {
       "created_at": "2026-09-09T17:17:39.563923+00:00",
       "deprecated_at": null,
@@ -2459,5 +3534,5 @@
       "vote_count": 0
     }
   },
-  "synced_at": "2026-09-09T17:45:49.665846+00:00"
+  "synced_at": "2026-09-09T18:34:54.987693+00:00"
 }

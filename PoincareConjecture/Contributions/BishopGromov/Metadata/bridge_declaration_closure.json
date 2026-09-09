@@ -1,0 +1,1072 @@
+[
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.RatioIntegral",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti",
+    "startLine": 65,
+    "endLine": 66,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hasDerivAt_hypDen",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hasDerivAt_hypDen",
+    "startLine": 91,
+    "endLine": 95,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensityDeriv",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensityDeriv",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hasDerivAt_hypSn"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hasDerivAt_hypSn",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hasDerivAt_hypSn",
+    "startLine": 23,
+    "endLine": 38,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDen_continuous",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDen_continuous",
+    "startLine": 97,
+    "endLine": 98,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensityDeriv",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hasDerivAt_hypDen"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+    "startLine": 85,
+    "endLine": 86,
+    "typeDeps": [],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensityDeriv",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensityDeriv",
+    "startLine": 88,
+    "endLine": 89,
+    "typeDeps": [],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity_pos",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity_pos",
+    "startLine": 242,
+    "endLine": 244,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn_pos",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.BishopBall",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol",
+    "startLine": 272,
+    "endLine": 273,
+    "typeDeps": [],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol.eq_1",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.BishopBall",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol.eq_1",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol_pos",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.BishopBall",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol_pos",
+    "startLine": 294,
+    "endLine": 298,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDen_continuous",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity_pos",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+    "startLine": 17,
+    "endLine": 18,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn.eq_1",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn.eq_1",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv",
+    "startLine": 20,
+    "endLine": 21,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn_pos",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn_pos",
+    "startLine": 77,
+    "endLine": 83,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn.eq_1"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.RatioIntegral",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+    "startLine": 68,
+    "endLine": 109,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti"
+    ]
+  },
+  {
+    "name": "OpenGA.EventFreeInterval",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.EventFreeInterval",
+    "startLine": 24,
+    "endLine": 27,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "inductive",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget",
+    "startLine": 24,
+    "endLine": 50,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.anchor",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.anchor",
+    "startLine": 34,
+    "endLine": 34,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.anchor_pos",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.anchor_pos",
+    "startLine": 35,
+    "endLine": 35,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.anchor"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.density",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.density",
+    "startLine": 37,
+    "endLine": 37,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.density_comparison",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.density_comparison",
+    "startLine": 40,
+    "endLine": 40,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget.density",
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.RadialSurgeryVolumeBudget.modelParameter",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "OpenGA.RadialSurgeryVolumeBudget.referenceRadius",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.density_measurable",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.density_measurable",
+    "startLine": 38,
+    "endLine": 38,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget.density",
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.RadialSurgeryVolumeBudget.referenceRadius"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.events",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.events",
+    "startLine": 27,
+    "endLine": 27,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.events_finite",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.events_finite",
+    "startLine": 70,
+    "endLine": 89,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.events"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget.removedVolume",
+      "OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower",
+      "OpenGA.RadialSurgeryVolumeBudget.removalRadius_pos",
+      "OpenGA.RadialSurgeryVolumeBudget.modelParameter",
+      "OpenGA.RadialSurgeryVolumeBudget.removalRadius",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol",
+      "OpenGA.RadialSurgeryVolumeBudget.modelParameter_nonneg",
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.volume_budget",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.RadialSurgeryVolumeBudget.anchor",
+      "OpenGA.RadialSurgeryVolumeBudget.anchor_pos",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol_pos",
+      "OpenGA.RadialSurgeryVolumeBudget.totalBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.modelParameter",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.modelParameter",
+    "startLine": 28,
+    "endLine": 28,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.modelParameter_nonneg",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.modelParameter_nonneg",
+    "startLine": 29,
+    "endLine": 29,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.modelParameter"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.radius_le",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.radius_le",
+    "startLine": 33,
+    "endLine": 33,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.removalRadius",
+      "OpenGA.RadialSurgeryVolumeBudget.referenceRadius"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.referenceRadius",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.referenceRadius",
+    "startLine": 30,
+    "endLine": 30,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.reference_lower",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.reference_lower",
+    "startLine": 42,
+    "endLine": 42,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget.density",
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.anchor",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.RadialSurgeryVolumeBudget.modelParameter",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol",
+      "OpenGA.RadialSurgeryVolumeBudget.referenceRadius"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.removalRadius",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.removalRadius",
+    "startLine": 31,
+    "endLine": 31,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.removalRadius_pos",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.removalRadius_pos",
+    "startLine": 32,
+    "endLine": 32,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.removalRadius"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.removal_contains",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.removal_contains",
+    "startLine": 47,
+    "endLine": 47,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget.density",
+      "OpenGA.RadialSurgeryVolumeBudget.removedVolume",
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.RadialSurgeryVolumeBudget.removalRadius"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.removedVolume",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.removedVolume",
+    "startLine": 45,
+    "endLine": 45,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower",
+    "startLine": 52,
+    "endLine": 68,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget.removedVolume",
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.anchor",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.RadialSurgeryVolumeBudget.modelParameter",
+      "OpenGA.RadialSurgeryVolumeBudget.removalRadius",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget.removedVolume_nonneg",
+      "OpenGA.RadialSurgeryVolumeBudget.removedVolume",
+      "OpenGA.RadialSurgeryVolumeBudget.radius_le",
+      "OpenGA.RadialSurgeryVolumeBudget.density_comparison",
+      "OpenGA.RadialSurgeryVolumeBudget.removalRadius_pos",
+      "OpenGA.RadialSurgeryVolumeBudget.modelParameter",
+      "OpenGA.RadialSurgeryVolumeBudget.density_measurable",
+      "OpenGA.RadialSurgeryVolumeBudget.removalRadius",
+      "OpenGA.RadialSurgeryVolumeBudget.referenceRadius",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol",
+      "OpenGA.RadialSurgeryVolumeBudget.modelParameter_nonneg",
+      "OpenGA.RadialSurgeryVolumeBudget.reference_lower",
+      "OpenGA.RadialSurgeryVolumeBudget.density",
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.anchor",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.RadialSurgeryVolumeBudget.anchor_pos",
+      "OpenGA.RadialSurgeryVolumeBudget.removal_contains",
+      "OpenGA.antitoneOn_lintegral_div_hypRadVol",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol_pos"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.removedVolume_nonneg",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.removedVolume_nonneg",
+    "startLine": 46,
+    "endLine": 46,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget.removedVolume",
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.events"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.totalBudget",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.totalBudget",
+    "startLine": 36,
+    "endLine": 36,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.RadialSurgeryVolumeBudget.volume_budget",
+    "module": "OpenGALib.Analysis.SurgeryVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RadialSurgeryVolumeBudget.volume_budget",
+    "startLine": 49,
+    "endLine": 49,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget.removedVolume",
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.RadialSurgeryVolumeBudget.totalBudget"
+    ],
+    "valueDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "inductive",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess",
+    "startLine": 29,
+    "endLine": 56,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.comparison",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.comparison",
+    "startLine": 49,
+    "endLine": 49,
+    "typeDeps": [
+      "OpenGA.EventFreeInterval",
+      "OpenGA.SurgeryComparisonProcess",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.SurgeryComparisonProcess.scalar",
+      "OpenGA.SurgeryComparisonProcess.width",
+      "OpenGA.SurgeryComparisonProcess.volumeControl",
+      "OpenGA.WidthComparisonData"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.events_inside",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.events_inside",
+    "startLine": 34,
+    "endLine": 34,
+    "typeDeps": [
+      "OpenGA.SurgeryComparisonProcess",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.SurgeryComparisonProcess.volumeControl"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.finalTime_pos",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.finalTime_pos",
+    "startLine": 35,
+    "endLine": 35,
+    "typeDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.scalar",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.scalar",
+    "startLine": 36,
+    "endLine": 36,
+    "typeDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.scalar_cont",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.scalar_cont",
+    "startLine": 38,
+    "endLine": 38,
+    "typeDeps": [
+      "OpenGA.EventFreeInterval",
+      "OpenGA.SurgeryComparisonProcess",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.SurgeryComparisonProcess.scalar",
+      "OpenGA.SurgeryComparisonProcess.volumeControl"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.scalar_initial",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.scalar_initial",
+    "startLine": 42,
+    "endLine": 42,
+    "typeDeps": [
+      "OpenGA.SurgeryComparisonProcess",
+      "OpenGA.SurgeryComparisonProcess.scalar"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.scalar_jump",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.scalar_jump",
+    "startLine": 51,
+    "endLine": 51,
+    "typeDeps": [
+      "OpenGA.EventFreeInterval",
+      "OpenGA.SurgeryComparisonProcess",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.SurgeryComparisonProcess.scalar",
+      "OpenGA.SurgeryComparisonProcess.volumeControl"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.scalar_slope",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.scalar_slope",
+    "startLine": 46,
+    "endLine": 46,
+    "typeDeps": [
+      "OpenGA.EventFreeInterval",
+      "OpenGA.SurgeryComparisonProcess",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.SurgeryComparisonProcess.scalar",
+      "OpenGA.SurgeryComparisonProcess.volumeControl"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.volumeControl",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.volumeControl",
+    "startLine": 33,
+    "endLine": 33,
+    "typeDeps": [
+      "OpenGA.RadialSurgeryVolumeBudget",
+      "OpenGA.SurgeryComparisonProcess"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.width",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.width",
+    "startLine": 37,
+    "endLine": 37,
+    "typeDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.width_cont",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.width_cont",
+    "startLine": 40,
+    "endLine": 40,
+    "typeDeps": [
+      "OpenGA.EventFreeInterval",
+      "OpenGA.SurgeryComparisonProcess",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.SurgeryComparisonProcess.width",
+      "OpenGA.SurgeryComparisonProcess.volumeControl"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.width_initial",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.width_initial",
+    "startLine": 43,
+    "endLine": 43,
+    "typeDeps": [
+      "OpenGA.SurgeryComparisonProcess",
+      "OpenGA.SurgeryComparisonProcess.width"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.width_jump",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.width_jump",
+    "startLine": 54,
+    "endLine": 54,
+    "typeDeps": [
+      "OpenGA.EventFreeInterval",
+      "OpenGA.SurgeryComparisonProcess",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.SurgeryComparisonProcess.width",
+      "OpenGA.SurgeryComparisonProcess.volumeControl"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.SurgeryComparisonProcess.width_nonneg",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.SurgeryComparisonProcess.width_nonneg",
+    "startLine": 44,
+    "endLine": 44,
+    "typeDeps": [
+      "OpenGA.EventFreeInterval",
+      "OpenGA.SurgeryComparisonProcess",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.SurgeryComparisonProcess.width",
+      "OpenGA.SurgeryComparisonProcess.volumeControl"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess"
+    ]
+  },
+  {
+    "name": "OpenGA.WidthComparisonData",
+    "module": "OpenGALib.Analysis.WidthComparison",
+    "kind": "inductive",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.WidthComparisonData",
+    "startLine": 61,
+    "endLine": 75,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.WidthComparisonTrace",
+    "module": "OpenGALib.Analysis.ComparisonTrace",
+    "kind": "inductive",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.WidthComparisonTrace",
+    "startLine": 10,
+    "endLine": 35,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.WidthComparisonTrace.mk",
+    "module": "OpenGALib.Analysis.ComparisonTrace",
+    "kind": "ctor",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.WidthComparisonTrace.mk",
+    "startLine": 13,
+    "endLine": 13,
+    "typeDeps": [
+      "OpenGA.WidthComparisonTrace",
+      "OpenGA.WidthComparisonData"
+    ],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.antitoneOn_lintegral_Ioc_div",
+    "module": "OpenGALib.Analysis.IntegralComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.antitoneOn_lintegral_Ioc_div",
+    "startLine": 28,
+    "endLine": 51,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti"
+    ]
+  },
+  {
+    "name": "OpenGA.antitoneOn_lintegral_div_hypRadVol",
+    "module": "OpenGALib.Analysis.ModelVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.antitoneOn_lintegral_div_hypRadVol",
+    "startLine": 32,
+    "endLine": 55,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti"
+    ],
+    "valueDeps": [
+      "OpenGA.lintegral_hypDensity",
+      "OpenGA.antitoneOn_lintegral_Ioc_div",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDen_continuous",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol_pos",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti"
+    ]
+  },
+  {
+    "name": "OpenGA.exists_event_free_partition",
+    "module": "OpenGALib.Analysis.FiniteEventPartition",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.exists_event_free_partition",
+    "startLine": 11,
+    "endLine": 74,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.lintegral_hypDensity",
+    "module": "OpenGALib.Analysis.ModelVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.lintegral_hypDensity",
+    "startLine": 22,
+    "endLine": 30,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol.eq_1",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDen_continuous",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity_pos",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol"
+    ]
+  },
+  {
+    "name": "OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess",
+    "module": "OpenGALib.Analysis.SurgeryComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess",
+    "startLine": 58,
+    "endLine": 88,
+    "typeDeps": [
+      "OpenGA.SurgeryComparisonProcess",
+      "OpenGA.WidthComparisonTrace"
+    ],
+    "valueDeps": [
+      "OpenGA.SurgeryComparisonProcess.comparison",
+      "OpenGA.SurgeryComparisonProcess.scalar",
+      "OpenGA.SurgeryComparisonProcess.scalar_initial",
+      "OpenGA.WidthComparisonTrace",
+      "OpenGA.SurgeryComparisonProcess.events_inside",
+      "OpenGA.exists_event_free_partition",
+      "OpenGA.SurgeryComparisonProcess.volumeControl",
+      "OpenGA.SurgeryComparisonProcess.finalTime_pos",
+      "OpenGA.SurgeryComparisonProcess.width_nonneg",
+      "OpenGA.SurgeryComparisonProcess.scalar_cont",
+      "OpenGA.EventFreeInterval",
+      "OpenGA.SurgeryComparisonProcess",
+      "OpenGA.RadialSurgeryVolumeBudget.events",
+      "OpenGA.SurgeryComparisonProcess.scalar_jump",
+      "OpenGA.SurgeryComparisonProcess.width",
+      "OpenGA.SurgeryComparisonProcess.width_jump",
+      "OpenGA.SurgeryComparisonProcess.scalar_slope",
+      "OpenGA.SurgeryComparisonProcess.width_initial",
+      "OpenGA.WidthComparisonTrace.mk",
+      "OpenGA.SurgeryComparisonProcess.width_cont",
+      "OpenGA.RadialSurgeryVolumeBudget.events_finite"
+    ]
+  }
+]

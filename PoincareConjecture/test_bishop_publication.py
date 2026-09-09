@@ -46,5 +46,40 @@ class PublicationOrderingTests(unittest.TestCase):
                 self.assertEqual(json.loads((root / 'model_publication.json').read_text())['last_attempt'], calls[-1])
 
 
+class SketchPublicationTests(unittest.TestCase):
+    def test_accepted_sketch_requires_open_parent_and_exact_source(self):
+        from types import SimpleNamespace
+        from hashlib import sha256
+        code = 'theorem solution : True := by trivial\n'
+        entry = {'id': 'parent', 'payload': {}, 'expected_verdict': 'SKETCH_ACCEPTED',
+                 'proof_sha256': sha256(code.encode()).hexdigest(),
+                 'submission': {'submission_id': 'sketch'},
+                 'publication': {'theorem_id': 'parent'}}
+        client = SimpleNamespace(request=lambda path:
+            {'status': 'SKETCH_ACCEPTED'} if path.startswith('/verify') else {'content': code})
+        with patch.object(publisher, 'save'), patch.object(publisher, 'verify_item',
+                return_value={'theorem_id': 'parent', 'status': 'Open'}):
+            self.assertTrue(publisher.prove(client, {}, entry))
+        with patch.object(publisher, 'save'), patch.object(publisher, 'verify_item',
+                return_value={'theorem_id': 'parent', 'status': 'Proved'}):
+            with self.assertRaisesRegex(RuntimeError, 'theorem status'):
+                publisher.prove(client, {}, entry)
+
+    def test_pending_analytic_child_blocks_parent_sketch(self):
+        from types import SimpleNamespace
+        import publish_surgery_bridge as bridge
+        record = {'definitions': [], 'theorems': [
+            {'id': 'analytic', 'definitions': [], 'imports': []},
+            {'id': 'geometry', 'definitions': [], 'imports': [], 'open_problem': True},
+            {'id': 'parent', 'definitions': [], 'imports': ['analytic', 'geometry']}]}
+        calls=[]
+        p=SimpleNamespace(publish=lambda c,r,e: True,
+            prove=lambda c,r,e: calls.append(e['id']) or False,
+            verify_item=lambda c,e: {'status':'Open'})
+        with patch.object(bridge,'external_entries',return_value={}):
+            bridge.run_bridge(p,None,record)
+        self.assertEqual(calls,['analytic'])
+
+
 if __name__ == '__main__':
     unittest.main()

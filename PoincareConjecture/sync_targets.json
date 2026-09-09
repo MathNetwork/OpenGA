@@ -10,6 +10,13 @@
     "OpenGA.antitoneOn_lintegral_Ioc_div",
     "DifferentialGeometry_HyperbolicModel",
     "DifferentialGeometry_ModelRadialVolume",
-    "OpenGA.antitoneOn_lintegral_div_hypRadVol"
+    "OpenGA.antitoneOn_lintegral_div_hypRadVol",
+    "OpenGA_RadialSurgeryVolumeBudget",
+    "OpenGA_SurgeryComparisonProcess",
+    "OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower",
+    "OpenGA.RadialSurgeryVolumeBudget.events_finite",
+    "OpenGA.exists_event_free_partition",
+    "OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess",
+    "PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere"
   ]
 }

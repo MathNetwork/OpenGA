@@ -21,6 +21,7 @@ scripts/extract_sketch_info.lean.
 -- EDIT: import every root module of the project (transitively covers the rest)
 import OpenGALib.Interoperability.BishopGromov
 import OpenGALib.Analysis.ModelVolume
+import OpenGALib.Analysis.SurgeryComparison
 open Lean
 
 run_meta do
