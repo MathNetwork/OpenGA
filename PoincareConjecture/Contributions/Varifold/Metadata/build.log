@@ -1,0 +1,17 @@
+⚠ [3457/3481] Replayed Theorems.Thm_OpenGA_areaDensity_eq_normDet
+warning: Theorems/Thm_OpenGA_areaDensity_eq_normDet.lean:19:8: declaration uses `sorry`
+⚠ [3467/3481] Replayed Theorems.Thm_OpenGA_integral_areaDensity_le_energyDensity
+warning: Theorems/Thm_OpenGA_integral_areaDensity_le_energyDensity.lean:15:8: declaration uses `sorry`
+⚠ [3468/3481] Replayed Theorems.Thm_OpenGA_Varifold_testIntegral_ofWeightedMap
+warning: Theorems/Thm_OpenGA_Varifold_testIntegral_ofWeightedMap.lean:40:8: declaration uses `sorry`
+⚠ [3469/3481] Replayed Theorems.Thm_OpenGA_Varifold_ofParametrization_independent_of_lift
+warning: Theorems/Thm_OpenGA_Varifold_ofParametrization_independent_of_lift.lean:52:8: declaration uses `sorry`
+⚠ [3470/3481] Replayed Theorems.Thm_OpenGA_Varifold_ofWeightedMap_eq_of_plane_eq
+warning: Theorems/Thm_OpenGA_Varifold_ofWeightedMap_eq_of_plane_eq.lean:42:8: declaration uses `sorry`
+⚠ [3471/3481] Replayed Theorems.Thm_OpenGA_Varifold_tendsto_weightMeasure_integral
+warning: Theorems/Thm_OpenGA_Varifold_tendsto_weightMeasure_integral.lean:51:8: declaration uses `sorry`
+⚠ [3472/3481] Replayed Theorems.Thm_OpenGA_Varifold_mass_ofParametrization_le_energy
+warning: Theorems/Thm_OpenGA_Varifold_mass_ofParametrization_le_energy.lean:31:8: declaration uses `sorry`
+⚠ [3473/3481] Replayed Theorems.Thm_OpenGA_Varifold_testIntegral_ofParametrization
+warning: Theorems/Thm_OpenGA_Varifold_testIntegral_ofParametrization.lean:50:8: declaration uses `sorry`
+Build completed successfully (3481 jobs).

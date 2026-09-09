@@ -1,0 +1,13 @@
+{"declEnd":{"col":97,"line":47,"offset":2348},"declStart":{"col":0,"line":27,"offset":934},"docstring":{"end":{"col":83,"line":27,"offset":1017},"start":{"col":0,"line":27,"offset":934}},"kind":"decl","nameText":"mass_ofParametrization_le_energy","privateTok":null,"valKind":"simple","valStart":{"col":74,"line":36,"offset":1605}}
+{"const":"OpenGA.Varifold.mass_ofParametrization_le_energy","end":{"col":40,"line":28,"offset":1058},"kind":"ref","start":{"col":8,"line":28,"offset":1026}}
+{"const":"OpenGA.Varifold.SurfaceTangentLift","end":{"col":27,"line":30,"offset":1193},"kind":"ref","start":{"col":9,"line":30,"offset":1175}}
+{"const":"OpenGA.Varifold.surfaceJacobian","end":{"col":43,"line":31,"offset":1245},"kind":"ref","start":{"col":28,"line":31,"offset":1230}}
+{"const":"OpenGA.energyDensity","end":{"col":19,"line":34,"offset":1397},"kind":"ref","start":{"col":6,"line":34,"offset":1384}}
+{"const":"OpenGA.Varifold.ofParametrization","end":{"col":22,"line":35,"offset":1480},"kind":"ref","start":{"col":5,"line":35,"offset":1463}}
+{"const":"OpenGA.Varifold.mass","end":{"col":45,"line":35,"offset":1504},"kind":"ref","start":{"col":41,"line":35,"offset":1500}}
+{"const":"OpenGA.energyDensity","end":{"col":30,"line":36,"offset":1557},"kind":"ref","start":{"col":17,"line":36,"offset":1544}}
+{"const":"OpenGA.Varifold.surfaceJacobian","end":{"col":49,"line":41,"offset":1912},"kind":"ref","start":{"col":34,"line":41,"offset":1897}}
+{"const":"OpenGA.Varifold.continuous_surfaceJacobian","end":{"col":33,"line":43,"offset":2039},"kind":"ref","start":{"col":7,"line":43,"offset":2013}}
+{"const":"OpenGA.Varifold.mass_ofParametrization","end":{"col":28,"line":44,"offset":2126},"kind":"ref","start":{"col":6,"line":44,"offset":2104}}
+{"const":"OpenGA.Varifold.surfaceJacobian_eq_areaDensity","end":{"col":44,"line":46,"offset":2237},"kind":"ref","start":{"col":14,"line":46,"offset":2207}}
+{"const":"OpenGA.integral_areaDensity_le_energyDensity","end":{"col":41,"line":47,"offset":2292},"kind":"ref","start":{"col":4,"line":47,"offset":2255}}

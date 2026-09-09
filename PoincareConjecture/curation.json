@@ -1,6 +1,6 @@
 {
   "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
-  "reviewed_at": "2026-09-09T18:35:20.588977+00:00",
+  "reviewed_at": "2026-09-09T20:04:43.342079+00:00",
   "reviews": {
     "01167772-943a-4c75-ab15-9f7b235777a8": {
       "declarations": [
@@ -87,6 +87,38 @@
       "source_status": "ACCEPTED",
       "source_theorem_id": "2afae5fd-c4e2-4544-b37b-e819211739f1",
       "source_url": "https://prove2.me/api/v1/submissions/2283c781-4086-4880-9c6f-6556c635be55/solution",
+      "status": "integrated"
+    },
+    "24400f2f-77a8-4a88-bd6a-c2dc9454b43d": {
+      "declarations": [
+        {
+          "name": "OpenGA.Varifold.mass_ofParametrization_le_energy",
+          "path": "OpenGALib/GeometricMeasureTheory/Varifold/AreaEnergy.lean"
+        }
+      ],
+      "scope": "Euclidean Radon varifolds and finite-area C1 parametrizations with supplied measurable tangent lifts. Exact exported types and definition bodies agree with OpenGA; complete source proof closure uses only standard logical axioms. Manifold and Sobolev surface constructions, CM min-max and quantitative variation transfer remain open.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "ef0a43fee3badea04e0f9cbfce24e551a860f222791dd06f5ddc0327b5dc6c58",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "947563ea-c13b-4ec6-b08d-7b11e70914be",
+      "source_url": "https://prove2.me/api/v1/submissions/24400f2f-77a8-4a88-bd6a-c2dc9454b43d/solution",
+      "status": "integrated"
+    },
+    "26ffe87c-abf2-41b7-874f-7f793cc78209": {
+      "declarations": [
+        {
+          "name": "OpenGA.Varifold.testIntegral_ofWeightedMap",
+          "path": "OpenGALib/GeometricMeasureTheory/Varifold/WeightedMap.lean"
+        }
+      ],
+      "scope": "Euclidean Radon varifolds and finite-area C1 parametrizations with supplied measurable tangent lifts. Exact exported types and definition bodies agree with OpenGA; complete source proof closure uses only standard logical axioms. Manifold and Sobolev surface constructions, CM min-max and quantitative variation transfer remain open.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "7413ea5233135e54bb14795f8c5cd09ca6190e96491921f008dbfcaef54b9d96",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "ede9d85f-3bc2-4f0d-a18e-6644aa9e8a64",
+      "source_url": "https://prove2.me/api/v1/submissions/26ffe87c-abf2-41b7-874f-7f793cc78209/solution",
       "status": "integrated"
     },
     "2e402417-5f76-4df8-a6d5-b9f1ff27d93b": {
@@ -325,6 +357,22 @@
       "source_url": "https://prove2.me/api/v1/submissions/9d895407-3c0b-47ee-b857-e6ae4f60617f/solution",
       "status": "integrated"
     },
+    "9e93d892-d2c2-4735-a11c-7964b71a61ab": {
+      "declarations": [
+        {
+          "name": "OpenGA.Varifold.testIntegral_ofParametrization",
+          "path": "OpenGALib/GeometricMeasureTheory/Varifold/Parametrization.lean"
+        }
+      ],
+      "scope": "Euclidean Radon varifolds and finite-area C1 parametrizations with supplied measurable tangent lifts. Exact exported types and definition bodies agree with OpenGA; complete source proof closure uses only standard logical axioms. Manifold and Sobolev surface constructions, CM min-max and quantitative variation transfer remain open.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "2d46d5c1b7a5f9c1f08e8062c7a16fd7056d91069ebc717ce3f6d46b86818a17",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "ccd2776d-93a4-4bd7-8e5f-f2fe733b8b3f",
+      "source_url": "https://prove2.me/api/v1/submissions/9e93d892-d2c2-4735-a11c-7964b71a61ab/solution",
+      "status": "integrated"
+    },
     "bbe6fec0-1a12-4eba-bb85-2c00ebf62342": {
       "declarations": [
         {
@@ -339,6 +387,22 @@
       "source_status": "ACCEPTED",
       "source_theorem_id": "192cef90-169f-4470-b074-8392596cb487",
       "source_url": "https://prove2.me/api/v1/submissions/bbe6fec0-1a12-4eba-bb85-2c00ebf62342/solution",
+      "status": "integrated"
+    },
+    "bff3c9b3-d65b-4442-b2c0-c044e8254055": {
+      "declarations": [
+        {
+          "name": "OpenGA.Varifold.ofParametrization_independent_of_lift",
+          "path": "OpenGALib/GeometricMeasureTheory/Varifold/Parametrization.lean"
+        }
+      ],
+      "scope": "Euclidean Radon varifolds and finite-area C1 parametrizations with supplied measurable tangent lifts. Exact exported types and definition bodies agree with OpenGA; complete source proof closure uses only standard logical axioms. Manifold and Sobolev surface constructions, CM min-max and quantitative variation transfer remain open.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "ced055b7ebbcd41c878733de8c2e0409e2750ba7496289d0a77c1c82384e39d1",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "501be76f-ec02-41c5-8998-42f15f54da21",
+      "source_url": "https://prove2.me/api/v1/submissions/bff3c9b3-d65b-4442-b2c0-c044e8254055/solution",
       "status": "integrated"
     },
     "d543d39b-4273-4b91-826f-1b9c8c6191ee": {
@@ -388,6 +452,22 @@
       "source_url": "https://prove2.me/api/v1/submissions/e226c921-de2b-4b97-bc82-2365ef39853d/solution",
       "status": "integrated"
     },
+    "ecffef77-6ae4-4288-95a2-b62ceb5e9571": {
+      "declarations": [
+        {
+          "name": "OpenGA.Varifold.ofWeightedMap_eq_of_plane_eq",
+          "path": "OpenGALib/GeometricMeasureTheory/Varifold/WeightedMap.lean"
+        }
+      ],
+      "scope": "Euclidean Radon varifolds and finite-area C1 parametrizations with supplied measurable tangent lifts. Exact exported types and definition bodies agree with OpenGA; complete source proof closure uses only standard logical axioms. Manifold and Sobolev surface constructions, CM min-max and quantitative variation transfer remain open.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "3a1b22e3e0a3a14374afbb95c9475bc6b55686dd440993c979226266d6238ad6",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "4a4cf695-0ca3-4738-86e8-eba60eae34a2",
+      "source_url": "https://prove2.me/api/v1/submissions/ecffef77-6ae4-4288-95a2-b62ceb5e9571/solution",
+      "status": "integrated"
+    },
     "f0552af4-769d-4fe4-8754-b9e01fd5718b": {
       "declarations": [
         {
@@ -402,6 +482,22 @@
       "source_status": "ACCEPTED",
       "source_theorem_id": "16d46789-a853-4a33-a4a3-4134fe549c82",
       "source_url": "https://prove2.me/api/v1/submissions/f0552af4-769d-4fe4-8754-b9e01fd5718b/solution",
+      "status": "integrated"
+    },
+    "f7b7217a-bf10-417c-8b1c-0abe47d70e42": {
+      "declarations": [
+        {
+          "name": "OpenGA.Varifold.tendsto_weightMeasure_integral",
+          "path": "OpenGALib/GeometricMeasureTheory/Varifold/Convergence.lean"
+        }
+      ],
+      "scope": "Euclidean Radon varifolds and finite-area C1 parametrizations with supplied measurable tangent lifts. Exact exported types and definition bodies agree with OpenGA; complete source proof closure uses only standard logical axioms. Manifold and Sobolev surface constructions, CM min-max and quantitative variation transfer remain open.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "b305b3b9cc2fdd30a5afaa3f8f9bb72a68c1f7c60c1b0570567f16975b776bf0",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "bb524212-c028-4aa8-b321-88db1e9c09ad",
+      "source_url": "https://prove2.me/api/v1/submissions/f7b7217a-bf10-417c-8b1c-0abe47d70e42/solution",
       "status": "integrated"
     },
     "fd6f90da-3fa3-48c4-95a0-f36e42b9fe72": {

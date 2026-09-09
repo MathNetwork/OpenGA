@@ -17,6 +17,17 @@
     "OpenGA.RadialSurgeryVolumeBudget.events_finite",
     "OpenGA.exists_event_free_partition",
     "OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess",
-    "PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere"
+    "PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere",
+    "OpenGA_UnorientedGrassmannian",
+    "OpenGA_EuclideanVarifold",
+    "OpenGA_VarifoldConvergence",
+    "OpenGA_WeightedMapVarifold",
+    "OpenGA_ParametrizedVarifold",
+    "OpenGA.Varifold.tendsto_weightMeasure_integral",
+    "OpenGA.Varifold.testIntegral_ofWeightedMap",
+    "OpenGA.Varifold.ofWeightedMap_eq_of_plane_eq",
+    "OpenGA.Varifold.testIntegral_ofParametrization",
+    "OpenGA.Varifold.ofParametrization_independent_of_lift",
+    "OpenGA.Varifold.mass_ofParametrization_le_energy"
   ]
 }

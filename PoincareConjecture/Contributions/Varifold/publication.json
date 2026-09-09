@@ -1,0 +1,1063 @@
+{
+  "batch": "euclidean_varifolds",
+  "definitions": [
+    {
+      "definitions": [],
+      "existing_theorems": [],
+      "id": "OpenGA_UnorientedGrassmannian",
+      "path": "Definitions/Def_OpenGA_UnorientedGrassmannian.lean",
+      "payload": {
+        "definition": "import Mathlib.Analysis.InnerProductSpace.Adjoint\nimport Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional\nimport Mathlib.LinearAlgebra.Trace\nimport Mathlib.Topology.MetricSpace.Isometry\nimport Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Idempotent\nimport Mathlib.MeasureTheory.Constructions.BorelSpace.Basic\n\n/-!\n# The Grassmannian of unoriented planes\n\n`OpenGA.Grassmannian E k` consists of exactly the `k`-dimensional real subspaces of `E`.\nThe metric is the operator norm of the difference of orthogonal projections. This is the\nprojection model of the Grassmannian; no orientation or choice of basis is included.\n\nReference: Leon Simon, *Introduction to Geometric Measure Theory*, 2018 lecture notes,\nChapter 8, Section 1, pp. 235-236. Simon uses the Euclidean matrix norm of projections;\nwe use the operator norm, another norm on the same finite-dimensional operator space.\nThe compactness proof below uses the closed, bounded set of self-adjoint idempotents\nof trace `k`. This is distinct from Mathlib's algebraic, quotient-rank Grassmannian.\n-/\n\nnoncomputable section\n\nopen Set Topology\n\nnamespace OpenGA\n\n/-- Unoriented `k`-planes in a finite-dimensional real inner product space. -/\ndef Grassmannian (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n    [FiniteDimensional ℝ E] (k : ℕ) :=\n  {S : Submodule ℝ E // Module.finrank ℝ S = k}\n\nnamespace Grassmannian\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] {k : ℕ}\n\n/-- The underlying plane. Its dimension is part of the definition. -/\ndef plane (P : Grassmannian E k) : Submodule ℝ E := P.val\n\n@[simp] theorem finrank_plane (P : Grassmannian E k) :\n    Module.finrank ℝ P.plane = k := P.property\n\n@[ext] theorem ext {P Q : Grassmannian E k} (h : P.plane = Q.plane) : P = Q :=\n  Subtype.ext h\n\n/-- Orthogonal projection onto the plane, with values in the ambient space. -/\ndef projection (P : Grassmannian E k) : E →L[ℝ] E := P.plane.starProjection\n\ntheorem projection_injective : Function.Injective (projection : Grassmannian E k → E →L[ℝ] E) := by\n  intro P Q h\n  apply ext\n  have hr := congrArg (fun A : E →L[ℝ] E => A.range) h\n  simpa [projection, Submodule.range_starProjection] using hr\n\ninstance : MetricSpace (Grassmannian E k) :=\n  MetricSpace.induced projection projection_injective inferInstance\n\ntheorem isometry_projection : Isometry (projection : Grassmannian E k → E →L[ℝ] E) :=\n  fun _ _ => rfl\n\ntheorem continuous_projection : Continuous (projection : Grassmannian E k → E →L[ℝ] E) :=\n  isometry_projection.continuous\n\n@[simp] theorem dist_eq (P Q : Grassmannian E k) :\n    dist P Q = ‖P.projection - Q.projection‖ :=\n  (isometry_projection.dist_eq P Q).symm.trans (dist_eq_norm _ _)\n\ninstance : SecondCountableTopology (Grassmannian E k) :=\n  isometry_projection.isEmbedding.secondCountableTopology\n\ninstance : MeasurableSpace (Grassmannian E k) := borel _\ninstance : BorelSpace (Grassmannian E k) := ⟨rfl⟩\n\ntheorem projection_mem (P : Grassmannian E k) (v : E) : P.projection v ∈ P.plane :=\n  P.plane.starProjection_apply_mem v\n\n@[simp] theorem projection_eq_self_iff (P : Grassmannian E k) (v : E) :\n    P.projection v = v ↔ v ∈ P.plane := P.plane.starProjection_eq_self_iff\n\ntheorem norm_projection_le (P : Grassmannian E k) : ‖P.projection‖ ≤ 1 :=\n  P.plane.starProjection_norm_le\n\ntheorem isStarProjection_projection (P : Grassmannian E k) : IsStarProjection P.projection :=\n  isStarProjection_starProjection\n\ntheorem trace_projection (P : Grassmannian E k) :\n    LinearMap.trace ℝ E P.projection.toLinearMap = k := by\n  have hid := ContinuousLinearMap.IsIdempotentElem.toLinearMap\n    P.plane.isIdempotentElem_starProjection\n  have h := (LinearMap.IsIdempotentElem.isProj_range _ hid).trace\n  change LinearMap.trace ℝ E P.projection.toLinearMap =\n    (Module.finrank ℝ P.plane.starProjection.range : ℝ) at h\n  rw [Submodule.range_starProjection, P.finrank_plane] at h\n  exact h\n\n/-- The image of the projection representation is described by closed algebraic conditions. -/\ntheorem range_projection :\n    Set.range (projection : Grassmannian E k → E →L[ℝ] E) =\n      {A | IsStarProjection A ∧ LinearMap.trace ℝ E A.toLinearMap = k} := by\n  ext A\n  constructor\n  · rintro ⟨P, rfl⟩\n    exact ⟨P.isStarProjection_projection, P.trace_projection⟩\n  · rintro ⟨hA, htr⟩\n    obtain ⟨_, heq⟩ := isStarProjection_iff_eq_starProjection_range.mp hA\n    have hdim : Module.finrank ℝ A.range = k := by\n      have hid := ContinuousLinearMap.IsIdempotentElem.toLinearMap hA.isIdempotentElem\n      have ht := (LinearMap.IsIdempotentElem.isProj_range _ hid).trace\n      exact_mod_cast ht.symm.trans htr\n    exact ⟨⟨A.range, hdim⟩, heq.symm⟩\n\ntheorem isClosed_range_projection :\n    IsClosed (Set.range (projection : Grassmannian E k → E →L[ℝ] E)) := by\n  rw [range_projection]\n  have htrace : Continuous (fun A : E →L[ℝ] E => LinearMap.trace ℝ E A.toLinearMap) :=\n    ((LinearMap.trace ℝ E).comp (ContinuousLinearMap.coeLM ℝ)).continuous_of_finiteDimensional\n  have hid : IsClosed {A : E →L[ℝ] E | A * A = A} :=\n    isClosed_eq (continuous_id.mul continuous_id) continuous_id\n  have hstar : IsClosed {A : E →L[ℝ] E | star A = A} :=\n    isClosed_eq continuous_star continuous_id\n  simpa only [isStarProjection_iff, IsIdempotentElem, IsSelfAdjoint, Set.ofPred_and] using\n    (hid.inter hstar).inter (isClosed_eq htrace (continuous_const (y := (k : ℝ))))\n\n/-- The Grassmannian is compact, including the empty case `k > dim E`. -/\ninstance : CompactSpace (Grassmannian E k) := by\n  have hbounded : Bornology.IsBounded\n      (Set.range (projection : Grassmannian E k → E →L[ℝ] E)) := by\n    apply (Metric.isBounded_closedBall (x := (0 : E →L[ℝ] E)) (r := 1)).subset\n    rintro A ⟨P, rfl⟩\n    simpa using P.norm_projection_le\n  have hc := Metric.isCompact_of_isClosed_isBounded isClosed_range_projection hbounded\n  exact ⟨isometry_projection.isEmbedding.isCompact_iff.mpr (by simpa using hc)⟩\n\nend Grassmannian\nend OpenGA\n",
+        "definition_name": "OpenGA_UnorientedGrassmannian",
+        "definition_title": "Grassmannian of unoriented planes",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For a finite-dimensional real inner-product space $E$, $G_k(E)$ consists of its exactly $k$-dimensional linear subspaces, without orientation. Its distance is the operator norm of the difference of the orthogonal projections. This compact metric space has its Borel measurable structure. If $k>\\dim E$, it is empty. The compactness and projection lemmas here support the measure constructions. Simon uses the Euclidean matrix norm; this formalization uses the operator norm on the same finite-dimensional operator space.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Grassmannian.lean#L1-L136; Leon Simon, Introduction to Geometric Measure Theory (2018), Chapter 8, Section 1, pp. 235-236, https://math.stanford.edu/~lms/ntu-gmt-text.pdf; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+        "tags": [
+          "geometric-measure-theory",
+          "varifold",
+          "poincare-foundations",
+          "openga-varifold"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-09T19:58:14.210266+00:00",
+        "job": {
+          "created_at": "2026-09-09T19:57:44.585895+00:00",
+          "definitions": "import Mathlib.Analysis.InnerProductSpace.Adjoint\nimport Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional\nimport Mathlib.LinearAlgebra.Trace\nimport Mathlib.Topology.MetricSpace.Isometry\nimport Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Idempotent\nimport Mathlib.MeasureTheory.Constructions.BorelSpace.Basic\n\n/-!\n# The Grassmannian of unoriented planes\n\n`OpenGA.Grassmannian E k` consists of exactly the `k`-dimensional real subspaces of `E`.\nThe metric is the operator norm of the difference of orthogonal projections. This is the\nprojection model of the Grassmannian; no orientation or choice of basis is included.\n\nReference: Leon Simon, *Introduction to Geometric Measure Theory*, 2018 lecture notes,\nChapter 8, Section 1, pp. 235-236. Simon uses the Euclidean matrix norm of projections;\nwe use the operator norm, another norm on the same finite-dimensional operator space.\nThe compactness proof below uses the closed, bounded set of self-adjoint idempotents\nof trace `k`. This is distinct from Mathlib's algebraic, quotient-rank Grassmannian.\n-/\n\nnoncomputable section\n\nopen Set Topology\n\nnamespace OpenGA\n\n/-- Unoriented `k`-planes in a finite-dimensional real inner product space. -/\ndef Grassmannian (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n    [FiniteDimensional ℝ E] (k : ℕ) :=\n  {S : Submodule ℝ E // Module.finrank ℝ S = k}\n\nnamespace Grassmannian\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] {k : ℕ}\n\n/-- The underlying plane. Its dimension is part of the definition. -/\ndef plane (P : Grassmannian E k) : Submodule ℝ E := P.val\n\n@[simp] theorem finrank_plane (P : Grassmannian E k) :\n    Module.finrank ℝ P.plane = k := P.property\n\n@[ext] theorem ext {P Q : Grassmannian E k} (h : P.plane = Q.plane) : P = Q :=\n  Subtype.ext h\n\n/-- Orthogonal projection onto the plane, with values in the ambient space. -/\ndef projection (P : Grassmannian E k) : E →L[ℝ] E := P.plane.starProjection\n\ntheorem projection_injective : Function.Injective (projection : Grassmannian E k → E →L[ℝ] E) := by\n  intro P Q h\n  apply ext\n  have hr := congrArg (fun A : E →L[ℝ] E => A.range) h\n  simpa [projection, Submodule.range_starProjection] using hr\n\ninstance : MetricSpace (Grassmannian E k) :=\n  MetricSpace.induced projection projection_injective inferInstance\n\ntheorem isometry_projection : Isometry (projection : Grassmannian E k → E →L[ℝ] E) :=\n  fun _ _ => rfl\n\ntheorem continuous_projection : Continuous (projection : Grassmannian E k → E →L[ℝ] E) :=\n  isometry_projection.continuous\n\n@[simp] theorem dist_eq (P Q : Grassmannian E k) :\n    dist P Q = ‖P.projection - Q.projection‖ :=\n  (isometry_projection.dist_eq P Q).symm.trans (dist_eq_norm _ _)\n\ninstance : SecondCountableTopology (Grassmannian E k) :=\n  isometry_projection.isEmbedding.secondCountableTopology\n\ninstance : MeasurableSpace (Grassmannian E k) := borel _\ninstance : BorelSpace (Grassmannian E k) := ⟨rfl⟩\n\ntheorem projection_mem (P : Grassmannian E k) (v : E) : P.projection v ∈ P.plane :=\n  P.plane.starProjection_apply_mem v\n\n@[simp] theorem projection_eq_self_iff (P : Grassmannian E k) (v : E) :\n    P.projection v = v ↔ v ∈ P.plane := P.plane.starProjection_eq_self_iff\n\ntheorem norm_projection_le (P : Grassmannian E k) : ‖P.projection‖ ≤ 1 :=\n  P.plane.starProjection_norm_le\n\ntheorem isStarProjection_projection (P : Grassmannian E k) : IsStarProjection P.projection :=\n  isStarProjection_starProjection\n\ntheorem trace_projection (P : Grassmannian E k) :\n    LinearMap.trace ℝ E P.projection.toLinearMap = k := by\n  have hid := ContinuousLinearMap.IsIdempotentElem.toLinearMap\n    P.plane.isIdempotentElem_starProjection\n  have h := (LinearMap.IsIdempotentElem.isProj_range _ hid).trace\n  change LinearMap.trace ℝ E P.projection.toLinearMap =\n    (Module.finrank ℝ P.plane.starProjection.range : ℝ) at h\n  rw [Submodule.range_starProjection, P.finrank_plane] at h\n  exact h\n\n/-- The image of the projection representation is described by closed algebraic conditions. -/\ntheorem range_projection :\n    Set.range (projection : Grassmannian E k → E →L[ℝ] E) =\n      {A | IsStarProjection A ∧ LinearMap.trace ℝ E A.toLinearMap = k} := by\n  ext A\n  constructor\n  · rintro ⟨P, rfl⟩\n    exact ⟨P.isStarProjection_projection, P.trace_projection⟩\n  · rintro ⟨hA, htr⟩\n    obtain ⟨_, heq⟩ := isStarProjection_iff_eq_starProjection_range.mp hA\n    have hdim : Module.finrank ℝ A.range = k := by\n      have hid := ContinuousLinearMap.IsIdempotentElem.toLinearMap hA.isIdempotentElem\n      have ht := (LinearMap.IsIdempotentElem.isProj_range _ hid).trace\n      exact_mod_cast ht.symm.trans htr\n    exact ⟨⟨A.range, hdim⟩, heq.symm⟩\n\ntheorem isClosed_range_projection :\n    IsClosed (Set.range (projection : Grassmannian E k → E →L[ℝ] E)) := by\n  rw [range_projection]\n  have htrace : Continuous (fun A : E →L[ℝ] E => LinearMap.trace ℝ E A.toLinearMap) :=\n    ((LinearMap.trace ℝ E).comp (ContinuousLinearMap.coeLM ℝ)).continuous_of_finiteDimensional\n  have hid : IsClosed {A : E →L[ℝ] E | A * A = A} :=\n    isClosed_eq (continuous_id.mul continuous_id) continuous_id\n  have hstar : IsClosed {A : E →L[ℝ] E | star A = A} :=\n    isClosed_eq continuous_star continuous_id\n  simpa only [isStarProjection_iff, IsIdempotentElem, IsSelfAdjoint, Set.ofPred_and] using\n    (hid.inter hstar).inter (isClosed_eq htrace (continuous_const (y := (k : ℝ))))\n\n/-- The Grassmannian is compact, including the empty case `k > dim E`. -/\ninstance : CompactSpace (Grassmannian E k) := by\n  have hbounded : Bornology.IsBounded\n      (Set.range (projection : Grassmannian E k → E →L[ℝ] E)) := by\n    apply (Metric.isBounded_closedBall (x := (0 : E →L[ℝ] E)) (r := 1)).subset\n    rintro A ⟨P, rfl⟩\n    simpa using P.norm_projection_le\n  have hc := Metric.isCompact_of_isClosed_isBounded isClosed_range_projection hbounded\n  exact ⟨isometry_projection.isEmbedding.isCompact_iff.mpr (by simpa using hc)⟩\n\nend Grassmannian\nend OpenGA\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "bfb8f08a-ffab-44e1-b074-c9bacac1bb65",
+          "kind": "definition",
+          "natural_language_statement": "For a finite-dimensional real inner-product space $E$, $G_k(E)$ consists of its exactly $k$-dimensional linear subspaces, without orientation. Its distance is the operator norm of the difference of the orthogonal projections. This compact metric space has its Borel measurable structure. If $k>\\dim E$, it is empty. The compactness and projection lemmas here support the measure constructions. Simon uses the Euclidean matrix norm; this formalization uses the operator norm on the same finite-dimensional operator space.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Grassmannian.lean#L1-L136; Leon Simon, Introduction to Geometric Measure Theory (2018), Chapter 8, Section 1, pp. 235-236, https://math.stanford.edu/~lms/ntu-gmt-text.pdf; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-measure-theory",
+            "varifold",
+            "poincare-foundations",
+            "openga-varifold"
+          ],
+          "theorem_id": "58b2081d-b550-4dfd-8504-7f8003d3c681",
+          "theorem_name": "OpenGA_UnorientedGrassmannian",
+          "theorem_title": "Grassmannian of unoriented planes",
+          "updated_at": "2026-09-09T19:57:56.738499+00:00",
+          "visibility": "public"
+        },
+        "job_id": "bfb8f08a-ffab-44e1-b074-c9bacac1bb65",
+        "response": {
+          "definition_name": "OpenGA_UnorientedGrassmannian",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "bfb8f08a-ffab-44e1-b074-c9bacac1bb65",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/bfb8f08a-ffab-44e1-b074-c9bacac1bb65 until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-09T19:57:44.219297+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "58b2081d-b550-4dfd-8504-7f8003d3c681",
+        "verified_at": "2026-09-09T20:02:22.255089+00:00"
+      },
+      "sha256": "1b5f6cbde689059852db3d8b0cd7c2890ce8a558b06dfcddd85cb97474d0ba36"
+    },
+    {
+      "definitions": [
+        "OpenGA_UnorientedGrassmannian"
+      ],
+      "existing_theorems": [],
+      "id": "OpenGA_EuclideanVarifold",
+      "path": "Definitions/Def_OpenGA_EuclideanVarifold.lean",
+      "payload": {
+        "definition": "import Definitions.Def_OpenGA_UnorientedGrassmannian\nimport Mathlib.MeasureTheory.Measure.Regular\nimport Mathlib.MeasureTheory.Measure.Support\nimport Mathlib.MeasureTheory.Integral.CompactlySupported\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\n\n/-!\n# Euclidean varifolds and their weight measures\n\nA `k`-varifold on `E` is a nonnegative Radon measure on\n`E × Grassmannian E k`. The `Measure.Regular` field includes finiteness on\ncompact sets and regularity; total mass need not be finite. On this locally\ncompact metric space this gives the Radon measures used by Simon.\n\nReference: Leon Simon, *Introduction to Geometric Measure Theory*, 2018,\nChapter 8, Section 1, pp. 235-236. This module treats the Euclidean ambient\nspace. It does not identify the product with the Grassmann bundle of an\narbitrary manifold, and does not impose rectifiability or stationarity.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal Topology CompactlySupported\n\nnamespace OpenGA\n\n/-- A Radon measure on positions and unoriented `k`-planes. -/\nstructure Varifold (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n    [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] (k : ℕ) where\n  measure : Measure (E × Grassmannian E k)\n  regular : measure.Regular\n\nattribute [instance] Varifold.regular\n\nnamespace Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] {k : ℕ}\n\n@[ext] theorem ext {V W : Varifold E k} (h : V.measure = W.measure) : V = W := by\n  cases V\n  cases W\n  cases h\n  rfl\n\n/-- Spatial projection of a varifold, conventionally denoted `‖V‖`. -/\ndef weightMeasure (V : Varifold E k) : Measure E := V.measure.map Prod.fst\n\ntheorem weightMeasure_apply (V : Varifold E k) {A : Set E} (hA : MeasurableSet A) :\n    V.weightMeasure A = V.measure (A ×ˢ Set.univ) := by\n  rw [weightMeasure, Measure.map_apply measurable_fst hA]\n  congr 1\n  ext z\n  simp\n\ninstance weightMeasure_finiteOnCompacts (V : Varifold E k) :\n    IsFiniteMeasureOnCompacts V.weightMeasure := by\n  constructor\n  intro K hK\n  rw [weightMeasure_apply V hK.measurableSet]\n  exact (hK.prod isCompact_univ).measure_lt_top\n\n/-- Compactness of the Grassmannian ensures that spatial projection is again Radon. -/\ninstance weightMeasure_regular (V : Varifold E k) : V.weightMeasure.Regular :=\n  inferInstance\n\n/-- Total mass, allowed to be infinite for a general varifold. -/\ndef mass (V : Varifold E k) : ℝ≥0∞ := V.measure Set.univ\n\ntheorem mass_eq_weightMeasure_univ (V : Varifold E k) :\n    V.mass = V.weightMeasure Set.univ := by\n  simp [mass, weightMeasure_apply V MeasurableSet.univ]\n\ntheorem weightMeasure_compact_lt_top (V : Varifold E k) {K : Set E} (hK : IsCompact K) :\n    V.weightMeasure K < ∞ := hK.measure_lt_top\n\n/-- The support in the ambient space is the support of the weight measure. -/\ndef support (V : Varifold E k) : Set E := V.weightMeasure.support\n\ntheorem isClosed_support (V : Varifold E k) : IsClosed V.support :=\n  Measure.isClosed_support\n\ntheorem mem_support_iff (V : Varifold E k) (x : E) :\n    x ∈ V.support ↔ ∀ U ∈ nhds x, 0 < V.weightMeasure U :=\n  V.weightMeasure.mem_support_iff_forall x\n\ninstance : Zero (Varifold E k) := ⟨⟨0, inferInstance⟩⟩\ninstance : Add (Varifold E k) := ⟨fun V W => by\n  haveI : IsFiniteMeasureOnCompacts (V.measure + W.measure) := ⟨fun K hK => by\n    rw [Measure.add_apply]\n    exact ENNReal.add_lt_top.mpr ⟨hK.measure_lt_top, hK.measure_lt_top⟩⟩\n  exact ⟨V.measure + W.measure, inferInstance⟩⟩\ninstance : SMul ℝ≥0 (Varifold E k) := ⟨fun c V => ⟨c • V.measure, inferInstance⟩⟩\n\n@[simp] theorem measure_zero : (0 : Varifold E k).measure = 0 := rfl\n@[simp] theorem measure_add (V W : Varifold E k) : (V + W).measure = V.measure + W.measure := rfl\n@[simp] theorem measure_smul (c : ℝ≥0) (V : Varifold E k) :\n    (c • V).measure = c • V.measure := rfl\n\n@[simp] theorem weightMeasure_zero : (0 : Varifold E k).weightMeasure = 0 := by\n  simp [weightMeasure]\n\n@[simp] theorem weightMeasure_add (V W : Varifold E k) :\n    (V + W).weightMeasure = V.weightMeasure + W.weightMeasure := by\n  exact Measure.map_add _ _ measurable_fst\n\n@[simp] theorem mass_zero : (0 : Varifold E k).mass = 0 := by simp [mass]\n@[simp] theorem mass_add (V W : Varifold E k) : (V + W).mass = V.mass + W.mass :=\n  Measure.add_apply _ _ _\n\n/-- Pairing with a continuous, compactly supported test function on positions and planes. -/\ndef testIntegral (V : Varifold E k) (φ : C_c(E × Grassmannian E k, ℝ)) : ℝ :=\n  ∫ z, φ z ∂V.measure\n\ntheorem integrable_testFunction (V : Varifold E k) (φ : C_c(E × Grassmannian E k, ℝ)) :\n    Integrable φ V.measure := φ.integrable\n\n@[simp] theorem testIntegral_add (V W : Varifold E k)\n    (φ : C_c(E × Grassmannian E k, ℝ)) :\n    (V + W).testIntegral φ = V.testIntegral φ + W.testIntegral φ :=\n  integral_add_measure φ.integrable φ.integrable\n\n/-- Integrating a spatial observable against the weight equals integrating its lift. -/\ntheorem integral_weightMeasure (V : Varifold E k) {f : E → ℝ}\n    (hf : AEStronglyMeasurable f V.weightMeasure) :\n    ∫ x, f x ∂V.weightMeasure = ∫ z, f z.1 ∂V.measure :=\n  integral_map measurable_fst.aemeasurable hf\n\nend Varifold\nend OpenGA\n",
+        "definition_name": "OpenGA_EuclideanVarifold",
+        "definition_title": "Euclidean varifolds and their weight measures",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "A $k$-varifold on a finite-dimensional real inner-product space $E$ is a nonnegative Radon measure on $E\\times G_k(E)$. Its weight is the spatial pushforward and its mass is the total measure, which may be infinite. Compactness of $G_k(E)$ makes the weight measure Radon. This interface includes compactly supported test integrals, support, addition and nonnegative scaling. It imposes neither rectifiability nor stationarity. A general manifold requires its tangent Grassmann bundle, not this product.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold.lean#L1-L131; Leon Simon, Introduction to Geometric Measure Theory (2018), Chapter 8, Section 1, pp. 235-236, https://math.stanford.edu/~lms/ntu-gmt-text.pdf; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+        "tags": [
+          "geometric-measure-theory",
+          "varifold",
+          "poincare-foundations",
+          "openga-varifold"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-09T19:58:37.829095+00:00",
+        "job": {
+          "created_at": "2026-09-09T19:58:14.88205+00:00",
+          "definitions": "import Definitions.Def_OpenGA_UnorientedGrassmannian\nimport Mathlib.MeasureTheory.Measure.Regular\nimport Mathlib.MeasureTheory.Measure.Support\nimport Mathlib.MeasureTheory.Integral.CompactlySupported\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\n\n/-!\n# Euclidean varifolds and their weight measures\n\nA `k`-varifold on `E` is a nonnegative Radon measure on\n`E × Grassmannian E k`. The `Measure.Regular` field includes finiteness on\ncompact sets and regularity; total mass need not be finite. On this locally\ncompact metric space this gives the Radon measures used by Simon.\n\nReference: Leon Simon, *Introduction to Geometric Measure Theory*, 2018,\nChapter 8, Section 1, pp. 235-236. This module treats the Euclidean ambient\nspace. It does not identify the product with the Grassmann bundle of an\narbitrary manifold, and does not impose rectifiability or stationarity.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal Topology CompactlySupported\n\nnamespace OpenGA\n\n/-- A Radon measure on positions and unoriented `k`-planes. -/\nstructure Varifold (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n    [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] (k : ℕ) where\n  measure : Measure (E × Grassmannian E k)\n  regular : measure.Regular\n\nattribute [instance] Varifold.regular\n\nnamespace Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] {k : ℕ}\n\n@[ext] theorem ext {V W : Varifold E k} (h : V.measure = W.measure) : V = W := by\n  cases V\n  cases W\n  cases h\n  rfl\n\n/-- Spatial projection of a varifold, conventionally denoted `‖V‖`. -/\ndef weightMeasure (V : Varifold E k) : Measure E := V.measure.map Prod.fst\n\ntheorem weightMeasure_apply (V : Varifold E k) {A : Set E} (hA : MeasurableSet A) :\n    V.weightMeasure A = V.measure (A ×ˢ Set.univ) := by\n  rw [weightMeasure, Measure.map_apply measurable_fst hA]\n  congr 1\n  ext z\n  simp\n\ninstance weightMeasure_finiteOnCompacts (V : Varifold E k) :\n    IsFiniteMeasureOnCompacts V.weightMeasure := by\n  constructor\n  intro K hK\n  rw [weightMeasure_apply V hK.measurableSet]\n  exact (hK.prod isCompact_univ).measure_lt_top\n\n/-- Compactness of the Grassmannian ensures that spatial projection is again Radon. -/\ninstance weightMeasure_regular (V : Varifold E k) : V.weightMeasure.Regular :=\n  inferInstance\n\n/-- Total mass, allowed to be infinite for a general varifold. -/\ndef mass (V : Varifold E k) : ℝ≥0∞ := V.measure Set.univ\n\ntheorem mass_eq_weightMeasure_univ (V : Varifold E k) :\n    V.mass = V.weightMeasure Set.univ := by\n  simp [mass, weightMeasure_apply V MeasurableSet.univ]\n\ntheorem weightMeasure_compact_lt_top (V : Varifold E k) {K : Set E} (hK : IsCompact K) :\n    V.weightMeasure K < ∞ := hK.measure_lt_top\n\n/-- The support in the ambient space is the support of the weight measure. -/\ndef support (V : Varifold E k) : Set E := V.weightMeasure.support\n\ntheorem isClosed_support (V : Varifold E k) : IsClosed V.support :=\n  Measure.isClosed_support\n\ntheorem mem_support_iff (V : Varifold E k) (x : E) :\n    x ∈ V.support ↔ ∀ U ∈ nhds x, 0 < V.weightMeasure U :=\n  V.weightMeasure.mem_support_iff_forall x\n\ninstance : Zero (Varifold E k) := ⟨⟨0, inferInstance⟩⟩\ninstance : Add (Varifold E k) := ⟨fun V W => by\n  haveI : IsFiniteMeasureOnCompacts (V.measure + W.measure) := ⟨fun K hK => by\n    rw [Measure.add_apply]\n    exact ENNReal.add_lt_top.mpr ⟨hK.measure_lt_top, hK.measure_lt_top⟩⟩\n  exact ⟨V.measure + W.measure, inferInstance⟩⟩\ninstance : SMul ℝ≥0 (Varifold E k) := ⟨fun c V => ⟨c • V.measure, inferInstance⟩⟩\n\n@[simp] theorem measure_zero : (0 : Varifold E k).measure = 0 := rfl\n@[simp] theorem measure_add (V W : Varifold E k) : (V + W).measure = V.measure + W.measure := rfl\n@[simp] theorem measure_smul (c : ℝ≥0) (V : Varifold E k) :\n    (c • V).measure = c • V.measure := rfl\n\n@[simp] theorem weightMeasure_zero : (0 : Varifold E k).weightMeasure = 0 := by\n  simp [weightMeasure]\n\n@[simp] theorem weightMeasure_add (V W : Varifold E k) :\n    (V + W).weightMeasure = V.weightMeasure + W.weightMeasure := by\n  exact Measure.map_add _ _ measurable_fst\n\n@[simp] theorem mass_zero : (0 : Varifold E k).mass = 0 := by simp [mass]\n@[simp] theorem mass_add (V W : Varifold E k) : (V + W).mass = V.mass + W.mass :=\n  Measure.add_apply _ _ _\n\n/-- Pairing with a continuous, compactly supported test function on positions and planes. -/\ndef testIntegral (V : Varifold E k) (φ : C_c(E × Grassmannian E k, ℝ)) : ℝ :=\n  ∫ z, φ z ∂V.measure\n\ntheorem integrable_testFunction (V : Varifold E k) (φ : C_c(E × Grassmannian E k, ℝ)) :\n    Integrable φ V.measure := φ.integrable\n\n@[simp] theorem testIntegral_add (V W : Varifold E k)\n    (φ : C_c(E × Grassmannian E k, ℝ)) :\n    (V + W).testIntegral φ = V.testIntegral φ + W.testIntegral φ :=\n  integral_add_measure φ.integrable φ.integrable\n\n/-- Integrating a spatial observable against the weight equals integrating its lift. -/\ntheorem integral_weightMeasure (V : Varifold E k) {f : E → ℝ}\n    (hf : AEStronglyMeasurable f V.weightMeasure) :\n    ∫ x, f x ∂V.weightMeasure = ∫ z, f z.1 ∂V.measure :=\n  integral_map measurable_fst.aemeasurable hf\n\nend Varifold\nend OpenGA\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "1ecaf672-d968-4f1c-8242-49acc5090ccc",
+          "kind": "definition",
+          "natural_language_statement": "A $k$-varifold on a finite-dimensional real inner-product space $E$ is a nonnegative Radon measure on $E\\times G_k(E)$. Its weight is the spatial pushforward and its mass is the total measure, which may be infinite. Compactness of $G_k(E)$ makes the weight measure Radon. This interface includes compactly supported test integrals, support, addition and nonnegative scaling. It imposes neither rectifiability nor stationarity. A general manifold requires its tangent Grassmann bundle, not this product.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold.lean#L1-L131; Leon Simon, Introduction to Geometric Measure Theory (2018), Chapter 8, Section 1, pp. 235-236, https://math.stanford.edu/~lms/ntu-gmt-text.pdf; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-measure-theory",
+            "varifold",
+            "poincare-foundations",
+            "openga-varifold"
+          ],
+          "theorem_id": "0ce91510-bed6-4687-9d9a-59db49ac32c1",
+          "theorem_name": "OpenGA_EuclideanVarifold",
+          "theorem_title": "Euclidean varifolds and their weight measures",
+          "updated_at": "2026-09-09T19:58:35.440052+00:00",
+          "visibility": "public"
+        },
+        "job_id": "1ecaf672-d968-4f1c-8242-49acc5090ccc",
+        "response": {
+          "definition_name": "OpenGA_EuclideanVarifold",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "1ecaf672-d968-4f1c-8242-49acc5090ccc",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/1ecaf672-d968-4f1c-8242-49acc5090ccc until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-09T19:58:14.578569+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "0ce91510-bed6-4687-9d9a-59db49ac32c1",
+        "verified_at": "2026-09-09T20:02:22.542192+00:00"
+      },
+      "sha256": "2eaafaee5b598f4f5c1f72894df01e63bc1601ab375257e32ae5929a95f92030"
+    },
+    {
+      "definitions": [
+        "OpenGA_EuclideanVarifold"
+      ],
+      "existing_theorems": [],
+      "id": "OpenGA_VarifoldConvergence",
+      "path": "Definitions/Def_OpenGA_VarifoldConvergence.lean",
+      "payload": {
+        "definition": "import Definitions.Def_OpenGA_EuclideanVarifold\nimport Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real\nimport Mathlib.Topology.Maps.Proper.Basic\n\n/-!\n# Varifold convergence\n\nThe topology is induced by all continuous compactly supported test functions on\n`E × Grassmannian E k`, not by the total mass or the weight measure alone.\nIt is Hausdorff, and convergence is exactly convergence of these integrals.\nSpatial weight measures consequently converge against compactly supported tests on `E`.\n\nReferences: Simon, *Introduction to Geometric Measure Theory*, 2018, Chapter 8;\nColding-Minicozzi, *Width and finite extinction time of Ricci flow*, arXiv:0707.0108,\nSection 1.3. The latter works on a compact manifold's Grassmann bundle. No quantitative\nbound for a particular metrization is asserted by this qualitative convergence interface.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set Filter Topology\nopen scoped CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] {k : ℕ}\n\n/-- Continuous compactly supported tests on both position and plane determine a varifold. -/\ntheorem ext_of_testIntegral_eq {V W : Varifold E k}\n    (h : ∀ φ : C_c(E × Grassmannian E k, ℝ), V.testIntegral φ = W.testIntegral φ) :\n    V = W :=\n  ext (Measure.ext_of_integral_eq_on_compactlySupported h)\n\ninstance : TopologicalSpace (Varifold E k) :=\n  TopologicalSpace.induced\n    (testIntegral : Varifold E k → C_c(E × Grassmannian E k, ℝ) → ℝ) inferInstance\n\ntheorem isEmbedding_testIntegral :\n    IsEmbedding (testIntegral : Varifold E k → C_c(E × Grassmannian E k, ℝ) → ℝ) :=\n  ⟨⟨rfl⟩, fun _ _ h => ext_of_testIntegral_eq (congrFun h)⟩\n\ninstance : T2Space (Varifold E k) := isEmbedding_testIntegral.t2Space\n\n/-- Varifold convergence is weak-* convergence as Radon measures on positions and planes. -/\ntheorem tendsto_iff_testIntegral {ι : Type*} {l : Filter ι}\n    {V : ι → Varifold E k} {W : Varifold E k} :\n    Tendsto V l (𝓝 W) ↔ ∀ φ : C_c(E × Grassmannian E k, ℝ),\n      Tendsto (fun i => (V i).testIntegral φ) l (𝓝 (W.testIntegral φ)) := by\n  rw [isEmbedding_testIntegral.tendsto_nhds_iff, tendsto_pi_nhds]\n  rfl\n\ntheorem continuous_testIntegral (φ : C_c(E × Grassmannian E k, ℝ)) :\n    Continuous (fun V : Varifold E k => V.testIntegral φ) :=\n  (continuous_apply φ).comp isEmbedding_testIntegral.continuous\n\n/-- Lift a spatial test function through the proper projection with compact Grassmannian fiber. -/\ndef liftSpatialTest (φ : C_c(E, ℝ)) : C_c(E × Grassmannian E k, ℝ) :=\n  φ.comp\n    { toFun := Prod.fst\n      continuous_toFun := continuous_fst\n      cocompact_tendsto' :=\n        CocompactMap.tendsto_of_forall_preimage (fun _ hK =>\n          isProperMap_fst_of_compactSpace.isCompact_preimage hK) }\n\nomit [MeasurableSpace E] [BorelSpace E] in\n@[simp] theorem liftSpatialTest_apply (φ : C_c(E, ℝ)) (z : E × Grassmannian E k) :\n    liftSpatialTest φ z = φ z.1 := rfl\n\ntheorem testIntegral_liftSpatialTest (V : Varifold E k) (φ : C_c(E, ℝ)) :\n    V.testIntegral (liftSpatialTest φ) = ∫ x, φ x ∂V.weightMeasure :=\n  (V.integral_weightMeasure φ.continuous.aestronglyMeasurable).symm\n\n\n\ntheorem tendsto_add {ι : Type*} {l : Filter ι}\n    {V W : ι → Varifold E k} {V₀ W₀ : Varifold E k}\n    (hV : Tendsto V l (𝓝 V₀)) (hW : Tendsto W l (𝓝 W₀)) :\n    Tendsto (fun i => V i + W i) l (𝓝 (V₀ + W₀)) := by\n  apply tendsto_iff_testIntegral.mpr\n  intro φ\n  simpa only [testIntegral_add] using\n    ((tendsto_iff_testIntegral.mp hV) φ).add ((tendsto_iff_testIntegral.mp hW) φ)\n\nend OpenGA.Varifold\n",
+        "definition_name": "OpenGA_VarifoldConvergence",
+        "definition_title": "Weak convergence of varifolds",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Equip Euclidean varifolds with the topology of convergence of integrals against every continuous compactly supported function on $E\\times G_k(E)$. Such tests determine a Radon measure, so this topology is Hausdorff. Spatial tests lift through the proper projection with compact Grassmannian fiber. This is qualitative weak convergence; no estimate in a particular metric is asserted.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/Convergence.lean#L1-L92; Leon Simon, Introduction to Geometric Measure Theory (2018), Chapter 8, Section 1, pp. 235-236, https://math.stanford.edu/~lms/ntu-gmt-text.pdf; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+        "tags": [
+          "geometric-measure-theory",
+          "varifold",
+          "poincare-foundations",
+          "openga-varifold"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-09T19:59:14.884728+00:00",
+        "job": {
+          "created_at": "2026-09-09T19:58:38.650094+00:00",
+          "definitions": "import Definitions.Def_OpenGA_EuclideanVarifold\nimport Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real\nimport Mathlib.Topology.Maps.Proper.Basic\n\n/-!\n# Varifold convergence\n\nThe topology is induced by all continuous compactly supported test functions on\n`E × Grassmannian E k`, not by the total mass or the weight measure alone.\nIt is Hausdorff, and convergence is exactly convergence of these integrals.\nSpatial weight measures consequently converge against compactly supported tests on `E`.\n\nReferences: Simon, *Introduction to Geometric Measure Theory*, 2018, Chapter 8;\nColding-Minicozzi, *Width and finite extinction time of Ricci flow*, arXiv:0707.0108,\nSection 1.3. The latter works on a compact manifold's Grassmann bundle. No quantitative\nbound for a particular metrization is asserted by this qualitative convergence interface.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set Filter Topology\nopen scoped CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] {k : ℕ}\n\n/-- Continuous compactly supported tests on both position and plane determine a varifold. -/\ntheorem ext_of_testIntegral_eq {V W : Varifold E k}\n    (h : ∀ φ : C_c(E × Grassmannian E k, ℝ), V.testIntegral φ = W.testIntegral φ) :\n    V = W :=\n  ext (Measure.ext_of_integral_eq_on_compactlySupported h)\n\ninstance : TopologicalSpace (Varifold E k) :=\n  TopologicalSpace.induced\n    (testIntegral : Varifold E k → C_c(E × Grassmannian E k, ℝ) → ℝ) inferInstance\n\ntheorem isEmbedding_testIntegral :\n    IsEmbedding (testIntegral : Varifold E k → C_c(E × Grassmannian E k, ℝ) → ℝ) :=\n  ⟨⟨rfl⟩, fun _ _ h => ext_of_testIntegral_eq (congrFun h)⟩\n\ninstance : T2Space (Varifold E k) := isEmbedding_testIntegral.t2Space\n\n/-- Varifold convergence is weak-* convergence as Radon measures on positions and planes. -/\ntheorem tendsto_iff_testIntegral {ι : Type*} {l : Filter ι}\n    {V : ι → Varifold E k} {W : Varifold E k} :\n    Tendsto V l (𝓝 W) ↔ ∀ φ : C_c(E × Grassmannian E k, ℝ),\n      Tendsto (fun i => (V i).testIntegral φ) l (𝓝 (W.testIntegral φ)) := by\n  rw [isEmbedding_testIntegral.tendsto_nhds_iff, tendsto_pi_nhds]\n  rfl\n\ntheorem continuous_testIntegral (φ : C_c(E × Grassmannian E k, ℝ)) :\n    Continuous (fun V : Varifold E k => V.testIntegral φ) :=\n  (continuous_apply φ).comp isEmbedding_testIntegral.continuous\n\n/-- Lift a spatial test function through the proper projection with compact Grassmannian fiber. -/\ndef liftSpatialTest (φ : C_c(E, ℝ)) : C_c(E × Grassmannian E k, ℝ) :=\n  φ.comp\n    { toFun := Prod.fst\n      continuous_toFun := continuous_fst\n      cocompact_tendsto' :=\n        CocompactMap.tendsto_of_forall_preimage (fun _ hK =>\n          isProperMap_fst_of_compactSpace.isCompact_preimage hK) }\n\nomit [MeasurableSpace E] [BorelSpace E] in\n@[simp] theorem liftSpatialTest_apply (φ : C_c(E, ℝ)) (z : E × Grassmannian E k) :\n    liftSpatialTest φ z = φ z.1 := rfl\n\ntheorem testIntegral_liftSpatialTest (V : Varifold E k) (φ : C_c(E, ℝ)) :\n    V.testIntegral (liftSpatialTest φ) = ∫ x, φ x ∂V.weightMeasure :=\n  (V.integral_weightMeasure φ.continuous.aestronglyMeasurable).symm\n\n\n\ntheorem tendsto_add {ι : Type*} {l : Filter ι}\n    {V W : ι → Varifold E k} {V₀ W₀ : Varifold E k}\n    (hV : Tendsto V l (𝓝 V₀)) (hW : Tendsto W l (𝓝 W₀)) :\n    Tendsto (fun i => V i + W i) l (𝓝 (V₀ + W₀)) := by\n  apply tendsto_iff_testIntegral.mpr\n  intro φ\n  simpa only [testIntegral_add] using\n    ((tendsto_iff_testIntegral.mp hV) φ).add ((tendsto_iff_testIntegral.mp hW) φ)\n\nend OpenGA.Varifold\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "5cc4537e-6d01-4645-b171-fd7c782a2340",
+          "kind": "definition",
+          "natural_language_statement": "Equip Euclidean varifolds with the topology of convergence of integrals against every continuous compactly supported function on $E\\times G_k(E)$. Such tests determine a Radon measure, so this topology is Hausdorff. Spatial tests lift through the proper projection with compact Grassmannian fiber. This is qualitative weak convergence; no estimate in a particular metric is asserted.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/Convergence.lean#L1-L92; Leon Simon, Introduction to Geometric Measure Theory (2018), Chapter 8, Section 1, pp. 235-236, https://math.stanford.edu/~lms/ntu-gmt-text.pdf; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-measure-theory",
+            "varifold",
+            "poincare-foundations",
+            "openga-varifold"
+          ],
+          "theorem_id": "bfa7b976-aa93-4a5f-bd79-b99b58741eeb",
+          "theorem_name": "OpenGA_VarifoldConvergence",
+          "theorem_title": "Weak convergence of varifolds",
+          "updated_at": "2026-09-09T19:59:04.740684+00:00",
+          "visibility": "public"
+        },
+        "job_id": "5cc4537e-6d01-4645-b171-fd7c782a2340",
+        "response": {
+          "definition_name": "OpenGA_VarifoldConvergence",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "5cc4537e-6d01-4645-b171-fd7c782a2340",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/5cc4537e-6d01-4645-b171-fd7c782a2340 until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-09T19:58:38.303888+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "bfa7b976-aa93-4a5f-bd79-b99b58741eeb",
+        "verified_at": "2026-09-09T20:02:22.767259+00:00"
+      },
+      "sha256": "1e2d1177855ee77501bc7275454b088dc6841bbac175b2c2f633f908b8af9ff2"
+    },
+    {
+      "definitions": [
+        "OpenGA_EuclideanVarifold"
+      ],
+      "existing_theorems": [],
+      "id": "OpenGA_WeightedMapVarifold",
+      "path": "Definitions/Def_OpenGA_WeightedMapVarifold.lean",
+      "payload": {
+        "definition": "import Definitions.Def_OpenGA_EuclideanVarifold\nimport Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap\n\n/-!\n# Varifolds induced by weighted measurable maps\n\nPush a finite weighted measure through `x ↦ (f x, P x)`, retaining both the\nposition and the plane. `J` is a nonnegative density; when it is the Jacobian\nand `P` is the differential's image, this is the parametrized-surface construction.\nThe latter identification is made separately in `Varifold.Parametrization`.\n\nThe choice of plane where `J = 0` does not affect the varifold. This is the\nextension-independence needed at degenerate differentials in CM Section 1.3.\nReference: Colding-Minicozzi, arXiv:0707.0108, Section 1.3, p. 5.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {X E : Type*} [MeasurableSpace X]\n  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n  [MeasurableSpace E] [BorelSpace E] {k : ℕ}\n\n/-- A finite weighted measure lifted to positions and planes. -/\ndef ofWeightedMap (μ : Measure X) (f : X → E) (P : X → Grassmannian E k)\n    (J : X → ℝ≥0) (hf : Measurable f) (hP : Measurable P)\n    (hfinite : (∫⁻ x, (J x : ℝ≥0∞) ∂μ) < ∞) : Varifold E k := by\n  let ν := μ.withDensity (fun x => (J x : ℝ≥0∞))\n  haveI : IsFiniteMeasure (ν.map (fun x => (f x, P x))) := ⟨by\n    rw [Measure.map_apply (hf.prodMk hP) MeasurableSet.univ]\n    simpa [ν, withDensity_apply] using hfinite⟩\n  exact ⟨ν.map (fun x => (f x, P x)), inferInstance⟩\n\n@[simp] theorem measure_ofWeightedMap (μ : Measure X) (f : X → E)\n    (P : X → Grassmannian E k) (J : X → ℝ≥0) (hf : Measurable f) (hP : Measurable P)\n    (hfinite : (∫⁻ x, (J x : ℝ≥0∞) ∂μ) < ∞) :\n    (ofWeightedMap μ f P J hf hP hfinite).measure =\n      (μ.withDensity (fun x => (J x : ℝ≥0∞))).map (fun x => (f x, P x)) := rfl\n\ntheorem mass_ofWeightedMap (μ : Measure X) (f : X → E)\n    (P : X → Grassmannian E k) (J : X → ℝ≥0) (hf : Measurable f) (hP : Measurable P)\n    (hfinite : (∫⁻ x, (J x : ℝ≥0∞) ∂μ) < ∞) :\n    (ofWeightedMap μ f P J hf hP hfinite).mass = ∫⁻ x, (J x : ℝ≥0∞) ∂μ := by\n  rw [mass, measure_ofWeightedMap, Measure.map_apply (hf.prodMk hP) MeasurableSet.univ]\n  simp [withDensity_apply]\n\ntheorem weightMeasure_ofWeightedMap (μ : Measure X) (f : X → E)\n    (P : X → Grassmannian E k) (J : X → ℝ≥0) (hf : Measurable f) (hP : Measurable P)\n    (hfinite : (∫⁻ x, (J x : ℝ≥0∞) ∂μ) < ∞) :\n    (ofWeightedMap μ f P J hf hP hfinite).weightMeasure =\n      (μ.withDensity (fun x => (J x : ℝ≥0∞))).map f := by\n  rw [weightMeasure, measure_ofWeightedMap, Measure.map_map measurable_fst (hf.prodMk hP)]\n  rfl\n\n\n\n\n\nend OpenGA.Varifold\n",
+        "definition_name": "OpenGA_WeightedMapVarifold",
+        "definition_title": "Varifolds induced by weighted maps",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $(X,\\mu)$ be a measure space, $f:X\\to E$ and $P:X\\to G_k(E)$ measurable, and $J:X\\to[0,\\infty)$ with $\\int J\\,d\\mu<\\infty$. Push the weighted measure $J\\mu$ forward by $x\\mapsto(f(x),P(x))$. The resulting finite Radon measure is a varifold and its mass is $\\int J\\,d\\mu$. Measurability of $J$ is explicit in the integral and zero-density extension theorems. Identifying $J$ and $P$ with geometric derivatives is done in the parametrization interface.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/WeightedMap.lean#L1-L84; Leon Simon, Introduction to Geometric Measure Theory (2018), Chapter 8, Section 1, pp. 235-236, https://math.stanford.edu/~lms/ntu-gmt-text.pdf; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+        "tags": [
+          "geometric-measure-theory",
+          "varifold",
+          "poincare-foundations",
+          "openga-varifold"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-09T19:59:15.436863+00:00",
+        "job": {
+          "created_at": "2026-09-09T19:58:39.267727+00:00",
+          "definitions": "import Definitions.Def_OpenGA_EuclideanVarifold\nimport Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap\n\n/-!\n# Varifolds induced by weighted measurable maps\n\nPush a finite weighted measure through `x ↦ (f x, P x)`, retaining both the\nposition and the plane. `J` is a nonnegative density; when it is the Jacobian\nand `P` is the differential's image, this is the parametrized-surface construction.\nThe latter identification is made separately in `Varifold.Parametrization`.\n\nThe choice of plane where `J = 0` does not affect the varifold. This is the\nextension-independence needed at degenerate differentials in CM Section 1.3.\nReference: Colding-Minicozzi, arXiv:0707.0108, Section 1.3, p. 5.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {X E : Type*} [MeasurableSpace X]\n  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n  [MeasurableSpace E] [BorelSpace E] {k : ℕ}\n\n/-- A finite weighted measure lifted to positions and planes. -/\ndef ofWeightedMap (μ : Measure X) (f : X → E) (P : X → Grassmannian E k)\n    (J : X → ℝ≥0) (hf : Measurable f) (hP : Measurable P)\n    (hfinite : (∫⁻ x, (J x : ℝ≥0∞) ∂μ) < ∞) : Varifold E k := by\n  let ν := μ.withDensity (fun x => (J x : ℝ≥0∞))\n  haveI : IsFiniteMeasure (ν.map (fun x => (f x, P x))) := ⟨by\n    rw [Measure.map_apply (hf.prodMk hP) MeasurableSet.univ]\n    simpa [ν, withDensity_apply] using hfinite⟩\n  exact ⟨ν.map (fun x => (f x, P x)), inferInstance⟩\n\n@[simp] theorem measure_ofWeightedMap (μ : Measure X) (f : X → E)\n    (P : X → Grassmannian E k) (J : X → ℝ≥0) (hf : Measurable f) (hP : Measurable P)\n    (hfinite : (∫⁻ x, (J x : ℝ≥0∞) ∂μ) < ∞) :\n    (ofWeightedMap μ f P J hf hP hfinite).measure =\n      (μ.withDensity (fun x => (J x : ℝ≥0∞))).map (fun x => (f x, P x)) := rfl\n\ntheorem mass_ofWeightedMap (μ : Measure X) (f : X → E)\n    (P : X → Grassmannian E k) (J : X → ℝ≥0) (hf : Measurable f) (hP : Measurable P)\n    (hfinite : (∫⁻ x, (J x : ℝ≥0∞) ∂μ) < ∞) :\n    (ofWeightedMap μ f P J hf hP hfinite).mass = ∫⁻ x, (J x : ℝ≥0∞) ∂μ := by\n  rw [mass, measure_ofWeightedMap, Measure.map_apply (hf.prodMk hP) MeasurableSet.univ]\n  simp [withDensity_apply]\n\ntheorem weightMeasure_ofWeightedMap (μ : Measure X) (f : X → E)\n    (P : X → Grassmannian E k) (J : X → ℝ≥0) (hf : Measurable f) (hP : Measurable P)\n    (hfinite : (∫⁻ x, (J x : ℝ≥0∞) ∂μ) < ∞) :\n    (ofWeightedMap μ f P J hf hP hfinite).weightMeasure =\n      (μ.withDensity (fun x => (J x : ℝ≥0∞))).map f := by\n  rw [weightMeasure, measure_ofWeightedMap, Measure.map_map measurable_fst (hf.prodMk hP)]\n  rfl\n\n\n\n\n\nend OpenGA.Varifold\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "5494f57d-44d0-4bb4-8f5b-d73d26bb9b35",
+          "kind": "definition",
+          "natural_language_statement": "Let $(X,\\mu)$ be a measure space, $f:X\\to E$ and $P:X\\to G_k(E)$ measurable, and $J:X\\to[0,\\infty)$ with $\\int J\\,d\\mu<\\infty$. Push the weighted measure $J\\mu$ forward by $x\\mapsto(f(x),P(x))$. The resulting finite Radon measure is a varifold and its mass is $\\int J\\,d\\mu$. Measurability of $J$ is explicit in the integral and zero-density extension theorems. Identifying $J$ and $P$ with geometric derivatives is done in the parametrization interface.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/WeightedMap.lean#L1-L84; Leon Simon, Introduction to Geometric Measure Theory (2018), Chapter 8, Section 1, pp. 235-236, https://math.stanford.edu/~lms/ntu-gmt-text.pdf; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-measure-theory",
+            "varifold",
+            "poincare-foundations",
+            "openga-varifold"
+          ],
+          "theorem_id": "5d21e64d-c602-43dc-9943-7d91074dec76",
+          "theorem_name": "OpenGA_WeightedMapVarifold",
+          "theorem_title": "Varifolds induced by weighted maps",
+          "updated_at": "2026-09-09T19:59:11.20063+00:00",
+          "visibility": "public"
+        },
+        "job_id": "5494f57d-44d0-4bb4-8f5b-d73d26bb9b35",
+        "response": {
+          "definition_name": "OpenGA_WeightedMapVarifold",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "5494f57d-44d0-4bb4-8f5b-d73d26bb9b35",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/5494f57d-44d0-4bb4-8f5b-d73d26bb9b35 until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-09T19:58:38.898350+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "5d21e64d-c602-43dc-9943-7d91074dec76",
+        "verified_at": "2026-09-09T20:02:23.069770+00:00"
+      },
+      "sha256": "0f2128c68b1ec3510541c9721fce85fcb611e1b227eb5815cc87e513cbcbf043"
+    },
+    {
+      "definitions": [
+        "OpenGA_WeightedMapVarifold"
+      ],
+      "existing_theorems": [
+        "OpenGA_areaDensity_eq_normDet"
+      ],
+      "id": "OpenGA_ParametrizedVarifold",
+      "path": "Definitions/Def_OpenGA_ParametrizedVarifold.lean",
+      "payload": {
+        "definition": "import Definitions.Def_OpenGA_WeightedMapVarifold\nimport Mathlib.Analysis.InnerProductSpace.NormDet\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.Tactic\nimport Theorems.Thm_OpenGA_areaDensity_eq_normDet\nimport Mathlib.Analysis.Calculus.ContDiff.Defs\n\n\nnamespace OpenGA\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nlemma continuous_areaDensity : Continuous (fun p : F × F => areaDensity p.1 p.2) := by\n  unfold areaDensity\n  fun_prop\nend OpenGA\n\n/-!\n# Varifolds of parametrized surfaces in Euclidean space\n\nThe Jacobian is the actual `normDet` of the Frechet derivative. A measurable\ntangent lift must agree with its range wherever the Jacobian is nonzero.\nUsing Lebesgue measure on the two-dimensional parameter space, restricted to\nthe parameter domain, we construct the finite-area varifold and prove that it\nis independent of the tangent-plane extension on the zero-Jacobian set.\n\nThe measurable tangent lift is explicit input: this file does not yet construct\nit automatically for every `C^1` map. Nor does it glue manifold charts or supply\nthe weak derivative for Sobolev surface maps. The definition already uses the\nactual derivative, rather than an unconstrained surrogate for it.\n\nReferences: Simon, *Introduction to Geometric Measure Theory*, 2018, Chapters 2\nand 8; Colding-Minicozzi, arXiv:0707.0108, Section 1.3, p. 5.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E]\n\n/-- The two-dimensional area Jacobian, computed from the actual derivative. -/\ndef surfaceJacobian (f : EuclideanSpace ℝ (Fin 2) → E)\n    (x : EuclideanSpace ℝ (Fin 2)) : ℝ≥0 :=\n  ⟨(fderiv ℝ f x).toLinearMap.normDet, (fderiv ℝ f x).toLinearMap.normDet_nonneg⟩\n\nomit [MeasurableSpace E] [BorelSpace E] [FiniteDimensional ℝ E] in\n/-- Agreement with the previously verified, basis-independent area density. -/\ntheorem surfaceJacobian_eq_areaDensity (f : EuclideanSpace ℝ (Fin 2) → E)\n    (x : EuclideanSpace ℝ (Fin 2))\n    (b : OrthonormalBasis (Fin 2) ℝ (EuclideanSpace ℝ (Fin 2))) :\n    (surfaceJacobian f x : ℝ) =\n      areaDensity (fderiv ℝ f x (b 0)) (fderiv ℝ f x (b 1)) :=\n  (areaDensity_eq_normDet (fderiv ℝ f x).toLinearMap b).symm\n\nomit [MeasurableSpace E] [BorelSpace E] [FiniteDimensional ℝ E] in\ntheorem continuous_surfaceJacobian {f : EuclideanSpace ℝ (Fin 2) → E}\n    (hf : ContDiff ℝ 1 f) : Continuous (surfaceJacobian f) := by\n  apply Continuous.subtype_mk\n  let b := EuclideanSpace.basisFun (Fin 2) ℝ\n  have h0 : Continuous (fun x => fderiv ℝ f x (b 0)) :=\n    (hf.continuous_fderiv (by norm_num)).clm_apply continuous_const\n  have h1 : Continuous (fun x => fderiv ℝ f x (b 1)) :=\n    (hf.continuous_fderiv (by norm_num)).clm_apply continuous_const\n  convert continuous_areaDensity.comp (h0.prodMk h1) using 1\n  ext x\n  exact surfaceJacobian_eq_areaDensity f x b\n\n/-- A measurable lift to genuine tangent planes, with arbitrary choices allowed only\nwhere the actual area Jacobian vanishes. -/\nstructure SurfaceTangentLift (f : EuclideanSpace ℝ (Fin 2) → E) where\n  plane : EuclideanSpace ℝ (Fin 2) → Grassmannian E 2\n  measurable_plane : Measurable plane\n  plane_eq_range : ∀ x, surfaceJacobian f x ≠ 0 →\n    (plane x).plane = (fderiv ℝ f x).range\n\n/-- Every injective linear parametrization has its canonical constant tangent lift. -/\ndef linearSurfaceTangentLift (L : EuclideanSpace ℝ (Fin 2) →L[ℝ] E)\n    (hL : Function.Injective L) : SurfaceTangentLift L where\n  plane := fun _ => ⟨L.range, by\n    simpa using (LinearMap.finrank_range_of_inj (f := L.toLinearMap) hL)⟩\n  measurable_plane := measurable_const\n  plane_eq_range x _ := by simp [Grassmannian.plane]\n\nomit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] in\n/-- A `C^1` parametrization has finite area on any compact parameter domain. -/\ntheorem finite_area_of_isCompact {f : EuclideanSpace ℝ (Fin 2) → E}\n    (hf : ContDiff ℝ 1 f) {K : Set (EuclideanSpace ℝ (Fin 2))} (hK : IsCompact K) :\n    (∫⁻ x in K, (surfaceJacobian f x : ℝ≥0∞)) < ∞ := by\n  have hc : Continuous (fun x => (surfaceJacobian f x : ℝ)) :=\n    (continuous_surfaceJacobian hf).subtype_val\n  have hi : IntegrableOn (fun x => (surfaceJacobian f x : ℝ)) K volume :=\n    hc.continuousOn.integrableOn_compact hK\n  have h := (hasFiniteIntegral_iff_ofReal\n    (Filter.Eventually.of_forall (fun x => (surfaceJacobian f x).coe_nonneg))).mp\n      hi.hasFiniteIntegral\n  simpa using h\n\n/-- The finite-area varifold induced by a `C^1` parametrization, relative to Lebesgue\nmeasure on its parameter domain. Finite area is a hypothesis on this constructor,\nnot on the general definition of `Varifold`. -/\ndef ofParametrization (f : EuclideanSpace ℝ (Fin 2) → E) (hf : ContDiff ℝ 1 f)\n    (Ω : Set (EuclideanSpace ℝ (Fin 2))) (P : SurfaceTangentLift f)\n    (hfinite : (∫⁻ x in Ω, (surfaceJacobian f x : ℝ≥0∞)) < ∞) : Varifold E 2 :=\n  ofWeightedMap (volume.restrict Ω) f P.plane (surfaceJacobian f)\n    hf.continuous.measurable P.measurable_plane hfinite\n\n/-- Its mass is the parametrized area, including multiplicity. -/\ntheorem mass_ofParametrization (f : EuclideanSpace ℝ (Fin 2) → E)\n    (hf : ContDiff ℝ 1 f) (Ω : Set (EuclideanSpace ℝ (Fin 2)))\n    (P : SurfaceTangentLift f)\n    (hfinite : (∫⁻ x in Ω, (surfaceJacobian f x : ℝ≥0∞)) < ∞) :\n    (ofParametrization f hf Ω P hfinite).mass =\n      ∫⁻ x in Ω, (surfaceJacobian f x : ℝ≥0∞) :=\n  mass_ofWeightedMap _ _ _ _ _ _ _\n\n\n\n\n\nend OpenGA.Varifold\n",
+        "definition_name": "OpenGA_ParametrizedVarifold",
+        "definition_title": "Varifolds of Euclidean parametrized surfaces",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For a $C^1$ map $f:\\mathbb R^2\\to E$, set $J_f=\\sqrt{\\det(df^*df)}$. A measurable tangent lift $P$ must equal the image of $df$ wherever $J_f\\ne0$. On a parameter domain $\\Omega$ of finite parametrized area, define $V_f=(f,P)_*(J_f\\,\\mathcal L^2|_\\Omega)$. Its mass equals $\\int_\\Omega J_f$, including multiplicity. Compact parameter domains have finite area. The lift is supplied as input; automatic measurable-lift construction, manifold charts and Sobolev derivatives remain further work.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/Parametrization.lean#L1-L129; Leon Simon, Introduction to Geometric Measure Theory (2018), Chapter 8, Section 1, pp. 235-236, https://math.stanford.edu/~lms/ntu-gmt-text.pdf; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+        "tags": [
+          "geometric-measure-theory",
+          "varifold",
+          "poincare-foundations",
+          "openga-varifold"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-09T19:59:45.797500+00:00",
+        "job": {
+          "created_at": "2026-09-09T19:59:16.35493+00:00",
+          "definitions": "import Definitions.Def_OpenGA_WeightedMapVarifold\nimport Mathlib.Analysis.InnerProductSpace.NormDet\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.Tactic\nimport Theorems.Thm_OpenGA_areaDensity_eq_normDet\nimport Mathlib.Analysis.Calculus.ContDiff.Defs\n\n\nnamespace OpenGA\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nlemma continuous_areaDensity : Continuous (fun p : F × F => areaDensity p.1 p.2) := by\n  unfold areaDensity\n  fun_prop\nend OpenGA\n\n/-!\n# Varifolds of parametrized surfaces in Euclidean space\n\nThe Jacobian is the actual `normDet` of the Frechet derivative. A measurable\ntangent lift must agree with its range wherever the Jacobian is nonzero.\nUsing Lebesgue measure on the two-dimensional parameter space, restricted to\nthe parameter domain, we construct the finite-area varifold and prove that it\nis independent of the tangent-plane extension on the zero-Jacobian set.\n\nThe measurable tangent lift is explicit input: this file does not yet construct\nit automatically for every `C^1` map. Nor does it glue manifold charts or supply\nthe weak derivative for Sobolev surface maps. The definition already uses the\nactual derivative, rather than an unconstrained surrogate for it.\n\nReferences: Simon, *Introduction to Geometric Measure Theory*, 2018, Chapters 2\nand 8; Colding-Minicozzi, arXiv:0707.0108, Section 1.3, p. 5.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E]\n\n/-- The two-dimensional area Jacobian, computed from the actual derivative. -/\ndef surfaceJacobian (f : EuclideanSpace ℝ (Fin 2) → E)\n    (x : EuclideanSpace ℝ (Fin 2)) : ℝ≥0 :=\n  ⟨(fderiv ℝ f x).toLinearMap.normDet, (fderiv ℝ f x).toLinearMap.normDet_nonneg⟩\n\nomit [MeasurableSpace E] [BorelSpace E] [FiniteDimensional ℝ E] in\n/-- Agreement with the previously verified, basis-independent area density. -/\ntheorem surfaceJacobian_eq_areaDensity (f : EuclideanSpace ℝ (Fin 2) → E)\n    (x : EuclideanSpace ℝ (Fin 2))\n    (b : OrthonormalBasis (Fin 2) ℝ (EuclideanSpace ℝ (Fin 2))) :\n    (surfaceJacobian f x : ℝ) =\n      areaDensity (fderiv ℝ f x (b 0)) (fderiv ℝ f x (b 1)) :=\n  (areaDensity_eq_normDet (fderiv ℝ f x).toLinearMap b).symm\n\nomit [MeasurableSpace E] [BorelSpace E] [FiniteDimensional ℝ E] in\ntheorem continuous_surfaceJacobian {f : EuclideanSpace ℝ (Fin 2) → E}\n    (hf : ContDiff ℝ 1 f) : Continuous (surfaceJacobian f) := by\n  apply Continuous.subtype_mk\n  let b := EuclideanSpace.basisFun (Fin 2) ℝ\n  have h0 : Continuous (fun x => fderiv ℝ f x (b 0)) :=\n    (hf.continuous_fderiv (by norm_num)).clm_apply continuous_const\n  have h1 : Continuous (fun x => fderiv ℝ f x (b 1)) :=\n    (hf.continuous_fderiv (by norm_num)).clm_apply continuous_const\n  convert continuous_areaDensity.comp (h0.prodMk h1) using 1\n  ext x\n  exact surfaceJacobian_eq_areaDensity f x b\n\n/-- A measurable lift to genuine tangent planes, with arbitrary choices allowed only\nwhere the actual area Jacobian vanishes. -/\nstructure SurfaceTangentLift (f : EuclideanSpace ℝ (Fin 2) → E) where\n  plane : EuclideanSpace ℝ (Fin 2) → Grassmannian E 2\n  measurable_plane : Measurable plane\n  plane_eq_range : ∀ x, surfaceJacobian f x ≠ 0 →\n    (plane x).plane = (fderiv ℝ f x).range\n\n/-- Every injective linear parametrization has its canonical constant tangent lift. -/\ndef linearSurfaceTangentLift (L : EuclideanSpace ℝ (Fin 2) →L[ℝ] E)\n    (hL : Function.Injective L) : SurfaceTangentLift L where\n  plane := fun _ => ⟨L.range, by\n    simpa using (LinearMap.finrank_range_of_inj (f := L.toLinearMap) hL)⟩\n  measurable_plane := measurable_const\n  plane_eq_range x _ := by simp [Grassmannian.plane]\n\nomit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] in\n/-- A `C^1` parametrization has finite area on any compact parameter domain. -/\ntheorem finite_area_of_isCompact {f : EuclideanSpace ℝ (Fin 2) → E}\n    (hf : ContDiff ℝ 1 f) {K : Set (EuclideanSpace ℝ (Fin 2))} (hK : IsCompact K) :\n    (∫⁻ x in K, (surfaceJacobian f x : ℝ≥0∞)) < ∞ := by\n  have hc : Continuous (fun x => (surfaceJacobian f x : ℝ)) :=\n    (continuous_surfaceJacobian hf).subtype_val\n  have hi : IntegrableOn (fun x => (surfaceJacobian f x : ℝ)) K volume :=\n    hc.continuousOn.integrableOn_compact hK\n  have h := (hasFiniteIntegral_iff_ofReal\n    (Filter.Eventually.of_forall (fun x => (surfaceJacobian f x).coe_nonneg))).mp\n      hi.hasFiniteIntegral\n  simpa using h\n\n/-- The finite-area varifold induced by a `C^1` parametrization, relative to Lebesgue\nmeasure on its parameter domain. Finite area is a hypothesis on this constructor,\nnot on the general definition of `Varifold`. -/\ndef ofParametrization (f : EuclideanSpace ℝ (Fin 2) → E) (hf : ContDiff ℝ 1 f)\n    (Ω : Set (EuclideanSpace ℝ (Fin 2))) (P : SurfaceTangentLift f)\n    (hfinite : (∫⁻ x in Ω, (surfaceJacobian f x : ℝ≥0∞)) < ∞) : Varifold E 2 :=\n  ofWeightedMap (volume.restrict Ω) f P.plane (surfaceJacobian f)\n    hf.continuous.measurable P.measurable_plane hfinite\n\n/-- Its mass is the parametrized area, including multiplicity. -/\ntheorem mass_ofParametrization (f : EuclideanSpace ℝ (Fin 2) → E)\n    (hf : ContDiff ℝ 1 f) (Ω : Set (EuclideanSpace ℝ (Fin 2)))\n    (P : SurfaceTangentLift f)\n    (hfinite : (∫⁻ x in Ω, (surfaceJacobian f x : ℝ≥0∞)) < ∞) :\n    (ofParametrization f hf Ω P hfinite).mass =\n      ∫⁻ x in Ω, (surfaceJacobian f x : ℝ≥0∞) :=\n  mass_ofWeightedMap _ _ _ _ _ _ _\n\n\n\n\n\nend OpenGA.Varifold\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "f728c21a-cda3-4578-808d-ca573c1f911c",
+          "kind": "definition",
+          "natural_language_statement": "For a $C^1$ map $f:\\mathbb R^2\\to E$, set $J_f=\\sqrt{\\det(df^*df)}$. A measurable tangent lift $P$ must equal the image of $df$ wherever $J_f\\ne0$. On a parameter domain $\\Omega$ of finite parametrized area, define $V_f=(f,P)_*(J_f\\,\\mathcal L^2|_\\Omega)$. Its mass equals $\\int_\\Omega J_f$, including multiplicity. Compact parameter domains have finite area. The lift is supplied as input; automatic measurable-lift construction, manifold charts and Sobolev derivatives remain further work.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/Parametrization.lean#L1-L129; Leon Simon, Introduction to Geometric Measure Theory (2018), Chapter 8, Section 1, pp. 235-236, https://math.stanford.edu/~lms/ntu-gmt-text.pdf; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-measure-theory",
+            "varifold",
+            "poincare-foundations",
+            "openga-varifold"
+          ],
+          "theorem_id": "6f457e50-d41f-4c21-b797-27b9539b003e",
+          "theorem_name": "OpenGA_ParametrizedVarifold",
+          "theorem_title": "Varifolds of Euclidean parametrized surfaces",
+          "updated_at": "2026-09-09T19:59:41.604727+00:00",
+          "visibility": "public"
+        },
+        "job_id": "f728c21a-cda3-4578-808d-ca573c1f911c",
+        "response": {
+          "definition_name": "OpenGA_ParametrizedVarifold",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "f728c21a-cda3-4578-808d-ca573c1f911c",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/f728c21a-cda3-4578-808d-ca573c1f911c until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-09T19:59:15.915634+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "6f457e50-d41f-4c21-b797-27b9539b003e",
+        "verified_at": "2026-09-09T20:02:23.255463+00:00"
+      },
+      "sha256": "a61739198e608d37c009111fd4bfbd00b06b3a8bdb2f80636387fd48f2a7dac7"
+    }
+  ],
+  "existing": [
+    {
+      "id": "eddc764e-527d-4d07-a812-94f60b637407",
+      "name": "OpenGA.areaDensity_eq_normDet",
+      "path": "Theorems/Thm_OpenGA_areaDensity_eq_normDet.lean",
+      "sha256": "3713ac03cc811c1859f50f188c79c6bb4930be3a2d928b62773ceb276584f993"
+    },
+    {
+      "id": "d81e3640-8579-4396-babb-69edac82be33",
+      "name": "OpenGA.integral_areaDensity_le_energyDensity",
+      "path": "Theorems/Thm_OpenGA_integral_areaDensity_le_energyDensity.lean",
+      "sha256": "2b39298ae34637e1a5caef96635defee125dc41f104cce140f0fb7afa0a458d6"
+    },
+    {
+      "id": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+      "name": "OpenGA_AreaEnergyDensities",
+      "path": "Definitions/Def_OpenGA_AreaEnergyDensities.lean",
+      "sha256": "2dab2dcf50f33f84e67badfd0cf7a68b71b8da53614a28c399ff529d40e0300e"
+    }
+  ],
+  "extinction_annotation": {
+    "after": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.\n\n**Colding-Minicozzi foundations.** [The mass of a parametrized surface varifold is bounded by its energy](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be) now connects the Euclidean varifold construction to the same integral area-energy theorem used by the width comparison branch. See the **Area-energy control of parametrized varifolds** milestone for the definitions and verified prerequisites. The geometric CM min-max and variation steps remain open; this foundation does not establish finite-time extinction.",
+    "before": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.",
+    "canonical_theorem": null,
+    "response": {
+      "completed": false,
+      "created_at": "2026-09-09T01:41:09.964537+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "33045187-e820-4325-a253-c8ba2c778897",
+      "milestone_description": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.\n\n**Colding-Minicozzi foundations.** [The mass of a parametrized surface varifold is bounded by its energy](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be) now connects the Euclidean varifold construction to the same integral area-energy theorem used by the width comparison branch. See the **Area-energy control of parametrized varifolds** milestone for the definitions and verified prerequisites. The geometric CM min-max and variation steps remain open; this foundation does not establish finite-time extinction.",
+      "sort_order": 2,
+      "theorem": null,
+      "title": "Finite-time extinction"
+    },
+    "status": "VERIFIED",
+    "verified_at": "2026-09-09T20:02:40.720058+00:00"
+  },
+  "graph_verification": {
+    "checked_at": "2026-09-09T20:02:39.212698+00:00",
+    "existing_path": "Integral area-energy comparison -> width comparison -> mission goal",
+    "new_path": "Integral area-energy comparison -> mass bound for parametrized varifolds",
+    "new_theorems_in_goal_dependency_graph": [],
+    "scope": "The two branches share a proved prerequisite. A geometric CM reduction making the varifold results prerequisites of the goal remains open; no artificial edge is asserted.",
+    "shared_theorem": "d81e3640-8579-4396-babb-69edac82be33",
+    "status": "VERIFIED"
+  },
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "milestone": {
+    "id": "89631254-a7b9-4d11-b01d-777444bbcd1e",
+    "payload": {
+      "milestone_description": "Let $f:\\mathbb R^2\\to E$ be $C^1$, $b_0,b_1$ an orthonormal basis, $P$ a measurable tangent lift, and $\\Omega$ a parameter domain with finite area and finite Dirichlet energy. Then\n\n$$\\mathbf M(V_f)\\le\\frac12\\int_\\Omega\\bigl(|df(b_0)|^2+|df(b_1)|^2\\bigr)\\,dx.$$\n\nThe Jacobian and tangent planes are those of the actual derivative. The proof reuses OpenGA's published integral area-energy comparison, which also enters the existing width-decay graph. This is CM equation (1.4) in a Euclidean parameter domain; no global frame on a sphere is asserted.\n\n**Varifold foundations.** [Grassmannian of unoriented planes](https://prove2.me/theorems/58b2081d-b550-4dfd-8504-7f8003d3c681); [Euclidean varifolds and their weight measures](https://prove2.me/theorems/0ce91510-bed6-4687-9d9a-59db49ac32c1); [Weak convergence of varifolds](https://prove2.me/theorems/bfa7b976-aa93-4a5f-bd79-b99b58741eeb); [Varifolds induced by weighted maps](https://prove2.me/theorems/5d21e64d-c602-43dc-9943-7d91074dec76); [Varifolds of Euclidean parametrized surfaces](https://prove2.me/theorems/6f457e50-d41f-4c21-b797-27b9539b003e). The published companion results verify the test-function formulas, independence of zero-Jacobian plane choices, and convergence of spatial weight integrals. [Browse the dependency graph](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be).\n\nThis is a proved Euclidean foundation for the Colding-Minicozzi route, using [the existing area-energy comparison](https://prove2.me/theorems/d81e3640-8579-4396-babb-69edac82be33) shared with the width graph. It does not close finite-time extinction. The manifold Grassmann bundle, Sobolev surface construction, minimal-sphere approximation and quantitative variation transfer remain to be formalized. Sources: [Colding-Minicozzi, equation (1.4) and Section 1.3](https://arxiv.org/pdf/0707.0108), [Simon, Chapter 8, Section 1](https://math.stanford.edu/~lms/ntu-gmt-text.pdf).",
+      "theorem_id": "947563ea-c13b-4ec6-b08d-7b11e70914be",
+      "title": "Area-energy control of parametrized varifolds"
+    },
+    "response": {
+      "completed": true,
+      "created_at": "2026-09-09T20:02:39.819333+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "89631254-a7b9-4d11-b01d-777444bbcd1e",
+      "milestone_description": "Let $f:\\mathbb R^2\\to E$ be $C^1$, $b_0,b_1$ an orthonormal basis, $P$ a measurable tangent lift, and $\\Omega$ a parameter domain with finite area and finite Dirichlet energy. Then\n\n$$\\mathbf M(V_f)\\le\\frac12\\int_\\Omega\\bigl(|df(b_0)|^2+|df(b_1)|^2\\bigr)\\,dx.$$\n\nThe Jacobian and tangent planes are those of the actual derivative. The proof reuses OpenGA's published integral area-energy comparison, which also enters the existing width-decay graph. This is CM equation (1.4) in a Euclidean parameter domain; no global frame on a sphere is asserted.\n\n**Varifold foundations.** [Grassmannian of unoriented planes](https://prove2.me/theorems/58b2081d-b550-4dfd-8504-7f8003d3c681); [Euclidean varifolds and their weight measures](https://prove2.me/theorems/0ce91510-bed6-4687-9d9a-59db49ac32c1); [Weak convergence of varifolds](https://prove2.me/theorems/bfa7b976-aa93-4a5f-bd79-b99b58741eeb); [Varifolds induced by weighted maps](https://prove2.me/theorems/5d21e64d-c602-43dc-9943-7d91074dec76); [Varifolds of Euclidean parametrized surfaces](https://prove2.me/theorems/6f457e50-d41f-4c21-b797-27b9539b003e). The published companion results verify the test-function formulas, independence of zero-Jacobian plane choices, and convergence of spatial weight integrals. [Browse the dependency graph](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be).\n\nThis is a proved Euclidean foundation for the Colding-Minicozzi route, using [the existing area-energy comparison](https://prove2.me/theorems/d81e3640-8579-4396-babb-69edac82be33) shared with the width graph. It does not close finite-time extinction. The manifold Grassmann bundle, Sobolev surface construction, minimal-sphere approximation and quantitative variation transfer remain to be formalized. Sources: [Colding-Minicozzi, equation (1.4) and Section 1.3](https://arxiv.org/pdf/0707.0108), [Simon, Chapter 8, Section 1](https://math.stanford.edu/~lms/ntu-gmt-text.pdf).",
+      "sort_order": 16,
+      "theorem": {
+        "id": "947563ea-c13b-4ec6-b08d-7b11e70914be",
+        "status": "Proved",
+        "theorem_name": "OpenGA.Varifold.mass_ofParametrization_le_energy"
+      },
+      "title": "Area-energy control of parametrized varifolds"
+    },
+    "status": "VERIFIED",
+    "verified_at": "2026-09-09T20:02:40.198897+00:00"
+  },
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "schema_version": 1,
+  "scope": "Euclidean Radon varifolds, qualitative convergence and C1 parametrizations with supplied measurable tangent lifts. Not the manifold/Sobolev CM min-max or finite-extinction theorem.",
+  "source_reviewed": true,
+  "source_revision": "048ed85016b9cd9a9b2c588b3bac00b9fdf03819",
+  "sources": [
+    {
+      "path": "OpenGALib/GeometricMeasureTheory/Grassmannian.lean",
+      "sha256": "1b5f6cbde689059852db3d8b0cd7c2890ce8a558b06dfcddd85cb97474d0ba36"
+    },
+    {
+      "path": "OpenGALib/GeometricMeasureTheory/Varifold.lean",
+      "sha256": "24119edb89447727aa11f5ae9108e384dc962a5254f52c2be9ef94eafe6f3a79"
+    },
+    {
+      "path": "OpenGALib/GeometricMeasureTheory/Varifold/Convergence.lean",
+      "sha256": "0cc1a15d5a851e585b9cbbada6a2660eb35cf648f90490b14d184043a0e4aed6"
+    },
+    {
+      "path": "OpenGALib/GeometricMeasureTheory/Varifold/WeightedMap.lean",
+      "sha256": "5f4e30f1750ef5ab9f6ff41b585e0ac7f76a016dc5f86eab0988c189318daa92"
+    },
+    {
+      "path": "OpenGALib/GeometricMeasureTheory/Varifold/Parametrization.lean",
+      "sha256": "b42ff6f4af495faef74bf35afe23db8f0b9d0ae452b20afe396c6d538527ca52"
+    },
+    {
+      "path": "OpenGALib/GeometricMeasureTheory/Varifold/AreaEnergy.lean",
+      "sha256": "5bfc7393ead2e4f938109ab9083ffb675abdab518508f023a2ea4b6c3020e0ea"
+    },
+    {
+      "path": "OpenGALib/Analysis/AreaEnergy.lean",
+      "sha256": "60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Metadata/Convergence_facts.jsonl",
+      "sha256": "d0a4b0af4eb380a5083237f0057256f7a772814a723f77ff783dae989d42a446"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Metadata/AreaEnergy_facts.jsonl",
+      "sha256": "32538e914ebb5d669b3944562110bff819302d3cb0d6f4662ee14ba4bee68243"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Metadata/Parametrization_facts.jsonl",
+      "sha256": "485fc0e0874f97a5e48a66b012729f989901b44166942d9499bd4292cbaa7000"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Metadata/Atomic_facts.jsonl",
+      "sha256": "cb7d0e0ef381b49105c2e8d3bc60baa548ac6a385c0cca72da2ee83195fa9db8"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Metadata/Density_facts.jsonl",
+      "sha256": "43ed1839c45577b06e192073c2dc3965c4deb60b0d3ad4d2b2bb6361e8c562be"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Metadata/WeightedMap_facts.jsonl",
+      "sha256": "2367522f8231c5e9068ab861c66e27a1ded5a3ecc4bb989c93c9b7cb73210425"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Metadata/Grassmannian_facts.jsonl",
+      "sha256": "0cbc3fe66f7dfddd3cc55f91959db72de463f410e0ad015fd2e88ef672df7f08"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Metadata/Varifold_facts.jsonl",
+      "sha256": "069743ec25cf56f3223bcfe78005ba9b732738a166185e992859dc0da7342238"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Tools/ExtractSketchInfo.lean",
+      "sha256": "e0a9164a476c61b6da70592e3c7e8f4267910ac3d433d9fd13e6ccca7b7e801b"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Tools/export_varifolds.py",
+      "sha256": "246fdd669751efb187772cb20ae3cfb81320f80b8ca645228d958470a09a3bf8"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Tools/Audit_OpenGA_Varifold_testIntegral_ofWeightedMap.lean",
+      "sha256": "40449a8240e432a1aa49b647cee69e07f4e940a9f737bc206920e7dbde699e24"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Tools/Audit_OpenGA_Varifold_mass_ofParametrization_le_energy.lean",
+      "sha256": "ae1df345776c9fdb11ba5cd4cf4ee2c24b395e95fc09d375f604d8743da6902b"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Tools/Audit_OpenGA_Varifold_ofParametrization_independent_of_lift.lean",
+      "sha256": "223fdc868f4899c66afb6163f98c12f8fc586d114db63022575058223e7ad9ab"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Tools/ExportedTypes.lean",
+      "sha256": "a348c3b20f0672623f5963546f0bfe8749ea8551d0d2baf3043acd084fc0f417"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Tools/OriginalTypes.lean",
+      "sha256": "7745c80c5e47f0e5be44c836bd6b1fd3113d63d4870c6867234fe90c5171c4db"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Tools/Audit_OpenGA_Varifold_testIntegral_ofParametrization.lean",
+      "sha256": "945ddc6d0966dfe9c13355bd264b475f7667f6c4ef0cc7d5d600f605767bfab0"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Tools/validate_exports.py",
+      "sha256": "1bf0fa58435d8d60003b7ab9b782fa45ddad72a58c1d3554f83e02498af788b3"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Tools/ExtractDeclarationGraph.lean",
+      "sha256": "e698fe471b867ee448fff9bfebd43eac90acf47a1c518a4c7d63195f9232ee95"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Tools/Audit_OpenGA_Varifold_ofWeightedMap_eq_of_plane_eq.lean",
+      "sha256": "4b079b2d1d359e549581721bd2a1eba5cf06fad9421a11cdf42ca4a35b75fc5b"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Varifold/Tools/Audit_OpenGA_Varifold_tendsto_weightMeasure_integral.lean",
+      "sha256": "dc76fbe832dabccb51e41fc4193810e6e6685988d0eace621cd675e673937ac6"
+    }
+  ],
+  "status": "COMPLETE",
+  "theorems": [
+    {
+      "definitions": [
+        "OpenGA_VarifoldConvergence"
+      ],
+      "explanation": "If Euclidean varifolds $V_i$ converge weakly to $V$, then for every continuous compactly supported spatial function $\\phi$, $\\int\\phi\\,d\\|V_i\\|\\to\\int\\phi\\,d\\|V\\|$. The index may be any filter. Compactness of the Grassmannian makes the lifted spatial test compactly supported. The submitted proof preserves the reviewed OpenGA source; only imports and the solution binding are adapted.",
+      "id": "OpenGA.Varifold.tendsto_weightMeasure_integral",
+      "imports": [],
+      "path": "Theorems/Thm_OpenGA_Varifold_tendsto_weightMeasure_integral.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# Varifold convergence\n\nThe topology is induced by all continuous compactly supported test functions on\n`E × Grassmannian E k`, not by the total mass or the weight measure alone.\nIt is Hausdorff, and convergence is exactly convergence of these integrals.\nSpatial weight measures consequently converge against compactly supported tests on `E`.\n\nReferences: Simon, *Introduction to Geometric Measure Theory*, 2018, Chapter 8;\nColding-Minicozzi, *Width and finite extinction time of Ricci flow*, arXiv:0707.0108,\nSection 1.3. The latter works on a compact manifold's Grassmann bundle. No quantitative\nbound for a particular metrization is asserted by this qualitative convergence interface.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set Filter Topology\nopen scoped CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] {k : ℕ}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntheorem tendsto_weightMeasure_integral {ι : Type*} {l : Filter ι}\n    {V : ι → Varifold E k} {W : Varifold E k} (h : Tendsto V l (𝓝 W))\n    (φ : C_c(E, ℝ)) :\n    Tendsto (fun i => ∫ x, φ x ∂(V i).weightMeasure) l\n      (𝓝 (∫ x, φ x ∂W.weightMeasure)) := by sorry\n\n\n\nend OpenGA.Varifold\n",
+        "natural_language_statement": "If Euclidean varifolds $V_i$ converge weakly to $V$, then for every continuous compactly supported spatial function $\\phi$, $\\int\\phi\\,d\\|V_i\\|\\to\\int\\phi\\,d\\|V\\|$. The index may be any filter. Compactness of the Grassmannian makes the lifted spatial test compactly supported.",
+        "preamble": "import Definitions.Def_OpenGA_VarifoldConvergence\nimport Definitions.Def_OpenGA_EuclideanVarifold\nimport Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real\nimport Mathlib.Topology.Maps.Proper.Basic\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/Convergence.lean#L1-L92; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+        "tags": [
+          "geometric-measure-theory",
+          "varifold",
+          "poincare-foundations",
+          "openga-varifold"
+        ],
+        "theorem_name": "OpenGA.Varifold.tendsto_weightMeasure_integral",
+        "theorem_title": "Varifold convergence implies convergence of spatial test integrals"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_Varifold_tendsto_weightMeasure_integral.lean",
+      "proof_sha256": "b305b3b9cc2fdd30a5afaa3f8f9bb72a68c1f7c60c1b0570567f16975b776bf0",
+      "publication": {
+        "checked_at": "2026-09-09T19:59:46.378650+00:00",
+        "job": {
+          "created_at": "2026-09-09T19:59:17.664018+00:00",
+          "definitions": "import Definitions.Def_OpenGA_VarifoldConvergence\nimport Definitions.Def_OpenGA_EuclideanVarifold\nimport Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real\nimport Mathlib.Topology.Maps.Proper.Basic\n",
+          "error_message": "",
+          "formal_statement": "\n/-!\n# Varifold convergence\n\nThe topology is induced by all continuous compactly supported test functions on\n`E × Grassmannian E k`, not by the total mass or the weight measure alone.\nIt is Hausdorff, and convergence is exactly convergence of these integrals.\nSpatial weight measures consequently converge against compactly supported tests on `E`.\n\nReferences: Simon, *Introduction to Geometric Measure Theory*, 2018, Chapter 8;\nColding-Minicozzi, *Width and finite extinction time of Ricci flow*, arXiv:0707.0108,\nSection 1.3. The latter works on a compact manifold's Grassmann bundle. No quantitative\nbound for a particular metrization is asserted by this qualitative convergence interface.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set Filter Topology\nopen scoped CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] {k : ℕ}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntheorem tendsto_weightMeasure_integral {ι : Type*} {l : Filter ι}\n    {V : ι → Varifold E k} {W : Varifold E k} (h : Tendsto V l (𝓝 W))\n    (φ : C_c(E, ℝ)) :\n    Tendsto (fun i => ∫ x, φ x ∂(V i).weightMeasure) l\n      (𝓝 (∫ x, φ x ∂W.weightMeasure)) := by sorry\n\n\n\nend OpenGA.Varifold\n",
+          "id": "90a83fb5-6c3f-4b12-ad7e-03316179af1b",
+          "kind": "problem",
+          "natural_language_statement": "If Euclidean varifolds $V_i$ converge weakly to $V$, then for every continuous compactly supported spatial function $\\phi$, $\\int\\phi\\,d\\|V_i\\|\\to\\int\\phi\\,d\\|V\\|$. The index may be any filter. Compactness of the Grassmannian makes the lifted spatial test compactly supported.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/Convergence.lean#L1-L92; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-measure-theory",
+            "varifold",
+            "poincare-foundations",
+            "openga-varifold"
+          ],
+          "theorem_id": "bb524212-c028-4aa8-b321-88db1e9c09ad",
+          "theorem_name": "OpenGA.Varifold.tendsto_weightMeasure_integral",
+          "theorem_title": "Varifold convergence implies convergence of spatial test integrals",
+          "updated_at": "2026-09-09T19:59:46.156797+00:00",
+          "visibility": "public"
+        },
+        "job_id": "90a83fb5-6c3f-4b12-ad7e-03316179af1b",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "90a83fb5-6c3f-4b12-ad7e-03316179af1b",
+              "name": "OpenGA.Varifold.tendsto_weightMeasure_integral"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-09T19:59:17.357123+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "bb524212-c028-4aa8-b321-88db1e9c09ad",
+        "verified_at": "2026-09-09T20:02:23.484556+00:00"
+      },
+      "sha256": "b0299ce70103016ffa800b2a4ae27b2ff518f8aa3e6b930ad4c173a7097d9550",
+      "submission": {
+        "accepted_source_sha256": "b305b3b9cc2fdd30a5afaa3f8f9bb72a68c1f7c60c1b0570567f16975b776bf0",
+        "checked_at": "2026-09-09T20:02:23.946022+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "f7b7217a-bf10-417c-8b1c-0abe47d70e42"
+        },
+        "started_at": "2026-09-09T19:59:46.854549+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "f7b7217a-bf10-417c-8b1c-0abe47d70e42",
+        "verdict": {
+          "created_at": "2026-09-09T19:59:47.507112+00:00",
+          "error_message": "",
+          "file_path": "bb524212-c028-4aa8-b321-88db1e9c09ad/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/f7b7217a-bf10-417c-8b1c-0abe47d70e42.lean",
+          "id": "f7b7217a-bf10-417c-8b1c-0abe47d70e42",
+          "status": "ACCEPTED",
+          "theorem_id": "bb524212-c028-4aa8-b321-88db1e9c09ad",
+          "updated_at": "2026-09-09T20:00:35.053382+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-09T20:02:24.470013+00:00"
+      }
+    },
+    {
+      "definitions": [
+        "OpenGA_WeightedMapVarifold"
+      ],
+      "explanation": "For measurable $f:X\\to E$, $P:X\\to G_k(E)$ and $J:X\\to[0,\\infty)$ of finite integral, and every compactly supported continuous $\\phi$ on positions and planes,\n\n$$\\int\\phi\\,d((f,P)_*(J\\mu))=\\int_X J(x)\\phi(f(x),P(x))\\,d\\mu(x).$$ The submitted proof preserves the reviewed OpenGA source; only imports and the solution binding are adapted.",
+      "id": "OpenGA.Varifold.testIntegral_ofWeightedMap",
+      "imports": [],
+      "path": "Theorems/Thm_OpenGA_Varifold_testIntegral_ofWeightedMap.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# Varifolds induced by weighted measurable maps\n\nPush a finite weighted measure through `x ↦ (f x, P x)`, retaining both the\nposition and the plane. `J` is a nonnegative density; when it is the Jacobian\nand `P` is the differential's image, this is the parametrized-surface construction.\nThe latter identification is made separately in `Varifold.Parametrization`.\n\nThe choice of plane where `J = 0` does not affect the varifold. This is the\nextension-independence needed at degenerate differentials in CM Section 1.3.\nReference: Colding-Minicozzi, arXiv:0707.0108, Section 1.3, p. 5.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {X E : Type*} [MeasurableSpace X]\n  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n  [MeasurableSpace E] [BorelSpace E] {k : ℕ}\n\n\n\n\n\n\n\n\n\n\ntheorem testIntegral_ofWeightedMap (μ : Measure X) (f : X → E)\n    (P : X → Grassmannian E k) (J : X → ℝ≥0) (hf : Measurable f) (hP : Measurable P)\n    (hJ : Measurable J) (hfinite : (∫⁻ x, (J x : ℝ≥0∞) ∂μ) < ∞)\n    (φ : C_c(E × Grassmannian E k, ℝ)) :\n    (ofWeightedMap μ f P J hf hP hfinite).testIntegral φ =\n      ∫ x, (J x : ℝ) * φ (f x, P x) ∂μ := by sorry\n\n\n\nend OpenGA.Varifold\n",
+        "natural_language_statement": "For measurable $f:X\\to E$, $P:X\\to G_k(E)$ and $J:X\\to[0,\\infty)$ of finite integral, and every compactly supported continuous $\\phi$ on positions and planes,\n\n$$\\int\\phi\\,d((f,P)_*(J\\mu))=\\int_X J(x)\\phi(f(x),P(x))\\,d\\mu(x).$$",
+        "preamble": "import Definitions.Def_OpenGA_WeightedMapVarifold\nimport Definitions.Def_OpenGA_EuclideanVarifold\nimport Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/WeightedMap.lean#L1-L84; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+        "tags": [
+          "geometric-measure-theory",
+          "varifold",
+          "poincare-foundations",
+          "openga-varifold"
+        ],
+        "theorem_name": "OpenGA.Varifold.testIntegral_ofWeightedMap",
+        "theorem_title": "Integration against a varifold induced by a weighted map"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_Varifold_testIntegral_ofWeightedMap.lean",
+      "proof_sha256": "7413ea5233135e54bb14795f8c5cd09ca6190e96491921f008dbfcaef54b9d96",
+      "publication": {
+        "checked_at": "2026-09-09T19:59:47.902854+00:00",
+        "job": {
+          "created_at": "2026-09-09T19:59:18.380644+00:00",
+          "definitions": "import Definitions.Def_OpenGA_WeightedMapVarifold\nimport Definitions.Def_OpenGA_EuclideanVarifold\nimport Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap\n",
+          "error_message": "",
+          "formal_statement": "\n/-!\n# Varifolds induced by weighted measurable maps\n\nPush a finite weighted measure through `x ↦ (f x, P x)`, retaining both the\nposition and the plane. `J` is a nonnegative density; when it is the Jacobian\nand `P` is the differential's image, this is the parametrized-surface construction.\nThe latter identification is made separately in `Varifold.Parametrization`.\n\nThe choice of plane where `J = 0` does not affect the varifold. This is the\nextension-independence needed at degenerate differentials in CM Section 1.3.\nReference: Colding-Minicozzi, arXiv:0707.0108, Section 1.3, p. 5.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {X E : Type*} [MeasurableSpace X]\n  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n  [MeasurableSpace E] [BorelSpace E] {k : ℕ}\n\n\n\n\n\n\n\n\n\n\ntheorem testIntegral_ofWeightedMap (μ : Measure X) (f : X → E)\n    (P : X → Grassmannian E k) (J : X → ℝ≥0) (hf : Measurable f) (hP : Measurable P)\n    (hJ : Measurable J) (hfinite : (∫⁻ x, (J x : ℝ≥0∞) ∂μ) < ∞)\n    (φ : C_c(E × Grassmannian E k, ℝ)) :\n    (ofWeightedMap μ f P J hf hP hfinite).testIntegral φ =\n      ∫ x, (J x : ℝ) * φ (f x, P x) ∂μ := by sorry\n\n\n\nend OpenGA.Varifold\n",
+          "id": "4890a544-eaba-4c63-ae54-a8fd0d480370",
+          "kind": "problem",
+          "natural_language_statement": "For measurable $f:X\\to E$, $P:X\\to G_k(E)$ and $J:X\\to[0,\\infty)$ of finite integral, and every compactly supported continuous $\\phi$ on positions and planes,\n\n$$\\int\\phi\\,d((f,P)_*(J\\mu))=\\int_X J(x)\\phi(f(x),P(x))\\,d\\mu(x).$$",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/WeightedMap.lean#L1-L84; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-measure-theory",
+            "varifold",
+            "poincare-foundations",
+            "openga-varifold"
+          ],
+          "theorem_id": "ede9d85f-3bc2-4f0d-a18e-6644aa9e8a64",
+          "theorem_name": "OpenGA.Varifold.testIntegral_ofWeightedMap",
+          "theorem_title": "Integration against a varifold induced by a weighted map",
+          "updated_at": "2026-09-09T19:59:46.892714+00:00",
+          "visibility": "public"
+        },
+        "job_id": "4890a544-eaba-4c63-ae54-a8fd0d480370",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "4890a544-eaba-4c63-ae54-a8fd0d480370",
+              "name": "OpenGA.Varifold.testIntegral_ofWeightedMap"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-09T19:59:18.028038+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "ede9d85f-3bc2-4f0d-a18e-6644aa9e8a64",
+        "verified_at": "2026-09-09T20:02:24.664073+00:00"
+      },
+      "sha256": "4aadba86b0e65d3362778a304598f0dc174d664be82f57248395f5082749ce5a",
+      "submission": {
+        "accepted_source_sha256": "7413ea5233135e54bb14795f8c5cd09ca6190e96491921f008dbfcaef54b9d96",
+        "checked_at": "2026-09-09T20:02:25.159318+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "26ffe87c-abf2-41b7-874f-7f793cc78209"
+        },
+        "started_at": "2026-09-09T19:59:48.427424+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "26ffe87c-abf2-41b7-874f-7f793cc78209",
+        "verdict": {
+          "created_at": "2026-09-09T19:59:48.746725+00:00",
+          "error_message": "",
+          "file_path": "ede9d85f-3bc2-4f0d-a18e-6644aa9e8a64/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/26ffe87c-abf2-41b7-874f-7f793cc78209.lean",
+          "id": "26ffe87c-abf2-41b7-874f-7f793cc78209",
+          "status": "ACCEPTED",
+          "theorem_id": "ede9d85f-3bc2-4f0d-a18e-6644aa9e8a64",
+          "updated_at": "2026-09-09T20:00:47.513195+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-09T20:02:25.688943+00:00"
+      }
+    },
+    {
+      "definitions": [
+        "OpenGA_WeightedMapVarifold"
+      ],
+      "explanation": "Let $f$, $P$, $Q$ and $J\\ge0$ be measurable, with finite integral of $J$. If $P(x)=Q(x)$ for almost every $x$ with $J(x)\\ne0$, then $(f,P)_*(J\\mu)=(f,Q)_*(J\\mu)$. Thus arbitrary tangent-plane choices on the zero-density set have no effect. The submitted proof preserves the reviewed OpenGA source; only imports and the solution binding are adapted.",
+      "id": "OpenGA.Varifold.ofWeightedMap_eq_of_plane_eq",
+      "imports": [],
+      "path": "Theorems/Thm_OpenGA_Varifold_ofWeightedMap_eq_of_plane_eq.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# Varifolds induced by weighted measurable maps\n\nPush a finite weighted measure through `x ↦ (f x, P x)`, retaining both the\nposition and the plane. `J` is a nonnegative density; when it is the Jacobian\nand `P` is the differential's image, this is the parametrized-surface construction.\nThe latter identification is made separately in `Varifold.Parametrization`.\n\nThe choice of plane where `J = 0` does not affect the varifold. This is the\nextension-independence needed at degenerate differentials in CM Section 1.3.\nReference: Colding-Minicozzi, arXiv:0707.0108, Section 1.3, p. 5.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {X E : Type*} [MeasurableSpace X]\n  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n  [MeasurableSpace E] [BorelSpace E] {k : ℕ}\n\n\n\n\n\n\n\n\n\n\n\n\ntheorem ofWeightedMap_eq_of_plane_eq (μ : Measure X) (f : X → E)\n    (P Q : X → Grassmannian E k) (J : X → ℝ≥0) (hf : Measurable f)\n    (hP : Measurable P) (hQ : Measurable Q) (hJ : Measurable J)\n    (hfinite : (∫⁻ x, (J x : ℝ≥0∞) ∂μ) < ∞)\n    (hPQ : ∀ᵐ x ∂μ, J x ≠ 0 → P x = Q x) :\n    ofWeightedMap μ f P J hf hP hfinite = ofWeightedMap μ f Q J hf hQ hfinite := by sorry\n\nend OpenGA.Varifold\n",
+        "natural_language_statement": "Let $f$, $P$, $Q$ and $J\\ge0$ be measurable, with finite integral of $J$. If $P(x)=Q(x)$ for almost every $x$ with $J(x)\\ne0$, then $(f,P)_*(J\\mu)=(f,Q)_*(J\\mu)$. Thus arbitrary tangent-plane choices on the zero-density set have no effect.",
+        "preamble": "import Definitions.Def_OpenGA_WeightedMapVarifold\nimport Definitions.Def_OpenGA_EuclideanVarifold\nimport Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/WeightedMap.lean#L1-L84; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+        "tags": [
+          "geometric-measure-theory",
+          "varifold",
+          "poincare-foundations",
+          "openga-varifold"
+        ],
+        "theorem_name": "OpenGA.Varifold.ofWeightedMap_eq_of_plane_eq",
+        "theorem_title": "Zero-density choices do not change a weighted-map varifold"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_Varifold_ofWeightedMap_eq_of_plane_eq.lean",
+      "proof_sha256": "3a1b22e3e0a3a14374afbb95c9475bc6b55686dd440993c979226266d6238ad6",
+      "publication": {
+        "checked_at": "2026-09-09T20:00:05.224327+00:00",
+        "job": {
+          "created_at": "2026-09-09T19:59:18.913776+00:00",
+          "definitions": "import Definitions.Def_OpenGA_WeightedMapVarifold\nimport Definitions.Def_OpenGA_EuclideanVarifold\nimport Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap\n",
+          "error_message": "",
+          "formal_statement": "\n/-!\n# Varifolds induced by weighted measurable maps\n\nPush a finite weighted measure through `x ↦ (f x, P x)`, retaining both the\nposition and the plane. `J` is a nonnegative density; when it is the Jacobian\nand `P` is the differential's image, this is the parametrized-surface construction.\nThe latter identification is made separately in `Varifold.Parametrization`.\n\nThe choice of plane where `J = 0` does not affect the varifold. This is the\nextension-independence needed at degenerate differentials in CM Section 1.3.\nReference: Colding-Minicozzi, arXiv:0707.0108, Section 1.3, p. 5.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {X E : Type*} [MeasurableSpace X]\n  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n  [MeasurableSpace E] [BorelSpace E] {k : ℕ}\n\n\n\n\n\n\n\n\n\n\n\n\ntheorem ofWeightedMap_eq_of_plane_eq (μ : Measure X) (f : X → E)\n    (P Q : X → Grassmannian E k) (J : X → ℝ≥0) (hf : Measurable f)\n    (hP : Measurable P) (hQ : Measurable Q) (hJ : Measurable J)\n    (hfinite : (∫⁻ x, (J x : ℝ≥0∞) ∂μ) < ∞)\n    (hPQ : ∀ᵐ x ∂μ, J x ≠ 0 → P x = Q x) :\n    ofWeightedMap μ f P J hf hP hfinite = ofWeightedMap μ f Q J hf hQ hfinite := by sorry\n\nend OpenGA.Varifold\n",
+          "id": "51d8c88a-abd7-437e-bbf7-4010a0f7a04b",
+          "kind": "problem",
+          "natural_language_statement": "Let $f$, $P$, $Q$ and $J\\ge0$ be measurable, with finite integral of $J$. If $P(x)=Q(x)$ for almost every $x$ with $J(x)\\ne0$, then $(f,P)_*(J\\mu)=(f,Q)_*(J\\mu)$. Thus arbitrary tangent-plane choices on the zero-density set have no effect.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/WeightedMap.lean#L1-L84; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-measure-theory",
+            "varifold",
+            "poincare-foundations",
+            "openga-varifold"
+          ],
+          "theorem_id": "4a4cf695-0ca3-4738-86e8-eba60eae34a2",
+          "theorem_name": "OpenGA.Varifold.ofWeightedMap_eq_of_plane_eq",
+          "theorem_title": "Zero-density choices do not change a weighted-map varifold",
+          "updated_at": "2026-09-09T19:59:50.485602+00:00",
+          "visibility": "public"
+        },
+        "job_id": "51d8c88a-abd7-437e-bbf7-4010a0f7a04b",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "51d8c88a-abd7-437e-bbf7-4010a0f7a04b",
+              "name": "OpenGA.Varifold.ofWeightedMap_eq_of_plane_eq"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-09T19:59:18.661164+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "4a4cf695-0ca3-4738-86e8-eba60eae34a2",
+        "verified_at": "2026-09-09T20:02:25.870454+00:00"
+      },
+      "sha256": "32193694320baa101e80571a4c8129c720b86af13988e833c15bf3e7b654b2ca",
+      "submission": {
+        "accepted_source_sha256": "3a1b22e3e0a3a14374afbb95c9475bc6b55686dd440993c979226266d6238ad6",
+        "checked_at": "2026-09-09T20:02:26.203289+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "ecffef77-6ae4-4288-95a2-b62ceb5e9571"
+        },
+        "started_at": "2026-09-09T20:00:05.708210+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "ecffef77-6ae4-4288-95a2-b62ceb5e9571",
+        "verdict": {
+          "created_at": "2026-09-09T20:00:06.191161+00:00",
+          "error_message": "",
+          "file_path": "4a4cf695-0ca3-4738-86e8-eba60eae34a2/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/ecffef77-6ae4-4288-95a2-b62ceb5e9571.lean",
+          "id": "ecffef77-6ae4-4288-95a2-b62ceb5e9571",
+          "status": "ACCEPTED",
+          "theorem_id": "4a4cf695-0ca3-4738-86e8-eba60eae34a2",
+          "updated_at": "2026-09-09T20:00:43.508654+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-09T20:02:26.795916+00:00"
+      }
+    },
+    {
+      "definitions": [
+        "OpenGA_ParametrizedVarifold"
+      ],
+      "explanation": "Let $f:\\mathbb R^2\\to E$ be $C^1$, let $P$ be a measurable tangent lift agreeing with the derivative image where $J_f\\ne0$, and assume $\\int_\\Omega J_f<\\infty$. For every compactly supported continuous position-plane test $\\phi$,\n\n$$\\int\\phi\\,dV_f=\\int_\\Omega J_f(x)\\phi(f(x),P(x))\\,dx.$$\n\nThis is the Euclidean parameter-domain form of the construction in CM Section 1.3. The submitted proof preserves the reviewed OpenGA source; only imports and the solution binding are adapted.",
+      "id": "OpenGA.Varifold.testIntegral_ofParametrization",
+      "imports": [
+        "OpenGA.Varifold.testIntegral_ofWeightedMap"
+      ],
+      "path": "Theorems/Thm_OpenGA_Varifold_testIntegral_ofParametrization.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# Varifolds of parametrized surfaces in Euclidean space\n\nThe Jacobian is the actual `normDet` of the Frechet derivative. A measurable\ntangent lift must agree with its range wherever the Jacobian is nonzero.\nUsing Lebesgue measure on the two-dimensional parameter space, restricted to\nthe parameter domain, we construct the finite-area varifold and prove that it\nis independent of the tangent-plane extension on the zero-Jacobian set.\n\nThe measurable tangent lift is explicit input: this file does not yet construct\nit automatically for every `C^1` map. Nor does it glue manifold charts or supply\nthe weak derivative for Sobolev surface maps. The definition already uses the\nactual derivative, rather than an unconstrained surrogate for it.\n\nReferences: Simon, *Introduction to Geometric Measure Theory*, 2018, Chapters 2\nand 8; Colding-Minicozzi, arXiv:0707.0108, Section 1.3, p. 5.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E]\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntheorem testIntegral_ofParametrization (f : EuclideanSpace ℝ (Fin 2) → E)\n    (hf : ContDiff ℝ 1 f) (Ω : Set (EuclideanSpace ℝ (Fin 2)))\n    (P : SurfaceTangentLift f)\n    (hfinite : (∫⁻ x in Ω, (surfaceJacobian f x : ℝ≥0∞)) < ∞)\n    (φ : C_c(E × Grassmannian E 2, ℝ)) :\n    (ofParametrization f hf Ω P hfinite).testIntegral φ =\n      ∫ x in Ω, (surfaceJacobian f x : ℝ) * φ (f x, P.plane x) := by sorry\n\n\n\nend OpenGA.Varifold\n",
+        "natural_language_statement": "Let $f:\\mathbb R^2\\to E$ be $C^1$, let $P$ be a measurable tangent lift agreeing with the derivative image where $J_f\\ne0$, and assume $\\int_\\Omega J_f<\\infty$. For every compactly supported continuous position-plane test $\\phi$,\n\n$$\\int\\phi\\,dV_f=\\int_\\Omega J_f(x)\\phi(f(x),P(x))\\,dx.$$\n\nThis is the Euclidean parameter-domain form of the construction in CM Section 1.3.",
+        "preamble": "import Definitions.Def_OpenGA_ParametrizedVarifold\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/Parametrization.lean#L1-L129; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+        "tags": [
+          "geometric-measure-theory",
+          "varifold",
+          "poincare-foundations",
+          "openga-varifold"
+        ],
+        "theorem_name": "OpenGA.Varifold.testIntegral_ofParametrization",
+        "theorem_title": "Test-function formula for a parametrized surface varifold"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_Varifold_testIntegral_ofParametrization.lean",
+      "proof_sha256": "2d46d5c1b7a5f9c1f08e8062c7a16fd7056d91069ebc717ce3f6d46b86818a17",
+      "publication": {
+        "checked_at": "2026-09-09T20:00:22.836394+00:00",
+        "job": {
+          "created_at": "2026-09-09T19:59:49.833592+00:00",
+          "definitions": "import Definitions.Def_OpenGA_ParametrizedVarifold\n",
+          "error_message": "",
+          "formal_statement": "\n/-!\n# Varifolds of parametrized surfaces in Euclidean space\n\nThe Jacobian is the actual `normDet` of the Frechet derivative. A measurable\ntangent lift must agree with its range wherever the Jacobian is nonzero.\nUsing Lebesgue measure on the two-dimensional parameter space, restricted to\nthe parameter domain, we construct the finite-area varifold and prove that it\nis independent of the tangent-plane extension on the zero-Jacobian set.\n\nThe measurable tangent lift is explicit input: this file does not yet construct\nit automatically for every `C^1` map. Nor does it glue manifold charts or supply\nthe weak derivative for Sobolev surface maps. The definition already uses the\nactual derivative, rather than an unconstrained surrogate for it.\n\nReferences: Simon, *Introduction to Geometric Measure Theory*, 2018, Chapters 2\nand 8; Colding-Minicozzi, arXiv:0707.0108, Section 1.3, p. 5.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E]\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntheorem testIntegral_ofParametrization (f : EuclideanSpace ℝ (Fin 2) → E)\n    (hf : ContDiff ℝ 1 f) (Ω : Set (EuclideanSpace ℝ (Fin 2)))\n    (P : SurfaceTangentLift f)\n    (hfinite : (∫⁻ x in Ω, (surfaceJacobian f x : ℝ≥0∞)) < ∞)\n    (φ : C_c(E × Grassmannian E 2, ℝ)) :\n    (ofParametrization f hf Ω P hfinite).testIntegral φ =\n      ∫ x in Ω, (surfaceJacobian f x : ℝ) * φ (f x, P.plane x) := by sorry\n\n\n\nend OpenGA.Varifold\n",
+          "id": "63af25c8-5c1a-4035-bdbb-d9fabed63f23",
+          "kind": "problem",
+          "natural_language_statement": "Let $f:\\mathbb R^2\\to E$ be $C^1$, let $P$ be a measurable tangent lift agreeing with the derivative image where $J_f\\ne0$, and assume $\\int_\\Omega J_f<\\infty$. For every compactly supported continuous position-plane test $\\phi$,\n\n$$\\int\\phi\\,dV_f=\\int_\\Omega J_f(x)\\phi(f(x),P(x))\\,dx.$$\n\nThis is the Euclidean parameter-domain form of the construction in CM Section 1.3.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/Parametrization.lean#L1-L129; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-measure-theory",
+            "varifold",
+            "poincare-foundations",
+            "openga-varifold"
+          ],
+          "theorem_id": "ccd2776d-93a4-4bd7-8e5f-f2fe733b8b3f",
+          "theorem_name": "OpenGA.Varifold.testIntegral_ofParametrization",
+          "theorem_title": "Test-function formula for a parametrized surface varifold",
+          "updated_at": "2026-09-09T20:00:14.090366+00:00",
+          "visibility": "public"
+        },
+        "job_id": "63af25c8-5c1a-4035-bdbb-d9fabed63f23",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "63af25c8-5c1a-4035-bdbb-d9fabed63f23",
+              "name": "OpenGA.Varifold.testIntegral_ofParametrization"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-09T19:59:49.475867+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "ccd2776d-93a4-4bd7-8e5f-f2fe733b8b3f",
+        "verified_at": "2026-09-09T20:02:27.088563+00:00"
+      },
+      "sha256": "0003cf458b3c1829e36a10ce357833988b14c7a743bf9227919f12e3977745a7",
+      "submission": {
+        "accepted_source_sha256": "2d46d5c1b7a5f9c1f08e8062c7a16fd7056d91069ebc717ce3f6d46b86818a17",
+        "checked_at": "2026-09-09T20:02:27.610726+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "9e93d892-d2c2-4735-a11c-7964b71a61ab"
+        },
+        "started_at": "2026-09-09T20:01:07.396538+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "9e93d892-d2c2-4735-a11c-7964b71a61ab",
+        "verdict": {
+          "created_at": "2026-09-09T20:01:07.719953+00:00",
+          "error_message": "",
+          "file_path": "ccd2776d-93a4-4bd7-8e5f-f2fe733b8b3f/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/9e93d892-d2c2-4735-a11c-7964b71a61ab.lean",
+          "id": "9e93d892-d2c2-4735-a11c-7964b71a61ab",
+          "status": "ACCEPTED",
+          "theorem_id": "ccd2776d-93a4-4bd7-8e5f-f2fe733b8b3f",
+          "updated_at": "2026-09-09T20:01:47.524863+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-09T20:02:28.026984+00:00"
+      }
+    },
+    {
+      "definitions": [
+        "OpenGA_ParametrizedVarifold"
+      ],
+      "explanation": "Let $f:\\mathbb R^2\\to E$ be $C^1$ and have finite parametrized area on $\\Omega$. If two measurable plane lifts both agree with $df(\\mathbb R^2)$ wherever $J_f\\ne0$, they induce the same varifold on $E\\times G_2(E)$. No injectivity or immersion assumption is imposed. This verifies that the zero-Jacobian choices in the CM construction do not affect the result, for this Euclidean setting. The submitted proof preserves the reviewed OpenGA source; only imports and the solution binding are adapted.",
+      "id": "OpenGA.Varifold.ofParametrization_independent_of_lift",
+      "imports": [
+        "OpenGA.Varifold.ofWeightedMap_eq_of_plane_eq"
+      ],
+      "path": "Theorems/Thm_OpenGA_Varifold_ofParametrization_independent_of_lift.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# Varifolds of parametrized surfaces in Euclidean space\n\nThe Jacobian is the actual `normDet` of the Frechet derivative. A measurable\ntangent lift must agree with its range wherever the Jacobian is nonzero.\nUsing Lebesgue measure on the two-dimensional parameter space, restricted to\nthe parameter domain, we construct the finite-area varifold and prove that it\nis independent of the tangent-plane extension on the zero-Jacobian set.\n\nThe measurable tangent lift is explicit input: this file does not yet construct\nit automatically for every `C^1` map. Nor does it glue manifold charts or supply\nthe weak derivative for Sobolev surface maps. The definition already uses the\nactual derivative, rather than an unconstrained surrogate for it.\n\nReferences: Simon, *Introduction to Geometric Measure Theory*, 2018, Chapters 2\nand 8; Colding-Minicozzi, arXiv:0707.0108, Section 1.3, p. 5.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E]\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntheorem ofParametrization_independent_of_lift (f : EuclideanSpace ℝ (Fin 2) → E)\n    (hf : ContDiff ℝ 1 f) (Ω : Set (EuclideanSpace ℝ (Fin 2)))\n    (P Q : SurfaceTangentLift f)\n    (hfinite : (∫⁻ x in Ω, (surfaceJacobian f x : ℝ≥0∞)) < ∞) :\n    ofParametrization f hf Ω P hfinite = ofParametrization f hf Ω Q hfinite := by sorry\n\nend OpenGA.Varifold\n",
+        "natural_language_statement": "Let $f:\\mathbb R^2\\to E$ be $C^1$ and have finite parametrized area on $\\Omega$. If two measurable plane lifts both agree with $df(\\mathbb R^2)$ wherever $J_f\\ne0$, they induce the same varifold on $E\\times G_2(E)$. No injectivity or immersion assumption is imposed. This verifies that the zero-Jacobian choices in the CM construction do not affect the result, for this Euclidean setting.",
+        "preamble": "import Definitions.Def_OpenGA_ParametrizedVarifold\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/Parametrization.lean#L1-L129; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+        "tags": [
+          "geometric-measure-theory",
+          "varifold",
+          "poincare-foundations",
+          "openga-varifold"
+        ],
+        "theorem_name": "OpenGA.Varifold.ofParametrization_independent_of_lift",
+        "theorem_title": "A parametrized surface varifold is independent of its tangent lift"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_Varifold_ofParametrization_independent_of_lift.lean",
+      "proof_sha256": "ced055b7ebbcd41c878733de8c2e0409e2750ba7496289d0a77c1c82384e39d1",
+      "publication": {
+        "checked_at": "2026-09-09T20:00:43.467274+00:00",
+        "job": {
+          "created_at": "2026-09-09T19:59:50.594098+00:00",
+          "definitions": "import Definitions.Def_OpenGA_ParametrizedVarifold\n",
+          "error_message": "",
+          "formal_statement": "\n/-!\n# Varifolds of parametrized surfaces in Euclidean space\n\nThe Jacobian is the actual `normDet` of the Frechet derivative. A measurable\ntangent lift must agree with its range wherever the Jacobian is nonzero.\nUsing Lebesgue measure on the two-dimensional parameter space, restricted to\nthe parameter domain, we construct the finite-area varifold and prove that it\nis independent of the tangent-plane extension on the zero-Jacobian set.\n\nThe measurable tangent lift is explicit input: this file does not yet construct\nit automatically for every `C^1` map. Nor does it glue manifold charts or supply\nthe weak derivative for Sobolev surface maps. The definition already uses the\nactual derivative, rather than an unconstrained surrogate for it.\n\nReferences: Simon, *Introduction to Geometric Measure Theory*, 2018, Chapters 2\nand 8; Colding-Minicozzi, arXiv:0707.0108, Section 1.3, p. 5.\n-/\n\nnoncomputable section\n\nopen MeasureTheory Set\nopen scoped ENNReal NNReal CompactlySupported\n\nnamespace OpenGA.Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E]\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntheorem ofParametrization_independent_of_lift (f : EuclideanSpace ℝ (Fin 2) → E)\n    (hf : ContDiff ℝ 1 f) (Ω : Set (EuclideanSpace ℝ (Fin 2)))\n    (P Q : SurfaceTangentLift f)\n    (hfinite : (∫⁻ x in Ω, (surfaceJacobian f x : ℝ≥0∞)) < ∞) :\n    ofParametrization f hf Ω P hfinite = ofParametrization f hf Ω Q hfinite := by sorry\n\nend OpenGA.Varifold\n",
+          "id": "73003bdf-83dc-4f98-aed6-621280c210eb",
+          "kind": "problem",
+          "natural_language_statement": "Let $f:\\mathbb R^2\\to E$ be $C^1$ and have finite parametrized area on $\\Omega$. If two measurable plane lifts both agree with $df(\\mathbb R^2)$ wherever $J_f\\ne0$, they induce the same varifold on $E\\times G_2(E)$. No injectivity or immersion assumption is imposed. This verifies that the zero-Jacobian choices in the CM construction do not affect the result, for this Euclidean setting.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/Parametrization.lean#L1-L129; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=5, Section 1.3.",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-measure-theory",
+            "varifold",
+            "poincare-foundations",
+            "openga-varifold"
+          ],
+          "theorem_id": "501be76f-ec02-41c5-8998-42f15f54da21",
+          "theorem_name": "OpenGA.Varifold.ofParametrization_independent_of_lift",
+          "theorem_title": "A parametrized surface varifold is independent of its tangent lift",
+          "updated_at": "2026-09-09T20:00:24.216259+00:00",
+          "visibility": "public"
+        },
+        "job_id": "73003bdf-83dc-4f98-aed6-621280c210eb",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "73003bdf-83dc-4f98-aed6-621280c210eb",
+              "name": "OpenGA.Varifold.ofParametrization_independent_of_lift"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-09T19:59:50.211746+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "501be76f-ec02-41c5-8998-42f15f54da21",
+        "verified_at": "2026-09-09T20:02:28.277214+00:00"
+      },
+      "sha256": "9ab30809b96fb0008bcbb0a872e2cece33159016e333e1b9468f8a5cdb83f34e",
+      "submission": {
+        "accepted_source_sha256": "ced055b7ebbcd41c878733de8c2e0409e2750ba7496289d0a77c1c82384e39d1",
+        "checked_at": "2026-09-09T20:02:28.660699+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "bff3c9b3-d65b-4442-b2c0-c044e8254055"
+        },
+        "started_at": "2026-09-09T20:01:08.471656+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "bff3c9b3-d65b-4442-b2c0-c044e8254055",
+        "verdict": {
+          "created_at": "2026-09-09T20:01:08.794248+00:00",
+          "error_message": "",
+          "file_path": "501be76f-ec02-41c5-8998-42f15f54da21/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/bff3c9b3-d65b-4442-b2c0-c044e8254055.lean",
+          "id": "bff3c9b3-d65b-4442-b2c0-c044e8254055",
+          "status": "ACCEPTED",
+          "theorem_id": "501be76f-ec02-41c5-8998-42f15f54da21",
+          "updated_at": "2026-09-09T20:02:11.26182+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-09T20:02:30.059861+00:00"
+      }
+    },
+    {
+      "definitions": [
+        "OpenGA_ParametrizedVarifold"
+      ],
+      "explanation": "Let $f:\\mathbb R^2\\to E$ be $C^1$, $b_0,b_1$ an orthonormal basis, $P$ a measurable tangent lift, and $\\Omega$ a parameter domain with finite area and finite Dirichlet energy. Then\n\n$$\\mathbf M(V_f)\\le\\frac12\\int_\\Omega\\bigl(|df(b_0)|^2+|df(b_1)|^2\\bigr)\\,dx.$$\n\nThe Jacobian and tangent planes are those of the actual derivative. The proof reuses OpenGA's published integral area-energy comparison, which also enters the existing width-decay graph. This is CM equation (1.4) in a Euclidean parameter domain; no global frame on a sphere is asserted. The submitted proof preserves the reviewed OpenGA source; only imports and the solution binding are adapted.",
+      "id": "OpenGA.Varifold.mass_ofParametrization_le_energy",
+      "imports": [
+        "OpenGA.integral_areaDensity_le_energyDensity"
+      ],
+      "path": "Theorems/Thm_OpenGA_Varifold_mass_ofParametrization_le_energy.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# Area-energy control of a parametrized varifold\n\nFor a `C^1` map from a Euclidean two-dimensional parameter domain, the mass of\nits induced varifold is bounded by its Dirichlet energy. The derivative and\nJacobian are the actual ones, and the tangent lift is the one required by\n`ofParametrization`. This connects the varifold construction to the existing\nfinite-energy comparison theorem used by the width route.\n\nReference: Colding-Minicozzi, arXiv:0707.0108, equation (1.4), p. 3, and\nSection 1.3, p. 5. This is the Euclidean parameter-domain version; it does not\nassert a global frame on a sphere or construct a Sobolev derivative.\n-/\n\nnoncomputable section\n\nopen MeasureTheory\nopen scoped ENNReal\n\nnamespace OpenGA.Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E]\n\n\ntheorem mass_ofParametrization_le_energy (f : EuclideanSpace ℝ (Fin 2) → E)\n    (hf : ContDiff ℝ 1 f) (Ω : Set (EuclideanSpace ℝ (Fin 2)))\n    (P : SurfaceTangentLift f)\n    (hfinite : (∫⁻ x in Ω, (surfaceJacobian f x : ℝ≥0∞)) < ∞)\n    (b : OrthonormalBasis (Fin 2) ℝ (EuclideanSpace ℝ (Fin 2)))\n    (henergy : IntegrableOn (fun x =>\n      energyDensity (fderiv ℝ f x (b 0)) (fderiv ℝ f x (b 1))) Ω volume) :\n    (ofParametrization f hf Ω P hfinite).mass ≤ ENNReal.ofReal\n      (∫ x in Ω, energyDensity (fderiv ℝ f x (b 0)) (fderiv ℝ f x (b 1))) := by sorry\n\nend OpenGA.Varifold\n",
+        "natural_language_statement": "Let $f:\\mathbb R^2\\to E$ be $C^1$, $b_0,b_1$ an orthonormal basis, $P$ a measurable tangent lift, and $\\Omega$ a parameter domain with finite area and finite Dirichlet energy. Then\n\n$$\\mathbf M(V_f)\\le\\frac12\\int_\\Omega\\bigl(|df(b_0)|^2+|df(b_1)|^2\\bigr)\\,dx.$$\n\nThe Jacobian and tangent planes are those of the actual derivative. The proof reuses OpenGA's published integral area-energy comparison, which also enters the existing width-decay graph. This is CM equation (1.4) in a Euclidean parameter domain; no global frame on a sphere is asserted.",
+        "preamble": "import Definitions.Def_OpenGA_ParametrizedVarifold\nimport Definitions.Def_OpenGA_ParametrizedVarifold\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/AreaEnergy.lean#L1-L49; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=3, equation (1.4).",
+        "tags": [
+          "geometric-measure-theory",
+          "varifold",
+          "poincare-foundations",
+          "openga-varifold"
+        ],
+        "theorem_name": "OpenGA.Varifold.mass_ofParametrization_le_energy",
+        "theorem_title": "The mass of a parametrized surface varifold is bounded by its energy"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_Varifold_mass_ofParametrization_le_energy.lean",
+      "proof_sha256": "ef0a43fee3badea04e0f9cbfce24e551a860f222791dd06f5ddc0327b5dc6c58",
+      "publication": {
+        "checked_at": "2026-09-09T20:00:47.683064+00:00",
+        "job": {
+          "created_at": "2026-09-09T19:59:51.179845+00:00",
+          "definitions": "import Definitions.Def_OpenGA_ParametrizedVarifold\nimport Definitions.Def_OpenGA_ParametrizedVarifold\n",
+          "error_message": "",
+          "formal_statement": "\n/-!\n# Area-energy control of a parametrized varifold\n\nFor a `C^1` map from a Euclidean two-dimensional parameter domain, the mass of\nits induced varifold is bounded by its Dirichlet energy. The derivative and\nJacobian are the actual ones, and the tangent lift is the one required by\n`ofParametrization`. This connects the varifold construction to the existing\nfinite-energy comparison theorem used by the width route.\n\nReference: Colding-Minicozzi, arXiv:0707.0108, equation (1.4), p. 3, and\nSection 1.3, p. 5. This is the Euclidean parameter-domain version; it does not\nassert a global frame on a sphere or construct a Sobolev derivative.\n-/\n\nnoncomputable section\n\nopen MeasureTheory\nopen scoped ENNReal\n\nnamespace OpenGA.Varifold\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E]\n\n\ntheorem mass_ofParametrization_le_energy (f : EuclideanSpace ℝ (Fin 2) → E)\n    (hf : ContDiff ℝ 1 f) (Ω : Set (EuclideanSpace ℝ (Fin 2)))\n    (P : SurfaceTangentLift f)\n    (hfinite : (∫⁻ x in Ω, (surfaceJacobian f x : ℝ≥0∞)) < ∞)\n    (b : OrthonormalBasis (Fin 2) ℝ (EuclideanSpace ℝ (Fin 2)))\n    (henergy : IntegrableOn (fun x =>\n      energyDensity (fderiv ℝ f x (b 0)) (fderiv ℝ f x (b 1))) Ω volume) :\n    (ofParametrization f hf Ω P hfinite).mass ≤ ENNReal.ofReal\n      (∫ x in Ω, energyDensity (fderiv ℝ f x (b 0)) (fderiv ℝ f x (b 1))) := by sorry\n\nend OpenGA.Varifold\n",
+          "id": "0fb98f00-2142-46b2-b7a6-e4593d82f2b8",
+          "kind": "problem",
+          "natural_language_statement": "Let $f:\\mathbb R^2\\to E$ be $C^1$, $b_0,b_1$ an orthonormal basis, $P$ a measurable tangent lift, and $\\Omega$ a parameter domain with finite area and finite Dirichlet energy. Then\n\n$$\\mathbf M(V_f)\\le\\frac12\\int_\\Omega\\bigl(|df(b_0)|^2+|df(b_1)|^2\\bigr)\\,dx.$$\n\nThe Jacobian and tangent planes are those of the actual derivative. The proof reuses OpenGA's published integral area-energy comparison, which also enters the existing width-decay graph. This is CM equation (1.4) in a Euclidean parameter domain; no global frame on a sphere is asserted.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/048ed85016b9cd9a9b2c588b3bac00b9fdf03819/OpenGALib/GeometricMeasureTheory/Varifold/AreaEnergy.lean#L1-L49; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108#page=3, equation (1.4).",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-measure-theory",
+            "varifold",
+            "poincare-foundations",
+            "openga-varifold"
+          ],
+          "theorem_id": "947563ea-c13b-4ec6-b08d-7b11e70914be",
+          "theorem_name": "OpenGA.Varifold.mass_ofParametrization_le_energy",
+          "theorem_title": "The mass of a parametrized surface varifold is bounded by its energy",
+          "updated_at": "2026-09-09T20:00:33.652837+00:00",
+          "visibility": "public"
+        },
+        "job_id": "0fb98f00-2142-46b2-b7a6-e4593d82f2b8",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "0fb98f00-2142-46b2-b7a6-e4593d82f2b8",
+              "name": "OpenGA.Varifold.mass_ofParametrization_le_energy"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-09T19:59:50.852864+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "947563ea-c13b-4ec6-b08d-7b11e70914be",
+        "verified_at": "2026-09-09T20:02:30.246562+00:00"
+      },
+      "sha256": "bc676a81d19552ae9000d1286d06ad880887bca95ed593ab5319fddc95a32c61",
+      "submission": {
+        "accepted_source_sha256": "ef0a43fee3badea04e0f9cbfce24e551a860f222791dd06f5ddc0327b5dc6c58",
+        "checked_at": "2026-09-09T20:02:30.656834+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "24400f2f-77a8-4a88-bd6a-c2dc9454b43d"
+        },
+        "started_at": "2026-09-09T20:00:48.140998+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "24400f2f-77a8-4a88-bd6a-c2dc9454b43d",
+        "verdict": {
+          "created_at": "2026-09-09T20:00:48.56001+00:00",
+          "error_message": "",
+          "file_path": "947563ea-c13b-4ec6-b08d-7b11e70914be/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/24400f2f-77a8-4a88-bd6a-c2dc9454b43d.lean",
+          "id": "24400f2f-77a8-4a88-bd6a-c2dc9454b43d",
+          "status": "ACCEPTED",
+          "theorem_id": "947563ea-c13b-4ec6-b08d-7b11e70914be",
+          "updated_at": "2026-09-09T20:01:33.730365+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-09T20:02:31.155260+00:00"
+      }
+    }
+  ],
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "validation": {
+    "build": "passed",
+    "checked_at": "2026-09-09T19:57:24.567304+00:00",
+    "exact_types_and_definition_bodies": 94,
+    "export_audit": "Exact solution types and no new axioms; declared imported theorem dependencies checked separately against their published proofs.",
+    "solutions": 6,
+    "source_kernel_audit": "142 declarations: only propext, Classical.choice, Quot.sound",
+    "status": "passed"
+  },
+  "verified_at": "2026-09-09T20:02:40.720066+00:00"
+}

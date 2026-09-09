@@ -1,0 +1,2795 @@
+[
+  {
+    "name": "OpenGA.Grassmannian.instCompactSpace",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": true,
+    "userName": "OpenGA.Grassmannian.instCompactSpace",
+    "startLine": 125,
+    "endLine": 133,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian.isometry_projection",
+      "OpenGA.Grassmannian.norm_projection_le",
+      "OpenGA.Grassmannian.isClosed_range_projection",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.testIntegral",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.testIntegral",
+    "startLine": 112,
+    "endLine": 114,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.mk.inj",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.mk.inj",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Varifold.SurfaceTangentLift.mk",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.mk.noConfusion",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Varifold.SurfaceTangentLift.mk",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.noConfusionType",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.noConfusionType",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.casesOn",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.weightMeasure_regular",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": true,
+    "userName": "OpenGA.Varifold.weightMeasure_regular",
+    "startLine": 64,
+    "endLine": 66,
+    "typeDeps": [
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.weightMeasure_finiteOnCompacts",
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.weightMeasure_add",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.weightMeasure_add",
+    "startLine": 104,
+    "endLine": 106,
+    "typeDeps": [
+      "OpenGA.Varifold.instAdd",
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.projection",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.projection",
+    "startLine": 47,
+    "endLine": 48,
+    "typeDeps": [
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mk.sizeOf_spec",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mk.sizeOf_spec",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold.rec",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.finite_area_of_isCompact",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.finite_area_of_isCompact",
+    "startLine": 77,
+    "endLine": 88,
+    "typeDeps": [
+      "OpenGA.Varifold.surfaceJacobian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.continuous_surfaceJacobian",
+      "OpenGA.Varifold.surfaceJacobian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.ctorIdx",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.ctorIdx",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.weightMeasure_ofWeightedMap",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.WeightedMap",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.weightMeasure_ofWeightedMap",
+    "startLine": 51,
+    "endLine": 57,
+    "typeDeps": [
+      "OpenGA.Varifold.ofWeightedMap",
+      "OpenGA.Varifold.weightMeasure",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold.weightMeasure.eq_1",
+      "OpenGA.Varifold.ofWeightedMap",
+      "OpenGA.Varifold.measure_ofWeightedMap",
+      "OpenGA.Varifold.weightMeasure",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mk.injEq",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mk.injEq",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.mk.inj"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.trace_projection",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.trace_projection",
+    "startLine": 87,
+    "endLine": 95,
+    "typeDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian.finrank_plane",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.continuous_dirac",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Atomic",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.continuous_dirac",
+    "startLine": 43,
+    "endLine": 50,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.dirac",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold.tendsto_iff_testIntegral",
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.dirac",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral_dirac",
+      "OpenGA.Varifold.testIntegral"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "inductive",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold",
+    "startLine": 28,
+    "endLine": 32,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.Varifold.isClosed_support",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.isClosed_support",
+    "startLine": 81,
+    "endLine": 82,
+    "typeDeps": [
+      "OpenGA.Varifold.support",
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.liftSpatialTest",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Convergence",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.liftSpatialTest",
+    "startLine": 57,
+    "endLine": 64,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.instCompactSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.areaDensity_eq_normDet",
+    "module": "OpenGALib.Analysis.AreaEnergy.LinearMap",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.areaDensity_eq_normDet",
+    "startLine": 34,
+    "endLine": 44,
+    "typeDeps": [
+      "OpenGA.areaDensity"
+    ],
+    "valueDeps": [
+      "OpenGA.areaDensity_sq",
+      "OpenGA.areaDensity_nonneg",
+      "OpenGA.areaDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.isEmbedding_testIntegral",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Convergence",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.isEmbedding_testIntegral",
+    "startLine": 39,
+    "endLine": 41,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold.ext_of_testIntegral_eq",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ]
+  },
+  {
+    "name": "OpenGA.areaDensity_sq",
+    "module": "OpenGALib.Analysis.AreaEnergy",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.areaDensity_sq",
+    "startLine": 50,
+    "endLine": 55,
+    "typeDeps": [
+      "OpenGA.areaDensity"
+    ],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.Grassmannian.instMetricSpace",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": true,
+    "userName": "OpenGA.Grassmannian.instMetricSpace",
+    "startLine": 56,
+    "endLine": 57,
+    "typeDeps": [
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian.projection_injective",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mass_ofParametrization_le_energy",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.AreaEnergy",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mass_ofParametrization_le_energy",
+    "startLine": 27,
+    "endLine": 47,
+    "typeDeps": [
+      "OpenGA.Varifold.mass",
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.ofParametrization",
+      "OpenGA.energyDensity",
+      "OpenGA.Varifold.surfaceJacobian"
+    ],
+    "valueDeps": [
+      "OpenGA.integral_areaDensity_le_energyDensity",
+      "OpenGA.Varifold.mass",
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.continuous_surfaceJacobian",
+      "OpenGA.Varifold.ofParametrization",
+      "OpenGA.energyDensity",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Varifold.mass_ofParametrization",
+      "OpenGA.Varifold.surfaceJacobian_eq_areaDensity",
+      "OpenGA.areaDensity"
+    ]
+  },
+  {
+    "name": "_private.OpenGALib.Algebraic.Auxiliary.OrthonormalBasisDiagonal.0.OrthonormalBasis.expand_diagonal_via_other_basis",
+    "module": "OpenGALib.Algebraic.Auxiliary.OrthonormalBasisDiagonal",
+    "kind": "theorem",
+    "isPrivate": true,
+    "isInstance": false,
+    "userName": "OrthonormalBasis.expand_diagonal_via_other_basis",
+    "startLine": 41,
+    "endLine": 84,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.areaDensity",
+    "module": "OpenGALib.Analysis.AreaEnergy",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.areaDensity",
+    "startLine": 34,
+    "endLine": 36,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.mk.injEq",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.mk.injEq",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Varifold.SurfaceTangentLift.mk",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.mk.inj",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Varifold.SurfaceTangentLift.mk",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mk.noConfusion",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mk.noConfusion",
+    "startLine": 29,
+    "endLine": 29,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.noConfusion",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.instAdd",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": true,
+    "userName": "OpenGA.Varifold.instAdd",
+    "startLine": 89,
+    "endLine": 93,
+    "typeDeps": [
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Grassmannian.instSecondCountableTopology",
+      "OpenGA.Varifold.regular",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Grassmannian.instBorelSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instCompactSpace",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.mk.sizeOf_spec",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.mk.sizeOf_spec",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.rec",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Varifold.SurfaceTangentLift.mk",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.instMeasurableSpace",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": true,
+    "userName": "OpenGA.Grassmannian.instMeasurableSpace",
+    "startLine": 72,
+    "endLine": 72,
+    "typeDeps": [
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.weightMeasure_apply",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.weightMeasure_apply",
+    "startLine": 50,
+    "endLine": 55,
+    "typeDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.weightMeasure"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold.weightMeasure.eq_1",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.weightMeasure"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.casesOn",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.casesOn",
+    "startLine": 28,
+    "endLine": 32,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold.rec",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.continuous_projection",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.continuous_projection",
+    "startLine": 62,
+    "endLine": 63,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian.isometry_projection",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.energyDensity.eq_1",
+    "module": "OpenGALib.Analysis.AreaEnergy",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.energyDensity.eq_1",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.energyDensity"
+    ],
+    "valueDeps": [
+      "OpenGA.energyDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mk.inj",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mk.inj",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold.mk.noConfusion",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.integrable_areaDensity",
+    "module": "OpenGALib.Analysis.AreaEnergy",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.integrable_areaDensity",
+    "startLine": 96,
+    "endLine": 103,
+    "typeDeps": [
+      "OpenGA.energyDensity",
+      "OpenGA.areaDensity"
+    ],
+    "valueDeps": [
+      "OpenGA.areaDensity_le_energyDensity",
+      "OpenGA.continuous_areaDensity",
+      "OpenGA.energyDensity",
+      "OpenGA.areaDensity_nonneg",
+      "OpenGA.areaDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.energyDensity_nonneg",
+    "module": "OpenGALib.Analysis.AreaEnergy",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.energyDensity_nonneg",
+    "startLine": 46,
+    "endLine": 48,
+    "typeDeps": [
+      "OpenGA.energyDensity"
+    ],
+    "valueDeps": [
+      "OpenGA.energyDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.ext",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.ext",
+    "startLine": 41,
+    "endLine": 45,
+    "typeDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold.casesOn",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.measure_ofWeightedMap",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.WeightedMap",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.measure_ofWeightedMap",
+    "startLine": 38,
+    "endLine": 42,
+    "typeDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold.ofWeightedMap",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold.ofWeightedMap",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.surfaceJacobian_eq_areaDensity",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.surfaceJacobian_eq_areaDensity",
+    "startLine": 39,
+    "endLine": 45,
+    "typeDeps": [
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.areaDensity"
+    ],
+    "valueDeps": [
+      "OpenGA.areaDensity_eq_normDet",
+      "OpenGA.areaDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.tendsto_add",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Convergence",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.tendsto_add",
+    "startLine": 83,
+    "endLine": 90,
+    "typeDeps": [
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold.instAdd",
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold.testIntegral_add",
+      "OpenGA.Varifold.tendsto_iff_testIntegral",
+      "OpenGA.Varifold.instAdd",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mass_dirac",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Atomic",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mass_dirac",
+    "startLine": 29,
+    "endLine": 30,
+    "typeDeps": [
+      "OpenGA.Varifold.mass",
+      "OpenGA.Varifold.dirac",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.mass",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Varifold.dirac",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mk.congr_simp",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Atomic",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mk.congr_simp",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.ctorIdx",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.ctorIdx",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold"
+    ]
+  },
+  {
+    "name": "OpenGA.energyDensity",
+    "module": "OpenGALib.Analysis.AreaEnergy",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.energyDensity",
+    "startLine": 38,
+    "endLine": 40,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.Varifold.integral_weightMeasure",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.integral_weightMeasure",
+    "startLine": 124,
+    "endLine": 128,
+    "typeDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.weightMeasure"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.weightMeasure"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.testIntegral_ofParametrization",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.testIntegral_ofParametrization",
+    "startLine": 108,
+    "endLine": 116,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.plane",
+      "OpenGA.Varifold.ofParametrization",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.continuous_surfaceJacobian",
+      "OpenGA.Varifold.SurfaceTangentLift.plane",
+      "OpenGA.Varifold.testIntegral_ofWeightedMap",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.SurfaceTangentLift.measurable_plane"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.continuous_surfaceJacobian",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.continuous_surfaceJacobian",
+    "startLine": 48,
+    "endLine": 58,
+    "typeDeps": [
+      "OpenGA.Varifold.surfaceJacobian"
+    ],
+    "valueDeps": [
+      "OpenGA.continuous_areaDensity",
+      "OpenGA.Varifold.surfaceJacobian_eq_areaDensity",
+      "OpenGA.areaDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.ext_iff",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.ext_iff",
+    "startLine": 41,
+    "endLine": 41,
+    "typeDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.ext",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mass.eq_1",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mass.eq_1",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Varifold.mass",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.mass",
+      "OpenGA.Varifold"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.ofWeightedMap_eq_of_plane_eq",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.WeightedMap",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.ofWeightedMap_eq_of_plane_eq",
+    "startLine": 71,
+    "endLine": 82,
+    "typeDeps": [
+      "OpenGA.Varifold.ofWeightedMap",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.ext",
+      "OpenGA.Varifold.ofWeightedMap",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.isometry_projection",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.isometry_projection",
+    "startLine": 59,
+    "endLine": 60,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.measurable_plane",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.measurable_plane",
+    "startLine": 64,
+    "endLine": 64,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.plane",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.range_projection",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.range_projection",
+    "startLine": 97,
+    "endLine": 111,
+    "typeDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian.isStarProjection_projection",
+      "OpenGA.Grassmannian.trace_projection",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.noConfusion",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.noConfusion",
+    "startLine": 28,
+    "endLine": 32,
+    "typeDeps": [
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.noConfusionType"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.casesOn",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.noConfusionType"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.weightMeasure_zero",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.weightMeasure_zero",
+    "startLine": 101,
+    "endLine": 102,
+    "typeDeps": [
+      "OpenGA.Varifold.instZero",
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.instZero",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.weightMeasure"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.instT2Space",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Convergence",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": true,
+    "userName": "OpenGA.Varifold.instT2Space",
+    "startLine": 43,
+    "endLine": 43,
+    "typeDeps": [
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.isEmbedding_testIntegral",
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.projection_injective",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.projection_injective",
+    "startLine": 50,
+    "endLine": 54,
+    "typeDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.ext",
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.liftSpatialTest_apply",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Convergence",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.liftSpatialTest_apply",
+    "startLine": 67,
+    "endLine": 68,
+    "typeDeps": [
+      "OpenGA.Varifold.liftSpatialTest",
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.liftSpatialTest",
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.plane",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.plane",
+    "startLine": 63,
+    "endLine": 63,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.finrank_plane",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.finrank_plane",
+    "startLine": 41,
+    "endLine": 42,
+    "typeDeps": [
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.plane.eq_1",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.plane.eq_1",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.dirac.eq_1",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Atomic",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.dirac.eq_1",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Grassmannian.instSecondCountableTopology",
+      "OpenGA.Grassmannian.instBorelSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instCompactSpace",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Varifold.dirac",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.dirac",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.surfaceJacobian",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.surfaceJacobian",
+    "startLine": 33,
+    "endLine": 36,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.continuous_areaDensity",
+    "module": "OpenGALib.Analysis.AreaEnergy",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.continuous_areaDensity",
+    "startLine": 88,
+    "endLine": 90,
+    "typeDeps": [
+      "OpenGA.areaDensity"
+    ],
+    "valueDeps": [
+      "OpenGA.areaDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.instSMulNNReal",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": true,
+    "userName": "OpenGA.Varifold.instSMulNNReal",
+    "startLine": 94,
+    "endLine": 94,
+    "typeDeps": [
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold.regular",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.testIntegral_ofWeightedMap",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.WeightedMap",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.testIntegral_ofWeightedMap",
+    "startLine": 59,
+    "endLine": 69,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.ofWeightedMap",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.instSecondCountableTopology",
+      "OpenGA.Grassmannian.instBorelSpace",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.weightMeasure.eq_1",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.weightMeasure.eq_1",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.weightMeasure"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mass_ofWeightedMap",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.WeightedMap",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mass_ofWeightedMap",
+    "startLine": 44,
+    "endLine": 49,
+    "typeDeps": [
+      "OpenGA.Varifold.mass",
+      "OpenGA.Varifold.ofWeightedMap",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.mass",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold.ofWeightedMap",
+      "OpenGA.Varifold.measure_ofWeightedMap",
+      "OpenGA.Varifold.mass.eq_1",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mem_support_iff",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mem_support_iff",
+    "startLine": 84,
+    "endLine": 86,
+    "typeDeps": [
+      "OpenGA.Varifold.support",
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.plane_eq_range",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.plane_eq_range",
+    "startLine": 65,
+    "endLine": 65,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.plane",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.instZero",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": true,
+    "userName": "OpenGA.Varifold.instZero",
+    "startLine": 88,
+    "endLine": 88,
+    "typeDeps": [
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.tendsto_weightMeasure_integral",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Convergence",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.tendsto_weightMeasure_integral",
+    "startLine": 74,
+    "endLine": 81,
+    "typeDeps": [
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.liftSpatialTest",
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold.testIntegral_liftSpatialTest",
+      "OpenGA.Varifold.tendsto_iff_testIntegral",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.weightMeasure",
+      "OpenGA.Varifold.testIntegral"
+    ]
+  },
+  {
+    "name": "OpenGA.energyDensity_sq_sub_areaDensity_sq",
+    "module": "OpenGALib.Analysis.AreaEnergy",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.energyDensity_sq_sub_areaDensity_sq",
+    "startLine": 57,
+    "endLine": 62,
+    "typeDeps": [
+      "OpenGA.energyDensity",
+      "OpenGA.areaDensity"
+    ],
+    "valueDeps": [
+      "OpenGA.areaDensity_sq",
+      "OpenGA.energyDensity",
+      "OpenGA.energyDensity.eq_1",
+      "OpenGA.areaDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.testIntegral_add",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.testIntegral_add",
+    "startLine": 119,
+    "endLine": 122,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.instAdd",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.instSecondCountableTopology",
+      "OpenGA.Varifold.regular",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Grassmannian.instBorelSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.rec",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "rec",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.rec",
+    "startLine": 60,
+    "endLine": 66,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Varifold.SurfaceTangentLift.mk",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.Varifold.weightMeasure_compact_lt_top",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.weightMeasure_compact_lt_top",
+    "startLine": 75,
+    "endLine": 76,
+    "typeDeps": [
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.weightMeasure_finiteOnCompacts",
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.projection_eq_self_iff",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.projection_eq_self_iff",
+    "startLine": 78,
+    "endLine": 79,
+    "typeDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.norm_projection_le",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.norm_projection_le",
+    "startLine": 81,
+    "endLine": 82,
+    "typeDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.instSecondCountableTopology",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": true,
+    "userName": "OpenGA.Grassmannian.instSecondCountableTopology",
+    "startLine": 69,
+    "endLine": 70,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian.isometry_projection",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.isStarProjection_projection",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.isStarProjection_projection",
+    "startLine": 84,
+    "endLine": 85,
+    "typeDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.measure",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.measure",
+    "startLine": 31,
+    "endLine": 31,
+    "typeDeps": [
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.mk",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "ctor",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.mk",
+    "startLine": 62,
+    "endLine": 62,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.Varifold.support",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.support",
+    "startLine": 78,
+    "endLine": 79,
+    "typeDeps": [
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.mk.noConfusion",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.mk.noConfusion",
+    "startLine": 62,
+    "endLine": 62,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Varifold.SurfaceTangentLift.mk",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.noConfusion",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Varifold.SurfaceTangentLift.mk",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.testIntegral_dirac",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Atomic",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.testIntegral_dirac",
+    "startLine": 32,
+    "endLine": 34,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.dirac",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.instSecondCountableTopology",
+      "OpenGA.Grassmannian.instBorelSpace",
+      "OpenGA.Grassmannian.instCompactSpace",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OrthonormalBasis.sum_apply_diagonal_invariant",
+    "module": "OpenGALib.Algebraic.Auxiliary.OrthonormalBasisDiagonal",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OrthonormalBasis.sum_apply_diagonal_invariant",
+    "startLine": 97,
+    "endLine": 141,
+    "typeDeps": [],
+    "valueDeps": [
+      "_private.OpenGALib.Algebraic.Auxiliary.OrthonormalBasisDiagonal.0.OrthonormalBasis.sum_inner_mul_inner_other_basis",
+      "_private.OpenGALib.Algebraic.Auxiliary.OrthonormalBasisDiagonal.0.OrthonormalBasis.expand_diagonal_via_other_basis"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.projection.eq_1",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.projection.eq_1",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.testIntegral_liftSpatialTest",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Convergence",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.testIntegral_liftSpatialTest",
+    "startLine": 70,
+    "endLine": 72,
+    "typeDeps": [
+      "OpenGA.Varifold.liftSpatialTest",
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure",
+      "OpenGA.Varifold.testIntegral"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold.integral_weightMeasure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.weightMeasure"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.ofParametrization",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.ofParametrization",
+    "startLine": 90,
+    "endLine": 97,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.plane",
+      "OpenGA.Varifold.ofWeightedMap",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Varifold.SurfaceTangentLift.measurable_plane"
+    ]
+  },
+  {
+    "name": "_private.OpenGALib.Algebraic.Auxiliary.OrthonormalBasisDiagonal.0.OrthonormalBasis.sum_inner_mul_inner_other_basis",
+    "module": "OpenGALib.Algebraic.Auxiliary.OrthonormalBasisDiagonal",
+    "kind": "theorem",
+    "isPrivate": true,
+    "isInstance": false,
+    "userName": "OrthonormalBasis.sum_inner_mul_inner_other_basis",
+    "startLine": 86,
+    "endLine": 95,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.Varifold.linearSurfaceTangentLift",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.linearSurfaceTangentLift",
+    "startLine": 68,
+    "endLine": 74,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Varifold.SurfaceTangentLift.mk",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.plane",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.plane",
+    "startLine": 38,
+    "endLine": 39,
+    "typeDeps": [
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.areaDensity_basis_independent",
+    "module": "OpenGALib.Analysis.AreaEnergy.LinearMap",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.areaDensity_basis_independent",
+    "startLine": 46,
+    "endLine": 51,
+    "typeDeps": [
+      "OpenGA.areaDensity"
+    ],
+    "valueDeps": [
+      "OpenGA.areaDensity_eq_normDet",
+      "OpenGA.areaDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.noConfusion",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.noConfusion",
+    "startLine": 60,
+    "endLine": 66,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.noConfusionType"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.casesOn",
+      "OpenGA.Varifold.SurfaceTangentLift.noConfusionType",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.casesOn",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.casesOn",
+    "startLine": 60,
+    "endLine": 66,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Varifold.SurfaceTangentLift.mk",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.rec",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Varifold.SurfaceTangentLift.mk",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.weightMeasure",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.weightMeasure",
+    "startLine": 47,
+    "endLine": 48,
+    "typeDeps": [
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.ext_iff",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.ext_iff",
+    "startLine": 44,
+    "endLine": 44,
+    "typeDeps": [
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.ext",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "inductive",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift",
+    "startLine": 60,
+    "endLine": 66,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.Grassmannian",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian",
+    "startLine": 28,
+    "endLine": 31,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.Grassmannian.isClosed_range_projection",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.isClosed_range_projection",
+    "startLine": 113,
+    "endLine": 123,
+    "typeDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.range_projection",
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.measure_add",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.measure_add",
+    "startLine": 97,
+    "endLine": 97,
+    "typeDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold.instAdd",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold.instAdd",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.ext_of_testIntegral_eq",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Convergence",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.ext_of_testIntegral_eq",
+    "startLine": 29,
+    "endLine": 33,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.instSecondCountableTopology",
+      "OpenGA.Varifold.regular",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold.ext",
+      "OpenGA.Grassmannian.instBorelSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instCompactSpace",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ]
+  },
+  {
+    "name": "OpenGA.areaDensity_le_energyDensity",
+    "module": "OpenGALib.Analysis.AreaEnergy",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.areaDensity_le_energyDensity",
+    "startLine": 64,
+    "endLine": 69,
+    "typeDeps": [
+      "OpenGA.energyDensity",
+      "OpenGA.areaDensity"
+    ],
+    "valueDeps": [
+      "OpenGA.energyDensity_nonneg",
+      "OpenGA.energyDensity_sq_sub_areaDensity_sq",
+      "OpenGA.energyDensity",
+      "OpenGA.areaDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.ofWeightedMap",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.WeightedMap",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.ofWeightedMap",
+    "startLine": 28,
+    "endLine": 36,
+    "typeDeps": [
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Grassmannian.instSecondCountableTopology",
+      "OpenGA.Grassmannian.instBorelSpace",
+      "OpenGA.Grassmannian.instCompactSpace",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.energyDensity_basis_independent",
+    "module": "OpenGALib.Analysis.AreaEnergy.LinearMap",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.energyDensity_basis_independent",
+    "startLine": 54,
+    "endLine": 63,
+    "typeDeps": [
+      "OpenGA.energyDensity"
+    ],
+    "valueDeps": [
+      "OrthonormalBasis.sum_apply_diagonal_invariant",
+      "OpenGA.energyDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mass_eq_weightMeasure_univ",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mass_eq_weightMeasure_univ",
+    "startLine": 71,
+    "endLine": 73,
+    "typeDeps": [
+      "OpenGA.Varifold.mass",
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold.weightMeasure_apply",
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.dirac",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Atomic",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.dirac",
+    "startLine": 21,
+    "endLine": 23,
+    "typeDeps": [
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Grassmannian.instSecondCountableTopology",
+      "OpenGA.Grassmannian.instBorelSpace",
+      "OpenGA.Grassmannian.instCompactSpace",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mk",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "ctor",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mk",
+    "startLine": 29,
+    "endLine": 29,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.Varifold.noConfusionType",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.noConfusionType",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.casesOn",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.ofParametrization_independent_of_lift",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.ofParametrization_independent_of_lift",
+    "startLine": 118,
+    "endLine": 127,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.ofParametrization",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.ext",
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.continuous_surfaceJacobian",
+      "OpenGA.Varifold.SurfaceTangentLift.plane",
+      "OpenGA.Varifold.ofWeightedMap_eq_of_plane_eq",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Varifold.SurfaceTangentLift.plane_eq_range",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.SurfaceTangentLift.measurable_plane"
+    ]
+  },
+  {
+    "name": "OpenGA.integral_areaDensity_eq_energyDensity_iff",
+    "module": "OpenGALib.Analysis.AreaEnergy",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.integral_areaDensity_eq_energyDensity_iff",
+    "startLine": 113,
+    "endLine": 123,
+    "typeDeps": [
+      "OpenGA.energyDensity",
+      "OpenGA.areaDensity"
+    ],
+    "valueDeps": [
+      "OpenGA.areaDensity_le_energyDensity",
+      "OpenGA.integrable_areaDensity",
+      "OpenGA.energyDensity",
+      "OpenGA.areaDensity_eq_energyDensity_iff",
+      "OpenGA.areaDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mass_ofParametrization",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mass_ofParametrization",
+    "startLine": 99,
+    "endLine": 106,
+    "typeDeps": [
+      "OpenGA.Varifold.mass",
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.ofParametrization",
+      "OpenGA.Varifold.surfaceJacobian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.plane",
+      "OpenGA.Varifold.mass_ofWeightedMap",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Varifold.SurfaceTangentLift.measurable_plane"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.rec",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "rec",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.rec",
+    "startLine": 28,
+    "endLine": 32,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.Varifold.recOn",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.recOn",
+    "startLine": 28,
+    "endLine": 32,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.mk",
+      "OpenGA.Varifold.rec",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.areaDensity_eq_energyDensity_iff",
+    "module": "OpenGALib.Analysis.AreaEnergy",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.areaDensity_eq_energyDensity_iff",
+    "startLine": 71,
+    "endLine": 86,
+    "typeDeps": [
+      "OpenGA.energyDensity",
+      "OpenGA.areaDensity"
+    ],
+    "valueDeps": [
+      "OpenGA.energyDensity_nonneg",
+      "OpenGA.energyDensity_sq_sub_areaDensity_sq",
+      "OpenGA.energyDensity",
+      "OpenGA.areaDensity_nonneg",
+      "OpenGA.areaDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.dist_eq",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.dist_eq",
+    "startLine": 65,
+    "endLine": 67,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian.isometry_projection",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.dirac_ne_of_plane_ne",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Atomic",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.dirac_ne_of_plane_ne",
+    "startLine": 36,
+    "endLine": 41,
+    "typeDeps": [
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.dirac",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.instSecondCountableTopology",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Grassmannian.instBorelSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Varifold.dirac",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.areaDensity_nonneg",
+    "module": "OpenGALib.Analysis.AreaEnergy",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.areaDensity_nonneg",
+    "startLine": 42,
+    "endLine": 43,
+    "typeDeps": [
+      "OpenGA.areaDensity"
+    ],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.Varifold.mass_zero",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mass_zero",
+    "startLine": 108,
+    "endLine": 108,
+    "typeDeps": [
+      "OpenGA.Varifold.instZero",
+      "OpenGA.Varifold.mass",
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.Varifold.weightMeasure_finiteOnCompacts",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": true,
+    "userName": "OpenGA.Varifold.weightMeasure_finiteOnCompacts",
+    "startLine": 57,
+    "endLine": 62,
+    "typeDeps": [
+      "OpenGA.Varifold",
+      "OpenGA.Varifold.weightMeasure"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.regular",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold.weightMeasure_apply",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instCompactSpace",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.weightMeasure"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.continuous_testIntegral",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Convergence",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.continuous_testIntegral",
+    "startLine": 53,
+    "endLine": 55,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.isEmbedding_testIntegral",
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.regular",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": true,
+    "userName": "OpenGA.Varifold.regular",
+    "startLine": 32,
+    "endLine": 32,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.instTopologicalSpace",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Convergence",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": true,
+    "userName": "OpenGA.Varifold.instTopologicalSpace",
+    "startLine": 35,
+    "endLine": 37,
+    "typeDeps": [
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mass_add",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mass_add",
+    "startLine": 109,
+    "endLine": 110,
+    "typeDeps": [
+      "OpenGA.Varifold.mass",
+      "OpenGA.Varifold.instAdd",
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.weightMeasure_dirac",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Atomic",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.weightMeasure_dirac",
+    "startLine": 25,
+    "endLine": 27,
+    "typeDeps": [
+      "OpenGA.Varifold.dirac",
+      "OpenGA.Varifold.weightMeasure",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.projection_mem",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.projection_mem",
+    "startLine": 75,
+    "endLine": 76,
+    "typeDeps": [
+      "OpenGA.Grassmannian.projection",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.integrable_testFunction",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.integrable_testFunction",
+    "startLine": 116,
+    "endLine": 117,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.instSecondCountableTopology",
+      "OpenGA.Varifold.regular",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Grassmannian.instBorelSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.SurfaceTangentLift.recOn",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Parametrization",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.SurfaceTangentLift.recOn",
+    "startLine": 60,
+    "endLine": 66,
+    "typeDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Varifold.SurfaceTangentLift.mk",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.SurfaceTangentLift",
+      "OpenGA.Varifold.SurfaceTangentLift.rec",
+      "OpenGA.Varifold.surfaceJacobian",
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Varifold.SurfaceTangentLift.mk",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.ext",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Grassmannian.ext",
+    "startLine": 44,
+    "endLine": 45,
+    "typeDeps": [
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.plane",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.integral_areaDensity_le_energyDensity",
+    "module": "OpenGALib.Analysis.AreaEnergy",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.integral_areaDensity_le_energyDensity",
+    "startLine": 105,
+    "endLine": 111,
+    "typeDeps": [
+      "OpenGA.energyDensity",
+      "OpenGA.areaDensity"
+    ],
+    "valueDeps": [
+      "OpenGA.areaDensity_le_energyDensity",
+      "OpenGA.integrable_areaDensity",
+      "OpenGA.energyDensity",
+      "OpenGA.areaDensity"
+    ]
+  },
+  {
+    "name": "OpenGA.Grassmannian.instBorelSpace",
+    "module": "OpenGALib.GeometricMeasureTheory.Grassmannian",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": true,
+    "userName": "OpenGA.Grassmannian.instBorelSpace",
+    "startLine": 73,
+    "endLine": 73,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.measure_zero",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.measure_zero",
+    "startLine": 96,
+    "endLine": 96,
+    "typeDeps": [
+      "OpenGA.Varifold.instZero",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.instZero",
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.mass",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.mass",
+    "startLine": 68,
+    "endLine": 69,
+    "typeDeps": [
+      "OpenGA.Varifold"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.measure_smul",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.measure_smul",
+    "startLine": 98,
+    "endLine": 99,
+    "typeDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold.instSMulNNReal",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.measure",
+      "OpenGA.Varifold.instSMulNNReal",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian.instMeasurableSpace",
+      "OpenGA.Grassmannian"
+    ]
+  },
+  {
+    "name": "OpenGA.Varifold.tendsto_iff_testIntegral",
+    "module": "OpenGALib.GeometricMeasureTheory.Varifold.Convergence",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.Varifold.tendsto_iff_testIntegral",
+    "startLine": 45,
+    "endLine": 51,
+    "typeDeps": [
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ],
+    "valueDeps": [
+      "OpenGA.Varifold.isEmbedding_testIntegral",
+      "OpenGA.Grassmannian.instMetricSpace",
+      "OpenGA.Varifold.instTopologicalSpace",
+      "OpenGA.Varifold",
+      "OpenGA.Grassmannian",
+      "OpenGA.Varifold.testIntegral"
+    ]
+  }
+]
