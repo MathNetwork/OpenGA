@@ -35,14 +35,34 @@ def finish(client, record):
     old = json.loads((DIRECTORY / "Metadata/before.json").read_text())["graph"]
     old_edges = {(e["source"], e["target"]) for e in old["edges"]}
     new_edges = {(e["source"], e["target"]) for e in graph["edges"]}
-    if not old_edges <= new_edges:
-        raise RuntimeError("Previously observed dependency edges disappeared; inspect graph before claiming completion")
+    write_atomic(DIRECTORY / "Metadata/goal_graph.json", json_bytes(graph))
+    missing_edges = old_edges - new_edges
+    # The displayed graph can select a different accepted proof of a theorem.
+    # Confirm omitted proof records and their children instead of assuming deletion.
+    old_sketches = {n["node_id"]: n for n in old["nodes"] if n.get("node_type") == "sketch"}
+    omitted = {endpoint for edge in missing_edges for endpoint in edge if endpoint in old_sketches}
+    if any(not any(endpoint in omitted for endpoint in edge) for edge in missing_edges):
+        raise RuntimeError("A previous non-proof dependency disappeared; inspect before continuing")
+    preserved = {}
+    for id in omitted:
+        node = old_sketches[id]
+        decompositions = client.request("/theorems/" + node["parent_theorem_id"] + "/decompositions")
+        live = next((d for d in decompositions["decompositions"]
+                     if d["submission_id"] == node["submission_id"] and not d.get("deprecated_at")), None)
+        children = {d.get("theorem_id") or d.get("definition_id") for d in (live or {}).get("children", [])}
+        previous = {a for a, b in old_edges if b == id}
+        if live is None or not previous <= children:
+            raise RuntimeError("A previous accepted proof or its dependencies changed")
+        preserved[id] = live
+    write_atomic(DIRECTORY / "Metadata/preserved_decompositions.json", json_bytes(preserved))
     record["graph_verification"] = {
         "status": "VERIFIED", "checked_at": publisher.now(), "root_status": "Open",
         "before": {"nodes": len(old["nodes"]), "edges": len(old["edges"])},
         "after": {"nodes": len(graph["nodes"]), "edges": len(graph["edges"])},
         "connected_new_nodes": [e["id"] for e in entries.values() if not e.get("existing_target")],
-        "preserved_prior_edges": True,
+        "preserved_prior_decompositions": True,
+        "prior_edges_not_in_display": [list(e) for e in sorted(missing_edges)],
+        "previously_visible_proofs_omitted": sorted(omitted),
         "path": "Uniform width-controlled surgery topology -> finite extinction -> standard connected-sum decomposition -> simply connected endgame -> existing Poincare goal",
         "open_inputs": [e["id"] for e in record["theorems"] if "proof_path" not in e]}
     write_atomic(DIRECTORY / "Metadata/goal_graph.json", json_bytes(graph))

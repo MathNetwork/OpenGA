@@ -1,26 +1,70 @@
 {
-  "status": "LOCAL_CHECKED_CONDITIONAL_REDUCTION",
+  "status": "PUBLISHED_CONDITIONAL_REDUCTION",
   "namespace": "PoincareFormalization.ExtinctionEndgame",
   "platform_publication": {
     "attempted": true,
-    "graph_updated": false,
-    "status": "WAITING_FOR_PLATFORM",
-    "checked_at": "2026-09-09T21:00:31.925666+00:00",
+    "graph_updated": true,
+    "status": "COMPLETE",
+    "root_status": "Open",
     "record": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/publication.json",
     "source_revision": "20ce5fe376984e6628a05ab1622edd8dc64b3985",
-    "root_status": "Open",
-    "queued_jobs": [
-      {
-        "name": "OpenGA_CoordinateBallConnectedSum",
-        "job_id": "1bcee360-0ff7-4eb0-88ea-824e98b3bf50",
-        "status": "PENDING"
+    "verified_at": "2026-09-09T21:52:44.581898+00:00",
+    "graph": {
+      "after": {
+        "edges": 90,
+        "nodes": 55
       },
-      {
-        "name": "OpenGA_WidthExtinctionTime",
-        "job_id": "0b04854e-3e17-49e7-bed4-00b0843ada67",
-        "status": "PENDING"
-      }
-    ]
+      "before": {
+        "edges": 60,
+        "nodes": 39
+      },
+      "checked_at": "2026-09-09T21:52:43.010736+00:00",
+      "connected_new_nodes": [
+        "OpenGA_CoordinateBallConnectedSum",
+        "OpenGA_SurgeryTopologyEvolution",
+        "OpenGA_ExtinctionWidthControl",
+        "OpenGA_WidthExtinctionTime",
+        "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+        "PoincareFormalization.ExtinctionEndgame.simply_connected_factors_of_connected_sum",
+        "PoincareFormalization.ExtinctionEndgame.not_simply_connected_sphere_handle",
+        "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_connected_sum_spheres",
+        "OpenGA.WidthComparisonTrace.le_extinctionTime",
+        "OpenGA.SurgeryTopologyEvolution.finiteExtinction_of_width_control",
+        "OpenGA.SurgeryTopologyEvolution.topology_from_extinction",
+        "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_standard_decomposition"
+      ],
+      "open_inputs": [
+        "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+        "PoincareFormalization.ExtinctionEndgame.simply_connected_factors_of_connected_sum",
+        "PoincareFormalization.ExtinctionEndgame.not_simply_connected_sphere_handle",
+        "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_connected_sum_spheres"
+      ],
+      "path": "Uniform width-controlled surgery topology -> finite extinction -> standard connected-sum decomposition -> simply connected endgame -> existing Poincare goal",
+      "preserved_prior_decompositions": true,
+      "previously_visible_proofs_omitted": [
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+      ],
+      "prior_edges_not_in_display": [
+        [
+          "16d46789-a853-4a33-a4a3-4134fe549c82",
+          "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+        ],
+        [
+          "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+          "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+        ],
+        [
+          "b0543216-8c0f-4f20-8b76-40d197f69fba",
+          "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+        ],
+        [
+          "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+          "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+        ]
+      ],
+      "root_status": "Open",
+      "status": "VERIFIED"
+    }
   },
   "lean_version": "v4.33.1",
   "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
@@ -109,6 +153,18 @@
       "topological_endgame_open_dependencies": 3,
       "root_open_dependencies": 4,
       "undeclared_proof_holes": 0
+    },
+    "platform_mirror": {
+      "status": "PASS",
+      "command": "lake build",
+      "cwd": "PoincareConjecture",
+      "jobs": 3673
+    },
+    "curation": {
+      "status": "PASS",
+      "command": "python3 PoincareConjecture/check_curation.py",
+      "declarations": 34,
+      "source_reviews": 36
     }
   },
   "files": {

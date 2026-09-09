@@ -55,7 +55,7 @@
       "created_at": "2026-09-09T01:41:09.964537+00:00",
       "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
       "id": "33045187-e820-4325-a253-c8ba2c778897",
-      "milestone_description": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.",
+      "milestone_description": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.\n\n**Colding-Minicozzi foundations.** [The mass of a parametrized surface varifold is bounded by its energy](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be) now connects the Euclidean varifold construction to the same integral area-energy theorem used by the width comparison branch. See the **Area-energy control of parametrized varifolds** milestone for the definitions and verified prerequisites. The geometric CM min-max and variation steps remain open; this foundation does not establish finite-time extinction.\n\n**Finite-extinction endgame in the mission graph.** [Uniform width control forces finite extinction](https://prove2.me/theorems/2e12f604-9e6a-4062-9bac-8727a1a9edb7); [Finite extinction reconstructs a connected sum of standard factors](https://prove2.me/theorems/33f0b928-916f-4ff5-833b-fbc31308c762); [The simply connected endgame for a standard connected-sum decomposition](https://prove2.me/theorems/c508d5db-b2a6-4c25-8144-9a9f55f2b4e2). These nodes now enter a checked [reduction of the existing Poincare goal](https://prove2.me/theorems/7ea2da12-4d1b-4bbc-8257-df87d92f5a8e). The width deadline and finite reconstruction are proved implications for explicitly supplied data. The construction of uniform width-controlled surgery topology and three connected-sum topology inputs remain Open. The extracted evolution has a nonempty initial positive time interval and finite reconstruction histories; it is not a definition of metric Ricci flow. The full geometric finite-extinction and classification milestones remain open.",
       "sort_order": 2,
       "theorem": null,
       "title": "Finite-time extinction"
@@ -167,7 +167,7 @@
       "created_at": "2026-09-09T01:41:10.721747+00:00",
       "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
       "id": "29f0d323-76f4-4288-b819-626a482e9d5f",
-      "milestone_description": "If a Kleiner-Lott Ricci flow with surgery on a closed connected orientable three-manifold $M$ becomes extinct, then $M$ is diffeomorphic to a connected sum of $S^1\\times S^2$ factors and spherical space forms.\n\n[Source: Kleiner-Lott, Lemma 81.2, p. 160](https://arxiv.org/pdf/math/0605667v5#page=160).",
+      "milestone_description": "If a Kleiner-Lott Ricci flow with surgery on a closed connected orientable three-manifold $M$ becomes extinct, then $M$ is diffeomorphic to a connected sum of $S^1\\times S^2$ factors and spherical space forms.\n\n[Source: Kleiner-Lott, Lemma 81.2, p. 160](https://arxiv.org/pdf/math/0605667v5#page=160).\n\n**Finite-extinction endgame in the mission graph.** [Uniform width control forces finite extinction](https://prove2.me/theorems/2e12f604-9e6a-4062-9bac-8727a1a9edb7); [Finite extinction reconstructs a connected sum of standard factors](https://prove2.me/theorems/33f0b928-916f-4ff5-833b-fbc31308c762); [The simply connected endgame for a standard connected-sum decomposition](https://prove2.me/theorems/c508d5db-b2a6-4c25-8144-9a9f55f2b4e2). These nodes now enter a checked [reduction of the existing Poincare goal](https://prove2.me/theorems/7ea2da12-4d1b-4bbc-8257-df87d92f5a8e). The width deadline and finite reconstruction are proved implications for explicitly supplied data. The construction of uniform width-controlled surgery topology and three connected-sum topology inputs remain Open. The extracted evolution has a nonempty initial positive time interval and finite reconstruction histories; it is not a definition of metric Ricci flow. The full geometric finite-extinction and classification milestones remain open.",
       "sort_order": 3,
       "theorem": null,
       "title": "Topology from extinction"
@@ -188,5 +188,5 @@
     "title": "Notes on Perelman's Papers",
     "url": "https://arxiv.org/pdf/math/0605667v5"
   },
-  "verified_at": "2026-09-09T18:33:48.369706+00:00"
+  "verified_at": "2026-09-09T21:52:44.581898+00:00"
 }

@@ -1,6 +1,6 @@
 {
   "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
-  "reviewed_at": "2026-09-09T20:04:43.342079+00:00",
+  "reviewed_at": "2026-09-09T21:54:09.427538+00:00",
   "reviews": {
     "01167772-943a-4c75-ab15-9f7b235777a8": {
       "declarations": [
@@ -519,6 +519,88 @@
       "source_theorem_id": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
       "source_url": "https://prove2.me/api/v1/submissions/fd6f90da-3fa3-48c4-95a0-f36e42b9fe72/solution",
       "status": "integrated"
+    },
+    "f49a1f88-a5c8-43b7-a45a-5768ddb274e8": {
+      "source_theorem_id": "945e8722-bd96-4eba-a6eb-6458fadeea7a",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "980ca65bd817ead1a86b8e035c58f2749503d5defb96cf9aef8c97c19865154e",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/f49a1f88-a5c8-43b7-a45a-5768ddb274e8/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "OpenGA.WidthComparisonTrace.le_extinctionTime",
+          "path": "OpenGALib/Analysis/ComparisonExtinction.lean"
+        }
+      ],
+      "scope": "Proved implications for explicitly supplied scalar/width comparison traces and finite topological surgery reconstruction records. The export types and definition bodies match OpenGA, and the source proof closure uses only standard logical axioms. The geometric construction is an open mission input."
+    },
+    "6beb3841-4356-42a3-b3df-a417e4042a5c": {
+      "source_theorem_id": "2e12f604-9e6a-4062-9bac-8727a1a9edb7",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "4b9738d885d25dc8d28eec99c31c0cd06fc606a35e5dd22cd87c5ba4d410a7ee",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/6beb3841-4356-42a3-b3df-a417e4042a5c/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "OpenGA.SurgeryTopologyEvolution.finiteExtinction_of_width_control",
+          "path": "OpenGALib/Topology/ExtinctionEndgame.lean"
+        }
+      ],
+      "scope": "Proved implications for explicitly supplied scalar/width comparison traces and finite topological surgery reconstruction records. The export types and definition bodies match OpenGA, and the source proof closure uses only standard logical axioms. The geometric construction is an open mission input."
+    },
+    "58f269c4-3b23-4a74-8345-965d2603ca5c": {
+      "source_theorem_id": "33f0b928-916f-4ff5-833b-fbc31308c762",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "ddedb41c8809646f4262c9587ebadab4a4585231ae10f745c1aa5425db0ca6df",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/58f269c4-3b23-4a74-8345-965d2603ca5c/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "OpenGA.SurgeryTopologyEvolution.topology_from_extinction",
+          "path": "OpenGALib/Topology/SurgeryReconstruction.lean"
+        }
+      ],
+      "scope": "Proved implications for explicitly supplied scalar/width comparison traces and finite topological surgery reconstruction records. The export types and definition bodies match OpenGA, and the source proof closure uses only standard logical axioms. The geometric construction is an open mission input."
+    },
+    "a63d8d8d-3824-4e31-92a5-75d2e263bf09": {
+      "source_theorem_id": "c508d5db-b2a6-4c25-8144-9a9f55f2b4e2",
+      "source_status": "SKETCH_ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "e7a5a90fd3863cc8082641fdeedc7d9a4006816b97be1776851a8a2d60ebdf02",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/a63d8d8d-3824-4e31-92a5-75d2e263bf09/solution",
+      "status": "deferred",
+      "declarations": [],
+      "deferred_theorem_ids": [
+        "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+        "cbde63f3-ca2b-4aef-b124-5827b74f7e4c",
+        "eafa0066-fef6-45ad-87b1-02fc3898b4f8",
+        "82499fe3-a4f5-4f42-96da-34e3e6fe56ba"
+      ],
+      "reason": "Verified conditional endgame, kept in the mission workspace. The extracted geometric-data construction and three topology lemmas remain Open; this sketch is not admitted into the reusable library as an unconditional proof."
+    },
+    "25d76430-fc9b-4aaa-9490-50a596f993ff": {
+      "source_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "source_status": "SKETCH_ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "a97ca9de32a9c314a89de5c3875973f44258ca044e8cd5589d49ba81dc3bc9e7",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/25d76430-fc9b-4aaa-9490-50a596f993ff/solution",
+      "status": "deferred",
+      "declarations": [],
+      "deferred_theorem_ids": [
+        "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+        "cbde63f3-ca2b-4aef-b124-5827b74f7e4c",
+        "eafa0066-fef6-45ad-87b1-02fc3898b4f8",
+        "82499fe3-a4f5-4f42-96da-34e3e6fe56ba"
+      ],
+      "reason": "Verified conditional endgame, kept in the mission workspace. The extracted geometric-data construction and three topology lemmas remain Open; this sketch is not admitted into the reusable library as an unconditional proof."
     }
   },
   "schema_version": 1

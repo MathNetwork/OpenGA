@@ -54,7 +54,7 @@
         "started_at": "2026-09-09T20:49:57.015995+00:00",
         "status": "PUBLISHED",
         "theorem_id": "8a4a74f9-f4d9-4425-9a7c-390771b2977a",
-        "verified_at": "2026-09-09T21:04:34.476567+00:00"
+        "verified_at": "2026-09-09T21:52:29.229336+00:00"
       },
       "sha256": "4beee1de6655a98b3cf80f42d0bb391104c08a18b9512993bb76603a4186429b"
     },
@@ -113,7 +113,7 @@
         "started_at": "2026-09-09T21:04:34.746081+00:00",
         "status": "PUBLISHED",
         "theorem_id": "4593f200-a9c0-4715-9c46-b8c80a268057",
-        "verified_at": "2026-09-09T21:06:03.442174+00:00"
+        "verified_at": "2026-09-09T21:52:29.407417+00:00"
       },
       "sha256": "b6ec59174acb352cb61ba878aa52f93a65471db0a7453d585bb5cf68be1d5d25"
     },
@@ -173,7 +173,7 @@
         "started_at": "2026-09-09T21:06:03.649022+00:00",
         "status": "PUBLISHED",
         "theorem_id": "619035ff-1499-4934-8c9f-89230aeafd54",
-        "verified_at": "2026-09-09T21:06:34.688373+00:00"
+        "verified_at": "2026-09-09T21:52:29.574806+00:00"
       },
       "sha256": "afe4ed0e6b0879f093815c8e7478a4dc256b1a4cd398b1ffbe072f1b84136d18"
     },
@@ -230,7 +230,7 @@
         "started_at": "2026-09-09T20:49:57.538531+00:00",
         "status": "PUBLISHED",
         "theorem_id": "95ea3aea-cf45-4445-aeaf-765e9a9e127b",
-        "verified_at": "2026-09-09T21:04:35.686494+00:00"
+        "verified_at": "2026-09-09T21:52:29.748837+00:00"
       },
       "sha256": "a02f23e506357ca800daf7629864e60452ffc1098d47aabd6c80630a9a451cf1"
     }
@@ -285,7 +285,99 @@
       "sha256": "8f601ae71ec55995167ff09f845daea0707e662608f45c127642dc98a0581933"
     }
   ],
+  "graph_verification": {
+    "after": {
+      "edges": 90,
+      "nodes": 55
+    },
+    "before": {
+      "edges": 60,
+      "nodes": 39
+    },
+    "checked_at": "2026-09-09T21:52:43.010736+00:00",
+    "connected_new_nodes": [
+      "OpenGA_CoordinateBallConnectedSum",
+      "OpenGA_SurgeryTopologyEvolution",
+      "OpenGA_ExtinctionWidthControl",
+      "OpenGA_WidthExtinctionTime",
+      "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+      "PoincareFormalization.ExtinctionEndgame.simply_connected_factors_of_connected_sum",
+      "PoincareFormalization.ExtinctionEndgame.not_simply_connected_sphere_handle",
+      "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_connected_sum_spheres",
+      "OpenGA.WidthComparisonTrace.le_extinctionTime",
+      "OpenGA.SurgeryTopologyEvolution.finiteExtinction_of_width_control",
+      "OpenGA.SurgeryTopologyEvolution.topology_from_extinction",
+      "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_standard_decomposition"
+    ],
+    "open_inputs": [
+      "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+      "PoincareFormalization.ExtinctionEndgame.simply_connected_factors_of_connected_sum",
+      "PoincareFormalization.ExtinctionEndgame.not_simply_connected_sphere_handle",
+      "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_connected_sum_spheres"
+    ],
+    "path": "Uniform width-controlled surgery topology -> finite extinction -> standard connected-sum decomposition -> simply connected endgame -> existing Poincare goal",
+    "preserved_prior_decompositions": true,
+    "previously_visible_proofs_omitted": [
+      "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+    ],
+    "prior_edges_not_in_display": [
+      [
+        "16d46789-a853-4a33-a4a3-4134fe549c82",
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+      ],
+      [
+        "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+      ],
+      [
+        "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+      ],
+      [
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+      ]
+    ],
+    "root_status": "Open",
+    "status": "VERIFIED"
+  },
   "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "milestone_annotations": {
+    "29f0d323-76f4-4288-b819-626a482e9d5f": {
+      "after": "If a Kleiner-Lott Ricci flow with surgery on a closed connected orientable three-manifold $M$ becomes extinct, then $M$ is diffeomorphic to a connected sum of $S^1\\times S^2$ factors and spherical space forms.\n\n[Source: Kleiner-Lott, Lemma 81.2, p. 160](https://arxiv.org/pdf/math/0605667v5#page=160).\n\n**Finite-extinction endgame in the mission graph.** [Uniform width control forces finite extinction](https://prove2.me/theorems/2e12f604-9e6a-4062-9bac-8727a1a9edb7); [Finite extinction reconstructs a connected sum of standard factors](https://prove2.me/theorems/33f0b928-916f-4ff5-833b-fbc31308c762); [The simply connected endgame for a standard connected-sum decomposition](https://prove2.me/theorems/c508d5db-b2a6-4c25-8144-9a9f55f2b4e2). These nodes now enter a checked [reduction of the existing Poincare goal](https://prove2.me/theorems/7ea2da12-4d1b-4bbc-8257-df87d92f5a8e). The width deadline and finite reconstruction are proved implications for explicitly supplied data. The construction of uniform width-controlled surgery topology and three connected-sum topology inputs remain Open. The extracted evolution has a nonempty initial positive time interval and finite reconstruction histories; it is not a definition of metric Ricci flow. The full geometric finite-extinction and classification milestones remain open.",
+      "before": "If a Kleiner-Lott Ricci flow with surgery on a closed connected orientable three-manifold $M$ becomes extinct, then $M$ is diffeomorphic to a connected sum of $S^1\\times S^2$ factors and spherical space forms.\n\n[Source: Kleiner-Lott, Lemma 81.2, p. 160](https://arxiv.org/pdf/math/0605667v5#page=160).",
+      "canonical_theorem": null,
+      "response": {
+        "completed": false,
+        "created_at": "2026-09-09T01:41:10.721747+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "id": "29f0d323-76f4-4288-b819-626a482e9d5f",
+        "milestone_description": "If a Kleiner-Lott Ricci flow with surgery on a closed connected orientable three-manifold $M$ becomes extinct, then $M$ is diffeomorphic to a connected sum of $S^1\\times S^2$ factors and spherical space forms.\n\n[Source: Kleiner-Lott, Lemma 81.2, p. 160](https://arxiv.org/pdf/math/0605667v5#page=160).\n\n**Finite-extinction endgame in the mission graph.** [Uniform width control forces finite extinction](https://prove2.me/theorems/2e12f604-9e6a-4062-9bac-8727a1a9edb7); [Finite extinction reconstructs a connected sum of standard factors](https://prove2.me/theorems/33f0b928-916f-4ff5-833b-fbc31308c762); [The simply connected endgame for a standard connected-sum decomposition](https://prove2.me/theorems/c508d5db-b2a6-4c25-8144-9a9f55f2b4e2). These nodes now enter a checked [reduction of the existing Poincare goal](https://prove2.me/theorems/7ea2da12-4d1b-4bbc-8257-df87d92f5a8e). The width deadline and finite reconstruction are proved implications for explicitly supplied data. The construction of uniform width-controlled surgery topology and three connected-sum topology inputs remain Open. The extracted evolution has a nonempty initial positive time interval and finite reconstruction histories; it is not a definition of metric Ricci flow. The full geometric finite-extinction and classification milestones remain open.",
+        "sort_order": 3,
+        "theorem": null,
+        "title": "Topology from extinction"
+      },
+      "status": "VERIFIED",
+      "verified_at": "2026-09-09T21:52:44.581889+00:00"
+    },
+    "33045187-e820-4325-a253-c8ba2c778897": {
+      "after": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.\n\n**Colding-Minicozzi foundations.** [The mass of a parametrized surface varifold is bounded by its energy](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be) now connects the Euclidean varifold construction to the same integral area-energy theorem used by the width comparison branch. See the **Area-energy control of parametrized varifolds** milestone for the definitions and verified prerequisites. The geometric CM min-max and variation steps remain open; this foundation does not establish finite-time extinction.\n\n**Finite-extinction endgame in the mission graph.** [Uniform width control forces finite extinction](https://prove2.me/theorems/2e12f604-9e6a-4062-9bac-8727a1a9edb7); [Finite extinction reconstructs a connected sum of standard factors](https://prove2.me/theorems/33f0b928-916f-4ff5-833b-fbc31308c762); [The simply connected endgame for a standard connected-sum decomposition](https://prove2.me/theorems/c508d5db-b2a6-4c25-8144-9a9f55f2b4e2). These nodes now enter a checked [reduction of the existing Poincare goal](https://prove2.me/theorems/7ea2da12-4d1b-4bbc-8257-df87d92f5a8e). The width deadline and finite reconstruction are proved implications for explicitly supplied data. The construction of uniform width-controlled surgery topology and three connected-sum topology inputs remain Open. The extracted evolution has a nonempty initial positive time interval and finite reconstruction histories; it is not a definition of metric Ricci flow. The full geometric finite-extinction and classification milestones remain open.",
+      "before": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.\n\n**Colding-Minicozzi foundations.** [The mass of a parametrized surface varifold is bounded by its energy](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be) now connects the Euclidean varifold construction to the same integral area-energy theorem used by the width comparison branch. See the **Area-energy control of parametrized varifolds** milestone for the definitions and verified prerequisites. The geometric CM min-max and variation steps remain open; this foundation does not establish finite-time extinction.",
+      "canonical_theorem": null,
+      "response": {
+        "completed": false,
+        "created_at": "2026-09-09T01:41:09.964537+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "id": "33045187-e820-4325-a253-c8ba2c778897",
+        "milestone_description": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.\n\n**Colding-Minicozzi foundations.** [The mass of a parametrized surface varifold is bounded by its energy](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be) now connects the Euclidean varifold construction to the same integral area-energy theorem used by the width comparison branch. See the **Area-energy control of parametrized varifolds** milestone for the definitions and verified prerequisites. The geometric CM min-max and variation steps remain open; this foundation does not establish finite-time extinction.\n\n**Finite-extinction endgame in the mission graph.** [Uniform width control forces finite extinction](https://prove2.me/theorems/2e12f604-9e6a-4062-9bac-8727a1a9edb7); [Finite extinction reconstructs a connected sum of standard factors](https://prove2.me/theorems/33f0b928-916f-4ff5-833b-fbc31308c762); [The simply connected endgame for a standard connected-sum decomposition](https://prove2.me/theorems/c508d5db-b2a6-4c25-8144-9a9f55f2b4e2). These nodes now enter a checked [reduction of the existing Poincare goal](https://prove2.me/theorems/7ea2da12-4d1b-4bbc-8257-df87d92f5a8e). The width deadline and finite reconstruction are proved implications for explicitly supplied data. The construction of uniform width-controlled surgery topology and three connected-sum topology inputs remain Open. The extracted evolution has a nonempty initial positive time interval and finite reconstruction histories; it is not a definition of metric Ricci flow. The full geometric finite-extinction and classification milestones remain open.",
+        "sort_order": 2,
+        "theorem": null,
+        "title": "Finite-time extinction"
+      },
+      "status": "VERIFIED",
+      "verified_at": "2026-09-09T21:52:43.813891+00:00"
+    }
+  },
   "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
   "schema_version": 1,
   "scope": "Extracted topology and width data, three proved implications, four open inputs, a conditional topology sketch and a reduction of the existing root. The full KL/CM geometric construction remains open.",
@@ -385,7 +477,7 @@
       "sha256": "199a2cd84ab68e585a61e7fed9945591bf0b1ab16944c4ba813c4a4942a5c8e3"
     }
   ],
-  "status": "VALIDATED",
+  "status": "COMPLETE",
   "theorems": [
     {
       "definitions": [
@@ -448,7 +540,7 @@
         "started_at": "2026-09-09T21:06:34.947538+00:00",
         "status": "PUBLISHED",
         "theorem_id": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
-        "verified_at": "2026-09-09T21:07:03.732262+00:00"
+        "verified_at": "2026-09-09T21:52:29.911647+00:00"
       },
       "sha256": "1447851f3c52c15e4c4a0e72727ad0f95c1e521e54f89583ed53b5f79251dd85"
     },
@@ -513,7 +605,7 @@
         "started_at": "2026-09-09T21:06:04.489633+00:00",
         "status": "PUBLISHED",
         "theorem_id": "cbde63f3-ca2b-4aef-b124-5827b74f7e4c",
-        "verified_at": "2026-09-09T21:06:35.798488+00:00"
+        "verified_at": "2026-09-09T21:52:30.075081+00:00"
       },
       "sha256": "83463d14d54580106bb844c7d77f664b73073a9abdbf0fa260d07ce99cb2d638"
     },
@@ -578,7 +670,7 @@
         "started_at": "2026-09-09T21:06:05.961884+00:00",
         "status": "PUBLISHED",
         "theorem_id": "eafa0066-fef6-45ad-87b1-02fc3898b4f8",
-        "verified_at": "2026-09-09T21:06:36.270342+00:00"
+        "verified_at": "2026-09-09T21:52:30.240029+00:00"
       },
       "sha256": "8a09758a4598afa9733965cecdb5e5b5cb0de8f548a8b19d89003ea4d500e056"
     },
@@ -643,7 +735,7 @@
         "started_at": "2026-09-09T21:06:06.591038+00:00",
         "status": "PUBLISHED",
         "theorem_id": "82499fe3-a4f5-4f42-96da-34e3e6fe56ba",
-        "verified_at": "2026-09-09T21:06:36.649246+00:00"
+        "verified_at": "2026-09-09T21:52:30.425247+00:00"
       },
       "sha256": "d8fd0cdbf946bb3ca12e4e84fdae04bb781de174a3e7c299778e273a8701362c"
     },
@@ -717,12 +809,12 @@
         "started_at": "2026-09-09T21:04:36.084005+00:00",
         "status": "PUBLISHED",
         "theorem_id": "945e8722-bd96-4eba-a6eb-6458fadeea7a",
-        "verified_at": "2026-09-09T21:07:03.997978+00:00"
+        "verified_at": "2026-09-09T21:52:30.599600+00:00"
       },
       "sha256": "4242242605cdf8c6476e1a2bfb694fd4517b33f2f204d98f7b85bb519597759b",
       "submission": {
         "accepted_source_sha256": "980ca65bd817ead1a86b8e035c58f2749503d5defb96cf9aef8c97c19865154e",
-        "checked_at": "2026-09-09T21:07:04.453914+00:00",
+        "checked_at": "2026-09-09T21:52:31.056114+00:00",
         "response": {
           "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
           "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
@@ -742,7 +834,7 @@
           "updated_at": "2026-09-09T21:06:57.506996+00:00",
           "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
         },
-        "verified_at": "2026-09-09T21:07:04.953516+00:00"
+        "verified_at": "2026-09-09T21:52:31.627093+00:00"
       }
     },
     {
@@ -813,12 +905,12 @@
         "started_at": "2026-09-09T21:06:37.521508+00:00",
         "status": "PUBLISHED",
         "theorem_id": "2e12f604-9e6a-4062-9bac-8727a1a9edb7",
-        "verified_at": "2026-09-09T21:07:52.888657+00:00"
+        "verified_at": "2026-09-09T21:52:31.807404+00:00"
       },
       "sha256": "3cbf8af35d63fa7f11dd9027e281d355fe9f3e6551e258168dbf5a2af5ed02ce",
       "submission": {
         "accepted_source_sha256": "4b9738d885d25dc8d28eec99c31c0cd06fc606a35e5dd22cd87c5ba4d410a7ee",
-        "checked_at": "2026-09-09T21:07:53.332016+00:00",
+        "checked_at": "2026-09-09T21:52:32.168894+00:00",
         "response": {
           "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
           "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
@@ -838,7 +930,7 @@
           "updated_at": "2026-09-09T21:07:48.949776+00:00",
           "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
         },
-        "verified_at": "2026-09-09T21:07:53.863713+00:00"
+        "verified_at": "2026-09-09T21:52:33.322257+00:00"
       }
     },
     {
@@ -906,12 +998,12 @@
         "started_at": "2026-09-09T21:06:10.133402+00:00",
         "status": "PUBLISHED",
         "theorem_id": "33f0b928-916f-4ff5-833b-fbc31308c762",
-        "verified_at": "2026-09-09T21:07:18.080022+00:00"
+        "verified_at": "2026-09-09T21:52:33.572579+00:00"
       },
       "sha256": "028542e721e41b71a85652de80062eabcc18013c0d1d09897ad9491d101e37a2",
       "submission": {
         "accepted_source_sha256": "ddedb41c8809646f4262c9587ebadab4a4585231ae10f745c1aa5425db0ca6df",
-        "checked_at": "2026-09-09T21:07:18.413946+00:00",
+        "checked_at": "2026-09-09T21:52:34.288384+00:00",
         "response": {
           "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
           "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
@@ -931,7 +1023,7 @@
           "updated_at": "2026-09-09T21:07:09.666214+00:00",
           "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
         },
-        "verified_at": "2026-09-09T21:07:19.128560+00:00"
+        "verified_at": "2026-09-09T21:52:35.006573+00:00"
       }
     },
     {
@@ -1004,12 +1096,12 @@
         "started_at": "2026-09-09T21:06:11.006232+00:00",
         "status": "PUBLISHED",
         "theorem_id": "c508d5db-b2a6-4c25-8144-9a9f55f2b4e2",
-        "verified_at": "2026-09-09T21:07:30.787724+00:00"
+        "verified_at": "2026-09-09T21:52:35.359705+00:00"
       },
       "sha256": "28ddbafc558136fb77c23697ee2f8c8e8af4b9528f4520b9f693ca3b0746a012",
       "submission": {
         "accepted_source_sha256": "e7a5a90fd3863cc8082641fdeedc7d9a4006816b97be1776851a8a2d60ebdf02",
-        "checked_at": "2026-09-09T21:07:31.177854+00:00",
+        "checked_at": "2026-09-09T21:52:35.821307+00:00",
         "response": {
           "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
           "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
@@ -1029,7 +1121,7 @@
           "updated_at": "2026-09-09T21:07:22.098982+00:00",
           "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
         },
-        "verified_at": "2026-09-09T21:07:31.687389+00:00"
+        "verified_at": "2026-09-09T21:52:36.558416+00:00"
       }
     },
     {
@@ -1062,12 +1154,12 @@
       "publication": {
         "status": "PUBLISHED",
         "theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
-        "verified_at": "2026-09-09T21:08:37.055583+00:00"
+        "verified_at": "2026-09-09T21:52:36.768472+00:00"
       },
       "sha256": "985a9a5ff7b4debdcbee0cf819b32e3d3ab747d535eb597a085c88e2983288c1",
       "submission": {
         "accepted_source_sha256": "a97ca9de32a9c314a89de5c3875973f44258ca044e8cd5589d49ba81dc3bc9e7",
-        "checked_at": "2026-09-09T21:08:37.371111+00:00",
+        "checked_at": "2026-09-09T21:52:37.243713+00:00",
         "response": {
           "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
           "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
@@ -1087,7 +1179,7 @@
           "updated_at": "2026-09-09T21:08:31.786377+00:00",
           "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
         },
-        "verified_at": "2026-09-09T21:08:37.801154+00:00"
+        "verified_at": "2026-09-09T21:52:38.040129+00:00"
       }
     }
   ],
@@ -1100,5 +1192,16 @@
     "solutions": 5,
     "source_kernel_audit": "122 declarations: only propext, Classical.choice, Quot.sound",
     "status": "passed"
+  },
+  "verified_at": "2026-09-09T21:52:44.581898+00:00",
+  "local_mirror": {
+    "synced_at": "2026-09-09T21:53:57.184611+00:00",
+    "lean_source_files": 96,
+    "nodes": 60,
+    "accepted_submissions": 36,
+    "build": "passed",
+    "curated_declarations_checked": 34,
+    "source_reviews_checked": 36,
+    "unreviewed_submissions": 0
   }
 }

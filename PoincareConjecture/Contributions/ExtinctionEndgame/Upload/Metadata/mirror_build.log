@@ -1,0 +1,103 @@
+⚠ [2817/3090] Replayed Theorems.Thm_PoincareFormalization_surgery_comparison_process_of_not_homeomorph_sphere
+warning: Theorems/Thm_PoincareFormalization_surgery_comparison_process_of_not_homeomorph_sphere.lean:18:8: declaration uses `sorry`
+⚠ [2818/3090] Replayed Theorems.Thm_OpenGA_RadialSurgeryVolumeBudget_events_finite
+warning: Theorems/Thm_OpenGA_RadialSurgeryVolumeBudget_events_finite.lean:16:8: declaration uses `sorry`
+⚠ [2819/3090] Replayed Theorems.Thm_OpenGA_integral_areaDensity_le_energyDensity
+warning: Theorems/Thm_OpenGA_integral_areaDensity_le_energyDensity.lean:15:8: declaration uses `sorry`
+⚠ [2820/3090] Replayed Theorems.Thm_OpenGA_scalar_lower_bound_across_upward_jumps
+warning: Theorems/Thm_OpenGA_scalar_lower_bound_across_upward_jumps.lean:8:8: declaration uses `sorry`
+⚠ [3098/3215] Replayed Theorems.Thm_OpenGA_energyDensity_basis_independent
+warning: Theorems/Thm_OpenGA_energyDensity_basis_independent.lean:20:8: declaration uses `sorry`
+⚠ [3099/3215] Replayed Theorems.Thm_OpenGA_areaDensity_eq_normDet
+warning: Theorems/Thm_OpenGA_areaDensity_eq_normDet.lean:19:8: declaration uses `sorry`
+⚠ [3100/3215] Replayed Theorems.Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le
+warning: Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le.lean:20:8: declaration uses `sorry`
+⚠ [3109/3215] Replayed Theorems.Thm_OpenGA_nonempty_widthComparisonTrace_of_surgeryComparisonProcess
+warning: Theorems/Thm_OpenGA_nonempty_widthComparisonTrace_of_surgeryComparisonProcess.lean:17:8: declaration uses `sorry`
+⚠ [3118/3215] Replayed Theorems.Thm_OpenGA_Varifold_testIntegral_ofWeightedMap
+warning: Theorems/Thm_OpenGA_Varifold_testIntegral_ofWeightedMap.lean:40:8: declaration uses `sorry`
+⚠ [3119/3215] Replayed Theorems.Thm_OpenGA_RadialSurgeryVolumeBudget_removedVolume_lower
+warning: Theorems/Thm_OpenGA_RadialSurgeryVolumeBudget_removedVolume_lower.lean:16:8: declaration uses `sorry`
+⚠ [3120/3215] Replayed Theorems.Thm_OpenGA_areaDensity_basis_independent
+warning: Theorems/Thm_OpenGA_areaDensity_basis_independent.lean:19:8: declaration uses `sorry`
+⚠ [3174/3215] Replayed Theorems.Thm_OpenGA_exists_event_free_partition
+warning: Theorems/Thm_OpenGA_exists_event_free_partition.lean:13:8: declaration uses `sorry`
+⚠ [3206/3370] Replayed Theorems.Thm_PoincareFormalization_nonempty_sdiffeomorph_sphere_three
+warning: Theorems/Thm_PoincareFormalization_nonempty_sdiffeomorph_sphere_three.lean:11:8: declaration uses `sorry`
+⚠ [3207/3370] Replayed Theorems.Thm_PoincareFormalization_exists_smooth_structure_three
+warning: Theorems/Thm_PoincareFormalization_exists_smooth_structure_three.lean:10:8: declaration uses `sorry`
+⚠ [3591/3673] Replayed Theorems.Thm_OpenGA_Varifold_ofParametrization_independent_of_lift
+warning: Theorems/Thm_OpenGA_Varifold_ofParametrization_independent_of_lift.lean:52:8: declaration uses `sorry`
+⚠ [3592/3673] Replayed Theorems.Thm_PoincareFormalization_persistent_profiles_of_not_homeomorph_sphere
+warning: Theorems/Thm_PoincareFormalization_persistent_profiles_of_not_homeomorph_sphere.lean:8:8: declaration uses `sorry`
+⚠ [3593/3673] Replayed Theorems.Thm_PoincareFormalization_covering_is_homeomorph
+warning: Theorems/Thm_PoincareFormalization_covering_is_homeomorph.lean:3:8: declaration uses `sorry`
+⚠ [3594/3673] Replayed Theorems.Thm_OpenGA_Varifold_ofWeightedMap_eq_of_plane_eq
+warning: Theorems/Thm_OpenGA_Varifold_ofWeightedMap_eq_of_plane_eq.lean:42:8: declaration uses `sorry`
+⚠ [3595/3673] Replayed Theorems.Thm_OpenGA_antitoneOn_lintegral_div_hypRadVol
+warning: Theorems/Thm_OpenGA_antitoneOn_lintegral_div_hypRadVol.lean:10:8: declaration uses `sorry`
+⚠ [3596/3673] Replayed Theorems.Thm_OpenGA_antitoneOn_lintegral_Ioc_div
+warning: Theorems/Thm_OpenGA_antitoneOn_lintegral_Ioc_div.lean:11:8: declaration uses `sorry`
+⚠ [3597/3673] Replayed Theorems.Thm_OrthonormalBasis_sum_apply_diagonal_invariant
+warning: Theorems/Thm_OrthonormalBasis_sum_apply_diagonal_invariant.lean:12:8: declaration uses `sorry`
+⚠ [3605/3673] Replayed Theorems.Thm_OpenGA_Varifold_tendsto_weightMeasure_integral
+warning: Theorems/Thm_OpenGA_Varifold_tendsto_weightMeasure_integral.lean:51:8: declaration uses `sorry`
+⚠ [3606/3673] Replayed Theorems.Thm_PoincareFormalization_spherical_cover_of_finite_fundamental_group
+warning: Theorems/Thm_PoincareFormalization_spherical_cover_of_finite_fundamental_group.lean:6:8: declaration uses `sorry`
+⚠ [3607/3673] Replayed Theorems.Thm_OpenGA_eventually_width_slope_lt_of_comparison
+warning: Theorems/Thm_OpenGA_eventually_width_slope_lt_of_comparison.lean:8:8: declaration uses `sorry`
+⚠ [3608/3673] Replayed Theorems.Thm_OpenGA_Varifold_mass_ofParametrization_le_energy
+warning: Theorems/Thm_OpenGA_Varifold_mass_ofParametrization_le_energy.lean:31:8: declaration uses `sorry`
+⚠ [3609/3673] Replayed Theorems.Thm_OpenGA_le_width_deadline_across_downward_jumps
+warning: Theorems/Thm_OpenGA_le_width_deadline_across_downward_jumps.lean:9:8: declaration uses `sorry`
+⚠ [3610/3673] Replayed Theorems.Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross
+warning: Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross.lean:12:8: declaration uses `sorry`
+⚠ [3611/3673] Replayed Theorems.Thm_OpenGA_areaDensity_eq_energyDensity_iff
+warning: Theorems/Thm_OpenGA_areaDensity_eq_energyDensity_iff.lean:14:8: declaration uses `sorry`
+⚠ [3612/3673] Replayed Theorems.Thm_PoincareFormalization_homotopy_three_sphere_nonempty_homeomorph
+warning: Theorems/Thm_PoincareFormalization_homotopy_three_sphere_nonempty_homeomorph.lean:9:8: declaration uses `sorry`
+⚠ [3613/3673] Replayed Theorems.Thm_OpenGA_Varifold_testIntegral_ofParametrization
+warning: Theorems/Thm_OpenGA_Varifold_testIntegral_ofParametrization.lean:50:8: declaration uses `sorry`
+⚠ [3614/3673] Replayed Theorems.Thm_PoincareFormalization_homotopyEquiv_sphere_three
+warning: Theorems/Thm_PoincareFormalization_homotopyEquiv_sphere_three.lean:9:8: declaration uses `sorry`
+⚠ [3615/3673] Replayed Theorems.Thm_OpenGA_integral_areaDensity_eq_energyDensity_iff
+warning: Theorems/Thm_OpenGA_integral_areaDensity_eq_energyDensity_iff.lean:15:8: declaration uses `sorry`
+⚠ [3616/3673] Replayed Theorems.Thm_PoincareFormalization_nonempty_homeomorph_sphere_three
+warning: Theorems/Thm_PoincareFormalization_nonempty_homeomorph_sphere_three.lean:7:8: declaration uses `sorry`
+⚠ [3617/3673] Replayed Theorems.Thm_PoincareFormalization_persistent_comparison_data_of_not_homeomorph_sphere
+warning: Theorems/Thm_PoincareFormalization_persistent_comparison_data_of_not_homeomorph_sphere.lean:8:8: declaration uses `sorry`
+⚠ [3636/3673] Replayed Solutions.Sol_PoincareFormalization_nonempty_homeomorph_sphere_three_51179dae3662451eb374fe303c70b325
+warning: Solutions/Sol_PoincareFormalization_nonempty_homeomorph_sphere_three_51179dae3662451eb374fe303c70b325.lean:12:2: Try this:
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+✔ [3654/3673] Built Definitions.Def_OpenGA_WidthExtinctionTime (8.9s)
+✔ [3655/3673] Built Definitions.Def_OpenGA_CoordinateBallConnectedSum (9.3s)
+⚠ [3656/3673] Built Theorems.Thm_OpenGA_WidthComparisonTrace_le_extinctionTime (3.1s)
+warning: Theorems/Thm_OpenGA_WidthComparisonTrace_le_extinctionTime.lean:20:8: declaration uses `sorry`
+✔ [3657/3673] Built Definitions.Def_OpenGA_SurgeryTopologyEvolution (3.1s)
+✔ [3658/3673] Built Solutions.Sol_OpenGA_WidthComparisonTrace_le_extinctionTime_f49a1f88a5c843b7a45a5768ddb274e8 (3.8s)
+⚠ [3659/3673] Built Theorems.Thm_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_connected_sum_spheres (3.4s)
+warning: Theorems/Thm_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_connected_sum_spheres.lean:32:8: declaration uses `sorry`
+✔ [3660/3673] Built Solutions.Sol_OpenGA_SurgeryTopologyEvolution_topology_from_extinction_58f269c43b234a748345965d2603ca5c (3.5s)
+⚠ [3661/3673] Built Theorems.Thm_PoincareFormalization_ExtinctionEndgame_not_simply_connected_sphere_handle (3.6s)
+warning: Theorems/Thm_PoincareFormalization_ExtinctionEndgame_not_simply_connected_sphere_handle.lean:30:8: declaration uses `sorry`
+⚠ [3662/3673] Built Theorems.Thm_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_standard_decomposition (3.7s)
+warning: Theorems/Thm_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_standard_decomposition.lean:31:8: declaration uses `sorry`
+⚠ [3663/3673] Built Theorems.Thm_OpenGA_SurgeryTopologyEvolution_topology_from_extinction (3.8s)
+warning: Theorems/Thm_OpenGA_SurgeryTopologyEvolution_topology_from_extinction.lean:80:8: declaration uses `sorry`
+⚠ [3664/3673] Built Theorems.Thm_PoincareFormalization_ExtinctionEndgame_simply_connected_factors_of_connected_sum (3.8s)
+warning: Theorems/Thm_PoincareFormalization_ExtinctionEndgame_simply_connected_factors_of_connected_sum.lean:28:8: declaration uses `sorry`
+✔ [3665/3673] Built Definitions.Def_OpenGA_ExtinctionWidthControl (4.1s)
+✔ [3667/3673] Built Solutions.Sol_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_standard_decomposition_a63d8d8d38244e3192a575d2e263bf09 (3.4s)
+⚠ [3668/3673] Built Theorems.Thm_PoincareFormalization_ExtinctionEndgame_exists_width_controlled_surgery_topology (3.6s)
+warning: Theorems/Thm_PoincareFormalization_ExtinctionEndgame_exists_width_controlled_surgery_topology.lean:26:8: declaration uses `sorry`
+⚠ [3669/3673] Built Theorems.Thm_OpenGA_SurgeryTopologyEvolution_finiteExtinction_of_width_control (3.8s)
+warning: Theorems/Thm_OpenGA_SurgeryTopologyEvolution_finiteExtinction_of_width_control.lean:30:8: declaration uses `sorry`
+✔ [3671/3673] Built Solutions.Sol_OpenGA_SurgeryTopologyEvolution_finiteExtinction_of_width_control_6beb3841435642a3b3dfa417e4042a5c (3.9s)
+✔ [3672/3673] Built Solutions.Sol_PoincareFormalization_nonempty_homeomorph_sphere_three_25d76430fc9b4aaa949050a596f993ff (3.4s)
+Build completed successfully (3673 jobs).
