@@ -31,6 +31,44 @@
       "scope": "Analytic radial integral comparison and normalized integral monotonicity; no geometric completion claimed.",
       "status": "verified_and_published",
       "verified_at": "2026-09-09T17:24:30.676565+00:00"
+    },
+    {
+      "graph_dependencies_verified": true,
+      "local_module": "OpenGALib/Analysis/ModelVolume.lean",
+      "local_results": [
+        "OpenGA.lintegral_hypDensity",
+        "OpenGA.antitoneOn_lintegral_div_hypRadVol"
+      ],
+      "platform_definitions": [
+        {
+          "name": "DifferentialGeometry_HyperbolicModel",
+          "theorem_id": "5f12b4eb-73fe-4f5b-9eca-ea195943cb23"
+        },
+        {
+          "name": "DifferentialGeometry_ModelRadialVolume",
+          "theorem_id": "8f010cd2-75b6-40f7-abdf-ec788a788a40"
+        }
+      ],
+      "platform_publication": "published",
+      "platform_theorems": [
+        {
+          "name": "OpenGA.antitoneOn_lintegral_div_hypRadVol",
+          "status": "Proved",
+          "submission_id": "fd6f90da-3fa3-48c4-95a0-f36e42b9fe72",
+          "theorem_id": "58a8c735-04e5-4c94-afef-0b03d5d80e0a"
+        }
+      ],
+      "publication_record": "PoincareConjecture/Contributions/BishopGromov/model_publication.json",
+      "scope": "Original scalar model of curvature -q^2 for q>=0, radial exponent d=n-1, and conditional normalized radial integral comparison. Riemannian volume, geodesic distance and Ricci-bound inputs are separate; this component is not attached to the Poincare root.",
+      "status": "verified_and_published",
+      "upstream_definitions": [
+        "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+        "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv",
+        "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+        "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensityDeriv",
+        "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol"
+      ],
+      "verified_at": "2026-09-09T17:44:39.811662+00:00"
     }
   ],
   "commit": "1b535dd102b94cc42b107cca27059687888f08b3",

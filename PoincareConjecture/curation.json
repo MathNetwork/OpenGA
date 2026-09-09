@@ -1,6 +1,6 @@
 {
   "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
-  "reviewed_at": "2026-09-09T17:26:30.899937+00:00",
+  "reviewed_at": "2026-09-09T17:44:39.811662+00:00",
   "reviews": {
     "01167772-943a-4c75-ab15-9f7b235777a8": {
       "declarations": [
@@ -323,6 +323,26 @@
       "source_status": "ACCEPTED",
       "source_theorem_id": "16d46789-a853-4a33-a4a3-4134fe549c82",
       "source_url": "https://prove2.me/api/v1/submissions/f0552af4-769d-4fe4-8754-b9e01fd5718b/solution",
+      "status": "integrated"
+    },
+    "fd6f90da-3fa3-48c4-95a0-f36e42b9fe72": {
+      "declarations": [
+        {
+          "name": "OpenGA.lintegral_hypDensity",
+          "path": "OpenGALib/Analysis/ModelVolume.lean"
+        },
+        {
+          "name": "OpenGA.antitoneOn_lintegral_div_hypRadVol",
+          "path": "OpenGALib/Analysis/ModelVolume.lean"
+        }
+      ],
+      "scope": "The original DifferentialGeometry scalar model definitions are reused without changes. The real-to-nonnegative model integral identity and the conditional normalized comparison are integrated into OpenGA. The source and export types match, five definition bodies match, and the complete proof uses only standard Lean axioms. This covers curvature -q^2 for q>=0; the Ricci-to-density and polar-integration steps remain separate.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "073b4b697338a6e09df7b2c113d5eb5c3e255c33cd241dea183cecbaa5157c62",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
+      "source_url": "https://prove2.me/api/v1/submissions/fd6f90da-3fa3-48c4-95a0-f36e42b9fe72/solution",
       "status": "integrated"
     }
   },

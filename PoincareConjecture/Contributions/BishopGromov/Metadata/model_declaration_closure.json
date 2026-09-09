@@ -1,0 +1,319 @@
+[
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.RatioIntegral",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti",
+    "startLine": 65,
+    "endLine": 66,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hasDerivAt_hypDen",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hasDerivAt_hypDen",
+    "startLine": 91,
+    "endLine": 95,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensityDeriv",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensityDeriv",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hasDerivAt_hypSn"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hasDerivAt_hypSn",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hasDerivAt_hypSn",
+    "startLine": 23,
+    "endLine": 38,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDen_continuous",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDen_continuous",
+    "startLine": 97,
+    "endLine": 98,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensityDeriv",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hasDerivAt_hypDen"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+    "startLine": 85,
+    "endLine": 86,
+    "typeDeps": [],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensityDeriv",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensityDeriv",
+    "startLine": 88,
+    "endLine": 89,
+    "typeDeps": [],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity_pos",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity_pos",
+    "startLine": 242,
+    "endLine": 244,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn_pos",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.BishopBall",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol",
+    "startLine": 272,
+    "endLine": 273,
+    "typeDeps": [],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol.eq_1",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.BishopBall",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol.eq_1",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol_pos",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.BishopBall",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol_pos",
+    "startLine": 294,
+    "endLine": 298,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDen_continuous",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity_pos",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+    "startLine": 17,
+    "endLine": 18,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn.eq_1",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn.eq_1",
+    "startLine": 0,
+    "endLine": 0,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv",
+    "startLine": 20,
+    "endLine": 21,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn_continuous",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn_continuous",
+    "startLine": 74,
+    "endLine": 75,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSnDeriv",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hasDerivAt_hypSn"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn_pos",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.HyperbolicModel",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn_pos",
+    "startLine": 77,
+    "endLine": 83,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypSn.eq_1"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+    "module": "DifferentialGeometry.Geometry.Comparison.Volume.RatioIntegral",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+    "startLine": 68,
+    "endLine": 109,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti"
+    ]
+  },
+  {
+    "name": "OpenGA.antitoneOn_lintegral_Ioc_div",
+    "module": "OpenGALib.Analysis.IntegralComparison",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.antitoneOn_lintegral_Ioc_div",
+    "startLine": 28,
+    "endLine": 51,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti"
+    ]
+  },
+  {
+    "name": "OpenGA.antitoneOn_lintegral_div_hypRadVol",
+    "module": "OpenGALib.Analysis.ModelVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.antitoneOn_lintegral_div_hypRadVol",
+    "startLine": 32,
+    "endLine": 55,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti"
+    ],
+    "valueDeps": [
+      "OpenGA.lintegral_hypDensity",
+      "OpenGA.antitoneOn_lintegral_Ioc_div",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDen_continuous",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol_pos",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti"
+    ]
+  },
+  {
+    "name": "OpenGA.lintegral_hypDensity",
+    "module": "OpenGALib.Analysis.ModelVolume",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.lintegral_hypDensity",
+    "startLine": 22,
+    "endLine": 30,
+    "typeDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol.eq_1",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDen_continuous",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity_pos",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity",
+      "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol"
+    ]
+  }
+]

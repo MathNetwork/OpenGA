@@ -174,6 +174,16 @@ def annotate_milestone(client, record):
                      "The full geometric milestone remains open: geometric density comparison, "
                      "polar integration, the ball-local hypotheses and positive model curvature "
                      "still require a faithful platform development.")
+        if record.get("batch") == "model_volume":
+            definitions = ["[" + e["payload"]["definition_title"] + "](https://prove2.me/theorems/" +
+                           e["publication"]["theorem_id"] + ")" for e in record["definitions"]]
+            paragraph = ("\n\n**Verified model definitions.** " + "; ".join(definitions) +
+                         ". They are used in " + "; ".join(links) +
+                         ", connected to the earlier integral comparison proof. "
+                         "This model batch covers curvature $K=-q^2\\le0$ and uses radial exponent "
+                         "$d=n-1$. The angular constant cancels in ratios. The geometric milestone "
+                         "remains open, and this analytic component is not yet a dependency of the "
+                         "Poincare goal theorem.")
         update = record["milestone_annotation"] = {
             "before": live["milestone_description"],
             "after": live["milestone_description"] + paragraph,
@@ -185,7 +195,7 @@ def annotate_milestone(client, record):
             raise RuntimeError("Milestone changed during annotation; no overwrite performed")
         request = Request(BASE + "/milestones/" + record["milestone_id"], method="PATCH",
                           data=json_bytes({"milestone_description": update["after"],
-                                           "reason": "Record three verified analytic prerequisites; preserve the geometric statement and its unlinked Open status."}),
+                                           "reason": "Record verified Bishop-Gromov prerequisites; preserve the full geometric statement and canonical target."}),
                           headers={"Authorization": "Bearer " + client.token,
                                    "Content-Type": "application/json", "Accept": "application/json"})
         with client.opener.open(request, timeout=60) as response:
@@ -198,11 +208,13 @@ def annotate_milestone(client, record):
     update.update(status="VERIFIED", verified_at=now())
     local["payload"]["milestone_description"] = update["after"]
     local["platform_verified_at"] = now()
-    local["local_progress"]["analytic_prerequisites"] = [
+    progress_key = "model_volume_prerequisites" if record.get("batch") == "model_volume" else "analytic_prerequisites"
+    local["local_progress"][progress_key] = [
         {"declaration": e["payload"]["theorem_name"], "theorem_id": e["publication"]["theorem_id"],
          "submission_id": e["submission"]["submission_id"], "status": "Proved"}
         for e in record["theorems"]]
-    local["local_progress"]["analytic_publication_record"] = str(RECORD.relative_to(ROOT.parent))
+    record_key = "model_publication_record" if record.get("batch") == "model_volume" else "analytic_publication_record"
+    local["local_progress"][record_key] = str(RECORD.relative_to(ROOT.parent))
     write_atomic(plan_path, json_bytes(plan))
     receipt_path = ROOT / "milestones_published.json"
     receipt = json.loads(receipt_path.read_text())
@@ -214,23 +226,40 @@ def annotate_milestone(client, record):
 
 
 def main():
+    global RECORD
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--apply", action="store_true", help="Publish and poll validated entries")
+    parser.add_argument("--batch", choices=("analytic", "model"), default="analytic")
     args = parser.parse_args()
+    RECORD = DIRECTORY / ("model_publication.json" if args.batch == "model" else "publication.json")
     record = json.loads(RECORD.read_text())
     validate(record)
     if not args.apply:
         print("Validated all source hashes and exact payloads; no network request made.")
         return
     client = Client(json.loads((ROOT / ".credentials.json").read_text())["api_key"])
+    if client.version != "0.9.8":
+        raise RuntimeError("Platform version changed; refresh https://prove2.me/skill.md before publishing")
     envs = client.request("/environments")["environments"]
     if not any(e["mathlib_rev"] == record["mathlib_rev"] and e["toolchain"] == record["toolchain"] for e in envs):
         raise RuntimeError("Platform environment no longer matches")
     definitions_ready = {}
     for entry in record["definitions"]:
+        if not all(definitions_ready.get(name, False) for name in entry.get("definitions", [])):
+            definitions_ready[entry["id"]] = False
+            continue
         definitions_ready[entry["id"]] = publish(client, record, entry)
-    ready = True
+    ready = all(definitions_ready.values())
     proofs_ready = {}
+    external = {}
+    if record.get("external_theorems"):
+        prior = json.loads((DIRECTORY / "publication.json").read_text())
+        for name in record["external_theorems"]:
+            entry = next(e for e in prior["theorems"] if e["id"] == name)
+            if verify_item(client, entry)["status"] != "Proved":
+                raise RuntimeError("An external proof dependency is no longer Proved")
+            external[name] = entry
+            proofs_ready[name] = True
     for entry in record["theorems"]:
         proofs_ready[entry["id"]] = False
         if not all(definitions_ready[name] for name in entry["definitions"]):
@@ -249,10 +278,11 @@ def main():
     if ready:
         graphs = {entry["id"]: client.request("/theorems/" + entry["publication"]["theorem_id"] + "/graph")
                   for entry in record["theorems"]}
-        write_atomic(DIRECTORY / "Metadata/platform_graphs.json", json_bytes(graphs))
-        entries = {e["id"]: e for e in record["theorems"]}
+        graph_file = "model_platform_graphs.json" if args.batch == "model" else "platform_graphs.json"
+        write_atomic(DIRECTORY / "Metadata" / graph_file, json_bytes(graphs))
+        entries = {**external, **{e["id"]: e for e in record["theorems"] + record["definitions"]}}
         for entry in record["theorems"]:
-            for dependency in entry["imports"]:
+            for dependency in entry["imports"] + entry["definitions"]:
                 reached = {entries[dependency]["publication"]["theorem_id"]}
                 edges = graphs[entry["id"]]["edges"]
                 while True:
@@ -261,7 +291,7 @@ def main():
                         break
                     reached = expanded
                 if entry["publication"]["theorem_id"] not in reached:
-                    raise RuntimeError("Platform graph is missing a required proof dependency")
+                    raise RuntimeError("Platform graph is missing a required dependency: " + dependency)
         record.update(status="ANALYTIC_PREREQUISITES_PUBLISHED", verified_at=now())
         save(record)
         annotate_milestone(client, record)

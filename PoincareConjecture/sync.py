@@ -37,7 +37,9 @@ class Client:
     def __init__(self, key):
         self.opener = build_opener(NoRedirects())
         self.token = None
-        self.token = self.request("/agent/refresh", {"api_key": key})["access_token"]
+        refreshed = self.request("/agent/refresh", {"api_key": key})
+        self.token = refreshed["access_token"]
+        self.version = refreshed.get("version")
 
     def request(self, path, body=None):
         if not path.startswith("/") or path.startswith("//"):
@@ -322,7 +324,10 @@ def main():
         if targets["mission_id"] != MISSION_ID or not isinstance(targets["theorem_names"], list):
             raise ValueError("Invalid additional synchronization targets")
         names = targets["theorem_names"]
-    files, metadata = collect(Client(key), names)
+    client = Client(key)
+    if client.version != "0.9.8":
+        raise RuntimeError("Platform version changed; refresh https://prove2.me/skill.md before synchronizing")
+    files, metadata = collect(client, names)
     source_count = len(files)
     files.update(build_files(ROOT.parent, metadata["environment"]))
     changed = install(ROOT, files, metadata)

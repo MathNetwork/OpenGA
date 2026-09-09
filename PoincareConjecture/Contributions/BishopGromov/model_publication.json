@@ -1,0 +1,309 @@
+{
+  "batch": "model_volume",
+  "declaration_graph_sha256": "d70431a7bd8d3e7905b72a1051ea895ce6b1f33300dfc5fa0be9beac3b504d6e",
+  "definitions": [
+    {
+      "definitions": [],
+      "id": "hyperbolic_model",
+      "path": "Definitions/Def_DifferentialGeometry_HyperbolicModel.lean",
+      "payload": {
+        "definition": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Mathlib.Analysis.Calculus.Deriv.Pow\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\n\nnoncomputable section\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\ndef hypSn (q r : ℝ) : ℝ :=\n  if q = 0 then r else Real.sinh (q * r) / q\n\ndef hypSnDeriv (q r : ℝ) : ℝ :=\n  if q = 0 then 1 else Real.cosh (q * r)\n\ndef hypDensity (q : ℝ) (d : ℕ) (r : ℝ) : ℝ :=\n  hypSn q r ^ d\n\ndef hypDensityDeriv (q : ℝ) (d : ℕ) (r : ℝ) : ℝ :=\n  (d : ℝ) * hypSn q r ^ (d - 1) * hypSnDeriv q r\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+        "definition_name": "DifferentialGeometry_HyperbolicModel",
+        "definition_title": "Model radial function and density for nonpositive curvature",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $q\\in\\mathbb R$ and $d\\in\\mathbb N$. Define the model radial function and density by\n\n$$s_q(r)=\\begin{cases}r,&q=0,\\\\\\sinh(qr)/q,&q\\ne0,\\end{cases}\\qquad J_{q,d}(r)=s_q(r)^d.$$\n\nFor $q\\ge0$ and $d=n-1$, these give the radial factors of the $n$-dimensional constant-curvature model with curvature $-q^2$. The bundle also defines their derivative expressions. The zero-curvature case is included; positive model curvature requires a separate trigonometric model.",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/HyperbolicModel.lean#L17-L98",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-09T17:40:38.280115+00:00",
+        "job": {
+          "created_at": "2026-09-09T17:39:48.508835+00:00",
+          "definitions": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Mathlib.Analysis.Calculus.Deriv.Pow\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\n\nnoncomputable section\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\ndef hypSn (q r : ℝ) : ℝ :=\n  if q = 0 then r else Real.sinh (q * r) / q\n\ndef hypSnDeriv (q r : ℝ) : ℝ :=\n  if q = 0 then 1 else Real.cosh (q * r)\n\ndef hypDensity (q : ℝ) (d : ℕ) (r : ℝ) : ℝ :=\n  hypSn q r ^ d\n\ndef hypDensityDeriv (q : ℝ) (d : ℕ) (r : ℝ) : ℝ :=\n  (d : ℝ) * hypSn q r ^ (d - 1) * hypSnDeriv q r\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "b0e6dc0f-f40c-4c5e-ae97-416b1575539c",
+          "kind": "definition",
+          "natural_language_statement": "Let $q\\in\\mathbb R$ and $d\\in\\mathbb N$. Define the model radial function and density by\n\n$$s_q(r)=\\begin{cases}r,&q=0,\\\\\\sinh(qr)/q,&q\\ne0,\\end{cases}\\qquad J_{q,d}(r)=s_q(r)^d.$$\n\nFor $q\\ge0$ and $d=n-1$, these give the radial factors of the $n$-dimensional constant-curvature model with curvature $-q^2$. The bundle also defines their derivative expressions. The zero-curvature case is included; positive model curvature requires a separate trigonometric model.",
+          "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/HyperbolicModel.lean#L17-L98",
+          "status": "PUBLISHED",
+          "tags": [
+            "bishop-gromov",
+            "differential-geometry",
+            "measure-theory"
+          ],
+          "theorem_id": "5f12b4eb-73fe-4f5b-9eca-ea195943cb23",
+          "theorem_name": "DifferentialGeometry_HyperbolicModel",
+          "theorem_title": "Model radial function and density for nonpositive curvature",
+          "updated_at": "2026-09-09T17:39:55.723356+00:00",
+          "visibility": "public"
+        },
+        "job_id": "b0e6dc0f-f40c-4c5e-ae97-416b1575539c",
+        "response": {
+          "definition_name": "DifferentialGeometry_HyperbolicModel",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "b0e6dc0f-f40c-4c5e-ae97-416b1575539c",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/b0e6dc0f-f40c-4c5e-ae97-416b1575539c until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-09T17:39:48.203275+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "5f12b4eb-73fe-4f5b-9eca-ea195943cb23",
+        "verified_at": "2026-09-09T17:44:37.741644+00:00"
+      },
+      "sha256": "2da5fe520383c826cf36535704740d8bc3119d52cd32806b4e86e42c7179c16a"
+    },
+    {
+      "definitions": [
+        "hyperbolic_model"
+      ],
+      "id": "model_radial_volume",
+      "path": "Definitions/Def_DifferentialGeometry_ModelRadialVolume.lean",
+      "payload": {
+        "definition": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Definitions.Def_DifferentialGeometry_HyperbolicModel\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\n\nnoncomputable section\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\ndef hypRadVol (q : Real) (d : Nat) (R : Real) : Real :=\n  ∫ t in (0 : Real)..R, hypDensity q d t\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+        "definition_name": "DifferentialGeometry_ModelRadialVolume",
+        "definition_title": "Radial model volume for nonpositive curvature",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For $q\\in\\mathbb R$, $d\\in\\mathbb N$ and $r\\in\\mathbb R$, let $s_q$ be the model radial function and define\n\n$$V_{q,d}(r)=\\int_0^r s_q(t)^d\\,dt.$$\n\nFor $q\\ge0$, $r>0$ and $d=n-1$, this is the radial volume factor in the $n$-dimensional model of curvature $-q^2$. The constant angular factor is omitted because it cancels in volume ratios. The Lean definition uses the oriented interval integral, so it is defined for every real radius.",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/BishopBall.lean#L272-L273",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-09T17:42:19.382956+00:00",
+        "job": {
+          "created_at": "2026-09-09T17:40:38.97284+00:00",
+          "definitions": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Definitions.Def_DifferentialGeometry_HyperbolicModel\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\n\nnoncomputable section\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\ndef hypRadVol (q : Real) (d : Nat) (R : Real) : Real :=\n  ∫ t in (0 : Real)..R, hypDensity q d t\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "57f809d7-ba95-4cf0-8663-cc3ec04856e6",
+          "kind": "definition",
+          "natural_language_statement": "For $q\\in\\mathbb R$, $d\\in\\mathbb N$ and $r\\in\\mathbb R$, let $s_q$ be the model radial function and define\n\n$$V_{q,d}(r)=\\int_0^r s_q(t)^d\\,dt.$$\n\nFor $q\\ge0$, $r>0$ and $d=n-1$, this is the radial volume factor in the $n$-dimensional model of curvature $-q^2$. The constant angular factor is omitted because it cancels in volume ratios. The Lean definition uses the oriented interval integral, so it is defined for every real radius.",
+          "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/BishopBall.lean#L272-L273",
+          "status": "PUBLISHED",
+          "tags": [
+            "bishop-gromov",
+            "differential-geometry",
+            "measure-theory"
+          ],
+          "theorem_id": "8f010cd2-75b6-40f7-abdf-ec788a788a40",
+          "theorem_name": "DifferentialGeometry_ModelRadialVolume",
+          "theorem_title": "Radial model volume for nonpositive curvature",
+          "updated_at": "2026-09-09T17:40:53.754252+00:00",
+          "visibility": "public"
+        },
+        "job_id": "57f809d7-ba95-4cf0-8663-cc3ec04856e6",
+        "response": {
+          "definition_name": "DifferentialGeometry_ModelRadialVolume",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "57f809d7-ba95-4cf0-8663-cc3ec04856e6",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/57f809d7-ba95-4cf0-8663-cc3ec04856e6 until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-09T17:40:38.714209+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "8f010cd2-75b6-40f7-abdf-ec788a788a40",
+        "verified_at": "2026-09-09T17:44:37.916398+00:00"
+      },
+      "sha256": "2f6f2a5deaa47418f8d9c399067b74bff35fa8d1f9055a3ffff5ee17dbe17f16"
+    }
+  ],
+  "external_theorems": [
+    "antitoneOn_lintegral_Ioc_div"
+  ],
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "milestone_annotation": {
+    "after": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).\n\n**Verified analytic prerequisites.** [Integral comparison on nested lower intervals](https://prove2.me/theorems/1b1a2764-46a8-4ccb-9220-d38a56f8a6a5); [Radial density comparison implies integrated comparison](https://prove2.me/theorems/0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb); [Monotonicity of normalized radial integrals](https://prove2.me/theorems/00a47c26-3e61-4afc-91c7-117708e1baf9). The first two results preserve the DifferentialGeometry proofs; the third is an OpenGA corollary. These establish the integral comparison step. The full geometric milestone remains open: geometric density comparison, polar integration, the ball-local hypotheses and positive model curvature still require a faithful platform development.\n\n**Verified model definitions.** [Model radial function and density for nonpositive curvature](https://prove2.me/theorems/5f12b4eb-73fe-4f5b-9eca-ea195943cb23); [Radial model volume for nonpositive curvature](https://prove2.me/theorems/8f010cd2-75b6-40f7-abdf-ec788a788a40). They are used in [Radial integral monotonicity with the model-volume denominator](https://prove2.me/theorems/58a8c735-04e5-4c94-afef-0b03d5d80e0a), connected to the earlier integral comparison proof. This model batch covers curvature $K=-q^2\\le0$ and uses radial exponent $d=n-1$. The angular constant cancels in ratios. The geometric milestone remains open, and this analytic component is not yet a dependency of the Poincare goal theorem.",
+    "before": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).\n\n**Verified analytic prerequisites.** [Integral comparison on nested lower intervals](https://prove2.me/theorems/1b1a2764-46a8-4ccb-9220-d38a56f8a6a5); [Radial density comparison implies integrated comparison](https://prove2.me/theorems/0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb); [Monotonicity of normalized radial integrals](https://prove2.me/theorems/00a47c26-3e61-4afc-91c7-117708e1baf9). The first two results preserve the DifferentialGeometry proofs; the third is an OpenGA corollary. These establish the integral comparison step. The full geometric milestone remains open: geometric density comparison, polar integration, the ball-local hypotheses and positive model curvature still require a faithful platform development.",
+    "canonical_theorem": null,
+    "response": {
+      "completed": false,
+      "created_at": "2026-09-09T16:03:11.319685+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "cb96ab98-d517-4ecc-964b-b4b39a2d07a3",
+      "milestone_description": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).\n\n**Verified analytic prerequisites.** [Integral comparison on nested lower intervals](https://prove2.me/theorems/1b1a2764-46a8-4ccb-9220-d38a56f8a6a5); [Radial density comparison implies integrated comparison](https://prove2.me/theorems/0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb); [Monotonicity of normalized radial integrals](https://prove2.me/theorems/00a47c26-3e61-4afc-91c7-117708e1baf9). The first two results preserve the DifferentialGeometry proofs; the third is an OpenGA corollary. These establish the integral comparison step. The full geometric milestone remains open: geometric density comparison, polar integration, the ball-local hypotheses and positive model curvature still require a faithful platform development.\n\n**Verified model definitions.** [Model radial function and density for nonpositive curvature](https://prove2.me/theorems/5f12b4eb-73fe-4f5b-9eca-ea195943cb23); [Radial model volume for nonpositive curvature](https://prove2.me/theorems/8f010cd2-75b6-40f7-abdf-ec788a788a40). They are used in [Radial integral monotonicity with the model-volume denominator](https://prove2.me/theorems/58a8c735-04e5-4c94-afef-0b03d5d80e0a), connected to the earlier integral comparison proof. This model batch covers curvature $K=-q^2\\le0$ and uses radial exponent $d=n-1$. The angular constant cancels in ratios. The geometric milestone remains open, and this analytic component is not yet a dependency of the Poincare goal theorem.",
+      "sort_order": 7,
+      "theorem": null,
+      "title": "Bishop-Gromov volume comparison"
+    },
+    "status": "VERIFIED",
+    "verified_at": "2026-09-09T17:44:40.583253+00:00"
+  },
+  "milestone_id": "cb96ab98-d517-4ecc-964b-b4b39a2d07a3",
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "scout": {
+    "hypDensity": [],
+    "hypRadVol": [],
+    "hypSn": [],
+    "hyperbolic model": [],
+    "model volume": []
+  },
+  "source_review": "Five original definitions retain their names, elaborated types and bodies. Seven upstream helper proofs are copied unchanged into the solution using Lean source spans. The two OpenGA lemmas connect the model denominator to the existing normalized-integral comparison; no Ricci or ball-volume hypothesis is inferred.",
+  "source_reviewed": true,
+  "sources": [
+    {
+      "path": ".lake/packages/DifferentialGeometry/DifferentialGeometry/Geometry/Comparison/Volume/HyperbolicModel.lean",
+      "sha256": "e1e4b6f61a80c920370b19e1dcd594dec066d8fa429c40d90437859b0e376d78"
+    },
+    {
+      "path": ".lake/packages/DifferentialGeometry/DifferentialGeometry/Geometry/Comparison/Volume/BishopBall.lean",
+      "sha256": "8cceb704d978899d0919b0a2c6c1142275db33915889fc2ba7914f58e3a6107e"
+    },
+    {
+      "path": "OpenGALib/Analysis/ModelVolume.lean",
+      "sha256": "7f900b1dcf3bc1c7173545d9a11ccf85a9b83b01ae6072c3d94a165e65c064d3"
+    },
+    {
+      "path": ".lake/packages/DifferentialGeometry/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean",
+      "sha256": "6480c8419c591340bf8ac38b06e6d2aec285f449d64df482ed11ef6be6f57502"
+    },
+    {
+      "path": "OpenGALib/Analysis/IntegralComparison.lean",
+      "sha256": "eb97449053abeabb37c1c9d4be7842d8a5fa7869660b470c35d6fdf64fd75c38"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/BishopGromov/Metadata/model_model_facts.jsonl",
+      "sha256": "3d8aa4f81288a478f636ff3a2f8fd509ab8ac37e66b00c0f8b095451d3e62bd3"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/BishopGromov/Metadata/model_volume_facts.jsonl",
+      "sha256": "a76c976797368cd5b43f0ede4e8a12053fc3de4a6cca110fe87829d52bb09cf0"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/BishopGromov/Metadata/model_local_facts.jsonl",
+      "sha256": "9954297950593f5f616df33a37da8673f064add7116723a42aa155e8fe1e51e7"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/BishopGromov/Metadata/model_ratio_facts.jsonl",
+      "sha256": "2d47b713085a2818f303f35669ed0dd3df0441914ae7cbf48c72db7b6143ab16"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/BishopGromov/Metadata/model_normalized_facts.jsonl",
+      "sha256": "1d80f9314387948f793bccdc9d60586377210c286725b888690268cc727ff651"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/BishopGromov/Metadata/model_declaration_closure.json",
+      "sha256": "635f4acebb5e23734af8d2dcd65a70e9a31fa37844d72c3feb88092397f63d6b"
+    }
+  ],
+  "status": "ANALYTIC_PREREQUISITES_PUBLISHED",
+  "theorems": [
+    {
+      "definitions": [
+        "hyperbolic_model",
+        "model_radial_volume"
+      ],
+      "explanation": "Continuity and positivity of the model density give a positive finite model integral at every positive radius. The real interval integral agrees with its extended nonnegative Lebesgue integral. Apply the already proved normalized radial integral comparison and substitute this identity at both radii. The imported comparison theorem and both model definition bundles are genuine dependencies of this proof.",
+      "id": "antitoneOn_lintegral_div_hypRadVol",
+      "imports": [
+        "antitoneOn_lintegral_Ioc_div"
+      ],
+      "path": "Theorems/Thm_OpenGA_antitoneOn_lintegral_div_hypRadVol.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem OpenGA.antitoneOn_lintegral_div_hypRadVol {f : ℝ → ℝ≥0∞} {q R : ℝ} {d : ℕ}\n    (hq : 0 ≤ q)\n    (hf : AEMeasurable f (volume.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f (fun t => ENNReal.ofReal (hypDensity q d t))) :\n    AntitoneOn (fun r => (∫⁻ t in Ioc (0 : ℝ) r, f t) /\n      ENNReal.ofReal (hypRadVol q d r)) (Ioc (0 : ℝ) R) := by sorry",
+        "natural_language_statement": "Let $q\\ge0$, $d\\in\\mathbb N$, $R\\in\\mathbb R$, and let $f:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$ with respect to Lebesgue measure. Set $J(t)=s_q(t)^d$ and $V(r)=\\int_0^r J(t)\\,dt$. Assume $f(b)J(a)\\le f(a)J(b)$ for every $0<a\\le b\\le R$, interpreting the products in the extended nonnegative reals. Then\n\n$$\\frac{\\int_{(0,s]}f(t)\\,dt}{V(s)}\\le\\frac{\\int_{(0,r]}f(t)\\,dt}{V(r)}\\qquad(0<r\\le s\\le R).$$\n\nThe numerator may be infinite. For $d=n-1$, the denominator is the radial model volume at curvature $-q^2$. This supplies the analytic normalization step for volume comparison; identifying the numerator with Riemannian ball volume and deriving the density comparison from a Ricci bound are separate geometric steps.",
+        "preamble": "import Definitions.Def_DifferentialGeometry_ModelRadialVolume\nimport Definitions.Def_DifferentialGeometry_RadialCrossComparison\n\nset_option autoImplicit false\n\nopen MeasureTheory Set\nopen scoped ENNReal\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+        "source": "OpenGA, OpenGALib/Analysis/ModelVolume.lean#L33-L55; derived from the published normalized integral comparison and the DifferentialGeometry model definitions. https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/ModelVolume.lean#L33",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_name": "OpenGA.antitoneOn_lintegral_div_hypRadVol",
+        "theorem_title": "Radial integral monotonicity with the model-volume denominator"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_antitoneOn_lintegral_div_hypRadVol.lean",
+      "proof_sha256": "073b4b697338a6e09df7b2c113d5eb5c3e255c33cd241dea183cecbaa5157c62",
+      "publication": {
+        "checked_at": "2026-09-09T17:43:34.884603+00:00",
+        "job": {
+          "created_at": "2026-09-09T17:42:21.178064+00:00",
+          "definitions": "import Definitions.Def_DifferentialGeometry_ModelRadialVolume\nimport Definitions.Def_DifferentialGeometry_RadialCrossComparison\n\nset_option autoImplicit false\n\nopen MeasureTheory Set\nopen scoped ENNReal\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+          "error_message": "",
+          "formal_statement": "theorem OpenGA.antitoneOn_lintegral_div_hypRadVol {f : ℝ → ℝ≥0∞} {q R : ℝ} {d : ℕ}\n    (hq : 0 ≤ q)\n    (hf : AEMeasurable f (volume.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f (fun t => ENNReal.ofReal (hypDensity q d t))) :\n    AntitoneOn (fun r => (∫⁻ t in Ioc (0 : ℝ) r, f t) /\n      ENNReal.ofReal (hypRadVol q d r)) (Ioc (0 : ℝ) R) := by sorry",
+          "id": "e0841213-2948-4d49-ba5d-fdfc108c1859",
+          "kind": "problem",
+          "natural_language_statement": "Let $q\\ge0$, $d\\in\\mathbb N$, $R\\in\\mathbb R$, and let $f:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$ with respect to Lebesgue measure. Set $J(t)=s_q(t)^d$ and $V(r)=\\int_0^r J(t)\\,dt$. Assume $f(b)J(a)\\le f(a)J(b)$ for every $0<a\\le b\\le R$, interpreting the products in the extended nonnegative reals. Then\n\n$$\\frac{\\int_{(0,s]}f(t)\\,dt}{V(s)}\\le\\frac{\\int_{(0,r]}f(t)\\,dt}{V(r)}\\qquad(0<r\\le s\\le R).$$\n\nThe numerator may be infinite. For $d=n-1$, the denominator is the radial model volume at curvature $-q^2$. This supplies the analytic normalization step for volume comparison; identifying the numerator with Riemannian ball volume and deriving the density comparison from a Ricci bound are separate geometric steps.",
+          "source": "OpenGA, OpenGALib/Analysis/ModelVolume.lean#L33-L55; derived from the published normalized integral comparison and the DifferentialGeometry model definitions. https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/ModelVolume.lean#L33",
+          "status": "PUBLISHED",
+          "tags": [
+            "bishop-gromov",
+            "differential-geometry",
+            "measure-theory"
+          ],
+          "theorem_id": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
+          "theorem_name": "OpenGA.antitoneOn_lintegral_div_hypRadVol",
+          "theorem_title": "Radial integral monotonicity with the model-volume denominator",
+          "updated_at": "2026-09-09T17:42:37.451765+00:00",
+          "visibility": "public"
+        },
+        "job_id": "e0841213-2948-4d49-ba5d-fdfc108c1859",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "e0841213-2948-4d49-ba5d-fdfc108c1859",
+              "name": "OpenGA.antitoneOn_lintegral_div_hypRadVol"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-09T17:42:20.835003+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
+        "verified_at": "2026-09-09T17:44:38.287168+00:00"
+      },
+      "sha256": "9c87f0e8660436b88e5e412e2440cd4878bdfc5126dfec08c75205573a8786dd",
+      "submission": {
+        "accepted_source_sha256": "073b4b697338a6e09df7b2c113d5eb5c3e255c33cd241dea183cecbaa5157c62",
+        "checked_at": "2026-09-09T17:44:38.818655+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "fd6f90da-3fa3-48c4-95a0-f36e42b9fe72"
+        },
+        "started_at": "2026-09-09T17:43:35.347525+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "fd6f90da-3fa3-48c4-95a0-f36e42b9fe72",
+        "verdict": {
+          "created_at": "2026-09-09T17:43:35.575473+00:00",
+          "error_message": "",
+          "file_path": "58a8c735-04e5-4c94-afef-0b03d5d80e0a/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/fd6f90da-3fa3-48c4-95a0-f36e42b9fe72.lean",
+          "id": "fd6f90da-3fa3-48c4-95a0-f36e42b9fe72",
+          "status": "ACCEPTED",
+          "theorem_id": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
+          "updated_at": "2026-09-09T17:44:27.511656+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-09T17:44:39.411380+00:00"
+      }
+    }
+  ],
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "upstream_revision": "1b535dd102b94cc42b107cca27059687888f08b3",
+  "validation": {
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build": "Mathlib-only submission workspace passed",
+    "checked_at": "2026-09-09T17:41:46.193275+00:00",
+    "dependency_audit": "The imported normalized-integral stub is replaced by the audited complete original proofs for the axiom audit",
+    "proof_audit": "Exact target type and complete proof checked; axioms: [propext, Classical.choice, Quot.sound]",
+    "scope": "Nonpositive-curvature scalar model and conditional radial integral comparison; no geometric completion",
+    "source_equivalence": "Five definition bodies and fourteen declaration types match their originals after canonicalizing universes",
+    "status": "passed"
+  },
+  "verified_at": "2026-09-09T17:44:39.811662+00:00"
+}
