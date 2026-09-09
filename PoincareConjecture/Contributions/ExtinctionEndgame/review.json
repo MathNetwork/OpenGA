@@ -2,8 +2,25 @@
   "status": "LOCAL_CHECKED_CONDITIONAL_REDUCTION",
   "namespace": "PoincareFormalization.ExtinctionEndgame",
   "platform_publication": {
-    "attempted": false,
-    "graph_updated": false
+    "attempted": true,
+    "graph_updated": false,
+    "status": "WAITING_FOR_PLATFORM",
+    "checked_at": "2026-09-09T21:00:31.925666+00:00",
+    "record": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/publication.json",
+    "source_revision": "20ce5fe376984e6628a05ab1622edd8dc64b3985",
+    "root_status": "Open",
+    "queued_jobs": [
+      {
+        "name": "OpenGA_CoordinateBallConnectedSum",
+        "job_id": "1bcee360-0ff7-4eb0-88ea-824e98b3bf50",
+        "status": "PENDING"
+      },
+      {
+        "name": "OpenGA_WidthExtinctionTime",
+        "job_id": "0b04854e-3e17-49e7-bed4-00b0843ada67",
+        "status": "PENDING"
+      }
+    ]
   },
   "lean_version": "v4.33.1",
   "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
