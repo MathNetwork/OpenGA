@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "theorem_id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+  "theorem_name": "OpenGA.scalar_lower_bound_across_upward_jumps",
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "milestone_id": "2d6c9060-c962-45a7-81c9-ba7f22f44012",
+  "proof_path": "PoincareConjecture/Contributions/ScalarLowerBoundAcrossJumpsProof.lean",
+  "proof_sha256": "e627dd2d5f006bb2bc42732cee611d2851a6e45bf399c55aa839ce1c9d093348",
+  "library_path": "OpenGALib/Analysis/ScalarLowerBound.lean",
+  "payload": {
+    "theorem_id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+    "proof_type": "prove",
+    "explanation": "Let $0=t_0<\\cdots<t_n$ be the given finite partition and let $r_i$ be the continuous profiles. We prove\n$$r_i(t)\\ge -\\frac{6}{1+4t}\\qquad(t_i\\le t\\le t_{i+1})$$\nunder the lower right Dini inequality, the initial lower bound, and the upward-jump inequalities in the statement.\n\nFirst consider one interval $[a,b]$ with $a\\ge0$ and a continuous profile $r$ whose initial value is at least $-6/(1+4a)$. For $\\varepsilon>0$, use the lower comparison function\n$$b_\\varepsilon(t)=-\\frac{6}{1+4t}-\\varepsilon.$$\nThe denominator is positive. Writing $A=6/(1+4t)>0$, its derivative satisfies\n$$\\frac23 b_\\varepsilon(t)^2-b_\\varepsilon'(t)\n=\\frac43 A\\varepsilon+\\frac23\\varepsilon^2>0.$$\nThus, at a contact point, the assumed lower right Dini derivative of $r$ is strictly larger than the derivative of $b_\\varepsilon$. The one-dimensional comparison principle, applied to the negative profile, gives $r\\ge b_\\varepsilon$ on the closed interval. The hypothesis on eventual slopes supplies the required frequent slope estimates for the negative profile. Letting $\\varepsilon$ decrease to zero gives $r(t)\\ge-6/(1+4t)$, including the right endpoint.\n\nFor the first interval, $t_0=0$ and $r_0(0)\\ge-6$ supply the initial comparison. Suppose the bound holds on interval $i$. At its right endpoint, the jump condition gives\n$$r_{i+1}(t_{i+1})\\ge r_i(t_{i+1})\\ge-\\frac6{1+4t_{i+1}}.$$\nThis starts the same comparison on interval $i+1$. Induction proves the claim on every interval. In particular, both one-sided profile values at each joining time satisfy the bound.\n\nThe analytic comparison is the step used in [Kleiner-Lott, proof of Lemma 79.11](https://arxiv.org/pdf/math/0605667v5#page=154), with the scalar differential inequality from Appendix B. Its geometric application requires separately verifying the profile hypotheses for a Ricci flow."
+  },
+  "validation": {
+    "checked_at": "2026-09-09T02:15:43.153290+00:00",
+    "status": "passed",
+    "toolchain": "leanprover/lean4:v4.33.1",
+    "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
+    "exact_published_type": "Verified by a Lean example using the verbatim published signature.",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "audited_declarations": [
+      "OpenGA.scalar_lower_bound_on_interval",
+      "solution"
+    ],
+    "target_imported": false,
+    "unproved_dependencies": false,
+    "library_build": "passed: lake build, 3185 jobs; new scalar module and public import compiled",
+    "library_sha256": "c263aa41dffea6113a6e7988a567befe74c878dbe8402e4a1940bde98ab3ef05"
+  },
+  "submission": {
+    "status": "ACCEPTED",
+    "started_at": "2026-09-09T02:16:01.986533+00:00",
+    "response": {
+      "submission_id": "6d178906-6119-48c0-b672-0f3881b70643",
+      "status": "PENDING",
+      "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+      "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation"
+    },
+    "submission_id": "6d178906-6119-48c0-b672-0f3881b70643",
+    "verdict": {
+      "id": "6d178906-6119-48c0-b672-0f3881b70643",
+      "theorem_id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "status": "ACCEPTED",
+      "error_message": "",
+      "file_path": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/6d178906-6119-48c0-b672-0f3881b70643.lean",
+      "created_at": "2026-09-09T02:16:02.232543+00:00",
+      "updated_at": "2026-09-09T02:16:32.594916+00:00"
+    },
+    "checked_at": "2026-09-09T02:16:42.540286+00:00",
+    "verified_at": "2026-09-09T02:16:43.372563+00:00",
+    "accepted_source_sha256": "e627dd2d5f006bb2bc42732cee611d2851a6e45bf399c55aa839ce1c9d093348",
+    "theorem": {
+      "theorem_id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+      "theorem_name": "OpenGA.scalar_lower_bound_across_upward_jumps",
+      "theorem_title": "Scalar lower bound across upward jumps",
+      "status": "Proved",
+      "formal_statement": "theorem OpenGA.scalar_lower_bound_across_upward_jumps\n    (n : ℕ) (hn : 0 < n) (times : ℕ → ℝ) (profiles : ℕ → ℝ → ℝ)\n    (hzero : times 0 = 0)\n    (htimes : ∀ i < n, times i < times (i + 1))\n    (hcont : ∀ i < n, ContinuousOn (profiles i) (Icc (times i) (times (i + 1))))\n    (hinitial : -6 ≤ profiles 0 (times 0))\n    (hslope : ∀ i < n, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n      q < (2 / 3 : ℝ) * (profiles i t) ^ 2 →\n        ∀ᶠ s in 𝓝[>] t, q < slope (profiles i) t s)\n    (hjumps : ∀ i, i + 1 < n →\n      profiles i (times (i + 1)) ≤ profiles (i + 1) (times (i + 1))) :\n    ∀ i < n, ∀ t ∈ Icc (times i) (times (i + 1)),\n      -(6 : ℝ) / (1 + 4 * t) ≤ profiles i t := by sorry",
+      "natural_language_statement": "Let $n\\ge1$ and $0=t_0<t_1<\\cdots<t_n$. For $0\\le i<n$, let $r_i:[t_i,t_{i+1}]\\to\\mathbb R$ be continuous. Write\n$$D_+r_i(t)=\\liminf_{s\\to t^+}\\frac{r_i(s)-r_i(t)}{s-t}.$$\nAssume $r_0(0)\\ge-6$, and, for each $i<n$ and $t_i\\le t<t_{i+1}$,\n$$D_+r_i(t)\\ge\\frac23r_i(t)^2.$$\nAt every internal joining time, assume $r_i(t_{i+1})\\le r_{i+1}(t_{i+1})$ for $i+1<n$. Then\n$$r_i(t)\\ge-\\frac6{1+4t}\\qquad(0\\le i<n,\\ t_i\\le t\\le t_{i+1}).$$\nThis isolates the scalar comparison step used in Kleiner-Lott's surgery estimates, with upward jumps allowed. Applying it to scalar-curvature minima requires establishing these analytic hypotheses from the geometry; this statement does not itself formalize a Ricci flow.\n\n[Source: Kleiner-Lott, proof of Lemma 79.11, p. 154](https://arxiv.org/pdf/math/0605667v5#page=154), using [Appendix B, equations (B.1)-(B.2), p. 202](https://arxiv.org/pdf/math/0605667v5#page=202).",
+      "created_at": "2026-09-09T02:04:08.77703+00:00",
+      "vote_count": 0,
+      "tags": [
+        "differential-inequalities",
+        "geometric-analysis",
+        "ricci-flow"
+      ],
+      "preamble": "import Mathlib.Analysis.Calculus.MeanValue\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology",
+      "source": "Analytic comparison extracted from Kleiner-Lott, Notes on Perelman's Papers, arXiv:math/0605667v5, proof of Lemma 79.11 (p. 154) and Appendix B (B.1)-(B.2) (p. 202). Upward jumps generalize the unchanged minima in that argument; the geometric Ricci-flow hypotheses are not formalized here. https://arxiv.org/pdf/math/0605667v5",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "visibility": "public",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "audits": [],
+      "readback": null
+    },
+    "milestone": {
+      "id": "2d6c9060-c962-45a7-81c9-ba7f22f44012",
+      "title": "Scalar lower bound across upward jumps",
+      "milestone_description": "Let $n\\ge1$ and $0=t_0<t_1<\\cdots<t_n$. For $0\\le i<n$, let $r_i:[t_i,t_{i+1}]\\to\\mathbb R$ be continuous. Write\n$$D_+r_i(t)=\\liminf_{s\\to t^+}\\frac{r_i(s)-r_i(t)}{s-t}.$$\nAssume $r_0(0)\\ge-6$, and, for each $i<n$ and $t_i\\le t<t_{i+1}$,\n$$D_+r_i(t)\\ge\\frac23r_i(t)^2.$$\nAt every internal joining time, assume $r_i(t_{i+1})\\le r_{i+1}(t_{i+1})$ for $i+1<n$. Then\n$$r_i(t)\\ge-\\frac6{1+4t}\\qquad(0\\le i<n,\\ t_i\\le t\\le t_{i+1}).$$\nThis isolates the scalar comparison step used in Kleiner-Lott's surgery estimates, with upward jumps allowed. Applying it to scalar-curvature minima requires establishing these analytic hypotheses from the geometry; this statement does not itself formalize a Ricci flow.\n\n[Source: Kleiner-Lott, proof of Lemma 79.11, p. 154](https://arxiv.org/pdf/math/0605667v5#page=154), using [Appendix B, equations (B.1)-(B.2), p. 202](https://arxiv.org/pdf/math/0605667v5#page=202).",
+      "sort_order": 4,
+      "completed": true,
+      "theorem": {
+        "id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+        "theorem_name": "OpenGA.scalar_lower_bound_across_upward_jumps",
+        "status": "Proved"
+      },
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T02:04:41.741988+00:00"
+    }
+  },
+  "library_declarations": [
+    "OpenGA.scalar_lower_bound_on_interval",
+    "OpenGA.scalar_lower_bound_across_upward_jumps"
+  ],
+  "curation": {
+    "status": "integrated",
+    "reviewed_at": "2026-09-09T02:17:53.146938+00:00",
+    "record_path": "PoincareConjecture/curation.json",
+    "mirror_path": "PoincareConjecture/Solutions/Sol_OpenGA_scalar_lower_bound_across_upward_jumps_6d178906611948c0b6720f3881b70643.lean",
+    "source_author": "Moqian"
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "changes": [
+    {
+      "id": "adopt_kleiner_lott",
+      "verified_at": "2026-09-09T01:49:51.146784+00:00",
+      "reason": "Kleiner-Lott surgery and extinction route. The original Dini comparison milestone is replaced by surgery-flow existence; the other three statements are restated using Kleiner-Lott conventions.",
+      "previous_plan": {
+        "schema_version": 1,
+        "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+        "source": {
+          "title": "Ricci Flow and the Poincare Conjecture",
+          "authors": [
+            "John Morgan",
+            "Gang Tian"
+          ],
+          "url": "https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf",
+          "pdf_sha256": "7c9db0c1577c0c59b2c0fb90a4a7dcf8cc7a45388fc9a39f1998cc636f2d5276",
+          "review_method": "Original PDF pages visually checked against the candidate statement; paraphrased descriptions.",
+          "reference_repository": "https://github.com/frenzymath/Poincare-Conjecture",
+          "reference_commit": "bb91a091f0b968f8bbe8d861e025a88d82b161be"
+        },
+        "milestones": [
+          {
+            "id": "forward_difference_comparison",
+            "source_reviewed": true,
+            "source_printed_page": 33,
+            "source_pdf_page": 76,
+            "payload": {
+              "title": "Lemma 2.22 (forward difference comparison)",
+              "milestone_description": "For continuous $f:[a,b]\\to\\mathbb R$ and $C^1$ $\\psi:[a,b]\\times\\mathbb R\\to\\mathbb R$, if $D^+f(t)\\le\\psi(t,f(t))$ for $t\\in[a,b)$, every solution on $[a,b]$ of $G'=\\psi(t,G)$ with $f(a)\\le G(a)$ satisfies $f\\le G$ throughout $[a,b]$. Here $D^+$ denotes the upper right Dini derivative.\n\n[Source: Morgan-Tian, p. 33](https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf#page=76).",
+              "sort_order": 0
+            },
+            "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this plan."
+          },
+          {
+            "id": "surgery_topology",
+            "source_reviewed": true,
+            "source_printed_page": 357,
+            "source_pdf_page": 400,
+            "payload": {
+              "title": "Proposition 15.3 (topological effect of surgery)",
+              "milestone_description": "For a generalized Ricci flow satisfying Assumptions (1)-(7), any singular time $t$ and sufficiently close $t'<t$, $M_{t'}$ is diffeomorphic to connected sums among components of the disjoint union of $M_t$, finitely many $S^2$-bundles over $S^1$, and finitely many closed constant-positive-curvature three-manifolds.\n\n[Source: Morgan-Tian, p. 357](https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf#page=400).",
+              "sort_order": 1
+            },
+            "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this plan."
+          },
+          {
+            "id": "finite_time_extinction",
+            "source_reviewed": true,
+            "source_printed_page": 415,
+            "source_pdf_page": 458,
+            "payload": {
+              "title": "Theorem 18.1 (finite-time extinction)",
+              "milestone_description": "A compact connected normalized Riemannian three-manifold whose fundamental group is a free product of finite and infinite cyclic groups contains no embedded $\\mathbb{RP}^2$ with trivial normal bundle. Its Theorem 15.9 surgery flow has empty slices for all sufficiently large times.\n\n[Source: Morgan-Tian, p. 415](https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf#page=458).",
+              "sort_order": 2
+            },
+            "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this plan."
+          },
+          {
+            "id": "topology_from_extinction",
+            "source_reviewed": true,
+            "source_printed_page": 358,
+            "source_pdf_page": 401,
+            "payload": {
+              "title": "Corollary 15.4(1) (topology from extinction)",
+              "milestone_description": "For a generalized Ricci flow satisfying Assumptions (1)-(7) with initial manifold $M$, if $M_T=\\varnothing$ for some $T>0$, then $M$ is diffeomorphic to a connected sum of $S^2$-bundles over $S^1$ and three-dimensional spherical space forms.\n\n[Source: Morgan-Tian, p. 358](https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf#page=401).",
+              "sort_order": 3
+            },
+            "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this plan."
+          }
+        ]
+      },
+      "previous_receipt": {
+        "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+        "milestones": {
+          "forward_difference_comparison": {
+            "id": "01af4eaa-14be-4540-8708-3da1ea55850b",
+            "title": "Lemma 2.22 (forward difference comparison)",
+            "milestone_description": "For continuous $f:[a,b]\\to\\mathbb R$ and $C^1$ $\\psi:[a,b]\\times\\mathbb R\\to\\mathbb R$, if $D^+f(t)\\le\\psi(t,f(t))$ for $t\\in[a,b)$, every solution on $[a,b]$ of $G'=\\psi(t,G)$ with $f(a)\\le G(a)$ satisfies $f\\le G$ throughout $[a,b]$. Here $D^+$ denotes the upper right Dini derivative.\n\n[Source: Morgan-Tian, p. 33](https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf#page=76).",
+            "sort_order": 0,
+            "completed": false,
+            "theorem": null,
+            "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+            "created_at": "2026-09-09T01:41:08.099214+00:00"
+          },
+          "surgery_topology": {
+            "id": "245ff479-b4c3-46c9-aee5-43f931990aa1",
+            "title": "Proposition 15.3 (topological effect of surgery)",
+            "milestone_description": "For a generalized Ricci flow satisfying Assumptions (1)-(7), any singular time $t$ and sufficiently close $t'<t$, $M_{t'}$ is diffeomorphic to connected sums among components of the disjoint union of $M_t$, finitely many $S^2$-bundles over $S^1$, and finitely many closed constant-positive-curvature three-manifolds.\n\n[Source: Morgan-Tian, p. 357](https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf#page=400).",
+            "sort_order": 1,
+            "completed": false,
+            "theorem": null,
+            "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+            "created_at": "2026-09-09T01:41:09.044793+00:00"
+          },
+          "finite_time_extinction": {
+            "id": "33045187-e820-4325-a253-c8ba2c778897",
+            "title": "Theorem 18.1 (finite-time extinction)",
+            "milestone_description": "A compact connected normalized Riemannian three-manifold whose fundamental group is a free product of finite and infinite cyclic groups contains no embedded $\\mathbb{RP}^2$ with trivial normal bundle. Its Theorem 15.9 surgery flow has empty slices for all sufficiently large times.\n\n[Source: Morgan-Tian, p. 415](https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf#page=458).",
+            "sort_order": 2,
+            "completed": false,
+            "theorem": null,
+            "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+            "created_at": "2026-09-09T01:41:09.964537+00:00"
+          },
+          "topology_from_extinction": {
+            "id": "29f0d323-76f4-4288-b819-626a482e9d5f",
+            "title": "Corollary 15.4(1) (topology from extinction)",
+            "milestone_description": "For a generalized Ricci flow satisfying Assumptions (1)-(7) with initial manifold $M$, if $M_T=\\varnothing$ for some $T>0$, then $M$ is diffeomorphic to a connected sum of $S^2$-bundles over $S^1$ and three-dimensional spherical space forms.\n\n[Source: Morgan-Tian, p. 358](https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf#page=401).",
+            "sort_order": 3,
+            "completed": false,
+            "theorem": null,
+            "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+            "created_at": "2026-09-09T01:41:10.721747+00:00"
+          }
+        },
+        "source": {
+          "title": "Ricci Flow and the Poincare Conjecture",
+          "authors": [
+            "John Morgan",
+            "Gang Tian"
+          ],
+          "url": "https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf",
+          "pdf_sha256": "7c9db0c1577c0c59b2c0fb90a4a7dcf8cc7a45388fc9a39f1998cc636f2d5276",
+          "review_method": "Original PDF pages visually checked against the candidate statement; paraphrased descriptions.",
+          "reference_repository": "https://github.com/frenzymath/Poincare-Conjecture",
+          "reference_commit": "bb91a091f0b968f8bbe8d861e025a88d82b161be"
+        },
+        "verified_at": "2026-09-09T01:41:11.015610+00:00"
+      },
+      "target_plan": "PoincareConjecture/milestones.json",
+      "updates": [
+        {
+          "old_local_id": "forward_difference_comparison",
+          "local_id": "all_time_surgery_flow",
+          "before": {
+            "id": "01af4eaa-14be-4540-8708-3da1ea55850b",
+            "title": "Lemma 2.22 (forward difference comparison)",
+            "milestone_description": "For continuous $f:[a,b]\\to\\mathbb R$ and $C^1$ $\\psi:[a,b]\\times\\mathbb R\\to\\mathbb R$, if $D^+f(t)\\le\\psi(t,f(t))$ for $t\\in[a,b)$, every solution on $[a,b]$ of $G'=\\psi(t,G)$ with $f(a)\\le G(a)$ satisfies $f\\le G$ throughout $[a,b]$. Here $D^+$ denotes the upper right Dini derivative.\n\n[Source: Morgan-Tian, p. 33](https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf#page=76).",
+            "sort_order": 0,
+            "completed": false,
+            "theorem": null,
+            "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+            "created_at": "2026-09-09T01:41:08.099214+00:00"
+          },
+          "after": {
+            "title": "All-time Ricci flow with surgery",
+            "milestone_description": "Every closed oriented Riemannian three-manifold with normalized metric admits a Ricci flow with $(r,\\delta)$-cutoff for all $t\\ge0$, for suitable positive nonincreasing parameters $r,\\delta$, allowing empty slices.\n\n[Source: Kleiner-Lott, Proposition 77.2, p. 146 (existence consequence)](https://arxiv.org/pdf/math/0605667v5#page=146).",
+            "sort_order": 0
+          },
+          "reason": "At the mission creator's request, adopt Kleiner-Lott as the primary reference and use a semantic English title without source numbering. Replace the original forward-difference comparison target with the all-time surgery-flow existence consequence of Kleiner-Lott Proposition 77.2."
+        },
+        {
+          "old_local_id": "surgery_topology",
+          "local_id": "surgery_topology",
+          "before": {
+            "id": "245ff479-b4c3-46c9-aee5-43f931990aa1",
+            "title": "Proposition 15.3 (topological effect of surgery)",
+            "milestone_description": "For a generalized Ricci flow satisfying Assumptions (1)-(7), any singular time $t$ and sufficiently close $t'<t$, $M_{t'}$ is diffeomorphic to connected sums among components of the disjoint union of $M_t$, finitely many $S^2$-bundles over $S^1$, and finitely many closed constant-positive-curvature three-manifolds.\n\n[Source: Morgan-Tian, p. 357](https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf#page=400).",
+            "sort_order": 1,
+            "completed": false,
+            "theorem": null,
+            "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+            "created_at": "2026-09-09T01:41:09.044793+00:00"
+          },
+          "after": {
+            "title": "Topological effect of surgery",
+            "milestone_description": "At a Kleiner-Lott cutoff surgery, recover the presurgery manifold up to diffeomorphism by finitely many operations: join two components by connected sum; sum a component with $S^1\\times S^2$ or $\\mathbb{RP}^3$; adjoin a component $S^1\\times S^2$ or a spherical space form.\n\n[Source: Kleiner-Lott, Lemma 73.4, p. 140](https://arxiv.org/pdf/math/0605667v5#page=140).",
+            "sort_order": 1
+          },
+          "reason": "At the mission creator's request, adopt Kleiner-Lott as the primary reference and use a semantic English title without source numbering. Restate this unlinked milestone using Kleiner-Lott Lemma 73.4, with its hypotheses and attribution."
+        },
+        {
+          "old_local_id": "finite_time_extinction",
+          "local_id": "finite_time_extinction",
+          "before": {
+            "id": "33045187-e820-4325-a253-c8ba2c778897",
+            "title": "Theorem 18.1 (finite-time extinction)",
+            "milestone_description": "A compact connected normalized Riemannian three-manifold whose fundamental group is a free product of finite and infinite cyclic groups contains no embedded $\\mathbb{RP}^2$ with trivial normal bundle. Its Theorem 15.9 surgery flow has empty slices for all sufficiently large times.\n\n[Source: Morgan-Tian, p. 415](https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf#page=458).",
+            "sort_order": 2,
+            "completed": false,
+            "theorem": null,
+            "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+            "created_at": "2026-09-09T01:41:09.964537+00:00"
+          },
+          "after": {
+            "title": "Finite-time extinction",
+            "milestone_description": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.",
+            "sort_order": 2
+          },
+          "reason": "At the mission creator's request, adopt Kleiner-Lott as the primary reference and use a semantic English title without source numbering. Restate this unlinked milestone using Kleiner-Lott Claim 3.5, with its hypotheses and attribution."
+        },
+        {
+          "old_local_id": "topology_from_extinction",
+          "local_id": "topology_from_extinction",
+          "before": {
+            "id": "29f0d323-76f4-4288-b819-626a482e9d5f",
+            "title": "Corollary 15.4(1) (topology from extinction)",
+            "milestone_description": "For a generalized Ricci flow satisfying Assumptions (1)-(7) with initial manifold $M$, if $M_T=\\varnothing$ for some $T>0$, then $M$ is diffeomorphic to a connected sum of $S^2$-bundles over $S^1$ and three-dimensional spherical space forms.\n\n[Source: Morgan-Tian, p. 358](https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf#page=401).",
+            "sort_order": 3,
+            "completed": false,
+            "theorem": null,
+            "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+            "created_at": "2026-09-09T01:41:10.721747+00:00"
+          },
+          "after": {
+            "title": "Topology from extinction",
+            "milestone_description": "If a Kleiner-Lott Ricci flow with surgery on a closed connected orientable three-manifold $M$ becomes extinct, then $M$ is diffeomorphic to a connected sum of $S^1\\times S^2$ factors and spherical space forms.\n\n[Source: Kleiner-Lott, Lemma 81.2, p. 160](https://arxiv.org/pdf/math/0605667v5#page=160).",
+            "sort_order": 3
+          },
+          "reason": "At the mission creator's request, adopt Kleiner-Lott as the primary reference and use a semantic English title without source numbering. Restate this unlinked milestone using Kleiner-Lott Lemma 81.2, with its hypotheses and attribution."
+        }
+      ]
+    }
+  ]
+}

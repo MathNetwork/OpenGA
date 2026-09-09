@@ -1,0 +1,970 @@
+{
+  "literature_decomposition": {
+    "comparison_data_construction": {
+      "reduction_status": "SKETCH_ACCEPTED",
+      "reduction_submission_id": "42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+      "refines_theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+      "scope": "Composite geometric extraction problem; smoothing, flow and surgery, sweepout topology, scalar estimates, realizers, uniform comparisons, endpoint regularity and jump control remain open.",
+      "status": "Open",
+      "theorem_id": "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+      "theorem_name": "PoincareFormalization.persistent_comparison_data_of_not_homeomorph_sphere"
+    },
+    "comparison_geometry_targets": [
+      {
+        "dependency_note": "The proof components are implementation candidates, not additional published milestones or Lean proof edges.",
+        "id": "bishop_gromov_volume_comparison",
+        "locator": "Appendix G, equation (G.1), Riemannian Ricci-curvature version",
+        "next_bounded_extraction": "Audit existing Riemannian distance, Ricci tensor, exponential map, Jacobi field and volume-measure APIs before choosing the first faithful Lean target.",
+        "pages": [
+          211,
+          212
+        ],
+        "proof_components_to_review": [
+          "Jacobi fields and radial Riccati comparison",
+          "Radial volume density comparison",
+          "Cut locus and polar integration",
+          "Integration to the relative ball-volume inequality"
+        ],
+        "role": "Reusable comparison geometry supporting the smooth Ricci-flow branch.",
+        "source": "kleiner-lott",
+        "status": "formalization_open",
+        "title": "Bishop-Gromov volume comparison"
+      }
+    ],
+    "definitions_to_formalize": [
+      {
+        "id": "normalized_cutoff_flow",
+        "locators": [
+          "Definition 68.1",
+          "Definition 69.6",
+          "Definition 73.1",
+          "Definition 77.1"
+        ],
+        "source": "kleiner-lott",
+        "status": "full_definition_review_required"
+      },
+      {
+        "id": "sweepout_width",
+        "locators": [
+          "Section 1.1",
+          "equations (1.1)-(1.4)"
+        ],
+        "pages": [
+          2,
+          3
+        ],
+        "scope": "Fixed homotopy class of continuous Sobolev sweepouts; energy and area widths.",
+        "source": "colding-minicozzi-width",
+        "status": "definition_design_required"
+      }
+    ],
+    "finite_time_extinction_targets": [
+      {
+        "existing_analytic_milestone": "scalar_lower_bound_across_upward_jumps",
+        "id": "geometric_scalar_lower_bound",
+        "kind": "source_lemma",
+        "locator": "Lemma 79.11",
+        "page": 154,
+        "prerequisite_sources": [
+          "Appendix B, equations (B.1)-(B.2)",
+          "Definition 77.1"
+        ],
+        "remaining_interface": "Derive scalar-minimum evolution and surgery compatibility from a geometric flow.",
+        "source": "kleiner-lott",
+        "status": "geometry_open",
+        "title": "Scalar curvature bound for surgery flows",
+        "upstream_candidates_record": "PoincareConjecture/References/DifferentialGeometry/reuse.json"
+      },
+      {
+        "completed_extractions": [
+          {
+            "declarations": [
+              "OpenGA.energyDensity_sq_sub_areaDensity_sq",
+              "OpenGA.areaDensity_le_energyDensity",
+              "OpenGA.areaDensity_eq_energyDensity_iff",
+              "OpenGA.integrable_areaDensity",
+              "OpenGA.integral_areaDensity_le_energyDensity",
+              "OpenGA.integral_areaDensity_eq_energyDensity_iff"
+            ],
+            "id": "area_energy_comparison",
+            "local_path": "OpenGALib/Analysis/AreaEnergy.lean",
+            "platform_published": true,
+            "platform_verified_at": "2026-09-09T03:20:48.491442+00:00",
+            "publication_record": "PoincareConjecture/Contributions/AreaEnergy/publication.json",
+            "published_theorems": [
+              {
+                "declaration": "OpenGA.areaDensity_eq_energyDensity_iff",
+                "status": "Proved",
+                "submission_id": "9d895407-3c0b-47ee-b857-e6ae4f60617f",
+                "theorem_id": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b"
+              },
+              {
+                "declaration": "OpenGA.integral_areaDensity_le_energyDensity",
+                "status": "Proved",
+                "submission_id": "096644e2-0f01-45df-9752-41d89decd664",
+                "theorem_id": "d81e3640-8579-4396-babb-69edac82be33"
+              },
+              {
+                "declaration": "OpenGA.integral_areaDensity_eq_energyDensity_iff",
+                "status": "Proved",
+                "submission_id": "01167772-943a-4c75-ab15-9f7b235777a8",
+                "theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7"
+              }
+            ],
+            "riemannian_integration": {
+              "local_path": "OpenGALib/Interoperability/DifferentialGeometry.lean",
+              "scope": "Continuous fields on a compact Riemannian manifold, with integrability derived and the equality criterion valid everywhere. Surface differential and frame identification remain open.",
+              "status": "proved_locally",
+              "upstream_record_path": "PoincareConjecture/References/DifferentialGeometry/reuse.json"
+            },
+            "scope": "Inner-product vector pairs and measurable fields with integrable energy; the Sobolev differential and surface integration interface remain open.",
+            "source_locator": "equation (1.4) and the following equality discussion, page 3",
+            "status": "proved_and_published",
+            "verification": {
+              "allowed_axioms": [
+                "propext",
+                "Classical.choice",
+                "Quot.sound"
+              ],
+              "axiom_audit": "passed for all 10 new lemmas and theorems",
+              "checked_at": "2026-09-09T03:00:26.694892+00:00",
+              "full_library_build": "passed",
+              "lean_toolchain": "leanprover/lean4:v4.33.1",
+              "new_module_warnings": 0,
+              "source_sha256": "60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a",
+              "synchronization_tests": "11 passed"
+            }
+          },
+          {
+            "declarations": [
+              "OpenGA.areaDensity_eq_normDet",
+              "OpenGA.areaDensity_basis_independent",
+              "OpenGA.energyDensity_basis_independent"
+            ],
+            "id": "linear_map_density_frame_independence",
+            "kind": "derived_interface",
+            "local_path": "OpenGALib/Analysis/AreaEnergy/LinearMap.lean",
+            "platform_published": true,
+            "platform_verified_at": "2026-09-09T15:47:54.746928+00:00",
+            "publication_record": "PoincareConjecture/Contributions/LinearMapDensities/publication.json",
+            "published_dependencies": [
+              {
+                "declaration": "OrthonormalBasis.sum_apply_diagonal_invariant",
+                "status": "Proved",
+                "submission_id": "98c16d58-8c4b-4ec5-aa86-7a1af0257775",
+                "theorem_id": "a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784",
+                "url": "https://prove2.me/theorems/a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784"
+              }
+            ],
+            "published_theorems": [
+              {
+                "declaration": "OpenGA.areaDensity_eq_normDet",
+                "status": "Proved",
+                "submission_id": "15a12bda-4d91-481f-9492-2022ec9bf42b",
+                "theorem_id": "eddc764e-527d-4d07-a812-94f60b637407",
+                "url": "https://prove2.me/theorems/eddc764e-527d-4d07-a812-94f60b637407"
+              },
+              {
+                "declaration": "OpenGA.areaDensity_basis_independent",
+                "status": "Proved",
+                "submission_id": "59b54355-c04b-4077-925b-c7d3785054ad",
+                "theorem_id": "85285131-e406-453d-81b2-2e602a3e878d",
+                "url": "https://prove2.me/theorems/85285131-e406-453d-81b2-2e602a3e878d"
+              },
+              {
+                "declaration": "OpenGA.energyDensity_basis_independent",
+                "status": "Proved",
+                "submission_id": "973f67d3-d234-4233-800f-35c83decf01c",
+                "theorem_id": "1e7c607c-776e-41d3-8819-54cfe0543e69",
+                "url": "https://prove2.me/theorems/1e7c607c-776e-41d3-8819-54cfe0543e69"
+              }
+            ],
+            "scope": "Pointwise linear maps from a two-dimensional real inner product space into any real inner product space. The area density is the intrinsic norm determinant, and both area and energy densities are independent of orthonormal basis. No injectivity or orientation assumption is required.",
+            "source_locator": "Pointwise Jacobian and energy formulas accompanying equation (1.4), p. 3. The intrinsic linear-map identification is a derived interface.",
+            "status": "proved_and_published",
+            "verification_record": "PoincareConjecture/Contributions/AreaEnergy/linear_map_verification.json",
+            "verified_at": "2026-09-09T04:01:07.956996+00:00"
+          }
+        ],
+        "id": "energy_area_width_equivalence",
+        "kind": "source_proposition",
+        "locator": "Proposition 1.5",
+        "next_bounded_extraction": "Apply the proved intrinsic linear-map density formulas to manifold differentials, establish regularity with varying tangent fibers, and integrate over surfaces. Sobolev sweepouts and Proposition 1.5 remain open.",
+        "page": 4,
+        "prerequisite_sources": [
+          "Section 1.1",
+          "Appendix D"
+        ],
+        "source": "colding-minicozzi-width",
+        "status": "formalization_open",
+        "title": "Equality of energy and area widths"
+      },
+      {
+        "dependency_evidence": "Section 2.2",
+        "hypothesis_to_preserve": "A nontrivial class in the third homotopy group.",
+        "id": "good_sweepouts",
+        "kind": "source_theorem",
+        "locator": "Theorem 1.14",
+        "page": 6,
+        "prerequisite_sources": [
+          "Theorem 2.1",
+          "Proposition 2.2"
+        ],
+        "source": "colding-minicozzi-width",
+        "status": "formalization_open",
+        "title": "Sweepouts approaching minimal spheres"
+      },
+      {
+        "hypothesis_to_preserve": "A branched minimal immersion of the two-sphere under smooth Ricci flow.",
+        "id": "minimal_sphere_area_decay",
+        "kind": "source_lemma",
+        "locator": "Lemma 1.22",
+        "page": 7,
+        "prerequisite_sources": [
+          "equation (1.21)",
+          "Gauss-Bonnet with branch points"
+        ],
+        "source": "colding-minicozzi-width",
+        "status": "formalization_open",
+        "title": "Area decay of minimal spheres"
+      },
+      {
+        "completed_extractions": [
+          {
+            "declarations": [
+              "OpenGA.eventually_width_slope_lt_of_comparison"
+            ],
+            "id": "width_slope_from_comparisons",
+            "local_path": "OpenGALib/Analysis/WidthComparison.lean",
+            "publication_record": "PoincareConjecture/Contributions/WidthComparison/publication.json",
+            "root_graph_connected": true,
+            "scope": "Conditional analytic extraction from uniform short-time comparison estimates, finite-energy competitors and a conformal width realizer. The geometric Theorem 1.7 remains open.",
+            "source_locator": "Proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8",
+            "status": "proved_and_published",
+            "submission_id": "719f4cdd-1059-4091-9819-7926dbc5806e",
+            "theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
+            "verified_at": "2026-09-09T03:42:47.917030+00:00"
+          }
+        ],
+        "dependency_evidence": "Proof on pages 7-8.",
+        "depends_on": [
+          "energy_area_width_equivalence",
+          "good_sweepouts",
+          "minimal_sphere_area_decay"
+        ],
+        "hypothesis_to_preserve": "Closed orientable prime nonaspherical three-manifold.",
+        "id": "smooth_width_variation",
+        "kind": "source_theorem",
+        "locator": "Theorem 1.7",
+        "normalized_route_input": "geometric_scalar_lower_bound",
+        "page": 4,
+        "prerequisite_sources": [
+          "equation (1.18)"
+        ],
+        "scope": "Forward upper Dini estimate between surgeries.",
+        "source": "colding-minicozzi-width",
+        "status": "formalization_open",
+        "title": "Width variation under smooth Ricci flow"
+      },
+      {
+        "hypothesis_to_preserve": "Nonaspherical irreducible initial manifold; follow the surviving component.",
+        "id": "surgery_homotopy_control",
+        "kind": "source_remark_target",
+        "locator": "Remark 73.6",
+        "page": 140,
+        "scope": "Homotopy equivalences with distance expansion tending to one from earlier slices.",
+        "source": "kleiner-lott",
+        "status": "formalization_open",
+        "title": "Homotopy control across surgery"
+      },
+      {
+        "depends_on": [
+          "surgery_homotopy_control",
+          "energy_area_width_equivalence"
+        ],
+        "id": "width_transport_across_surgery",
+        "kind": "derived_interface",
+        "remaining_interface": "Transport the chosen sweepout class, bound its energy, and justify one-sided limits before asserting a downward jump.",
+        "source_locators": [
+          "Kleiner-Lott, Remark 73.6",
+          "Colding-Minicozzi, Corollary 1.11 and its cited surgery arguments"
+        ],
+        "status": "statement_review_required",
+        "title": "Width control across surgery"
+      },
+      {
+        "additional_review": "Prime-factor reduction and the surgery conventions require explicit verification.",
+        "depends_on": [
+          "smooth_width_variation",
+          "width_transport_across_surgery"
+        ],
+        "existing_analytic_theorem_id": "16d46789-a853-4a33-a4a3-4134fe549c82",
+        "hypothesis_to_preserve": "Closed orientable three-manifold with no aspherical prime factor.",
+        "id": "extinction_without_aspherical_factors",
+        "kind": "source_corollary",
+        "locator": "Corollary 1.11",
+        "page": 4,
+        "source": "colding-minicozzi-width",
+        "status": "formalization_open",
+        "title": "Extinction without aspherical prime factors"
+      }
+    ],
+    "next_action": "Build the manifold-differential area-energy interface using the proved pointwise frame independence, local orthonormal frames and imported Riemannian volume. Assess upstream scalar evolution and pinching before formalizing them again.",
+    "other_milestone_expansions": [
+      {
+        "milestone": "all_time_surgery_flow",
+        "next_review": "Prolongation, noncollapsing, and canonical-neighborhood control; preserve the parameter quantifiers.",
+        "proof_outline_locators": [
+          "Lemma 73.7",
+          "Proposition 77.2",
+          "Sections 78-80"
+        ]
+      },
+      {
+        "dependency_evidence": "Proof of Lemma 73.4",
+        "milestone": "surgery_topology",
+        "next_review": "Neck cutting, capping, and discarded-component classification.",
+        "proof_input_locators": [
+          "Lemma 67.13",
+          "Lemma 67.5"
+        ]
+      },
+      {
+        "dependency_evidence": "Proof of Lemma 81.2",
+        "depends_on_milestones": [
+          "surgery_topology"
+        ],
+        "milestone": "topology_from_extinction",
+        "scope": "Extinction remains a hypothesis of this conditional theorem."
+      }
+    ],
+    "platform_published": false,
+    "primary_source": "kleiner-lott",
+    "publication_scope": "The three area-energy extractions and the width-comparison slope theorem are published and proved, and connected to the mission root through a conditional persistent-profile reduction. The eight geometric literature targets remain open. The new comparison-data construction is a composite open refinement, not a completed geometric source theorem.",
+    "review_method": "Source statements and surrounding proofs checked in the original PDF text. These entries identify formalization targets; they do not supply complete Lean signatures.",
+    "ricci_flow_milestone_expansion": {
+      "milestone_ids": [
+        "local_curvature_derivative_estimates",
+        "hamilton_ivey_pinching",
+        "compactness_of_ricci_flows",
+        "reduced_volume_monotonicity",
+        "no_local_collapsing",
+        "compactness_of_three_dimensional_kappa_solutions",
+        "canonical_neighborhood_theorem",
+        "noncollapsing_across_surgery"
+      ],
+      "platform_verified_at": "2026-09-09T16:13:35.957779+00:00",
+      "publication_record": "PoincareConjecture/milestones_published.json",
+      "scope": "Eight additional open literature milestones. Supports metadata indicates intended use, not complete dependency lists or formal proof-graph edges. Existing milestones and theorem links are preserved.",
+      "source": "kleiner-lott",
+      "source_reviewed_at": "2026-09-09T16:10:45.666983+00:00",
+      "status": "published_open",
+      "synchronized_at": "2026-09-09T16:14:38.012369+00:00",
+      "verification": {
+        "api_readback": "passed",
+        "lean_source_changes": 0,
+        "milestones_in_snapshot": 16,
+        "new_milestones_verified": 8,
+        "synchronization_tests": "14 passed"
+      }
+    },
+    "root_graph_verification_record": "PoincareConjecture/Contributions/WidthComparison/publication.json",
+    "root_interfaces_requiring_review": [
+      {
+        "id": "smooth_model_of_topological_manifold",
+        "scope": "Match the platform's topological hypotheses to a closed oriented smooth Riemannian model; include countability and normalization.",
+        "status": "source_review_required"
+      },
+      {
+        "id": "prime_factor_topology",
+        "scope": "Justify the prime and irreducible reductions and the nontrivial sweepout class without using the Poincare conclusion.",
+        "status": "source_review_required"
+      },
+      {
+        "id": "geometric_trace_assembly",
+        "platform_theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "scope": "The existing composite Open target still requires endpoint continuity, finitely many pieces on each finite interval, compatible jumps, and an initial width bound independent of the final time.",
+        "status": "statement_review_required"
+      },
+      {
+        "id": "simply_connected_reconstruction",
+        "locator": "Section 3.2, final paragraph",
+        "page": 9,
+        "scope": "Use simple connectivity in the connected-sum classification to recover the sphere.",
+        "source": "kleiner-lott",
+        "status": "formalization_open"
+      }
+    ],
+    "scope": "First expansion of the existing milestones. Source dependencies below are not Lean proof edges or complete prerequisite lists.",
+    "status": "local_source_review",
+    "supporting_source": {
+      "arxiv_version": "0707.0108v1",
+      "key": "colding-minicozzi-width",
+      "role": "Finite extinction input cited in Kleiner-Lott Section 2 and Claim 3.5.",
+      "title": "Width and Finite Extinction Time of Ricci Flow",
+      "url": "https://arxiv.org/pdf/0707.0108v1"
+    },
+    "upstream_libraries": [
+      {
+        "commit": "1b535dd102b94cc42b107cca27059687888f08b3",
+        "id": "differential_geometry",
+        "record_path": "PoincareConjecture/References/DifferentialGeometry/reuse.json",
+        "scope": "Metric and Riemannian-volume integration verified locally; Ricci-flow results are candidates for further review."
+      }
+    ]
+  },
+  "milestones": [
+    {
+      "definition_references": [
+        "Definition 73.1",
+        "Definition 77.1"
+      ],
+      "depends_on": [],
+      "id": "all_time_surgery_flow",
+      "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this plan.",
+      "payload": {
+        "milestone_description": "Every closed oriented Riemannian three-manifold with normalized metric admits a Ricci flow with $(r,\\delta)$-cutoff for all $t\\ge0$, for suitable positive nonincreasing parameters $r,\\delta$, allowing empty slices.\n\n[Source: Kleiner-Lott, Proposition 77.2, p. 146 (existence consequence)](https://arxiv.org/pdf/math/0605667v5#page=146).",
+        "sort_order": 0,
+        "title": "All-time Ricci flow with surgery"
+      },
+      "platform_milestone_id": "01af4eaa-14be-4540-8708-3da1ea55850b",
+      "reviewed_scope": "Existence consequence of Proposition 77.2 as stated in its introductory paragraph; not the full quantified noncollapsing assertion.",
+      "source_index": "Proposition 77.2",
+      "source_pdf_page": 146,
+      "source_printed_page": 146,
+      "source_reviewed": true
+    },
+    {
+      "definition_references": [
+        "Definition 73.1"
+      ],
+      "depends_on": [],
+      "id": "surgery_topology",
+      "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this plan.",
+      "payload": {
+        "milestone_description": "At a Kleiner-Lott cutoff surgery, recover the presurgery manifold up to diffeomorphism by finitely many operations: join two components by connected sum; sum a component with $S^1\\times S^2$ or $\\mathbb{RP}^3$; adjoin a component $S^1\\times S^2$ or a spherical space form.\n\n[Source: Kleiner-Lott, Lemma 73.4, p. 140](https://arxiv.org/pdf/math/0605667v5#page=140).",
+        "sort_order": 1,
+        "title": "Topological effect of surgery"
+      },
+      "platform_milestone_id": "245ff479-b4c3-46c9-aee5-43f931990aa1",
+      "reviewed_scope": "Three permitted reconstruction operations of Lemma 73.4, using the cutoff procedure of Definition 73.1.",
+      "source_index": "Lemma 73.4",
+      "source_pdf_page": 140,
+      "source_printed_page": 140,
+      "source_reviewed": true
+    },
+    {
+      "definition_references": [
+        "Section 3.2",
+        "Remark 73.6"
+      ],
+      "depends_on": [
+        "all_time_surgery_flow"
+      ],
+      "id": "finite_time_extinction",
+      "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this plan.",
+      "payload": {
+        "milestone_description": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.",
+        "sort_order": 2,
+        "title": "Finite-time extinction"
+      },
+      "platform_milestone_id": "33045187-e820-4325-a253-c8ba2c778897",
+      "reviewed_scope": "Simply connected case of Claim 3.5; this is an external extinction input cited by Kleiner-Lott, not proved in their notes.",
+      "source_index": "Claim 3.5",
+      "source_pdf_page": 9,
+      "source_printed_page": 9,
+      "source_reviewed": true,
+      "supporting_sources": [
+        {
+          "authors": [
+            "Grigori Perelman"
+          ],
+          "kleiner_lott_reference": 53,
+          "title": "Finite Extinction Time for the Solutions to the Ricci Flow on Certain Three-Manifolds",
+          "url": "https://arxiv.org/abs/math/0307245"
+        },
+        {
+          "authors": [
+            "Tobias Colding",
+            "William Minicozzi"
+          ],
+          "kleiner_lott_reference": 25,
+          "title": "Width and Finite Extinction Time of Ricci Flow",
+          "url": "https://arxiv.org/abs/0707.0108"
+        }
+      ]
+    },
+    {
+      "definition_references": [
+        "Definition 73.1",
+        "Lemma 73.4"
+      ],
+      "depends_on": [
+        "surgery_topology"
+      ],
+      "id": "topology_from_extinction",
+      "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this plan.",
+      "payload": {
+        "milestone_description": "If a Kleiner-Lott Ricci flow with surgery on a closed connected orientable three-manifold $M$ becomes extinct, then $M$ is diffeomorphic to a connected sum of $S^1\\times S^2$ factors and spherical space forms.\n\n[Source: Kleiner-Lott, Lemma 81.2, p. 160](https://arxiv.org/pdf/math/0605667v5#page=160).",
+        "sort_order": 3,
+        "title": "Topology from extinction"
+      },
+      "platform_milestone_id": "29f0d323-76f4-4288-b819-626a482e9d5f",
+      "reviewed_scope": "Lemma 81.2, including compactness, connectedness and orientability; spherical space forms mean free finite isometric quotients of the round three-sphere.",
+      "source_index": "Lemma 81.2",
+      "source_pdf_page": 160,
+      "source_printed_page": 160,
+      "source_reviewed": true
+    },
+    {
+      "accepted_submission_id": "6d178906-6119-48c0-b672-0f3881b70643",
+      "definition_references": [
+        "Appendix B, equations (B.1)-(B.2)"
+      ],
+      "depends_on": [],
+      "graph_connection": {
+        "root_submission_id": "d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "verified_at": "2026-09-09T02:43:14.796179+00:00"
+      },
+      "id": "scalar_lower_bound_across_upward_jumps",
+      "link_status": "Complete: the linked analytic statement has an accepted full proof.",
+      "linked_theorem_id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+      "payload": {
+        "milestone_description": "Let $n\\ge1$ and $0=t_0<t_1<\\cdots<t_n$. For $0\\le i<n$, let $r_i:[t_i,t_{i+1}]\\to\\mathbb R$ be continuous. Write\n$$D_+r_i(t)=\\liminf_{s\\to t^+}\\frac{r_i(s)-r_i(t)}{s-t}.$$\nAssume $r_0(0)\\ge-6$, and, for each $i<n$ and $t_i\\le t<t_{i+1}$,\n$$D_+r_i(t)\\ge\\frac23r_i(t)^2.$$\nAt every internal joining time, assume $r_i(t_{i+1})\\le r_{i+1}(t_{i+1})$ for $i+1<n$. Then\n$$r_i(t)\\ge-\\frac6{1+4t}\\qquad(0\\le i<n,\\ t_i\\le t\\le t_{i+1}).$$\nThis isolates the scalar comparison step used in Kleiner-Lott's surgery estimates, with upward jumps allowed. Applying it to scalar-curvature minima requires establishing these analytic hypotheses from the geometry; this statement does not itself formalize a Ricci flow.\n\n[Source: Kleiner-Lott, proof of Lemma 79.11, p. 154](https://arxiv.org/pdf/math/0605667v5#page=154), using [Appendix B, equations (B.1)-(B.2), p. 202](https://arxiv.org/pdf/math/0605667v5#page=202).",
+        "sort_order": 4,
+        "title": "Scalar lower bound across upward jumps"
+      },
+      "platform_milestone_id": "2d6c9060-c962-45a7-81c9-ba7f22f44012",
+      "reviewed_scope": "Analytic extraction on finitely many continuous pieces, generalizing unchanged minima at surgery to upward jumps. This is not the full geometric Lemma 79.11.",
+      "role": "supporting_analytic_lemma",
+      "source_index": "Lemma 79.11",
+      "source_pdf_page": 154,
+      "source_printed_page": 154,
+      "source_reviewed": true,
+      "supports": [
+        "all_time_surgery_flow",
+        "finite_time_extinction"
+      ]
+    },
+    {
+      "depends_on": [],
+      "id": "integral_areaDensity_le_energyDensity",
+      "link_status": "Proved analytic extraction; accepted proof and completed supporting milestone verified.",
+      "linked_theorem_id": "d81e3640-8579-4396-babb-69edac82be33",
+      "payload": {
+        "milestone_description": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density $x\\mapsto E(v(x),w(x))$. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu\\leq\\int_X E(v(x),w(x))\\,d\\mu.$$\n\nNo finiteness assumption on the measure is needed; finite energy is explicit. This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "sort_order": 5,
+        "title": "Area-energy comparison for finite-energy vector fields"
+      },
+      "platform_milestone_id": "59cdc370-8720-41f9-8b38-a4a11e9a9718",
+      "publication_record": "PoincareConjecture/Contributions/AreaEnergy/publication.json",
+      "reviewed_scope": "This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+      "role": "supporting_analytic_lemma",
+      "source": "colding-minicozzi-width",
+      "source_index": "Equation 1.4",
+      "source_locator_detail": "Equation (1.4) and the following equality discussion.",
+      "source_pdf_page": 3,
+      "source_printed_page": 3,
+      "source_reviewed": true,
+      "supports": [
+        "energy_area_width_equivalence"
+      ]
+    },
+    {
+      "depends_on": [
+        "areaDensity_eq_energyDensity_iff"
+      ],
+      "id": "integral_areaDensity_eq_energyDensity_iff",
+      "link_status": "Proved analytic extraction; accepted proof and completed supporting milestone verified.",
+      "linked_theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+      "payload": {
+        "milestone_description": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu=\\int_X E(v(x),w(x))\\,d\\mu$$\n\nholds exactly when\n\n$$\\langle v(x),w(x)\\rangle=0\\quad\\text{and}\\quad\\|v(x)\\|=\\|w(x)\\|\\quad\\text{for }\\mu\\text{-almost every }x.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "sort_order": 6,
+        "title": "Equality in the integrated area-energy comparison"
+      },
+      "platform_milestone_id": "dd7060c8-1d02-4851-bad3-66eeef3a13b9",
+      "publication_record": "PoincareConjecture/Contributions/AreaEnergy/publication.json",
+      "reviewed_scope": "This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+      "role": "supporting_analytic_lemma",
+      "source": "colding-minicozzi-width",
+      "source_index": "Equation 1.4",
+      "source_locator_detail": "Equation (1.4) and the following equality discussion.",
+      "source_pdf_page": 3,
+      "source_printed_page": 3,
+      "source_reviewed": true,
+      "supports": [
+        "energy_area_width_equivalence"
+      ]
+    },
+    {
+      "dependency_evidence": [
+        {
+          "locator": "Sublemma 79.23, proof, cases (b) and (c)",
+          "page": 157,
+          "role": "Transfers a controlled ball-volume lower bound between scales in the surgery noncollapsing estimate.",
+          "source": "kleiner-lott"
+        }
+      ],
+      "depends_on": [],
+      "id": "bishop_gromov_volume_comparison",
+      "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this milestone.",
+      "local_progress": {
+        "full_milestone_status": "Open",
+        "module": "OpenGALib/Interoperability/BishopGromov.lean",
+        "platform_publication": "not_published",
+        "proved_scope": "Complete connected positive-dimensional smooth boundaryless manifolds with a global Ricci lower bound -(n-1)q^2, q>=0: ball-volume ratio comparison and monotonicity; nonnegative-Ricci specialization and volume doubling.",
+        "remaining_scope": [
+          "Positive model curvature.",
+          "Ricci bound assumed only on the outer ball with compact closure, without global completeness."
+        ],
+        "review_record": "PoincareConjecture/References/DifferentialGeometry/bishop_gromov_review.json",
+        "status": "verified_partial_scope",
+        "verified_at": "2026-09-09T16:44:10.366582+00:00"
+      },
+      "payload": {
+        "milestone_description": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).",
+        "sort_order": 7,
+        "title": "Bishop-Gromov volume comparison"
+      },
+      "platform_milestone_id": "cb96ab98-d517-4ecc-964b-b4b39a2d07a3",
+      "platform_verified_at": "2026-09-09T16:03:11.818725+00:00",
+      "publication_record": "PoincareConjecture/milestones_published.json",
+      "reviewed_scope": "Positive-dimensional smooth Riemannian manifolds without boundary; only compact closure of the outer geodesic ball is required. Ricci >= (n-1) K g is assumed on that ball. Preserve 0 < r1 <= r2 and r2 <= pi/sqrt(K) for K > 0. The normalized model radial function gives exactly the same volume ratio as (G.1). The Alexandrov-space extension is outside this milestone.",
+      "role": "supporting_geometric_theorem",
+      "source": "kleiner-lott",
+      "source_index": "Equation G.1",
+      "source_locator_detail": "Appendix G, equation (G.1), with the Riemannian Ricci-curvature variant in the following paragraph.",
+      "source_pages": [
+        211,
+        212
+      ],
+      "source_pdf_page": 211,
+      "source_printed_page": 211,
+      "source_reviewed": true,
+      "source_reviewed_at": "2026-09-09T15:54:14.094007+00:00",
+      "supports": [
+        "all_time_surgery_flow"
+      ],
+      "verification": {
+        "api_readback": "passed",
+        "browser_display": "Bishop-Gromov volume comparison is visible and open in the mission milestones page",
+        "synchronization_tests": "14 passed",
+        "synchronized_at": "2026-09-09T16:04:24.133098+00:00"
+      }
+    },
+    {
+      "id": "local_curvature_derivative_estimates",
+      "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this milestone.",
+      "payload": {
+        "milestone_description": "Fix $\\alpha,K>0$, $K'\\ge0$, $l\\ge0$ and positive integers $m,n$. There is a constant $C=C(\\alpha,K,K',l,m,n)$ with the following property. Let $r>0$ and let $g(t)$ solve Ricci flow on an open neighborhood $U$ of $p\\in M^n$ for $0\\le t\\le\\bar t$, where $0<\\bar t\\le\\alpha r^2/K$. Assume that the closure of the time-zero ball $B_{g(0)}(p,r)$ is a compact subset of $U$, and that\n\n$$|\\operatorname{Rm}(x,t)|\\le K/r^2\\quad\\text{on }U\\times[0,\\bar t],\\qquad |\\nabla^\\beta\\operatorname{Rm}(x,0)|\\le K'/r^{|\\beta|+2}\\quad(x\\in U,\\ |\\beta|\\le l).$$\n\nThen, for $x\\in B_{g(0)}(p,r/2)$, $0<t\\le\\bar t$ and $|\\beta|\\le m$,\n\n$$|\\nabla^\\beta\\operatorname{Rm}(x,t)|\\le\\frac{C}{r^{|\\beta|+2}(t/r^2)^{\\max(m-l,0)/2}}.$$\n\nThe source's $K=0$ case has identically zero curvature, so all the indicated derivatives vanish. The displayed positive-$K$ formulation makes the time bound unambiguous. The case $l=0$ is Shi's estimate; the source also includes initial derivative control for $l\\ge0$.\n\nSource: [Kleiner-Lott, Appendix D, Theorem D.1 and equations (D.2)-(D.4), p. 207](https://arxiv.org/pdf/math/0605667v5#page=207).",
+        "sort_order": 8,
+        "title": "Local curvature derivative estimates"
+      },
+      "platform_milestone_id": "149701dc-6dbc-4301-8b60-688c2fccc086",
+      "platform_verified_at": "2026-09-09T16:13:35.957779+00:00",
+      "publication_record": "PoincareConjecture/milestones_published.json",
+      "review_method": "Original versioned source text and surrounding definitions checked; the local derivative formula and closed-ball hypothesis were also visually checked on PDF page 207.",
+      "reviewed_scope": "Preserve compact closure of the time-zero ball inside U, curvature bounds on all of U throughout the interval, initial derivative bounds, and the exponent max(m-l,0)/2 for every order at most m. Positive alpha and K are the nondegenerate displayed case; K=0 is explicitly identified as flat. No global completeness is assumed.",
+      "role": "supporting_geometric_theorem",
+      "source": "kleiner-lott",
+      "source_index": "Theorem D.1",
+      "source_locator_detail": "Appendix D, Theorem D.1 and equations (D.2)-(D.4); closed-ball bar and exponent visually checked.",
+      "source_pages": [
+        207
+      ],
+      "source_pdf_page": 207,
+      "source_printed_page": 207,
+      "source_reviewed": true,
+      "source_reviewed_at": "2026-09-09T16:10:45.666983+00:00",
+      "supports": [
+        "compactness_of_ricci_flows"
+      ],
+      "verification": {
+        "api_readback": "passed",
+        "browser_display": "Not verified: reloading the mission page requires browser sign-in; authenticated API readback and synchronized snapshot verified.",
+        "synchronization_tests": "14 passed",
+        "synchronized_at": "2026-09-09T16:14:38.012369+00:00"
+      }
+    },
+    {
+      "id": "hamilton_ivey_pinching",
+      "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this milestone.",
+      "payload": {
+        "milestone_description": "Let $g(t)$, $0\\le t<T$, be a smooth Ricci flow on a three-manifold, with complete time slices and curvature bounded on every compact time interval. Use the curvature-operator convention in which constant sectional curvature $k$ gives the operator $2k\\,\\mathrm{Id}$ on two-forms; its trace is the scalar curvature $R$.\n\nWrite its eigenvalues as $\\lambda_1\\le\\lambda_2\\le\\lambda_3$ and assume $\\lambda_1(x,0)\\ge-1$ for every $x$. At any spacetime point with $X=-\\lambda_1(x,t)>0$,\n\n$$R(x,t)\\ge X\\bigl(\\log X+\\log(1+t)-3\\bigr).$$\n\nSource: [Kleiner-Lott, Appendix B, equation (B.3) and its hypotheses, pp. 202-203](https://arxiv.org/pdf/math/0605667v5#page=203). This curvature-operator estimate supplies the pinching input used to obtain almost nonnegative curvature in blowup limits.",
+        "sort_order": 9,
+        "title": "Hamilton-Ivey pinching"
+      },
+      "platform_milestone_id": "c18c8e39-32d3-41f4-917e-449be9fefce3",
+      "platform_verified_at": "2026-09-09T16:13:35.957779+00:00",
+      "publication_record": "PoincareConjecture/milestones_published.json",
+      "review_method": "Original versioned source text and surrounding definitions checked; the local derivative formula and closed-ball hypothesis were also visually checked on PDF page 207.",
+      "reviewed_scope": "Three-dimensional smooth complete flow with bounded curvature on compact time intervals; initial least curvature-operator eigenvalue at least -1. Preserve the factor-two curvature-operator convention, the pointwise condition X>0, and log(1+t), including t=0. This is not merely a scalar-curvature lower bound.",
+      "role": "supporting_geometric_theorem",
+      "source": "kleiner-lott",
+      "source_index": "Equation B.3",
+      "source_locator_detail": "Appendix B, equation (B.3), preceding completeness, curvature, normalization and eigenvalue conventions.",
+      "source_pages": [
+        202,
+        203
+      ],
+      "source_pdf_page": 203,
+      "source_printed_page": 203,
+      "source_reviewed": true,
+      "source_reviewed_at": "2026-09-09T16:10:45.666983+00:00",
+      "supports": [
+        "canonical_neighborhood_theorem",
+        "all_time_surgery_flow"
+      ],
+      "verification": {
+        "api_readback": "passed",
+        "browser_display": "Not verified: reloading the mission page requires browser sign-in; authenticated API readback and synchronized snapshot verified.",
+        "synchronization_tests": "14 passed",
+        "synchronized_at": "2026-09-09T16:14:38.012369+00:00"
+      }
+    },
+    {
+      "id": "compactness_of_ricci_flows",
+      "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this milestone.",
+      "payload": {
+        "milestone_description": "Consider smooth Ricci flows $g_i(t)$ on connected pointed $n$-manifolds $(M_i,p_i)$, defined for $t\\in(A,B)$, where $-\\infty\\le A<0<B\\le\\infty$. Assume that every $(M_i,g_i(0))$ is complete and that the injectivity radii at $(p_i,0)$ have a common positive lower bound.\n\nFor each compact interval $I\\subset(A,B)$, require a finite constant $N_I$ such that, for every $r>0$, there is an index $J_{r,I}$ for which\n\n$$i\\ge J_{r,I}\\ \\Longrightarrow\\ \\sup_{B_{g_i(0)}(p_i,r)\\times I}|\\operatorname{Rm}(g_i)|\\le N_I.$$\n\nThe curvature bound $N_I$ is independent of $r$; the starting index may depend on $r$.\n\nThen a subsequence converges smoothly in the pointed sense to a Ricci flow on a connected pointed manifold $(M_\\infty,p_\\infty)$, defined on the same interval $(A,B)$, with complete time slices. Convergence is through time-independent pointed identifications on compact spatial and time subsets.\n\nSource: [Kleiner-Lott, Appendix E, Corollary E.4, pp. 208-209](https://arxiv.org/pdf/math/0605667v5#page=208).",
+        "sort_order": 10,
+        "title": "Compactness of Ricci flows"
+      },
+      "platform_milestone_id": "92e1c50a-cec4-485b-8f38-28a2d24f11ea",
+      "platform_verified_at": "2026-09-09T16:13:35.957779+00:00",
+      "publication_record": "PoincareConjecture/milestones_published.json",
+      "review_method": "Original versioned source text and surrounding definitions checked; the local derivative formula and closed-ball hypothesis were also visually checked on PDF page 207.",
+      "reviewed_scope": "Fixed dimension; time zero lies inside the common interval; only time-zero completeness is assumed. Preserve the quantifier order for N_I and J_(r,I); allowing N to depend on r would not justify completeness at every limit time. The conclusion includes all-time-slice completeness and pointed smooth spacetime convergence.",
+      "role": "supporting_geometric_theorem",
+      "source": "kleiner-lott",
+      "source_index": "Corollary E.4",
+      "source_locator_detail": "Appendix E, Corollary E.4, continuing from page 208 to page 209; convergence terminology from Theorem E.1.",
+      "source_pages": [
+        208,
+        209
+      ],
+      "source_pdf_page": 208,
+      "source_printed_page": 208,
+      "source_reviewed": true,
+      "source_reviewed_at": "2026-09-09T16:10:45.666983+00:00",
+      "supports": [
+        "compactness_of_three_dimensional_kappa_solutions",
+        "canonical_neighborhood_theorem"
+      ],
+      "verification": {
+        "api_readback": "passed",
+        "browser_display": "Not verified: reloading the mission page requires browser sign-in; authenticated API readback and synchronized snapshot verified.",
+        "synchronization_tests": "14 passed",
+        "synchronized_at": "2026-09-09T16:14:38.012369+00:00"
+      }
+    },
+    {
+      "id": "reduced_volume_monotonicity",
+      "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this milestone.",
+      "payload": {
+        "milestone_description": "Let $(M^n,g(\\tau))$, $0\\le\\tau<T$, be a connected complete backward Ricci flow, $\\partial_\\tau g=2\\operatorname{Ric}$, with curvature bounded on compact time intervals. Fix a basepoint $p$ at $\\tau=0$. For $\\tau>0$, define the reduced length by\n\n$$l_p(q,\\tau)=\\frac{1}{2\\sqrt\\tau}\\inf_{\\gamma(0)=p,\\,\\gamma(\\tau)=q}\\int_0^\\tau\\sqrt{s}\\left(R(\\gamma(s),s)+|\\dot\\gamma(s)|_{g(s)}^2\\right)\\,ds,$$\n\nusing the admissible curves of the source's $\\mathcal L$-length construction. Define the reduced volume with Kleiner-Lott's normalization by\n\n$$\\widetilde V_p(\\tau)=\\int_M\\tau^{-n/2}e^{-l_p(q,\\tau)}\\,d\\operatorname{vol}_{g(\\tau)}(q).$$\n\nThis integral is finite, and for $0<\\tau_1\\le\\tau_2<T$,\n\n$$\\widetilde V_p(\\tau_2)\\le\\widetilde V_p(\\tau_1).$$\n\nSource: [Kleiner-Lott, Section 23, pp. 43-44](https://arxiv.org/pdf/math/0605667v5#page=43), using [equations (15.1), (15.3)-(15.4) and the construction in Section 17](https://arxiv.org/pdf/math/0605667v5#page=33). The time variable is backward time; this source does not include a $(4\\pi)^{-n/2}$ prefactor in $\\widetilde V$.",
+        "sort_order": 11,
+        "title": "Reduced volume monotonicity"
+      },
+      "platform_milestone_id": "944c0806-badc-43ae-bc07-982d49c86619",
+      "platform_verified_at": "2026-09-09T16:13:35.957779+00:00",
+      "publication_record": "PoincareConjecture/milestones_published.json",
+      "review_method": "Original versioned source text and surrounding definitions checked; the local derivative formula and closed-ball hypothesis were also visually checked on PDF page 207.",
+      "reviewed_scope": "Actual reduced length from the infimum of geometric L-lengths, not an abstract function with monotonicity assumed. Complete slices and curvature bounded on compact backward-time intervals including zero; fixed basepoint; positive comparison times. Preserve KL normalization and backward-time direction. The rigidity conclusion is outside this milestone.",
+      "role": "supporting_geometric_theorem",
+      "source": "kleiner-lott",
+      "source_index": "Section 23",
+      "source_locator_detail": "Section 23, Lemma 23.1, equations (23.4)-(23.9) and the concluding monotonicity argument; definitions in Sections 15 and 17.",
+      "source_pages": [
+        43,
+        44
+      ],
+      "source_pdf_page": 43,
+      "source_printed_page": 43,
+      "source_reviewed": true,
+      "source_reviewed_at": "2026-09-09T16:10:45.666983+00:00",
+      "supports": [
+        "no_local_collapsing"
+      ],
+      "verification": {
+        "api_readback": "passed",
+        "browser_display": "Not verified: reloading the mission page requires browser sign-in; authenticated API readback and synchronized snapshot verified.",
+        "synchronization_tests": "14 passed",
+        "synchronized_at": "2026-09-09T16:14:38.012369+00:00"
+      }
+    },
+    {
+      "id": "no_local_collapsing",
+      "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this milestone.",
+      "payload": {
+        "milestone_description": "For every positive integer $n$, $0<T<\\infty$ and $\\rho,K,c>0$, there is $\\kappa=\\kappa(n,K,c,\\rho,T)>0$ with the following property. Let $g(t)$ solve Ricci flow on $M^n$ for $0\\le t<T$, with curvature bounded on $M\\times[0,T']$ for every $T'<T$. Assume that $g(0)$ is complete, $|\\operatorname{Rm}(g(0))|\\le K$ everywhere, and $\\operatorname{inj}(M,g(0))\\ge c$.\n\nWhenever $0<r<\\rho$, $r^2\\le t_0<T$, and\n\n$$|\\operatorname{Rm}(x,t)|\\le r^{-2}\\quad\\text{for all }x\\in B_{g(t_0)}(x_0,r),\\ t\\in[t_0-r^2,t_0],$$\n\none has\n\n$$\\operatorname{vol}_{g(t_0)}B_{g(t_0)}(x_0,r)\\ge\\kappa r^n.$$\n\nWith $n,K,c,\\rho$ fixed, $\\kappa$ can be chosen nonincreasing in $T$. The curvature hypothesis uses the entire backward parabolic region over the fixed final-time ball.\n\nSource: [Kleiner-Lott, Definition 26.1 and Theorem 26.2, p. 47](https://arxiv.org/pdf/math/0605667v5#page=47).",
+        "sort_order": 12,
+        "title": "No local collapsing"
+      },
+      "platform_milestone_id": "ed9cc5e0-19e6-4d15-bc2a-ff6701974891",
+      "platform_verified_at": "2026-09-09T16:13:35.957779+00:00",
+      "publication_record": "PoincareConjecture/milestones_published.json",
+      "review_method": "Original versioned source text and surrounding definitions checked; the local derivative formula and closed-ball hypothesis were also visually checked on PDF page 207.",
+      "reviewed_scope": "Finite time horizon, global initial curvature and injectivity bounds, complete initial metric, and spacetime curvature bounded on every initial compact time interval. The noncollapsing test is Definition 26.1, with a fixed final-time ball and full backward time interval, not the time-slice-only Definition 13.14. Preserve dependence on n,K,c,rho,T and the monotone choice in T.",
+      "role": "supporting_geometric_theorem",
+      "source": "kleiner-lott",
+      "source_index": "Theorem 26.2",
+      "source_locator_detail": "Definition 26.1 and Theorem 26.2; the proof begins by invoking reduced-volume monotonicity.",
+      "source_pages": [
+        47
+      ],
+      "source_pdf_page": 47,
+      "source_printed_page": 47,
+      "source_reviewed": true,
+      "source_reviewed_at": "2026-09-09T16:10:45.666983+00:00",
+      "supports": [
+        "canonical_neighborhood_theorem"
+      ],
+      "verification": {
+        "api_readback": "passed",
+        "browser_display": "Not verified: reloading the mission page requires browser sign-in; authenticated API readback and synchronized snapshot verified.",
+        "synchronization_tests": "14 passed",
+        "synchronized_at": "2026-09-09T16:14:38.012369+00:00"
+      }
+    },
+    {
+      "id": "compactness_of_three_dimensional_kappa_solutions",
+      "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this milestone.",
+      "payload": {
+        "milestone_description": "Fix $\\kappa>0$. Given any sequence of oriented three-dimensional $\\kappa$-solutions and basepoints $(x_i,0)$, apply parabolic dilations so that $R(x_i,0)=1$. A subsequence then converges smoothly in the pointed sense to an oriented three-dimensional $\\kappa$-solution with scalar curvature one at its basepoint at time zero.\n\nHere a $\\kappa$-solution has the meaning of Definition 38.1: it is ancient; its time slices are complete; its curvature is bounded on each compact time interval; its curvature operator is nonnegative; its scalar curvature is everywhere positive; and it is $\\kappa$-noncollapsed at all scales. Solutions based at time zero are considered on their common ancient interval $(-\\infty,0]$. All these conditions, including bounded curvature on compact time intervals, hold for the limit with the same $\\kappa$.\n\nSource: [Kleiner-Lott, Theorem 46.1 and its normalization in the proof, p. 81](https://arxiv.org/pdf/math/0605667v5#page=81); [Definition 38.1, p. 67](https://arxiv.org/pdf/math/0605667v5#page=67).",
+        "sort_order": 13,
+        "title": "Compactness of three-dimensional kappa-solutions"
+      },
+      "platform_milestone_id": "e77732ea-15a0-4bcf-a341-ab5be97949b3",
+      "platform_verified_at": "2026-09-09T16:13:35.957779+00:00",
+      "publication_record": "PoincareConjecture/milestones_published.json",
+      "review_method": "Original versioned source text and surrounding definitions checked; the local derivative formula and closed-ball hypothesis were also visually checked on PDF page 207.",
+      "reviewed_scope": "Fixed positive kappa; oriented dimension three; pointed smooth compactness modulo parabolic scaling. Preserve complete ancient slices, interval-wise bounded curvature, nonnegative curvature operator, strictly positive scalar curvature, all-scale noncollapsing, and the same kappa in the limit. Normalize by positive basepoint scalar curvature and restrict to the common past interval.",
+      "role": "supporting_geometric_theorem",
+      "source": "kleiner-lott",
+      "source_index": "Theorem 46.1",
+      "source_locator_detail": "Theorem 46.1 and its proof; Definition 38.1 supplies the complete geometric meaning of kappa-solution.",
+      "source_pages": [
+        81
+      ],
+      "source_pdf_page": 81,
+      "source_printed_page": 81,
+      "source_reviewed": true,
+      "source_reviewed_at": "2026-09-09T16:10:45.666983+00:00",
+      "supports": [
+        "canonical_neighborhood_theorem",
+        "all_time_surgery_flow"
+      ],
+      "verification": {
+        "api_readback": "passed",
+        "browser_display": "Not verified: reloading the mission page requires browser sign-in; authenticated API readback and synchronized snapshot verified.",
+        "synchronization_tests": "14 passed",
+        "synchronized_at": "2026-09-09T16:14:38.012369+00:00"
+      }
+    },
+    {
+      "id": "canonical_neighborhood_theorem",
+      "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this milestone.",
+      "payload": {
+        "milestone_description": "Let $\\Phi\\in C^\\infty(\\mathbb R)$ be positive and nondecreasing, with $\\Phi(s)/s$ decreasing to zero as $s\\to\\infty$ through positive values. For every $\\epsilon,\\kappa,\\sigma>0$, there exists $r_0>0$ with the following property.\n\nLet $g(t)$ be a Ricci flow on a three-manifold for $0\\le t\\le T$, $T\\ge1$, with complete time slices and sectional curvature bounded on compact time intervals. Suppose all sectional curvatures at $(x,t)$ are at least $-\\Phi(R(x,t))$, and the flow is $\\kappa$-noncollapsed at scales below $\\sigma$ in the parabolic sense of Definition 26.1.\n\nFor any $(x_0,t_0)$ with $1\\le t_0\\le T$ and $Q=R(x_0,t_0)\\ge r_0^{-2}$, the flow on\n\n$$\\{(x,t):d_{g(t_0)}(x,x_0)^2<(\\epsilon Q)^{-1},\\quad t_0-(\\epsilon Q)^{-1}\\le t\\le t_0\\}$$\n\nis, after parabolic rescaling by $Q$ and moving $t_0$ to zero, $\\epsilon$-close in the source's smooth spacetime sense to the corresponding region of a $\\kappa$-solution. The fixed noncollapsing scale $\\sigma$ is independent of the resulting threshold $r_0$.\n\nSource: [Kleiner-Lott, Definition 52.1, Theorem 52.7 and Remark 52.8, pp. 89-90](https://arxiv.org/pdf/math/0605667v5#page=89); smooth closeness is clarified in [Definition 58.1, p. 108](https://arxiv.org/pdf/math/0605667v5#page=108).",
+        "sort_order": 14,
+        "title": "Canonical neighborhood theorem"
+      },
+      "platform_milestone_id": "70d4aeb2-fb41-417e-918c-1d2649faafe7",
+      "platform_verified_at": "2026-09-09T16:13:35.957779+00:00",
+      "publication_record": "PoincareConjecture/milestones_published.json",
+      "review_method": "Original versioned source text and surrounding definitions checked; the local derivative formula and closed-ball hypothesis were also visually checked on PDF page 207.",
+      "reviewed_scope": "First canonical-neighborhood theorem for smooth flows. Preserve Phi conditions, dimension three, complete slices, compact-time curvature bounds, t0>=1, and kappa-noncollapsing below a separately fixed sigma. The conclusion is a parabolic kappa-solution model with squared spatial radius (epsilon Q)^(-1); it is not the later surgery canonical-neighborhood assumption, nor the classification of all kappa-solutions.",
+      "role": "supporting_geometric_theorem",
+      "source": "kleiner-lott",
+      "source_index": "Theorem 52.7",
+      "source_locator_detail": "Definition 52.1, Theorem 52.7 and Remark 52.8; Definition 58.1 clarifies smooth spacetime closeness.",
+      "source_pages": [
+        89,
+        90
+      ],
+      "source_pdf_page": 90,
+      "source_printed_page": 90,
+      "source_reviewed": true,
+      "source_reviewed_at": "2026-09-09T16:10:45.666983+00:00",
+      "supports": [
+        "all_time_surgery_flow"
+      ],
+      "verification": {
+        "api_readback": "passed",
+        "browser_display": "Not verified: reloading the mission page requires browser sign-in; authenticated API readback and synchronized snapshot verified.",
+        "synchronization_tests": "14 passed",
+        "synchronized_at": "2026-09-09T16:14:38.012369+00:00"
+      }
+    },
+    {
+      "id": "noncollapsing_across_surgery",
+      "link_status": "Awaiting a faithful platform formalization; no theorem is attested by this milestone.",
+      "payload": {
+        "milestone_description": "Fix the source's sufficiently small global parameter $\\epsilon$, including the pinching convention preceding Lemma 79.12. Given $\\epsilon\\ge r_-\\ge r_+>0$, $\\kappa_->0$, $E_->0$ and finite $E>0$, there are positive constants\n\n$$\\bar\\delta=\\bar\\delta(r_-,r_+,\\kappa_-,E_-,E),\\qquad\\kappa_+=\\kappa_+(r_-,\\kappa_-,E_-,E)$$\n\nwith the following property. Let $0\\le a<b<c$, $b-a\\ge E_-$ and $c-a\\le E$. Consider a Ricci flow with $(r,\\delta)$-cutoff, as in Definition 73.1, with normalized initial data and a domain containing $[a,c)$. Assume\n\n- $r(t)\\ge r_-$ on $[a,b)$ and $r(t)\\ge r_+$ on $[b,c)$, with $r(t)\\le\\epsilon$;\n- the flow is $\\kappa_-$-noncollapsed below scale $\\epsilon$ on $[a,b)$;\n- $\\delta(t)\\le\\bar\\delta$ on $[a,c)$.\n\nThen it is $\\kappa_+$-noncollapsed below scale $\\epsilon$ on $[b,c)$. Crucially, $\\kappa_+$ can be chosen independently of $r_+$, although $\\bar\\delta$ may depend on it.\n\nHere normalized initial data means a compact initial three-manifold with $|\\operatorname{Rm}|\\le1$ and each unit ball having at least half the volume of the Euclidean unit ball. Noncollapsing is the surgery convention of Section 77: for $0<\\rho<\\epsilon$ and $t\\ge\\rho^2$, an unscathed backward parabolic neighborhood $P(x,t,\\rho,-\\rho^2)$ with $|\\operatorname{Rm}|\\le\\rho^{-2}$ has $\\operatorname{vol}B(x,t,\\rho)\\ge\\kappa\\rho^3$. The cutoff-flow hypothesis includes the source's pinching and canonical-neighborhood assumptions and prescribed surgery procedure.\n\nSource: [Kleiner-Lott, Lemma 79.12 and Remark 79.13, p. 154](https://arxiv.org/pdf/math/0605667v5#page=154); [Definition 73.1, p. 139](https://arxiv.org/pdf/math/0605667v5#page=139); [normalization and noncollapsing conventions in Section 77, p. 146](https://arxiv.org/pdf/math/0605667v5#page=146).",
+        "sort_order": 15,
+        "title": "Noncollapsing across surgery"
+      },
+      "platform_milestone_id": "10e68fd6-579c-48dc-9506-3c0bb279f8f4",
+      "platform_verified_at": "2026-09-09T16:13:35.957779+00:00",
+      "publication_record": "PoincareConjecture/milestones_published.json",
+      "review_method": "Original versioned source text and surrounding definitions checked; the local derivative formula and closed-ball hypothesis were also visually checked on PDF page 207.",
+      "reviewed_scope": "Conditional propagation across adjacent time intervals for the specific cutoff-flow definition, not arbitrary surgery. Preserve normalized initial data, the small global epsilon and its pinching constraint, r and delta conditions, time gap and horizon, and unscathed parabolic noncollapsing. Kappa-plus must be selected uniformly over all permitted r-plus; only delta-bar may depend on r-plus. Full cutoff definitions are referenced, not replaced with opaque abstract assumptions.",
+      "role": "supporting_geometric_theorem",
+      "source": "kleiner-lott",
+      "source_index": "Lemma 79.12",
+      "source_locator_detail": "Lemma 79.12 and Remark 79.13, together with its preceding epsilon convention; Definitions 69.6, 73.1, 77.1 and Section 77 noncollapsing.",
+      "source_pages": [
+        154
+      ],
+      "source_pdf_page": 154,
+      "source_printed_page": 154,
+      "source_reviewed": true,
+      "source_reviewed_at": "2026-09-09T16:10:45.666983+00:00",
+      "supports": [
+        "all_time_surgery_flow"
+      ],
+      "verification": {
+        "api_readback": "passed",
+        "browser_display": "Not verified: reloading the mission page requires browser sign-in; authenticated API readback and synchronized snapshot verified.",
+        "synchronization_tests": "14 passed",
+        "synchronized_at": "2026-09-09T16:14:38.012369+00:00"
+      }
+    }
+  ],
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "naming": {
+    "id": "Stable English semantic name.",
+    "source_index": "Bibliographic locator only; not part of the title or local identifier.",
+    "title": "English mathematical name without source numbering."
+  },
+  "proof_graph": {
+    "open_geometric_theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+    "proved_analytic_theorem_ids": [
+      "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+      "16d46789-a853-4a33-a4a3-4134fe549c82"
+    ],
+    "record_path": "PoincareConjecture/Contributions/ExtinctionRoute/publication.json",
+    "root_submission_id": "d543d39b-4273-4b91-826f-1b9c8c6191ee",
+    "route": "scalar_width_extinction",
+    "scope": "Composite geometric extraction remains Open; this connection does not attest any of the four named geometric milestones.",
+    "status": "SKETCH_ACCEPTED",
+    "verified_at": "2026-09-09T02:43:14.796179+00:00"
+  },
+  "schema_version": 1,
+  "scope": "Kleiner-Lott surgery and extinction route, with explicitly scoped supporting analytic and comparison-geometric results.",
+  "source": {
+    "arxiv_version": "math/0605667v5",
+    "authors": [
+      "Bruce Kleiner",
+      "John Lott"
+    ],
+    "key": "kleiner-lott",
+    "pdf_sha256": "4ccd1a86defe89561ecc2067654bc3b5375e4973c8a06c521376cbd13a9121b5",
+    "reference_commit": "bb91a091f0b968f8bbe8d861e025a88d82b161be",
+    "reference_repository": "https://github.com/frenzymath/Poincare-Conjecture",
+    "review_method": "Original PDF pages visually checked. Exact locators and scope reviews are recorded per milestone and contribution.",
+    "title": "Notes on Perelman's Papers",
+    "url": "https://arxiv.org/pdf/math/0605667v5"
+  }
+}

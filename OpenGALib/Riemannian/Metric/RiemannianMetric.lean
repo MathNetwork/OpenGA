@@ -235,12 +235,10 @@ private noncomputable def toBilinForm (g : RiemannianMetric I M) (x : M) :
     BilinearForm.Form ℝ E :=
   LinearMap.mk₂ ℝ
     (fun v w => g.inner x v w)
-    (fun v₁ v₂ w => by
-      simp only [show g.inner x (v₁ + v₂) = g.inner x v₁ + g.inner x v₂
-        from (g.inner x).map_add v₁ v₂, ContinuousLinearMap.add_apply])
-    (fun c v w => by
-      simp only [show g.inner x (c • v) = c • g.inner x v
-        from (g.inner x).map_smul c v, ContinuousLinearMap.smul_apply])
+    (fun v₁ v₂ w =>
+      congrArg (fun f : TangentSpace I x →L[ℝ] ℝ => f w) ((g.inner x).map_add v₁ v₂))
+    (fun c v w =>
+      congrArg (fun f : TangentSpace I x →L[ℝ] ℝ => f w) ((g.inner x).map_smul c v))
     (fun v w₁ w₂ => (g.inner x v).map_add w₁ w₂)
     (fun c v w => (g.inner x v).map_smul c w)
 

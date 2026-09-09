@@ -37,6 +37,8 @@ Blueprint: PoincareNet card `lem-width-inequality-forces-extinction`
 * `le_widthExtinctionTime_of_slope_le` — a nonnegative continuous `W`
   satisfying the width differential inequality on `[0, t]` forces
   `t ≤ widthExtinctionTime C (W 0)`.
+* `le_widthExtinctionTime_across_downward_jumps` — the same deadline for
+  finitely many continuous width profiles with downward jumps.
 
 ## Proof shape
 
@@ -229,5 +231,138 @@ theorem le_widthExtinctionTime_of_slope_le
   rw [← hA4] at hpow
   unfold widthExtinctionTime
   linarith
+
+
+open WidthExtinction in
+/-- **Math.** The Colding-Minicozzi width deadline survives finitely many
+surgery times at which the width can only decrease. This is an analytic
+statement; its hypotheses must be supplied by a geometric construction. -/
+theorem le_widthExtinctionTime_across_downward_jumps
+    {C W₀ : ℝ} (hC : 0 < C)
+    (n : ℕ) (hn : 0 < n) (times : ℕ → ℝ) (widths : ℕ → ℝ → ℝ)
+    (hzero : times 0 = 0)
+    (htimes : ∀ i < n, times i < times (i + 1))
+    (hcont : ∀ i < n, ContinuousOn (widths i) (Icc (times i) (times (i + 1))))
+    (hinitial : widths 0 (times 0) ≤ W₀)
+    (hfinal : 0 ≤ widths (n - 1) (times n))
+    (hslope : ∀ i < n, ∀ x ∈ Ico (times i) (times (i + 1)), ∀ r : ℝ,
+      -(4 * Real.pi) + 3 / (4 * (x + C)) * widths i x < r →
+        ∃ᶠ z in 𝓝[>] x, slope (widths i) x z < r)
+    (hjumps : ∀ i, i + 1 < n →
+      widths (i + 1) (times (i + 1)) ≤ widths i (times (i + 1))) :
+    times n ≤ widthExtinctionTime C W₀ := by
+  have hnonneg : ∀ i ≤ n, 0 ≤ times i := by
+    intro i
+    induction i with
+    | zero => intro _; simp [hzero]
+    | succ i ih =>
+      intro hi
+      exact (ih (by omega)).trans (htimes i (by omega)).le
+  have key : ∀ ε > (0 : ℝ), ∀ i < n, ∀ t ∈ Icc (times i) (times (i + 1)),
+      widths i t ≤ comparison C W₀ ε t := by
+    intro ε hε
+    have interval : ∀ i < n,
+        widths i (times i) ≤ comparison C W₀ ε (times i) →
+        ∀ t ∈ Icc (times i) (times (i + 1)),
+          widths i t ≤ comparison C W₀ ε t := by
+      intro i hi hstart t ht
+      have hb := image_le_of_liminf_slope_right_lt_deriv_boundary'
+        (f := widths i)
+        (f' := fun x => -(4 * Real.pi) + 3 / (4 * (x + C)) * widths i x)
+        (B := comparison C W₀ ε)
+        (B' := fun x => comparisonDeriv C W₀ ε x)
+        (hcont i hi) (hslope i hi) hstart
+      apply hb ?_ ?_ ?_ ht
+      · exact (comparison_continuousOn C W₀ ε).mono (by
+          intro x hx
+          exact ⟨(hnonneg i (by omega)).trans hx.1, hx.2⟩)
+      · intro x hx
+        have hxC : 0 < x + C := by
+          have := (hnonneg i (by omega)).trans hx.1
+          linarith
+        exact comparison_hasDerivWithinAt C W₀ ε hxC (Ici x)
+      · intro x hx hcontact
+        have hxC : 0 < x + C := by
+          have := (hnonneg i (by omega)).trans hx.1
+          linarith
+        rw [comparisonDeriv_eq C W₀ ε hC hxC, ← hcontact]
+        linarith
+    have hpieces : ∀ i < n, ∀ t ∈ Icc (times i) (times (i + 1)),
+        widths i t ≤ comparison C W₀ ε t := by
+      intro i
+      induction i with
+      | zero =>
+        intro hi
+        apply interval 0 hi
+        rw [hzero, comparison_zero W₀ ε hC]
+        have := hinitial
+        rw [hzero] at this
+        linarith
+      | succ i ih =>
+        intro hi
+        apply interval (i + 1) hi
+        exact (hjumps i hi).trans
+          (ih (by omega) (times (i + 1)) ⟨(htimes i (by omega)).le, le_rfl⟩)
+    intro i hi t ht
+    exact hpieces i hi t ht
+  let t := times n
+  have ht : 0 ≤ t := hnonneg n le_rfl
+  have htC : 0 < t + C := by linarith
+  have hWt : 0 ≤ widths (n - 1) t := hfinal
+  have hle : widths (n - 1) t ≤ comparison C W₀ 0 t := by
+    have hcε : ContinuousWithinAt (fun ε => comparison C W₀ ε t) (Ioi 0) 0 := by
+      unfold WidthExtinction.comparison
+      fun_prop
+    have h0 : (0 : ℝ) ∈ closure (Ioi (0 : ℝ)) := by
+      rw [closure_Ioi]
+      exact Set.self_mem_Ici
+    apply ContinuousWithinAt.closure_le h0 continuousWithinAt_const hcε
+    intro ε hε
+    apply key ε hε (n - 1) (by omega) t
+    have heq : n - 1 + 1 = n := by omega
+    constructor
+    · exact (htimes (n - 1) (by omega)).le.trans (by simp [heq, t])
+    · simp [heq, t]
+  -- Step 3: read off the deadline from the sign of the limit solution.
+  set A : ℝ := (t + C) ^ ((1 : ℝ)/4) with hA
+  have hApos : 0 < A := Real.rpow_pos_of_pos htC _
+  have hA3 : (t + C) ^ ((3 : ℝ)/4) = A ^ (3 : ℕ) := by
+    rw [hA, ← Real.rpow_natCast ((t + C) ^ ((1 : ℝ)/4)) 3,
+      ← Real.rpow_mul htC.le]
+    norm_num
+  have hA4 : t + C = A ^ (4 : ℕ) := by
+    rw [hA, ← Real.rpow_natCast ((t + C) ^ ((1 : ℝ)/4)) 4,
+      ← Real.rpow_mul htC.le]
+    norm_num
+  -- 0 ≤ comparison at t, with the ε = 0 solution factored through A.
+  have hsign : 0 ≤ W₀ / C ^ ((3 : ℝ)/4) - 16 * Real.pi * (A - C ^ ((1 : ℝ)/4)) := by
+    have h0B : 0 ≤ comparison C (W₀) 0 t := hWt.trans hle
+    have hfactor : comparison C (W₀) 0 t
+        = A ^ (3 : ℕ)
+          * (W₀ / C ^ ((3 : ℝ)/4) - 16 * Real.pi * (A - C ^ ((1 : ℝ)/4))) := by
+      unfold WidthExtinction.comparison
+      rw [hA3, hA4]
+      ring
+    rw [hfactor] at h0B
+    have hA3pos : (0 : ℝ) < A ^ (3 : ℕ) := by positivity
+    exact nonneg_of_mul_nonneg_right h0B hA3pos
+  -- Solve for A, then raise to the fourth power.
+  have hAle : A ≤ C ^ ((1 : ℝ)/4) + W₀ / (16 * Real.pi * C ^ ((3 : ℝ)/4)) := by
+    have h16π : (0 : ℝ) < 16 * Real.pi := by positivity
+    have hdiv : W₀ / C ^ ((3 : ℝ)/4) / (16 * Real.pi)
+        = W₀ / (16 * Real.pi * C ^ ((3 : ℝ)/4)) := by
+      rw [div_div, mul_comm]
+    have hstep : A - C ^ ((1 : ℝ)/4) ≤ W₀ / C ^ ((3 : ℝ)/4) / (16 * Real.pi) := by
+      rw [le_div_iff₀ h16π]
+      linarith [hsign]
+    rw [← hdiv]
+    linarith [hstep]
+  have hpow : A ^ (4 : ℕ)
+      ≤ (C ^ ((1 : ℝ)/4) + W₀ / (16 * Real.pi * C ^ ((3 : ℝ)/4))) ^ (4 : ℕ) :=
+    pow_le_pow_left₀ hApos.le hAle 4
+  rw [← hA4] at hpow
+  unfold widthExtinctionTime
+  linarith
+
 
 end OpenGA

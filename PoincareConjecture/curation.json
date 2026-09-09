@@ -1,0 +1,282 @@
+{
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "reviewed_at": "2026-09-09T15:49:18.606093+00:00",
+  "reviews": {
+    "01167772-943a-4c75-ab15-9f7b235777a8": {
+      "declarations": [
+        {
+          "name": "OpenGA.integral_areaDensity_eq_energyDensity_iff",
+          "path": "OpenGALib/Analysis/AreaEnergy.lean"
+        }
+      ],
+      "scope": "This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks. Exact exported theorem types were compared with the local source; helpers remain reusable library results.",
+      "source_author": "Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "9142fa4bbcfa3f67405caf7e279e1fd5316c8d2a681b195cdcfe2e676aa77456",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+      "source_url": "https://prove2.me/api/v1/submissions/01167772-943a-4c75-ab15-9f7b235777a8/solution",
+      "status": "integrated"
+    },
+    "096644e2-0f01-45df-9752-41d89decd664": {
+      "declarations": [
+        {
+          "name": "OpenGA.areaDensity_le_energyDensity",
+          "path": "OpenGALib/Analysis/AreaEnergy.lean"
+        },
+        {
+          "name": "OpenGA.integrable_areaDensity",
+          "path": "OpenGALib/Analysis/AreaEnergy.lean"
+        },
+        {
+          "name": "OpenGA.integral_areaDensity_le_energyDensity",
+          "path": "OpenGALib/Analysis/AreaEnergy.lean"
+        }
+      ],
+      "scope": "This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks. Exact exported theorem types were compared with the local source; helpers remain reusable library results.",
+      "source_author": "Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "e7044f4473b40bbe1b6c33341b84c9756e218eef8b867e49b5954023ac90b866",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "d81e3640-8579-4396-babb-69edac82be33",
+      "source_url": "https://prove2.me/api/v1/submissions/096644e2-0f01-45df-9752-41d89decd664/solution",
+      "status": "integrated"
+    },
+    "15a12bda-4d91-481f-9492-2022ec9bf42b": {
+      "declarations": [
+        {
+          "name": "OpenGA.areaDensity_eq_normDet",
+          "path": "OpenGALib/Analysis/AreaEnergy/LinearMap.lean"
+        }
+      ],
+      "scope": "Pointwise linear maps from a two-dimensional real inner product space into any real inner product space. The area density is the intrinsic norm determinant, and both area and energy densities are independent of orthonormal basis. No injectivity or orientation assumption is required. Surface differentials, varying tangent fibers and geometric integration remain open.",
+      "source_author": "Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "2606761057aeff6659c525b9e726a059951d5abbb4efa8c650697d9cf4032bac",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "eddc764e-527d-4d07-a812-94f60b637407",
+      "source_url": "https://prove2.me/api/v1/submissions/15a12bda-4d91-481f-9492-2022ec9bf42b/solution",
+      "status": "integrated"
+    },
+    "42885aae-9f1a-4edc-b4c4-d8e3820e630a": {
+      "declarations": [],
+      "deferred_theorem_ids": [
+        "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+        "b0543216-8c0f-4f20-8b76-40d197f69fba"
+      ],
+      "reason": "This accepted reduction constructs the old scalar-width trace using the proved analytic comparison theorem and an open geometric construction target. It is retained as a platform dependency sketch and is not an independent library proof of profile existence or Poincare.",
+      "source_author": "Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "dc8c042f755c5f45e7b206977229599b9df780414ad02643f249179daf410137",
+      "source_status": "SKETCH_ACCEPTED",
+      "source_theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+      "source_url": "https://prove2.me/api/v1/submissions/42885aae-9f1a-4edc-b4c4-d8e3820e630a/solution",
+      "status": "deferred"
+    },
+    "51179dae-3662-451e-b374-fe303c70b325": {
+      "declarations": [],
+      "deferred_theorem_ids": [
+        "6445ec61-f49c-47ce-b681-7ab9ea9a4059",
+        "c5c9092c-00f4-4939-893e-ea9cc075b564",
+        "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+      ],
+      "reason": "The reduction obtains a smooth structure from an open Moise theorem, then applies the open smooth Poincare statement. The second-countability step already comes from Mathlib. It supplies no new independently complete theorem to extract into OpenGA.",
+      "source_author": "Shuze Chen",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "2d3e255639dd8a9f55a0c1269ca6a5f43eff3d2f7b57a6d9d1bd341efcc565a9",
+      "source_status": "SKETCH_ACCEPTED",
+      "source_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "source_url": "https://prove2.me/api/v1/submissions/51179dae-3662-451e-b374-fe303c70b325/solution",
+      "status": "deferred"
+    },
+    "59b54355-c04b-4077-925b-c7d3785054ad": {
+      "declarations": [
+        {
+          "name": "OpenGA.areaDensity_basis_independent",
+          "path": "OpenGALib/Analysis/AreaEnergy/LinearMap.lean"
+        }
+      ],
+      "scope": "Pointwise linear maps from a two-dimensional real inner product space into any real inner product space. The area density is the intrinsic norm determinant, and both area and energy densities are independent of orthonormal basis. No injectivity or orientation assumption is required. Surface differentials, varying tangent fibers and geometric integration remain open.",
+      "source_author": "Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "3acc9ec58bc869ebd3e83af830f9b2e375260069cd7dcd0dc141ace9cf313331",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "85285131-e406-453d-81b2-2e602a3e878d",
+      "source_url": "https://prove2.me/api/v1/submissions/59b54355-c04b-4077-925b-c7d3785054ad/solution",
+      "status": "integrated"
+    },
+    "6d178906-6119-48c0-b672-0f3881b70643": {
+      "declarations": [
+        {
+          "name": "OpenGA.scalar_lower_bound_on_interval",
+          "path": "OpenGALib/Analysis/ScalarLowerBound.lean"
+        },
+        {
+          "name": "OpenGA.scalar_lower_bound_across_upward_jumps",
+          "path": "OpenGALib/Analysis/ScalarLowerBound.lean"
+        }
+      ],
+      "scope": "Complete scalar comparison for finitely many continuous profiles with upward jumps. The single-interval comparison is also exposed for reuse. Geometric Ricci-flow hypotheses remain a separate formalization task.",
+      "source_author": "Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "e627dd2d5f006bb2bc42732cee611d2851a6e45bf399c55aa839ce1c9d093348",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+      "source_url": "https://prove2.me/api/v1/submissions/6d178906-6119-48c0-b672-0f3881b70643/solution",
+      "status": "integrated"
+    },
+    "719f4cdd-1059-4091-9819-7926dbc5806e": {
+      "declarations": [
+        {
+          "name": "OpenGA.eventually_width_slope_lt_of_comparison",
+          "path": "OpenGALib/Analysis/WidthComparison.lean"
+        }
+      ],
+      "scope": "Complete analytic conversion of finite-energy comparison data to an upper right width slope bound. The proof uses both integrated area-energy results. Exact exported types match the library theorem; construction of geometric sweepouts and comparison data remains separate.",
+      "source_author": "Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "2c2b9d9f07a54114a040c23bc011551e61343ff5262b43656141700ae37a0213",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
+      "source_url": "https://prove2.me/api/v1/submissions/719f4cdd-1059-4091-9819-7926dbc5806e/solution",
+      "status": "integrated"
+    },
+    "973f67d3-d234-4233-800f-35c83decf01c": {
+      "declarations": [
+        {
+          "name": "OpenGA.energyDensity_basis_independent",
+          "path": "OpenGALib/Analysis/AreaEnergy/LinearMap.lean"
+        }
+      ],
+      "scope": "Pointwise linear maps from a two-dimensional real inner product space into any real inner product space. The area density is the intrinsic norm determinant, and both area and energy densities are independent of orthonormal basis. No injectivity or orientation assumption is required. Surface differentials, varying tangent fibers and geometric integration remain open.",
+      "source_author": "Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "674917b6fe9e146b436877c8027fc9af9b54197e3c6c7441ff7bfb484ffa507c",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "1e7c607c-776e-41d3-8819-54cfe0543e69",
+      "source_url": "https://prove2.me/api/v1/submissions/973f67d3-d234-4233-800f-35c83decf01c/solution",
+      "status": "integrated"
+    },
+    "97d3cac5-2b5e-48c6-9651-e94fe6c77fcd": {
+      "declarations": [],
+      "deferred_theorem_ids": [
+        "0ecb5d1e-78dc-49f7-986e-4faa74dae462",
+        "79da6e34-6c16-4bcf-bac0-c071f41d246d",
+        "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+      ],
+      "reason": "The reduction applies two open platform theorems. Neither prerequisite is available as an independent complete proof, and the composition adds no reusable result beyond those hypotheses.",
+      "source_author": "korbonits",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "b0555ccb503f050bd9855fcc82417bcbf069af8a993307920952aa41b9de6b0c",
+      "source_status": "SKETCH_ACCEPTED",
+      "source_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "source_url": "https://prove2.me/api/v1/submissions/97d3cac5-2b5e-48c6-9651-e94fe6c77fcd/solution",
+      "status": "deferred"
+    },
+    "98612d40-bcb7-4333-afa7-69b60e20dfdc": {
+      "declarations": [
+        {
+          "name": "OpenGA.nonempty_homeomorph_sphere_of_isCoveringMap",
+          "path": "OpenGALib/Topology/SphereCovering.lean"
+        }
+      ],
+      "deferred_theorem_ids": [
+        "4de517bb-1125-48cf-b44f-de4ca093a0a5",
+        "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+      ],
+      "reason": "The spherical-cover existence theorem is still open; the sketch does not prove the Poincare theorem independently.",
+      "scope": "Only the conditional helper homeomorph_sphere_three_of_cover. Generalized to nonnegative-radius spheres in real normed spaces of dimension greater than one, with a simply connected and locally path connected base. Cover existence is an explicit hypothesis.",
+      "source_author": "salim",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "50b9eda313389c99350477162fa37e175c678c40e8a69ccc76fd211be713eafe",
+      "source_status": "SKETCH_ACCEPTED",
+      "source_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "source_url": "https://prove2.me/api/v1/submissions/98612d40-bcb7-4333-afa7-69b60e20dfdc/solution",
+      "status": "partially_integrated"
+    },
+    "98c16d58-8c4b-4ec5-aa86-7a1af0257775": {
+      "declarations": [
+        {
+          "name": "OrthonormalBasis.sum_apply_diagonal_invariant",
+          "path": "OpenGALib/Algebraic/Auxiliary/OrthonormalBasisDiagonal.lean"
+        }
+      ],
+      "scope": "Finite orthonormal bases and a bilinear map into an arbitrary real module; no symmetry or inner product on the codomain is required.",
+      "source_author": "Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "5f0a22543750f96ef79fda02d9762ef353a30905c2b00358238adfa1258a7a7c",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784",
+      "source_url": "https://prove2.me/api/v1/submissions/98c16d58-8c4b-4ec5-aa86-7a1af0257775/solution",
+      "status": "integrated"
+    },
+    "9d895407-3c0b-47ee-b857-e6ae4f60617f": {
+      "declarations": [
+        {
+          "name": "OpenGA.energyDensity_sq_sub_areaDensity_sq",
+          "path": "OpenGALib/Analysis/AreaEnergy.lean"
+        },
+        {
+          "name": "OpenGA.areaDensity_eq_energyDensity_iff",
+          "path": "OpenGALib/Analysis/AreaEnergy.lean"
+        }
+      ],
+      "scope": "This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks. Exact exported theorem types were compared with the local source; helpers remain reusable library results.",
+      "source_author": "Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "0d9283ab0f17c1d3c269ef359a5f94ed61a8f0d1040195dc53a7cd12fa7ffae8",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b",
+      "source_url": "https://prove2.me/api/v1/submissions/9d895407-3c0b-47ee-b857-e6ae4f60617f/solution",
+      "status": "integrated"
+    },
+    "bbe6fec0-1a12-4eba-bb85-2c00ebf62342": {
+      "declarations": [
+        {
+          "name": "IsCoveringMap.isHomeomorph_of_simplyConnectedSpace",
+          "path": "OpenGALib/Topology/CoveringSpace.lean"
+        }
+      ],
+      "scope": "The complete covering-space result. Recast the existential homeomorphism as IsHomeomorph so existing Mathlib constructors and bijectivity lemmas apply.",
+      "source_author": "salim",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "d5676b60bfa2501caa3f404c0f8c437605939295fb56fe7133b901ada89c51d2",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "192cef90-169f-4470-b074-8392596cb487",
+      "source_url": "https://prove2.me/api/v1/submissions/bbe6fec0-1a12-4eba-bb85-2c00ebf62342/solution",
+      "status": "integrated"
+    },
+    "d543d39b-4273-4b91-826f-1b9c8c6191ee": {
+      "declarations": [],
+      "deferred_theorem_ids": [
+        "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+      ],
+      "reason": "The reduction uses the open geometric profile-extraction target. It connects two complete analytic results to the mission graph but does not establish smoothing, Ricci-flow surgery, width geometry, or the Poincare theorem.",
+      "source_author": "Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "f82e819e6892eccb42edc84434fd83ecca4ab929dbbd8edba8791948e44bdfa6",
+      "source_status": "SKETCH_ACCEPTED",
+      "source_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "source_url": "https://prove2.me/api/v1/submissions/d543d39b-4273-4b91-826f-1b9c8c6191ee/solution",
+      "status": "deferred"
+    },
+    "f0552af4-769d-4fe4-8754-b9e01fd5718b": {
+      "declarations": [
+        {
+          "name": "OpenGA.le_widthExtinctionTime_across_downward_jumps",
+          "path": "OpenGALib/Analysis/WidthExtinction.lean"
+        }
+      ],
+      "scope": "Complete analytic deadline for a finite sequence of continuous width profiles with downward jumps. The geometric origin of profiles is not assumed or asserted by the library theorem.",
+      "source_author": "Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "aeb6b786fd328e52c6be60acb2cf0cd441a9ee2595df316b1bc2382521512a08",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "16d46789-a853-4a33-a4a3-4134fe549c82",
+      "source_url": "https://prove2.me/api/v1/submissions/f0552af4-769d-4fe4-8754-b9e01fd5718b/solution",
+      "status": "integrated"
+    }
+  },
+  "schema_version": 1
+}

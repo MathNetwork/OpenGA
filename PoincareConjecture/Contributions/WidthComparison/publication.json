@@ -1,0 +1,429 @@
+{
+  "graph_verification": {
+    "browser_scope": "The mission root graph displays all three area-energy theorem nodes, the width comparison theorem, the open comparison-data target, and the reduction edges to the root. Definitions are hidden by the default checkbox.",
+    "browser_url": "https://prove2.me/missions/Formalization%20of%20the%20Poincar%C3%A9%20Conjecture/graph",
+    "browser_verified_at": "2026-09-09T03:43:32.070784+00:00",
+    "checked_at": "2026-09-09T03:41:59.357609+00:00",
+    "edge_count": 26,
+    "node_count": 20,
+    "paths_to_root": {
+      "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7": [
+        "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+        "sketch-719f4cdd-1059-4091-9819-7926dbc5806e",
+        "18265c01-abe4-486f-84f2-c88759ab91fc",
+        "sketch-42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+        "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+      ],
+      "18265c01-abe4-486f-84f2-c88759ab91fc": [
+        "18265c01-abe4-486f-84f2-c88759ab91fc",
+        "sketch-42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+        "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+      ],
+      "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b": [
+        "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b",
+        "sketch-01167772-943a-4c75-ab15-9f7b235777a8",
+        "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+        "sketch-719f4cdd-1059-4091-9819-7926dbc5806e",
+        "18265c01-abe4-486f-84f2-c88759ab91fc",
+        "sketch-42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+        "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+      ],
+      "d81e3640-8579-4396-babb-69edac82be33": [
+        "d81e3640-8579-4396-babb-69edac82be33",
+        "sketch-719f4cdd-1059-4091-9819-7926dbc5806e",
+        "18265c01-abe4-486f-84f2-c88759ab91fc",
+        "sketch-42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+        "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+      ],
+      "ed56bd90-927e-45c1-81d1-b79a2ca8a034": [
+        "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+        "sketch-42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+        "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+      ]
+    },
+    "root_status": "Open",
+    "status": "VERIFIED"
+  },
+  "items": [
+    {
+      "key": "comparison_data",
+      "kind": "definition",
+      "path": "PoincareConjecture/Contributions/WidthComparison/ComparisonData.lean",
+      "payload": {
+        "definition": "import Definitions.Def_OpenGA_AreaEnergyDensities\nimport Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Order.ConditionallyCompleteLattice.Indexed\n\n/-!\n# Width variation from area-energy comparison data\n\nThis module isolates the analytic passage from comparison families to a\nright-hand slope estimate. The input consists of finite-energy measurable\nvector pairs, uniform energy caps tending to the width, an almost conformal\nrealizer, and a short-time area comparison. None of these data are a definition\nof a surface differential, a sweepout, a harmonic map, or a Ricci flow.\n\nThe intended geometric inputs are described in Colding-Minicozzi,\n*Width and Finite Extinction Time of Ricci Flow*, arXiv:0707.0108v1:\nequation (1.4), the paragraph after Theorem 1.14, and the proof of Theorem 1.7,\nequations (1.25)-(1.28) and footnote 6 (pp. 3, 6-8). The comparison hypothesis\nbelow packages the uniform error estimates after shrinking the time interval;\nconstructing it from geometry is a separate open task.\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory Set Filter\nopen scoped InnerProductSpace Topology\n\nnamespace OpenGA\n\n/-- **Math.** A measurable pair with finite Dirichlet energy. Its domain may\nalso be a disjoint union, as for a finite collection of sphere maps. -/\nstructure FiniteEnergyPair where\n  domain : Type\n  [measurableSpace : MeasurableSpace domain]\n  target : Type\n  [normedAddCommGroup : NormedAddCommGroup target]\n  [innerProductSpace : InnerProductSpace ℝ target]\n  measure : Measure domain\n  first : domain → target\n  second : domain → target\n  first_measurable : AEStronglyMeasurable first measure\n  second_measurable : AEStronglyMeasurable second measure\n  energy_integrable : Integrable (fun x => energyDensity (first x) (second x)) measure\n\nattribute [instance] FiniteEnergyPair.measurableSpace\n  FiniteEnergyPair.normedAddCommGroup FiniteEnergyPair.innerProductSpace\n\n/-- **Math.** Integrated area density of a finite-energy pair. -/\nnoncomputable def FiniteEnergyPair.area (p : FiniteEnergyPair) : ℝ :=\n  ∫ x, areaDensity (p.first x) (p.second x) ∂p.measure\n\n/-- **Math.** Integrated energy density of a finite-energy pair. -/\nnoncomputable def FiniteEnergyPair.energy (p : FiniteEnergyPair) : ℝ :=\n  ∫ x, energyDensity (p.first x) (p.second x) ∂p.measure\n\n/-- **Math.** Orthogonality and equal length almost everywhere; a condition\non the supplied fields, without asserting that they are a map differential. -/\ndef FiniteEnergyPair.IsConformal (p : FiniteEnergyPair) : Prop :=\n  ∀ᵐ x ∂p.measure, ⟪p.first x, p.second x⟫_ℝ = 0 ∧ ‖p.first x‖ = ‖p.second x‖\n\n/-- **Math.** Analytic comparison data at one time. Competitors are indexed by\na sequence and the unit interval. The realizer encodes the limiting harmonic\nspheres only once the separate geometric construction has been supplied. -/\nstructure WidthComparisonData (width : ℝ → ℝ) (time scalar : ℝ) where\n  realizer : FiniteEnergyPair\n  realizer_conformal : realizer.IsConformal\n  realized_energy : realizer.energy = width time\n  competitor : ℕ → Icc (0 : ℝ) 1 → FiniteEnergyPair\n  energy_cap : ℕ → ℝ\n  energy_le_cap : ∀ j p, (competitor j p).energy ≤ energy_cap j\n  cap_tendsto : Tendsto energy_cap atTop (𝓝 (width time))\n  area_comparison : ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧ ∃ start : ℕ,\n    ∀ j ≥ start, ∀ s ∈ Ioo time (time + δ),\n      width s ≤ (⨆ p, (competitor j p).area) +\n        (s - time) * (-(4 * Real.pi) - scalar / 2 * realizer.area + ε)\n\n\n\nend OpenGA\n",
+        "definition_name": "OpenGA_WidthComparisonData",
+        "definition_title": "Finite-energy fields and width comparison data",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "A finite-energy pair consists of a measure space, a real inner product space, and two almost-everywhere strongly measurable fields $v,w$ with integrable energy. Write\n\n$$A(p)=\\int\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(p)=\\frac12\\int(\\|v\\|^2+\\|w\\|^2).$$\n\nConformality means orthogonality and equal norms almost everywhere. A width comparison at time $t$, with scalar parameter $R$, supplies a conformal realizer $r$ with $E(r)=W(t)$; pairs $p_{j,u}$ for $j\\in\\mathbb N$, $u\\in[0,1]$; caps $c_j$ with $E(p_{j,u})\\le c_j$ and $c_j\\to W(t)$; and, for every $\\varepsilon>0$, numbers $\\delta>0$ and $J$ such that for $j\\ge J$ and $t<s<t+\\delta$,\n\n$$W(s)\\le\\sup_{u\\in[0,1]}A(p_{j,u})+(s-t)\\left(-4\\pi-\\frac R2 A(r)+\\varepsilon\\right).$$\n\nThe fields are analytic input data. No surface differential, sweepout homotopy class, harmonic map, or Ricci flow is defined by this bundle.",
+        "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692.",
+        "tags": [
+          "geometric-analysis",
+          "openga-width-comparison"
+        ]
+      },
+      "requires": [],
+      "sha256": "9a8c33f6132b66ab7cc3dd693b644b140b04c87c08bf140e8db81b160e0f5488"
+    },
+    {
+      "key": "comparison_trace",
+      "kind": "definition",
+      "path": "PoincareConjecture/Contributions/WidthComparison/ComparisonTrace.lean",
+      "payload": {
+        "definition": "import Definitions.Def_OpenGA_WidthComparisonData\nimport Definitions.Def_OpenGA_ScalarWidthTrace\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite scalar and width data with area-energy comparison witnesses in\nplace of an assumed width slope bound. This is an analytic interface, not a\ndefinition of Ricci flow, surgery, or a geometric sweepout. -/\nstructure WidthComparisonTrace (initialWidth finalTime : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = finalTime\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ initialWidth\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  comparison : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)),\n    Nonempty (WidthComparisonData (width i) t (scalar i t))\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
+        "definition_name": "OpenGA_WidthComparisonTrace",
+        "definition_title": "Width traces with area-energy comparison witnesses",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "A finite partition of a time interval carries continuous scalar and width profiles, normalized initial scalar bound, a common initial width bound, nonnegative widths, the scalar differential inequality, upward scalar jumps and downward width jumps. At each time before the end of a partition interval, an area-energy width comparison bundle is supplied. The width slope inequality is deliberately a conclusion of the comparison theorem, not a field of this bundle. This records analytic data to be constructed from geometry; it does not define a surgery flow.",
+        "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692.",
+        "tags": [
+          "geometric-analysis",
+          "openga-width-comparison"
+        ]
+      },
+      "requires": [
+        "comparison_data"
+      ],
+      "sha256": "6713d3f63eea5cc92c91b8639ffef711ec0dbd81a14f5da53003796d465b9bb8"
+    },
+    {
+      "key": "slope_problem",
+      "kind": "problem",
+      "path": "PoincareConjecture/Contributions/WidthComparison/WidthSlope.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem OpenGA.eventually_width_slope_lt_of_comparison\n    {width : ℝ → ℝ} {time scalar : ℝ}\n    (data : WidthComparisonData width time scalar) (q : ℝ)\n    (hq : -(4 * Real.pi) - scalar / 2 * width time < q) :\n    ∀ᶠ s in 𝓝[>] time, slope width time s < q := by sorry",
+        "natural_language_statement": "A finite-energy pair consists of a measure space, a real inner product space, and two almost-everywhere strongly measurable fields $v,w$ with integrable energy. Write\n\n$$A(p)=\\int\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(p)=\\frac12\\int(\\|v\\|^2+\\|w\\|^2).$$\n\nConformality means orthogonality and equal norms almost everywhere. A width comparison at time $t$, with scalar parameter $R$, supplies a conformal realizer $r$ with $E(r)=W(t)$; pairs $p_{j,u}$ for $j\\in\\mathbb N$, $u\\in[0,1]$; caps $c_j$ with $E(p_{j,u})\\le c_j$ and $c_j\\to W(t)$; and, for every $\\varepsilon>0$, numbers $\\delta>0$ and $J$ such that for $j\\ge J$ and $t<s<t+\\delta$,\n\n$$W(s)\\le\\sup_{u\\in[0,1]}A(p_{j,u})+(s-t)\\left(-4\\pi-\\frac R2 A(r)+\\varepsilon\\right).$$\n\nThe fields are analytic input data. No surface differential, sweepout homotopy class, harmonic map, or Ricci flow is defined by this bundle.\n\nUnder these hypotheses, for every $q>-4\\pi-\\frac R2W(t)$ the right-hand difference quotients eventually satisfy\n\n$$\\frac{W(s)-W(t)}{s-t}<q\\qquad(s\\downarrow t).$$\n\nThis is the analytic conversion from short-time comparison estimates to the upper right slope bound. The existence of geometric comparison data is a separate requirement.",
+        "preamble": "import Definitions.Def_OpenGA_WidthComparisonData\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped InnerProductSpace Topology\nopen OpenGA",
+        "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692.",
+        "tags": [
+          "geometric-analysis",
+          "openga-width-comparison"
+        ],
+        "theorem_name": "OpenGA.eventually_width_slope_lt_of_comparison",
+        "theorem_title": "Width slope bound from area-energy comparisons"
+      },
+      "requires": [
+        "comparison_data"
+      ],
+      "sha256": "ab97369b4cd0410d1e122769f90e8c57d2b925f28ba39e57d28929b156ac2546"
+    },
+    {
+      "key": "geometry",
+      "kind": "problem",
+      "path": "PoincareConjecture/Contributions/WidthComparison/PersistentComparisonData.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem PoincareFormalization.persistent_comparison_data_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →\n      Nonempty (OpenGA.WidthComparisonTrace initialWidth finalTime) := by sorry",
+        "natural_language_statement": "Let $M$ be a compact, simply connected, Hausdorff topological three-manifold without boundary. Assume hypothetically that $M$ is not homeomorphic to the unit three-sphere. Construct a constant $W_0\\ge0$ such that for every $T>0$ there is a finite width comparison trace on $[0,T]$, with initial width at most $W_0$.\n\nA finite partition of a time interval carries continuous scalar and width profiles, normalized initial scalar bound, a common initial width bound, nonnegative widths, the scalar differential inequality, upward scalar jumps and downward width jumps. At each time before the end of a partition interval, an area-energy width comparison bundle is supplied. The width slope inequality is deliberately a conclusion of the comparison theorem, not a field of this bundle. This records analytic data to be constructed from geometry; it does not define a surgery flow.\n\nA finite-energy pair consists of a measure space, a real inner product space, and two almost-everywhere strongly measurable fields $v,w$ with integrable energy. Write\n\n$$A(p)=\\int\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(p)=\\frac12\\int(\\|v\\|^2+\\|w\\|^2).$$\n\nConformality means orthogonality and equal norms almost everywhere. A width comparison at time $t$, with scalar parameter $R$, supplies a conformal realizer $r$ with $E(r)=W(t)$; pairs $p_{j,u}$ for $j\\in\\mathbb N$, $u\\in[0,1]$; caps $c_j$ with $E(p_{j,u})\\le c_j$ and $c_j\\to W(t)$; and, for every $\\varepsilon>0$, numbers $\\delta>0$ and $J$ such that for $j\\ge J$ and $t<s<t+\\delta$,\n\n$$W(s)\\le\\sup_{u\\in[0,1]}A(p_{j,u})+(s-t)\\left(-4\\pi-\\frac R2 A(r)+\\varepsilon\\right).$$\n\nThe fields are analytic input data. No surface differential, sweepout homotopy class, harmonic map, or Ricci flow is defined by this bundle.\n\nThis is a composite open construction problem refining the existing persistent-profile target. Remaining geometric work includes a smooth model and normalization, the prime-factor and sweepout reductions, surgery-flow existence, scalar comparison, conformal width realizers, uniform short-time comparison estimates, endpoint continuity and surgery compatibility. In particular, this statement does not assert that these tasks are solved.",
+        "preamble": "import Definitions.Def_OpenGA_WidthComparisonTrace\nimport Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\nset_option autoImplicit false",
+        "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692. For the surgery framework and topology: Kleiner-Lott, Notes on Perelman's papers, math/0605667v5, Claim 3.5, Remark 73.6, Proposition 77.2, Lemma 79.11 and Lemma 81.2. https://arxiv.org/pdf/math/0605667v5 . This is a composite open construction target, not a claim that these geometric sources have already been formalized.",
+        "tags": [
+          "geometric-analysis",
+          "openga-width-comparison"
+        ],
+        "theorem_name": "PoincareFormalization.persistent_comparison_data_of_not_homeomorph_sphere",
+        "theorem_title": "Comparison data from a hypothetical Poincare counterexample"
+      },
+      "requires": [
+        "comparison_trace"
+      ],
+      "sha256": "7b6f25f0b5169dcfcf41ddfa7492381e79c7eadbb30ecba165511c3b0ee7a6b9"
+    },
+    {
+      "expected_status": "ACCEPTED",
+      "explanation": "The comparison data imply an upper right slope bound $D=-4\\pi-\\frac R2W(t)$. The integrated conformality criterion first gives $A(r)=E(r)=W(t)$. The integrated area-energy inequality gives $\\sup_u A(p_{j,u})\\le c_j$, so each real supremum is bounded above.\n\nFix $q>D$ and set $\\varepsilon=(q-D)/4$. Use the comparison hypothesis to obtain a common right neighborhood and a threshold $J$. For each $s$ in that neighborhood, convergence of the caps allows a choice $j\\ge J$ with $c_j<W(t)+\\varepsilon(s-t)$. Combining the inequalities yields\n\n$$W(s)-W(t)<(s-t)(D+2\\varepsilon)<(s-t)q.$$\n\nDividing by $s-t>0$ proves the eventual slope estimate. The choice of $j$ may depend on $s$; the neighborhood is uniform because the comparison estimate holds for every sufficiently large index.",
+      "key": "slope_proof",
+      "kind": "proof",
+      "path": "PoincareConjecture/Contributions/WidthComparison/WidthSlopeProof.lean",
+      "requires": [
+        "slope_problem"
+      ],
+      "sha256": "2c2b9d9f07a54114a040c23bc011551e61343ff5262b43656141700ae37a0213",
+      "target_id": null,
+      "target_key": "slope_problem"
+    },
+    {
+      "expected_status": "SKETCH_ACCEPTED",
+      "explanation": "Assume the open comparison-data construction target. It supplies one initial width bound valid for every finite horizon and a trace of scalar and width profiles on each such horizon. Keep its partition, profiles, initial bounds, continuity and jump inequalities.\n\nAt each interior time the proved area-energy comparison theorem gives an eventual upper bound on the right-hand difference quotients of the width. The real right-neighborhood filter is nontrivial, so an eventual bound implies the frequently occurring bound required by ScalarWidthTrace. This fills its remaining width slope field.\n\nThe conclusion remains conditional on constructing the geometric comparison data; neither this reduction nor the analytic comparison theorem proves the Poincare conjecture independently.",
+      "key": "profiles_reduction",
+      "kind": "proof",
+      "path": "PoincareConjecture/Contributions/WidthComparison/PersistentProfilesReduction.lean",
+      "requires": [
+        "geometry",
+        "slope_proof"
+      ],
+      "sha256": "dc8c042f755c5f45e7b206977229599b9df780414ad02643f249179daf410137",
+      "target_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+      "target_key": null
+    }
+  ],
+  "local_source": "OpenGALib/Analysis/WidthComparison.lean",
+  "local_source_sha256": "a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692",
+  "local_verification": {
+    "checked_at": "2026-09-09T03:43:55.494285+00:00",
+    "curation": "passed: 12 curated declarations, 11 source reviews; only propext, Classical.choice and Quot.sound",
+    "full_library_build": "passed (3204 jobs)",
+    "legacy_shake_check": "Unavailable: the existing CI command lake exe shake has no executable in this toolchain. The replacement lake shake only supports module-system files; this repository still uses ordinary imports. Neither invocation completed the import baseline check.",
+    "library_sorry_axiom_scan": "no declarations found",
+    "linter_baselines": "MathTag 0, AnchorPurity 0, Naming 0",
+    "platform_mirror_build": "passed (2821 jobs); expected sorry warnings in verbatim platform statement stubs",
+    "synchronization_tests": "11 passed"
+  },
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "parent_theorem": {
+    "audits": [],
+    "created_at": "2026-09-09T02:38:25.083946+00:00",
+    "deprecated_at": null,
+    "deprecated_by": null,
+    "formal_statement": "theorem PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ W₀ : ℝ, 0 ≤ W₀ ∧ ∀ T : ℝ, 0 < T → Nonempty (OpenGA.ScalarWidthTrace W₀ T) := by sorry",
+    "local_path": "Theorems/Thm_PoincareFormalization_persistent_profiles_of_not_homeomorph_sphere.lean",
+    "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+    "natural_language_statement": "Let $M$ be a compact simply connected Hausdorff topological three-manifold without boundary. Suppose that $M$ is not homeomorphic to the unit three-sphere. Then there is a real number $W_0\\ge0$, independent of the final time, such that\n$$\\forall T>0,\\quad \\text{there exists a scalar-width trace on }[0,T]\\text{ with initial width at most }W_0.$$\nA scalar-width trace is the analytic data in the imported definition: finitely many continuous scalar and nonnegative width profiles, initial scalar minimum at least $-6$, differential inequalities\n$$D_+r\\ge\\frac23r^2,\\qquad D_+w\\le-4\\pi-\\frac12rw,$$\nand upward scalar jumps and downward width jumps.\n\nThis is a composite geometric extraction target for the Kleiner-Lott surgery route with the Colding-Minicozzi width input. It deliberately isolates the unresolved passage from geometry and topology to analytic data. It is not a formalization of any one named milestone. The scope includes passing from a topological three-manifold to smooth normalized initial data, constructing surgery flows for arbitrary finite times, identifying surviving nontrivial components under the nonspherical hypothesis, and establishing the scalar/width estimates, endpoint regularity, jump inequalities, and a uniform initial width bound. None of those geometric constructions is supplied by the trace definition.\n\nThe Kleiner-Lott source starts with smooth geometric data; the topological-to-smooth passage is an additional formalization obligation in this statement.",
+    "preamble": "import Definitions.Def_OpenGA_ScalarWidthTrace\nimport Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\nset_option autoImplicit false",
+    "readback": null,
+    "source": "Composite reduction target, not a verbatim theorem: Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 (pp.8-9), Proposition 77.2 (p.146), Lemma 79.11 (p.154), Lemma 81.2 (p.160), with Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7, Corollary 1.11 (p.4), and (1.28) (p.8). The topological smoothing bridge and the extraction of finite analytic profiles are explicitly unresolved parts of this derived target; this statement does not attest any individual geometric milestone.",
+    "status": "Open",
+    "tags": [
+      "differential-inequalities",
+      "geometric-analysis",
+      "ricci-flow"
+    ],
+    "theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+    "theorem_name": "PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere",
+    "theorem_title": "Persistent profiles from a hypothetical Poincare counterexample",
+    "visibility": "public",
+    "vote_count": 0
+  },
+  "receipts": {
+    "comparison_data": {
+      "checked_at": "2026-09-09T03:39:42.061213+00:00",
+      "job": {
+        "created_at": "2026-09-09T03:38:56.13516+00:00",
+        "definitions": "import Definitions.Def_OpenGA_AreaEnergyDensities\nimport Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Order.ConditionallyCompleteLattice.Indexed\n\n/-!\n# Width variation from area-energy comparison data\n\nThis module isolates the analytic passage from comparison families to a\nright-hand slope estimate. The input consists of finite-energy measurable\nvector pairs, uniform energy caps tending to the width, an almost conformal\nrealizer, and a short-time area comparison. None of these data are a definition\nof a surface differential, a sweepout, a harmonic map, or a Ricci flow.\n\nThe intended geometric inputs are described in Colding-Minicozzi,\n*Width and Finite Extinction Time of Ricci Flow*, arXiv:0707.0108v1:\nequation (1.4), the paragraph after Theorem 1.14, and the proof of Theorem 1.7,\nequations (1.25)-(1.28) and footnote 6 (pp. 3, 6-8). The comparison hypothesis\nbelow packages the uniform error estimates after shrinking the time interval;\nconstructing it from geometry is a separate open task.\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory Set Filter\nopen scoped InnerProductSpace Topology\n\nnamespace OpenGA\n\n/-- **Math.** A measurable pair with finite Dirichlet energy. Its domain may\nalso be a disjoint union, as for a finite collection of sphere maps. -/\nstructure FiniteEnergyPair where\n  domain : Type\n  [measurableSpace : MeasurableSpace domain]\n  target : Type\n  [normedAddCommGroup : NormedAddCommGroup target]\n  [innerProductSpace : InnerProductSpace ℝ target]\n  measure : Measure domain\n  first : domain → target\n  second : domain → target\n  first_measurable : AEStronglyMeasurable first measure\n  second_measurable : AEStronglyMeasurable second measure\n  energy_integrable : Integrable (fun x => energyDensity (first x) (second x)) measure\n\nattribute [instance] FiniteEnergyPair.measurableSpace\n  FiniteEnergyPair.normedAddCommGroup FiniteEnergyPair.innerProductSpace\n\n/-- **Math.** Integrated area density of a finite-energy pair. -/\nnoncomputable def FiniteEnergyPair.area (p : FiniteEnergyPair) : ℝ :=\n  ∫ x, areaDensity (p.first x) (p.second x) ∂p.measure\n\n/-- **Math.** Integrated energy density of a finite-energy pair. -/\nnoncomputable def FiniteEnergyPair.energy (p : FiniteEnergyPair) : ℝ :=\n  ∫ x, energyDensity (p.first x) (p.second x) ∂p.measure\n\n/-- **Math.** Orthogonality and equal length almost everywhere; a condition\non the supplied fields, without asserting that they are a map differential. -/\ndef FiniteEnergyPair.IsConformal (p : FiniteEnergyPair) : Prop :=\n  ∀ᵐ x ∂p.measure, ⟪p.first x, p.second x⟫_ℝ = 0 ∧ ‖p.first x‖ = ‖p.second x‖\n\n/-- **Math.** Analytic comparison data at one time. Competitors are indexed by\na sequence and the unit interval. The realizer encodes the limiting harmonic\nspheres only once the separate geometric construction has been supplied. -/\nstructure WidthComparisonData (width : ℝ → ℝ) (time scalar : ℝ) where\n  realizer : FiniteEnergyPair\n  realizer_conformal : realizer.IsConformal\n  realized_energy : realizer.energy = width time\n  competitor : ℕ → Icc (0 : ℝ) 1 → FiniteEnergyPair\n  energy_cap : ℕ → ℝ\n  energy_le_cap : ∀ j p, (competitor j p).energy ≤ energy_cap j\n  cap_tendsto : Tendsto energy_cap atTop (𝓝 (width time))\n  area_comparison : ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧ ∃ start : ℕ,\n    ∀ j ≥ start, ∀ s ∈ Ioo time (time + δ),\n      width s ≤ (⨆ p, (competitor j p).area) +\n        (s - time) * (-(4 * Real.pi) - scalar / 2 * realizer.area + ε)\n\n\n\nend OpenGA\n",
+        "error_message": "",
+        "formal_statement": "",
+        "id": "1aef5537-13e7-4a86-b8ea-ae279027fc0e",
+        "kind": "definition",
+        "natural_language_statement": "A finite-energy pair consists of a measure space, a real inner product space, and two almost-everywhere strongly measurable fields $v,w$ with integrable energy. Write\n\n$$A(p)=\\int\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(p)=\\frac12\\int(\\|v\\|^2+\\|w\\|^2).$$\n\nConformality means orthogonality and equal norms almost everywhere. A width comparison at time $t$, with scalar parameter $R$, supplies a conformal realizer $r$ with $E(r)=W(t)$; pairs $p_{j,u}$ for $j\\in\\mathbb N$, $u\\in[0,1]$; caps $c_j$ with $E(p_{j,u})\\le c_j$ and $c_j\\to W(t)$; and, for every $\\varepsilon>0$, numbers $\\delta>0$ and $J$ such that for $j\\ge J$ and $t<s<t+\\delta$,\n\n$$W(s)\\le\\sup_{u\\in[0,1]}A(p_{j,u})+(s-t)\\left(-4\\pi-\\frac R2 A(r)+\\varepsilon\\right).$$\n\nThe fields are analytic input data. No surface differential, sweepout homotopy class, harmonic map, or Ricci flow is defined by this bundle.",
+        "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692.",
+        "status": "PUBLISHED",
+        "tags": [
+          "geometric-analysis",
+          "openga-width-comparison"
+        ],
+        "theorem_id": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+        "theorem_name": "OpenGA_WidthComparisonData",
+        "theorem_title": "Finite-energy fields and width comparison data",
+        "updated_at": "2026-09-09T03:39:11.613464+00:00",
+        "visibility": "public"
+      },
+      "job_id": "1aef5537-13e7-4a86-b8ea-ae279027fc0e",
+      "response": {
+        "definition_name": "OpenGA_WidthComparisonData",
+        "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+        "job_id": "1aef5537-13e7-4a86-b8ea-ae279027fc0e",
+        "message": "Definition queued. Poll GET /api/v1/publish-jobs/1aef5537-13e7-4a86-b8ea-ae279027fc0e until status is PUBLISHED, FAILED, or ERROR.",
+        "status": "PENDING"
+      },
+      "started_at": "2026-09-09T03:38:55.880265+00:00",
+      "status": "PUBLISHED",
+      "theorem_id": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+      "verified_at": "2026-09-09T03:41:55.894951+00:00"
+    },
+    "comparison_trace": {
+      "checked_at": "2026-09-09T03:40:04.536023+00:00",
+      "job": {
+        "created_at": "2026-09-09T03:39:42.756218+00:00",
+        "definitions": "import Definitions.Def_OpenGA_WidthComparisonData\nimport Definitions.Def_OpenGA_ScalarWidthTrace\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite scalar and width data with area-energy comparison witnesses in\nplace of an assumed width slope bound. This is an analytic interface, not a\ndefinition of Ricci flow, surgery, or a geometric sweepout. -/\nstructure WidthComparisonTrace (initialWidth finalTime : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = finalTime\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ initialWidth\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  comparison : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)),\n    Nonempty (WidthComparisonData (width i) t (scalar i t))\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
+        "error_message": "",
+        "formal_statement": "",
+        "id": "a257d2e0-67e5-40d5-ba12-6685bd7ae78e",
+        "kind": "definition",
+        "natural_language_statement": "A finite partition of a time interval carries continuous scalar and width profiles, normalized initial scalar bound, a common initial width bound, nonnegative widths, the scalar differential inequality, upward scalar jumps and downward width jumps. At each time before the end of a partition interval, an area-energy width comparison bundle is supplied. The width slope inequality is deliberately a conclusion of the comparison theorem, not a field of this bundle. This records analytic data to be constructed from geometry; it does not define a surgery flow.",
+        "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692.",
+        "status": "PUBLISHED",
+        "tags": [
+          "geometric-analysis",
+          "openga-width-comparison"
+        ],
+        "theorem_id": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+        "theorem_name": "OpenGA_WidthComparisonTrace",
+        "theorem_title": "Width traces with area-energy comparison witnesses",
+        "updated_at": "2026-09-09T03:39:58.346904+00:00",
+        "visibility": "public"
+      },
+      "job_id": "a257d2e0-67e5-40d5-ba12-6685bd7ae78e",
+      "response": {
+        "definition_name": "OpenGA_WidthComparisonTrace",
+        "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+        "job_id": "a257d2e0-67e5-40d5-ba12-6685bd7ae78e",
+        "message": "Definition queued. Poll GET /api/v1/publish-jobs/a257d2e0-67e5-40d5-ba12-6685bd7ae78e until status is PUBLISHED, FAILED, or ERROR.",
+        "status": "PENDING"
+      },
+      "started_at": "2026-09-09T03:39:42.495968+00:00",
+      "status": "PUBLISHED",
+      "theorem_id": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+      "verified_at": "2026-09-09T03:41:56.146850+00:00"
+    },
+    "geometry": {
+      "checked_at": "2026-09-09T03:40:27.997364+00:00",
+      "job": {
+        "created_at": "2026-09-09T03:40:05.867979+00:00",
+        "definitions": "import Definitions.Def_OpenGA_WidthComparisonTrace\nimport Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\nset_option autoImplicit false",
+        "error_message": "",
+        "formal_statement": "theorem PoincareFormalization.persistent_comparison_data_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →\n      Nonempty (OpenGA.WidthComparisonTrace initialWidth finalTime) := by sorry",
+        "id": "7d0a3f1a-82f4-4742-950d-7bdec7758e37",
+        "kind": "problem",
+        "natural_language_statement": "Let $M$ be a compact, simply connected, Hausdorff topological three-manifold without boundary. Assume hypothetically that $M$ is not homeomorphic to the unit three-sphere. Construct a constant $W_0\\ge0$ such that for every $T>0$ there is a finite width comparison trace on $[0,T]$, with initial width at most $W_0$.\n\nA finite partition of a time interval carries continuous scalar and width profiles, normalized initial scalar bound, a common initial width bound, nonnegative widths, the scalar differential inequality, upward scalar jumps and downward width jumps. At each time before the end of a partition interval, an area-energy width comparison bundle is supplied. The width slope inequality is deliberately a conclusion of the comparison theorem, not a field of this bundle. This records analytic data to be constructed from geometry; it does not define a surgery flow.\n\nA finite-energy pair consists of a measure space, a real inner product space, and two almost-everywhere strongly measurable fields $v,w$ with integrable energy. Write\n\n$$A(p)=\\int\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(p)=\\frac12\\int(\\|v\\|^2+\\|w\\|^2).$$\n\nConformality means orthogonality and equal norms almost everywhere. A width comparison at time $t$, with scalar parameter $R$, supplies a conformal realizer $r$ with $E(r)=W(t)$; pairs $p_{j,u}$ for $j\\in\\mathbb N$, $u\\in[0,1]$; caps $c_j$ with $E(p_{j,u})\\le c_j$ and $c_j\\to W(t)$; and, for every $\\varepsilon>0$, numbers $\\delta>0$ and $J$ such that for $j\\ge J$ and $t<s<t+\\delta$,\n\n$$W(s)\\le\\sup_{u\\in[0,1]}A(p_{j,u})+(s-t)\\left(-4\\pi-\\frac R2 A(r)+\\varepsilon\\right).$$\n\nThe fields are analytic input data. No surface differential, sweepout homotopy class, harmonic map, or Ricci flow is defined by this bundle.\n\nThis is a composite open construction problem refining the existing persistent-profile target. Remaining geometric work includes a smooth model and normalization, the prime-factor and sweepout reductions, surgery-flow existence, scalar comparison, conformal width realizers, uniform short-time comparison estimates, endpoint continuity and surgery compatibility. In particular, this statement does not assert that these tasks are solved.",
+        "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692. For the surgery framework and topology: Kleiner-Lott, Notes on Perelman's papers, math/0605667v5, Claim 3.5, Remark 73.6, Proposition 77.2, Lemma 79.11 and Lemma 81.2. https://arxiv.org/pdf/math/0605667v5 . This is a composite open construction target, not a claim that these geometric sources have already been formalized.",
+        "status": "PUBLISHED",
+        "tags": [
+          "geometric-analysis",
+          "openga-width-comparison"
+        ],
+        "theorem_id": "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+        "theorem_name": "PoincareFormalization.persistent_comparison_data_of_not_homeomorph_sphere",
+        "theorem_title": "Comparison data from a hypothetical Poincare counterexample",
+        "updated_at": "2026-09-09T03:40:22.344997+00:00",
+        "visibility": "public"
+      },
+      "job_id": "7d0a3f1a-82f4-4742-950d-7bdec7758e37",
+      "response": {
+        "errors": [],
+        "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+        "jobs": [
+          {
+            "job_id": "7d0a3f1a-82f4-4742-950d-7bdec7758e37",
+            "name": "PoincareFormalization.persistent_comparison_data_of_not_homeomorph_sphere"
+          }
+        ],
+        "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+      },
+      "started_at": "2026-09-09T03:40:05.556956+00:00",
+      "status": "PUBLISHED",
+      "theorem_id": "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+      "verified_at": "2026-09-09T03:41:56.621366+00:00"
+    },
+    "profiles_reduction": {
+      "accepted_source_sha256": "dc8c042f755c5f45e7b206977229599b9df780414ad02643f249179daf410137",
+      "checked_at": "2026-09-09T03:41:58.110995+00:00",
+      "response": {
+        "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+        "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+        "status": "PENDING",
+        "submission_id": "42885aae-9f1a-4edc-b4c4-d8e3820e630a"
+      },
+      "started_at": "2026-09-09T03:41:13.819643+00:00",
+      "status": "SKETCH_ACCEPTED",
+      "submission_id": "42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+      "theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+      "verdict": {
+        "created_at": "2026-09-09T03:41:14.183826+00:00",
+        "error_message": "",
+        "file_path": "b0543216-8c0f-4f20-8b76-40d197f69fba/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/42885aae-9f1a-4edc-b4c4-d8e3820e630a.lean",
+        "id": "42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+        "status": "SKETCH_ACCEPTED",
+        "theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "updated_at": "2026-09-09T03:41:51.670231+00:00",
+        "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+      },
+      "verified_at": "2026-09-09T03:41:58.674859+00:00"
+    },
+    "slope_problem": {
+      "checked_at": "2026-09-09T03:40:04.994992+00:00",
+      "job": {
+        "created_at": "2026-09-09T03:39:43.317497+00:00",
+        "definitions": "import Definitions.Def_OpenGA_WidthComparisonData\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped InnerProductSpace Topology\nopen OpenGA",
+        "error_message": "",
+        "formal_statement": "theorem OpenGA.eventually_width_slope_lt_of_comparison\n    {width : ℝ → ℝ} {time scalar : ℝ}\n    (data : WidthComparisonData width time scalar) (q : ℝ)\n    (hq : -(4 * Real.pi) - scalar / 2 * width time < q) :\n    ∀ᶠ s in 𝓝[>] time, slope width time s < q := by sorry",
+        "id": "e61b132b-580e-4de6-8ae4-bd65502e906d",
+        "kind": "problem",
+        "natural_language_statement": "A finite-energy pair consists of a measure space, a real inner product space, and two almost-everywhere strongly measurable fields $v,w$ with integrable energy. Write\n\n$$A(p)=\\int\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(p)=\\frac12\\int(\\|v\\|^2+\\|w\\|^2).$$\n\nConformality means orthogonality and equal norms almost everywhere. A width comparison at time $t$, with scalar parameter $R$, supplies a conformal realizer $r$ with $E(r)=W(t)$; pairs $p_{j,u}$ for $j\\in\\mathbb N$, $u\\in[0,1]$; caps $c_j$ with $E(p_{j,u})\\le c_j$ and $c_j\\to W(t)$; and, for every $\\varepsilon>0$, numbers $\\delta>0$ and $J$ such that for $j\\ge J$ and $t<s<t+\\delta$,\n\n$$W(s)\\le\\sup_{u\\in[0,1]}A(p_{j,u})+(s-t)\\left(-4\\pi-\\frac R2 A(r)+\\varepsilon\\right).$$\n\nThe fields are analytic input data. No surface differential, sweepout homotopy class, harmonic map, or Ricci flow is defined by this bundle.\n\nUnder these hypotheses, for every $q>-4\\pi-\\frac R2W(t)$ the right-hand difference quotients eventually satisfy\n\n$$\\frac{W(s)-W(t)}{s-t}<q\\qquad(s\\downarrow t).$$\n\nThis is the analytic conversion from short-time comparison estimates to the upper right slope bound. The existence of geometric comparison data is a separate requirement.",
+        "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692.",
+        "status": "PUBLISHED",
+        "tags": [
+          "geometric-analysis",
+          "openga-width-comparison"
+        ],
+        "theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
+        "theorem_name": "OpenGA.eventually_width_slope_lt_of_comparison",
+        "theorem_title": "Width slope bound from area-energy comparisons",
+        "updated_at": "2026-09-09T03:39:56.886678+00:00",
+        "visibility": "public"
+      },
+      "job_id": "e61b132b-580e-4de6-8ae4-bd65502e906d",
+      "response": {
+        "errors": [],
+        "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+        "jobs": [
+          {
+            "job_id": "e61b132b-580e-4de6-8ae4-bd65502e906d",
+            "name": "OpenGA.eventually_width_slope_lt_of_comparison"
+          }
+        ],
+        "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+      },
+      "started_at": "2026-09-09T03:39:43.054368+00:00",
+      "status": "PUBLISHED",
+      "theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
+      "verified_at": "2026-09-09T03:41:56.418981+00:00"
+    },
+    "slope_proof": {
+      "accepted_source_sha256": "2c2b9d9f07a54114a040c23bc011551e61343ff5262b43656141700ae37a0213",
+      "checked_at": "2026-09-09T03:41:12.771733+00:00",
+      "response": {
+        "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+        "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+        "status": "PENDING",
+        "submission_id": "719f4cdd-1059-4091-9819-7926dbc5806e"
+      },
+      "started_at": "2026-09-09T03:40:06.200481+00:00",
+      "status": "ACCEPTED",
+      "submission_id": "719f4cdd-1059-4091-9819-7926dbc5806e",
+      "theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
+      "verdict": {
+        "created_at": "2026-09-09T03:40:06.598218+00:00",
+        "error_message": "",
+        "file_path": "18265c01-abe4-486f-84f2-c88759ab91fc/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/719f4cdd-1059-4091-9819-7926dbc5806e.lean",
+        "id": "719f4cdd-1059-4091-9819-7926dbc5806e",
+        "status": "ACCEPTED",
+        "theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
+        "updated_at": "2026-09-09T03:40:57.943241+00:00",
+        "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+      },
+      "verified_at": "2026-09-09T03:41:57.614549+00:00"
+    }
+  },
+  "root_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+  "schema_version": 1,
+  "source_reviewed": true,
+  "source_scope": "Derived analytic interface and explicit open geometric construction; not a completed formalization of the source geometric theorems.",
+  "status": "COMPLETE",
+  "validation": {
+    "checked_at": "2026-09-09T03:38:08.335804+00:00",
+    "exact_payload_build": "passed (2809 jobs)",
+    "existing_parent_reduction_type_match": true,
+    "extraction": "Lean declaration and reference source positions, official workspace extractor at 6b46503",
+    "original_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "source_and_export_type": "∀ {width : ℝ → ℝ} {time scalar : ℝ} (data : OpenGA.WidthComparisonData width time scalar) (q : ℝ),\n  -(4 * Real.pi) - scalar / 2 * width time < q → ∀ᶠ (s : ℝ) in nhdsWithin time (Set.Ioi time), slope width time s < q",
+    "source_and_export_type_match": true,
+    "staging_note": "Platform theorem stubs are imported for exact payload compilation; the original library proof was independently audited without sorryAx. The geometric construction target deliberately remains open.",
+    "status": "passed"
+  },
+  "verified_at": "2026-09-09T03:41:59.359202+00:00"
+}

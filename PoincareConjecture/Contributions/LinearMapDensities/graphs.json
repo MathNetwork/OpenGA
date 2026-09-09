@@ -1,0 +1,480 @@
+{
+  "OpenGA.areaDensity_basis_independent": {
+    "edges": [
+      {
+        "kind": "sketch",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "sketch-59b54355-c04b-4077-925b-c7d3785054ad"
+      },
+      {
+        "kind": "sketch",
+        "source": "eddc764e-527d-4d07-a812-94f60b637407",
+        "target": "sketch-59b54355-c04b-4077-925b-c7d3785054ad"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-59b54355-c04b-4077-925b-c7d3785054ad",
+        "target": "85285131-e406-453d-81b2-2e602a3e878d"
+      },
+      {
+        "kind": "structural",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "85285131-e406-453d-81b2-2e602a3e878d"
+      },
+      {
+        "kind": "structural",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "eddc764e-527d-4d07-a812-94f60b637407"
+      }
+    ],
+    "has_hidden_deprecated_sketches": false,
+    "nodes": [
+      {
+        "audits": [],
+        "created_at": "2026-09-09T15:44:30.584699+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.areaDensity_basis_independent (L : E →ₗ[ℝ] F)\n    (b c : OrthonormalBasis (Fin 2) ℝ E) :\n    areaDensity (L (b 0)) (L (b 1)) = areaDensity (L (c 0)) (L (c 1)) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $L:E\\to F$ be a linear map from a two-dimensional real inner product space into any real inner product space. If $(e_1,e_2)$ and $(f_1,f_2)$ are orthonormal bases of $E$, then\n\n$$\\sqrt{\\|Le_1\\|^2\\|Le_2\\|^2-\\langle Le_1,Le_2\\rangle^2}=\\sqrt{\\|Lf_1\\|^2\\|Lf_2\\|^2-\\langle Lf_1,Lf_2\\rangle^2}.$$\n\nBoth orientation-preserving and orientation-reversing basis changes are allowed, as are rank-deficient maps. The result is pointwise; the surface differential and integration interfaces remain separate.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Algebra.BigOperators.Pi\nimport Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.Analysis.InnerProductSpace.NormDet\nimport Mathlib.Analysis.InnerProductSpace.Orthonormal\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.LinearAlgebra.BilinearMap\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen scoped InnerProductSpace\nopen OpenGA\nvariable {E F : Type*}\n  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n  [NormedAddCommGroup F] [InnerProductSpace ℝ F]",
+        "source": "OpenGA source: OpenGALib/Analysis/AreaEnergy/LinearMap.lean, SHA-256 b316e1614ddc42bfa4b1bdce446cbc2503f9e5ee8008d8a591c2ca9d80532d35. Derived pointwise linear-algebra interface for Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, equation (1.4) and the Jacobian formula immediately before it, p. 3. https://arxiv.org/pdf/0707.0108v1#page=3 . The intrinsic volume-factor identity uses Mathlib LinearMap.normDet_sq_eq_det_gram, https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/Analysis/InnerProductSpace/NormDet.lean . This does not formalize Sobolev sweepouts or the equality of area and energy widths.",
+        "status": "Proved",
+        "tags": [
+          "geometric-analysis",
+          "linear-algebra",
+          "openga-area-energy"
+        ],
+        "theorem_id": "85285131-e406-453d-81b2-2e602a3e878d",
+        "theorem_name": "OpenGA.areaDensity_basis_independent",
+        "theorem_title": "Frame independence of area density",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T03:17:38.845171+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Moqian",
+        "definition": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\n/-!\n# Area and energy densities\n\nFor the images `v`, `w` of an orthonormal tangent frame under a differential,\nthe area density is the square root of the Gram determinant and the energy\ndensity is half the sum of the squared norms. The area is bounded by the\nenergy, with equality precisely for orthogonal vectors of equal norm.\n\nThe integral results assume measurable vector fields and integrable energy;\nintegrability of the area is a conclusion, not an additional assumption.\nThey apply on any measure space, including a restricted domain measure.\nIdentifying these fields with a Sobolev differential on a surface remains a\nseparate geometric interface. No global frame on the sphere is asserted.\n\nReference: Colding-Minicozzi, *Width and Finite Extinction Time of Ricci Flow*,\narXiv:0707.0108v1, equation (1.4) and the following equality discussion, p. 3.\nhttps://arxiv.org/pdf/0707.0108v1#page=3\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory\nopen scoped InnerProductSpace\n\nnamespace OpenGA\n\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\n\n/-- **Math.** The two-dimensional Jacobian density of a pair of derivative vectors. -/\nnoncomputable def areaDensity (v w : F) : ℝ :=\n  Real.sqrt (‖v‖ ^ 2 * ‖w‖ ^ 2 - ⟪v, w⟫_ℝ ^ 2)\n\n/-- **Math.** The Dirichlet energy density of a pair of derivative vectors. -/\nnoncomputable def energyDensity (v w : F) : ℝ :=\n  (‖v‖ ^ 2 + ‖w‖ ^ 2) / 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsection Integral\n\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\n\n\n\n\n\n\n\nend Integral\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "node_type": "theorem",
+        "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+        "status": "Definition",
+        "tags": [
+          "geometric-analysis",
+          "openga-area-energy"
+        ],
+        "theorem_id": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "theorem_name": "OpenGA_AreaEnergyDensities",
+        "theorem_title": "Area and energy densities of a vector pair",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T15:44:22.899431+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.areaDensity_eq_normDet (L : E →ₗ[ℝ] F) (b : OrthonormalBasis (Fin 2) ℝ E) :\n    areaDensity (L (b 0)) (L (b 1)) = L.normDet := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $E$ be a two-dimensional real inner product space, let $F$ be any real inner product space, and let $L:E\\to F$ be linear. For every orthonormal basis $(e_1,e_2)$ of $E$,\n\n$$\\sqrt{\\|Le_1\\|^2\\|Le_2\\|^2-\\langle Le_1,Le_2\\rangle^2}=\\operatorname{normDet}(L).$$\n\nThe right side is Mathlib's nonnegative volume factor of a linear map. No injectivity assumption is made; rank-deficient maps are included. This is a pointwise linear-algebra interface for the surface Jacobian formula, not a construction of a manifold differential or a Sobolev surface integral.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Algebra.BigOperators.Pi\nimport Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.Analysis.InnerProductSpace.NormDet\nimport Mathlib.Analysis.InnerProductSpace.Orthonormal\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.LinearAlgebra.BilinearMap\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen scoped InnerProductSpace\nopen OpenGA\nvariable {E F : Type*}\n  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n  [NormedAddCommGroup F] [InnerProductSpace ℝ F]",
+        "source": "OpenGA source: OpenGALib/Analysis/AreaEnergy/LinearMap.lean, SHA-256 b316e1614ddc42bfa4b1bdce446cbc2503f9e5ee8008d8a591c2ca9d80532d35. Derived pointwise linear-algebra interface for Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, equation (1.4) and the Jacobian formula immediately before it, p. 3. https://arxiv.org/pdf/0707.0108v1#page=3 . The intrinsic volume-factor identity uses Mathlib LinearMap.normDet_sq_eq_det_gram, https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/Analysis/InnerProductSpace/NormDet.lean . This does not formalize Sobolev sweepouts or the equality of area and energy widths.",
+        "status": "Proved",
+        "tags": [
+          "geometric-analysis",
+          "linear-algebra",
+          "openga-area-energy"
+        ],
+        "theorem_id": "eddc764e-527d-4d07-a812-94f60b637407",
+        "theorem_name": "OpenGA.areaDensity_eq_normDet",
+        "theorem_title": "Area density as the intrinsic volume factor",
+        "vote_count": 0
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-09T15:46:30.595401+00:00",
+        "deprecated_at": null,
+        "explanation": "Evaluate the proved intrinsic-volume-factor identity in each orthonormal basis. Both area densities equal normDet of the same linear map.",
+        "node_id": "sketch-59b54355-c04b-4077-925b-c7d3785054ad",
+        "node_type": "sketch",
+        "parent_theorem_id": "85285131-e406-453d-81b2-2e602a3e878d",
+        "status": "ACCEPTED",
+        "submission_id": "59b54355-c04b-4077-925b-c7d3785054ad",
+        "username": "Moqian"
+      }
+    ],
+    "root_id": "85285131-e406-453d-81b2-2e602a3e878d"
+  },
+  "OpenGA.areaDensity_eq_normDet": {
+    "edges": [
+      {
+        "kind": "sketch",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "sketch-59b54355-c04b-4077-925b-c7d3785054ad"
+      },
+      {
+        "kind": "sketch",
+        "source": "eddc764e-527d-4d07-a812-94f60b637407",
+        "target": "sketch-59b54355-c04b-4077-925b-c7d3785054ad"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-59b54355-c04b-4077-925b-c7d3785054ad",
+        "target": "85285131-e406-453d-81b2-2e602a3e878d"
+      },
+      {
+        "kind": "structural",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "85285131-e406-453d-81b2-2e602a3e878d"
+      },
+      {
+        "kind": "structural",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "eddc764e-527d-4d07-a812-94f60b637407"
+      }
+    ],
+    "has_hidden_deprecated_sketches": false,
+    "nodes": [
+      {
+        "audits": [],
+        "created_at": "2026-09-09T15:44:30.584699+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.areaDensity_basis_independent (L : E →ₗ[ℝ] F)\n    (b c : OrthonormalBasis (Fin 2) ℝ E) :\n    areaDensity (L (b 0)) (L (b 1)) = areaDensity (L (c 0)) (L (c 1)) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $L:E\\to F$ be a linear map from a two-dimensional real inner product space into any real inner product space. If $(e_1,e_2)$ and $(f_1,f_2)$ are orthonormal bases of $E$, then\n\n$$\\sqrt{\\|Le_1\\|^2\\|Le_2\\|^2-\\langle Le_1,Le_2\\rangle^2}=\\sqrt{\\|Lf_1\\|^2\\|Lf_2\\|^2-\\langle Lf_1,Lf_2\\rangle^2}.$$\n\nBoth orientation-preserving and orientation-reversing basis changes are allowed, as are rank-deficient maps. The result is pointwise; the surface differential and integration interfaces remain separate.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Algebra.BigOperators.Pi\nimport Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.Analysis.InnerProductSpace.NormDet\nimport Mathlib.Analysis.InnerProductSpace.Orthonormal\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.LinearAlgebra.BilinearMap\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen scoped InnerProductSpace\nopen OpenGA\nvariable {E F : Type*}\n  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n  [NormedAddCommGroup F] [InnerProductSpace ℝ F]",
+        "source": "OpenGA source: OpenGALib/Analysis/AreaEnergy/LinearMap.lean, SHA-256 b316e1614ddc42bfa4b1bdce446cbc2503f9e5ee8008d8a591c2ca9d80532d35. Derived pointwise linear-algebra interface for Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, equation (1.4) and the Jacobian formula immediately before it, p. 3. https://arxiv.org/pdf/0707.0108v1#page=3 . The intrinsic volume-factor identity uses Mathlib LinearMap.normDet_sq_eq_det_gram, https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/Analysis/InnerProductSpace/NormDet.lean . This does not formalize Sobolev sweepouts or the equality of area and energy widths.",
+        "status": "Proved",
+        "tags": [
+          "geometric-analysis",
+          "linear-algebra",
+          "openga-area-energy"
+        ],
+        "theorem_id": "85285131-e406-453d-81b2-2e602a3e878d",
+        "theorem_name": "OpenGA.areaDensity_basis_independent",
+        "theorem_title": "Frame independence of area density",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T03:17:38.845171+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Moqian",
+        "definition": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\n/-!\n# Area and energy densities\n\nFor the images `v`, `w` of an orthonormal tangent frame under a differential,\nthe area density is the square root of the Gram determinant and the energy\ndensity is half the sum of the squared norms. The area is bounded by the\nenergy, with equality precisely for orthogonal vectors of equal norm.\n\nThe integral results assume measurable vector fields and integrable energy;\nintegrability of the area is a conclusion, not an additional assumption.\nThey apply on any measure space, including a restricted domain measure.\nIdentifying these fields with a Sobolev differential on a surface remains a\nseparate geometric interface. No global frame on the sphere is asserted.\n\nReference: Colding-Minicozzi, *Width and Finite Extinction Time of Ricci Flow*,\narXiv:0707.0108v1, equation (1.4) and the following equality discussion, p. 3.\nhttps://arxiv.org/pdf/0707.0108v1#page=3\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory\nopen scoped InnerProductSpace\n\nnamespace OpenGA\n\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\n\n/-- **Math.** The two-dimensional Jacobian density of a pair of derivative vectors. -/\nnoncomputable def areaDensity (v w : F) : ℝ :=\n  Real.sqrt (‖v‖ ^ 2 * ‖w‖ ^ 2 - ⟪v, w⟫_ℝ ^ 2)\n\n/-- **Math.** The Dirichlet energy density of a pair of derivative vectors. -/\nnoncomputable def energyDensity (v w : F) : ℝ :=\n  (‖v‖ ^ 2 + ‖w‖ ^ 2) / 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsection Integral\n\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\n\n\n\n\n\n\n\nend Integral\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "node_type": "theorem",
+        "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+        "status": "Definition",
+        "tags": [
+          "geometric-analysis",
+          "openga-area-energy"
+        ],
+        "theorem_id": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "theorem_name": "OpenGA_AreaEnergyDensities",
+        "theorem_title": "Area and energy densities of a vector pair",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T15:44:22.899431+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.areaDensity_eq_normDet (L : E →ₗ[ℝ] F) (b : OrthonormalBasis (Fin 2) ℝ E) :\n    areaDensity (L (b 0)) (L (b 1)) = L.normDet := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $E$ be a two-dimensional real inner product space, let $F$ be any real inner product space, and let $L:E\\to F$ be linear. For every orthonormal basis $(e_1,e_2)$ of $E$,\n\n$$\\sqrt{\\|Le_1\\|^2\\|Le_2\\|^2-\\langle Le_1,Le_2\\rangle^2}=\\operatorname{normDet}(L).$$\n\nThe right side is Mathlib's nonnegative volume factor of a linear map. No injectivity assumption is made; rank-deficient maps are included. This is a pointwise linear-algebra interface for the surface Jacobian formula, not a construction of a manifold differential or a Sobolev surface integral.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Algebra.BigOperators.Pi\nimport Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.Analysis.InnerProductSpace.NormDet\nimport Mathlib.Analysis.InnerProductSpace.Orthonormal\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.LinearAlgebra.BilinearMap\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen scoped InnerProductSpace\nopen OpenGA\nvariable {E F : Type*}\n  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n  [NormedAddCommGroup F] [InnerProductSpace ℝ F]",
+        "source": "OpenGA source: OpenGALib/Analysis/AreaEnergy/LinearMap.lean, SHA-256 b316e1614ddc42bfa4b1bdce446cbc2503f9e5ee8008d8a591c2ca9d80532d35. Derived pointwise linear-algebra interface for Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, equation (1.4) and the Jacobian formula immediately before it, p. 3. https://arxiv.org/pdf/0707.0108v1#page=3 . The intrinsic volume-factor identity uses Mathlib LinearMap.normDet_sq_eq_det_gram, https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/Analysis/InnerProductSpace/NormDet.lean . This does not formalize Sobolev sweepouts or the equality of area and energy widths.",
+        "status": "Proved",
+        "tags": [
+          "geometric-analysis",
+          "linear-algebra",
+          "openga-area-energy"
+        ],
+        "theorem_id": "eddc764e-527d-4d07-a812-94f60b637407",
+        "theorem_name": "OpenGA.areaDensity_eq_normDet",
+        "theorem_title": "Area density as the intrinsic volume factor",
+        "vote_count": 0
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-09T15:46:30.595401+00:00",
+        "deprecated_at": null,
+        "explanation": "Evaluate the proved intrinsic-volume-factor identity in each orthonormal basis. Both area densities equal normDet of the same linear map.",
+        "node_id": "sketch-59b54355-c04b-4077-925b-c7d3785054ad",
+        "node_type": "sketch",
+        "parent_theorem_id": "85285131-e406-453d-81b2-2e602a3e878d",
+        "status": "ACCEPTED",
+        "submission_id": "59b54355-c04b-4077-925b-c7d3785054ad",
+        "username": "Moqian"
+      }
+    ],
+    "root_id": "eddc764e-527d-4d07-a812-94f60b637407"
+  },
+  "OpenGA.energyDensity_basis_independent": {
+    "edges": [
+      {
+        "kind": "sketch",
+        "source": "a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784",
+        "target": "sketch-973f67d3-d234-4233-800f-35c83decf01c"
+      },
+      {
+        "kind": "sketch",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "sketch-973f67d3-d234-4233-800f-35c83decf01c"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-973f67d3-d234-4233-800f-35c83decf01c",
+        "target": "1e7c607c-776e-41d3-8819-54cfe0543e69"
+      },
+      {
+        "kind": "structural",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "1e7c607c-776e-41d3-8819-54cfe0543e69"
+      }
+    ],
+    "has_hidden_deprecated_sketches": false,
+    "nodes": [
+      {
+        "audits": [],
+        "created_at": "2026-09-09T15:44:32.934565+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.energyDensity_basis_independent (L : E →ₗ[ℝ] F)\n    (b c : OrthonormalBasis (Fin 2) ℝ E) :\n    energyDensity (L (b 0)) (L (b 1)) = energyDensity (L (c 0)) (L (c 1)) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $L:E\\to F$ be a linear map between real inner product spaces, and let $(e_1,e_2)$ and $(f_1,f_2)$ be orthonormal bases of $E$. Then the Dirichlet energy densities satisfy\n\n$$\\frac{\\|Le_1\\|^2+\\|Le_2\\|^2}{2}=\\frac{\\|Lf_1\\|^2+\\|Lf_2\\|^2}{2}.$$\n\nThe two-element bases already express that the domain is two-dimensional; the Lean statement has no additional finite-dimensionality instance parameter. The codomain may have arbitrary dimension. No injectivity or orientation assumption is required.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Algebra.BigOperators.Pi\nimport Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.Analysis.InnerProductSpace.NormDet\nimport Mathlib.Analysis.InnerProductSpace.Orthonormal\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.LinearAlgebra.BilinearMap\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen scoped InnerProductSpace\nopen OpenGA\nvariable {E F : Type*}\n  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n  [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nomit [FiniteDimensional ℝ E]",
+        "source": "OpenGA source: OpenGALib/Analysis/AreaEnergy/LinearMap.lean, SHA-256 b316e1614ddc42bfa4b1bdce446cbc2503f9e5ee8008d8a591c2ca9d80532d35. Derived pointwise linear-algebra interface for Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, equation (1.4) and the Jacobian formula immediately before it, p. 3. https://arxiv.org/pdf/0707.0108v1#page=3 . The intrinsic volume-factor identity uses Mathlib LinearMap.normDet_sq_eq_det_gram, https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/Analysis/InnerProductSpace/NormDet.lean . This does not formalize Sobolev sweepouts or the equality of area and energy widths.",
+        "status": "Proved",
+        "tags": [
+          "geometric-analysis",
+          "linear-algebra",
+          "openga-area-energy"
+        ],
+        "theorem_id": "1e7c607c-776e-41d3-8819-54cfe0543e69",
+        "theorem_name": "OpenGA.energyDensity_basis_independent",
+        "theorem_title": "Frame independence of energy density",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T15:44:24.688297+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OrthonormalBasis.sum_apply_diagonal_invariant\n    (b : OrthonormalBasis ι ℝ V) (b' : OrthonormalBasis ι' ℝ V)\n    (B : V →ₗ[ℝ] V →ₗ[ℝ] W) :\n    ∑ i, B (b i) (b i) = ∑ i, B (b' i) (b' i) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $V$ be a real inner product space with two orthonormal bases $(b_i)_{i\\in I}$ and $(c_j)_{j\\in J}$, indexed by arbitrary finite types $I,J$. Let $W$ be any real module and $B:V\\times V\\to W$ a bilinear map. Then\n\n$$\\sum_{i\\in I}B(b_i,b_i)=\\sum_{j\\in J}B(c_j,c_j).$$\n\nThe bilinear map need not be symmetric, and the target module need not carry an inner product. This is the basis-independence of the diagonal contraction.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Algebra.BigOperators.Pi\nimport Mathlib.Analysis.InnerProductSpace.Orthonormal\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.LinearAlgebra.BilinearMap\n\nopen OrthonormalBasis\nvariable {ι ι' : Type*} [Fintype ι] [Fintype ι']\nvariable {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]\nvariable {W : Type*} [AddCommGroup W] [Module ℝ W]\nopen scoped InnerProductSpace",
+        "source": "OpenGA source: OpenGALib/Algebraic/Auxiliary/OrthonormalBasisDiagonal.lean, SHA-256 2bb74c08dfe7d43cb07d0da6d9b5134272b9a32fc9cf0b3d457986466a60a4f6. Basis-invariance of bilinear diagonal contraction; the proof uses orthonormal-basis expansions and Parseval. This is the general algebraic ingredient reused in the energy-density frame-independence argument, not a numbered geometric theorem.",
+        "status": "Proved",
+        "tags": [
+          "geometric-analysis",
+          "linear-algebra",
+          "openga-area-energy"
+        ],
+        "theorem_id": "a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784",
+        "theorem_name": "OrthonormalBasis.sum_apply_diagonal_invariant",
+        "theorem_title": "Orthonormal-basis invariance of a bilinear diagonal sum",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T03:17:38.845171+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Moqian",
+        "definition": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\n/-!\n# Area and energy densities\n\nFor the images `v`, `w` of an orthonormal tangent frame under a differential,\nthe area density is the square root of the Gram determinant and the energy\ndensity is half the sum of the squared norms. The area is bounded by the\nenergy, with equality precisely for orthogonal vectors of equal norm.\n\nThe integral results assume measurable vector fields and integrable energy;\nintegrability of the area is a conclusion, not an additional assumption.\nThey apply on any measure space, including a restricted domain measure.\nIdentifying these fields with a Sobolev differential on a surface remains a\nseparate geometric interface. No global frame on the sphere is asserted.\n\nReference: Colding-Minicozzi, *Width and Finite Extinction Time of Ricci Flow*,\narXiv:0707.0108v1, equation (1.4) and the following equality discussion, p. 3.\nhttps://arxiv.org/pdf/0707.0108v1#page=3\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory\nopen scoped InnerProductSpace\n\nnamespace OpenGA\n\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\n\n/-- **Math.** The two-dimensional Jacobian density of a pair of derivative vectors. -/\nnoncomputable def areaDensity (v w : F) : ℝ :=\n  Real.sqrt (‖v‖ ^ 2 * ‖w‖ ^ 2 - ⟪v, w⟫_ℝ ^ 2)\n\n/-- **Math.** The Dirichlet energy density of a pair of derivative vectors. -/\nnoncomputable def energyDensity (v w : F) : ℝ :=\n  (‖v‖ ^ 2 + ‖w‖ ^ 2) / 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsection Integral\n\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\n\n\n\n\n\n\n\nend Integral\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "node_type": "theorem",
+        "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+        "status": "Definition",
+        "tags": [
+          "geometric-analysis",
+          "openga-area-energy"
+        ],
+        "theorem_id": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "theorem_name": "OpenGA_AreaEnergyDensities",
+        "theorem_title": "Area and energy densities of a vector pair",
+        "vote_count": 0
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-09T15:46:32.279039+00:00",
+        "deprecated_at": null,
+        "explanation": "Apply the proved bilinear diagonal-sum invariance to the pulled-back target inner product B(v,w)=inner(L(v),L(w)). Each diagonal entry is the squared norm of L on a basis vector. Expand each sum over Fin 2 and divide the equality by two.",
+        "node_id": "sketch-973f67d3-d234-4233-800f-35c83decf01c",
+        "node_type": "sketch",
+        "parent_theorem_id": "1e7c607c-776e-41d3-8819-54cfe0543e69",
+        "status": "ACCEPTED",
+        "submission_id": "973f67d3-d234-4233-800f-35c83decf01c",
+        "username": "Moqian"
+      }
+    ],
+    "root_id": "1e7c607c-776e-41d3-8819-54cfe0543e69"
+  },
+  "OrthonormalBasis.sum_apply_diagonal_invariant": {
+    "edges": [
+      {
+        "kind": "sketch",
+        "source": "a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784",
+        "target": "sketch-973f67d3-d234-4233-800f-35c83decf01c"
+      },
+      {
+        "kind": "sketch",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "sketch-973f67d3-d234-4233-800f-35c83decf01c"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-973f67d3-d234-4233-800f-35c83decf01c",
+        "target": "1e7c607c-776e-41d3-8819-54cfe0543e69"
+      },
+      {
+        "kind": "structural",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "1e7c607c-776e-41d3-8819-54cfe0543e69"
+      }
+    ],
+    "has_hidden_deprecated_sketches": false,
+    "nodes": [
+      {
+        "audits": [],
+        "created_at": "2026-09-09T15:44:32.934565+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.energyDensity_basis_independent (L : E →ₗ[ℝ] F)\n    (b c : OrthonormalBasis (Fin 2) ℝ E) :\n    energyDensity (L (b 0)) (L (b 1)) = energyDensity (L (c 0)) (L (c 1)) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $L:E\\to F$ be a linear map between real inner product spaces, and let $(e_1,e_2)$ and $(f_1,f_2)$ be orthonormal bases of $E$. Then the Dirichlet energy densities satisfy\n\n$$\\frac{\\|Le_1\\|^2+\\|Le_2\\|^2}{2}=\\frac{\\|Lf_1\\|^2+\\|Lf_2\\|^2}{2}.$$\n\nThe two-element bases already express that the domain is two-dimensional; the Lean statement has no additional finite-dimensionality instance parameter. The codomain may have arbitrary dimension. No injectivity or orientation assumption is required.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Algebra.BigOperators.Pi\nimport Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.Analysis.InnerProductSpace.NormDet\nimport Mathlib.Analysis.InnerProductSpace.Orthonormal\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.LinearAlgebra.BilinearMap\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen scoped InnerProductSpace\nopen OpenGA\nvariable {E F : Type*}\n  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n  [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nomit [FiniteDimensional ℝ E]",
+        "source": "OpenGA source: OpenGALib/Analysis/AreaEnergy/LinearMap.lean, SHA-256 b316e1614ddc42bfa4b1bdce446cbc2503f9e5ee8008d8a591c2ca9d80532d35. Derived pointwise linear-algebra interface for Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, equation (1.4) and the Jacobian formula immediately before it, p. 3. https://arxiv.org/pdf/0707.0108v1#page=3 . The intrinsic volume-factor identity uses Mathlib LinearMap.normDet_sq_eq_det_gram, https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/Analysis/InnerProductSpace/NormDet.lean . This does not formalize Sobolev sweepouts or the equality of area and energy widths.",
+        "status": "Proved",
+        "tags": [
+          "geometric-analysis",
+          "linear-algebra",
+          "openga-area-energy"
+        ],
+        "theorem_id": "1e7c607c-776e-41d3-8819-54cfe0543e69",
+        "theorem_name": "OpenGA.energyDensity_basis_independent",
+        "theorem_title": "Frame independence of energy density",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T15:44:24.688297+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OrthonormalBasis.sum_apply_diagonal_invariant\n    (b : OrthonormalBasis ι ℝ V) (b' : OrthonormalBasis ι' ℝ V)\n    (B : V →ₗ[ℝ] V →ₗ[ℝ] W) :\n    ∑ i, B (b i) (b i) = ∑ i, B (b' i) (b' i) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $V$ be a real inner product space with two orthonormal bases $(b_i)_{i\\in I}$ and $(c_j)_{j\\in J}$, indexed by arbitrary finite types $I,J$. Let $W$ be any real module and $B:V\\times V\\to W$ a bilinear map. Then\n\n$$\\sum_{i\\in I}B(b_i,b_i)=\\sum_{j\\in J}B(c_j,c_j).$$\n\nThe bilinear map need not be symmetric, and the target module need not carry an inner product. This is the basis-independence of the diagonal contraction.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Algebra.BigOperators.Pi\nimport Mathlib.Analysis.InnerProductSpace.Orthonormal\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.LinearAlgebra.BilinearMap\n\nopen OrthonormalBasis\nvariable {ι ι' : Type*} [Fintype ι] [Fintype ι']\nvariable {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]\nvariable {W : Type*} [AddCommGroup W] [Module ℝ W]\nopen scoped InnerProductSpace",
+        "source": "OpenGA source: OpenGALib/Algebraic/Auxiliary/OrthonormalBasisDiagonal.lean, SHA-256 2bb74c08dfe7d43cb07d0da6d9b5134272b9a32fc9cf0b3d457986466a60a4f6. Basis-invariance of bilinear diagonal contraction; the proof uses orthonormal-basis expansions and Parseval. This is the general algebraic ingredient reused in the energy-density frame-independence argument, not a numbered geometric theorem.",
+        "status": "Proved",
+        "tags": [
+          "geometric-analysis",
+          "linear-algebra",
+          "openga-area-energy"
+        ],
+        "theorem_id": "a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784",
+        "theorem_name": "OrthonormalBasis.sum_apply_diagonal_invariant",
+        "theorem_title": "Orthonormal-basis invariance of a bilinear diagonal sum",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T03:17:38.845171+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Moqian",
+        "definition": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\n/-!\n# Area and energy densities\n\nFor the images `v`, `w` of an orthonormal tangent frame under a differential,\nthe area density is the square root of the Gram determinant and the energy\ndensity is half the sum of the squared norms. The area is bounded by the\nenergy, with equality precisely for orthogonal vectors of equal norm.\n\nThe integral results assume measurable vector fields and integrable energy;\nintegrability of the area is a conclusion, not an additional assumption.\nThey apply on any measure space, including a restricted domain measure.\nIdentifying these fields with a Sobolev differential on a surface remains a\nseparate geometric interface. No global frame on the sphere is asserted.\n\nReference: Colding-Minicozzi, *Width and Finite Extinction Time of Ricci Flow*,\narXiv:0707.0108v1, equation (1.4) and the following equality discussion, p. 3.\nhttps://arxiv.org/pdf/0707.0108v1#page=3\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory\nopen scoped InnerProductSpace\n\nnamespace OpenGA\n\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\n\n/-- **Math.** The two-dimensional Jacobian density of a pair of derivative vectors. -/\nnoncomputable def areaDensity (v w : F) : ℝ :=\n  Real.sqrt (‖v‖ ^ 2 * ‖w‖ ^ 2 - ⟪v, w⟫_ℝ ^ 2)\n\n/-- **Math.** The Dirichlet energy density of a pair of derivative vectors. -/\nnoncomputable def energyDensity (v w : F) : ℝ :=\n  (‖v‖ ^ 2 + ‖w‖ ^ 2) / 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsection Integral\n\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\n\n\n\n\n\n\n\nend Integral\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "node_type": "theorem",
+        "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+        "status": "Definition",
+        "tags": [
+          "geometric-analysis",
+          "openga-area-energy"
+        ],
+        "theorem_id": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "theorem_name": "OpenGA_AreaEnergyDensities",
+        "theorem_title": "Area and energy densities of a vector pair",
+        "vote_count": 0
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-09T15:46:32.279039+00:00",
+        "deprecated_at": null,
+        "explanation": "Apply the proved bilinear diagonal-sum invariance to the pulled-back target inner product B(v,w)=inner(L(v),L(w)). Each diagonal entry is the squared norm of L on a basis vector. Expand each sum over Fin 2 and divide the equality by two.",
+        "node_id": "sketch-973f67d3-d234-4233-800f-35c83decf01c",
+        "node_type": "sketch",
+        "parent_theorem_id": "1e7c607c-776e-41d3-8819-54cfe0543e69",
+        "status": "ACCEPTED",
+        "submission_id": "973f67d3-d234-4233-800f-35c83decf01c",
+        "username": "Moqian"
+      }
+    ],
+    "root_id": "a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784"
+  }
+}

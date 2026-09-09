@@ -8,3 +8,7 @@
 # Lean build artifacts (Mathlib oleans, ~7G)
 .lake/
 lake-packages/
+
+# Local Prove2Me credentials
+/PoincareConjecture/.credentials.json
+__pycache__/

@@ -1,0 +1,192 @@
+{
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "milestones": {
+    "all_time_surgery_flow": {
+      "id": "01af4eaa-14be-4540-8708-3da1ea55850b",
+      "title": "All-time Ricci flow with surgery",
+      "milestone_description": "Every closed oriented Riemannian three-manifold with normalized metric admits a Ricci flow with $(r,\\delta)$-cutoff for all $t\\ge0$, for suitable positive nonincreasing parameters $r,\\delta$, allowing empty slices.\n\n[Source: Kleiner-Lott, Proposition 77.2, p. 146 (existence consequence)](https://arxiv.org/pdf/math/0605667v5#page=146).",
+      "sort_order": 0,
+      "completed": false,
+      "theorem": null,
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T01:41:08.099214+00:00"
+    },
+    "finite_time_extinction": {
+      "id": "33045187-e820-4325-a253-c8ba2c778897",
+      "title": "Finite-time extinction",
+      "milestone_description": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.",
+      "sort_order": 2,
+      "completed": false,
+      "theorem": null,
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T01:41:09.964537+00:00"
+    },
+    "integral_areaDensity_eq_energyDensity_iff": {
+      "id": "dd7060c8-1d02-4851-bad3-66eeef3a13b9",
+      "title": "Equality in the integrated area-energy comparison",
+      "milestone_description": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu=\\int_X E(v(x),w(x))\\,d\\mu$$\n\nholds exactly when\n\n$$\\langle v(x),w(x)\\rangle=0\\quad\\text{and}\\quad\\|v(x)\\|=\\|w(x)\\|\\quad\\text{for }\\mu\\text{-almost every }x.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+      "sort_order": 6,
+      "completed": true,
+      "theorem": {
+        "id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+        "theorem_name": "OpenGA.integral_areaDensity_eq_energyDensity_iff",
+        "status": "Proved"
+      },
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T03:20:47.418386+00:00"
+    },
+    "integral_areaDensity_le_energyDensity": {
+      "id": "59cdc370-8720-41f9-8b38-a4a11e9a9718",
+      "title": "Area-energy comparison for finite-energy vector fields",
+      "milestone_description": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density $x\\mapsto E(v(x),w(x))$. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu\\leq\\int_X E(v(x),w(x))\\,d\\mu.$$\n\nNo finiteness assumption on the measure is needed; finite energy is explicit. This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+      "sort_order": 5,
+      "completed": true,
+      "theorem": {
+        "id": "d81e3640-8579-4396-babb-69edac82be33",
+        "theorem_name": "OpenGA.integral_areaDensity_le_energyDensity",
+        "status": "Proved"
+      },
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T03:20:46.689646+00:00"
+    },
+    "scalar_lower_bound_across_upward_jumps": {
+      "id": "2d6c9060-c962-45a7-81c9-ba7f22f44012",
+      "title": "Scalar lower bound across upward jumps",
+      "milestone_description": "Let $n\\ge1$ and $0=t_0<t_1<\\cdots<t_n$. For $0\\le i<n$, let $r_i:[t_i,t_{i+1}]\\to\\mathbb R$ be continuous. Write\n$$D_+r_i(t)=\\liminf_{s\\to t^+}\\frac{r_i(s)-r_i(t)}{s-t}.$$\nAssume $r_0(0)\\ge-6$, and, for each $i<n$ and $t_i\\le t<t_{i+1}$,\n$$D_+r_i(t)\\ge\\frac23r_i(t)^2.$$\nAt every internal joining time, assume $r_i(t_{i+1})\\le r_{i+1}(t_{i+1})$ for $i+1<n$. Then\n$$r_i(t)\\ge-\\frac6{1+4t}\\qquad(0\\le i<n,\\ t_i\\le t\\le t_{i+1}).$$\nThis isolates the scalar comparison step used in Kleiner-Lott's surgery estimates, with upward jumps allowed. Applying it to scalar-curvature minima requires establishing these analytic hypotheses from the geometry; this statement does not itself formalize a Ricci flow.\n\n[Source: Kleiner-Lott, proof of Lemma 79.11, p. 154](https://arxiv.org/pdf/math/0605667v5#page=154), using [Appendix B, equations (B.1)-(B.2), p. 202](https://arxiv.org/pdf/math/0605667v5#page=202).",
+      "sort_order": 4,
+      "completed": true,
+      "theorem": {
+        "id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+        "theorem_name": "OpenGA.scalar_lower_bound_across_upward_jumps",
+        "status": "Proved"
+      },
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T02:04:41.741988+00:00"
+    },
+    "surgery_topology": {
+      "id": "245ff479-b4c3-46c9-aee5-43f931990aa1",
+      "title": "Topological effect of surgery",
+      "milestone_description": "At a Kleiner-Lott cutoff surgery, recover the presurgery manifold up to diffeomorphism by finitely many operations: join two components by connected sum; sum a component with $S^1\\times S^2$ or $\\mathbb{RP}^3$; adjoin a component $S^1\\times S^2$ or a spherical space form.\n\n[Source: Kleiner-Lott, Lemma 73.4, p. 140](https://arxiv.org/pdf/math/0605667v5#page=140).",
+      "sort_order": 1,
+      "completed": false,
+      "theorem": null,
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T01:41:09.044793+00:00"
+    },
+    "topology_from_extinction": {
+      "id": "29f0d323-76f4-4288-b819-626a482e9d5f",
+      "title": "Topology from extinction",
+      "milestone_description": "If a Kleiner-Lott Ricci flow with surgery on a closed connected orientable three-manifold $M$ becomes extinct, then $M$ is diffeomorphic to a connected sum of $S^1\\times S^2$ factors and spherical space forms.\n\n[Source: Kleiner-Lott, Lemma 81.2, p. 160](https://arxiv.org/pdf/math/0605667v5#page=160).",
+      "sort_order": 3,
+      "completed": false,
+      "theorem": null,
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T01:41:10.721747+00:00"
+    },
+    "bishop_gromov_volume_comparison": {
+      "id": "cb96ab98-d517-4ecc-964b-b4b39a2d07a3",
+      "title": "Bishop-Gromov volume comparison",
+      "milestone_description": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).",
+      "sort_order": 7,
+      "completed": false,
+      "theorem": null,
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T16:03:11.319685+00:00"
+    },
+    "local_curvature_derivative_estimates": {
+      "id": "149701dc-6dbc-4301-8b60-688c2fccc086",
+      "title": "Local curvature derivative estimates",
+      "milestone_description": "Fix $\\alpha,K>0$, $K'\\ge0$, $l\\ge0$ and positive integers $m,n$. There is a constant $C=C(\\alpha,K,K',l,m,n)$ with the following property. Let $r>0$ and let $g(t)$ solve Ricci flow on an open neighborhood $U$ of $p\\in M^n$ for $0\\le t\\le\\bar t$, where $0<\\bar t\\le\\alpha r^2/K$. Assume that the closure of the time-zero ball $B_{g(0)}(p,r)$ is a compact subset of $U$, and that\n\n$$|\\operatorname{Rm}(x,t)|\\le K/r^2\\quad\\text{on }U\\times[0,\\bar t],\\qquad |\\nabla^\\beta\\operatorname{Rm}(x,0)|\\le K'/r^{|\\beta|+2}\\quad(x\\in U,\\ |\\beta|\\le l).$$\n\nThen, for $x\\in B_{g(0)}(p,r/2)$, $0<t\\le\\bar t$ and $|\\beta|\\le m$,\n\n$$|\\nabla^\\beta\\operatorname{Rm}(x,t)|\\le\\frac{C}{r^{|\\beta|+2}(t/r^2)^{\\max(m-l,0)/2}}.$$\n\nThe source's $K=0$ case has identically zero curvature, so all the indicated derivatives vanish. The displayed positive-$K$ formulation makes the time bound unambiguous. The case $l=0$ is Shi's estimate; the source also includes initial derivative control for $l\\ge0$.\n\nSource: [Kleiner-Lott, Appendix D, Theorem D.1 and equations (D.2)-(D.4), p. 207](https://arxiv.org/pdf/math/0605667v5#page=207).",
+      "sort_order": 8,
+      "completed": false,
+      "theorem": null,
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T16:13:29.515808+00:00"
+    },
+    "hamilton_ivey_pinching": {
+      "id": "c18c8e39-32d3-41f4-917e-449be9fefce3",
+      "title": "Hamilton-Ivey pinching",
+      "milestone_description": "Let $g(t)$, $0\\le t<T$, be a smooth Ricci flow on a three-manifold, with complete time slices and curvature bounded on every compact time interval. Use the curvature-operator convention in which constant sectional curvature $k$ gives the operator $2k\\,\\mathrm{Id}$ on two-forms; its trace is the scalar curvature $R$.\n\nWrite its eigenvalues as $\\lambda_1\\le\\lambda_2\\le\\lambda_3$ and assume $\\lambda_1(x,0)\\ge-1$ for every $x$. At any spacetime point with $X=-\\lambda_1(x,t)>0$,\n\n$$R(x,t)\\ge X\\bigl(\\log X+\\log(1+t)-3\\bigr).$$\n\nSource: [Kleiner-Lott, Appendix B, equation (B.3) and its hypotheses, pp. 202-203](https://arxiv.org/pdf/math/0605667v5#page=203). This curvature-operator estimate supplies the pinching input used to obtain almost nonnegative curvature in blowup limits.",
+      "sort_order": 9,
+      "completed": false,
+      "theorem": null,
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T16:13:30.712627+00:00"
+    },
+    "compactness_of_ricci_flows": {
+      "id": "92e1c50a-cec4-485b-8f38-28a2d24f11ea",
+      "title": "Compactness of Ricci flows",
+      "milestone_description": "Consider smooth Ricci flows $g_i(t)$ on connected pointed $n$-manifolds $(M_i,p_i)$, defined for $t\\in(A,B)$, where $-\\infty\\le A<0<B\\le\\infty$. Assume that every $(M_i,g_i(0))$ is complete and that the injectivity radii at $(p_i,0)$ have a common positive lower bound.\n\nFor each compact interval $I\\subset(A,B)$, require a finite constant $N_I$ such that, for every $r>0$, there is an index $J_{r,I}$ for which\n\n$$i\\ge J_{r,I}\\ \\Longrightarrow\\ \\sup_{B_{g_i(0)}(p_i,r)\\times I}|\\operatorname{Rm}(g_i)|\\le N_I.$$\n\nThe curvature bound $N_I$ is independent of $r$; the starting index may depend on $r$.\n\nThen a subsequence converges smoothly in the pointed sense to a Ricci flow on a connected pointed manifold $(M_\\infty,p_\\infty)$, defined on the same interval $(A,B)$, with complete time slices. Convergence is through time-independent pointed identifications on compact spatial and time subsets.\n\nSource: [Kleiner-Lott, Appendix E, Corollary E.4, pp. 208-209](https://arxiv.org/pdf/math/0605667v5#page=208).",
+      "sort_order": 10,
+      "completed": false,
+      "theorem": null,
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T16:13:31.449305+00:00"
+    },
+    "reduced_volume_monotonicity": {
+      "id": "944c0806-badc-43ae-bc07-982d49c86619",
+      "title": "Reduced volume monotonicity",
+      "milestone_description": "Let $(M^n,g(\\tau))$, $0\\le\\tau<T$, be a connected complete backward Ricci flow, $\\partial_\\tau g=2\\operatorname{Ric}$, with curvature bounded on compact time intervals. Fix a basepoint $p$ at $\\tau=0$. For $\\tau>0$, define the reduced length by\n\n$$l_p(q,\\tau)=\\frac{1}{2\\sqrt\\tau}\\inf_{\\gamma(0)=p,\\,\\gamma(\\tau)=q}\\int_0^\\tau\\sqrt{s}\\left(R(\\gamma(s),s)+|\\dot\\gamma(s)|_{g(s)}^2\\right)\\,ds,$$\n\nusing the admissible curves of the source's $\\mathcal L$-length construction. Define the reduced volume with Kleiner-Lott's normalization by\n\n$$\\widetilde V_p(\\tau)=\\int_M\\tau^{-n/2}e^{-l_p(q,\\tau)}\\,d\\operatorname{vol}_{g(\\tau)}(q).$$\n\nThis integral is finite, and for $0<\\tau_1\\le\\tau_2<T$,\n\n$$\\widetilde V_p(\\tau_2)\\le\\widetilde V_p(\\tau_1).$$\n\nSource: [Kleiner-Lott, Section 23, pp. 43-44](https://arxiv.org/pdf/math/0605667v5#page=43), using [equations (15.1), (15.3)-(15.4) and the construction in Section 17](https://arxiv.org/pdf/math/0605667v5#page=33). The time variable is backward time; this source does not include a $(4\\pi)^{-n/2}$ prefactor in $\\widetilde V$.",
+      "sort_order": 11,
+      "completed": false,
+      "theorem": null,
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T16:13:32.511276+00:00"
+    },
+    "no_local_collapsing": {
+      "id": "ed9cc5e0-19e6-4d15-bc2a-ff6701974891",
+      "title": "No local collapsing",
+      "milestone_description": "For every positive integer $n$, $0<T<\\infty$ and $\\rho,K,c>0$, there is $\\kappa=\\kappa(n,K,c,\\rho,T)>0$ with the following property. Let $g(t)$ solve Ricci flow on $M^n$ for $0\\le t<T$, with curvature bounded on $M\\times[0,T']$ for every $T'<T$. Assume that $g(0)$ is complete, $|\\operatorname{Rm}(g(0))|\\le K$ everywhere, and $\\operatorname{inj}(M,g(0))\\ge c$.\n\nWhenever $0<r<\\rho$, $r^2\\le t_0<T$, and\n\n$$|\\operatorname{Rm}(x,t)|\\le r^{-2}\\quad\\text{for all }x\\in B_{g(t_0)}(x_0,r),\\ t\\in[t_0-r^2,t_0],$$\n\none has\n\n$$\\operatorname{vol}_{g(t_0)}B_{g(t_0)}(x_0,r)\\ge\\kappa r^n.$$\n\nWith $n,K,c,\\rho$ fixed, $\\kappa$ can be chosen nonincreasing in $T$. The curvature hypothesis uses the entire backward parabolic region over the fixed final-time ball.\n\nSource: [Kleiner-Lott, Definition 26.1 and Theorem 26.2, p. 47](https://arxiv.org/pdf/math/0605667v5#page=47).",
+      "sort_order": 12,
+      "completed": false,
+      "theorem": null,
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T16:13:33.241475+00:00"
+    },
+    "compactness_of_three_dimensional_kappa_solutions": {
+      "id": "e77732ea-15a0-4bcf-a341-ab5be97949b3",
+      "title": "Compactness of three-dimensional kappa-solutions",
+      "milestone_description": "Fix $\\kappa>0$. Given any sequence of oriented three-dimensional $\\kappa$-solutions and basepoints $(x_i,0)$, apply parabolic dilations so that $R(x_i,0)=1$. A subsequence then converges smoothly in the pointed sense to an oriented three-dimensional $\\kappa$-solution with scalar curvature one at its basepoint at time zero.\n\nHere a $\\kappa$-solution has the meaning of Definition 38.1: it is ancient; its time slices are complete; its curvature is bounded on each compact time interval; its curvature operator is nonnegative; its scalar curvature is everywhere positive; and it is $\\kappa$-noncollapsed at all scales. Solutions based at time zero are considered on their common ancient interval $(-\\infty,0]$. All these conditions, including bounded curvature on compact time intervals, hold for the limit with the same $\\kappa$.\n\nSource: [Kleiner-Lott, Theorem 46.1 and its normalization in the proof, p. 81](https://arxiv.org/pdf/math/0605667v5#page=81); [Definition 38.1, p. 67](https://arxiv.org/pdf/math/0605667v5#page=67).",
+      "sort_order": 13,
+      "completed": false,
+      "theorem": null,
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T16:13:34.032866+00:00"
+    },
+    "canonical_neighborhood_theorem": {
+      "id": "70d4aeb2-fb41-417e-918c-1d2649faafe7",
+      "title": "Canonical neighborhood theorem",
+      "milestone_description": "Let $\\Phi\\in C^\\infty(\\mathbb R)$ be positive and nondecreasing, with $\\Phi(s)/s$ decreasing to zero as $s\\to\\infty$ through positive values. For every $\\epsilon,\\kappa,\\sigma>0$, there exists $r_0>0$ with the following property.\n\nLet $g(t)$ be a Ricci flow on a three-manifold for $0\\le t\\le T$, $T\\ge1$, with complete time slices and sectional curvature bounded on compact time intervals. Suppose all sectional curvatures at $(x,t)$ are at least $-\\Phi(R(x,t))$, and the flow is $\\kappa$-noncollapsed at scales below $\\sigma$ in the parabolic sense of Definition 26.1.\n\nFor any $(x_0,t_0)$ with $1\\le t_0\\le T$ and $Q=R(x_0,t_0)\\ge r_0^{-2}$, the flow on\n\n$$\\{(x,t):d_{g(t_0)}(x,x_0)^2<(\\epsilon Q)^{-1},\\quad t_0-(\\epsilon Q)^{-1}\\le t\\le t_0\\}$$\n\nis, after parabolic rescaling by $Q$ and moving $t_0$ to zero, $\\epsilon$-close in the source's smooth spacetime sense to the corresponding region of a $\\kappa$-solution. The fixed noncollapsing scale $\\sigma$ is independent of the resulting threshold $r_0$.\n\nSource: [Kleiner-Lott, Definition 52.1, Theorem 52.7 and Remark 52.8, pp. 89-90](https://arxiv.org/pdf/math/0605667v5#page=89); smooth closeness is clarified in [Definition 58.1, p. 108](https://arxiv.org/pdf/math/0605667v5#page=108).",
+      "sort_order": 14,
+      "completed": false,
+      "theorem": null,
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T16:13:34.822844+00:00"
+    },
+    "noncollapsing_across_surgery": {
+      "id": "10e68fd6-579c-48dc-9506-3c0bb279f8f4",
+      "title": "Noncollapsing across surgery",
+      "milestone_description": "Fix the source's sufficiently small global parameter $\\epsilon$, including the pinching convention preceding Lemma 79.12. Given $\\epsilon\\ge r_-\\ge r_+>0$, $\\kappa_->0$, $E_->0$ and finite $E>0$, there are positive constants\n\n$$\\bar\\delta=\\bar\\delta(r_-,r_+,\\kappa_-,E_-,E),\\qquad\\kappa_+=\\kappa_+(r_-,\\kappa_-,E_-,E)$$\n\nwith the following property. Let $0\\le a<b<c$, $b-a\\ge E_-$ and $c-a\\le E$. Consider a Ricci flow with $(r,\\delta)$-cutoff, as in Definition 73.1, with normalized initial data and a domain containing $[a,c)$. Assume\n\n- $r(t)\\ge r_-$ on $[a,b)$ and $r(t)\\ge r_+$ on $[b,c)$, with $r(t)\\le\\epsilon$;\n- the flow is $\\kappa_-$-noncollapsed below scale $\\epsilon$ on $[a,b)$;\n- $\\delta(t)\\le\\bar\\delta$ on $[a,c)$.\n\nThen it is $\\kappa_+$-noncollapsed below scale $\\epsilon$ on $[b,c)$. Crucially, $\\kappa_+$ can be chosen independently of $r_+$, although $\\bar\\delta$ may depend on it.\n\nHere normalized initial data means a compact initial three-manifold with $|\\operatorname{Rm}|\\le1$ and each unit ball having at least half the volume of the Euclidean unit ball. Noncollapsing is the surgery convention of Section 77: for $0<\\rho<\\epsilon$ and $t\\ge\\rho^2$, an unscathed backward parabolic neighborhood $P(x,t,\\rho,-\\rho^2)$ with $|\\operatorname{Rm}|\\le\\rho^{-2}$ has $\\operatorname{vol}B(x,t,\\rho)\\ge\\kappa\\rho^3$. The cutoff-flow hypothesis includes the source's pinching and canonical-neighborhood assumptions and prescribed surgery procedure.\n\nSource: [Kleiner-Lott, Lemma 79.12 and Remark 79.13, p. 154](https://arxiv.org/pdf/math/0605667v5#page=154); [Definition 73.1, p. 139](https://arxiv.org/pdf/math/0605667v5#page=139); [normalization and noncollapsing conventions in Section 77, p. 146](https://arxiv.org/pdf/math/0605667v5#page=146).",
+      "sort_order": 15,
+      "completed": false,
+      "theorem": null,
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_at": "2026-09-09T16:13:35.651145+00:00"
+    }
+  },
+  "source": {
+    "arxiv_version": "math/0605667v5",
+    "authors": [
+      "Bruce Kleiner",
+      "John Lott"
+    ],
+    "key": "kleiner-lott",
+    "pdf_sha256": "4ccd1a86defe89561ecc2067654bc3b5375e4973c8a06c521376cbd13a9121b5",
+    "reference_commit": "bb91a091f0b968f8bbe8d861e025a88d82b161be",
+    "reference_repository": "https://github.com/frenzymath/Poincare-Conjecture",
+    "review_method": "Original PDF pages visually checked. Exact locators and scope reviews are recorded per milestone and contribution.",
+    "title": "Notes on Perelman's Papers",
+    "url": "https://arxiv.org/pdf/math/0605667v5"
+  },
+  "verified_at": "2026-09-09T16:13:35.957779+00:00"
+}

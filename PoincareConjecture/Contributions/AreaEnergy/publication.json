@@ -1,0 +1,457 @@
+{
+  "definition": {
+    "path": "Definitions/Def_OpenGA_AreaEnergyDensities.lean",
+    "payload": {
+      "definition": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\n/-!\n# Area and energy densities\n\nFor the images `v`, `w` of an orthonormal tangent frame under a differential,\nthe area density is the square root of the Gram determinant and the energy\ndensity is half the sum of the squared norms. The area is bounded by the\nenergy, with equality precisely for orthogonal vectors of equal norm.\n\nThe integral results assume measurable vector fields and integrable energy;\nintegrability of the area is a conclusion, not an additional assumption.\nThey apply on any measure space, including a restricted domain measure.\nIdentifying these fields with a Sobolev differential on a surface remains a\nseparate geometric interface. No global frame on the sphere is asserted.\n\nReference: Colding-Minicozzi, *Width and Finite Extinction Time of Ricci Flow*,\narXiv:0707.0108v1, equation (1.4) and the following equality discussion, p. 3.\nhttps://arxiv.org/pdf/0707.0108v1#page=3\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory\nopen scoped InnerProductSpace\n\nnamespace OpenGA\n\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\n\n/-- **Math.** The two-dimensional Jacobian density of a pair of derivative vectors. -/\nnoncomputable def areaDensity (v w : F) : ℝ :=\n  Real.sqrt (‖v‖ ^ 2 * ‖w‖ ^ 2 - ⟪v, w⟫_ℝ ^ 2)\n\n/-- **Math.** The Dirichlet energy density of a pair of derivative vectors. -/\nnoncomputable def energyDensity (v w : F) : ℝ :=\n  (‖v‖ ^ 2 + ‖w‖ ^ 2) / 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsection Integral\n\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\n\n\n\n\n\n\n\nend Integral\n\nend OpenGA\n",
+      "definition_name": "OpenGA_AreaEnergyDensities",
+      "definition_title": "Area and energy densities of a vector pair",
+      "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+      "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+      "tags": [
+        "geometric-analysis",
+        "openga-area-energy"
+      ]
+    },
+    "publication": {
+      "checked_at": "2026-09-09T03:18:08.063462+00:00",
+      "job": {
+        "created_at": "2026-09-09T03:17:32.185843+00:00",
+        "definitions": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\n/-!\n# Area and energy densities\n\nFor the images `v`, `w` of an orthonormal tangent frame under a differential,\nthe area density is the square root of the Gram determinant and the energy\ndensity is half the sum of the squared norms. The area is bounded by the\nenergy, with equality precisely for orthogonal vectors of equal norm.\n\nThe integral results assume measurable vector fields and integrable energy;\nintegrability of the area is a conclusion, not an additional assumption.\nThey apply on any measure space, including a restricted domain measure.\nIdentifying these fields with a Sobolev differential on a surface remains a\nseparate geometric interface. No global frame on the sphere is asserted.\n\nReference: Colding-Minicozzi, *Width and Finite Extinction Time of Ricci Flow*,\narXiv:0707.0108v1, equation (1.4) and the following equality discussion, p. 3.\nhttps://arxiv.org/pdf/0707.0108v1#page=3\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory\nopen scoped InnerProductSpace\n\nnamespace OpenGA\n\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\n\n/-- **Math.** The two-dimensional Jacobian density of a pair of derivative vectors. -/\nnoncomputable def areaDensity (v w : F) : ℝ :=\n  Real.sqrt (‖v‖ ^ 2 * ‖w‖ ^ 2 - ⟪v, w⟫_ℝ ^ 2)\n\n/-- **Math.** The Dirichlet energy density of a pair of derivative vectors. -/\nnoncomputable def energyDensity (v w : F) : ℝ :=\n  (‖v‖ ^ 2 + ‖w‖ ^ 2) / 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsection Integral\n\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\n\n\n\n\n\n\n\nend Integral\n\nend OpenGA\n",
+        "error_message": "",
+        "formal_statement": "",
+        "id": "66b9272c-31a6-406d-8e9c-81670b828f16",
+        "kind": "definition",
+        "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+        "status": "PUBLISHED",
+        "tags": [
+          "geometric-analysis",
+          "openga-area-energy"
+        ],
+        "theorem_id": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "theorem_name": "OpenGA_AreaEnergyDensities",
+        "theorem_title": "Area and energy densities of a vector pair",
+        "updated_at": "2026-09-09T03:17:39.311982+00:00",
+        "visibility": "public"
+      },
+      "job_id": "66b9272c-31a6-406d-8e9c-81670b828f16",
+      "response": {
+        "definition_name": "OpenGA_AreaEnergyDensities",
+        "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+        "job_id": "66b9272c-31a6-406d-8e9c-81670b828f16",
+        "message": "Definition queued. Poll GET /api/v1/publish-jobs/66b9272c-31a6-406d-8e9c-81670b828f16 until status is PUBLISHED, FAILED, or ERROR.",
+        "status": "PENDING"
+      },
+      "started_at": "2026-09-09T03:17:31.914321+00:00",
+      "status": "PUBLISHED",
+      "theorem_id": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+      "verified_at": "2026-09-09T03:20:42.023304+00:00"
+    },
+    "sha256": "2dab2dcf50f33f84e67badfd0cf7a68b71b8da53614a28c399ff529d40e0300e"
+  },
+  "extraction": {
+    "graph_sha256": "b819c4ac69ba4902bdf3c558a159fe7ef8f0703db2082d11ca45fd2085ba6b4d",
+    "method": "Lean declaration graph and source positions; skeleton subtraction",
+    "positions_sha256": "e0eb825e2ef0e9c32ae82b7d13d1bb580f946959ac33b986180e88315cd70e1a",
+    "workspace_commit": "6b46503"
+  },
+  "id": "area_energy_comparison",
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "schema_version": 1,
+  "scope": "This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+  "source_path": "OpenGALib/Analysis/AreaEnergy.lean",
+  "source_reviewed": true,
+  "source_sha256": "60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a",
+  "status": "COMPLETE",
+  "theorems": [
+    {
+      "explanation": "The area and energy densities agree precisely for orthogonal vectors of equal norm, including the zero pair.\n\nCauchy-Schwarz makes the Gram determinant nonnegative. Expanding gives\n\n$$E(v,w)^2-A(v,w)^2=\\frac{(\\|v\\|^2-\\|w\\|^2)^2}{4}+\\langle v,w\\rangle^2.$$\n\nThe two terms on the right are nonnegative. Equality of the densities forces both to vanish. Conversely, orthogonality and equal norms make the right-hand side zero; nonnegativity of both densities then gives equality.",
+      "id": "areaDensity_eq_energyDensity_iff",
+      "imports": [],
+      "inlined_helpers": [
+        "areaDensity_nonneg",
+        "areaDensity_sq",
+        "energyDensity_nonneg",
+        "energyDensity_sq_sub_areaDensity_sq"
+      ],
+      "milestone": null,
+      "path": "Theorems/Thm_OpenGA_areaDensity_eq_energyDensity_iff.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem OpenGA.areaDensity_eq_energyDensity_iff (v w : F) :\n    areaDensity v w = energyDensity v w ↔ ⟪v, w⟫_ℝ = 0 ∧ ‖v‖ = ‖w‖ := by sorry",
+        "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nFor every such pair,\n\n$$A(v,w)=E(v,w)\\quad\\Longleftrightarrow\\quad\\langle v,w\\rangle=0\\ \\text{and}\\ \\|v\\|=\\|w\\|.$$\n\nThe zero pair is included. This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "preamble": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen MeasureTheory\nopen scoped InnerProductSpace\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nopen OpenGA",
+        "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+        "tags": [
+          "geometric-analysis",
+          "openga-area-energy"
+        ],
+        "theorem_name": "OpenGA.areaDensity_eq_energyDensity_iff",
+        "theorem_title": "Equality of area and energy densities"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_areaDensity_eq_energyDensity_iff.lean",
+      "proof_sha256": "0d9283ab0f17c1d3c269ef359a5f94ed61a8f0d1040195dc53a7cd12fa7ffae8",
+      "publication": {
+        "checked_at": "2026-09-09T03:18:34.822129+00:00",
+        "job": {
+          "created_at": "2026-09-09T03:18:08.818199+00:00",
+          "definitions": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen MeasureTheory\nopen scoped InnerProductSpace\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nopen OpenGA",
+          "error_message": "",
+          "formal_statement": "theorem OpenGA.areaDensity_eq_energyDensity_iff (v w : F) :\n    areaDensity v w = energyDensity v w ↔ ⟪v, w⟫_ℝ = 0 ∧ ‖v‖ = ‖w‖ := by sorry",
+          "id": "5bea725d-5c38-4299-8069-c4beef309dbe",
+          "kind": "problem",
+          "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nFor every such pair,\n\n$$A(v,w)=E(v,w)\\quad\\Longleftrightarrow\\quad\\langle v,w\\rangle=0\\ \\text{and}\\ \\|v\\|=\\|w\\|.$$\n\nThe zero pair is included. This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+          "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-analysis",
+            "openga-area-energy"
+          ],
+          "theorem_id": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b",
+          "theorem_name": "OpenGA.areaDensity_eq_energyDensity_iff",
+          "theorem_title": "Equality of area and energy densities",
+          "updated_at": "2026-09-09T03:18:24.429258+00:00",
+          "visibility": "public"
+        },
+        "job_id": "5bea725d-5c38-4299-8069-c4beef309dbe",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "5bea725d-5c38-4299-8069-c4beef309dbe",
+              "name": "OpenGA.areaDensity_eq_energyDensity_iff"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-09T03:18:08.523443+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b",
+        "verified_at": "2026-09-09T03:20:42.256010+00:00"
+      },
+      "sha256": "92db58d1ad48b5e4aaaea322dff2ffabd0f16af640377286ae5cef947d795614",
+      "source_lines": [
+        71,
+        86
+      ],
+      "submission": {
+        "accepted_source_sha256": "0d9283ab0f17c1d3c269ef359a5f94ed61a8f0d1040195dc53a7cd12fa7ffae8",
+        "checked_at": "2026-09-09T03:19:39.622649+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "9d895407-3c0b-47ee-b857-e6ae4f60617f"
+        },
+        "started_at": "2026-09-09T03:18:36.197358+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "9d895407-3c0b-47ee-b857-e6ae4f60617f",
+        "verdict": {
+          "created_at": "2026-09-09T03:18:36.396021+00:00",
+          "error_message": "",
+          "file_path": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/9d895407-3c0b-47ee-b857-e6ae4f60617f.lean",
+          "id": "9d895407-3c0b-47ee-b857-e6ae4f60617f",
+          "status": "ACCEPTED",
+          "theorem_id": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b",
+          "updated_at": "2026-09-09T03:19:17.759988+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-09T03:20:43.719302+00:00"
+      }
+    },
+    {
+      "attachment": {
+        "milestone": {
+          "completed": true,
+          "created_at": "2026-09-09T03:20:46.689646+00:00",
+          "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+          "id": "59cdc370-8720-41f9-8b38-a4a11e9a9718",
+          "milestone_description": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density $x\\mapsto E(v(x),w(x))$. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu\\leq\\int_X E(v(x),w(x))\\,d\\mu.$$\n\nNo finiteness assumption on the measure is needed; finite energy is explicit. This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+          "sort_order": 5,
+          "theorem": {
+            "id": "d81e3640-8579-4396-babb-69edac82be33",
+            "status": "Proved",
+            "theorem_name": "OpenGA.integral_areaDensity_le_energyDensity"
+          },
+          "title": "Area-energy comparison for finite-energy vector fields"
+        },
+        "status": "VERIFIED",
+        "verified_at": "2026-09-09T03:20:47.059318+00:00"
+      },
+      "explanation": "For almost-everywhere strongly measurable fields with finite energy, we prove\n\n$$\\int_X A(v,w)\\,d\\mu\\leq\\int_X E(v,w)\\,d\\mu.$$\n\nCauchy-Schwarz and the identity\n\n$$E(v,w)^2-A(v,w)^2=\\frac{(\\|v\\|^2-\\|w\\|^2)^2}{4}+\\langle v,w\\rangle^2.$$\n\nshow that the area density lies between zero and the energy density at every point. The area density is a continuous function of the pair of vectors, hence is almost-everywhere strongly measurable. Domination by the integrable energy density makes the area density integrable. Monotonicity of the integral gives the assertion.",
+      "id": "integral_areaDensity_le_energyDensity",
+      "imports": [],
+      "inlined_helpers": [
+        "areaDensity_le_energyDensity",
+        "areaDensity_nonneg",
+        "areaDensity_sq",
+        "continuous_areaDensity",
+        "energyDensity_nonneg",
+        "energyDensity_sq_sub_areaDensity_sq",
+        "integrable_areaDensity"
+      ],
+      "milestone": {
+        "milestone_description": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density $x\\mapsto E(v(x),w(x))$. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu\\leq\\int_X E(v(x),w(x))\\,d\\mu.$$\n\nNo finiteness assumption on the measure is needed; finite energy is explicit. This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "title": "Area-energy comparison for finite-energy vector fields"
+      },
+      "path": "Theorems/Thm_OpenGA_integral_areaDensity_le_energyDensity.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem OpenGA.integral_areaDensity_le_energyDensity (hv : AEStronglyMeasurable v μ)\n    (hw : AEStronglyMeasurable w μ)\n    (hE : Integrable (fun x => energyDensity (v x) (w x)) μ) :\n    (∫ x, areaDensity (v x) (w x) ∂μ) ≤ ∫ x, energyDensity (v x) (w x) ∂μ := by sorry",
+        "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density $x\\mapsto E(v(x),w(x))$. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu\\leq\\int_X E(v(x),w(x))\\,d\\mu.$$\n\nNo finiteness assumption on the measure is needed; finite energy is explicit. This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "preamble": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen MeasureTheory\nopen scoped InnerProductSpace\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\nopen OpenGA",
+        "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+        "tags": [
+          "geometric-analysis",
+          "openga-area-energy"
+        ],
+        "theorem_name": "OpenGA.integral_areaDensity_le_energyDensity",
+        "theorem_title": "Area-energy comparison for finite-energy vector fields"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_integral_areaDensity_le_energyDensity.lean",
+      "proof_sha256": "e7044f4473b40bbe1b6c33341b84c9756e218eef8b867e49b5954023ac90b866",
+      "publication": {
+        "checked_at": "2026-09-09T03:18:35.238512+00:00",
+        "job": {
+          "created_at": "2026-09-09T03:18:09.547109+00:00",
+          "definitions": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen MeasureTheory\nopen scoped InnerProductSpace\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\nopen OpenGA",
+          "error_message": "",
+          "formal_statement": "theorem OpenGA.integral_areaDensity_le_energyDensity (hv : AEStronglyMeasurable v μ)\n    (hw : AEStronglyMeasurable w μ)\n    (hE : Integrable (fun x => energyDensity (v x) (w x)) μ) :\n    (∫ x, areaDensity (v x) (w x) ∂μ) ≤ ∫ x, energyDensity (v x) (w x) ∂μ := by sorry",
+          "id": "4339dfc0-d20a-4536-8835-89f21a4befe9",
+          "kind": "problem",
+          "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density $x\\mapsto E(v(x),w(x))$. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu\\leq\\int_X E(v(x),w(x))\\,d\\mu.$$\n\nNo finiteness assumption on the measure is needed; finite energy is explicit. This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+          "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-analysis",
+            "openga-area-energy"
+          ],
+          "theorem_id": "d81e3640-8579-4396-babb-69edac82be33",
+          "theorem_name": "OpenGA.integral_areaDensity_le_energyDensity",
+          "theorem_title": "Area-energy comparison for finite-energy vector fields",
+          "updated_at": "2026-09-09T03:18:24.394106+00:00",
+          "visibility": "public"
+        },
+        "job_id": "4339dfc0-d20a-4536-8835-89f21a4befe9",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "4339dfc0-d20a-4536-8835-89f21a4befe9",
+              "name": "OpenGA.integral_areaDensity_le_energyDensity"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-09T03:18:09.110062+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "d81e3640-8579-4396-babb-69edac82be33",
+        "verified_at": "2026-09-09T03:20:42.475348+00:00"
+      },
+      "sha256": "2b39298ae34637e1a5caef96635defee125dc41f104cce140f0fb7afa0a458d6",
+      "source_lines": [
+        105,
+        111
+      ],
+      "submission": {
+        "accepted_source_sha256": "e7044f4473b40bbe1b6c33341b84c9756e218eef8b867e49b5954023ac90b866",
+        "checked_at": "2026-09-09T03:19:40.780541+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "096644e2-0f01-45df-9752-41d89decd664"
+        },
+        "started_at": "2026-09-09T03:18:36.884616+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "096644e2-0f01-45df-9752-41d89decd664",
+        "verdict": {
+          "created_at": "2026-09-09T03:18:37.171154+00:00",
+          "error_message": "",
+          "file_path": "d81e3640-8579-4396-babb-69edac82be33/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/096644e2-0f01-45df-9752-41d89decd664.lean",
+          "id": "096644e2-0f01-45df-9752-41d89decd664",
+          "status": "ACCEPTED",
+          "theorem_id": "d81e3640-8579-4396-babb-69edac82be33",
+          "updated_at": "2026-09-09T03:19:11.888449+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-09T03:20:44.782724+00:00"
+      }
+    },
+    {
+      "attachment": {
+        "milestone": {
+          "completed": true,
+          "created_at": "2026-09-09T03:20:47.418386+00:00",
+          "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+          "id": "dd7060c8-1d02-4851-bad3-66eeef3a13b9",
+          "milestone_description": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu=\\int_X E(v(x),w(x))\\,d\\mu$$\n\nholds exactly when\n\n$$\\langle v(x),w(x)\\rangle=0\\quad\\text{and}\\quad\\|v(x)\\|=\\|w(x)\\|\\quad\\text{for }\\mu\\text{-almost every }x.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+          "sort_order": 6,
+          "theorem": {
+            "id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+            "status": "Proved",
+            "theorem_name": "OpenGA.integral_areaDensity_eq_energyDensity_iff"
+          },
+          "title": "Equality in the integrated area-energy comparison"
+        },
+        "status": "VERIFIED",
+        "verified_at": "2026-09-09T03:20:48.489997+00:00"
+      },
+      "explanation": "Under almost-everywhere strong measurability and integrable energy, equality of total area and energy is equivalent to orthogonality and equal norms almost everywhere.\n\nThe pointwise area-energy bound first supplies integrability of the area density by domination. For two integrable functions ordered almost everywhere, equal integrals are equivalent to equality almost everywhere. Applying the proved pointwise equality criterion therefore gives\n\n$$A(v(x),w(x))=E(v(x),w(x))\\ \\text{a.e.}\\quad\\Longleftrightarrow\\quad \\langle v(x),w(x)\\rangle=0\\ \\text{and}\\ \\|v(x)\\|=\\|w(x)\\|\\ \\text{a.e.}$$",
+      "id": "integral_areaDensity_eq_energyDensity_iff",
+      "imports": [
+        "areaDensity_eq_energyDensity_iff"
+      ],
+      "inlined_helpers": [
+        "areaDensity_le_energyDensity",
+        "areaDensity_nonneg",
+        "areaDensity_sq",
+        "continuous_areaDensity",
+        "energyDensity_nonneg",
+        "energyDensity_sq_sub_areaDensity_sq",
+        "integrable_areaDensity"
+      ],
+      "milestone": {
+        "milestone_description": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu=\\int_X E(v(x),w(x))\\,d\\mu$$\n\nholds exactly when\n\n$$\\langle v(x),w(x)\\rangle=0\\quad\\text{and}\\quad\\|v(x)\\|=\\|w(x)\\|\\quad\\text{for }\\mu\\text{-almost every }x.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "title": "Equality in the integrated area-energy comparison"
+      },
+      "path": "Theorems/Thm_OpenGA_integral_areaDensity_eq_energyDensity_iff.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem OpenGA.integral_areaDensity_eq_energyDensity_iff (hv : AEStronglyMeasurable v μ)\n    (hw : AEStronglyMeasurable w μ)\n    (hE : Integrable (fun x => energyDensity (v x) (w x)) μ) :\n    (∫ x, areaDensity (v x) (w x) ∂μ) = (∫ x, energyDensity (v x) (w x) ∂μ) ↔\n      ∀ᵐ x ∂μ, ⟪v x, w x⟫_ℝ = 0 ∧ ‖v x‖ = ‖w x‖ := by sorry",
+        "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu=\\int_X E(v(x),w(x))\\,d\\mu$$\n\nholds exactly when\n\n$$\\langle v(x),w(x)\\rangle=0\\quad\\text{and}\\quad\\|v(x)\\|=\\|w(x)\\|\\quad\\text{for }\\mu\\text{-almost every }x.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "preamble": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen MeasureTheory\nopen scoped InnerProductSpace\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\nopen OpenGA",
+        "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+        "tags": [
+          "geometric-analysis",
+          "openga-area-energy"
+        ],
+        "theorem_name": "OpenGA.integral_areaDensity_eq_energyDensity_iff",
+        "theorem_title": "Equality in the integrated area-energy comparison"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_integral_areaDensity_eq_energyDensity_iff.lean",
+      "proof_sha256": "9142fa4bbcfa3f67405caf7e279e1fd5316c8d2a681b195cdcfe2e676aa77456",
+      "publication": {
+        "checked_at": "2026-09-09T03:18:35.723950+00:00",
+        "job": {
+          "created_at": "2026-09-09T03:18:10.152641+00:00",
+          "definitions": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen MeasureTheory\nopen scoped InnerProductSpace\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\nopen OpenGA",
+          "error_message": "",
+          "formal_statement": "theorem OpenGA.integral_areaDensity_eq_energyDensity_iff (hv : AEStronglyMeasurable v μ)\n    (hw : AEStronglyMeasurable w μ)\n    (hE : Integrable (fun x => energyDensity (v x) (w x)) μ) :\n    (∫ x, areaDensity (v x) (w x) ∂μ) = (∫ x, energyDensity (v x) (w x) ∂μ) ↔\n      ∀ᵐ x ∂μ, ⟪v x, w x⟫_ℝ = 0 ∧ ‖v x‖ = ‖w x‖ := by sorry",
+          "id": "d9f440ab-8804-4646-9be4-37d9985c420b",
+          "kind": "problem",
+          "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu=\\int_X E(v(x),w(x))\\,d\\mu$$\n\nholds exactly when\n\n$$\\langle v(x),w(x)\\rangle=0\\quad\\text{and}\\quad\\|v(x)\\|=\\|w(x)\\|\\quad\\text{for }\\mu\\text{-almost every }x.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+          "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+          "status": "PUBLISHED",
+          "tags": [
+            "geometric-analysis",
+            "openga-area-energy"
+          ],
+          "theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+          "theorem_name": "OpenGA.integral_areaDensity_eq_energyDensity_iff",
+          "theorem_title": "Equality in the integrated area-energy comparison",
+          "updated_at": "2026-09-09T03:18:27.805255+00:00",
+          "visibility": "public"
+        },
+        "job_id": "d9f440ab-8804-4646-9be4-37d9985c420b",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "d9f440ab-8804-4646-9be4-37d9985c420b",
+              "name": "OpenGA.integral_areaDensity_eq_energyDensity_iff"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-09T03:18:09.863582+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+        "verified_at": "2026-09-09T03:20:42.674815+00:00"
+      },
+      "sha256": "2dff317470d51ba09f2a6213a5c81e0faf71209dd37bc53858ee967f0f322c83",
+      "source_lines": [
+        113,
+        123
+      ],
+      "submission": {
+        "accepted_source_sha256": "9142fa4bbcfa3f67405caf7e279e1fd5316c8d2a681b195cdcfe2e676aa77456",
+        "checked_at": "2026-09-09T03:20:45.263842+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "01167772-943a-4c75-ab15-9f7b235777a8"
+        },
+        "started_at": "2026-09-09T03:19:41.829260+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "01167772-943a-4c75-ab15-9f7b235777a8",
+        "verdict": {
+          "created_at": "2026-09-09T03:19:42.082002+00:00",
+          "error_message": "",
+          "file_path": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/01167772-943a-4c75-ab15-9f7b235777a8.lean",
+          "id": "01167772-943a-4c75-ab15-9f7b235777a8",
+          "status": "ACCEPTED",
+          "theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+          "updated_at": "2026-09-09T03:20:21.899999+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-09T03:20:45.888853+00:00"
+      }
+    }
+  ],
+  "validation": {
+    "checked_at": "2026-09-09T03:17:29.960401+00:00",
+    "exact_upload_build": "passed; one definition, three statements, three solutions",
+    "lean_toolchain": "leanprover/lean4:v4.33.1",
+    "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
+    "original_proof_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "solution_type_checks": "Lean isDefEq passed for each solution and its target",
+    "staged_dependency_note": "The integrated equality solution imports the pointwise equality statement stub locally; publish its proof first and require ACCEPTED before uploading the dependent solution.",
+    "status": "passed",
+    "type_preservation": "all three elaborated source and exported types match exactly",
+    "types": [
+      {
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "name": "OpenGA.areaDensity_eq_energyDensity_iff",
+        "proof_type": "∀ {F : Type u_1} [inst : NormedAddCommGroup.{u_1} F]\n  [inst_1 :\n    @InnerProductSpace.{0, u_1} Real F Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst)]\n  (v w : F),\n  Iff (@Eq.{1} Real (@OpenGA.areaDensity.{u_1} F inst inst_1 v w) (@OpenGA.energyDensity.{u_1} F inst v w))\n    (And\n      (@Eq.{1} Real\n        (@Inner.inner.{0, u_1} Real F\n          (@InnerProductSpace.toInner.{0, u_1} Real F Real.instRCLike\n            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst) inst_1)\n          v w)\n        (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))\n      (@Eq.{1} Real (@Norm.norm.{u_1} F (@NormedAddCommGroup.toNorm.{u_1} F inst) v)\n        (@Norm.norm.{u_1} F (@NormedAddCommGroup.toNorm.{u_1} F inst) w)))",
+        "type": "∀ {F : Type u_1} [inst : NormedAddCommGroup.{u_1} F]\n  [inst_1 :\n    @InnerProductSpace.{0, u_1} Real F Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst)]\n  (v w : F),\n  Iff (@Eq.{1} Real (@OpenGA.areaDensity.{u_1} F inst inst_1 v w) (@OpenGA.energyDensity.{u_1} F inst v w))\n    (And\n      (@Eq.{1} Real\n        (@Inner.inner.{0, u_1} Real F\n          (@InnerProductSpace.toInner.{0, u_1} Real F Real.instRCLike\n            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst) inst_1)\n          v w)\n        (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))\n      (@Eq.{1} Real (@Norm.norm.{u_1} F (@NormedAddCommGroup.toNorm.{u_1} F inst) v)\n        (@Norm.norm.{u_1} F (@NormedAddCommGroup.toNorm.{u_1} F inst) w)))"
+      },
+      {
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "name": "OpenGA.integral_areaDensity_le_energyDensity",
+        "proof_type": "∀ {F : Type u_1} [inst : NormedAddCommGroup.{u_1} F]\n  [inst_1 :\n    @InnerProductSpace.{0, u_1} Real F Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst)]\n  {X : Type u_2} [inst_2 : MeasurableSpace.{u_2} X] {μ : @MeasureTheory.Measure.{u_2} X inst_2} {v w : X → F},\n  @MeasureTheory.AEStronglyMeasurable.{u_2, u_1} X F\n      (@UniformSpace.toTopologicalSpace.{u_1} F\n        (@PseudoMetricSpace.toUniformSpace.{u_1} F\n          (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} F\n            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst))))\n      inst_2 inst_2 v μ →\n    @MeasureTheory.AEStronglyMeasurable.{u_2, u_1} X F\n        (@UniformSpace.toTopologicalSpace.{u_1} F\n          (@PseudoMetricSpace.toUniformSpace.{u_1} F\n            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} F\n              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst))))\n        inst_2 inst_2 w μ →\n      @MeasureTheory.Integrable.{0, u_2} Real\n          (@UniformSpace.toTopologicalSpace.{0} Real\n            (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))\n          (@SeminormedAddGroup.toContinuousENorm.{0} Real\n            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Real\n              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real\n                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real\n                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real\n                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))))\n          X inst_2 (fun x ↦ @OpenGA.energyDensity.{u_1} F inst (v x) (w x)) μ →\n        @LE.le.{0} Real Real.instLE\n          (@MeasureTheory.integral.{u_2, 0} X Real Real.normedAddCommGroup\n            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike\n              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)\n              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))\n            inst_2 μ fun x ↦ @OpenGA.areaDensity.{u_1} F inst inst_1 (v x) (w x))\n          (@MeasureTheory.integral.{u_2, 0} X Real Real.normedAddCommGroup\n            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike\n              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)\n              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))\n            inst_2 μ fun x ↦ @OpenGA.energyDensity.{u_1} F inst (v x) (w x))",
+        "type": "∀ {F : Type u_1} [inst : NormedAddCommGroup.{u_1} F]\n  [inst_1 :\n    @InnerProductSpace.{0, u_1} Real F Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst)]\n  {X : Type u_2} [inst_2 : MeasurableSpace.{u_2} X] {μ : @MeasureTheory.Measure.{u_2} X inst_2} {v w : X → F},\n  @MeasureTheory.AEStronglyMeasurable.{u_2, u_1} X F\n      (@UniformSpace.toTopologicalSpace.{u_1} F\n        (@PseudoMetricSpace.toUniformSpace.{u_1} F\n          (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} F\n            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst))))\n      inst_2 inst_2 v μ →\n    @MeasureTheory.AEStronglyMeasurable.{u_2, u_1} X F\n        (@UniformSpace.toTopologicalSpace.{u_1} F\n          (@PseudoMetricSpace.toUniformSpace.{u_1} F\n            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} F\n              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst))))\n        inst_2 inst_2 w μ →\n      @MeasureTheory.Integrable.{0, u_2} Real\n          (@UniformSpace.toTopologicalSpace.{0} Real\n            (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))\n          (@SeminormedAddGroup.toContinuousENorm.{0} Real\n            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Real\n              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real\n                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real\n                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real\n                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))))\n          X inst_2 (fun x ↦ @OpenGA.energyDensity.{u_1} F inst (v x) (w x)) μ →\n        @LE.le.{0} Real Real.instLE\n          (@MeasureTheory.integral.{u_2, 0} X Real Real.normedAddCommGroup\n            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike\n              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)\n              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))\n            inst_2 μ fun x ↦ @OpenGA.areaDensity.{u_1} F inst inst_1 (v x) (w x))\n          (@MeasureTheory.integral.{u_2, 0} X Real Real.normedAddCommGroup\n            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike\n              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)\n              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))\n            inst_2 μ fun x ↦ @OpenGA.energyDensity.{u_1} F inst (v x) (w x))"
+      },
+      {
+        "axioms": [
+          "propext",
+          "sorryAx",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "name": "OpenGA.integral_areaDensity_eq_energyDensity_iff",
+        "proof_type": "∀ {F : Type u_1} [inst : NormedAddCommGroup.{u_1} F]\n  [inst_1 :\n    @InnerProductSpace.{0, u_1} Real F Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst)]\n  {X : Type u_2} [inst_2 : MeasurableSpace.{u_2} X] {μ : @MeasureTheory.Measure.{u_2} X inst_2} {v w : X → F},\n  @MeasureTheory.AEStronglyMeasurable.{u_2, u_1} X F\n      (@UniformSpace.toTopologicalSpace.{u_1} F\n        (@PseudoMetricSpace.toUniformSpace.{u_1} F\n          (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} F\n            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst))))\n      inst_2 inst_2 v μ →\n    @MeasureTheory.AEStronglyMeasurable.{u_2, u_1} X F\n        (@UniformSpace.toTopologicalSpace.{u_1} F\n          (@PseudoMetricSpace.toUniformSpace.{u_1} F\n            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} F\n              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst))))\n        inst_2 inst_2 w μ →\n      @MeasureTheory.Integrable.{0, u_2} Real\n          (@UniformSpace.toTopologicalSpace.{0} Real\n            (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))\n          (@SeminormedAddGroup.toContinuousENorm.{0} Real\n            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Real\n              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real\n                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real\n                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real\n                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))))\n          X inst_2 (fun x ↦ @OpenGA.energyDensity.{u_1} F inst (v x) (w x)) μ →\n        Iff\n          (@Eq.{1} Real\n            (@MeasureTheory.integral.{u_2, 0} X Real Real.normedAddCommGroup\n              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike\n                (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)\n                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))\n              inst_2 μ fun x ↦ @OpenGA.areaDensity.{u_1} F inst inst_1 (v x) (w x))\n            (@MeasureTheory.integral.{u_2, 0} X Real Real.normedAddCommGroup\n              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike\n                (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)\n                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))\n              inst_2 μ fun x ↦ @OpenGA.energyDensity.{u_1} F inst (v x) (w x)))\n          (@Filter.Eventually.{u_2} X\n            (fun x ↦\n              And\n                (@Eq.{1} Real\n                  (@Inner.inner.{0, u_1} Real F\n                    (@InnerProductSpace.toInner.{0, u_1} Real F Real.instRCLike\n                      (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst) inst_1)\n                    (v x) (w x))\n                  (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))\n                (@Eq.{1} Real (@Norm.norm.{u_1} F (@NormedAddCommGroup.toNorm.{u_1} F inst) (v x))\n                  (@Norm.norm.{u_1} F (@NormedAddCommGroup.toNorm.{u_1} F inst) (w x))))\n            (@MeasureTheory.ae.{u_2, u_2} X (@MeasureTheory.Measure.{u_2} X inst_2)\n              (@MeasureTheory.Measure.instFunLike.{u_2} X inst_2) ⋯ μ))",
+        "type": "∀ {F : Type u_1} [inst : NormedAddCommGroup.{u_1} F]\n  [inst_1 :\n    @InnerProductSpace.{0, u_1} Real F Real.instRCLike (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst)]\n  {X : Type u_2} [inst_2 : MeasurableSpace.{u_2} X] {μ : @MeasureTheory.Measure.{u_2} X inst_2} {v w : X → F},\n  @MeasureTheory.AEStronglyMeasurable.{u_2, u_1} X F\n      (@UniformSpace.toTopologicalSpace.{u_1} F\n        (@PseudoMetricSpace.toUniformSpace.{u_1} F\n          (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} F\n            (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst))))\n      inst_2 inst_2 v μ →\n    @MeasureTheory.AEStronglyMeasurable.{u_2, u_1} X F\n        (@UniformSpace.toTopologicalSpace.{u_1} F\n          (@PseudoMetricSpace.toUniformSpace.{u_1} F\n            (@SeminormedAddCommGroup.toPseudoMetricSpace.{u_1} F\n              (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst))))\n        inst_2 inst_2 w μ →\n      @MeasureTheory.Integrable.{0, u_2} Real\n          (@UniformSpace.toTopologicalSpace.{0} Real\n            (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))\n          (@SeminormedAddGroup.toContinuousENorm.{0} Real\n            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Real\n              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real\n                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real\n                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real\n                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))))\n          X inst_2 (fun x ↦ @OpenGA.energyDensity.{u_1} F inst (v x) (w x)) μ →\n        Iff\n          (@Eq.{1} Real\n            (@MeasureTheory.integral.{u_2, 0} X Real Real.normedAddCommGroup\n              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike\n                (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)\n                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))\n              inst_2 μ fun x ↦ @OpenGA.areaDensity.{u_1} F inst inst_1 (v x) (w x))\n            (@MeasureTheory.integral.{u_2, 0} X Real Real.normedAddCommGroup\n              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike\n                (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)\n                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))\n              inst_2 μ fun x ↦ @OpenGA.energyDensity.{u_1} F inst (v x) (w x)))\n          (@Filter.Eventually.{u_2} X\n            (fun x ↦\n              And\n                (@Eq.{1} Real\n                  (@Inner.inner.{0, u_1} Real F\n                    (@InnerProductSpace.toInner.{0, u_1} Real F Real.instRCLike\n                      (@NormedAddCommGroup.toSeminormedAddCommGroup.{u_1} F inst) inst_1)\n                    (v x) (w x))\n                  (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))\n                (@Eq.{1} Real (@Norm.norm.{u_1} F (@NormedAddCommGroup.toNorm.{u_1} F inst) (v x))\n                  (@Norm.norm.{u_1} F (@NormedAddCommGroup.toNorm.{u_1} F inst) (w x))))\n            (@MeasureTheory.ae.{u_2, u_2} X (@MeasureTheory.Measure.{u_2} X inst_2)\n              (@MeasureTheory.Measure.instFunLike.{u_2} X inst_2) ⋯ μ))"
+      }
+    ],
+    "uploader_checks": "uncertain POST stops; queued job resumes without duplicate POST; content mismatch stops"
+  },
+  "verified_at": "2026-09-09T03:20:48.491442+00:00"
+}

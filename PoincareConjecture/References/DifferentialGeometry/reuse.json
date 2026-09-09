@@ -1,0 +1,147 @@
+{
+  "additional_integrations": [
+    {
+      "local_module": "OpenGALib/Interoperability/BishopGromov.lean",
+      "local_results": [
+        "Riemannian.RiemannianMetric.ballVolume_pos",
+        "Riemannian.RiemannianMetric.ballVolume_lt_top",
+        "Riemannian.RiemannianMetric.ballVolume_mul_modelVolume_le",
+        "Riemannian.RiemannianMetric.antitoneOn_ballVolume_div_modelVolume",
+        "Riemannian.RiemannianMetric.ballVolume_ratio_le",
+        "Riemannian.RiemannianMetric.ballVolume_mul_pow_le",
+        "Riemannian.RiemannianMetric.antitoneOn_ballVolume_div_pow",
+        "Riemannian.RiemannianMetric.ballVolume_mul_radius_le",
+        "Riemannian.RiemannianMetric.ballVolume_two_mul_le"
+      ],
+      "platform_publication": "not_published",
+      "review_record": "PoincareConjecture/References/DifferentialGeometry/bishop_gromov_review.json",
+      "scope": "Review and reuse the complete connected boundaryless manifold Bishop-Gromov comparison for global Ricci lower bound -(n-1) q^2, q>=0; specialize to nonnegative Ricci and volume doubling. This does not cover the entire platform milestone.",
+      "status": "verified",
+      "verified_at": "2026-09-09T16:44:10.366582+00:00"
+    }
+  ],
+  "commit": "1b535dd102b94cc42b107cca27059687888f08b3",
+  "integration_method": "Pinned Lake dependency; upstream source and theorem names are preserved.",
+  "lean_toolchain": "leanprover/lean4:v4.33.1",
+  "license": "Apache-2.0",
+  "local_module": "OpenGALib/Interoperability/DifferentialGeometry.lean",
+  "local_results": [
+    "Riemannian.RiemannianMetric.volumeMeasure_isFiniteMeasure",
+    "Riemannian.RiemannianMetric.volumeMeasure_isOpenPosMeasure",
+    "OpenGA.integrable_energyDensity_riemannian",
+    "OpenGA.integral_areaDensity_le_energyDensity_riemannian",
+    "OpenGA.integral_areaDensity_eq_energyDensity_riemannian_iff"
+  ],
+  "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "metric_interface": {
+    "local": "Riemannian.RiemannianMetric",
+    "relation": "Both abbreviate Mathlib's smooth tangent-bundle Riemannian metric. The local metric is passed directly to upstream volume functions.",
+    "upstream": "DifferentialGeometry.SmoothRiemannianMetric"
+  },
+  "next_candidates": [
+    {
+      "declaration": "DifferentialGeometry.PDE.RicciFlow.scalar_curvature_evolution",
+      "path": "DifferentialGeometry/Geometry/Flow/RicciFlow/Evolution/Scalar/IntrinsicDerivation.lean",
+      "remaining_interface": "Instantiate SolutionOn and IsSolutionOn, then connect the geometric evolution to scalar comparison.",
+      "status": "statement_inspected_not_built",
+      "supports": "geometric_scalar_lower_bound"
+    },
+    {
+      "declaration": "DifferentialGeometry.PDE.RicciFlow.hamilton_ivey_pinching_k_one",
+      "path": "DifferentialGeometry/Geometry/Flow/RicciFlow/DimensionThree/HamiltonIvey/MaximumPrinciple.lean",
+      "remaining_interface": "Preserve the closed boundaryless three-dimensional smooth-flow and initial curvature-operator hypotheses. Surgery compatibility is not supplied by this theorem.",
+      "status": "statement_inspected_not_built",
+      "supports": "geometric_scalar_lower_bound"
+    },
+    {
+      "declaration": "DifferentialGeometry.PDE.RicciFlow.ricci_flow_short_time_existence",
+      "path": "DifferentialGeometry/Geometry/Flow/RicciFlow/ShortTime/Existence.lean",
+      "remaining_interface": "Short-time existence is one prerequisite; it does not construct surgery or prove all-time continuation.",
+      "status": "statement_inspected_not_built",
+      "supports": "all_time_surgery_flow"
+    }
+  ],
+  "notice": "Copyright 2026 The DifferentialGeometry contributors",
+  "platform_publication": {
+    "publication_record": "PoincareConjecture/Contributions/AreaEnergy/publication.json",
+    "published_theorems": [
+      {
+        "declaration": "OpenGA.areaDensity_eq_energyDensity_iff",
+        "status": "Proved",
+        "submission_id": "9d895407-3c0b-47ee-b857-e6ae4f60617f",
+        "theorem_id": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b"
+      },
+      {
+        "declaration": "OpenGA.integral_areaDensity_le_energyDensity",
+        "status": "Proved",
+        "submission_id": "096644e2-0f01-45df-9752-41d89decd664",
+        "theorem_id": "d81e3640-8579-4396-babb-69edac82be33"
+      },
+      {
+        "declaration": "OpenGA.integral_areaDensity_eq_energyDensity_iff",
+        "status": "Proved",
+        "submission_id": "01167772-943a-4c75-ab15-9f7b235777a8",
+        "theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7"
+      }
+    ],
+    "remaining_work": "Port the selected upstream Riemannian volume definitions and proofs in dependency order, preserving upstream attribution. The local Lake dependency is not a platform dependency installation.",
+    "riemannian_application_published": false,
+    "root_graph_connection": {
+      "checked_at": "2026-09-09T03:42:47.917030+00:00",
+      "publication_record": "PoincareConjecture/Contributions/WidthComparison/publication.json",
+      "scope": "The previously published Mathlib-only area-energy prerequisites now reach the Poincare root through the proved width comparison and an open geometric extraction. This does not publish the upstream Riemannian definitions.",
+      "status": "verified"
+    },
+    "status": "analytic_prerequisites_published",
+    "upstream_definitions_published": false,
+    "verified_at": "2026-09-09T03:21:45.439442+00:00"
+  },
+  "release": "v0.1.2",
+  "repository": "https://github.com/qinz1yang/differential-geometry",
+  "schema_version": 1,
+  "scope": "Continuous vector fields on a compact Riemannian manifold. Identifying the fields with a surface differential and proving frame independence remain separate tasks.",
+  "selected_upstream_results": [
+    {
+      "declaration": "DifferentialGeometry.Integral.Measure.riemannianVolumeMeasure",
+      "path": "DifferentialGeometry/Analysis/Integration/Measure/Invariance.lean",
+      "role": "Volume constructed from chart densities and a subordinate partition of unity.",
+      "source_sha256": "967065c9d3b25a61fb94420c328c382c65a8353f9273849ba3860257a0d2d190",
+      "source_url": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Invariance.lean"
+    },
+    {
+      "declaration": "DifferentialGeometry.Integral.Measure.riemannianMeasure_eq_of_pou_independent",
+      "path": "DifferentialGeometry/Analysis/Integration/Measure/Invariance.lean",
+      "role": "Independence of the subordinate partition used in the volume construction.",
+      "source_sha256": "967065c9d3b25a61fb94420c328c382c65a8353f9273849ba3860257a0d2d190",
+      "source_url": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Invariance.lean"
+    },
+    {
+      "declaration": "DifferentialGeometry.Integral.Measure.riemannianVolumeMeasure_isFiniteMeasure_of_compactSpace",
+      "path": "DifferentialGeometry/Analysis/Integration/Measure/Properties.lean",
+      "role": "Makes continuous energy densities integrable on compact manifolds.",
+      "source_sha256": "471795f13c559d245de7760964fba8784b375b61ce305c941304c35ab80d364e",
+      "source_url": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Properties.lean"
+    },
+    {
+      "declaration": "DifferentialGeometry.Integral.Measure.riemannianVolumeMeasure_isOpenPosMeasure",
+      "path": "DifferentialGeometry/Analysis/Integration/Measure/Properties.lean",
+      "role": "Upgrades almost-everywhere equality of continuous densities to equality everywhere.",
+      "source_sha256": "471795f13c559d245de7760964fba8784b375b61ce305c941304c35ab80d364e",
+      "source_url": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Properties.lean"
+    }
+  ],
+  "verification": {
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "axiom_audit": "passed for five local results and four upstream theorems",
+    "checked_at": "2026-09-09T03:07:33.528483+00:00",
+    "full_library_build": "passed",
+    "local_source_sha256": "70cae58450bb1ae949b7526347c2924162811f1a0f51ac563470a009cfa02732",
+    "new_module_warnings": 0,
+    "synchronization_tests": "11 passed",
+    "upstream_coverage": "Only the selected integration dependency cone was compiled and audited; not the entire upstream library."
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "theorem_names": [
+    "OpenGA.areaDensity_eq_normDet",
+    "OpenGA.areaDensity_basis_independent",
+    "OrthonormalBasis.sum_apply_diagonal_invariant",
+    "OpenGA.energyDensity_basis_independent"
+  ]
+}

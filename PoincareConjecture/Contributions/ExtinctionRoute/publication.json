@@ -1,0 +1,855 @@
+{
+  "schema_version": 1,
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "root_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "scope": "Conditional scalar-width extinction branch. The geometric profile extraction is open. No existing geometric milestone is relinked.",
+  "definition": {
+    "path": "PoincareConjecture/Contributions/ExtinctionRoute/ScalarWidthTrace.lean",
+    "sha256": "8f601ae71ec55995167ff09f845daea0707e662608f45c127642dc98a0581933",
+    "payload": {
+      "definition_name": "OpenGA_ScalarWidthTrace",
+      "definition_title": "Scalar and width traces across surgery times",
+      "definition": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite analytic data for the scalar-minimum and width argument on `[0, T]`.\nThis structure records inequalities and jumps only. It is not a definition of\nRicci flow, surgery, scalar curvature, or sweepout width. Supplying it from\ngeometric data is a separate theorem. -/\nstructure ScalarWidthTrace (W₀ T : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = T\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ W₀\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  width_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    -(4 * Real.pi) - scalar i t / 2 * width i t < q →\n      ∃ᶠ s in 𝓝[>] t, slope (width i) t s < q\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
+      "natural_language_statement": "For real numbers $W_0,T$, a scalar-width trace consists of a positive finite number of intervals with\n$$0=t_0<t_1<\\cdots<t_n=T,$$\nand continuous real functions $r_i,w_i$ on each $[t_i,t_{i+1}]$. The initial bounds are $r_0(0)\\ge-6$ and $w_0(0)\\le W_0$, and all widths are nonnegative. On each right-open interval the lower right Dini derivatives obey\n$$D_+r_i\\ge\\frac23 r_i^2,\\qquad D_+w_i\\le-4\\pi-\\frac12r_iw_i.$$\nAt each internal joining time, the scalar profile can jump upward and the width can jump downward:\n$$r_i(t_{i+1})\\le r_{i+1}(t_{i+1}),\\qquad w_{i+1}(t_{i+1})\\le w_i(t_{i+1}).$$\nHere $D_+$ denotes the liminf of forward difference quotients. Scalar lower bounds are expressed by eventual strict slope bounds; width upper bounds use frequent strict slope bounds. A limsup upper bound, as in the geometric width estimate, implies the latter hypothesis.\n\nThis is an analytic interface assembled from the scalar comparison and width estimates. It does not define Ricci flow, surgery, scalar curvature, or geometric sweepout width. Producing these data from a manifold remains a separate geometric theorem.",
+      "source": "Analytic interface extracted from Kleiner-Lott, Notes on Perelman's Papers, arXiv:math/0605667v5, Lemma 79.11 (p.154) and Appendix B (p.202), https://arxiv.org/pdf/math/0605667v5; Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, Theorem 1.7 and (1.8)-(1.10) (p.4), scalar evolution (1.17) (p.6), (1.28) (p.8), https://arxiv.org/pdf/0707.0108. Finite traces and the lower-Dini formulation are explicit analytic abstractions, not a verbatim named definition in either paper.",
+      "tags": [
+        "geometric-analysis",
+        "ricci-flow"
+      ],
+      "env": "0df444a360eaa60ab8c11dca51a86af692955474"
+    }
+  },
+  "problems": {
+    "width": {
+      "path": "PoincareConjecture/Contributions/ExtinctionRoute/WidthDeadline.lean",
+      "sha256": "1ad76d5518353e95cdc3642b2b18f662713c07684737d2ed603b3b5f81519662",
+      "payload": {
+        "theorem_name": "OpenGA.le_width_deadline_across_downward_jumps",
+        "theorem_title": "Width deadline across downward jumps",
+        "formal_statement": "theorem OpenGA.le_width_deadline_across_downward_jumps\n    {C W₀ : ℝ} (hC : 0 < C)\n    (n : ℕ) (hn : 0 < n) (times : ℕ → ℝ) (widths : ℕ → ℝ → ℝ)\n    (hzero : times 0 = 0)\n    (htimes : ∀ i < n, times i < times (i + 1))\n    (hcont : ∀ i < n, ContinuousOn (widths i) (Icc (times i) (times (i + 1))))\n    (hinitial : widths 0 (times 0) ≤ W₀)\n    (hfinal : 0 ≤ widths (n - 1) (times n))\n    (hslope : ∀ i < n, ∀ x ∈ Ico (times i) (times (i + 1)), ∀ r : ℝ,\n      -(4 * Real.pi) + 3 / (4 * (x + C)) * widths i x < r →\n        ∃ᶠ z in 𝓝[>] x, slope (widths i) x z < r)\n    (hjumps : ∀ i, i + 1 < n →\n      widths (i + 1) (times (i + 1)) ≤ widths i (times (i + 1))) :\n    times n ≤ (C ^ ((1 : ℝ) / 4) + W₀ / (16 * Real.pi * C ^ ((3 : ℝ) / 4))) ^ (4 : ℕ) - C := by sorry",
+        "preamble": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Pow.Deriv\n\nset_option autoImplicit false\n\nopen Set Topology\nopen scoped Topology",
+        "natural_language_statement": "Let $C>0$, $W_0\\in\\mathbb R$, and $0=t_0<t_1<\\cdots<t_n$ with $n\\ge1$. Let $w_i$ be continuous on $[t_i,t_{i+1}]$, with $w_0(0)\\le W_0$ and $w_{n-1}(t_n)\\ge0$. Suppose that, for $t_i\\le t<t_{i+1}$,\n$$D_+w_i(t)\\le-4\\pi+\\frac{3}{4(t+C)}w_i(t),$$\nand that $w_{i+1}(t_{i+1})\\le w_i(t_{i+1})$ at each internal joining time. Then\n$$t_n\\le\\left(C^{1/4}+\\frac{W_0}{16\\pi C^{3/4}}\\right)^4-C.$$\nHere $D_+$ is the lower right Dini derivative, represented by frequent strict upper bounds on forward slopes. The limsup upper bound in the geometric application implies this hypothesis. Nonnegativity is needed only at the final endpoint.\n\nThis is the explicit analytic extinction estimate, extended to a finite sequence of downward jumps. It does not assert that a geometric flow or its width has been constructed.",
+        "source": "Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, https://arxiv.org/pdf/0707.0108, p.4, Theorem 1.7 and equations (1.8)-(1.10). Analytic consequence of (1.10), extended to finitely many downward jumps by interval comparison; lower-Dini hypotheses are sufficient. The geometric surgery application is separate.",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "tags": [
+          "geometric-analysis",
+          "ricci-flow",
+          "differential-inequalities"
+        ]
+      }
+    },
+    "geometry": {
+      "path": "PoincareConjecture/Contributions/ExtinctionRoute/PersistentProfiles.lean",
+      "sha256": "b3230942c11213c43a5e3046766b117b4485e55f04e2f49226698f287f9544e7",
+      "payload": {
+        "theorem_name": "PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere",
+        "theorem_title": "Persistent profiles from a hypothetical Poincare counterexample",
+        "formal_statement": "theorem PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ W₀ : ℝ, 0 ≤ W₀ ∧ ∀ T : ℝ, 0 < T → Nonempty (OpenGA.ScalarWidthTrace W₀ T) := by sorry",
+        "preamble": "import Definitions.Def_OpenGA_ScalarWidthTrace\nimport Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\nset_option autoImplicit false",
+        "natural_language_statement": "Let $M$ be a compact simply connected Hausdorff topological three-manifold without boundary. Suppose that $M$ is not homeomorphic to the unit three-sphere. Then there is a real number $W_0\\ge0$, independent of the final time, such that\n$$\\forall T>0,\\quad \\text{there exists a scalar-width trace on }[0,T]\\text{ with initial width at most }W_0.$$\nA scalar-width trace is the analytic data in the imported definition: finitely many continuous scalar and nonnegative width profiles, initial scalar minimum at least $-6$, differential inequalities\n$$D_+r\\ge\\frac23r^2,\\qquad D_+w\\le-4\\pi-\\frac12rw,$$\nand upward scalar jumps and downward width jumps.\n\nThis is a composite geometric extraction target for the Kleiner-Lott surgery route with the Colding-Minicozzi width input. It deliberately isolates the unresolved passage from geometry and topology to analytic data. It is not a formalization of any one named milestone. The scope includes passing from a topological three-manifold to smooth normalized initial data, constructing surgery flows for arbitrary finite times, identifying surviving nontrivial components under the nonspherical hypothesis, and establishing the scalar/width estimates, endpoint regularity, jump inequalities, and a uniform initial width bound. None of those geometric constructions is supplied by the trace definition.\n\nThe Kleiner-Lott source starts with smooth geometric data; the topological-to-smooth passage is an additional formalization obligation in this statement.",
+        "source": "Composite reduction target, not a verbatim theorem: Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 (pp.8-9), Proposition 77.2 (p.146), Lemma 79.11 (p.154), Lemma 81.2 (p.160), with Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7, Corollary 1.11 (p.4), and (1.28) (p.8). The topological smoothing bridge and the extraction of finite analytic profiles are explicitly unresolved parts of this derived target; this statement does not attest any individual geometric milestone.",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "tags": [
+          "geometric-analysis",
+          "ricci-flow",
+          "differential-inequalities"
+        ]
+      }
+    }
+  },
+  "proofs": {
+    "width": {
+      "path": "PoincareConjecture/Contributions/ExtinctionRoute/WidthDeadlineProof.lean",
+      "sha256": "aeb6b786fd328e52c6be60acb2cf0cd441a9ee2595df316b1bc2382521512a08",
+      "explanation": "The conclusion is the explicit upper bound\n$$t_n\\le\\left(C^{1/4}+\\frac{W_0}{16\\pi C^{3/4}}\\right)^4-C.$$\nFor $\\varepsilon>0$, compare every width segment with the same solution $B_\\varepsilon$ of\n$$B_\\varepsilon'=\\frac{3}{4(t+C)}B_\\varepsilon-4\\pi+\\varepsilon,\\qquad B_\\varepsilon(0)=W_0+\\varepsilon.$$\nIts explicit expression is\n$$B_\\varepsilon(t)=\\frac{W_0+\\varepsilon}{C^{3/4}}(t+C)^{3/4}+4(\\varepsilon-4\\pi)\\big((t+C)-C^{1/4}(t+C)^{3/4}\\big).$$\nAt a contact point the assumed lower-Dini upper bound is strictly below the derivative of this comparison function. The one-sided comparison lemma therefore bounds the width on each interval. A downward jump preserves the endpoint inequality, so induction carries the same comparison through all intervals without changing the initial constant.\n\nContinuity in $\\varepsilon$ gives $w_{n-1}(t_n)\\le B_0(t_n)$. Since the final width is nonnegative and $(t_n+C)^{3/4}>0$, factoring this expression yields\n$$16\\pi\\big((t_n+C)^{1/4}-C^{1/4}\\big)\\le\\frac{W_0}{C^{3/4}}.$$\nDividing by $16\\pi$ and taking fourth powers proves the bound. The proof uses only Mathlib and contains no unproved geometric inputs."
+    },
+    "root": {
+      "path": "PoincareConjecture/Contributions/ExtinctionRoute/PoincareReduction.lean",
+      "sha256": "f82e819e6892eccb42edc84434fd83ecca4ab929dbbd8edba8791948e44bdfa6",
+      "explanation": "This is a conditional reduction of the topological Poincare conjecture to the geometric profile-extraction theorem. That child remains open. The two analytic inputs, scalar comparison and the width deadline, are proved independently.\n\nSuppose a compact simply connected Hausdorff topological three-manifold $M$ were not homeomorphic to $S^3$. The open geometric child supplies a number $W_0$, fixed before the final time, and finite scalar-width traces on arbitrarily long intervals. The scalar comparison theorem gives\n$$r_i(t)\\ge-\\frac6{1+4t}.$$\nBecause every width is nonnegative, the coupled width inequality implies\n$$D_+w_i(t)\\le-4\\pi-\\frac12r_i(t)w_i(t)\\le-4\\pi+\\frac3{1+4t}w_i(t).$$\nThis is precisely the width-deadline inequality with $C=1/4$. The downward jump hypothesis permits the deadline theorem to apply across all pieces, giving\n$$T\\le T_*:=\\left((1/4)^{1/4}+\\frac{W_0}{16\\pi(1/4)^{3/4}}\\right)^4-\\frac14.$$\nChoose $T=\\max(T_*,0)+1$. The geometric child supplies a trace at this positive time, while the analytic bound rules it out. This contradiction gives the required homeomorphism.\n\nThe unresolved geometric child includes smoothing, surgery existence, survival/topology, and the production of compatible scalar and width profiles. The reduction does not prove those ingredients or any of the four large geometric milestones. Every imported theorem is used in the argument; no extra import is present solely to create a graph edge."
+    }
+  },
+  "validation": {
+    "status": "passed",
+    "checked_at": "2026-09-09T02:36:29.364857+00:00",
+    "checks": [
+      "Lean compilation of the trace definition and both problem statements",
+      "Lean compilation of the reduction with platform-named imports and the exact root signature",
+      "Standalone width proof compiled with exact submitted signature",
+      "Width proof axioms restricted to propext, Classical.choice, Quot.sound",
+      "Source scope reviewed: composite geometric target, not a replacement for a milestone",
+      "Boundary review: positive piece count and C; time begins at zero; ordered positive intervals; all internal jumps controlled; uniform W0 chosen before T; nonnegative widths for multiplying the scalar bound",
+      "Full OpenGALib build passed (3185 jobs)",
+      "A one-interval trace with scalar 0, width 8*pi - 4*pi*t, T=1 compiled, checking finite-time consistency",
+      "11 synchronization and review tests passed"
+    ]
+  },
+  "receipts": {
+    "definition": {
+      "kind": "definition",
+      "status": "PUBLISHED",
+      "started_at": "2026-09-09T02:37:54.131107+00:00",
+      "response": {
+        "job_id": "ccf70d8b-4412-4c90-8aec-72811ca7668e",
+        "definition_name": "OpenGA_ScalarWidthTrace",
+        "status": "PENDING",
+        "message": "Definition queued. Poll GET /api/v1/publish-jobs/ccf70d8b-4412-4c90-8aec-72811ca7668e until status is PUBLISHED, FAILED, or ERROR.",
+        "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions"
+      },
+      "job_id": "ccf70d8b-4412-4c90-8aec-72811ca7668e",
+      "result": {
+        "id": "ccf70d8b-4412-4c90-8aec-72811ca7668e",
+        "kind": "definition",
+        "theorem_name": "OpenGA_ScalarWidthTrace",
+        "theorem_title": "Scalar and width traces across surgery times",
+        "formal_statement": "",
+        "natural_language_statement": "For real numbers $W_0,T$, a scalar-width trace consists of a positive finite number of intervals with\n$$0=t_0<t_1<\\cdots<t_n=T,$$\nand continuous real functions $r_i,w_i$ on each $[t_i,t_{i+1}]$. The initial bounds are $r_0(0)\\ge-6$ and $w_0(0)\\le W_0$, and all widths are nonnegative. On each right-open interval the lower right Dini derivatives obey\n$$D_+r_i\\ge\\frac23 r_i^2,\\qquad D_+w_i\\le-4\\pi-\\frac12r_iw_i.$$\nAt each internal joining time, the scalar profile can jump upward and the width can jump downward:\n$$r_i(t_{i+1})\\le r_{i+1}(t_{i+1}),\\qquad w_{i+1}(t_{i+1})\\le w_i(t_{i+1}).$$\nHere $D_+$ denotes the liminf of forward difference quotients. Scalar lower bounds are expressed by eventual strict slope bounds; width upper bounds use frequent strict slope bounds. A limsup upper bound, as in the geometric width estimate, implies the latter hypothesis.\n\nThis is an analytic interface assembled from the scalar comparison and width estimates. It does not define Ricci flow, surgery, scalar curvature, or geometric sweepout width. Producing these data from a manifold remains a separate geometric theorem.",
+        "definitions": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite analytic data for the scalar-minimum and width argument on `[0, T]`.\nThis structure records inequalities and jumps only. It is not a definition of\nRicci flow, surgery, scalar curvature, or sweepout width. Supplying it from\ngeometric data is a separate theorem. -/\nstructure ScalarWidthTrace (W₀ T : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = T\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ W₀\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  width_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    -(4 * Real.pi) - scalar i t / 2 * width i t < q →\n      ∃ᶠ s in 𝓝[>] t, slope (width i) t s < q\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
+        "source": "Analytic interface extracted from Kleiner-Lott, Notes on Perelman's Papers, arXiv:math/0605667v5, Lemma 79.11 (p.154) and Appendix B (p.202), https://arxiv.org/pdf/math/0605667v5; Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, Theorem 1.7 and (1.8)-(1.10) (p.4), scalar evolution (1.17) (p.6), (1.28) (p.8), https://arxiv.org/pdf/0707.0108. Finite traces and the lower-Dini formulation are explicit analytic abstractions, not a verbatim named definition in either paper.",
+        "tags": [
+          "geometric-analysis",
+          "ricci-flow"
+        ],
+        "visibility": "public",
+        "status": "PUBLISHED",
+        "error_message": "",
+        "theorem_id": "a15a21e2-9521-45ee-b36b-7db0df18ff13",
+        "created_at": "2026-09-09T02:37:54.395676+00:00",
+        "updated_at": "2026-09-09T02:38:00.86184+00:00"
+      },
+      "checked_at": "2026-09-09T02:41:27.098247+00:00",
+      "theorem_id": "a15a21e2-9521-45ee-b36b-7db0df18ff13",
+      "theorem": {
+        "theorem_id": "a15a21e2-9521-45ee-b36b-7db0df18ff13",
+        "theorem_name": "OpenGA_ScalarWidthTrace",
+        "theorem_title": "Scalar and width traces across surgery times",
+        "status": "Definition",
+        "formal_statement": "",
+        "natural_language_statement": "For real numbers $W_0,T$, a scalar-width trace consists of a positive finite number of intervals with\n$$0=t_0<t_1<\\cdots<t_n=T,$$\nand continuous real functions $r_i,w_i$ on each $[t_i,t_{i+1}]$. The initial bounds are $r_0(0)\\ge-6$ and $w_0(0)\\le W_0$, and all widths are nonnegative. On each right-open interval the lower right Dini derivatives obey\n$$D_+r_i\\ge\\frac23 r_i^2,\\qquad D_+w_i\\le-4\\pi-\\frac12r_iw_i.$$\nAt each internal joining time, the scalar profile can jump upward and the width can jump downward:\n$$r_i(t_{i+1})\\le r_{i+1}(t_{i+1}),\\qquad w_{i+1}(t_{i+1})\\le w_i(t_{i+1}).$$\nHere $D_+$ denotes the liminf of forward difference quotients. Scalar lower bounds are expressed by eventual strict slope bounds; width upper bounds use frequent strict slope bounds. A limsup upper bound, as in the geometric width estimate, implies the latter hypothesis.\n\nThis is an analytic interface assembled from the scalar comparison and width estimates. It does not define Ricci flow, surgery, scalar curvature, or geometric sweepout width. Producing these data from a manifold remains a separate geometric theorem.",
+        "created_at": "2026-09-09T02:38:00.672133+00:00",
+        "vote_count": 0,
+        "tags": [
+          "geometric-analysis",
+          "ricci-flow"
+        ],
+        "definition": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite analytic data for the scalar-minimum and width argument on `[0, T]`.\nThis structure records inequalities and jumps only. It is not a definition of\nRicci flow, surgery, scalar curvature, or sweepout width. Supplying it from\ngeometric data is a separate theorem. -/\nstructure ScalarWidthTrace (W₀ T : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = T\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ W₀\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  width_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    -(4 * Real.pi) - scalar i t / 2 * width i t < q →\n      ∃ᶠ s in 𝓝[>] t, slope (width i) t s < q\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
+        "source": "Analytic interface extracted from Kleiner-Lott, Notes on Perelman's Papers, arXiv:math/0605667v5, Lemma 79.11 (p.154) and Appendix B (p.202), https://arxiv.org/pdf/math/0605667v5; Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, Theorem 1.7 and (1.8)-(1.10) (p.4), scalar evolution (1.17) (p.6), (1.28) (p.8), https://arxiv.org/pdf/0707.0108. Finite traces and the lower-Dini formulation are explicit analytic abstractions, not a verbatim named definition in either paper.",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "visibility": "public",
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "audits": [],
+        "readback": null
+      },
+      "verified_at": "2026-09-09T02:41:27.398964+00:00"
+    },
+    "width_problem": {
+      "kind": "problem",
+      "status": "PUBLISHED",
+      "started_at": "2026-09-09T02:38:11.245031+00:00",
+      "response": {
+        "jobs": [
+          {
+            "job_id": "741c4c18-45c3-460d-ad7d-28557cd36d33",
+            "name": "OpenGA.le_width_deadline_across_downward_jumps"
+          }
+        ],
+        "errors": [],
+        "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR.",
+        "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions"
+      },
+      "job_id": "741c4c18-45c3-460d-ad7d-28557cd36d33",
+      "result": {
+        "id": "741c4c18-45c3-460d-ad7d-28557cd36d33",
+        "kind": "problem",
+        "theorem_name": "OpenGA.le_width_deadline_across_downward_jumps",
+        "theorem_title": "Width deadline across downward jumps",
+        "formal_statement": "theorem OpenGA.le_width_deadline_across_downward_jumps\n    {C W₀ : ℝ} (hC : 0 < C)\n    (n : ℕ) (hn : 0 < n) (times : ℕ → ℝ) (widths : ℕ → ℝ → ℝ)\n    (hzero : times 0 = 0)\n    (htimes : ∀ i < n, times i < times (i + 1))\n    (hcont : ∀ i < n, ContinuousOn (widths i) (Icc (times i) (times (i + 1))))\n    (hinitial : widths 0 (times 0) ≤ W₀)\n    (hfinal : 0 ≤ widths (n - 1) (times n))\n    (hslope : ∀ i < n, ∀ x ∈ Ico (times i) (times (i + 1)), ∀ r : ℝ,\n      -(4 * Real.pi) + 3 / (4 * (x + C)) * widths i x < r →\n        ∃ᶠ z in 𝓝[>] x, slope (widths i) x z < r)\n    (hjumps : ∀ i, i + 1 < n →\n      widths (i + 1) (times (i + 1)) ≤ widths i (times (i + 1))) :\n    times n ≤ (C ^ ((1 : ℝ) / 4) + W₀ / (16 * Real.pi * C ^ ((3 : ℝ) / 4))) ^ (4 : ℕ) - C := by sorry",
+        "natural_language_statement": "Let $C>0$, $W_0\\in\\mathbb R$, and $0=t_0<t_1<\\cdots<t_n$ with $n\\ge1$. Let $w_i$ be continuous on $[t_i,t_{i+1}]$, with $w_0(0)\\le W_0$ and $w_{n-1}(t_n)\\ge0$. Suppose that, for $t_i\\le t<t_{i+1}$,\n$$D_+w_i(t)\\le-4\\pi+\\frac{3}{4(t+C)}w_i(t),$$\nand that $w_{i+1}(t_{i+1})\\le w_i(t_{i+1})$ at each internal joining time. Then\n$$t_n\\le\\left(C^{1/4}+\\frac{W_0}{16\\pi C^{3/4}}\\right)^4-C.$$\nHere $D_+$ is the lower right Dini derivative, represented by frequent strict upper bounds on forward slopes. The limsup upper bound in the geometric application implies this hypothesis. Nonnegativity is needed only at the final endpoint.\n\nThis is the explicit analytic extinction estimate, extended to a finite sequence of downward jumps. It does not assert that a geometric flow or its width has been constructed.",
+        "definitions": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Pow.Deriv\n\nset_option autoImplicit false\n\nopen Set Topology\nopen scoped Topology",
+        "source": "Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, https://arxiv.org/pdf/0707.0108, p.4, Theorem 1.7 and equations (1.8)-(1.10). Analytic consequence of (1.10), extended to finitely many downward jumps by interval comparison; lower-Dini hypotheses are sufficient. The geometric surgery application is separate.",
+        "tags": [
+          "geometric-analysis",
+          "ricci-flow",
+          "differential-inequalities"
+        ],
+        "visibility": "public",
+        "status": "PUBLISHED",
+        "error_message": "",
+        "theorem_id": "16d46789-a853-4a33-a4a3-4134fe549c82",
+        "created_at": "2026-09-09T02:38:11.493278+00:00",
+        "updated_at": "2026-09-09T02:38:19.921363+00:00"
+      },
+      "checked_at": "2026-09-09T02:41:27.619845+00:00",
+      "theorem_id": "16d46789-a853-4a33-a4a3-4134fe549c82",
+      "theorem": {
+        "theorem_id": "16d46789-a853-4a33-a4a3-4134fe549c82",
+        "theorem_name": "OpenGA.le_width_deadline_across_downward_jumps",
+        "theorem_title": "Width deadline across downward jumps",
+        "status": "Proved",
+        "formal_statement": "theorem OpenGA.le_width_deadline_across_downward_jumps\n    {C W₀ : ℝ} (hC : 0 < C)\n    (n : ℕ) (hn : 0 < n) (times : ℕ → ℝ) (widths : ℕ → ℝ → ℝ)\n    (hzero : times 0 = 0)\n    (htimes : ∀ i < n, times i < times (i + 1))\n    (hcont : ∀ i < n, ContinuousOn (widths i) (Icc (times i) (times (i + 1))))\n    (hinitial : widths 0 (times 0) ≤ W₀)\n    (hfinal : 0 ≤ widths (n - 1) (times n))\n    (hslope : ∀ i < n, ∀ x ∈ Ico (times i) (times (i + 1)), ∀ r : ℝ,\n      -(4 * Real.pi) + 3 / (4 * (x + C)) * widths i x < r →\n        ∃ᶠ z in 𝓝[>] x, slope (widths i) x z < r)\n    (hjumps : ∀ i, i + 1 < n →\n      widths (i + 1) (times (i + 1)) ≤ widths i (times (i + 1))) :\n    times n ≤ (C ^ ((1 : ℝ) / 4) + W₀ / (16 * Real.pi * C ^ ((3 : ℝ) / 4))) ^ (4 : ℕ) - C := by sorry",
+        "natural_language_statement": "Let $C>0$, $W_0\\in\\mathbb R$, and $0=t_0<t_1<\\cdots<t_n$ with $n\\ge1$. Let $w_i$ be continuous on $[t_i,t_{i+1}]$, with $w_0(0)\\le W_0$ and $w_{n-1}(t_n)\\ge0$. Suppose that, for $t_i\\le t<t_{i+1}$,\n$$D_+w_i(t)\\le-4\\pi+\\frac{3}{4(t+C)}w_i(t),$$\nand that $w_{i+1}(t_{i+1})\\le w_i(t_{i+1})$ at each internal joining time. Then\n$$t_n\\le\\left(C^{1/4}+\\frac{W_0}{16\\pi C^{3/4}}\\right)^4-C.$$\nHere $D_+$ is the lower right Dini derivative, represented by frequent strict upper bounds on forward slopes. The limsup upper bound in the geometric application implies this hypothesis. Nonnegativity is needed only at the final endpoint.\n\nThis is the explicit analytic extinction estimate, extended to a finite sequence of downward jumps. It does not assert that a geometric flow or its width has been constructed.",
+        "created_at": "2026-09-09T02:38:17.472582+00:00",
+        "vote_count": 0,
+        "tags": [
+          "differential-inequalities",
+          "geometric-analysis",
+          "ricci-flow"
+        ],
+        "preamble": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Pow.Deriv\n\nset_option autoImplicit false\n\nopen Set Topology\nopen scoped Topology",
+        "source": "Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, https://arxiv.org/pdf/0707.0108, p.4, Theorem 1.7 and equations (1.8)-(1.10). Analytic consequence of (1.10), extended to finitely many downward jumps by interval comparison; lower-Dini hypotheses are sufficient. The geometric surgery application is separate.",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "visibility": "public",
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "audits": [],
+        "readback": null
+      },
+      "verified_at": "2026-09-09T02:41:27.854330+00:00"
+    },
+    "geometry_problem": {
+      "kind": "problem",
+      "status": "PUBLISHED",
+      "started_at": "2026-09-09T02:38:11.788027+00:00",
+      "response": {
+        "jobs": [
+          {
+            "job_id": "5f6ced00-fec0-4e2c-9506-18a4b2465067",
+            "name": "PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere"
+          }
+        ],
+        "errors": [],
+        "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR.",
+        "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions"
+      },
+      "job_id": "5f6ced00-fec0-4e2c-9506-18a4b2465067",
+      "result": {
+        "id": "5f6ced00-fec0-4e2c-9506-18a4b2465067",
+        "kind": "problem",
+        "theorem_name": "PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere",
+        "theorem_title": "Persistent profiles from a hypothetical Poincare counterexample",
+        "formal_statement": "theorem PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ W₀ : ℝ, 0 ≤ W₀ ∧ ∀ T : ℝ, 0 < T → Nonempty (OpenGA.ScalarWidthTrace W₀ T) := by sorry",
+        "natural_language_statement": "Let $M$ be a compact simply connected Hausdorff topological three-manifold without boundary. Suppose that $M$ is not homeomorphic to the unit three-sphere. Then there is a real number $W_0\\ge0$, independent of the final time, such that\n$$\\forall T>0,\\quad \\text{there exists a scalar-width trace on }[0,T]\\text{ with initial width at most }W_0.$$\nA scalar-width trace is the analytic data in the imported definition: finitely many continuous scalar and nonnegative width profiles, initial scalar minimum at least $-6$, differential inequalities\n$$D_+r\\ge\\frac23r^2,\\qquad D_+w\\le-4\\pi-\\frac12rw,$$\nand upward scalar jumps and downward width jumps.\n\nThis is a composite geometric extraction target for the Kleiner-Lott surgery route with the Colding-Minicozzi width input. It deliberately isolates the unresolved passage from geometry and topology to analytic data. It is not a formalization of any one named milestone. The scope includes passing from a topological three-manifold to smooth normalized initial data, constructing surgery flows for arbitrary finite times, identifying surviving nontrivial components under the nonspherical hypothesis, and establishing the scalar/width estimates, endpoint regularity, jump inequalities, and a uniform initial width bound. None of those geometric constructions is supplied by the trace definition.\n\nThe Kleiner-Lott source starts with smooth geometric data; the topological-to-smooth passage is an additional formalization obligation in this statement.",
+        "definitions": "import Definitions.Def_OpenGA_ScalarWidthTrace\nimport Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\nset_option autoImplicit false",
+        "source": "Composite reduction target, not a verbatim theorem: Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 (pp.8-9), Proposition 77.2 (p.146), Lemma 79.11 (p.154), Lemma 81.2 (p.160), with Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7, Corollary 1.11 (p.4), and (1.28) (p.8). The topological smoothing bridge and the extraction of finite analytic profiles are explicitly unresolved parts of this derived target; this statement does not attest any individual geometric milestone.",
+        "tags": [
+          "geometric-analysis",
+          "ricci-flow",
+          "differential-inequalities"
+        ],
+        "visibility": "public",
+        "status": "PUBLISHED",
+        "error_message": "",
+        "theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "created_at": "2026-09-09T02:38:12.049559+00:00",
+        "updated_at": "2026-09-09T02:38:25.990522+00:00"
+      },
+      "checked_at": "2026-09-09T02:41:28.089350+00:00",
+      "theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+      "theorem": {
+        "theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "theorem_name": "PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere",
+        "theorem_title": "Persistent profiles from a hypothetical Poincare counterexample",
+        "status": "Open",
+        "formal_statement": "theorem PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ W₀ : ℝ, 0 ≤ W₀ ∧ ∀ T : ℝ, 0 < T → Nonempty (OpenGA.ScalarWidthTrace W₀ T) := by sorry",
+        "natural_language_statement": "Let $M$ be a compact simply connected Hausdorff topological three-manifold without boundary. Suppose that $M$ is not homeomorphic to the unit three-sphere. Then there is a real number $W_0\\ge0$, independent of the final time, such that\n$$\\forall T>0,\\quad \\text{there exists a scalar-width trace on }[0,T]\\text{ with initial width at most }W_0.$$\nA scalar-width trace is the analytic data in the imported definition: finitely many continuous scalar and nonnegative width profiles, initial scalar minimum at least $-6$, differential inequalities\n$$D_+r\\ge\\frac23r^2,\\qquad D_+w\\le-4\\pi-\\frac12rw,$$\nand upward scalar jumps and downward width jumps.\n\nThis is a composite geometric extraction target for the Kleiner-Lott surgery route with the Colding-Minicozzi width input. It deliberately isolates the unresolved passage from geometry and topology to analytic data. It is not a formalization of any one named milestone. The scope includes passing from a topological three-manifold to smooth normalized initial data, constructing surgery flows for arbitrary finite times, identifying surviving nontrivial components under the nonspherical hypothesis, and establishing the scalar/width estimates, endpoint regularity, jump inequalities, and a uniform initial width bound. None of those geometric constructions is supplied by the trace definition.\n\nThe Kleiner-Lott source starts with smooth geometric data; the topological-to-smooth passage is an additional formalization obligation in this statement.",
+        "created_at": "2026-09-09T02:38:25.083946+00:00",
+        "vote_count": 0,
+        "tags": [
+          "differential-inequalities",
+          "geometric-analysis",
+          "ricci-flow"
+        ],
+        "preamble": "import Definitions.Def_OpenGA_ScalarWidthTrace\nimport Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\nset_option autoImplicit false",
+        "source": "Composite reduction target, not a verbatim theorem: Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 (pp.8-9), Proposition 77.2 (p.146), Lemma 79.11 (p.154), Lemma 81.2 (p.160), with Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7, Corollary 1.11 (p.4), and (1.28) (p.8). The topological smoothing bridge and the extraction of finite analytic profiles are explicitly unresolved parts of this derived target; this statement does not attest any individual geometric milestone.",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "visibility": "public",
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "audits": [],
+        "readback": null
+      },
+      "verified_at": "2026-09-09T02:41:28.377359+00:00"
+    },
+    "width_proof": {
+      "kind": "proof",
+      "target": "16d46789-a853-4a33-a4a3-4134fe549c82",
+      "status": "ACCEPTED",
+      "started_at": "2026-09-09T02:38:45.138349+00:00",
+      "response": {
+        "submission_id": "f0552af4-769d-4fe4-8754-b9e01fd5718b",
+        "status": "PENDING",
+        "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+        "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation"
+      },
+      "submission_id": "f0552af4-769d-4fe4-8754-b9e01fd5718b",
+      "result": {
+        "id": "f0552af4-769d-4fe4-8754-b9e01fd5718b",
+        "theorem_id": "16d46789-a853-4a33-a4a3-4134fe549c82",
+        "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "status": "ACCEPTED",
+        "error_message": "",
+        "file_path": "16d46789-a853-4a33-a4a3-4134fe549c82/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/f0552af4-769d-4fe4-8754-b9e01fd5718b.lean",
+        "created_at": "2026-09-09T02:38:45.493956+00:00",
+        "updated_at": "2026-09-09T02:39:17.988714+00:00"
+      },
+      "checked_at": "2026-09-09T02:41:28.585966+00:00",
+      "verified_at": "2026-09-09T02:41:29.083369+00:00",
+      "accepted_source_sha256": "aeb6b786fd328e52c6be60acb2cf0cd441a9ee2595df316b1bc2382521512a08"
+    },
+    "root_reduction": {
+      "kind": "proof",
+      "target": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "status": "SKETCH_ACCEPTED",
+      "started_at": "2026-09-09T02:40:06.781609+00:00",
+      "response": {
+        "submission_id": "d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "status": "PENDING",
+        "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+        "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation"
+      },
+      "submission_id": "d543d39b-4273-4b91-826f-1b9c8c6191ee",
+      "result": {
+        "id": "d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+        "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "status": "SKETCH_ACCEPTED",
+        "error_message": "",
+        "file_path": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/d543d39b-4273-4b91-826f-1b9c8c6191ee.lean",
+        "created_at": "2026-09-09T02:40:07.087888+00:00",
+        "updated_at": "2026-09-09T02:40:49.543292+00:00"
+      },
+      "checked_at": "2026-09-09T02:41:29.425895+00:00",
+      "verified_at": "2026-09-09T02:41:29.951132+00:00",
+      "accepted_source_sha256": "f82e819e6892eccb42edc84434fd83ecca4ab929dbbd8edba8791948e44bdfa6"
+    }
+  },
+  "before": {
+    "checked_at": "2026-09-09T02:37:44.901653+00:00",
+    "root_status": "Open",
+    "graph": {
+      "root_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "nodes": [
+        {
+          "node_type": "theorem",
+          "theorem_id": "0ecb5d1e-78dc-49f7-986e-4faa74dae462",
+          "theorem_name": "PoincareFormalization.homotopyEquiv_sphere_three",
+          "theorem_title": "A closed simply connected 3-manifold is a homotopy 3-sphere",
+          "status": "Open",
+          "formal_statement": "namespace PoincareFormalization\n\ntheorem homotopyEquiv_sphere_three (M : Type*) [TopologicalSpace M]\n    [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M] :\n    Nonempty (M ≃ₕ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization",
+          "natural_language_statement": "Let $M$ be a compact, Hausdorff, simply connected topological $3$-manifold without boundary, modelled on Euclidean $3$-space (a charted space over $\\mathbb{R}^3 = $ `EuclideanSpace ℝ (Fin 3)`). Then $M$ is homotopy equivalent to the standard $3$-sphere:\n\n$$ M \\simeq_h \\mathbb{S}^3 = \\{\\, x \\in \\mathbb{R}^4 : \\lVert x\\rVert = 1 \\,\\}. $$\n\nThis is the classical, purely homotopy-theoretic half of the three-dimensional Poincaré conjecture; it does not use geometrization or Ricci flow. A simply connected closed $3$-manifold is orientable, so Poincaré duality forces its homology to coincide with that of $S^3$, namely $H_0 = H_3 = \\mathbb{Z}$ and $H_1 = H_2 = 0$. The Hurewicz theorem then gives $\\pi_3(M) \\cong H_3(M) \\cong \\mathbb{Z}$, and a generator is represented by a map $f : S^3 \\to M$ that induces isomorphisms on all homology groups. Since both $M$ and $S^3$ are simply connected CW complexes, Whitehead's theorem promotes $f$ to a homotopy equivalence.\n\nAs a milestone this is the \"easy\" input to the topological Poincaré conjecture: combined with the statement that every homotopy $3$-sphere is homeomorphic to $S^3$, it yields that a compact simply connected $3$-manifold is homeomorphic to $S^3$.\n\n**Formalization Note** The sphere $\\mathbb{S}^3$ is `Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1` with the subspace topology, and $\\simeq_h$ is Mathlib's `ContinuousMap.HomotopyEquiv` (notation `≃ₕ`, scoped in the `ContinuousMap` namespace). No second-countability assumption is imposed, matching the parent statement `PoincareFormalization.nonempty_homeomorph_sphere_three`.",
+          "created_at": "2026-09-08T15:57:20.366156+00:00",
+          "vote_count": 0,
+          "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\nimport Mathlib.Topology.Homotopy.Equiv\nopen scoped ContinuousMap",
+          "source": "Mathlib proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three, Geometry/Manifold/PoincareConjecture.lean, rev 0df444a (author Junyan Xu). Mathematical reference: J. Milnor, The Poincaré Conjecture, Clay Mathematics Institute, Section 1, p. 1, https://www.claymath.org/wp-content/uploads/2022/06/poincare.pdf . Homotopy-theoretic ingredients: A. Hatcher, Algebraic Topology (2002): Poincaré duality (Theorem 3.30), Hurewicz theorem (Theorem 4.32), Whitehead theorem (Theorem 4.5).",
+          "tags": [
+            "algebraic-topology",
+            "mathlib",
+            "poincare-conjecture",
+            "topology"
+          ],
+          "audits": [],
+          "created_by": "bb76969b-87a2-41ce-9427-f0342ba97e56",
+          "created_by_username": "korbonits",
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+          "has_more_children": false,
+          "has_more_parents": false
+        },
+        {
+          "node_type": "theorem",
+          "theorem_id": "192cef90-169f-4470-b074-8392596cb487",
+          "theorem_name": "PoincareFormalization.covering_is_homeomorph",
+          "theorem_title": "A connected covering of a simply connected space is a homeomorphism",
+          "status": "Proved",
+          "formal_statement": "theorem PoincareFormalization.covering_is_homeomorph\n    {E X : Type*} [TopologicalSpace E] [TopologicalSpace X]\n    [ConnectedSpace E] [SimplyConnectedSpace X] [LocallyPathConnectedSpace X]\n    (p : E → X) (hp : IsCoveringMap p) :\n    ∃ e : E ≃ₜ X, (e : E → X) = p := by sorry",
+          "natural_language_statement": "Let $E$ be a nonempty connected topological space, let $X$ be a simply connected and locally path connected topological space, and let $p:E\\to X$ be a covering map. Then $p$ itself is a homeomorphism:\n$$\\exists e:E\\cong X,\\qquad e=p.$$\nNo compactness, Hausdorff, or dimension assumption is needed. This gives the final covering-space step in deriving Poincaré from a spherical covering. The hypothesis that such a covering exists is not part of this result's conclusion.",
+          "created_at": "2026-09-08T04:51:46.882397+00:00",
+          "vote_count": 0,
+          "preamble": "import Mathlib.Topology.Homotopy.Lifting",
+          "source": "Corollary of Hatcher, Algebraic Topology (2002), Section 1.3, Propositions 1.33 (pp. 61–62, existence of lifts) and 1.34 (p. 62, uniqueness of lifts): https://pi.math.cornell.edu/~hatcher/AT/AT.pdf . Uses the existing Mathlib implementations in Topology/Homotopy/Lifting.lean and Topology/Covering/Basic.lean, revision 0df444a360eaa60ab8c11dca51a86af692955474.",
+          "tags": [
+            "covering-spaces",
+            "poincare-conjecture",
+            "topology"
+          ],
+          "audits": [],
+          "created_by": "9d3ad061-c992-4b3d-a6dd-36ecc2a5278e",
+          "created_by_username": "salim",
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+          "has_more_children": false,
+          "has_more_parents": false
+        },
+        {
+          "node_type": "theorem",
+          "theorem_id": "4de517bb-1125-48cf-b44f-de4ca093a0a5",
+          "theorem_name": "PoincareFormalization.spherical_cover_of_finite_fundamental_group",
+          "theorem_title": "Elliptization: a spherical cover for a closed 3-manifold with finite fundamental group",
+          "status": "Open",
+          "formal_statement": "theorem PoincareFormalization.spherical_cover_of_finite_fundamental_group\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M] [CompactSpace M] [ConnectedSpace M]\n    (x : M) [Finite (FundamentalGroup M x)] :\n    ∃ p : ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1) → M,\n      IsCoveringMap p := by sorry",
+          "natural_language_statement": "Let $M$ be a compact, connected, Hausdorff topological 3-manifold without boundary. Let $x\\in M$, and assume the fundamental group $\\pi_1(M,x)$ is finite. Then there exists a covering map from the unit 3-sphere to $M$:\n$$\\exists p:S^3\\longrightarrow M,\\qquad p\\text{ is a covering map}.$$\nThis is the topological covering-space consequence of the spherical space-form theorem (elliptization), not its stronger diffeomorphism classification. Compactness and local Euclidean charts supply second countability; the topological-to-smooth passage in dimension three is part of the literature's prerequisites. The geometric existence assertion remains an open formalization target. It must not be treated as an already-verified theorem when reducing Poincaré to it.",
+          "created_at": "2026-09-08T04:51:48.141734+00:00",
+          "vote_count": 0,
+          "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.FundamentalGroup\nimport Mathlib.Topology.Covering.Basic",
+          "source": "Morgan–Tian, Ricci Flow and the Poincaré Conjecture (2007), Introduction, Corollary 0.2(b), p. x, and the smooth/topological equivalence noted in footnote 1, p. ix: https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf . This statement is its topological covering-space consequence. See also the correction to Section 19.2: https://arxiv.org/abs/1512.00699 .",
+          "tags": [
+            "covering-spaces",
+            "elliptization",
+            "poincare-conjecture",
+            "topology"
+          ],
+          "audits": [],
+          "created_by": "9d3ad061-c992-4b3d-a6dd-36ecc2a5278e",
+          "created_by_username": "salim",
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+          "has_more_children": false,
+          "has_more_parents": false
+        },
+        {
+          "node_type": "theorem",
+          "theorem_id": "79da6e34-6c16-4bcf-bac0-c071f41d246d",
+          "theorem_name": "PoincareFormalization.homotopy_three_sphere_nonempty_homeomorph",
+          "theorem_title": "A homotopy 3-sphere is homeomorphic to the 3-sphere (Perelman)",
+          "status": "Open",
+          "formal_statement": "namespace PoincareFormalization\n\ntheorem homotopy_three_sphere_nonempty_homeomorph (M : Type*) [TopologicalSpace M]\n    [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M] :\n    (M ≃ₕ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) →\n    Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization",
+          "natural_language_statement": "Let $M$ be a Hausdorff topological $3$-manifold (a charted space over $\\mathbb{R}^3 = $ `EuclideanSpace ℝ (Fin 3)`). If $M$ is homotopy equivalent to the standard $3$-sphere, then $M$ is homeomorphic to it:\n\n$$ \\bigl(M \\simeq_h \\mathbb{S}^3\\bigr) \\;\\Longrightarrow\\; M \\simeq_t \\mathbb{S}^3 . $$\n\nThis is the deep half of the three-dimensional topological Poincaré conjecture, proved by Grigori Perelman (2002–2003) using Richard Hamilton's Ricci flow with surgery. It is precisely the $n = 3$ instance of Mathlib's `proof_wanted ContinuousMap.HomotopyEquiv.nonempty_homeomorph_sphere`, which asserts for each $n$ that a topological manifold homotopy equivalent to $\\mathbb{S}^n$ is homeomorphic to it. Together with the classical fact that a closed simply connected $3$-manifold is a homotopy $3$-sphere, this statement gives the Poincaré conjecture in dimension three.\n\n**Formalization Note** Here $\\simeq_h$ is `ContinuousMap.HomotopyEquiv` (notation `≃ₕ`) and $\\simeq_t$ is `Homeomorph` (notation `≃ₜ`); the sphere is `Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1`. The hypothesis is a bare homotopy equivalence, matching the shape of the sibling `proof_wanted`; no compactness or simple-connectivity hypothesis is required beyond the homotopy equivalence itself.",
+          "created_at": "2026-09-08T15:57:11.036991+00:00",
+          "vote_count": 0,
+          "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\nimport Mathlib.Topology.Homotopy.Equiv\nopen scoped ContinuousMap",
+          "source": "Mathlib proof_wanted ContinuousMap.HomotopyEquiv.nonempty_homeomorph_sphere specialized to n = 3, Geometry/Manifold/PoincareConjecture.lean, rev 0df444a (author Junyan Xu). G. Perelman, arXiv:math/0211159, math/0303109, math/0307245. Exposition: Morgan–Tian, Ricci Flow and the Poincaré Conjecture (2007), Clay Mathematics Monographs 3, Corollary 0.2(a), https://www.claymath.org/library/monographs/cmim03.pdf .",
+          "tags": [
+            "mathlib",
+            "poincare-conjecture",
+            "ricci-flow",
+            "topology"
+          ],
+          "audits": [],
+          "created_by": "bb76969b-87a2-41ce-9427-f0342ba97e56",
+          "created_by_username": "korbonits",
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+          "has_more_children": false,
+          "has_more_parents": false
+        },
+        {
+          "node_type": "theorem",
+          "theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+          "theorem_name": "PoincareFormalization.nonempty_homeomorph_sphere_three",
+          "theorem_title": "Three-dimensional topological Poincaré conjecture — Mathlib statement",
+          "status": "Open",
+          "formal_statement": "namespace PoincareFormalization\n\ntheorem nonempty_homeomorph_sphere_three (M : Type*) [TopologicalSpace M]\n    [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M] :\n    Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization",
+          "natural_language_statement": "Every compact simply connected Hausdorff topological 3-manifold without boundary is homeomorphic to the unit 3-sphere in Euclidean 4-space. This follows the exact hypotheses and conclusion of Mathlib’s proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three; only the declaration namespace and local notation are adapted for this platform. No extra second-countability assumption is imposed.",
+          "created_at": "2026-09-08T00:37:48.77319+00:00",
+          "vote_count": 0,
+          "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected",
+          "source": "Mathlib, Junyan Xu, Geometry/Manifold/PoincareConjecture.lean, proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three, platform revision 0df444a: https://github.com/leanprover-community/mathlib4/blob/0df444a/Mathlib/Geometry/Manifold/PoincareConjecture.lean . Mathematical reference: John Milnor, The Poincaré Conjecture, Section 1, p. 1, https://www.claymath.org/wp-content/uploads/2022/06/poincare.pdf . Proof exposition: Morgan–Tian, Ricci Flow and the Poincaré Conjecture (2007), Corollary 0.2(a), https://www.claymath.org/library/monographs/cmim03.pdf ; correction https://arxiv.org/abs/1512.00699 .",
+          "tags": [
+            "mathlib",
+            "poincare-conjecture",
+            "topology"
+          ],
+          "audits": [
+            {
+              "audit_id": "ba8c9e07-2e79-4ad2-93a8-961434e0b0e8",
+              "reviewer_id": "b14dd546-c5f9-458e-861d-79f50bacd399",
+              "reviewer_username": "tianyipeng",
+              "decision": "confirm",
+              "comment": null,
+              "created_at": "2026-09-08T03:14:14.323015+00:00"
+            },
+            {
+              "audit_id": "a25ab758-e063-474b-9880-ed5349eb82f0",
+              "reviewer_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+              "reviewer_username": "Moqian",
+              "decision": "confirm",
+              "comment": "Confirmed by the mission captain (proposal self-audit).",
+              "created_at": "2026-09-08T03:14:30.996361+00:00"
+            }
+          ],
+          "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+          "created_by_username": "Moqian",
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+          "has_more_children": false,
+          "has_more_parents": false
+        },
+        {
+          "node_type": "sketch",
+          "node_id": "sketch-97d3cac5-2b5e-48c6-9651-e94fe6c77fcd",
+          "submission_id": "97d3cac5-2b5e-48c6-9651-e94fe6c77fcd",
+          "parent_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+          "status": "SKETCH_ACCEPTED",
+          "username": "korbonits",
+          "explanation": "We prove the three-dimensional topological Poincaré conjecture in the form\n$$ \\text{$M$ compact, Hausdorff, simply connected, a topological $3$-manifold} \\",
+          "created_at": "2026-09-08T16:00:19.504985+00:00",
+          "child_count": 2,
+          "deprecated_at": null
+        },
+        {
+          "node_type": "sketch",
+          "node_id": "sketch-98612d40-bcb7-4333-afa7-69b60e20dfdc",
+          "submission_id": "98612d40-bcb7-4333-afa7-69b60e20dfdc",
+          "parent_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+          "status": "SKETCH_ACCEPTED",
+          "username": "salim",
+          "explanation": "This is a conditional reduction of the three-dimensional topological Poincaré theorem, not a complete proof. Its unproved geometric input is `PoincareFormalization.spherical_cover_of_finite_fundamental_group`:\n$$\\text{a closed connected 3-manifold with finite fundamental group admits a covering }S^3\\to M.$$\nThat input is a topological consequence of elliptization; see Morgan–Tian, *Ricci Flow and the Poincaré Conjecture* (2007), Corollary 0.2(b), p. x, and footnote 1, p. ix, https://www.claymath.org/wp-content/uploads/2022/03/Ricci-pdf.pdf. The geometric input remains open in Lean.\n\nFor the mission's simply connected manifold $M$, the fundamental group at any chosen point is trivial and hence finite. Applying the geometric input gives a covering\n$$p:S^3\\longrightarrow M.$$\nThe sphere is connected by Mathlib's connectedness theorem for spheres in real vector spaces of dimension greater than one. The manifold is locally path connected because its charts take values in Euclidean 3-space. The independently proved covering-space lemma `PoincareFormalization.covering_is_homeomorph` therefore makes $p$ a homeomorphism. Its inverse has the exact type required by the mission.\n\nNo Ricci-flow existence, singularity control, surgery, or extinction theorem is proved by this reduction. Those substantive geometric obligations remain inside the open elliptization input. The root must remain open until that input is proved.\n",
+          "created_at": "2026-09-08T04:53:00.448294+00:00",
+          "child_count": 2,
+          "deprecated_at": null
+        }
+      ],
+      "edges": [
+        {
+          "source": "0ecb5d1e-78dc-49f7-986e-4faa74dae462",
+          "target": "sketch-97d3cac5-2b5e-48c6-9651-e94fe6c77fcd",
+          "kind": "sketch"
+        },
+        {
+          "source": "79da6e34-6c16-4bcf-bac0-c071f41d246d",
+          "target": "sketch-97d3cac5-2b5e-48c6-9651-e94fe6c77fcd",
+          "kind": "sketch"
+        },
+        {
+          "source": "sketch-97d3cac5-2b5e-48c6-9651-e94fe6c77fcd",
+          "target": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+          "kind": "sketch"
+        },
+        {
+          "source": "192cef90-169f-4470-b074-8392596cb487",
+          "target": "sketch-98612d40-bcb7-4333-afa7-69b60e20dfdc",
+          "kind": "sketch"
+        },
+        {
+          "source": "4de517bb-1125-48cf-b44f-de4ca093a0a5",
+          "target": "sketch-98612d40-bcb7-4333-afa7-69b60e20dfdc",
+          "kind": "sketch"
+        },
+        {
+          "source": "sketch-98612d40-bcb7-4333-afa7-69b60e20dfdc",
+          "target": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+          "kind": "sketch"
+        }
+      ],
+      "has_hidden_deprecated_sketches": false
+    }
+  },
+  "graph_verification": {
+    "verified_at": "2026-09-09T02:41:37.436168+00:00",
+    "root_status": "Open",
+    "graph": {
+      "root_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "nodes": [
+        {
+          "node_type": "theorem",
+          "theorem_id": "0ecb5d1e-78dc-49f7-986e-4faa74dae462",
+          "theorem_name": "PoincareFormalization.homotopyEquiv_sphere_three",
+          "theorem_title": "A closed simply connected 3-manifold is a homotopy 3-sphere",
+          "status": "Open",
+          "formal_statement": "namespace PoincareFormalization\n\ntheorem homotopyEquiv_sphere_three (M : Type*) [TopologicalSpace M]\n    [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M] :\n    Nonempty (M ≃ₕ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization",
+          "natural_language_statement": "Let $M$ be a compact, Hausdorff, simply connected topological $3$-manifold without boundary, modelled on Euclidean $3$-space (a charted space over $\\mathbb{R}^3 = $ `EuclideanSpace ℝ (Fin 3)`). Then $M$ is homotopy equivalent to the standard $3$-sphere:\n\n$$ M \\simeq_h \\mathbb{S}^3 = \\{\\, x \\in \\mathbb{R}^4 : \\lVert x\\rVert = 1 \\,\\}. $$\n\nThis is the classical, purely homotopy-theoretic half of the three-dimensional Poincaré conjecture; it does not use geometrization or Ricci flow. A simply connected closed $3$-manifold is orientable, so Poincaré duality forces its homology to coincide with that of $S^3$, namely $H_0 = H_3 = \\mathbb{Z}$ and $H_1 = H_2 = 0$. The Hurewicz theorem then gives $\\pi_3(M) \\cong H_3(M) \\cong \\mathbb{Z}$, and a generator is represented by a map $f : S^3 \\to M$ that induces isomorphisms on all homology groups. Since both $M$ and $S^3$ are simply connected CW complexes, Whitehead's theorem promotes $f$ to a homotopy equivalence.\n\nAs a milestone this is the \"easy\" input to the topological Poincaré conjecture: combined with the statement that every homotopy $3$-sphere is homeomorphic to $S^3$, it yields that a compact simply connected $3$-manifold is homeomorphic to $S^3$.\n\n**Formalization Note** The sphere $\\mathbb{S}^3$ is `Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1` with the subspace topology, and $\\simeq_h$ is Mathlib's `ContinuousMap.HomotopyEquiv` (notation `≃ₕ`, scoped in the `ContinuousMap` namespace). No second-countability assumption is imposed, matching the parent statement `PoincareFormalization.nonempty_homeomorph_sphere_three`.",
+          "created_at": "2026-09-08T15:57:20.366156+00:00",
+          "vote_count": 0,
+          "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\nimport Mathlib.Topology.Homotopy.Equiv\nopen scoped ContinuousMap",
+          "source": "Mathlib proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three, Geometry/Manifold/PoincareConjecture.lean, rev 0df444a (author Junyan Xu). Mathematical reference: J. Milnor, The Poincaré Conjecture, Clay Mathematics Institute, Section 1, p. 1, https://www.claymath.org/wp-content/uploads/2022/06/poincare.pdf . Homotopy-theoretic ingredients: A. Hatcher, Algebraic Topology (2002): Poincaré duality (Theorem 3.30), Hurewicz theorem (Theorem 4.32), Whitehead theorem (Theorem 4.5).",
+          "tags": [
+            "algebraic-topology",
+            "mathlib",
+            "poincare-conjecture",
+            "topology"
+          ],
+          "audits": [],
+          "created_by": "bb76969b-87a2-41ce-9427-f0342ba97e56",
+          "created_by_username": "korbonits",
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+          "has_more_children": false,
+          "has_more_parents": false
+        },
+        {
+          "node_type": "theorem",
+          "theorem_id": "16d46789-a853-4a33-a4a3-4134fe549c82",
+          "theorem_name": "OpenGA.le_width_deadline_across_downward_jumps",
+          "theorem_title": "Width deadline across downward jumps",
+          "status": "Proved",
+          "formal_statement": "theorem OpenGA.le_width_deadline_across_downward_jumps\n    {C W₀ : ℝ} (hC : 0 < C)\n    (n : ℕ) (hn : 0 < n) (times : ℕ → ℝ) (widths : ℕ → ℝ → ℝ)\n    (hzero : times 0 = 0)\n    (htimes : ∀ i < n, times i < times (i + 1))\n    (hcont : ∀ i < n, ContinuousOn (widths i) (Icc (times i) (times (i + 1))))\n    (hinitial : widths 0 (times 0) ≤ W₀)\n    (hfinal : 0 ≤ widths (n - 1) (times n))\n    (hslope : ∀ i < n, ∀ x ∈ Ico (times i) (times (i + 1)), ∀ r : ℝ,\n      -(4 * Real.pi) + 3 / (4 * (x + C)) * widths i x < r →\n        ∃ᶠ z in 𝓝[>] x, slope (widths i) x z < r)\n    (hjumps : ∀ i, i + 1 < n →\n      widths (i + 1) (times (i + 1)) ≤ widths i (times (i + 1))) :\n    times n ≤ (C ^ ((1 : ℝ) / 4) + W₀ / (16 * Real.pi * C ^ ((3 : ℝ) / 4))) ^ (4 : ℕ) - C := by sorry",
+          "natural_language_statement": "Let $C>0$, $W_0\\in\\mathbb R$, and $0=t_0<t_1<\\cdots<t_n$ with $n\\ge1$. Let $w_i$ be continuous on $[t_i,t_{i+1}]$, with $w_0(0)\\le W_0$ and $w_{n-1}(t_n)\\ge0$. Suppose that, for $t_i\\le t<t_{i+1}$,\n$$D_+w_i(t)\\le-4\\pi+\\frac{3}{4(t+C)}w_i(t),$$\nand that $w_{i+1}(t_{i+1})\\le w_i(t_{i+1})$ at each internal joining time. Then\n$$t_n\\le\\left(C^{1/4}+\\frac{W_0}{16\\pi C^{3/4}}\\right)^4-C.$$\nHere $D_+$ is the lower right Dini derivative, represented by frequent strict upper bounds on forward slopes. The limsup upper bound in the geometric application implies this hypothesis. Nonnegativity is needed only at the final endpoint.\n\nThis is the explicit analytic extinction estimate, extended to a finite sequence of downward jumps. It does not assert that a geometric flow or its width has been constructed.",
+          "created_at": "2026-09-09T02:38:17.472582+00:00",
+          "vote_count": 0,
+          "preamble": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Pow.Deriv\n\nset_option autoImplicit false\n\nopen Set Topology\nopen scoped Topology",
+          "source": "Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, https://arxiv.org/pdf/0707.0108, p.4, Theorem 1.7 and equations (1.8)-(1.10). Analytic consequence of (1.10), extended to finitely many downward jumps by interval comparison; lower-Dini hypotheses are sufficient. The geometric surgery application is separate.",
+          "tags": [
+            "differential-inequalities",
+            "geometric-analysis",
+            "ricci-flow"
+          ],
+          "audits": [],
+          "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+          "created_by_username": "Moqian",
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+          "has_more_children": false,
+          "has_more_parents": false
+        },
+        {
+          "node_type": "theorem",
+          "theorem_id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+          "theorem_name": "OpenGA.scalar_lower_bound_across_upward_jumps",
+          "theorem_title": "Scalar lower bound across upward jumps",
+          "status": "Proved",
+          "formal_statement": "theorem OpenGA.scalar_lower_bound_across_upward_jumps\n    (n : ℕ) (hn : 0 < n) (times : ℕ → ℝ) (profiles : ℕ → ℝ → ℝ)\n    (hzero : times 0 = 0)\n    (htimes : ∀ i < n, times i < times (i + 1))\n    (hcont : ∀ i < n, ContinuousOn (profiles i) (Icc (times i) (times (i + 1))))\n    (hinitial : -6 ≤ profiles 0 (times 0))\n    (hslope : ∀ i < n, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n      q < (2 / 3 : ℝ) * (profiles i t) ^ 2 →\n        ∀ᶠ s in 𝓝[>] t, q < slope (profiles i) t s)\n    (hjumps : ∀ i, i + 1 < n →\n      profiles i (times (i + 1)) ≤ profiles (i + 1) (times (i + 1))) :\n    ∀ i < n, ∀ t ∈ Icc (times i) (times (i + 1)),\n      -(6 : ℝ) / (1 + 4 * t) ≤ profiles i t := by sorry",
+          "natural_language_statement": "Let $n\\ge1$ and $0=t_0<t_1<\\cdots<t_n$. For $0\\le i<n$, let $r_i:[t_i,t_{i+1}]\\to\\mathbb R$ be continuous. Write\n$$D_+r_i(t)=\\liminf_{s\\to t^+}\\frac{r_i(s)-r_i(t)}{s-t}.$$\nAssume $r_0(0)\\ge-6$, and, for each $i<n$ and $t_i\\le t<t_{i+1}$,\n$$D_+r_i(t)\\ge\\frac23r_i(t)^2.$$\nAt every internal joining time, assume $r_i(t_{i+1})\\le r_{i+1}(t_{i+1})$ for $i+1<n$. Then\n$$r_i(t)\\ge-\\frac6{1+4t}\\qquad(0\\le i<n,\\ t_i\\le t\\le t_{i+1}).$$\nThis isolates the scalar comparison step used in Kleiner-Lott's surgery estimates, with upward jumps allowed. Applying it to scalar-curvature minima requires establishing these analytic hypotheses from the geometry; this statement does not itself formalize a Ricci flow.\n\n[Source: Kleiner-Lott, proof of Lemma 79.11, p. 154](https://arxiv.org/pdf/math/0605667v5#page=154), using [Appendix B, equations (B.1)-(B.2), p. 202](https://arxiv.org/pdf/math/0605667v5#page=202).",
+          "created_at": "2026-09-09T02:04:08.77703+00:00",
+          "vote_count": 0,
+          "preamble": "import Mathlib.Analysis.Calculus.MeanValue\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology",
+          "source": "Analytic comparison extracted from Kleiner-Lott, Notes on Perelman's Papers, arXiv:math/0605667v5, proof of Lemma 79.11 (p. 154) and Appendix B (B.1)-(B.2) (p. 202). Upward jumps generalize the unchanged minima in that argument; the geometric Ricci-flow hypotheses are not formalized here. https://arxiv.org/pdf/math/0605667v5",
+          "tags": [
+            "differential-inequalities",
+            "geometric-analysis",
+            "ricci-flow"
+          ],
+          "audits": [],
+          "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+          "created_by_username": "Moqian",
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+          "has_more_children": false,
+          "has_more_parents": false
+        },
+        {
+          "node_type": "theorem",
+          "theorem_id": "79da6e34-6c16-4bcf-bac0-c071f41d246d",
+          "theorem_name": "PoincareFormalization.homotopy_three_sphere_nonempty_homeomorph",
+          "theorem_title": "A homotopy 3-sphere is homeomorphic to the 3-sphere (Perelman)",
+          "status": "Open",
+          "formal_statement": "namespace PoincareFormalization\n\ntheorem homotopy_three_sphere_nonempty_homeomorph (M : Type*) [TopologicalSpace M]\n    [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M] :\n    (M ≃ₕ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) →\n    Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization",
+          "natural_language_statement": "Let $M$ be a Hausdorff topological $3$-manifold (a charted space over $\\mathbb{R}^3 = $ `EuclideanSpace ℝ (Fin 3)`). If $M$ is homotopy equivalent to the standard $3$-sphere, then $M$ is homeomorphic to it:\n\n$$ \\bigl(M \\simeq_h \\mathbb{S}^3\\bigr) \\;\\Longrightarrow\\; M \\simeq_t \\mathbb{S}^3 . $$\n\nThis is the deep half of the three-dimensional topological Poincaré conjecture, proved by Grigori Perelman (2002–2003) using Richard Hamilton's Ricci flow with surgery. It is precisely the $n = 3$ instance of Mathlib's `proof_wanted ContinuousMap.HomotopyEquiv.nonempty_homeomorph_sphere`, which asserts for each $n$ that a topological manifold homotopy equivalent to $\\mathbb{S}^n$ is homeomorphic to it. Together with the classical fact that a closed simply connected $3$-manifold is a homotopy $3$-sphere, this statement gives the Poincaré conjecture in dimension three.\n\n**Formalization Note** Here $\\simeq_h$ is `ContinuousMap.HomotopyEquiv` (notation `≃ₕ`) and $\\simeq_t$ is `Homeomorph` (notation `≃ₜ`); the sphere is `Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1`. The hypothesis is a bare homotopy equivalence, matching the shape of the sibling `proof_wanted`; no compactness or simple-connectivity hypothesis is required beyond the homotopy equivalence itself.",
+          "created_at": "2026-09-08T15:57:11.036991+00:00",
+          "vote_count": 0,
+          "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\nimport Mathlib.Topology.Homotopy.Equiv\nopen scoped ContinuousMap",
+          "source": "Mathlib proof_wanted ContinuousMap.HomotopyEquiv.nonempty_homeomorph_sphere specialized to n = 3, Geometry/Manifold/PoincareConjecture.lean, rev 0df444a (author Junyan Xu). G. Perelman, arXiv:math/0211159, math/0303109, math/0307245. Exposition: Morgan–Tian, Ricci Flow and the Poincaré Conjecture (2007), Clay Mathematics Monographs 3, Corollary 0.2(a), https://www.claymath.org/library/monographs/cmim03.pdf .",
+          "tags": [
+            "mathlib",
+            "poincare-conjecture",
+            "ricci-flow",
+            "topology"
+          ],
+          "audits": [],
+          "created_by": "bb76969b-87a2-41ce-9427-f0342ba97e56",
+          "created_by_username": "korbonits",
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+          "has_more_children": false,
+          "has_more_parents": false
+        },
+        {
+          "node_type": "theorem",
+          "theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+          "theorem_name": "PoincareFormalization.nonempty_homeomorph_sphere_three",
+          "theorem_title": "Three-dimensional topological Poincaré conjecture — Mathlib statement",
+          "status": "Open",
+          "formal_statement": "namespace PoincareFormalization\n\ntheorem nonempty_homeomorph_sphere_three (M : Type*) [TopologicalSpace M]\n    [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M] :\n    Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization",
+          "natural_language_statement": "Every compact simply connected Hausdorff topological 3-manifold without boundary is homeomorphic to the unit 3-sphere in Euclidean 4-space. This follows the exact hypotheses and conclusion of Mathlib’s proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three; only the declaration namespace and local notation are adapted for this platform. No extra second-countability assumption is imposed.",
+          "created_at": "2026-09-08T00:37:48.77319+00:00",
+          "vote_count": 0,
+          "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected",
+          "source": "Mathlib, Junyan Xu, Geometry/Manifold/PoincareConjecture.lean, proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three, platform revision 0df444a: https://github.com/leanprover-community/mathlib4/blob/0df444a/Mathlib/Geometry/Manifold/PoincareConjecture.lean . Mathematical reference: John Milnor, The Poincaré Conjecture, Section 1, p. 1, https://www.claymath.org/wp-content/uploads/2022/06/poincare.pdf . Proof exposition: Morgan–Tian, Ricci Flow and the Poincaré Conjecture (2007), Corollary 0.2(a), https://www.claymath.org/library/monographs/cmim03.pdf ; correction https://arxiv.org/abs/1512.00699 .",
+          "tags": [
+            "mathlib",
+            "poincare-conjecture",
+            "topology"
+          ],
+          "audits": [
+            {
+              "audit_id": "ba8c9e07-2e79-4ad2-93a8-961434e0b0e8",
+              "reviewer_id": "b14dd546-c5f9-458e-861d-79f50bacd399",
+              "reviewer_username": "tianyipeng",
+              "decision": "confirm",
+              "comment": null,
+              "created_at": "2026-09-08T03:14:14.323015+00:00"
+            },
+            {
+              "audit_id": "a25ab758-e063-474b-9880-ed5349eb82f0",
+              "reviewer_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+              "reviewer_username": "Moqian",
+              "decision": "confirm",
+              "comment": "Confirmed by the mission captain (proposal self-audit).",
+              "created_at": "2026-09-08T03:14:30.996361+00:00"
+            }
+          ],
+          "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+          "created_by_username": "Moqian",
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+          "has_more_children": false,
+          "has_more_parents": false
+        },
+        {
+          "node_type": "theorem",
+          "theorem_id": "a15a21e2-9521-45ee-b36b-7db0df18ff13",
+          "theorem_name": "OpenGA_ScalarWidthTrace",
+          "theorem_title": "Scalar and width traces across surgery times",
+          "status": "Definition",
+          "formal_statement": "",
+          "natural_language_statement": "For real numbers $W_0,T$, a scalar-width trace consists of a positive finite number of intervals with\n$$0=t_0<t_1<\\cdots<t_n=T,$$\nand continuous real functions $r_i,w_i$ on each $[t_i,t_{i+1}]$. The initial bounds are $r_0(0)\\ge-6$ and $w_0(0)\\le W_0$, and all widths are nonnegative. On each right-open interval the lower right Dini derivatives obey\n$$D_+r_i\\ge\\frac23 r_i^2,\\qquad D_+w_i\\le-4\\pi-\\frac12r_iw_i.$$\nAt each internal joining time, the scalar profile can jump upward and the width can jump downward:\n$$r_i(t_{i+1})\\le r_{i+1}(t_{i+1}),\\qquad w_{i+1}(t_{i+1})\\le w_i(t_{i+1}).$$\nHere $D_+$ denotes the liminf of forward difference quotients. Scalar lower bounds are expressed by eventual strict slope bounds; width upper bounds use frequent strict slope bounds. A limsup upper bound, as in the geometric width estimate, implies the latter hypothesis.\n\nThis is an analytic interface assembled from the scalar comparison and width estimates. It does not define Ricci flow, surgery, scalar curvature, or geometric sweepout width. Producing these data from a manifold remains a separate geometric theorem.",
+          "created_at": "2026-09-09T02:38:00.672133+00:00",
+          "vote_count": 0,
+          "definition": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite analytic data for the scalar-minimum and width argument on `[0, T]`.\nThis structure records inequalities and jumps only. It is not a definition of\nRicci flow, surgery, scalar curvature, or sweepout width. Supplying it from\ngeometric data is a separate theorem. -/\nstructure ScalarWidthTrace (W₀ T : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = T\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ W₀\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  width_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    -(4 * Real.pi) - scalar i t / 2 * width i t < q →\n      ∃ᶠ s in 𝓝[>] t, slope (width i) t s < q\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
+          "source": "Analytic interface extracted from Kleiner-Lott, Notes on Perelman's Papers, arXiv:math/0605667v5, Lemma 79.11 (p.154) and Appendix B (p.202), https://arxiv.org/pdf/math/0605667v5; Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, Theorem 1.7 and (1.8)-(1.10) (p.4), scalar evolution (1.17) (p.6), (1.28) (p.8), https://arxiv.org/pdf/0707.0108. Finite traces and the lower-Dini formulation are explicit analytic abstractions, not a verbatim named definition in either paper.",
+          "tags": [
+            "geometric-analysis",
+            "ricci-flow"
+          ],
+          "audits": [],
+          "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+          "created_by_username": "Moqian",
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+          "has_more_children": false,
+          "has_more_parents": false
+        },
+        {
+          "node_type": "theorem",
+          "theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+          "theorem_name": "PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere",
+          "theorem_title": "Persistent profiles from a hypothetical Poincare counterexample",
+          "status": "Open",
+          "formal_statement": "theorem PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ W₀ : ℝ, 0 ≤ W₀ ∧ ∀ T : ℝ, 0 < T → Nonempty (OpenGA.ScalarWidthTrace W₀ T) := by sorry",
+          "natural_language_statement": "Let $M$ be a compact simply connected Hausdorff topological three-manifold without boundary. Suppose that $M$ is not homeomorphic to the unit three-sphere. Then there is a real number $W_0\\ge0$, independent of the final time, such that\n$$\\forall T>0,\\quad \\text{there exists a scalar-width trace on }[0,T]\\text{ with initial width at most }W_0.$$\nA scalar-width trace is the analytic data in the imported definition: finitely many continuous scalar and nonnegative width profiles, initial scalar minimum at least $-6$, differential inequalities\n$$D_+r\\ge\\frac23r^2,\\qquad D_+w\\le-4\\pi-\\frac12rw,$$\nand upward scalar jumps and downward width jumps.\n\nThis is a composite geometric extraction target for the Kleiner-Lott surgery route with the Colding-Minicozzi width input. It deliberately isolates the unresolved passage from geometry and topology to analytic data. It is not a formalization of any one named milestone. The scope includes passing from a topological three-manifold to smooth normalized initial data, constructing surgery flows for arbitrary finite times, identifying surviving nontrivial components under the nonspherical hypothesis, and establishing the scalar/width estimates, endpoint regularity, jump inequalities, and a uniform initial width bound. None of those geometric constructions is supplied by the trace definition.\n\nThe Kleiner-Lott source starts with smooth geometric data; the topological-to-smooth passage is an additional formalization obligation in this statement.",
+          "created_at": "2026-09-09T02:38:25.083946+00:00",
+          "vote_count": 0,
+          "preamble": "import Definitions.Def_OpenGA_ScalarWidthTrace\nimport Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\nset_option autoImplicit false",
+          "source": "Composite reduction target, not a verbatim theorem: Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 (pp.8-9), Proposition 77.2 (p.146), Lemma 79.11 (p.154), Lemma 81.2 (p.160), with Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7, Corollary 1.11 (p.4), and (1.28) (p.8). The topological smoothing bridge and the extraction of finite analytic profiles are explicitly unresolved parts of this derived target; this statement does not attest any individual geometric milestone.",
+          "tags": [
+            "differential-inequalities",
+            "geometric-analysis",
+            "ricci-flow"
+          ],
+          "audits": [],
+          "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+          "created_by_username": "Moqian",
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+          "has_more_children": false,
+          "has_more_parents": false
+        },
+        {
+          "node_type": "sketch",
+          "node_id": "sketch-97d3cac5-2b5e-48c6-9651-e94fe6c77fcd",
+          "submission_id": "97d3cac5-2b5e-48c6-9651-e94fe6c77fcd",
+          "parent_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+          "status": "SKETCH_ACCEPTED",
+          "username": "korbonits",
+          "explanation": "We prove the three-dimensional topological Poincaré conjecture in the form\n$$ \\text{$M$ compact, Hausdorff, simply connected, a topological $3$-manifold} \\",
+          "created_at": "2026-09-08T16:00:19.504985+00:00",
+          "child_count": 2,
+          "deprecated_at": null
+        },
+        {
+          "node_type": "sketch",
+          "node_id": "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+          "submission_id": "d543d39b-4273-4b91-826f-1b9c8c6191ee",
+          "parent_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+          "status": "SKETCH_ACCEPTED",
+          "username": "Moqian",
+          "explanation": "This is a conditional reduction of the topological Poincare conjecture to the geometric profile-extraction theorem. That child remains open. The two analytic inputs, scalar comparison and the width deadline, are proved independently.\n\nSuppose a compact simply connected Hausdorff topological three-manifold $M$ were not homeomorphic to $S^3$. The open geometric child supplies a number $W_0$, fixed before the final time, and finite scalar-width traces on arbitrarily long intervals. The scalar comparison theorem gives\n$$r_i(t)\\ge-\\frac6{1+4t}.$$\nBecause every width is nonnegative, the coupled width inequality implies\n$$D_+w_i(t)\\le-4\\pi-\\frac12r_i(t)w_i(t)\\le-4\\pi+\\frac3{1+4t}w_i(t).$$\nThis is precisely the width-deadline inequality with $C=1/4$. The downward jump hypothesis permits the deadline theorem to apply across all pieces, giving\n$$T\\le T_*:=\\left((1/4)^{1/4}+\\frac{W_0}{16\\pi(1/4)^{3/4}}\\right)^4-\\frac14.$$\nChoose $T=\\max(T_*,0)+1$. The geometric child supplies a trace at this positive time, while the analytic bound rules it out. This contradiction gives the required homeomorphism.\n\nThe unresolved geometric child includes smoothing, surgery existence, survival/topology, and the production of compatible scalar and width profiles. The reduction does not prove those ingredients or any of the four large geometric milestones. Every imported theorem is used in the argument; no extra import is present solely to create a graph edge.",
+          "created_at": "2026-09-09T02:40:07.087888+00:00",
+          "child_count": 3,
+          "deprecated_at": null
+        }
+      ],
+      "edges": [
+        {
+          "source": "0ecb5d1e-78dc-49f7-986e-4faa74dae462",
+          "target": "sketch-97d3cac5-2b5e-48c6-9651-e94fe6c77fcd",
+          "kind": "sketch"
+        },
+        {
+          "source": "79da6e34-6c16-4bcf-bac0-c071f41d246d",
+          "target": "sketch-97d3cac5-2b5e-48c6-9651-e94fe6c77fcd",
+          "kind": "sketch"
+        },
+        {
+          "source": "sketch-97d3cac5-2b5e-48c6-9651-e94fe6c77fcd",
+          "target": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+          "kind": "sketch"
+        },
+        {
+          "source": "16d46789-a853-4a33-a4a3-4134fe549c82",
+          "target": "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+          "kind": "sketch"
+        },
+        {
+          "source": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+          "target": "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+          "kind": "sketch"
+        },
+        {
+          "source": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+          "target": "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+          "kind": "sketch"
+        },
+        {
+          "source": "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+          "target": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+          "kind": "sketch"
+        },
+        {
+          "source": "a15a21e2-9521-45ee-b36b-7db0df18ff13",
+          "target": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+          "kind": "structural"
+        }
+      ],
+      "has_hidden_deprecated_sketches": false
+    },
+    "checked_dependency_edges": [
+      [
+        "16d46789-a853-4a33-a4a3-4134fe549c82",
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+      ],
+      [
+        "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+      ],
+      [
+        "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+      ],
+      [
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+      ]
+    ]
+  },
+  "curation": {
+    "reviewed_at": "2026-09-09T02:43:14.796179+00:00",
+    "complete_analytic_declaration": "OpenGA.le_widthExtinctionTime_across_downward_jumps",
+    "library_path": "OpenGALib/Analysis/WidthExtinction.lean",
+    "root_reduction": "Deferred from the trusted library because the geometric prerequisite is Open."
+  },
+  "ui_verification": {
+    "verified_at": "2026-09-09T02:43:14.796179+00:00",
+    "mission_graph_opened": true,
+    "selected_theorem": "OpenGA.scalar_lower_bound_across_upward_jumps",
+    "visible_graph_labels": [
+      "OpenGA.le_width_deadline_across…",
+      "OpenGA.scalar_lower_bound_acros…",
+      "PoincareFormalization.persisten…"
+    ]
+  }
+}
