@@ -1,5 +1,8 @@
 {
   "additional_theorems": {
+    "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross": "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5",
+    "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+    "OpenGA.antitoneOn_lintegral_Ioc_div": "00a47c26-3e61-4afc-91c7-117708e1baf9",
     "OpenGA.areaDensity_basis_independent": "85285131-e406-453d-81b2-2e602a3e878d",
     "OpenGA.areaDensity_eq_normDet": "eddc764e-527d-4d07-a812-94f60b637407",
     "OpenGA.energyDensity_basis_independent": "1e7c607c-776e-41d3-8819-54cfe0543e69",
@@ -7,6 +10,62 @@
   },
   "api_base": "https://prove2.me/api/v1",
   "decompositions": {
+    "00a47c26-3e61-4afc-91c7-117708e1baf9": [
+      {
+        "children": [
+          {
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "status": "Proved",
+            "theorem_id": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+            "theorem_name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+            "theorem_title": "Radial density comparison implies integrated comparison"
+          }
+        ],
+        "created_at": "2026-09-09T17:21:17.706683+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": "91cf1c6b-5ed5-463a-b593-6f385348e01e"
+      },
+      {
+        "children": [
+          {
+            "definition_id": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+            "definition_name": "DifferentialGeometry_RadialCrossComparison",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "Cross-multiplied comparison of radial densities"
+          }
+        ],
+        "created_at": null,
+        "created_by": null,
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": null
+      }
+    ],
+    "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb": [
+      {
+        "children": [
+          {
+            "definition_id": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+            "definition_name": "DifferentialGeometry_RadialCrossComparison",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "Cross-multiplied comparison of radial densities"
+          }
+        ],
+        "created_at": null,
+        "created_by": null,
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": null
+      }
+    ],
     "0ecb5d1e-78dc-49f7-986e-4faa74dae462": [],
     "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7": [
       {
@@ -109,6 +168,7 @@
       }
     ],
     "192cef90-169f-4470-b074-8392596cb487": [],
+    "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5": [],
     "1e7c607c-776e-41d3-8819-54cfe0543e69": [
       {
         "children": [
@@ -454,10 +514,14 @@
     "toolchain": "leanprover/lean4:v4.33.1"
   },
   "file_hashes": {
+    "Definitions/Def_DifferentialGeometry_RadialCrossComparison.lean": "6aa7f736ecfab7d375e80d7041dcaf55dd765bac79100fc2b763062fdd16b28e",
     "Definitions/Def_OpenGA_AreaEnergyDensities.lean": "2dab2dcf50f33f84e67badfd0cf7a68b71b8da53614a28c399ff529d40e0300e",
     "Definitions/Def_OpenGA_ScalarWidthTrace.lean": "8f601ae71ec55995167ff09f845daea0707e662608f45c127642dc98a0581933",
     "Definitions/Def_OpenGA_WidthComparisonData.lean": "9a8c33f6132b66ab7cc3dd693b644b140b04c87c08bf140e8db81b160e0f5488",
     "Definitions/Def_OpenGA_WidthComparisonTrace.lean": "6713d3f63eea5cc92c91b8639ffef711ec0dbd81a14f5da53003796d465b9bb8",
+    "Solutions/Sol_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross_2e4024175f764df8a6d5b9f1ff27d93b.lean": "08dc7ed4b87b0bf1538ea66406ba1333d2243069b11ed93bf0476bf6e1f99565",
+    "Solutions/Sol_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le_e226c921de2b4b97bc822365ef39853d.lean": "c6d226aa11c99558d172d007c9390cac52289c110e82584165a2259c8a3b6320",
+    "Solutions/Sol_OpenGA_antitoneOn_lintegral_Ioc_div_91cf1c6b5ed5463ab5936f385348e01e.lean": "cab8674f53f219f0acf85f1a16f62ab6f3f2ec304ac9b1c826179993024e8e25",
     "Solutions/Sol_OpenGA_areaDensity_basis_independent_59b54355c04b4077925bc7d3785054ad.lean": "3acc9ec58bc869ebd3e83af830f9b2e375260069cd7dcd0dc141ace9cf313331",
     "Solutions/Sol_OpenGA_areaDensity_eq_energyDensity_iff_9d8954073c0b47eeb857e6ae4f60617f.lean": "0d9283ab0f17c1d3c269ef359a5f94ed61a8f0d1040195dc53a7cd12fa7ffae8",
     "Solutions/Sol_OpenGA_areaDensity_eq_normDet_15a12bda4d91481f94922022ec9bf42b.lean": "2606761057aeff6659c525b9e726a059951d5abbb4efa8c650697d9cf4032bac",
@@ -474,6 +538,9 @@
     "Solutions/Sol_PoincareFormalization_nonempty_homeomorph_sphere_three_98612d40bcb74333afa769b60e20dfdc.lean": "50b9eda313389c99350477162fa37e175c678c40e8a69ccc76fd211be713eafe",
     "Solutions/Sol_PoincareFormalization_nonempty_homeomorph_sphere_three_d543d39b42734b91826f1b9c8c6191ee.lean": "f82e819e6892eccb42edc84434fd83ecca4ab929dbbd8edba8791948e44bdfa6",
     "Solutions/Sol_PoincareFormalization_persistent_profiles_of_not_homeomorph_sphere_42885aae9f1a4edcb4c4d8e3820e630a.lean": "dc8c042f755c5f45e7b206977229599b9df780414ad02643f249179daf410137",
+    "Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross.lean": "fa5adeaadf1270c1f334d7ed330605e63432fcd1f952396bb1897b78e050a2e4",
+    "Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le.lean": "ba37184924e7b600c4849fb75508f5cc012336c4b00b94f4812324b9b4014555",
+    "Theorems/Thm_OpenGA_antitoneOn_lintegral_Ioc_div.lean": "1c0cc19aed6fef84e36caff19c8919f4bbcb6d4c186cde40b681b23d920fc8c7",
     "Theorems/Thm_OpenGA_areaDensity_basis_independent.lean": "75e60d02bd1c944edd44a8b893699d1335122e0efebd77df18a496de86f79511",
     "Theorems/Thm_OpenGA_areaDensity_eq_energyDensity_iff.lean": "92db58d1ad48b5e4aaaea322dff2ffabd0f16af640377286ae5cef947d795614",
     "Theorems/Thm_OpenGA_areaDensity_eq_normDet.lean": "3713ac03cc811c1859f50f188c79c6bb4930be3a2d928b62773ceb276584f993",
@@ -636,7 +703,7 @@
         "audits": [],
         "created_at": "2026-09-09T03:18:25.623291+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-        "created_by_username": "Moqian",
+        "created_by_username": "Xinze-Li-Moqian",
         "deprecated_at": null,
         "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
         "formal_statement": "theorem OpenGA.integral_areaDensity_eq_energyDensity_iff (hv : AEStronglyMeasurable v μ)\n    (hw : AEStronglyMeasurable w μ)\n    (hE : Integrable (fun x => energyDensity (v x) (w x)) μ) :\n    (∫ x, areaDensity (v x) (w x) ∂μ) = (∫ x, energyDensity (v x) (w x) ∂μ) ↔\n      ∀ᵐ x ∂μ, ⟪v x, w x⟫_ℝ = 0 ∧ ‖v x‖ = ‖w x‖ := by sorry",
@@ -661,7 +728,7 @@
         "audits": [],
         "created_at": "2026-09-09T02:38:17.472582+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-        "created_by_username": "Moqian",
+        "created_by_username": "Xinze-Li-Moqian",
         "deprecated_at": null,
         "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
         "formal_statement": "theorem OpenGA.le_width_deadline_across_downward_jumps\n    {C W₀ : ℝ} (hC : 0 < C)\n    (n : ℕ) (hn : 0 < n) (times : ℕ → ℝ) (widths : ℕ → ℝ → ℝ)\n    (hzero : times 0 = 0)\n    (htimes : ∀ i < n, times i < times (i + 1))\n    (hcont : ∀ i < n, ContinuousOn (widths i) (Icc (times i) (times (i + 1))))\n    (hinitial : widths 0 (times 0) ≤ W₀)\n    (hfinal : 0 ≤ widths (n - 1) (times n))\n    (hslope : ∀ i < n, ∀ x ∈ Ico (times i) (times (i + 1)), ∀ r : ℝ,\n      -(4 * Real.pi) + 3 / (4 * (x + C)) * widths i x < r →\n        ∃ᶠ z in 𝓝[>] x, slope (widths i) x z < r)\n    (hjumps : ∀ i, i + 1 < n →\n      widths (i + 1) (times (i + 1)) ≤ widths i (times (i + 1))) :\n    times n ≤ (C ^ ((1 : ℝ) / 4) + W₀ / (16 * Real.pi * C ^ ((3 : ℝ) / 4))) ^ (4 : ℕ) - C := by sorry",
@@ -687,7 +754,7 @@
         "audits": [],
         "created_at": "2026-09-09T03:39:56.179735+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-        "created_by_username": "Moqian",
+        "created_by_username": "Xinze-Li-Moqian",
         "deprecated_at": null,
         "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
         "formal_statement": "theorem OpenGA.eventually_width_slope_lt_of_comparison\n    {width : ℝ → ℝ} {time scalar : ℝ}\n    (data : WidthComparisonData width time scalar) (q : ℝ)\n    (hq : -(4 * Real.pi) - scalar / 2 * width time < q) :\n    ∀ᶠ s in 𝓝[>] time, slope width time s < q := by sorry",
@@ -712,7 +779,7 @@
         "audits": [],
         "created_at": "2026-09-09T03:18:22.203268+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-        "created_by_username": "Moqian",
+        "created_by_username": "Xinze-Li-Moqian",
         "deprecated_at": null,
         "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
         "formal_statement": "theorem OpenGA.areaDensity_eq_energyDensity_iff (v w : F) :\n    areaDensity v w = energyDensity v w ↔ ⟪v, w⟫_ℝ = 0 ∧ ‖v‖ = ‖w‖ := by sorry",
@@ -762,7 +829,7 @@
         "audits": [],
         "created_at": "2026-09-09T02:04:08.77703+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-        "created_by_username": "Moqian",
+        "created_by_username": "Xinze-Li-Moqian",
         "deprecated_at": null,
         "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
         "formal_statement": "theorem OpenGA.scalar_lower_bound_across_upward_jumps\n    (n : ℕ) (hn : 0 < n) (times : ℕ → ℝ) (profiles : ℕ → ℝ → ℝ)\n    (hzero : times 0 = 0)\n    (htimes : ∀ i < n, times i < times (i + 1))\n    (hcont : ∀ i < n, ContinuousOn (profiles i) (Icc (times i) (times (i + 1))))\n    (hinitial : -6 ≤ profiles 0 (times 0))\n    (hslope : ∀ i < n, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n      q < (2 / 3 : ℝ) * (profiles i t) ^ 2 →\n        ∀ᶠ s in 𝓝[>] t, q < slope (profiles i) t s)\n    (hjumps : ∀ i, i + 1 < n →\n      profiles i (times (i + 1)) ≤ profiles (i + 1) (times (i + 1))) :\n    ∀ i < n, ∀ t ∈ Icc (times i) (times (i + 1)),\n      -(6 : ℝ) / (1 + 4 * t) ≤ profiles i t := by sorry",
@@ -788,7 +855,7 @@
         "audits": [],
         "created_at": "2026-09-09T03:39:10.718887+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-        "created_by_username": "Moqian",
+        "created_by_username": "Xinze-Li-Moqian",
         "definition": "import Definitions.Def_OpenGA_AreaEnergyDensities\nimport Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Order.ConditionallyCompleteLattice.Indexed\n\n/-!\n# Width variation from area-energy comparison data\n\nThis module isolates the analytic passage from comparison families to a\nright-hand slope estimate. The input consists of finite-energy measurable\nvector pairs, uniform energy caps tending to the width, an almost conformal\nrealizer, and a short-time area comparison. None of these data are a definition\nof a surface differential, a sweepout, a harmonic map, or a Ricci flow.\n\nThe intended geometric inputs are described in Colding-Minicozzi,\n*Width and Finite Extinction Time of Ricci Flow*, arXiv:0707.0108v1:\nequation (1.4), the paragraph after Theorem 1.14, and the proof of Theorem 1.7,\nequations (1.25)-(1.28) and footnote 6 (pp. 3, 6-8). The comparison hypothesis\nbelow packages the uniform error estimates after shrinking the time interval;\nconstructing it from geometry is a separate open task.\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory Set Filter\nopen scoped InnerProductSpace Topology\n\nnamespace OpenGA\n\n/-- **Math.** A measurable pair with finite Dirichlet energy. Its domain may\nalso be a disjoint union, as for a finite collection of sphere maps. -/\nstructure FiniteEnergyPair where\n  domain : Type\n  [measurableSpace : MeasurableSpace domain]\n  target : Type\n  [normedAddCommGroup : NormedAddCommGroup target]\n  [innerProductSpace : InnerProductSpace ℝ target]\n  measure : Measure domain\n  first : domain → target\n  second : domain → target\n  first_measurable : AEStronglyMeasurable first measure\n  second_measurable : AEStronglyMeasurable second measure\n  energy_integrable : Integrable (fun x => energyDensity (first x) (second x)) measure\n\nattribute [instance] FiniteEnergyPair.measurableSpace\n  FiniteEnergyPair.normedAddCommGroup FiniteEnergyPair.innerProductSpace\n\n/-- **Math.** Integrated area density of a finite-energy pair. -/\nnoncomputable def FiniteEnergyPair.area (p : FiniteEnergyPair) : ℝ :=\n  ∫ x, areaDensity (p.first x) (p.second x) ∂p.measure\n\n/-- **Math.** Integrated energy density of a finite-energy pair. -/\nnoncomputable def FiniteEnergyPair.energy (p : FiniteEnergyPair) : ℝ :=\n  ∫ x, energyDensity (p.first x) (p.second x) ∂p.measure\n\n/-- **Math.** Orthogonality and equal length almost everywhere; a condition\non the supplied fields, without asserting that they are a map differential. -/\ndef FiniteEnergyPair.IsConformal (p : FiniteEnergyPair) : Prop :=\n  ∀ᵐ x ∂p.measure, ⟪p.first x, p.second x⟫_ℝ = 0 ∧ ‖p.first x‖ = ‖p.second x‖\n\n/-- **Math.** Analytic comparison data at one time. Competitors are indexed by\na sequence and the unit interval. The realizer encodes the limiting harmonic\nspheres only once the separate geometric construction has been supplied. -/\nstructure WidthComparisonData (width : ℝ → ℝ) (time scalar : ℝ) where\n  realizer : FiniteEnergyPair\n  realizer_conformal : realizer.IsConformal\n  realized_energy : realizer.energy = width time\n  competitor : ℕ → Icc (0 : ℝ) 1 → FiniteEnergyPair\n  energy_cap : ℕ → ℝ\n  energy_le_cap : ∀ j p, (competitor j p).energy ≤ energy_cap j\n  cap_tendsto : Tendsto energy_cap atTop (𝓝 (width time))\n  area_comparison : ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧ ∃ start : ℕ,\n    ∀ j ≥ start, ∀ s ∈ Ioo time (time + δ),\n      width s ≤ (⨆ p, (competitor j p).area) +\n        (s - time) * (-(4 * Real.pi) - scalar / 2 * realizer.area + ε)\n\n\n\nend OpenGA\n",
         "deprecated_at": null,
         "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
@@ -825,12 +892,12 @@
             "created_at": "2026-09-08T03:14:30.996361+00:00",
             "decision": "confirm",
             "reviewer_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-            "reviewer_username": "Moqian"
+            "reviewer_username": "Xinze-Li-Moqian"
           }
         ],
         "created_at": "2026-09-08T00:37:48.77319+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-        "created_by_username": "Moqian",
+        "created_by_username": "Xinze-Li-Moqian",
         "deprecated_at": null,
         "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
         "formal_statement": "namespace PoincareFormalization\n\ntheorem nonempty_homeomorph_sphere_three (M : Type*) [TopologicalSpace M]\n    [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M] :\n    Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization",
@@ -856,7 +923,7 @@
         "audits": [],
         "created_at": "2026-09-09T03:39:56.083015+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-        "created_by_username": "Moqian",
+        "created_by_username": "Xinze-Li-Moqian",
         "definition": "import Definitions.Def_OpenGA_WidthComparisonData\nimport Definitions.Def_OpenGA_ScalarWidthTrace\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite scalar and width data with area-energy comparison witnesses in\nplace of an assumed width slope bound. This is an analytic interface, not a\ndefinition of Ricci flow, surgery, or a geometric sweepout. -/\nstructure WidthComparisonTrace (initialWidth finalTime : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = finalTime\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ initialWidth\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  comparison : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)),\n    Nonempty (WidthComparisonData (width i) t (scalar i t))\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
         "deprecated_at": null,
         "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
@@ -881,7 +948,7 @@
         "audits": [],
         "created_at": "2026-09-09T02:38:00.672133+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-        "created_by_username": "Moqian",
+        "created_by_username": "Xinze-Li-Moqian",
         "definition": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite analytic data for the scalar-minimum and width argument on `[0, T]`.\nThis structure records inequalities and jumps only. It is not a definition of\nRicci flow, surgery, scalar curvature, or sweepout width. Supplying it from\ngeometric data is a separate theorem. -/\nstructure ScalarWidthTrace (W₀ T : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = T\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ W₀\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  width_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    -(4 * Real.pi) - scalar i t / 2 * width i t < q →\n      ∃ᶠ s in 𝓝[>] t, slope (width i) t s < q\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
         "deprecated_at": null,
         "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
@@ -906,7 +973,7 @@
         "audits": [],
         "created_at": "2026-09-09T02:38:25.083946+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-        "created_by_username": "Moqian",
+        "created_by_username": "Xinze-Li-Moqian",
         "deprecated_at": null,
         "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
         "formal_statement": "theorem PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ W₀ : ℝ, 0 ≤ W₀ ∧ ∀ T : ℝ, 0 < T → Nonempty (OpenGA.ScalarWidthTrace W₀ T) := by sorry",
@@ -957,7 +1024,7 @@
         "audits": [],
         "created_at": "2026-09-09T03:17:38.845171+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-        "created_by_username": "Moqian",
+        "created_by_username": "Xinze-Li-Moqian",
         "definition": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\n/-!\n# Area and energy densities\n\nFor the images `v`, `w` of an orthonormal tangent frame under a differential,\nthe area density is the square root of the Gram determinant and the energy\ndensity is half the sum of the squared norms. The area is bounded by the\nenergy, with equality precisely for orthogonal vectors of equal norm.\n\nThe integral results assume measurable vector fields and integrable energy;\nintegrability of the area is a conclusion, not an additional assumption.\nThey apply on any measure space, including a restricted domain measure.\nIdentifying these fields with a Sobolev differential on a surface remains a\nseparate geometric interface. No global frame on the sphere is asserted.\n\nReference: Colding-Minicozzi, *Width and Finite Extinction Time of Ricci Flow*,\narXiv:0707.0108v1, equation (1.4) and the following equality discussion, p. 3.\nhttps://arxiv.org/pdf/0707.0108v1#page=3\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory\nopen scoped InnerProductSpace\n\nnamespace OpenGA\n\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\n\n/-- **Math.** The two-dimensional Jacobian density of a pair of derivative vectors. -/\nnoncomputable def areaDensity (v w : F) : ℝ :=\n  Real.sqrt (‖v‖ ^ 2 * ‖w‖ ^ 2 - ⟪v, w⟫_ℝ ^ 2)\n\n/-- **Math.** The Dirichlet energy density of a pair of derivative vectors. -/\nnoncomputable def energyDensity (v w : F) : ℝ :=\n  (‖v‖ ^ 2 + ‖w‖ ^ 2) / 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsection Integral\n\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\n\n\n\n\n\n\n\nend Integral\n\nend OpenGA\n",
         "deprecated_at": null,
         "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
@@ -982,7 +1049,7 @@
         "audits": [],
         "created_at": "2026-09-09T03:18:24.1547+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-        "created_by_username": "Moqian",
+        "created_by_username": "Xinze-Li-Moqian",
         "deprecated_at": null,
         "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
         "formal_statement": "theorem OpenGA.integral_areaDensity_le_energyDensity (hv : AEStronglyMeasurable v μ)\n    (hw : AEStronglyMeasurable w μ)\n    (hE : Integrable (fun x => energyDensity (v x) (w x)) μ) :\n    (∫ x, areaDensity (v x) (w x) ∂μ) ≤ ∫ x, energyDensity (v x) (w x) ∂μ := by sorry",
@@ -1007,7 +1074,7 @@
         "audits": [],
         "created_at": "2026-09-09T03:40:21.582079+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-        "created_by_username": "Moqian",
+        "created_by_username": "Xinze-Li-Moqian",
         "deprecated_at": null,
         "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
         "formal_statement": "theorem PoincareFormalization.persistent_comparison_data_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →\n      Nonempty (OpenGA.WidthComparisonTrace initialWidth finalTime) := by sorry",
@@ -1038,7 +1105,7 @@
         "parent_theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
         "status": "ACCEPTED",
         "submission_id": "01167772-943a-4c75-ab15-9f7b235777a8",
-        "username": "Moqian"
+        "username": "Xinze-Li-Moqian"
       },
       {
         "child_count": 2,
@@ -1050,7 +1117,7 @@
         "parent_theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
         "status": "SKETCH_ACCEPTED",
         "submission_id": "42885aae-9f1a-4edc-b4c4-d8e3820e630a",
-        "username": "Moqian"
+        "username": "Xinze-Li-Moqian"
       },
       {
         "child_count": 2,
@@ -1074,7 +1141,7 @@
         "parent_theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
         "status": "ACCEPTED",
         "submission_id": "719f4cdd-1059-4091-9819-7926dbc5806e",
-        "username": "Moqian"
+        "username": "Xinze-Li-Moqian"
       },
       {
         "child_count": 3,
@@ -1086,7 +1153,7 @@
         "parent_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
         "status": "SKETCH_ACCEPTED",
         "submission_id": "d543d39b-4273-4b91-826f-1b9c8c6191ee",
-        "username": "Moqian"
+        "username": "Xinze-Li-Moqian"
       }
     ],
     "root_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
@@ -1179,7 +1246,7 @@
       "created_at": "2026-09-09T16:03:11.319685+00:00",
       "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
       "id": "cb96ab98-d517-4ecc-964b-b4b39a2d07a3",
-      "milestone_description": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).",
+      "milestone_description": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).\n\n**Verified analytic prerequisites.** [Integral comparison on nested lower intervals](https://prove2.me/theorems/1b1a2764-46a8-4ccb-9220-d38a56f8a6a5); [Radial density comparison implies integrated comparison](https://prove2.me/theorems/0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb); [Monotonicity of normalized radial integrals](https://prove2.me/theorems/00a47c26-3e61-4afc-91c7-117708e1baf9). The first two results preserve the DifferentialGeometry proofs; the third is an OpenGA corollary. These establish the integral comparison step. The full geometric milestone remains open: geometric density comparison, polar integration, the ball-local hypotheses and positive model curvature still require a faithful platform development.",
       "sort_order": 7,
       "theorem": null,
       "title": "Bishop-Gromov volume comparison"
@@ -1269,7 +1336,7 @@
     "created_at": "2026-09-08T03:14:30.803315+00:00",
     "creator": {
       "id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "username": "Moqian"
+      "username": "Xinze-Li-Moqian"
     },
     "description": "A long-term Lean 4 formalization of the three-dimensional Poincaré theorem: every closed, simply connected topological 3-manifold is homeomorphic to the 3-sphere. The mathematical theorem is established; the open work here is its formalization, not a new proof of an open conjecture.\n\nThe project will first formulate the target faithfully, inventory existing foundations, and develop explicit prerequisite milestones toward a proof based on the literature on Ricci flow and geometrization. No claim is made that the required analytic and topological infrastructure is already available in Mathlib.\n\nThe development will build on Lean 4 and Mathlib and draw on three complementary projects:\n\n- [OpenGA](https://github.com/MathNetwork/OpenGA) will serve as the project library for reusable geometric-analysis infrastructure and the integration of reviewed results.\n- [DifferentialGeometry](https://github.com/qinz1yang/differential-geometry) will provide upstream differential- and Riemannian-geometric definitions and proofs for review, adaptation and reuse.\n- [Poincare-Conjecture](https://github.com/frenzymath/Poincare-Conjecture) will provide a reference for proof architecture, milestone decomposition and source-faithful supporting formalizations, including its Kleiner-Lott project. Selected code will be reused after review.\n\nReused code will retain its original attribution, explicit mathematical hypotheses and pinned source versions. The primary mathematical reference for the Ricci-flow development is Kleiner and Lott's [Notes on Perelman's Papers](https://arxiv.org/abs/math/0605667). Contributions are welcome in comparison geometry, geometric analysis, Ricci flow and the topology needed to connect the smooth and topological statements. Library results will be submitted with their required dependencies and verified in the mission's Lean environment before they are counted as proved on Prove2Me.",
     "fields": [
@@ -1295,6 +1362,54 @@
     "visibility": "public"
   },
   "nodes": {
+    "00a47c26-3e61-4afc-91c7-117708e1baf9": {
+      "audits": [],
+      "created_at": "2026-09-09T17:20:18.372121+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem OpenGA.antitoneOn_lintegral_Ioc_div {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g)\n    (hpos : ∀ r ∈ Ioc (0 : ℝ) R, 0 < ∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)\n    (hfin : ∀ r ∈ Ioc (0 : ℝ) R, (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ) < ⊤) :\n    AntitoneOn (fun r => (∫⁻ t in Ioc (0 : ℝ) r, f t ∂μ) /\n      (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)) (Ioc (0 : ℝ) R) := by sorry",
+      "local_path": "Theorems/Thm_OpenGA_antitoneOn_lintegral_Ioc_div.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ whenever $0<a\\le b\\le R$. Write $F(r)=\\int_{(0,r]} f\\,d\\mu$ and $G(r)=\\int_{(0,r]} g\\,d\\mu$, and assume $0<G(r)<\\infty$ for every $0<r\\le R$. Then\n\n$$\\frac{F(s)}{G(s)}\\le\\frac{F(r)}{G(r)}\\qquad(0<r\\le s\\le R).$$\n\nThe numerator may be infinite. This is the analytic normalized-volume monotonicity step; its application to Riemannian balls additionally requires geometric density comparison and polar integration.",
+      "preamble": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\n\n\n\nset_option autoImplicit false\n\nopen MeasureTheory Set\nopen scoped ENNReal\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+      "readback": null,
+      "source": "OpenGA, OpenGALib/Analysis/IntegralComparison.lean, derived from DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le (DifferentialGeometry v0.1.2). https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/IntegralComparison.lean",
+      "status": "Proved",
+      "tags": [
+        "bishop-gromov",
+        "differential-geometry",
+        "measure-theory"
+      ],
+      "theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+      "theorem_name": "OpenGA.antitoneOn_lintegral_Ioc_div",
+      "theorem_title": "Monotonicity of normalized radial integrals",
+      "visibility": "public",
+      "vote_count": 0
+    },
+    "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb": {
+      "audits": [],
+      "created_at": "2026-09-09T17:14:56.406714+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le {s : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g) (hs : 0 ≤ s) (hsR : s ≤ R) :\n    (∫⁻ t in Ioc (0 : ℝ) R, f t ∂μ) * (∫⁻ t in Ioc (0 : ℝ) s, g t ∂μ)\n      ≤ (∫⁻ t in Ioc (0 : ℝ) s, f t ∂μ) * ∫⁻ t in Ioc (0 : ℝ) R, g t ∂μ := by sorry",
+      "local_path": "Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, let $0\\le s\\le R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ for $0<a\\le b\\le R$. Then\n\n$$\\left(\\int_{(0,R]} f\\,d\\mu\\right)\\left(\\int_{(0,s]} g\\,d\\mu\\right)\\le\\left(\\int_{(0,s]} f\\,d\\mu\\right)\\left(\\int_{(0,R]} g\\,d\\mu\\right).$$\n\nThe endpoint $s=0$ is included. This is the analytic density-to-volume step of radial comparison; identifying these integrals with Riemannian ball volumes requires the separate geometric polar integration theorem.",
+      "preamble": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\n\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nset_option autoImplicit false",
+      "readback": null,
+      "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L68-L109",
+      "status": "Proved",
+      "tags": [
+        "bishop-gromov",
+        "differential-geometry",
+        "measure-theory"
+      ],
+      "theorem_id": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+      "theorem_name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+      "theorem_title": "Radial density comparison implies integrated comparison",
+      "visibility": "public",
+      "vote_count": 0
+    },
     "0ecb5d1e-78dc-49f7-986e-4faa74dae462": {
       "audits": [],
       "created_at": "2026-09-08T15:57:20.366156+00:00",
@@ -1414,6 +1529,30 @@
       "visibility": "public",
       "vote_count": 0
     },
+    "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5": {
+      "audits": [],
+      "created_at": "2026-09-09T17:13:19.590199+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross {α : Type*} [LinearOrder α]\n    [TopologicalSpace α] [MeasurableSpace α] [OpensMeasurableSpace α]\n    [ClosedIicTopology α]\n    {μ : Measure α} {f g : α → ℝ≥0∞} {s R : α}\n    (hf : AEMeasurable f (μ.restrict (Iic R)))\n    (hg : AEMeasurable g (μ.restrict (Iic R)))\n    (hcross : ∀ ⦃a b : α⦄, a ≤ b → b ≤ R →\n      f b * g a ≤ f a * g b)\n    (hsR : s ≤ R) :\n    (∫⁻ t in Iic R, f t ∂μ) * (∫⁻ t in Iic s, g t ∂μ)\n      ≤ (∫⁻ t in Iic s, f t ∂μ) * ∫⁻ t in Iic R, g t ∂μ := by sorry",
+      "local_path": "Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $X$ be a linearly ordered topological measurable space in which open sets are measurable and lower intervals $(-\\infty,r]$ are closed. Let $\\mu$ be a measure on $X$ and let $f,g:X\\to[0,\\infty]$ be almost-everywhere measurable on $(-\\infty,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ whenever $a\\le b\\le R$. Then, for every $s\\le R$,\n\n$$\\left(\\int_{(-\\infty,R]} f\\,d\\mu\\right)\\left(\\int_{(-\\infty,s]} g\\,d\\mu\\right)\\le\\left(\\int_{(-\\infty,s]} f\\,d\\mu\\right)\\left(\\int_{(-\\infty,R]} g\\,d\\mu\\right).$$\n\nAll integrals are extended nonnegative integrals; no finiteness or sigma-finiteness assumption is imposed. This transfers a pointwise density comparison to a comparison of accumulated mass, as used in the upstream Bishop–Gromov proof.",
+      "preamble": "import Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\nset_option autoImplicit false",
+      "readback": null,
+      "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L13-L61",
+      "status": "Proved",
+      "tags": [
+        "bishop-gromov",
+        "differential-geometry",
+        "measure-theory"
+      ],
+      "theorem_id": "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5",
+      "theorem_name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross",
+      "theorem_title": "Integral comparison on nested lower intervals",
+      "visibility": "public",
+      "vote_count": 0
+    },
     "1e7c607c-776e-41d3-8819-54cfe0543e69": {
       "audits": [],
       "created_at": "2026-09-09T15:44:32.934565+00:00",
@@ -1458,6 +1597,30 @@
       "theorem_id": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b",
       "theorem_name": "OpenGA.areaDensity_eq_energyDensity_iff",
       "theorem_title": "Equality of area and energy densities",
+      "visibility": "public",
+      "vote_count": 0
+    },
+    "38c5277b-7ee4-406b-b53a-f2c4ca12e087": {
+      "created_at": "2026-09-09T17:13:16.952419+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n\ndef CrossAnti (R : ℝ) (f g : ℝ → ℝ≥0∞) : Prop :=\n  ∀ a b : ℝ, 0 < a → a ≤ b → b ≤ R → f b * g a ≤ f a * g b\n\n\n\n\n\n\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "local_path": "Definitions/Def_DifferentialGeometry_RadialCrossComparison.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $R\\in\\mathbb R$ and let $f,g:\\mathbb R\\to[0,\\infty]$. The cross-comparison condition requires\n\n$$f(b)g(a)\\le f(a)g(b)\\qquad(0<a\\le b\\le R).$$\n\nWhen $g$ is finite and positive, this expresses that $f/g$ is nonincreasing. The cross-multiplied formulation also permits vanishing or infinite densities without division. It is an analytic input for radial volume comparison.",
+      "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L65-L66",
+      "status": "Definition",
+      "tags": [
+        "bishop-gromov",
+        "differential-geometry",
+        "measure-theory"
+      ],
+      "theorem_id": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+      "theorem_name": "DifferentialGeometry_RadialCrossComparison",
+      "theorem_title": "Cross-multiplied comparison of radial densities",
       "visibility": "public",
       "vote_count": 0
     },
@@ -1536,7 +1699,7 @@
     "78c6f8ef-0643-49d3-96b8-5d6dceda2385": {
       "created_at": "2026-09-09T03:39:10.718887+00:00",
       "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "created_by_username": "Moqian",
+      "created_by_username": "Xinze-Li-Moqian",
       "definition": "import Definitions.Def_OpenGA_AreaEnergyDensities\nimport Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Order.ConditionallyCompleteLattice.Indexed\n\n/-!\n# Width variation from area-energy comparison data\n\nThis module isolates the analytic passage from comparison families to a\nright-hand slope estimate. The input consists of finite-energy measurable\nvector pairs, uniform energy caps tending to the width, an almost conformal\nrealizer, and a short-time area comparison. None of these data are a definition\nof a surface differential, a sweepout, a harmonic map, or a Ricci flow.\n\nThe intended geometric inputs are described in Colding-Minicozzi,\n*Width and Finite Extinction Time of Ricci Flow*, arXiv:0707.0108v1:\nequation (1.4), the paragraph after Theorem 1.14, and the proof of Theorem 1.7,\nequations (1.25)-(1.28) and footnote 6 (pp. 3, 6-8). The comparison hypothesis\nbelow packages the uniform error estimates after shrinking the time interval;\nconstructing it from geometry is a separate open task.\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory Set Filter\nopen scoped InnerProductSpace Topology\n\nnamespace OpenGA\n\n/-- **Math.** A measurable pair with finite Dirichlet energy. Its domain may\nalso be a disjoint union, as for a finite collection of sphere maps. -/\nstructure FiniteEnergyPair where\n  domain : Type\n  [measurableSpace : MeasurableSpace domain]\n  target : Type\n  [normedAddCommGroup : NormedAddCommGroup target]\n  [innerProductSpace : InnerProductSpace ℝ target]\n  measure : Measure domain\n  first : domain → target\n  second : domain → target\n  first_measurable : AEStronglyMeasurable first measure\n  second_measurable : AEStronglyMeasurable second measure\n  energy_integrable : Integrable (fun x => energyDensity (first x) (second x)) measure\n\nattribute [instance] FiniteEnergyPair.measurableSpace\n  FiniteEnergyPair.normedAddCommGroup FiniteEnergyPair.innerProductSpace\n\n/-- **Math.** Integrated area density of a finite-energy pair. -/\nnoncomputable def FiniteEnergyPair.area (p : FiniteEnergyPair) : ℝ :=\n  ∫ x, areaDensity (p.first x) (p.second x) ∂p.measure\n\n/-- **Math.** Integrated energy density of a finite-energy pair. -/\nnoncomputable def FiniteEnergyPair.energy (p : FiniteEnergyPair) : ℝ :=\n  ∫ x, energyDensity (p.first x) (p.second x) ∂p.measure\n\n/-- **Math.** Orthogonality and equal length almost everywhere; a condition\non the supplied fields, without asserting that they are a map differential. -/\ndef FiniteEnergyPair.IsConformal (p : FiniteEnergyPair) : Prop :=\n  ∀ᵐ x ∂p.measure, ⟪p.first x, p.second x⟫_ℝ = 0 ∧ ‖p.first x‖ = ‖p.second x‖\n\n/-- **Math.** Analytic comparison data at one time. Competitors are indexed by\na sequence and the unit interval. The realizer encodes the limiting harmonic\nspheres only once the separate geometric construction has been supplied. -/\nstructure WidthComparisonData (width : ℝ → ℝ) (time scalar : ℝ) where\n  realizer : FiniteEnergyPair\n  realizer_conformal : realizer.IsConformal\n  realized_energy : realizer.energy = width time\n  competitor : ℕ → Icc (0 : ℝ) 1 → FiniteEnergyPair\n  energy_cap : ℕ → ℝ\n  energy_le_cap : ∀ j p, (competitor j p).energy ≤ energy_cap j\n  cap_tendsto : Tendsto energy_cap atTop (𝓝 (width time))\n  area_comparison : ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧ ∃ start : ℕ,\n    ∀ j ≥ start, ∀ s ∈ Ioo time (time + δ),\n      width s ≤ (⨆ p, (competitor j p).area) +\n        (s - time) * (-(4 * Real.pi) - scalar / 2 * realizer.area + ε)\n\n\n\nend OpenGA\n",
       "deprecated_at": null,
       "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
@@ -1597,7 +1760,7 @@
           "created_at": "2026-09-08T03:14:30.996361+00:00",
           "decision": "confirm",
           "reviewer_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-          "reviewer_username": "Moqian"
+          "reviewer_username": "Xinze-Li-Moqian"
         }
       ],
       "created_at": "2026-09-08T00:37:48.77319+00:00",
@@ -1649,7 +1812,7 @@
     "868ac3ab-4452-48dd-81f3-278079cdf42c": {
       "created_at": "2026-09-09T03:39:56.083015+00:00",
       "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "created_by_username": "Moqian",
+      "created_by_username": "Xinze-Li-Moqian",
       "definition": "import Definitions.Def_OpenGA_WidthComparisonData\nimport Definitions.Def_OpenGA_ScalarWidthTrace\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite scalar and width data with area-energy comparison witnesses in\nplace of an assumed width slope bound. This is an analytic interface, not a\ndefinition of Ricci flow, surgery, or a geometric sweepout. -/\nstructure WidthComparisonTrace (initialWidth finalTime : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = finalTime\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ initialWidth\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  comparison : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)),\n    Nonempty (WidthComparisonData (width i) t (scalar i t))\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
       "deprecated_at": null,
       "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
@@ -1672,7 +1835,7 @@
     "a15a21e2-9521-45ee-b36b-7db0df18ff13": {
       "created_at": "2026-09-09T02:38:00.672133+00:00",
       "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "created_by_username": "Moqian",
+      "created_by_username": "Xinze-Li-Moqian",
       "definition": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite analytic data for the scalar-minimum and width argument on `[0, T]`.\nThis structure records inequalities and jumps only. It is not a definition of\nRicci flow, surgery, scalar curvature, or sweepout width. Supplying it from\ngeometric data is a separate theorem. -/\nstructure ScalarWidthTrace (W₀ T : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = T\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ W₀\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  width_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    -(4 * Real.pi) - scalar i t / 2 * width i t < q →\n      ∃ᶠ s in 𝓝[>] t, slope (width i) t s < q\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
       "deprecated_at": null,
       "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
@@ -1766,7 +1929,7 @@
     "caf5e7f7-144e-4bc2-9730-695304525ad0": {
       "created_at": "2026-09-09T03:17:38.845171+00:00",
       "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "created_by_username": "Moqian",
+      "created_by_username": "Xinze-Li-Moqian",
       "definition": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\n/-!\n# Area and energy densities\n\nFor the images `v`, `w` of an orthonormal tangent frame under a differential,\nthe area density is the square root of the Gram determinant and the energy\ndensity is half the sum of the squared norms. The area is bounded by the\nenergy, with equality precisely for orthogonal vectors of equal norm.\n\nThe integral results assume measurable vector fields and integrable energy;\nintegrability of the area is a conclusion, not an additional assumption.\nThey apply on any measure space, including a restricted domain measure.\nIdentifying these fields with a Sobolev differential on a surface remains a\nseparate geometric interface. No global frame on the sphere is asserted.\n\nReference: Colding-Minicozzi, *Width and Finite Extinction Time of Ricci Flow*,\narXiv:0707.0108v1, equation (1.4) and the following equality discussion, p. 3.\nhttps://arxiv.org/pdf/0707.0108v1#page=3\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory\nopen scoped InnerProductSpace\n\nnamespace OpenGA\n\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\n\n/-- **Math.** The two-dimensional Jacobian density of a pair of derivative vectors. -/\nnoncomputable def areaDensity (v w : F) : ℝ :=\n  Real.sqrt (‖v‖ ^ 2 * ‖w‖ ^ 2 - ⟪v, w⟫_ℝ ^ 2)\n\n/-- **Math.** The Dirichlet energy density of a pair of derivative vectors. -/\nnoncomputable def energyDensity (v w : F) : ℝ :=\n  (‖v‖ ^ 2 + ‖w‖ ^ 2) / 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsection Integral\n\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\n\n\n\n\n\n\n\nend Integral\n\nend OpenGA\n",
       "deprecated_at": null,
       "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
@@ -1875,7 +2038,7 @@
       "theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
       "updated_at": "2026-09-09T03:20:21.899999+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "username": "Moqian",
+      "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
     "096644e2-0f01-45df-9752-41d89decd664": {
@@ -1890,7 +2053,7 @@
       "theorem_id": "d81e3640-8579-4396-babb-69edac82be33",
       "updated_at": "2026-09-09T03:19:11.888449+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "username": "Moqian",
+      "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
     "15a12bda-4d91-481f-9492-2022ec9bf42b": {
@@ -1905,7 +2068,22 @@
       "theorem_id": "eddc764e-527d-4d07-a812-94f60b637407",
       "updated_at": "2026-09-09T15:45:30.140337+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "username": "Moqian",
+      "username": "Xinze-Li-Moqian",
+      "vote_count": 0
+    },
+    "2e402417-5f76-4df8-a6d5-b9f1ff27d93b": {
+      "created_at": "2026-09-09T17:14:45.355984+00:00",
+      "deprecated_at": null,
+      "error_message": "",
+      "explanation": "The cross-comparison hypothesis passes to integrals:\n\n$$F(R)G(s)\\le F(s)G(R).$$\n\nHere $F$ and $G$ are the accumulated integrals of $f$ and $g$ over the intervals in the statement. Split the outer interval into the inner interval $A$ and the disjoint remainder $B$. Every $a\\in A$ precedes every $b\\in B$, so the hypothesis gives $f(b)g(a)\\le f(a)g(b)$. Integrating this inequality first over $a$ and then over $b$ gives\n\n$$\\left(\\int_B f\\,d\\mu\\right)\\left(\\int_A g\\,d\\mu\\right)\\le\\left(\\int_A f\\,d\\mu\\right)\\left(\\int_B g\\,d\\mu\\right).$$\n\nAdd the common product of the two inner integrals and use additivity over the disjoint union. The proof works with extended nonnegative integrals, including infinite values.\n\nProof adapted from DifferentialGeometry v0.1.2, RatioIntegral.lean; the original argument and hypotheses are preserved.",
+      "file_path": "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/2e402417-5f76-4df8-a6d5-b9f1ff27d93b.lean",
+      "id": "2e402417-5f76-4df8-a6d5-b9f1ff27d93b",
+      "local_path": "Solutions/Sol_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross_2e4024175f764df8a6d5b9f1ff27d93b.lean",
+      "status": "ACCEPTED",
+      "theorem_id": "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5",
+      "updated_at": "2026-09-09T17:15:08.430991+00:00",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
     "42885aae-9f1a-4edc-b4c4-d8e3820e630a": {
@@ -1920,7 +2098,7 @@
       "theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
       "updated_at": "2026-09-09T03:41:51.670231+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "username": "Moqian",
+      "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
     "51179dae-3662-451e-b374-fe303c70b325": {
@@ -1950,7 +2128,7 @@
       "theorem_id": "85285131-e406-453d-81b2-2e602a3e878d",
       "updated_at": "2026-09-09T15:47:07.644445+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "username": "Moqian",
+      "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
     "6d178906-6119-48c0-b672-0f3881b70643": {
@@ -1965,7 +2143,7 @@
       "theorem_id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
       "updated_at": "2026-09-09T02:16:32.594916+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "username": "Moqian",
+      "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
     "719f4cdd-1059-4091-9819-7926dbc5806e": {
@@ -1980,7 +2158,22 @@
       "theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
       "updated_at": "2026-09-09T03:40:57.943241+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "username": "Moqian",
+      "username": "Xinze-Li-Moqian",
+      "vote_count": 0
+    },
+    "91cf1c6b-5ed5-463a-b593-6f385348e01e": {
+      "created_at": "2026-09-09T17:21:17.706683+00:00",
+      "deprecated_at": null,
+      "error_message": "",
+      "explanation": "Fix $0<r\\le s\\le R$. Restrict measurability and the density comparison to $(0,s]$. The proved radial integral comparison gives\n\n$$F(s)G(r)\\le F(r)G(s).$$\n\nBoth $G(r)$ and $G(s)$ are positive and finite. Division by these factors therefore preserves the inequality even for extended nonnegative numerators, yielding $F(s)/G(s)\\le F(r)/G(r)$. The Lean proof imports the separately verified radial comparison theorem, so this dependency is visible in the proof graph.",
+      "file_path": "00a47c26-3e61-4afc-91c7-117708e1baf9/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/91cf1c6b-5ed5-463a-b593-6f385348e01e.lean",
+      "id": "91cf1c6b-5ed5-463a-b593-6f385348e01e",
+      "local_path": "Solutions/Sol_OpenGA_antitoneOn_lintegral_Ioc_div_91cf1c6b5ed5463ab5936f385348e01e.lean",
+      "status": "ACCEPTED",
+      "theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+      "updated_at": "2026-09-09T17:21:53.198212+00:00",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
     "973f67d3-d234-4233-800f-35c83decf01c": {
@@ -1995,7 +2188,7 @@
       "theorem_id": "1e7c607c-776e-41d3-8819-54cfe0543e69",
       "updated_at": "2026-09-09T15:47:08.283592+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "username": "Moqian",
+      "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
     "97d3cac5-2b5e-48c6-9651-e94fe6c77fcd": {
@@ -2040,7 +2233,7 @@
       "theorem_id": "a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784",
       "updated_at": "2026-09-09T15:45:18.257008+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "username": "Moqian",
+      "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
     "9d895407-3c0b-47ee-b857-e6ae4f60617f": {
@@ -2055,7 +2248,7 @@
       "theorem_id": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b",
       "updated_at": "2026-09-09T03:19:17.759988+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "username": "Moqian",
+      "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
     "bbe6fec0-1a12-4eba-bb85-2c00ebf62342": {
@@ -2085,7 +2278,22 @@
       "theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
       "updated_at": "2026-09-09T02:40:49.543292+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "username": "Moqian",
+      "username": "Xinze-Li-Moqian",
+      "vote_count": 0
+    },
+    "e226c921-de2b-4b97-bc82-2365ef39853d": {
+      "created_at": "2026-09-09T17:17:39.563923+00:00",
+      "deprecated_at": null,
+      "error_message": "",
+      "explanation": "The cross-comparison hypothesis passes to integrals:\n\n$$F(R)G(s)\\le F(s)G(R).$$\n\nHere $F$ and $G$ are the accumulated integrals of $f$ and $g$ over the intervals in the statement. Split the outer interval into the inner interval $A$ and the disjoint remainder $B$. Every $a\\in A$ precedes every $b\\in B$, so the hypothesis gives $f(b)g(a)\\le f(a)g(b)$. Integrating this inequality first over $a$ and then over $b$ gives\n\n$$\\left(\\int_B f\\,d\\mu\\right)\\left(\\int_A g\\,d\\mu\\right)\\le\\left(\\int_A f\\,d\\mu\\right)\\left(\\int_B g\\,d\\mu\\right).$$\n\nAdd the common product of the two inner integrals and use additivity over the disjoint union. The proof works with extended nonnegative integrals, including infinite values.\n\nProof adapted from DifferentialGeometry v0.1.2, RatioIntegral.lean; the original argument and hypotheses are preserved.",
+      "file_path": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/e226c921-de2b-4b97-bc82-2365ef39853d.lean",
+      "id": "e226c921-de2b-4b97-bc82-2365ef39853d",
+      "local_path": "Solutions/Sol_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le_e226c921de2b4b97bc822365ef39853d.lean",
+      "status": "ACCEPTED",
+      "theorem_id": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+      "updated_at": "2026-09-09T17:18:09.394216+00:00",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
     "f0552af4-769d-4fe4-8754-b9e01fd5718b": {
@@ -2100,9 +2308,9 @@
       "theorem_id": "16d46789-a853-4a33-a4a3-4134fe549c82",
       "updated_at": "2026-09-09T02:39:17.988714+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
-      "username": "Moqian",
+      "username": "Xinze-Li-Moqian",
       "vote_count": 0
     }
   },
-  "synced_at": "2026-09-09T16:51:35.664278+00:00"
+  "synced_at": "2026-09-09T17:26:00.000785+00:00"
 }

@@ -1,0 +1,271 @@
+{
+  "antitoneOn_lintegral_Ioc_div": {
+    "edges": [
+      {
+        "kind": "sketch",
+        "source": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+        "target": "sketch-91cf1c6b-5ed5-463a-b593-6f385348e01e"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-91cf1c6b-5ed5-463a-b593-6f385348e01e",
+        "target": "00a47c26-3e61-4afc-91c7-117708e1baf9"
+      },
+      {
+        "kind": "structural",
+        "source": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "target": "00a47c26-3e61-4afc-91c7-117708e1baf9"
+      },
+      {
+        "kind": "structural",
+        "source": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "target": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb"
+      }
+    ],
+    "has_hidden_deprecated_sketches": false,
+    "nodes": [
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:20:18.372121+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.antitoneOn_lintegral_Ioc_div {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g)\n    (hpos : ∀ r ∈ Ioc (0 : ℝ) R, 0 < ∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)\n    (hfin : ∀ r ∈ Ioc (0 : ℝ) R, (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ) < ⊤) :\n    AntitoneOn (fun r => (∫⁻ t in Ioc (0 : ℝ) r, f t ∂μ) /\n      (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)) (Ioc (0 : ℝ) R) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ whenever $0<a\\le b\\le R$. Write $F(r)=\\int_{(0,r]} f\\,d\\mu$ and $G(r)=\\int_{(0,r]} g\\,d\\mu$, and assume $0<G(r)<\\infty$ for every $0<r\\le R$. Then\n\n$$\\frac{F(s)}{G(s)}\\le\\frac{F(r)}{G(r)}\\qquad(0<r\\le s\\le R).$$\n\nThe numerator may be infinite. This is the analytic normalized-volume monotonicity step; its application to Riemannian balls additionally requires geometric density comparison and polar integration.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\n\n\n\nset_option autoImplicit false\n\nopen MeasureTheory Set\nopen scoped ENNReal\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+        "source": "OpenGA, OpenGALib/Analysis/IntegralComparison.lean, derived from DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le (DifferentialGeometry v0.1.2). https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/IntegralComparison.lean",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+        "theorem_name": "OpenGA.antitoneOn_lintegral_Ioc_div",
+        "theorem_title": "Monotonicity of normalized radial integrals",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:14:56.406714+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le {s : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g) (hs : 0 ≤ s) (hsR : s ≤ R) :\n    (∫⁻ t in Ioc (0 : ℝ) R, f t ∂μ) * (∫⁻ t in Ioc (0 : ℝ) s, g t ∂μ)\n      ≤ (∫⁻ t in Ioc (0 : ℝ) s, f t ∂μ) * ∫⁻ t in Ioc (0 : ℝ) R, g t ∂μ := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, let $0\\le s\\le R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ for $0<a\\le b\\le R$. Then\n\n$$\\left(\\int_{(0,R]} f\\,d\\mu\\right)\\left(\\int_{(0,s]} g\\,d\\mu\\right)\\le\\left(\\int_{(0,s]} f\\,d\\mu\\right)\\left(\\int_{(0,R]} g\\,d\\mu\\right).$$\n\nThe endpoint $s=0$ is included. This is the analytic density-to-volume step of radial comparison; identifying these integrals with Riemannian ball volumes requires the separate geometric polar integration theorem.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\n\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nset_option autoImplicit false",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L68-L109",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+        "theorem_name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+        "theorem_title": "Radial density comparison implies integrated comparison",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:13:16.952419+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n\ndef CrossAnti (R : ℝ) (f g : ℝ → ℝ≥0∞) : Prop :=\n  ∀ a b : ℝ, 0 < a → a ≤ b → b ≤ R → f b * g a ≤ f a * g b\n\n\n\n\n\n\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $R\\in\\mathbb R$ and let $f,g:\\mathbb R\\to[0,\\infty]$. The cross-comparison condition requires\n\n$$f(b)g(a)\\le f(a)g(b)\\qquad(0<a\\le b\\le R).$$\n\nWhen $g$ is finite and positive, this expresses that $f/g$ is nonincreasing. The cross-multiplied formulation also permits vanishing or infinite densities without division. It is an analytic input for radial volume comparison.",
+        "node_type": "theorem",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L65-L66",
+        "status": "Definition",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "theorem_name": "DifferentialGeometry_RadialCrossComparison",
+        "theorem_title": "Cross-multiplied comparison of radial densities",
+        "vote_count": 0
+      },
+      {
+        "child_count": 1,
+        "created_at": "2026-09-09T17:21:17.706683+00:00",
+        "deprecated_at": null,
+        "explanation": "Fix $0<r\\le s\\le R$. Restrict measurability and the density comparison to $(0,s]$. The proved radial integral comparison gives\n\n$$F(s)G(r)\\le F(r)G(s).$$\n\nBoth $G(r)$ and $G(s)$ are positive and finite. Division by these factors therefore preserves the inequality even for extended nonnegative numerators, yielding $F(s)/G(s)\\le F(r)/G(r)$. The Lean proof imports the separately verified radial comparison theorem, so this dependency is visible in the proof graph.",
+        "node_id": "sketch-91cf1c6b-5ed5-463a-b593-6f385348e01e",
+        "node_type": "sketch",
+        "parent_theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+        "status": "ACCEPTED",
+        "submission_id": "91cf1c6b-5ed5-463a-b593-6f385348e01e",
+        "username": "Xinze-Li-Moqian"
+      }
+    ],
+    "root_id": "00a47c26-3e61-4afc-91c7-117708e1baf9"
+  },
+  "lintegral_Iic_cross": {
+    "edges": [],
+    "has_hidden_deprecated_sketches": false,
+    "nodes": [
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:13:19.590199+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross {α : Type*} [LinearOrder α]\n    [TopologicalSpace α] [MeasurableSpace α] [OpensMeasurableSpace α]\n    [ClosedIicTopology α]\n    {μ : Measure α} {f g : α → ℝ≥0∞} {s R : α}\n    (hf : AEMeasurable f (μ.restrict (Iic R)))\n    (hg : AEMeasurable g (μ.restrict (Iic R)))\n    (hcross : ∀ ⦃a b : α⦄, a ≤ b → b ≤ R →\n      f b * g a ≤ f a * g b)\n    (hsR : s ≤ R) :\n    (∫⁻ t in Iic R, f t ∂μ) * (∫⁻ t in Iic s, g t ∂μ)\n      ≤ (∫⁻ t in Iic s, f t ∂μ) * ∫⁻ t in Iic R, g t ∂μ := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $X$ be a linearly ordered topological measurable space in which open sets are measurable and lower intervals $(-\\infty,r]$ are closed. Let $\\mu$ be a measure on $X$ and let $f,g:X\\to[0,\\infty]$ be almost-everywhere measurable on $(-\\infty,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ whenever $a\\le b\\le R$. Then, for every $s\\le R$,\n\n$$\\left(\\int_{(-\\infty,R]} f\\,d\\mu\\right)\\left(\\int_{(-\\infty,s]} g\\,d\\mu\\right)\\le\\left(\\int_{(-\\infty,s]} f\\,d\\mu\\right)\\left(\\int_{(-\\infty,R]} g\\,d\\mu\\right).$$\n\nAll integrals are extended nonnegative integrals; no finiteness or sigma-finiteness assumption is imposed. This transfers a pointwise density comparison to a comparison of accumulated mass, as used in the upstream Bishop–Gromov proof.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\nset_option autoImplicit false",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L13-L61",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5",
+        "theorem_name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross",
+        "theorem_title": "Integral comparison on nested lower intervals",
+        "vote_count": 0
+      }
+    ],
+    "root_id": "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5"
+  },
+  "lintegral_cross_le": {
+    "edges": [
+      {
+        "kind": "sketch",
+        "source": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+        "target": "sketch-91cf1c6b-5ed5-463a-b593-6f385348e01e"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-91cf1c6b-5ed5-463a-b593-6f385348e01e",
+        "target": "00a47c26-3e61-4afc-91c7-117708e1baf9"
+      },
+      {
+        "kind": "structural",
+        "source": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "target": "00a47c26-3e61-4afc-91c7-117708e1baf9"
+      },
+      {
+        "kind": "structural",
+        "source": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "target": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb"
+      }
+    ],
+    "has_hidden_deprecated_sketches": false,
+    "nodes": [
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:20:18.372121+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.antitoneOn_lintegral_Ioc_div {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g)\n    (hpos : ∀ r ∈ Ioc (0 : ℝ) R, 0 < ∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)\n    (hfin : ∀ r ∈ Ioc (0 : ℝ) R, (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ) < ⊤) :\n    AntitoneOn (fun r => (∫⁻ t in Ioc (0 : ℝ) r, f t ∂μ) /\n      (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)) (Ioc (0 : ℝ) R) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ whenever $0<a\\le b\\le R$. Write $F(r)=\\int_{(0,r]} f\\,d\\mu$ and $G(r)=\\int_{(0,r]} g\\,d\\mu$, and assume $0<G(r)<\\infty$ for every $0<r\\le R$. Then\n\n$$\\frac{F(s)}{G(s)}\\le\\frac{F(r)}{G(r)}\\qquad(0<r\\le s\\le R).$$\n\nThe numerator may be infinite. This is the analytic normalized-volume monotonicity step; its application to Riemannian balls additionally requires geometric density comparison and polar integration.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\n\n\n\nset_option autoImplicit false\n\nopen MeasureTheory Set\nopen scoped ENNReal\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+        "source": "OpenGA, OpenGALib/Analysis/IntegralComparison.lean, derived from DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le (DifferentialGeometry v0.1.2). https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/IntegralComparison.lean",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+        "theorem_name": "OpenGA.antitoneOn_lintegral_Ioc_div",
+        "theorem_title": "Monotonicity of normalized radial integrals",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:14:56.406714+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le {s : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g) (hs : 0 ≤ s) (hsR : s ≤ R) :\n    (∫⁻ t in Ioc (0 : ℝ) R, f t ∂μ) * (∫⁻ t in Ioc (0 : ℝ) s, g t ∂μ)\n      ≤ (∫⁻ t in Ioc (0 : ℝ) s, f t ∂μ) * ∫⁻ t in Ioc (0 : ℝ) R, g t ∂μ := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, let $0\\le s\\le R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ for $0<a\\le b\\le R$. Then\n\n$$\\left(\\int_{(0,R]} f\\,d\\mu\\right)\\left(\\int_{(0,s]} g\\,d\\mu\\right)\\le\\left(\\int_{(0,s]} f\\,d\\mu\\right)\\left(\\int_{(0,R]} g\\,d\\mu\\right).$$\n\nThe endpoint $s=0$ is included. This is the analytic density-to-volume step of radial comparison; identifying these integrals with Riemannian ball volumes requires the separate geometric polar integration theorem.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\n\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nset_option autoImplicit false",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L68-L109",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+        "theorem_name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+        "theorem_title": "Radial density comparison implies integrated comparison",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:13:16.952419+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n\ndef CrossAnti (R : ℝ) (f g : ℝ → ℝ≥0∞) : Prop :=\n  ∀ a b : ℝ, 0 < a → a ≤ b → b ≤ R → f b * g a ≤ f a * g b\n\n\n\n\n\n\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $R\\in\\mathbb R$ and let $f,g:\\mathbb R\\to[0,\\infty]$. The cross-comparison condition requires\n\n$$f(b)g(a)\\le f(a)g(b)\\qquad(0<a\\le b\\le R).$$\n\nWhen $g$ is finite and positive, this expresses that $f/g$ is nonincreasing. The cross-multiplied formulation also permits vanishing or infinite densities without division. It is an analytic input for radial volume comparison.",
+        "node_type": "theorem",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L65-L66",
+        "status": "Definition",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "theorem_name": "DifferentialGeometry_RadialCrossComparison",
+        "theorem_title": "Cross-multiplied comparison of radial densities",
+        "vote_count": 0
+      },
+      {
+        "child_count": 1,
+        "created_at": "2026-09-09T17:21:17.706683+00:00",
+        "deprecated_at": null,
+        "explanation": "Fix $0<r\\le s\\le R$. Restrict measurability and the density comparison to $(0,s]$. The proved radial integral comparison gives\n\n$$F(s)G(r)\\le F(r)G(s).$$\n\nBoth $G(r)$ and $G(s)$ are positive and finite. Division by these factors therefore preserves the inequality even for extended nonnegative numerators, yielding $F(s)/G(s)\\le F(r)/G(r)$. The Lean proof imports the separately verified radial comparison theorem, so this dependency is visible in the proof graph.",
+        "node_id": "sketch-91cf1c6b-5ed5-463a-b593-6f385348e01e",
+        "node_type": "sketch",
+        "parent_theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+        "status": "ACCEPTED",
+        "submission_id": "91cf1c6b-5ed5-463a-b593-6f385348e01e",
+        "username": "Xinze-Li-Moqian"
+      }
+    ],
+    "root_id": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb"
+  }
+}

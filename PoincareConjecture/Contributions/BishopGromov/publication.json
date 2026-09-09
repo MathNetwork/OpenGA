@@ -1,0 +1,394 @@
+{
+  "definitions": [
+    {
+      "id": "radial_cross_comparison",
+      "path": "Definitions/Def_DifferentialGeometry_RadialCrossComparison.lean",
+      "payload": {
+        "definition": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n\ndef CrossAnti (R : ℝ) (f g : ℝ → ℝ≥0∞) : Prop :=\n  ∀ a b : ℝ, 0 < a → a ≤ b → b ≤ R → f b * g a ≤ f a * g b\n\n\n\n\n\n\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+        "definition_name": "DifferentialGeometry_RadialCrossComparison",
+        "definition_title": "Cross-multiplied comparison of radial densities",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $R\\in\\mathbb R$ and let $f,g:\\mathbb R\\to[0,\\infty]$. The cross-comparison condition requires\n\n$$f(b)g(a)\\le f(a)g(b)\\qquad(0<a\\le b\\le R).$$\n\nWhen $g$ is finite and positive, this expresses that $f/g$ is nonincreasing. The cross-multiplied formulation also permits vanishing or infinite densities without division. It is an analytic input for radial volume comparison.",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L65-L66",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-09T17:14:44.270542+00:00",
+        "job": {
+          "created_at": "2026-09-09T17:11:30.012975+00:00",
+          "definitions": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n\ndef CrossAnti (R : ℝ) (f g : ℝ → ℝ≥0∞) : Prop :=\n  ∀ a b : ℝ, 0 < a → a ≤ b → b ≤ R → f b * g a ≤ f a * g b\n\n\n\n\n\n\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "f5227a66-b048-4453-87b5-f4a95cf32884",
+          "kind": "definition",
+          "natural_language_statement": "Let $R\\in\\mathbb R$ and let $f,g:\\mathbb R\\to[0,\\infty]$. The cross-comparison condition requires\n\n$$f(b)g(a)\\le f(a)g(b)\\qquad(0<a\\le b\\le R).$$\n\nWhen $g$ is finite and positive, this expresses that $f/g$ is nonincreasing. The cross-multiplied formulation also permits vanishing or infinite densities without division. It is an analytic input for radial volume comparison.",
+          "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L65-L66",
+          "status": "PUBLISHED",
+          "tags": [
+            "bishop-gromov",
+            "differential-geometry",
+            "measure-theory"
+          ],
+          "theorem_id": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+          "theorem_name": "DifferentialGeometry_RadialCrossComparison",
+          "theorem_title": "Cross-multiplied comparison of radial densities",
+          "updated_at": "2026-09-09T17:13:19.301932+00:00",
+          "visibility": "public"
+        },
+        "job_id": "f5227a66-b048-4453-87b5-f4a95cf32884",
+        "response": {
+          "definition_name": "DifferentialGeometry_RadialCrossComparison",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "f5227a66-b048-4453-87b5-f4a95cf32884",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/f5227a66-b048-4453-87b5-f4a95cf32884 until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-09T17:11:29.602650+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "verified_at": "2026-09-09T17:24:25.128319+00:00"
+      },
+      "sha256": "6aa7f736ecfab7d375e80d7041dcaf55dd765bac79100fc2b763062fdd16b28e"
+    }
+  ],
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "milestone_annotation": {
+    "after": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).\n\n**Verified analytic prerequisites.** [Integral comparison on nested lower intervals](https://prove2.me/theorems/1b1a2764-46a8-4ccb-9220-d38a56f8a6a5); [Radial density comparison implies integrated comparison](https://prove2.me/theorems/0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb); [Monotonicity of normalized radial integrals](https://prove2.me/theorems/00a47c26-3e61-4afc-91c7-117708e1baf9). The first two results preserve the DifferentialGeometry proofs; the third is an OpenGA corollary. These establish the integral comparison step. The full geometric milestone remains open: geometric density comparison, polar integration, the ball-local hypotheses and positive model curvature still require a faithful platform development.",
+    "before": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).",
+    "canonical_theorem": null,
+    "response": {
+      "completed": false,
+      "created_at": "2026-09-09T16:03:11.319685+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "cb96ab98-d517-4ecc-964b-b4b39a2d07a3",
+      "milestone_description": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).\n\n**Verified analytic prerequisites.** [Integral comparison on nested lower intervals](https://prove2.me/theorems/1b1a2764-46a8-4ccb-9220-d38a56f8a6a5); [Radial density comparison implies integrated comparison](https://prove2.me/theorems/0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb); [Monotonicity of normalized radial integrals](https://prove2.me/theorems/00a47c26-3e61-4afc-91c7-117708e1baf9). The first two results preserve the DifferentialGeometry proofs; the third is an OpenGA corollary. These establish the integral comparison step. The full geometric milestone remains open: geometric density comparison, polar integration, the ball-local hypotheses and positive model curvature still require a faithful platform development.",
+      "sort_order": 7,
+      "theorem": null,
+      "title": "Bishop-Gromov volume comparison"
+    },
+    "status": "VERIFIED",
+    "verified_at": "2026-09-09T17:24:31.495184+00:00"
+  },
+  "milestone_id": "cb96ab98-d517-4ecc-964b-b4b39a2d07a3",
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "phase": "radial_integral_prerequisites",
+  "schema_version": 1,
+  "scope": "Analytic prerequisites only. The full geometric Bishop-Gromov milestone remains Open.",
+  "source_reviewed": true,
+  "sources": [
+    {
+      "path": ".lake/packages/DifferentialGeometry/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean",
+      "sha256": "6480c8419c591340bf8ac38b06e6d2aec285f449d64df482ed11ef6be6f57502"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/BishopGromov/Metadata/ratio_integral_facts.jsonl",
+      "sha256": "90289f85d5a010a7530b2e6707b945462a6eba02f90a394b5e177ef4ad544c2a"
+    },
+    {
+      "path": "OpenGALib/Analysis/IntegralComparison.lean",
+      "sha256": "eb97449053abeabb37c1c9d4be7842d8a5fa7869660b470c35d6fdf64fd75c38"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/BishopGromov/Metadata/normalized_integral_facts.jsonl",
+      "sha256": "ef5aca31cc5134b38dd2d281a0144e951423a1ee7760125670dd7489144b98de"
+    }
+  ],
+  "status": "ANALYTIC_PREREQUISITES_PUBLISHED",
+  "theorems": [
+    {
+      "definitions": [],
+      "explanation": "The cross-comparison hypothesis passes to integrals:\n\n$$F(R)G(s)\\le F(s)G(R).$$\n\nHere $F$ and $G$ are the accumulated integrals of $f$ and $g$ over the intervals in the statement. Split the outer interval into the inner interval $A$ and the disjoint remainder $B$. Every $a\\in A$ precedes every $b\\in B$, so the hypothesis gives $f(b)g(a)\\le f(a)g(b)$. Integrating this inequality first over $a$ and then over $b$ gives\n\n$$\\left(\\int_B f\\,d\\mu\\right)\\left(\\int_A g\\,d\\mu\\right)\\le\\left(\\int_A f\\,d\\mu\\right)\\left(\\int_B g\\,d\\mu\\right).$$\n\nAdd the common product of the two inner integrals and use additivity over the disjoint union. The proof works with extended nonnegative integrals, including infinite values.\n\nProof adapted from DifferentialGeometry v0.1.2, RatioIntegral.lean; the original argument and hypotheses are preserved.",
+      "id": "lintegral_Iic_cross",
+      "imports": [],
+      "path": "Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross {α : Type*} [LinearOrder α]\n    [TopologicalSpace α] [MeasurableSpace α] [OpensMeasurableSpace α]\n    [ClosedIicTopology α]\n    {μ : Measure α} {f g : α → ℝ≥0∞} {s R : α}\n    (hf : AEMeasurable f (μ.restrict (Iic R)))\n    (hg : AEMeasurable g (μ.restrict (Iic R)))\n    (hcross : ∀ ⦃a b : α⦄, a ≤ b → b ≤ R →\n      f b * g a ≤ f a * g b)\n    (hsR : s ≤ R) :\n    (∫⁻ t in Iic R, f t ∂μ) * (∫⁻ t in Iic s, g t ∂μ)\n      ≤ (∫⁻ t in Iic s, f t ∂μ) * ∫⁻ t in Iic R, g t ∂μ := by sorry",
+        "natural_language_statement": "Let $X$ be a linearly ordered topological measurable space in which open sets are measurable and lower intervals $(-\\infty,r]$ are closed. Let $\\mu$ be a measure on $X$ and let $f,g:X\\to[0,\\infty]$ be almost-everywhere measurable on $(-\\infty,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ whenever $a\\le b\\le R$. Then, for every $s\\le R$,\n\n$$\\left(\\int_{(-\\infty,R]} f\\,d\\mu\\right)\\left(\\int_{(-\\infty,s]} g\\,d\\mu\\right)\\le\\left(\\int_{(-\\infty,s]} f\\,d\\mu\\right)\\left(\\int_{(-\\infty,R]} g\\,d\\mu\\right).$$\n\nAll integrals are extended nonnegative integrals; no finiteness or sigma-finiteness assumption is imposed. This transfers a pointwise density comparison to a comparison of accumulated mass, as used in the upstream Bishop–Gromov proof.",
+        "preamble": "import Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\nset_option autoImplicit false",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L13-L61",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross",
+        "theorem_title": "Integral comparison on nested lower intervals"
+      },
+      "proof_path": "Solutions/Sol_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross.lean",
+      "proof_sha256": "08dc7ed4b87b0bf1538ea66406ba1333d2243069b11ed93bf0476bf6e1f99565",
+      "publication": {
+        "checked_at": "2026-09-09T17:14:44.730598+00:00",
+        "job": {
+          "created_at": "2026-09-09T17:11:30.82637+00:00",
+          "definitions": "import Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\nset_option autoImplicit false",
+          "error_message": "",
+          "formal_statement": "theorem DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross {α : Type*} [LinearOrder α]\n    [TopologicalSpace α] [MeasurableSpace α] [OpensMeasurableSpace α]\n    [ClosedIicTopology α]\n    {μ : Measure α} {f g : α → ℝ≥0∞} {s R : α}\n    (hf : AEMeasurable f (μ.restrict (Iic R)))\n    (hg : AEMeasurable g (μ.restrict (Iic R)))\n    (hcross : ∀ ⦃a b : α⦄, a ≤ b → b ≤ R →\n      f b * g a ≤ f a * g b)\n    (hsR : s ≤ R) :\n    (∫⁻ t in Iic R, f t ∂μ) * (∫⁻ t in Iic s, g t ∂μ)\n      ≤ (∫⁻ t in Iic s, f t ∂μ) * ∫⁻ t in Iic R, g t ∂μ := by sorry",
+          "id": "dad437dc-3920-40e2-ad52-181fbb3462be",
+          "kind": "problem",
+          "natural_language_statement": "Let $X$ be a linearly ordered topological measurable space in which open sets are measurable and lower intervals $(-\\infty,r]$ are closed. Let $\\mu$ be a measure on $X$ and let $f,g:X\\to[0,\\infty]$ be almost-everywhere measurable on $(-\\infty,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ whenever $a\\le b\\le R$. Then, for every $s\\le R$,\n\n$$\\left(\\int_{(-\\infty,R]} f\\,d\\mu\\right)\\left(\\int_{(-\\infty,s]} g\\,d\\mu\\right)\\le\\left(\\int_{(-\\infty,s]} f\\,d\\mu\\right)\\left(\\int_{(-\\infty,R]} g\\,d\\mu\\right).$$\n\nAll integrals are extended nonnegative integrals; no finiteness or sigma-finiteness assumption is imposed. This transfers a pointwise density comparison to a comparison of accumulated mass, as used in the upstream Bishop–Gromov proof.",
+          "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L13-L61",
+          "status": "PUBLISHED",
+          "tags": [
+            "bishop-gromov",
+            "differential-geometry",
+            "measure-theory"
+          ],
+          "theorem_id": "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5",
+          "theorem_name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross",
+          "theorem_title": "Integral comparison on nested lower intervals",
+          "updated_at": "2026-09-09T17:13:21.911343+00:00",
+          "visibility": "public"
+        },
+        "job_id": "dad437dc-3920-40e2-ad52-181fbb3462be",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "dad437dc-3920-40e2-ad52-181fbb3462be",
+              "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-09T17:11:30.469265+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5",
+        "verified_at": "2026-09-09T17:24:25.400697+00:00"
+      },
+      "sha256": "fa5adeaadf1270c1f334d7ed330605e63432fcd1f952396bb1897b78e050a2e4",
+      "submission": {
+        "accepted_source_sha256": "08dc7ed4b87b0bf1538ea66406ba1333d2243069b11ed93bf0476bf6e1f99565",
+        "checked_at": "2026-09-09T17:24:25.713441+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "2e402417-5f76-4df8-a6d5-b9f1ff27d93b"
+        },
+        "started_at": "2026-09-09T17:14:45.132592+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "2e402417-5f76-4df8-a6d5-b9f1ff27d93b",
+        "verdict": {
+          "created_at": "2026-09-09T17:14:45.355984+00:00",
+          "error_message": "",
+          "file_path": "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/2e402417-5f76-4df8-a6d5-b9f1ff27d93b.lean",
+          "id": "2e402417-5f76-4df8-a6d5-b9f1ff27d93b",
+          "status": "ACCEPTED",
+          "theorem_id": "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5",
+          "updated_at": "2026-09-09T17:15:08.430991+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-09T17:24:26.361656+00:00"
+      }
+    },
+    {
+      "definitions": [
+        "radial_cross_comparison"
+      ],
+      "explanation": "The cross-comparison hypothesis passes to integrals:\n\n$$F(R)G(s)\\le F(s)G(R).$$\n\nHere $F$ and $G$ are the accumulated integrals of $f$ and $g$ over the intervals in the statement. Split the outer interval into the inner interval $A$ and the disjoint remainder $B$. Every $a\\in A$ precedes every $b\\in B$, so the hypothesis gives $f(b)g(a)\\le f(a)g(b)$. Integrating this inequality first over $a$ and then over $b$ gives\n\n$$\\left(\\int_B f\\,d\\mu\\right)\\left(\\int_A g\\,d\\mu\\right)\\le\\left(\\int_A f\\,d\\mu\\right)\\left(\\int_B g\\,d\\mu\\right).$$\n\nAdd the common product of the two inner integrals and use additivity over the disjoint union. The proof works with extended nonnegative integrals, including infinite values.\n\nProof adapted from DifferentialGeometry v0.1.2, RatioIntegral.lean; the original argument and hypotheses are preserved.",
+      "id": "lintegral_cross_le",
+      "imports": [],
+      "path": "Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le {s : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g) (hs : 0 ≤ s) (hsR : s ≤ R) :\n    (∫⁻ t in Ioc (0 : ℝ) R, f t ∂μ) * (∫⁻ t in Ioc (0 : ℝ) s, g t ∂μ)\n      ≤ (∫⁻ t in Ioc (0 : ℝ) s, f t ∂μ) * ∫⁻ t in Ioc (0 : ℝ) R, g t ∂μ := by sorry",
+        "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, let $0\\le s\\le R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ for $0<a\\le b\\le R$. Then\n\n$$\\left(\\int_{(0,R]} f\\,d\\mu\\right)\\left(\\int_{(0,s]} g\\,d\\mu\\right)\\le\\left(\\int_{(0,s]} f\\,d\\mu\\right)\\left(\\int_{(0,R]} g\\,d\\mu\\right).$$\n\nThe endpoint $s=0$ is included. This is the analytic density-to-volume step of radial comparison; identifying these integrals with Riemannian ball volumes requires the separate geometric polar integration theorem.",
+        "preamble": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\n\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nset_option autoImplicit false",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L68-L109",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+        "theorem_title": "Radial density comparison implies integrated comparison"
+      },
+      "proof_path": "Solutions/Sol_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le.lean",
+      "proof_sha256": "c6d226aa11c99558d172d007c9390cac52289c110e82584165a2259c8a3b6320",
+      "publication": {
+        "checked_at": "2026-09-09T17:17:38.880108+00:00",
+        "job": {
+          "created_at": "2026-09-09T17:14:46.318156+00:00",
+          "definitions": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\n\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nset_option autoImplicit false",
+          "error_message": "",
+          "formal_statement": "theorem DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le {s : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g) (hs : 0 ≤ s) (hsR : s ≤ R) :\n    (∫⁻ t in Ioc (0 : ℝ) R, f t ∂μ) * (∫⁻ t in Ioc (0 : ℝ) s, g t ∂μ)\n      ≤ (∫⁻ t in Ioc (0 : ℝ) s, f t ∂μ) * ∫⁻ t in Ioc (0 : ℝ) R, g t ∂μ := by sorry",
+          "id": "1012ea42-0482-40f1-9c60-665bb2d62294",
+          "kind": "problem",
+          "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, let $0\\le s\\le R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ for $0<a\\le b\\le R$. Then\n\n$$\\left(\\int_{(0,R]} f\\,d\\mu\\right)\\left(\\int_{(0,s]} g\\,d\\mu\\right)\\le\\left(\\int_{(0,s]} f\\,d\\mu\\right)\\left(\\int_{(0,R]} g\\,d\\mu\\right).$$\n\nThe endpoint $s=0$ is included. This is the analytic density-to-volume step of radial comparison; identifying these integrals with Riemannian ball volumes requires the separate geometric polar integration theorem.",
+          "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L68-L109",
+          "status": "PUBLISHED",
+          "tags": [
+            "bishop-gromov",
+            "differential-geometry",
+            "measure-theory"
+          ],
+          "theorem_id": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+          "theorem_name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+          "theorem_title": "Radial density comparison implies integrated comparison",
+          "updated_at": "2026-09-09T17:14:59.070069+00:00",
+          "visibility": "public"
+        },
+        "job_id": "1012ea42-0482-40f1-9c60-665bb2d62294",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "1012ea42-0482-40f1-9c60-665bb2d62294",
+              "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-09T17:14:45.949303+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+        "verified_at": "2026-09-09T17:24:26.784388+00:00"
+      },
+      "sha256": "ba37184924e7b600c4849fb75508f5cc012336c4b00b94f4812324b9b4014555",
+      "submission": {
+        "accepted_source_sha256": "c6d226aa11c99558d172d007c9390cac52289c110e82584165a2259c8a3b6320",
+        "checked_at": "2026-09-09T17:24:27.267715+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "e226c921-de2b-4b97-bc82-2365ef39853d"
+        },
+        "started_at": "2026-09-09T17:17:39.286225+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "e226c921-de2b-4b97-bc82-2365ef39853d",
+        "verdict": {
+          "created_at": "2026-09-09T17:17:39.563923+00:00",
+          "error_message": "",
+          "file_path": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/e226c921-de2b-4b97-bc82-2365ef39853d.lean",
+          "id": "e226c921-de2b-4b97-bc82-2365ef39853d",
+          "status": "ACCEPTED",
+          "theorem_id": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+          "updated_at": "2026-09-09T17:18:09.394216+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-09T17:24:28.064652+00:00"
+      }
+    },
+    {
+      "definitions": [
+        "radial_cross_comparison"
+      ],
+      "explanation": "Fix $0<r\\le s\\le R$. Restrict measurability and the density comparison to $(0,s]$. The proved radial integral comparison gives\n\n$$F(s)G(r)\\le F(r)G(s).$$\n\nBoth $G(r)$ and $G(s)$ are positive and finite. Division by these factors therefore preserves the inequality even for extended nonnegative numerators, yielding $F(s)/G(s)\\le F(r)/G(r)$. The Lean proof imports the separately verified radial comparison theorem, so this dependency is visible in the proof graph.",
+      "id": "antitoneOn_lintegral_Ioc_div",
+      "imports": [
+        "lintegral_cross_le"
+      ],
+      "path": "Theorems/Thm_OpenGA_antitoneOn_lintegral_Ioc_div.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem OpenGA.antitoneOn_lintegral_Ioc_div {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g)\n    (hpos : ∀ r ∈ Ioc (0 : ℝ) R, 0 < ∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)\n    (hfin : ∀ r ∈ Ioc (0 : ℝ) R, (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ) < ⊤) :\n    AntitoneOn (fun r => (∫⁻ t in Ioc (0 : ℝ) r, f t ∂μ) /\n      (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)) (Ioc (0 : ℝ) R) := by sorry",
+        "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ whenever $0<a\\le b\\le R$. Write $F(r)=\\int_{(0,r]} f\\,d\\mu$ and $G(r)=\\int_{(0,r]} g\\,d\\mu$, and assume $0<G(r)<\\infty$ for every $0<r\\le R$. Then\n\n$$\\frac{F(s)}{G(s)}\\le\\frac{F(r)}{G(r)}\\qquad(0<r\\le s\\le R).$$\n\nThe numerator may be infinite. This is the analytic normalized-volume monotonicity step; its application to Riemannian balls additionally requires geometric density comparison and polar integration.",
+        "preamble": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\n\n\n\nset_option autoImplicit false\n\nopen MeasureTheory Set\nopen scoped ENNReal\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+        "source": "OpenGA, OpenGALib/Analysis/IntegralComparison.lean, derived from DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le (DifferentialGeometry v0.1.2). https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/IntegralComparison.lean",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_name": "OpenGA.antitoneOn_lintegral_Ioc_div",
+        "theorem_title": "Monotonicity of normalized radial integrals"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_antitoneOn_lintegral_Ioc_div.lean",
+      "proof_sha256": "cab8674f53f219f0acf85f1a16f62ab6f3f2ec304ac9b1c826179993024e8e25",
+      "publication": {
+        "checked_at": "2026-09-09T17:21:16.984637+00:00",
+        "job": {
+          "created_at": "2026-09-09T17:20:08.78629+00:00",
+          "definitions": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\n\n\n\nset_option autoImplicit false\n\nopen MeasureTheory Set\nopen scoped ENNReal\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+          "error_message": "",
+          "formal_statement": "theorem OpenGA.antitoneOn_lintegral_Ioc_div {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g)\n    (hpos : ∀ r ∈ Ioc (0 : ℝ) R, 0 < ∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)\n    (hfin : ∀ r ∈ Ioc (0 : ℝ) R, (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ) < ⊤) :\n    AntitoneOn (fun r => (∫⁻ t in Ioc (0 : ℝ) r, f t ∂μ) /\n      (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)) (Ioc (0 : ℝ) R) := by sorry",
+          "id": "ac2de200-425a-4006-8c8d-5df4b8524cc8",
+          "kind": "problem",
+          "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ whenever $0<a\\le b\\le R$. Write $F(r)=\\int_{(0,r]} f\\,d\\mu$ and $G(r)=\\int_{(0,r]} g\\,d\\mu$, and assume $0<G(r)<\\infty$ for every $0<r\\le R$. Then\n\n$$\\frac{F(s)}{G(s)}\\le\\frac{F(r)}{G(r)}\\qquad(0<r\\le s\\le R).$$\n\nThe numerator may be infinite. This is the analytic normalized-volume monotonicity step; its application to Riemannian balls additionally requires geometric density comparison and polar integration.",
+          "source": "OpenGA, OpenGALib/Analysis/IntegralComparison.lean, derived from DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le (DifferentialGeometry v0.1.2). https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/IntegralComparison.lean",
+          "status": "PUBLISHED",
+          "tags": [
+            "bishop-gromov",
+            "differential-geometry",
+            "measure-theory"
+          ],
+          "theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+          "theorem_name": "OpenGA.antitoneOn_lintegral_Ioc_div",
+          "theorem_title": "Monotonicity of normalized radial integrals",
+          "updated_at": "2026-09-09T17:20:18.715802+00:00",
+          "visibility": "public"
+        },
+        "job_id": "ac2de200-425a-4006-8c8d-5df4b8524cc8",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "ac2de200-425a-4006-8c8d-5df4b8524cc8",
+              "name": "OpenGA.antitoneOn_lintegral_Ioc_div"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-09T17:20:07.874447+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+        "verified_at": "2026-09-09T17:24:28.238544+00:00"
+      },
+      "sha256": "1c0cc19aed6fef84e36caff19c8919f4bbcb6d4c186cde40b681b23d920fc8c7",
+      "submission": {
+        "accepted_source_sha256": "cab8674f53f219f0acf85f1a16f62ab6f3f2ec304ac9b1c826179993024e8e25",
+        "checked_at": "2026-09-09T17:24:28.641525+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "91cf1c6b-5ed5-463a-b593-6f385348e01e"
+        },
+        "started_at": "2026-09-09T17:21:17.459415+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "91cf1c6b-5ed5-463a-b593-6f385348e01e",
+        "verdict": {
+          "created_at": "2026-09-09T17:21:17.706683+00:00",
+          "error_message": "",
+          "file_path": "00a47c26-3e61-4afc-91c7-117708e1baf9/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/91cf1c6b-5ed5-463a-b593-6f385348e01e.lean",
+          "id": "91cf1c6b-5ed5-463a-b593-6f385348e01e",
+          "status": "ACCEPTED",
+          "theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+          "updated_at": "2026-09-09T17:21:53.198212+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-09T17:24:29.269944+00:00"
+      }
+    }
+  ],
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "upstream_commit": "1b535dd102b94cc42b107cca27059687888f08b3",
+  "validation": {
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build": "passed in a Mathlib-only submission workspace",
+    "checked_at": "2026-09-09T17:19:47.854369+00:00",
+    "dependency_audit": "The normalized integral proof is checked both with the platform child stub and with its audited complete upstream proof substituted for that stub.",
+    "proof_audits": {
+      "antitoneOn_lintegral_Ioc_div": "Exact target type matched after resolving the audited child proof; axioms: [propext, Classical.choice, Quot.sound]",
+      "lintegral_Iic_cross": "Exact target type matched; proof axioms: [propext, Classical.choice, Quot.sound]",
+      "lintegral_cross_le": "Exact target type matched; proof axioms: [propext, Classical.choice, Quot.sound]"
+    },
+    "scope": "One definition and three analytic prerequisites; no geometric completion claimed.",
+    "source_type_equivalence": "identical elaborated types after canonical universe names",
+    "status": "passed"
+  },
+  "verified_at": "2026-09-09T17:24:30.676565+00:00"
+}

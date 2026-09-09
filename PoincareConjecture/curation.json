@@ -1,6 +1,6 @@
 {
   "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
-  "reviewed_at": "2026-09-09T15:49:18.606093+00:00",
+  "reviewed_at": "2026-09-09T17:26:30.899937+00:00",
   "reviews": {
     "01167772-943a-4c75-ab15-9f7b235777a8": {
       "declarations": [
@@ -56,6 +56,22 @@
       "source_status": "ACCEPTED",
       "source_theorem_id": "eddc764e-527d-4d07-a812-94f60b637407",
       "source_url": "https://prove2.me/api/v1/submissions/15a12bda-4d91-481f-9492-2022ec9bf42b/solution",
+      "status": "integrated"
+    },
+    "2e402417-5f76-4df8-a6d5-b9f1ff27d93b": {
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross",
+          "path": "OpenGALib/Analysis/IntegralComparison.lean"
+        }
+      ],
+      "scope": "Radial integral comparison and normalized integral monotonicity. The original DifferentialGeometry theorems are reused through the pinned Lake dependency; the OpenGA corollary is proved locally. Exact elaborated types match the platform exports, and the proofs use only standard Lean axioms. Riemannian density comparison, polar integration and the full geometric milestone remain separate.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "08dc7ed4b87b0bf1538ea66406ba1333d2243069b11ed93bf0476bf6e1f99565",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5",
+      "source_url": "https://prove2.me/api/v1/submissions/2e402417-5f76-4df8-a6d5-b9f1ff27d93b/solution",
       "status": "integrated"
     },
     "42885aae-9f1a-4edc-b4c4-d8e3820e630a": {
@@ -139,6 +155,22 @@
       "source_status": "ACCEPTED",
       "source_theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
       "source_url": "https://prove2.me/api/v1/submissions/719f4cdd-1059-4091-9819-7926dbc5806e/solution",
+      "status": "integrated"
+    },
+    "91cf1c6b-5ed5-463a-b593-6f385348e01e": {
+      "declarations": [
+        {
+          "name": "OpenGA.antitoneOn_lintegral_Ioc_div",
+          "path": "OpenGALib/Analysis/IntegralComparison.lean"
+        }
+      ],
+      "scope": "Radial integral comparison and normalized integral monotonicity. The original DifferentialGeometry theorems are reused through the pinned Lake dependency; the OpenGA corollary is proved locally. Exact elaborated types match the platform exports, and the proofs use only standard Lean axioms. Riemannian density comparison, polar integration and the full geometric milestone remain separate.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "cab8674f53f219f0acf85f1a16f62ab6f3f2ec304ac9b1c826179993024e8e25",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+      "source_url": "https://prove2.me/api/v1/submissions/91cf1c6b-5ed5-463a-b593-6f385348e01e/solution",
       "status": "integrated"
     },
     "973f67d3-d234-4233-800f-35c83decf01c": {
@@ -260,6 +292,22 @@
       "source_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
       "source_url": "https://prove2.me/api/v1/submissions/d543d39b-4273-4b91-826f-1b9c8c6191ee/solution",
       "status": "deferred"
+    },
+    "e226c921-de2b-4b97-bc82-2365ef39853d": {
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+          "path": "OpenGALib/Analysis/IntegralComparison.lean"
+        }
+      ],
+      "scope": "Radial integral comparison and normalized integral monotonicity. The original DifferentialGeometry theorems are reused through the pinned Lake dependency; the OpenGA corollary is proved locally. Exact elaborated types match the platform exports, and the proofs use only standard Lean axioms. Riemannian density comparison, polar integration and the full geometric milestone remain separate.",
+      "source_author": "Xinze-Li-Moqian",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "c6d226aa11c99558d172d007c9390cac52289c110e82584165a2259c8a3b6320",
+      "source_status": "ACCEPTED",
+      "source_theorem_id": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+      "source_url": "https://prove2.me/api/v1/submissions/e226c921-de2b-4b97-bc82-2365ef39853d/solution",
+      "status": "integrated"
     },
     "f0552af4-769d-4fe4-8754-b9e01fd5718b": {
       "declarations": [

@@ -12,3 +12,6 @@ lake-packages/
 # Local Prove2Me credentials
 /PoincareConjecture/.credentials.json
 __pycache__/
+
+# Reproducible full dependency scan; retain its hash and selected source facts.
+/PoincareConjecture/Contributions/BishopGromov/Metadata/declaration_graph.jsonl

@@ -4,6 +4,9 @@
     "OpenGA.areaDensity_eq_normDet",
     "OpenGA.areaDensity_basis_independent",
     "OrthonormalBasis.sum_apply_diagonal_invariant",
-    "OpenGA.energyDensity_basis_independent"
+    "OpenGA.energyDensity_basis_independent",
+    "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross",
+    "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+    "OpenGA.antitoneOn_lintegral_Ioc_div"
   ]
 }

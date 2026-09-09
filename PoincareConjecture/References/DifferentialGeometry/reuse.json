@@ -18,6 +18,19 @@
       "scope": "Review and reuse the complete connected boundaryless manifold Bishop-Gromov comparison for global Ricci lower bound -(n-1) q^2, q>=0; specialize to nonnegative Ricci and volume doubling. This does not cover the entire platform milestone.",
       "status": "verified",
       "verified_at": "2026-09-09T16:44:10.366582+00:00"
+    },
+    {
+      "local_module": "OpenGALib/Analysis/IntegralComparison.lean",
+      "local_results": [
+        "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross",
+        "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+        "OpenGA.antitoneOn_lintegral_Ioc_div"
+      ],
+      "platform_publication": "published",
+      "publication_record": "PoincareConjecture/Contributions/BishopGromov/publication.json",
+      "scope": "Analytic radial integral comparison and normalized integral monotonicity; no geometric completion claimed.",
+      "status": "verified_and_published",
+      "verified_at": "2026-09-09T17:24:30.676565+00:00"
     }
   ],
   "commit": "1b535dd102b94cc42b107cca27059687888f08b3",
