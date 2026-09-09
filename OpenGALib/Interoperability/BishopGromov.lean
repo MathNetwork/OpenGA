@@ -1,6 +1,7 @@
 import DifferentialGeometry.Geometry.Comparison.Volume.SegmentBallEuclideanUpper
 import DifferentialGeometry.Geometry.Metric.Completeness
 import DifferentialGeometry.Topology.FiberBundleT2
+import OpenGALib.ComparisonGeometry.Volume
 import OpenGALib.Interoperability.DifferentialGeometry
 
 /-!
@@ -40,34 +41,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}
   {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]
   [T2Space M] [SigmaCompactSpace M]
-
-attribute [-instance] DifferentialGeometry.Tensor0SBundle.tangentSpaceNormedAddCommGroup
-  DifferentialGeometry.Tensor0SBundle.tangentSpaceNormedSpace in
-/-- **Math.** The open ball for the distance induced by the specified metric. -/
-def geodesicBall (g : RiemannianMetric I M) (p : M) (r : ℝ) : Set M :=
-  {x | riemannianEDistOf (I := I) g p x < ENNReal.ofReal r}
-
-/-- **Math.** The Riemannian volume of a geodesic ball for the same metric. -/
-def ballVolume (g : RiemannianMetric I M) (p : M) (r : ℝ) : ℝ≥0∞ :=
-  g.volumeMeasure (g.geodesicBall p r)
-
-attribute [-instance] DifferentialGeometry.Tensor0SBundle.tangentSpaceNormedAddCommGroup
-  DifferentialGeometry.Tensor0SBundle.tangentSpaceNormedSpace in
-/-- **Math.** Every positive-radius ball has positive volume, without completeness
-or a curvature assumption. -/
-theorem ballVolume_pos (g : RiemannianMetric I M) (p : M) {r : ℝ} (hr : 0 < r) :
-    0 < g.ballVolume p r := by
-  let : IsManifold I 1 M := IsManifold.of_le (n := ∞) (by decide)
-  let : TopologicalSpace.MetrizableSpace M := Manifold.metrizableSpace I M
-  let : T3Space M := inferInstance
-  let : RiemannianBundle (fun x : M => TangentSpace I x) := ⟨g.toRiemannianMetric⟩
-  let : IsContinuousRiemannianBundle E (fun x : M => TangentSpace I x) :=
-    ⟨⟨g.inner, g.contMDiff.continuous, by intro x v w; rfl⟩⟩
-  let : EMetricSpace M := EMetricSpace.ofRiemannianMetric I M
-  let : g.volumeMeasure.IsOpenPosMeasure := g.volumeMeasure_isOpenPosMeasure
-  change 0 < g.volumeMeasure {x | edist p x < ENNReal.ofReal r}
-  simpa only [Metric.eball, edist_comm] using
-    Metric.measure_eball_pos g.volumeMeasure p (ENNReal.ofReal_ne_zero_iff.mpr hr)
 
 variable [I.Boundaryless] [ConnectedSpace M] [NeZero (Module.finrank ℝ E)]
 

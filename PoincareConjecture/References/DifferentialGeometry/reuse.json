@@ -72,6 +72,18 @@
     }
   ],
   "commit": "1b535dd102b94cc42b107cca27059687888f08b3",
+  "foundation_refactor": {
+    "checked_at": "2026-09-09T18:47:34.927294+00:00",
+    "description": "The existing volume interface is now imported from ComparisonGeometry.VolumeMeasure; upstream construction and theorem names are unchanged.",
+    "foundation_sources": {
+      "OpenGALib/ComparisonGeometry/CurvatureBounds.lean": "427186a8dcb6f30dd3a9f99b53615de2b68b404cc8d6ddefe9a5f0915dcdf581",
+      "OpenGALib/ComparisonGeometry/MetricBall.lean": "4a3a40ad8bf323bbd1c7332618fee33fe431a798d9969a754220ed99f1c1459b",
+      "OpenGALib/ComparisonGeometry/Volume.lean": "06585b3560c1a5286310b245820e8e21feacfd822061d10d0a8d0b3d172b2ad8",
+      "OpenGALib/ComparisonGeometry/VolumeMeasure.lean": "114d1b823484d5cd7c72793d351550d100163d5c5dc020be9996ffc646e4b1b1"
+    },
+    "previous_source_sha256": "70cae58450bb1ae949b7526347c2924162811f1a0f51ac563470a009cfa02732",
+    "review_record": "PoincareConjecture/References/DifferentialGeometry/comparison_geometry_review.json"
+  },
   "integration_method": "Pinned Lake dependency; upstream source and theorem names are preserved.",
   "lean_toolchain": "leanprover/lean4:v4.33.1",
   "license": "Apache-2.0",
@@ -188,11 +200,11 @@
       "Quot.sound"
     ],
     "axiom_audit": "passed for five local results and four upstream theorems",
-    "checked_at": "2026-09-09T03:07:33.528483+00:00",
+    "checked_at": "2026-09-09T18:47:34.927294+00:00",
     "full_library_build": "passed",
-    "local_source_sha256": "70cae58450bb1ae949b7526347c2924162811f1a0f51ac563470a009cfa02732",
+    "local_source_sha256": "4f4250cb466d8b377db2d00769cfb500206e6ac1370a780b646ac41961b821f9",
     "new_module_warnings": 0,
-    "synchronization_tests": "11 passed",
+    "synchronization_tests": "19 passed",
     "upstream_coverage": "Only the selected integration dependency cone was compiled and audited; not the entire upstream library."
   }
 }

@@ -6,6 +6,8 @@ import OpenGALib.Analysis.SurgeryComparison
 import OpenGALib.Analysis.ScalarLowerBound
 import OpenGALib.Analysis.WidthExtinction
 import OpenGALib.Analysis.WidthComparison
+import OpenGALib.ComparisonGeometry.CurvatureBounds
+import OpenGALib.ComparisonGeometry.Volume
 import OpenGALib.Interoperability.BishopGromov
 import OpenGALib.Interoperability.DifferentialGeometry
 import OpenGALib.Riemannian.Geodesic.HopfRinow.EVariationLePathELength
@@ -30,4 +32,7 @@ DifferentialGeometry dependency through `OpenGALib.Interoperability.Differential
 The complete-manifold Bishop-Gromov comparison for nonpositive model curvature,
 including nonnegative-Ricci volume doubling, is exposed through
 `OpenGALib.Interoperability.BishopGromov`.
+The basic ball, volume and local Ricci-bound interfaces live in
+`OpenGALib.ComparisonGeometry`; in particular, ball-volume finiteness from
+compact closure does not require completeness of the ambient manifold.
 -/

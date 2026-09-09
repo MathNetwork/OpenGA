@@ -27,6 +27,18 @@
       "status": "explicitly_unavailable"
     }
   ],
+  "foundation_refactor": {
+    "checked_at": "2026-09-09T18:47:34.927294+00:00",
+    "declarations": "Existing public declaration names and geometric hypotheses preserved; basic interfaces relocated.",
+    "foundation_sources": {
+      "OpenGALib/ComparisonGeometry/CurvatureBounds.lean": "427186a8dcb6f30dd3a9f99b53615de2b68b404cc8d6ddefe9a5f0915dcdf581",
+      "OpenGALib/ComparisonGeometry/MetricBall.lean": "4a3a40ad8bf323bbd1c7332618fee33fe431a798d9969a754220ed99f1c1459b",
+      "OpenGALib/ComparisonGeometry/Volume.lean": "06585b3560c1a5286310b245820e8e21feacfd822061d10d0a8d0b3d172b2ad8",
+      "OpenGALib/ComparisonGeometry/VolumeMeasure.lean": "114d1b823484d5cd7c72793d351550d100163d5c5dc020be9996ffc646e4b1b1"
+    },
+    "previous_source_sha256": "f2d984a6e8918057fd6383cd584a8c05f6db8f02d296ba7bb9ceec7d8a729a5f",
+    "review_record": "PoincareConjecture/References/DifferentialGeometry/comparison_geometry_review.json"
+  },
   "local_module": "OpenGALib/Interoperability/BishopGromov.lean",
   "local_public_declarations": [
     "Riemannian.RiemannianMetric.geodesicBall",
@@ -6079,17 +6091,17 @@
         "Quot.sound"
       ]
     },
-    "checked_at": "2026-09-09T16:44:10.366582+00:00",
+    "checked_at": "2026-09-09T18:47:34.927294+00:00",
     "commands": [
       "lake build",
       "lake env lean PoincareConjecture/References/DifferentialGeometry/BishopGromovAudit.lean",
       "python3 -m unittest discover -s PoincareConjecture -p 'test_*.py'",
       "python3 PoincareConjecture/check_curation.py"
     ],
-    "curation_check": "16 curated declarations and 16 source reviews verified",
+    "curation_check": "25 curated declarations and 25 source reviews verified",
     "existing_library_warnings": "Other existing modules still emit style, deprecation and overlapping-instance warnings; this integration does not claim a warning-free whole library.",
     "full_library_build": "passed",
-    "full_library_build_jobs": 4220,
+    "full_library_build_jobs": 4230,
     "linter_baselines": {
       "AnchorPurity": 0,
       "MathTag": 0,
@@ -6104,8 +6116,8 @@
       "status": "unavailable"
     },
     "source_receipts": "443 upstream source hashes matched",
-    "source_sha256": "f2d984a6e8918057fd6383cd584a8c05f6db8f02d296ba7bb9ceec7d8a729a5f",
-    "synchronization_tests": "14 passed",
+    "source_sha256": "cbc96d2f67472fa48b11bc691512de1d4a2d883a45519a9f8e441761b23e6b3f",
+    "synchronization_tests": "19 passed",
     "upstream_build": "passed_for_selected_dependency_cone"
   }
 }

@@ -1,4 +1,4 @@
-import DifferentialGeometry.Analysis.Integration.Measure.Properties
+import OpenGALib.ComparisonGeometry.VolumeMeasure
 import Mathlib.MeasureTheory.Function.LocallyIntegrable
 import OpenGALib.Analysis.AreaEnergy
 import OpenGALib.Riemannian.Metric.RiemannianMetric
@@ -33,24 +33,6 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [Module.Finite �
 
 private local instance : MeasurableSpace M := borel M
 private local instance : BorelSpace M := ⟨rfl⟩
-
-namespace Riemannian.RiemannianMetric
-
-/-- **Math.** The upstream Riemannian volume of an OpenGA metric. -/
-noncomputable abbrev volumeMeasure (g : RiemannianMetric I M) : Measure M :=
-  DifferentialGeometry.Integral.Measure.riemannianVolumeMeasure I M g
-
-/-- **Math.** Compact manifolds have finite Riemannian volume. -/
-theorem volumeMeasure_isFiniteMeasure [CompactSpace M] (g : RiemannianMetric I M) :
-    IsFiniteMeasure g.volumeMeasure :=
-  DifferentialGeometry.Integral.Measure.riemannianVolumeMeasure_isFiniteMeasure_of_compactSpace g
-
-/-- **Math.** Every nonempty open set has positive Riemannian volume. -/
-theorem volumeMeasure_isOpenPosMeasure (g : RiemannianMetric I M) :
-    g.volumeMeasure.IsOpenPosMeasure :=
-  DifferentialGeometry.Integral.Measure.riemannianVolumeMeasure_isOpenPosMeasure g
-
-end Riemannian.RiemannianMetric
 
 namespace OpenGA
 
