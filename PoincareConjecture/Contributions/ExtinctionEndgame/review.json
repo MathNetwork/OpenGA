@@ -30,6 +30,7 @@
     "Spherical space forms are weakened to closed three-manifolds covered by the standard three-sphere.",
     "SurgeryTopologyEvolution contains extracted component topology and finite reconstruction histories; it is not a metric Ricci flow.",
     "A single initial width bound is required for all nonempty positive-time slices.",
+    "The initial component persists on a positive time interval, so width control cannot hold merely because all positive-time slices are empty.",
     "The geometric construction must provide compatible smoothing, orientation, normalization, surgery, sweepouts and comparison estimates.",
     "The final conditional theorem has exactly the hypotheses and conclusion of the platform topological goal."
   ],
@@ -75,7 +76,7 @@
     "library_audit": {
       "command": "lake env lean tests/ExtinctionEndgame.lean",
       "status": "PASS",
-      "declarations": 121,
+      "declarations": 122,
       "allowed_axioms": [
         "propext",
         "Classical.choice",
@@ -96,10 +97,10 @@
   "files": {
     "OpenGALib.lean": "592a5e5ed39f0b3474077f633d581ee183898a9e89da8014b4772b51b3b0172f",
     "OpenGALib/Topology/ConnectedSum.lean": "4beee1de6655a98b3cf80f42d0bb391104c08a18b9512993bb76603a4186429b",
-    "OpenGALib/Topology/SurgeryReconstruction.lean": "bcb3804b0ca640dfdb795693c50569e206b39c4a9b6b7c22a97458740bd675d4",
+    "OpenGALib/Topology/SurgeryReconstruction.lean": "fcbfc39df0965237b4b4208ecb05eb625c214fc790e0b819c5194068796e73e6",
     "OpenGALib/Topology/ExtinctionEndgame.lean": "59778334126ad2440992ac5d53fb464299f5b9acb4e80306e11d37af4cdd46c7",
     "OpenGALib/Analysis/ComparisonExtinction.lean": "efa9fd56da558a8452621ac255c13b6018ce2193dbfc7c54c391206ceb2515b6",
-    "tests/ExtinctionEndgame.lean": "4ab66520c8dea069de8c484962d82fc60980fadbeeecc17b0ab8a8ab0f3c2e2c",
+    "tests/ExtinctionEndgame.lean": "a0e69e65d46f6d2b95c69ab34b845145d85d3dda32528fe0f3eba6f305804678",
     "PoincareConjecture/Contributions/ExtinctionEndgame/Audit.lean": "7b8e0c3333c52577b77966775defcb4e1f40d60ca9c4d474da75d90209d27660",
     "PoincareConjecture/Contributions/ExtinctionEndgame/OpenProblems.lean": "5b8d398cb3b157d09fc426d5af57cf7821cf0a9326799d717dfb49e14bddf358",
     "PoincareConjecture/Contributions/ExtinctionEndgame/Reduction.lean": "42a27e6550d9f2fd92074930731479c484c193bbbafc9d1fef09b2e86baea4a5",

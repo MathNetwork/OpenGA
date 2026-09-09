@@ -143,6 +143,7 @@ Ricci flow: no metric or Ricci equation is encoded here. -/
 structure SurgeryTopologyEvolution (M : ClosedThreeManifold.{u}) where
   components : ℝ → List ClosedThreeManifold.{u}
   initial : components 0 = [M]
+  initial_interval : ∃ τ : ℝ, 0 < τ ∧ ∀ t ∈ Set.Icc 0 τ, components t = [M]
   history : ∀ T, 0 ≤ T → FiniteSurgeryHistory (components 0) (components T)
 
 namespace SurgeryTopologyEvolution

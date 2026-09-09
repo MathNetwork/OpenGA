@@ -38,7 +38,17 @@ example (M : ClosedThreeManifold.{u}) (hM : M.IsStandardFactor) :
 private def persistentEvolution (M : ClosedThreeManifold.{u}) : SurgeryTopologyEvolution M where
   components := fun _ => [M]
   initial := rfl
+  initial_interval := ⟨1, by norm_num, fun _ _ => rfl⟩
   history := fun _ _ => .refl [M]
+
+-- Nonempty initial topology persists for a positive interval, so width
+-- control cannot be satisfied merely by erasing every positive-time slice.
+example (M : ClosedThreeManifold.{u}) (E : SurgeryTopologyEvolution M) :
+    ∃ t : ℝ, 0 < t ∧ E.components t ≠ [] := by
+  obtain ⟨τ, hτ, hpersist⟩ := E.initial_interval
+  refine ⟨τ, hτ, ?_⟩
+  rw [hpersist τ ⟨hτ.le, le_rfl⟩]
+  simp
 
 example (M : ClosedThreeManifold.{u}) : ¬(persistentEvolution M).FiniteExtinction := by
   rintro ⟨T, _, hT⟩
