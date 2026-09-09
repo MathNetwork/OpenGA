@@ -10,6 +10,7 @@ import OpenGALib.ComparisonGeometry.CurvatureBounds
 import OpenGALib.ComparisonGeometry.Volume
 import OpenGALib.Interoperability.BishopGromov
 import OpenGALib.Interoperability.DifferentialGeometry
+import OpenGALib.GeometricMeasureTheory
 import OpenGALib.Riemannian.Geodesic.HopfRinow.EVariationLePathELength
 import OpenGALib.Riemannian.Geodesic.SymmetryLemma
 import OpenGALib.Topology.SphereCovering
@@ -35,4 +36,7 @@ including nonnegative-Ricci volume doubling, is exposed through
 The basic ball, volume and local Ricci-bound interfaces live in
 `OpenGALib.ComparisonGeometry`; in particular, ball-volume finiteness from
 compact closure does not require completeness of the ambient manifold.
+Euclidean varifolds following Simon, their Grassmannian, weight measures,
+weak-* convergence and parametrized-surface interfaces are available through
+`OpenGALib.GeometricMeasureTheory`.
 -/
