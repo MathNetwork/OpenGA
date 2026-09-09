@@ -14,6 +14,7 @@ import OpenGALib.GeometricMeasureTheory
 import OpenGALib.Riemannian.Geodesic.HopfRinow.EVariationLePathELength
 import OpenGALib.Riemannian.Geodesic.SymmetryLemma
 import OpenGALib.Topology.SphereCovering
+import OpenGALib.Topology.ExtinctionEndgame
 
 /-!
 # OpenGALib
