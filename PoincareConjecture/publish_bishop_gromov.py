@@ -241,7 +241,7 @@ def main():
         print("Validated all source hashes and exact payloads; no network request made.")
         return
     client = Client(json.loads((ROOT / ".credentials.json").read_text())["api_key"])
-    if client.version != "0.9.8":
+    if client.version != "0.9.9":
         raise RuntimeError("Platform version changed; refresh https://prove2.me/skill.md before publishing")
     envs = client.request("/environments")["environments"]
     if not any(e["mathlib_rev"] == record["mathlib_rev"] and e["toolchain"] == record["toolchain"] for e in envs):

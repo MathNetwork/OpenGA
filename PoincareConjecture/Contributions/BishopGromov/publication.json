@@ -50,7 +50,7 @@
         "started_at": "2026-09-09T17:11:29.602650+00:00",
         "status": "PUBLISHED",
         "theorem_id": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
-        "verified_at": "2026-09-09T17:24:25.128319+00:00"
+        "verified_at": "2026-09-10T20:01:13.011543+00:00"
       },
       "sha256": "6aa7f736ecfab7d375e80d7041dcaf55dd765bac79100fc2b763062fdd16b28e"
     }
@@ -159,12 +159,12 @@
         "started_at": "2026-09-09T17:11:30.469265+00:00",
         "status": "PUBLISHED",
         "theorem_id": "1b1a2764-46a8-4ccb-9220-d38a56f8a6a5",
-        "verified_at": "2026-09-09T17:24:25.400697+00:00"
+        "verified_at": "2026-09-10T20:01:14.338941+00:00"
       },
       "sha256": "fa5adeaadf1270c1f334d7ed330605e63432fcd1f952396bb1897b78e050a2e4",
       "submission": {
         "accepted_source_sha256": "08dc7ed4b87b0bf1538ea66406ba1333d2243069b11ed93bf0476bf6e1f99565",
-        "checked_at": "2026-09-09T17:24:25.713441+00:00",
+        "checked_at": "2026-09-10T20:01:15.083061+00:00",
         "response": {
           "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
           "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
@@ -184,7 +184,7 @@
           "updated_at": "2026-09-09T17:15:08.430991+00:00",
           "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
         },
-        "verified_at": "2026-09-09T17:24:26.361656+00:00"
+        "verified_at": "2026-09-10T20:01:15.982757+00:00"
       }
     },
     {
@@ -249,12 +249,12 @@
         "started_at": "2026-09-09T17:14:45.949303+00:00",
         "status": "PUBLISHED",
         "theorem_id": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
-        "verified_at": "2026-09-09T17:24:26.784388+00:00"
+        "verified_at": "2026-09-10T20:01:16.191688+00:00"
       },
       "sha256": "ba37184924e7b600c4849fb75508f5cc012336c4b00b94f4812324b9b4014555",
       "submission": {
         "accepted_source_sha256": "c6d226aa11c99558d172d007c9390cac52289c110e82584165a2259c8a3b6320",
-        "checked_at": "2026-09-09T17:24:27.267715+00:00",
+        "checked_at": "2026-09-10T20:01:16.608509+00:00",
         "response": {
           "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
           "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
@@ -274,7 +274,7 @@
           "updated_at": "2026-09-09T17:18:09.394216+00:00",
           "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
         },
-        "verified_at": "2026-09-09T17:24:28.064652+00:00"
+        "verified_at": "2026-09-10T20:01:17.158731+00:00"
       }
     },
     {
@@ -341,12 +341,12 @@
         "started_at": "2026-09-09T17:20:07.874447+00:00",
         "status": "PUBLISHED",
         "theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
-        "verified_at": "2026-09-09T17:24:28.238544+00:00"
+        "verified_at": "2026-09-10T20:01:17.377854+00:00"
       },
       "sha256": "1c0cc19aed6fef84e36caff19c8919f4bbcb6d4c186cde40b681b23d920fc8c7",
       "submission": {
         "accepted_source_sha256": "cab8674f53f219f0acf85f1a16f62ab6f3f2ec304ac9b1c826179993024e8e25",
-        "checked_at": "2026-09-09T17:24:28.641525+00:00",
+        "checked_at": "2026-09-10T20:01:17.766644+00:00",
         "response": {
           "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
           "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
@@ -366,7 +366,7 @@
           "updated_at": "2026-09-09T17:21:53.198212+00:00",
           "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
         },
-        "verified_at": "2026-09-09T17:24:29.269944+00:00"
+        "verified_at": "2026-09-10T20:01:19.702372+00:00"
       }
     }
   ],
@@ -390,5 +390,5 @@
     "source_type_equivalence": "identical elaborated types after canonical universe names",
     "status": "passed"
   },
-  "verified_at": "2026-09-09T17:24:30.676565+00:00"
+  "verified_at": "2026-09-10T20:01:28.147546+00:00"
 }

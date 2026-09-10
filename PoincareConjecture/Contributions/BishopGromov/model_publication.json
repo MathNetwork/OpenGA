@@ -53,7 +53,7 @@
         "started_at": "2026-09-09T17:39:48.203275+00:00",
         "status": "PUBLISHED",
         "theorem_id": "5f12b4eb-73fe-4f5b-9eca-ea195943cb23",
-        "verified_at": "2026-09-09T17:44:37.741644+00:00"
+        "verified_at": "2026-09-10T20:02:39.859058+00:00"
       },
       "sha256": "2da5fe520383c826cf36535704740d8bc3119d52cd32806b4e86e42c7179c16a"
     },
@@ -110,7 +110,7 @@
         "started_at": "2026-09-09T17:40:38.714209+00:00",
         "status": "PUBLISHED",
         "theorem_id": "8f010cd2-75b6-40f7-abdf-ec788a788a40",
-        "verified_at": "2026-09-09T17:44:37.916398+00:00"
+        "verified_at": "2026-09-10T20:02:40.058761+00:00"
       },
       "sha256": "2f6f2a5deaa47418f8d9c399067b74bff35fa8d1f9055a3ffff5ee17dbe17f16"
     }
@@ -260,12 +260,12 @@
         "started_at": "2026-09-09T17:42:20.835003+00:00",
         "status": "PUBLISHED",
         "theorem_id": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
-        "verified_at": "2026-09-09T17:44:38.287168+00:00"
+        "verified_at": "2026-09-10T20:02:40.582542+00:00"
       },
       "sha256": "9c87f0e8660436b88e5e412e2440cd4878bdfc5126dfec08c75205573a8786dd",
       "submission": {
         "accepted_source_sha256": "073b4b697338a6e09df7b2c113d5eb5c3e255c33cd241dea183cecbaa5157c62",
-        "checked_at": "2026-09-09T17:44:38.818655+00:00",
+        "checked_at": "2026-09-10T20:02:41.111713+00:00",
         "response": {
           "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
           "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
@@ -285,7 +285,7 @@
           "updated_at": "2026-09-09T17:44:27.511656+00:00",
           "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
         },
-        "verified_at": "2026-09-09T17:44:39.411380+00:00"
+        "verified_at": "2026-09-10T20:02:43.649989+00:00"
       }
     }
   ],
@@ -305,5 +305,5 @@
     "source_equivalence": "Five definition bodies and fourteen declaration types match their originals after canonicalizing universes",
     "status": "passed"
   },
-  "verified_at": "2026-09-09T17:44:39.811662+00:00"
+  "verified_at": "2026-09-10T20:02:44.385701+00:00"
 }
