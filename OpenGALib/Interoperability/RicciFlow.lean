@@ -4,3 +4,4 @@ import OpenGALib.Interoperability.RicciFlow.WidthComparison
 import OpenGALib.Interoperability.RicciFlow.SurfaceAreaCoordinates
 import OpenGALib.Interoperability.RicciFlow.ClosedSurfaceArea
 import OpenGALib.Interoperability.RicciFlow.AreaMonotonicity
+import OpenGALib.Interoperability.RicciFlow.SurfaceSliceFamily
