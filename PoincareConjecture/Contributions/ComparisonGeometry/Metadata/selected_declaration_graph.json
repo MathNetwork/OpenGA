@@ -1,0 +1,191 @@
+[
+  {
+    "name": "DifferentialGeometry.SmoothRiemannianMetric",
+    "module": "DifferentialGeometry.Geometry.Metric.Basic",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.SmoothRiemannianMetric",
+    "startLine": 12,
+    "endLine": 15,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "DifferentialGeometry.riemannianEDistOf",
+    "module": "DifferentialGeometry.Geometry.Metric.DistanceScaling",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.riemannianEDistOf",
+    "startLine": 24,
+    "endLine": 28,
+    "typeDeps": [
+      "DifferentialGeometry.SmoothRiemannianMetric"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.SmoothRiemannianMetric"
+    ]
+  },
+  {
+    "name": "DifferentialGeometry.riemannianEDistOf_self",
+    "module": "DifferentialGeometry.Geometry.Metric.DistanceScaling",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.riemannianEDistOf_self",
+    "startLine": 32,
+    "endLine": 38,
+    "typeDeps": [
+      "DifferentialGeometry.riemannianEDistOf",
+      "DifferentialGeometry.SmoothRiemannianMetric"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.riemannianEDistOf",
+      "DifferentialGeometry.SmoothRiemannianMetric"
+    ]
+  },
+  {
+    "name": "Riemannian.RiemannianMetric",
+    "module": "OpenGALib.Riemannian.Metric.RiemannianMetric",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "Riemannian.RiemannianMetric",
+    "startLine": 40,
+    "endLine": 49,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "Riemannian.RiemannianMetric.geodesicBall",
+    "module": "OpenGALib.ComparisonGeometry.MetricBall",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "Riemannian.RiemannianMetric.geodesicBall",
+    "startLine": 32,
+    "endLine": 34,
+    "typeDeps": [
+      "Riemannian.RiemannianMetric"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.riemannianEDistOf",
+      "Riemannian.RiemannianMetric"
+    ]
+  },
+  {
+    "name": "Riemannian.RiemannianMetric.geodesicBall_eq_empty",
+    "module": "OpenGALib.ComparisonGeometry.MetricBall",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "Riemannian.RiemannianMetric.geodesicBall_eq_empty",
+    "startLine": 41,
+    "endLine": 45,
+    "typeDeps": [
+      "Riemannian.RiemannianMetric",
+      "Riemannian.RiemannianMetric.geodesicBall"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.riemannianEDistOf",
+      "Riemannian.RiemannianMetric",
+      "Riemannian.RiemannianMetric.geodesicBall"
+    ]
+  },
+  {
+    "name": "Riemannian.RiemannianMetric.geodesicBall_mono",
+    "module": "OpenGALib.ComparisonGeometry.MetricBall",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "Riemannian.RiemannianMetric.geodesicBall_mono",
+    "startLine": 47,
+    "endLine": 51,
+    "typeDeps": [
+      "Riemannian.RiemannianMetric",
+      "Riemannian.RiemannianMetric.geodesicBall"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.riemannianEDistOf",
+      "Riemannian.RiemannianMetric",
+      "Riemannian.RiemannianMetric.geodesicBall"
+    ]
+  },
+  {
+    "name": "Riemannian.RiemannianMetric.geodesicBall_nonempty",
+    "module": "OpenGALib.ComparisonGeometry.MetricBall",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "Riemannian.RiemannianMetric.geodesicBall_nonempty",
+    "startLine": 58,
+    "endLine": 61,
+    "typeDeps": [
+      "Riemannian.RiemannianMetric",
+      "Riemannian.RiemannianMetric.geodesicBall"
+    ],
+    "valueDeps": [
+      "Riemannian.RiemannianMetric.self_mem_geodesicBall",
+      "Riemannian.RiemannianMetric",
+      "Riemannian.RiemannianMetric.geodesicBall"
+    ]
+  },
+  {
+    "name": "Riemannian.RiemannianMetric.isOpen_geodesicBall",
+    "module": "OpenGALib.ComparisonGeometry.MetricBall",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "Riemannian.RiemannianMetric.isOpen_geodesicBall",
+    "startLine": 65,
+    "endLine": 78,
+    "typeDeps": [
+      "Riemannian.RiemannianMetric",
+      "Riemannian.RiemannianMetric.geodesicBall"
+    ],
+    "valueDeps": [
+      "Riemannian.RiemannianMetric",
+      "Riemannian.RiemannianMetric.geodesicBall"
+    ]
+  },
+  {
+    "name": "Riemannian.RiemannianMetric.mem_geodesicBall",
+    "module": "OpenGALib.ComparisonGeometry.MetricBall",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "Riemannian.RiemannianMetric.mem_geodesicBall",
+    "startLine": 36,
+    "endLine": 39,
+    "typeDeps": [
+      "DifferentialGeometry.riemannianEDistOf",
+      "Riemannian.RiemannianMetric",
+      "Riemannian.RiemannianMetric.geodesicBall"
+    ],
+    "valueDeps": [
+      "Riemannian.RiemannianMetric",
+      "Riemannian.RiemannianMetric.geodesicBall"
+    ]
+  },
+  {
+    "name": "Riemannian.RiemannianMetric.self_mem_geodesicBall",
+    "module": "OpenGALib.ComparisonGeometry.MetricBall",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "Riemannian.RiemannianMetric.self_mem_geodesicBall",
+    "startLine": 53,
+    "endLine": 56,
+    "typeDeps": [
+      "Riemannian.RiemannianMetric",
+      "Riemannian.RiemannianMetric.geodesicBall"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.riemannianEDistOf",
+      "DifferentialGeometry.riemannianEDistOf_self",
+      "Riemannian.RiemannianMetric",
+      "Riemannian.RiemannianMetric.geodesicBall"
+    ]
+  }
+]

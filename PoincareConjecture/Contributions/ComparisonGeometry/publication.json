@@ -1,0 +1,388 @@
+{
+  "batch": "metric_balls",
+  "definitions": [
+    {
+      "definitions": [],
+      "id": "DifferentialGeometry_SmoothRiemannianMetric",
+      "path": "Definitions/Def_DifferentialGeometry_SmoothRiemannianMetric.lean",
+      "payload": {
+        "definition": "/-\nReuses qinz1yang/differential-geometry, Copyright 2026 The DifferentialGeometry\ncontributors, Apache-2.0, commit 1b535dd102b94cc42b107cca27059687888f08b3.\nThe metric and distance are upstream/Mathlib constructions. The ball interface\nis curated in OpenGA; source hypotheses and mathematical definitions are preserved.\n-/\nimport Mathlib.Geometry.Manifold.VectorBundle.Riemannian\nimport Mathlib.Geometry.Manifold.VectorBundle.Tangent\n\nopen Bundle\nopen scoped Manifold ContDiff\n\nnamespace DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]\nvariable {H : Type*} [TopologicalSpace H]\n\nabbrev SmoothRiemannianMetric\n    (I : ModelWithCorners Real E H) (M : Type*)\n    [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] : Type _ :=\n  Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I : M -> Type _)\n\nend DifferentialGeometry\n\nnamespace Riemannian\n\n/-- **Math.** A **Riemannian metric** on a smooth manifold $M$ modelled\non $(E, H, I)$. Mathlib's `Bundle.ContMDiffRiemannianMetric` aliased:\ndata, not a typeclass attribute. -/\nabbrev RiemannianMetric\n    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n    {H : Type*} [TopologicalSpace H]\n    (I : ModelWithCorners ℝ E H)\n    (M : Type*) [TopologicalSpace M] [ChartedSpace H M]\n    [IsManifold I ∞ M] : Type _ :=\n  Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I : M → Type _)\n\nend Riemannian\n",
+        "definition_name": "DifferentialGeometry_SmoothRiemannianMetric",
+        "definition_title": "Smooth Riemannian metric",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $M$ be a smooth manifold. A smooth Riemannian metric assigns a positive-definite symmetric bilinear form $g_x$ to every tangent space $T_xM$, varying smoothly with $x$. This bundle reuses Mathlib's metric type through the original DifferentialGeometry and OpenGA aliases. It imposes no completeness, curvature or orientation assumption.",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/Basic.lean#L12-L15; https://github.com/MathNetwork/OpenGA/blob/16e60c2b09f5c1d3c2bf44ed81429b1a1fecc1b8/OpenGALib/Riemannian/Metric/RiemannianMetric.lean#L40-L49",
+        "tags": [
+          "comparison-geometry",
+          "riemannian-geometry",
+          "poincare-foundations"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-09T18:59:34.830678+00:00",
+        "job": {
+          "created_at": "2026-09-09T18:59:15.257894+00:00",
+          "definitions": "/-\nReuses qinz1yang/differential-geometry, Copyright 2026 The DifferentialGeometry\ncontributors, Apache-2.0, commit 1b535dd102b94cc42b107cca27059687888f08b3.\nThe metric and distance are upstream/Mathlib constructions. The ball interface\nis curated in OpenGA; source hypotheses and mathematical definitions are preserved.\n-/\nimport Mathlib.Geometry.Manifold.VectorBundle.Riemannian\nimport Mathlib.Geometry.Manifold.VectorBundle.Tangent\n\nopen Bundle\nopen scoped Manifold ContDiff\n\nnamespace DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]\nvariable {H : Type*} [TopologicalSpace H]\n\nabbrev SmoothRiemannianMetric\n    (I : ModelWithCorners Real E H) (M : Type*)\n    [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] : Type _ :=\n  Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I : M -> Type _)\n\nend DifferentialGeometry\n\nnamespace Riemannian\n\n/-- **Math.** A **Riemannian metric** on a smooth manifold $M$ modelled\non $(E, H, I)$. Mathlib's `Bundle.ContMDiffRiemannianMetric` aliased:\ndata, not a typeclass attribute. -/\nabbrev RiemannianMetric\n    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n    {H : Type*} [TopologicalSpace H]\n    (I : ModelWithCorners ℝ E H)\n    (M : Type*) [TopologicalSpace M] [ChartedSpace H M]\n    [IsManifold I ∞ M] : Type _ :=\n  Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I : M → Type _)\n\nend Riemannian\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "7d19d3c1-c2c9-423e-b2d9-353adce0a3ac",
+          "kind": "definition",
+          "natural_language_statement": "Let $M$ be a smooth manifold. A smooth Riemannian metric assigns a positive-definite symmetric bilinear form $g_x$ to every tangent space $T_xM$, varying smoothly with $x$. This bundle reuses Mathlib's metric type through the original DifferentialGeometry and OpenGA aliases. It imposes no completeness, curvature or orientation assumption.",
+          "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/Basic.lean#L12-L15; https://github.com/MathNetwork/OpenGA/blob/16e60c2b09f5c1d3c2bf44ed81429b1a1fecc1b8/OpenGALib/Riemannian/Metric/RiemannianMetric.lean#L40-L49",
+          "status": "PUBLISHED",
+          "tags": [
+            "comparison-geometry",
+            "riemannian-geometry",
+            "poincare-foundations"
+          ],
+          "theorem_id": "9f78021b-c594-4538-b61f-06a8831433af",
+          "theorem_name": "DifferentialGeometry_SmoothRiemannianMetric",
+          "theorem_title": "Smooth Riemannian metric",
+          "updated_at": "2026-09-09T18:59:22.651093+00:00",
+          "visibility": "public"
+        },
+        "job_id": "7d19d3c1-c2c9-423e-b2d9-353adce0a3ac",
+        "response": {
+          "definition_name": "DifferentialGeometry_SmoothRiemannianMetric",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "7d19d3c1-c2c9-423e-b2d9-353adce0a3ac",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/7d19d3c1-c2c9-423e-b2d9-353adce0a3ac until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-09T18:59:14.981980+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "9f78021b-c594-4538-b61f-06a8831433af",
+        "verified_at": "2026-09-10T19:43:10.510875+00:00"
+      },
+      "sha256": "6119b09c9dbbf52d21ef7107cebfa0d9ba2801e80fc6e63d445afe93cc951110"
+    },
+    {
+      "definitions": [
+        "DifferentialGeometry_SmoothRiemannianMetric"
+      ],
+      "id": "DifferentialGeometry_RiemannianDistance",
+      "path": "Definitions/Def_DifferentialGeometry_RiemannianDistance.lean",
+      "payload": {
+        "definition": "/-\nReuses qinz1yang/differential-geometry, Copyright 2026 The DifferentialGeometry\ncontributors, Apache-2.0, commit 1b535dd102b94cc42b107cca27059687888f08b3.\nThe metric and distance are upstream/Mathlib constructions. The ball interface\nis curated in OpenGA; source hypotheses and mathematical definitions are preserved.\n-/\nimport Definitions.Def_DifferentialGeometry_SmoothRiemannianMetric\nimport Mathlib.Geometry.Manifold.Riemannian.Basic\n\nset_option autoImplicit false\nnoncomputable section\nopen Bundle Manifold MeasureTheory Set\nopen scoped Manifold ContDiff ENNReal Topology\n\nnamespace DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]\nvariable {H : Type*} [TopologicalSpace H]\nvariable {I : ModelWithCorners Real E H}\nvariable {M : Type*} [TopologicalSpace M] [ChartedSpace H M]\n  [IsManifold I ∞ M]\n\nnoncomputable def riemannianEDistOf\n    (g : SmoothRiemannianMetric I M) (x y : M) : ℝ≥0∞ :=\n  letI : Bundle.RiemannianBundle (TangentSpace I : M → Type _) :=\n    ⟨g.toRiemannianMetric⟩\n  Manifold.riemannianEDist I x y\n\ntheorem riemannianEDistOf_self\n    (g : SmoothRiemannianMetric I M) (x : M) :\n    riemannianEDistOf (I := I) g x x = 0 := by\n  let : Bundle.RiemannianBundle (TangentSpace I : M → Type _) :=\n    ⟨g.toRiemannianMetric⟩\n  change Manifold.riemannianEDist I x x = 0\n  exact Manifold.riemannianEDist_self\n\nend DifferentialGeometry\n",
+        "definition_name": "DifferentialGeometry_RiemannianDistance",
+        "definition_title": "Distance induced by a specified Riemannian metric",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For a smooth Riemannian metric $g$, define $d_g(x,y)$ as Mathlib's Riemannian extended distance computed using $g$: the infimum of lengths of the admissible differentiable paths from $x$ to $y$. The value lies in $[0,\\infty]$, allowing points in different components, and $d_g(x,x)=0$. This is the original DifferentialGeometry construction, based on Mathlib's path-length distance.",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/DistanceScaling.lean#L22-L38",
+        "tags": [
+          "comparison-geometry",
+          "riemannian-geometry",
+          "poincare-foundations"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-10T19:34:22.348962+00:00",
+        "job": {
+          "created_at": "2026-09-09T18:59:35.628478+00:00",
+          "definitions": "/-\nReuses qinz1yang/differential-geometry, Copyright 2026 The DifferentialGeometry\ncontributors, Apache-2.0, commit 1b535dd102b94cc42b107cca27059687888f08b3.\nThe metric and distance are upstream/Mathlib constructions. The ball interface\nis curated in OpenGA; source hypotheses and mathematical definitions are preserved.\n-/\nimport Definitions.Def_DifferentialGeometry_SmoothRiemannianMetric\nimport Mathlib.Geometry.Manifold.Riemannian.Basic\n\nset_option autoImplicit false\nnoncomputable section\nopen Bundle Manifold MeasureTheory Set\nopen scoped Manifold ContDiff ENNReal Topology\n\nnamespace DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]\nvariable {H : Type*} [TopologicalSpace H]\nvariable {I : ModelWithCorners Real E H}\nvariable {M : Type*} [TopologicalSpace M] [ChartedSpace H M]\n  [IsManifold I ∞ M]\n\nnoncomputable def riemannianEDistOf\n    (g : SmoothRiemannianMetric I M) (x y : M) : ℝ≥0∞ :=\n  letI : Bundle.RiemannianBundle (TangentSpace I : M → Type _) :=\n    ⟨g.toRiemannianMetric⟩\n  Manifold.riemannianEDist I x y\n\ntheorem riemannianEDistOf_self\n    (g : SmoothRiemannianMetric I M) (x : M) :\n    riemannianEDistOf (I := I) g x x = 0 := by\n  let : Bundle.RiemannianBundle (TangentSpace I : M → Type _) :=\n    ⟨g.toRiemannianMetric⟩\n  change Manifold.riemannianEDist I x x = 0\n  exact Manifold.riemannianEDist_self\n\nend DifferentialGeometry\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "3c4f9144-0157-434a-a2f2-5b2eaa80c90f",
+          "kind": "definition",
+          "natural_language_statement": "For a smooth Riemannian metric $g$, define $d_g(x,y)$ as Mathlib's Riemannian extended distance computed using $g$: the infimum of lengths of the admissible differentiable paths from $x$ to $y$. The value lies in $[0,\\infty]$, allowing points in different components, and $d_g(x,x)=0$. This is the original DifferentialGeometry construction, based on Mathlib's path-length distance.",
+          "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/DistanceScaling.lean#L22-L38",
+          "status": "PUBLISHED",
+          "tags": [
+            "comparison-geometry",
+            "riemannian-geometry",
+            "poincare-foundations"
+          ],
+          "theorem_id": "eeeda18f-236e-443c-9114-9f692c11f058",
+          "theorem_name": "DifferentialGeometry_RiemannianDistance",
+          "theorem_title": "Distance induced by a specified Riemannian metric",
+          "updated_at": "2026-09-09T18:59:51.307663+00:00",
+          "visibility": "public"
+        },
+        "job_id": "3c4f9144-0157-434a-a2f2-5b2eaa80c90f",
+        "response": {
+          "definition_name": "DifferentialGeometry_RiemannianDistance",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "3c4f9144-0157-434a-a2f2-5b2eaa80c90f",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/3c4f9144-0157-434a-a2f2-5b2eaa80c90f until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-09T18:59:35.354996+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "eeeda18f-236e-443c-9114-9f692c11f058",
+        "verified_at": "2026-09-10T19:43:10.792902+00:00"
+      },
+      "sha256": "ba1309d95d21f2d2cf06801fd268fe3a1a7117b687df892de55eecc3b07e8e21"
+    },
+    {
+      "definitions": [
+        "DifferentialGeometry_RiemannianDistance"
+      ],
+      "id": "OpenGA_GeodesicBall",
+      "path": "Definitions/Def_OpenGA_GeodesicBall.lean",
+      "payload": {
+        "definition": "/-\nReuses qinz1yang/differential-geometry, Copyright 2026 The DifferentialGeometry\ncontributors, Apache-2.0, commit 1b535dd102b94cc42b107cca27059687888f08b3.\nThe metric and distance are upstream/Mathlib constructions. The ball interface\nis curated in OpenGA; source hypotheses and mathematical definitions are preserved.\n-/\nimport Definitions.Def_DifferentialGeometry_RiemannianDistance\n\nnoncomputable section\nset_option autoImplicit false\n\nopen Bundle Set DifferentialGeometry\nopen scoped Manifold ContDiff ENNReal\n\nnamespace Riemannian.RiemannianMetric\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n\n/-- **Math.** The open ball for the distance induced by the specified metric. -/\ndef geodesicBall (g : RiemannianMetric I M) (p : M) (r : ℝ) : Set M :=\n  {x | riemannianEDistOf (I := I) g p x < ENNReal.ofReal r}\n\n/-- **Math.** Membership in a metric ball is the strict distance inequality. -/\n@[simp] theorem mem_geodesicBall (g : RiemannianMetric I M) (p x : M) (r : ℝ) :\n    x ∈ g.geodesicBall p r ↔ riemannianEDistOf (I := I) g p x < ENNReal.ofReal r :=\n  Iff.rfl\n\n/-- **Math.** A ball of nonpositive radius is empty. -/\ntheorem geodesicBall_eq_empty (g : RiemannianMetric I M) (p : M)\n    {r : ℝ} (hr : r ≤ 0) : g.geodesicBall p r = ∅ := by\n  ext x\n  simp [geodesicBall, ENNReal.ofReal_of_nonpos hr]\n\n/-- **Math.** Increasing the radius increases the ball. -/\ntheorem geodesicBall_mono (g : RiemannianMetric I M) (p : M) :\n    Monotone (g.geodesicBall p) := by\n  intro r R hrR x hx\n  exact lt_of_lt_of_le hx (ENNReal.ofReal_le_ofReal hrR)\n\n/-- **Math.** The center lies in precisely the positive-radius balls. -/\n@[simp] theorem self_mem_geodesicBall (g : RiemannianMetric I M) (p : M) (r : ℝ) :\n    p ∈ g.geodesicBall p r ↔ 0 < r := by\n  simp [geodesicBall, riemannianEDistOf_self]\n\n/-- **Math.** A positive-radius ball is nonempty. -/\ntheorem geodesicBall_nonempty (g : RiemannianMetric I M) (p : M)\n    {r : ℝ} (hr : 0 < r) : (g.geodesicBall p r).Nonempty :=\n  ⟨p, (g.self_mem_geodesicBall p r).mpr hr⟩\n\nend Riemannian.RiemannianMetric\n",
+        "definition_name": "OpenGA_GeodesicBall",
+        "definition_title": "Open balls for a specified Riemannian metric",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $g$ be a smooth Riemannian metric on $M$, $p\\in M$ and $r\\in\\mathbb R$. Define\n\n$$B_g(p,r)=\\{x\\in M:d_g(p,x)<\\max(r,0)\\}.$$\n\nFor $r>0$ this is the usual metric ball; for $r\\le0$ it is empty. The bundle includes its immediate membership, radius inclusion and center-membership properties. The distance is the imported DifferentialGeometry construction. No geodesic convexity, completeness or curvature bound is assumed.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/16e60c2b09f5c1d3c2bf44ed81429b1a1fecc1b8/OpenGALib/ComparisonGeometry/MetricBall.lean#L30-L61",
+        "tags": [
+          "comparison-geometry",
+          "riemannian-geometry",
+          "poincare-foundations"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-10T19:38:42.887774+00:00",
+        "job": {
+          "created_at": "2026-09-10T19:34:23.057505+00:00",
+          "definitions": "/-\nReuses qinz1yang/differential-geometry, Copyright 2026 The DifferentialGeometry\ncontributors, Apache-2.0, commit 1b535dd102b94cc42b107cca27059687888f08b3.\nThe metric and distance are upstream/Mathlib constructions. The ball interface\nis curated in OpenGA; source hypotheses and mathematical definitions are preserved.\n-/\nimport Definitions.Def_DifferentialGeometry_RiemannianDistance\n\nnoncomputable section\nset_option autoImplicit false\n\nopen Bundle Set DifferentialGeometry\nopen scoped Manifold ContDiff ENNReal\n\nnamespace Riemannian.RiemannianMetric\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n\n/-- **Math.** The open ball for the distance induced by the specified metric. -/\ndef geodesicBall (g : RiemannianMetric I M) (p : M) (r : ℝ) : Set M :=\n  {x | riemannianEDistOf (I := I) g p x < ENNReal.ofReal r}\n\n/-- **Math.** Membership in a metric ball is the strict distance inequality. -/\n@[simp] theorem mem_geodesicBall (g : RiemannianMetric I M) (p x : M) (r : ℝ) :\n    x ∈ g.geodesicBall p r ↔ riemannianEDistOf (I := I) g p x < ENNReal.ofReal r :=\n  Iff.rfl\n\n/-- **Math.** A ball of nonpositive radius is empty. -/\ntheorem geodesicBall_eq_empty (g : RiemannianMetric I M) (p : M)\n    {r : ℝ} (hr : r ≤ 0) : g.geodesicBall p r = ∅ := by\n  ext x\n  simp [geodesicBall, ENNReal.ofReal_of_nonpos hr]\n\n/-- **Math.** Increasing the radius increases the ball. -/\ntheorem geodesicBall_mono (g : RiemannianMetric I M) (p : M) :\n    Monotone (g.geodesicBall p) := by\n  intro r R hrR x hx\n  exact lt_of_lt_of_le hx (ENNReal.ofReal_le_ofReal hrR)\n\n/-- **Math.** The center lies in precisely the positive-radius balls. -/\n@[simp] theorem self_mem_geodesicBall (g : RiemannianMetric I M) (p : M) (r : ℝ) :\n    p ∈ g.geodesicBall p r ↔ 0 < r := by\n  simp [geodesicBall, riemannianEDistOf_self]\n\n/-- **Math.** A positive-radius ball is nonempty. -/\ntheorem geodesicBall_nonempty (g : RiemannianMetric I M) (p : M)\n    {r : ℝ} (hr : 0 < r) : (g.geodesicBall p r).Nonempty :=\n  ⟨p, (g.self_mem_geodesicBall p r).mpr hr⟩\n\nend Riemannian.RiemannianMetric\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "2c373fe8-07f1-4455-bd59-7549ae516391",
+          "kind": "definition",
+          "natural_language_statement": "Let $g$ be a smooth Riemannian metric on $M$, $p\\in M$ and $r\\in\\mathbb R$. Define\n\n$$B_g(p,r)=\\{x\\in M:d_g(p,x)<\\max(r,0)\\}.$$\n\nFor $r>0$ this is the usual metric ball; for $r\\le0$ it is empty. The bundle includes its immediate membership, radius inclusion and center-membership properties. The distance is the imported DifferentialGeometry construction. No geodesic convexity, completeness or curvature bound is assumed.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/16e60c2b09f5c1d3c2bf44ed81429b1a1fecc1b8/OpenGALib/ComparisonGeometry/MetricBall.lean#L30-L61",
+          "status": "PUBLISHED",
+          "tags": [
+            "comparison-geometry",
+            "riemannian-geometry",
+            "poincare-foundations"
+          ],
+          "theorem_id": "f68d7d0b-1e17-403b-92de-b69580391762",
+          "theorem_name": "OpenGA_GeodesicBall",
+          "theorem_title": "Open balls for a specified Riemannian metric",
+          "updated_at": "2026-09-10T19:36:28.640129+00:00",
+          "visibility": "public"
+        },
+        "job_id": "2c373fe8-07f1-4455-bd59-7549ae516391",
+        "response": {
+          "definition_name": "OpenGA_GeodesicBall",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "2c373fe8-07f1-4455-bd59-7549ae516391",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/2c373fe8-07f1-4455-bd59-7549ae516391 until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-10T19:34:22.787065+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "f68d7d0b-1e17-403b-92de-b69580391762",
+        "verified_at": "2026-09-10T19:43:11.059007+00:00"
+      },
+      "sha256": "69bc98f1bcecf039d4ff3fd6d2c8efbd00a704eb6fad8e99d532e94e9c9dcc83"
+    }
+  ],
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "milestone_id": "cb96ab98-d517-4ecc-964b-b4b39a2d07a3",
+  "milestone_update": {
+    "after": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).\n\n**Verified analytic prerequisites.** [Integral comparison on nested lower intervals](https://prove2.me/theorems/1b1a2764-46a8-4ccb-9220-d38a56f8a6a5); [Radial density comparison implies integrated comparison](https://prove2.me/theorems/0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb); [Monotonicity of normalized radial integrals](https://prove2.me/theorems/00a47c26-3e61-4afc-91c7-117708e1baf9). The first two results preserve the DifferentialGeometry proofs; the third is an OpenGA corollary. These establish the integral comparison step. The full geometric milestone remains open: geometric density comparison, polar integration, the ball-local hypotheses and positive model curvature still require a faithful platform development.\n\n**Verified model definitions.** [Model radial function and density for nonpositive curvature](https://prove2.me/theorems/5f12b4eb-73fe-4f5b-9eca-ea195943cb23); [Radial model volume for nonpositive curvature](https://prove2.me/theorems/8f010cd2-75b6-40f7-abdf-ec788a788a40). They are used in [Radial integral monotonicity with the model-volume denominator](https://prove2.me/theorems/58a8c735-04e5-4c94-afef-0b03d5d80e0a), connected to the earlier integral comparison proof. This model batch covers curvature $K=-q^2\\le0$ and uses radial exponent $d=n-1$. The angular constant cancels in ratios. The geometric milestone remains open. The analytic component now enters the Poincare width route through the conditional volume-loss nonaccumulation argument linked below.\n\n**Volume-loss bridge to the mission graph.** [A uniform positive volume loss from model comparison](https://prove2.me/theorems/ca66101a-7280-449f-ad5d-350153b56ffd); [Finitely many events from a radial volume-loss budget](https://prove2.me/theorems/3aca5641-0de9-4b5b-b280-28243d1961cd); [An event-free partition for finitely many event times](https://prove2.me/theorems/2afae5fd-c4e2-4544-b37b-e819211739f1); [A finite width comparison trace from volume-controlled profiles](https://prove2.me/theorems/ca00fe64-9dc8-4809-80cf-e824e93594b5). These proved analytic results transfer a reference-scale volume lower bound to the removal scale, bound the number of events and construct the finite width comparison trace. [The geometric construction](https://prove2.me/theorems/0347aa7b-4f24-4106-873e-c9b21fd9169f) remains Open: it must supply surgery flow, uniform radial estimates and containment, a removed-volume budget allowing smooth volume growth, and scalar/sweepout profiles. The full geometric Bishop-Gromov milestone remains Open.\n\n**Reviewed geometric foundations.** [Smooth Riemannian metric](https://prove2.me/theorems/9f78021b-c594-4538-b61f-06a8831433af); [Distance induced by a specified Riemannian metric](https://prove2.me/theorems/eeeda18f-236e-443c-9114-9f692c11f058); [Open balls for a specified Riemannian metric](https://prove2.me/theorems/f68d7d0b-1e17-403b-92de-b69580391762); [Riemannian metric balls are open in the manifold topology](https://prove2.me/theorems/c13cb69f-c40b-40b3-8960-3a59f11c9123). These reuse the original Mathlib/DifferentialGeometry metric and distance constructions, with OpenGA's ball interface and openness corollary. They provide the basic geometric objects for subsequent comparison proofs; the full Bishop-Gromov milestone remains Open.",
+    "before": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).\n\n**Verified analytic prerequisites.** [Integral comparison on nested lower intervals](https://prove2.me/theorems/1b1a2764-46a8-4ccb-9220-d38a56f8a6a5); [Radial density comparison implies integrated comparison](https://prove2.me/theorems/0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb); [Monotonicity of normalized radial integrals](https://prove2.me/theorems/00a47c26-3e61-4afc-91c7-117708e1baf9). The first two results preserve the DifferentialGeometry proofs; the third is an OpenGA corollary. These establish the integral comparison step. The full geometric milestone remains open: geometric density comparison, polar integration, the ball-local hypotheses and positive model curvature still require a faithful platform development.\n\n**Verified model definitions.** [Model radial function and density for nonpositive curvature](https://prove2.me/theorems/5f12b4eb-73fe-4f5b-9eca-ea195943cb23); [Radial model volume for nonpositive curvature](https://prove2.me/theorems/8f010cd2-75b6-40f7-abdf-ec788a788a40). They are used in [Radial integral monotonicity with the model-volume denominator](https://prove2.me/theorems/58a8c735-04e5-4c94-afef-0b03d5d80e0a), connected to the earlier integral comparison proof. This model batch covers curvature $K=-q^2\\le0$ and uses radial exponent $d=n-1$. The angular constant cancels in ratios. The geometric milestone remains open. The analytic component now enters the Poincare width route through the conditional volume-loss nonaccumulation argument linked below.\n\n**Volume-loss bridge to the mission graph.** [A uniform positive volume loss from model comparison](https://prove2.me/theorems/ca66101a-7280-449f-ad5d-350153b56ffd); [Finitely many events from a radial volume-loss budget](https://prove2.me/theorems/3aca5641-0de9-4b5b-b280-28243d1961cd); [An event-free partition for finitely many event times](https://prove2.me/theorems/2afae5fd-c4e2-4544-b37b-e819211739f1); [A finite width comparison trace from volume-controlled profiles](https://prove2.me/theorems/ca00fe64-9dc8-4809-80cf-e824e93594b5). These proved analytic results transfer a reference-scale volume lower bound to the removal scale, bound the number of events and construct the finite width comparison trace. [The geometric construction](https://prove2.me/theorems/0347aa7b-4f24-4106-873e-c9b21fd9169f) remains Open: it must supply surgery flow, uniform radial estimates and containment, a removed-volume budget allowing smooth volume growth, and scalar/sweepout profiles. The full geometric Bishop-Gromov milestone remains Open.",
+    "canonical_theorem": null,
+    "response": {
+      "completed": false,
+      "created_at": "2026-09-09T16:03:11.319685+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "cb96ab98-d517-4ecc-964b-b4b39a2d07a3",
+      "milestone_description": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).\n\n**Verified analytic prerequisites.** [Integral comparison on nested lower intervals](https://prove2.me/theorems/1b1a2764-46a8-4ccb-9220-d38a56f8a6a5); [Radial density comparison implies integrated comparison](https://prove2.me/theorems/0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb); [Monotonicity of normalized radial integrals](https://prove2.me/theorems/00a47c26-3e61-4afc-91c7-117708e1baf9). The first two results preserve the DifferentialGeometry proofs; the third is an OpenGA corollary. These establish the integral comparison step. The full geometric milestone remains open: geometric density comparison, polar integration, the ball-local hypotheses and positive model curvature still require a faithful platform development.\n\n**Verified model definitions.** [Model radial function and density for nonpositive curvature](https://prove2.me/theorems/5f12b4eb-73fe-4f5b-9eca-ea195943cb23); [Radial model volume for nonpositive curvature](https://prove2.me/theorems/8f010cd2-75b6-40f7-abdf-ec788a788a40). They are used in [Radial integral monotonicity with the model-volume denominator](https://prove2.me/theorems/58a8c735-04e5-4c94-afef-0b03d5d80e0a), connected to the earlier integral comparison proof. This model batch covers curvature $K=-q^2\\le0$ and uses radial exponent $d=n-1$. The angular constant cancels in ratios. The geometric milestone remains open. The analytic component now enters the Poincare width route through the conditional volume-loss nonaccumulation argument linked below.\n\n**Volume-loss bridge to the mission graph.** [A uniform positive volume loss from model comparison](https://prove2.me/theorems/ca66101a-7280-449f-ad5d-350153b56ffd); [Finitely many events from a radial volume-loss budget](https://prove2.me/theorems/3aca5641-0de9-4b5b-b280-28243d1961cd); [An event-free partition for finitely many event times](https://prove2.me/theorems/2afae5fd-c4e2-4544-b37b-e819211739f1); [A finite width comparison trace from volume-controlled profiles](https://prove2.me/theorems/ca00fe64-9dc8-4809-80cf-e824e93594b5). These proved analytic results transfer a reference-scale volume lower bound to the removal scale, bound the number of events and construct the finite width comparison trace. [The geometric construction](https://prove2.me/theorems/0347aa7b-4f24-4106-873e-c9b21fd9169f) remains Open: it must supply surgery flow, uniform radial estimates and containment, a removed-volume budget allowing smooth volume growth, and scalar/sweepout profiles. The full geometric Bishop-Gromov milestone remains Open.\n\n**Reviewed geometric foundations.** [Smooth Riemannian metric](https://prove2.me/theorems/9f78021b-c594-4538-b61f-06a8831433af); [Distance induced by a specified Riemannian metric](https://prove2.me/theorems/eeeda18f-236e-443c-9114-9f692c11f058); [Open balls for a specified Riemannian metric](https://prove2.me/theorems/f68d7d0b-1e17-403b-92de-b69580391762); [Riemannian metric balls are open in the manifold topology](https://prove2.me/theorems/c13cb69f-c40b-40b3-8960-3a59f11c9123). These reuse the original Mathlib/DifferentialGeometry metric and distance constructions, with OpenGA's ball interface and openness corollary. They provide the basic geometric objects for subsequent comparison proofs; the full Bishop-Gromov milestone remains Open.",
+      "sort_order": 7,
+      "theorem": null,
+      "title": "Bishop-Gromov volume comparison"
+    },
+    "status": "VERIFIED",
+    "verified_at": "2026-09-10T19:43:14.201555+00:00"
+  },
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "schema_version": 1,
+  "scope": "Three metric/distance/ball definition bundles and an openness interface corollary, reusing DifferentialGeometry and Mathlib. The full Bishop-Gromov milestone remains Open.",
+  "source_reviewed": true,
+  "sources": [
+    {
+      "path": ".lake/packages/DifferentialGeometry/DifferentialGeometry/Geometry/Metric/Basic.lean",
+      "sha256": "312ca68ba869a912e03d49f19cb8b25d52e8d0d4ebf298d1da17a310eb90bd70"
+    },
+    {
+      "path": ".lake/packages/DifferentialGeometry/DifferentialGeometry/Geometry/Metric/DistanceScaling.lean",
+      "sha256": "5ed884ad500b0dcf023c5e28292e64de5b59d60bc6cf342a671d43b6c8f0f0ff"
+    },
+    {
+      "path": "OpenGALib/Riemannian/Metric/RiemannianMetric.lean",
+      "sha256": "cf728945475617e7ab5b14617f1e2c0b858c36268bc2b99e9eb4afd2fe47ce14"
+    },
+    {
+      "path": "OpenGALib/ComparisonGeometry/MetricBall.lean",
+      "sha256": "4a3a40ad8bf323bbd1c7332618fee33fe431a798d9969a754220ed99f1c1459b"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Metadata/local_ball_facts.jsonl",
+      "sha256": "a7157d94ce53189ba0331a76c8b456f2e7ca6c8f12202a73a4d9f34933519303"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Metadata/upstream_distance_facts.jsonl",
+      "sha256": "37eb112ead8adbdb24636c930101bb7b02d87fef1f7bb7d9b81dcb7cb7b620f2"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Metadata/upstream_metric_facts.jsonl",
+      "sha256": "502d6dc837c767719b6eb92f0fa968b17e68488ff762207eb7badb762cc5d785"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Metadata/local_metric_facts.jsonl",
+      "sha256": "24c4c947b62c07666fb81cc724c523d606ae36f61674e2bd4c28798bcc307707"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Metadata/original_types.json",
+      "sha256": "40285ffa15d4e312b409ba4f4d40bc2e9f072fdedfcdfd233f6cddd8f7f8a87e"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Metadata/exported_types.json",
+      "sha256": "40285ffa15d4e312b409ba4f4d40bc2e9f072fdedfcdfd233f6cddd8f7f8a87e"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Metadata/selected_declaration_graph.json",
+      "sha256": "288ff03db51f6df48717f0e110e54186182f8b7946322e2ea2f4b81602b4a3ac"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Tools/ExtractSketchInfo.lean",
+      "sha256": "cb1ee4e7b984971bf805417c043af52ff4ec73755f2fba4703ff7c9d948d88d4"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Tools/ExportedTypes.lean",
+      "sha256": "6b61dc3d57fc4660147e65e6f52db8b784ab0f8be1d4d7858ed40ac94d170309"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Tools/OriginalTypes.lean",
+      "sha256": "837ab0877eaf395808edf9bb0673cc6afcff1a99e7c987b80ca47b281bfe7baf"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Tools/Audit.lean",
+      "sha256": "056c0f47db1c5f94521e4c29e812a89c4097388715edc0cdb42c384790c512b4"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Tools/ExtractDeclarationGraph.lean",
+      "sha256": "7bae4c71f35ee069d5f81af6b748fada6ba8abef157f124f4855d1dbc2e0dd9d"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Tools/validate_exports.py",
+      "sha256": "01f43c7a1fb9734dfcc99d98ef01646b937b8a12cfc89afa824fbd928645d8dc"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Tools/export_metric_balls.py",
+      "sha256": "fe647d9b5554fbdb6cc169bce49405790ed366b965660c26518b60d4a2ee9761"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/ComparisonGeometry/Library.lean",
+      "sha256": "49836394adfbbe550988f1a0e396fa610272b071e0b14665aaa77b5e608dd02c"
+    }
+  ],
+  "status": "PUBLISHED",
+  "theorems": [
+    {
+      "definitions": [
+        "DifferentialGeometry_SmoothRiemannianMetric",
+        "DifferentialGeometry_RiemannianDistance",
+        "OpenGA_GeodesicBall"
+      ],
+      "explanation": "Reuse the specified metric to instantiate Mathlib's continuous Riemannian bundle and the induced extended metric with its compatible manifold topology. The set defining the ball is an extended-metric open ball, so Mathlib's openness theorem applies. The metric and distance definitions retain their original Mathlib/DifferentialGeometry provenance; this is OpenGA's interface corollary.",
+      "id": "isOpen_geodesicBall",
+      "imports": [],
+      "path": "Theorems/Thm_Riemannian_RiemannianMetric_isOpen_geodesicBall.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem Riemannian.RiemannianMetric.isOpen_geodesicBall [FiniteDimensional ℝ E] [T2Space M] [SigmaCompactSpace M]\n    (g : RiemannianMetric I M) (p : M) (r : ℝ) :\n    IsOpen (g.geodesicBall p r) := by sorry",
+        "natural_language_statement": "Let $M$ be a smooth Hausdorff, $\\sigma$-compact manifold with a finite-dimensional real inner-product model space, and let $g$ be a smooth Riemannian metric. For every $p\\in M$ and $r\\in\\mathbb R$, the metric ball $B_g(p,r)$ is open in the original manifold topology. Completeness, connectedness and curvature assumptions are not required. This identifies the ball interface with the topology needed for local volume estimates.",
+        "preamble": "import Definitions.Def_OpenGA_GeodesicBall\nimport Mathlib.Geometry.Manifold.Metrizable\n\nnoncomputable section\nset_option autoImplicit false\n\nopen Bundle Set DifferentialGeometry\nopen scoped Manifold ContDiff ENNReal\n\nopen Riemannian Riemannian.RiemannianMetric\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/16e60c2b09f5c1d3c2bf44ed81429b1a1fecc1b8/OpenGALib/ComparisonGeometry/MetricBall.lean#L63-L78",
+        "tags": [
+          "comparison-geometry",
+          "riemannian-geometry",
+          "poincare-foundations"
+        ],
+        "theorem_name": "Riemannian.RiemannianMetric.isOpen_geodesicBall",
+        "theorem_title": "Riemannian metric balls are open in the manifold topology"
+      },
+      "proof_path": "Solutions/Sol_Riemannian_RiemannianMetric_isOpen_geodesicBall.lean",
+      "proof_sha256": "724ff48fb8441ff1219af45d3d813ec9588b78caf20aa99022afdcaa1fbf06e3",
+      "publication": {
+        "checked_at": "2026-09-10T19:42:23.144344+00:00",
+        "job": {
+          "created_at": "2026-09-10T19:38:43.816969+00:00",
+          "definitions": "import Definitions.Def_OpenGA_GeodesicBall\nimport Mathlib.Geometry.Manifold.Metrizable\n\nnoncomputable section\nset_option autoImplicit false\n\nopen Bundle Set DifferentialGeometry\nopen scoped Manifold ContDiff ENNReal\n\nopen Riemannian Riemannian.RiemannianMetric\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]",
+          "error_message": "",
+          "formal_statement": "theorem Riemannian.RiemannianMetric.isOpen_geodesicBall [FiniteDimensional ℝ E] [T2Space M] [SigmaCompactSpace M]\n    (g : RiemannianMetric I M) (p : M) (r : ℝ) :\n    IsOpen (g.geodesicBall p r) := by sorry",
+          "id": "20cc76d8-550f-40b3-9314-56c67e4998bb",
+          "kind": "problem",
+          "natural_language_statement": "Let $M$ be a smooth Hausdorff, $\\sigma$-compact manifold with a finite-dimensional real inner-product model space, and let $g$ be a smooth Riemannian metric. For every $p\\in M$ and $r\\in\\mathbb R$, the metric ball $B_g(p,r)$ is open in the original manifold topology. Completeness, connectedness and curvature assumptions are not required. This identifies the ball interface with the topology needed for local volume estimates.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/16e60c2b09f5c1d3c2bf44ed81429b1a1fecc1b8/OpenGALib/ComparisonGeometry/MetricBall.lean#L63-L78",
+          "status": "PUBLISHED",
+          "tags": [
+            "comparison-geometry",
+            "riemannian-geometry",
+            "poincare-foundations"
+          ],
+          "theorem_id": "c13cb69f-c40b-40b3-8960-3a59f11c9123",
+          "theorem_name": "Riemannian.RiemannianMetric.isOpen_geodesicBall",
+          "theorem_title": "Riemannian metric balls are open in the manifold topology",
+          "updated_at": "2026-09-10T19:41:10.133533+00:00",
+          "visibility": "public"
+        },
+        "job_id": "20cc76d8-550f-40b3-9314-56c67e4998bb",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "20cc76d8-550f-40b3-9314-56c67e4998bb",
+              "name": "Riemannian.RiemannianMetric.isOpen_geodesicBall"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-10T19:38:43.319389+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "c13cb69f-c40b-40b3-8960-3a59f11c9123",
+        "verified_at": "2026-09-10T19:43:11.234297+00:00"
+      },
+      "sha256": "65b3fe316f11b4c268e9d4065605c618a1efb21079e88275412fe15af9a3f4fb",
+      "submission": {
+        "accepted_source_sha256": "724ff48fb8441ff1219af45d3d813ec9588b78caf20aa99022afdcaa1fbf06e3",
+        "checked_at": "2026-09-10T19:43:12.084692+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "0bbeaeb3-bf91-4538-ad63-f4a462576fdd"
+        },
+        "started_at": "2026-09-10T19:42:23.500333+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "0bbeaeb3-bf91-4538-ad63-f4a462576fdd",
+        "verdict": {
+          "created_at": "2026-09-10T19:42:23.773735+00:00",
+          "error_message": "",
+          "file_path": "c13cb69f-c40b-40b3-8960-3a59f11c9123/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/0bbeaeb3-bf91-4538-ad63-f4a462576fdd.lean",
+          "id": "0bbeaeb3-bf91-4538-ad63-f4a462576fdd",
+          "status": "ACCEPTED",
+          "theorem_id": "c13cb69f-c40b-40b3-8960-3a59f11c9123",
+          "updated_at": "2026-09-10T19:43:08.075808+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-10T19:43:12.609570+00:00"
+      }
+    }
+  ],
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "transformations": [
+    "Lean source spans select original declarations and preserve variable contexts.",
+    "Remove scoped instance-disabling wrappers for upstream tensor instances absent from the staged environment.",
+    "Retain both metric aliases and all original definition names; verify their exact types and bodies.",
+    "Rename only the theorem binding to solution using the resolved reference span."
+  ],
+  "validation": {
+    "axiom_audit": "passed: 11 definitions/proofs; only propext, Classical.choice and Quot.sound",
+    "checked_at": "2026-09-09T18:59:12.310436+00:00",
+    "exact_types_and_definition_bodies": 11,
+    "library_entry": "passed",
+    "scope": "A metric-ball interface export; not the full geometric comparison.",
+    "solution_type": "exact match",
+    "staged_build": "passed",
+    "status": "passed"
+  },
+  "verified_at": "2026-09-10T19:43:13.203643+00:00"
+}

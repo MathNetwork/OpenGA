@@ -1,0 +1,130 @@
+{
+  "isOpen_geodesicBall": {
+    "edges": [
+      {
+        "kind": "structural",
+        "source": "f68d7d0b-1e17-403b-92de-b69580391762",
+        "target": "c13cb69f-c40b-40b3-8960-3a59f11c9123"
+      },
+      {
+        "kind": "structural",
+        "source": "eeeda18f-236e-443c-9114-9f692c11f058",
+        "target": "f68d7d0b-1e17-403b-92de-b69580391762"
+      },
+      {
+        "kind": "structural",
+        "source": "9f78021b-c594-4538-b61f-06a8831433af",
+        "target": "eeeda18f-236e-443c-9114-9f692c11f058"
+      }
+    ],
+    "expanded_theorem_ids": [],
+    "has_hidden_deprecated_sketches": false,
+    "nodes": [
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:59:21.810934+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "/-\nReuses qinz1yang/differential-geometry, Copyright 2026 The DifferentialGeometry\ncontributors, Apache-2.0, commit 1b535dd102b94cc42b107cca27059687888f08b3.\nThe metric and distance are upstream/Mathlib constructions. The ball interface\nis curated in OpenGA; source hypotheses and mathematical definitions are preserved.\n-/\nimport Mathlib.Geometry.Manifold.VectorBundle.Riemannian\nimport Mathlib.Geometry.Manifold.VectorBundle.Tangent\n\nopen Bundle\nopen scoped Manifold ContDiff\n\nnamespace DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]\nvariable {H : Type*} [TopologicalSpace H]\n\nabbrev SmoothRiemannianMetric\n    (I : ModelWithCorners Real E H) (M : Type*)\n    [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] : Type _ :=\n  Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I : M -> Type _)\n\nend DifferentialGeometry\n\nnamespace Riemannian\n\n/-- **Math.** A **Riemannian metric** on a smooth manifold $M$ modelled\non $(E, H, I)$. Mathlib's `Bundle.ContMDiffRiemannianMetric` aliased:\ndata, not a typeclass attribute. -/\nabbrev RiemannianMetric\n    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n    {H : Type*} [TopologicalSpace H]\n    (I : ModelWithCorners ℝ E H)\n    (M : Type*) [TopologicalSpace M] [ChartedSpace H M]\n    [IsManifold I ∞ M] : Type _ :=\n  Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I : M → Type _)\n\nend Riemannian\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $M$ be a smooth manifold. A smooth Riemannian metric assigns a positive-definite symmetric bilinear form $g_x$ to every tangent space $T_xM$, varying smoothly with $x$. This bundle reuses Mathlib's metric type through the original DifferentialGeometry and OpenGA aliases. It imposes no completeness, curvature or orientation assumption.",
+        "node_type": "theorem",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/Basic.lean#L12-L15; https://github.com/MathNetwork/OpenGA/blob/16e60c2b09f5c1d3c2bf44ed81429b1a1fecc1b8/OpenGALib/Riemannian/Metric/RiemannianMetric.lean#L40-L49",
+        "status": "Definition",
+        "tags": [
+          "comparison-geometry",
+          "poincare-foundations",
+          "riemannian-geometry"
+        ],
+        "theorem_id": "9f78021b-c594-4538-b61f-06a8831433af",
+        "theorem_name": "DifferentialGeometry_SmoothRiemannianMetric",
+        "theorem_title": "Smooth Riemannian metric",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-10T19:41:09.16134+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem Riemannian.RiemannianMetric.isOpen_geodesicBall [FiniteDimensional ℝ E] [T2Space M] [SigmaCompactSpace M]\n    (g : RiemannianMetric I M) (p : M) (r : ℝ) :\n    IsOpen (g.geodesicBall p r) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $M$ be a smooth Hausdorff, $\\sigma$-compact manifold with a finite-dimensional real inner-product model space, and let $g$ be a smooth Riemannian metric. For every $p\\in M$ and $r\\in\\mathbb R$, the metric ball $B_g(p,r)$ is open in the original manifold topology. Completeness, connectedness and curvature assumptions are not required. This identifies the ball interface with the topology needed for local volume estimates.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_GeodesicBall\nimport Mathlib.Geometry.Manifold.Metrizable\n\nnoncomputable section\nset_option autoImplicit false\n\nopen Bundle Set DifferentialGeometry\nopen scoped Manifold ContDiff ENNReal\n\nopen Riemannian Riemannian.RiemannianMetric\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/16e60c2b09f5c1d3c2bf44ed81429b1a1fecc1b8/OpenGALib/ComparisonGeometry/MetricBall.lean#L63-L78",
+        "status": "Proved",
+        "tags": [
+          "comparison-geometry",
+          "poincare-foundations",
+          "riemannian-geometry"
+        ],
+        "theorem_id": "c13cb69f-c40b-40b3-8960-3a59f11c9123",
+        "theorem_name": "Riemannian.RiemannianMetric.isOpen_geodesicBall",
+        "theorem_title": "Riemannian metric balls are open in the manifold topology",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:59:50.381362+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "/-\nReuses qinz1yang/differential-geometry, Copyright 2026 The DifferentialGeometry\ncontributors, Apache-2.0, commit 1b535dd102b94cc42b107cca27059687888f08b3.\nThe metric and distance are upstream/Mathlib constructions. The ball interface\nis curated in OpenGA; source hypotheses and mathematical definitions are preserved.\n-/\nimport Definitions.Def_DifferentialGeometry_SmoothRiemannianMetric\nimport Mathlib.Geometry.Manifold.Riemannian.Basic\n\nset_option autoImplicit false\nnoncomputable section\nopen Bundle Manifold MeasureTheory Set\nopen scoped Manifold ContDiff ENNReal Topology\n\nnamespace DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]\nvariable {H : Type*} [TopologicalSpace H]\nvariable {I : ModelWithCorners Real E H}\nvariable {M : Type*} [TopologicalSpace M] [ChartedSpace H M]\n  [IsManifold I ∞ M]\n\nnoncomputable def riemannianEDistOf\n    (g : SmoothRiemannianMetric I M) (x y : M) : ℝ≥0∞ :=\n  letI : Bundle.RiemannianBundle (TangentSpace I : M → Type _) :=\n    ⟨g.toRiemannianMetric⟩\n  Manifold.riemannianEDist I x y\n\ntheorem riemannianEDistOf_self\n    (g : SmoothRiemannianMetric I M) (x : M) :\n    riemannianEDistOf (I := I) g x x = 0 := by\n  let : Bundle.RiemannianBundle (TangentSpace I : M → Type _) :=\n    ⟨g.toRiemannianMetric⟩\n  change Manifold.riemannianEDist I x x = 0\n  exact Manifold.riemannianEDist_self\n\nend DifferentialGeometry\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For a smooth Riemannian metric $g$, define $d_g(x,y)$ as Mathlib's Riemannian extended distance computed using $g$: the infimum of lengths of the admissible differentiable paths from $x$ to $y$. The value lies in $[0,\\infty]$, allowing points in different components, and $d_g(x,x)=0$. This is the original DifferentialGeometry construction, based on Mathlib's path-length distance.",
+        "node_type": "theorem",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/DistanceScaling.lean#L22-L38",
+        "status": "Definition",
+        "tags": [
+          "comparison-geometry",
+          "poincare-foundations",
+          "riemannian-geometry"
+        ],
+        "theorem_id": "eeeda18f-236e-443c-9114-9f692c11f058",
+        "theorem_name": "DifferentialGeometry_RiemannianDistance",
+        "theorem_title": "Distance induced by a specified Riemannian metric",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-10T19:36:25.679461+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "/-\nReuses qinz1yang/differential-geometry, Copyright 2026 The DifferentialGeometry\ncontributors, Apache-2.0, commit 1b535dd102b94cc42b107cca27059687888f08b3.\nThe metric and distance are upstream/Mathlib constructions. The ball interface\nis curated in OpenGA; source hypotheses and mathematical definitions are preserved.\n-/\nimport Definitions.Def_DifferentialGeometry_RiemannianDistance\n\nnoncomputable section\nset_option autoImplicit false\n\nopen Bundle Set DifferentialGeometry\nopen scoped Manifold ContDiff ENNReal\n\nnamespace Riemannian.RiemannianMetric\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n\n/-- **Math.** The open ball for the distance induced by the specified metric. -/\ndef geodesicBall (g : RiemannianMetric I M) (p : M) (r : ℝ) : Set M :=\n  {x | riemannianEDistOf (I := I) g p x < ENNReal.ofReal r}\n\n/-- **Math.** Membership in a metric ball is the strict distance inequality. -/\n@[simp] theorem mem_geodesicBall (g : RiemannianMetric I M) (p x : M) (r : ℝ) :\n    x ∈ g.geodesicBall p r ↔ riemannianEDistOf (I := I) g p x < ENNReal.ofReal r :=\n  Iff.rfl\n\n/-- **Math.** A ball of nonpositive radius is empty. -/\ntheorem geodesicBall_eq_empty (g : RiemannianMetric I M) (p : M)\n    {r : ℝ} (hr : r ≤ 0) : g.geodesicBall p r = ∅ := by\n  ext x\n  simp [geodesicBall, ENNReal.ofReal_of_nonpos hr]\n\n/-- **Math.** Increasing the radius increases the ball. -/\ntheorem geodesicBall_mono (g : RiemannianMetric I M) (p : M) :\n    Monotone (g.geodesicBall p) := by\n  intro r R hrR x hx\n  exact lt_of_lt_of_le hx (ENNReal.ofReal_le_ofReal hrR)\n\n/-- **Math.** The center lies in precisely the positive-radius balls. -/\n@[simp] theorem self_mem_geodesicBall (g : RiemannianMetric I M) (p : M) (r : ℝ) :\n    p ∈ g.geodesicBall p r ↔ 0 < r := by\n  simp [geodesicBall, riemannianEDistOf_self]\n\n/-- **Math.** A positive-radius ball is nonempty. -/\ntheorem geodesicBall_nonempty (g : RiemannianMetric I M) (p : M)\n    {r : ℝ} (hr : 0 < r) : (g.geodesicBall p r).Nonempty :=\n  ⟨p, (g.self_mem_geodesicBall p r).mpr hr⟩\n\nend Riemannian.RiemannianMetric\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $g$ be a smooth Riemannian metric on $M$, $p\\in M$ and $r\\in\\mathbb R$. Define\n\n$$B_g(p,r)=\\{x\\in M:d_g(p,x)<\\max(r,0)\\}.$$\n\nFor $r>0$ this is the usual metric ball; for $r\\le0$ it is empty. The bundle includes its immediate membership, radius inclusion and center-membership properties. The distance is the imported DifferentialGeometry construction. No geodesic convexity, completeness or curvature bound is assumed.",
+        "node_type": "theorem",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/16e60c2b09f5c1d3c2bf44ed81429b1a1fecc1b8/OpenGALib/ComparisonGeometry/MetricBall.lean#L30-L61",
+        "status": "Definition",
+        "tags": [
+          "comparison-geometry",
+          "poincare-foundations",
+          "riemannian-geometry"
+        ],
+        "theorem_id": "f68d7d0b-1e17-403b-92de-b69580391762",
+        "theorem_name": "OpenGA_GeodesicBall",
+        "theorem_title": "Open balls for a specified Riemannian metric",
+        "vote_count": 0
+      }
+    ],
+    "root_id": "c13cb69f-c40b-40b3-8960-3a59f11c9123"
+  }
+}
