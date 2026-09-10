@@ -601,6 +601,38 @@
         "82499fe3-a4f5-4f42-96da-34e3e6fe56ba"
       ],
       "reason": "Verified conditional endgame, kept in the mission workspace. The extracted geometric-data construction and three topology lemmas remain Open; this sketch is not admitted into the reusable library as an unconditional proof."
+    },
+    "4d52aebd-c405-4a0e-83a6-9cf7c43a2eb3": {
+      "source_theorem_id": "06588c07-4c58-4d0f-a257-445289cde218",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "416cf74b34eff60daf2118f1eed992be51c59a690882e3040049cf6678a06b55",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/4d52aebd-c405-4a0e-83a6-9cf7c43a2eb3/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "OpenGA.RicciFlow.surfaceDensity_comp",
+          "path": "OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean"
+        }
+      ],
+      "scope": "Exact export of the actual pullback-metric area coordinate law. Original and staged types and definition bodies match; all eight source/export declarations passed the kernel axiom audit. Closed-surface gluing and CM sweepouts remain open."
+    },
+    "c2dd3a10-494f-4c3e-b361-25088e5043d6": {
+      "source_theorem_id": "25bed6f8-0964-4851-8d72-bd621c8f9303",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "acfaaf1181a2ae7649472d3ef23c8fa79a0d6a0ace1cf69480abcd9bf5577fa3",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/c2dd3a10-494f-4c3e-b361-25088e5043d6/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "OpenGA.RicciFlow.patchArea_comp",
+          "path": "OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean"
+        }
+      ],
+      "scope": "Exact export of the actual pullback-metric area coordinate law. Original and staged types and definition bodies match; all eight source/export declarations passed the kernel axiom audit. Closed-surface gluing and CM sweepouts remain open."
     }
   },
   "schema_version": 1

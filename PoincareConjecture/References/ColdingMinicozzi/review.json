@@ -60,8 +60,23 @@
     }
   },
   "publication": {
-    "status": "not_submitted",
-    "graph_change": false
+    "status": "partially_published",
+    "batch_record": "PoincareConjecture/Contributions/SurfaceArea/publication.json",
+    "definitions": [
+      "0e220955-5806-447e-b322-843240f3f915"
+    ],
+    "accepted_theorems": {
+      "OpenGA.RicciFlow.surfaceDensity_comp": "06588c07-4c58-4d0f-a257-445289cde218",
+      "OpenGA.RicciFlow.patchArea_comp": "25bed6f8-0964-4851-8d72-bd621c8f9303"
+    },
+    "remaining_local_only": [
+      "ScalarLowerBound.lean",
+      "SurfaceAreaVariation.lean",
+      "WidthComparison.lean"
+    ],
+    "new_area_dependency_chain_verified": true,
+    "mission_root_graph_extended": false,
+    "milestone_progress_links_verified": true
   },
   "sha256": {
     "OpenGALib/Interoperability/RicciFlow/ScalarLowerBound.lean": "dfb8c1f13339780b0369001a38603ece2f0893ec4886b0614c23209508935fb1",
