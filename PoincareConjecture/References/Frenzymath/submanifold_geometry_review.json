@@ -1,0 +1,40 @@
+{
+  "reviewed_on": "2026-09-09",
+  "repository": "https://github.com/frenzymath/Poincare-Conjecture",
+  "revision": "bb91a091f0b968f8bbe8d861e025a88d82b161be",
+  "upstream_environment": {
+    "toolchain": "leanprover/lean4:v4.32.1",
+    "mathlib": "520045ab14e26149ee970e2e617ca04b09bde5d6"
+  },
+  "target_environment": {
+    "toolchain": "leanprover/lean4:v4.33.1",
+    "mathlib": "0df444a360eaa60ab8c11dca51a86af692955474"
+  },
+  "status": "source_readback_complete; target_environment_build_not_yet_run",
+  "candidates": [
+    {
+      "name": "PetersenLib.secondFundamentalForm",
+      "source": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/formalized-sources/Petersen/PetersenLib/Ch03/SecondFundamentalForm.lean#L61",
+      "scope": "Pi(X,Y) = g(nabla_X N,Y), using the ambient affine connection. Symmetry is proved for smooth tangent fields with tangent Lie bracket; a level-set lemma supplies bracket tangency.",
+      "needed_bridge": "Adapt RiemannianMetric and RiemannianConnection to the current metric/connection interfaces and relate local normal-field expressions to an actual smooth immersion."
+    },
+    {
+      "name": "PetersenLib.tangentialCurvatureEquation",
+      "source": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/formalized-sources/Petersen/PetersenLib/Ch03/GaussCodazzi.lean#L244",
+      "scope": "A proved Gauss curvature identity for the explicitly constructed tangential covariant derivative and its curvature, under smoothness and orthogonality hypotheses. The algebraic theorem does not assume the Gauss identity itself.",
+      "needed_bridge": "Identify tangential curvature with intrinsic curvature of OpenGA.Surface.inducedMetric. The comment cites uniqueness of the Riemannian connection, but this identification is not a theorem in the reviewed GaussCodazzi file."
+    }
+  ],
+  "source_hashes": {
+    "petersen-Ch03-GaussCodazzi.lean": "c70252f1ae484f33c1cac49abaef4e3f3c93426fc244a30108adc2eab439d499",
+    "petersen-Ch03-SecondFundamentalForm.lean": "509f0e7a810104f142ede2ae187aefc6788e4cf8fb09f60496e98b69fd794b97",
+    "petersen-Ch02-SecondFundamentalForm.lean": "ad391f4942ab1c9c6d1dca86e1fe166dc95d4ba772b21146e969b02f7374332e",
+    "petersen-Ch03-HypersurfaceFundamentalTheorem.lean": "39746357af7aaa4952b83da4b53764876daa7f519237b9710a3aa59cd0173429"
+  },
+  "gauss_bonnet": {
+    "status": "not_located_in_checked_sources",
+    "scope": "Local MathNetwork Lean files and the checked upstream source tree. This is not a claim that no formalization exists elsewhere.",
+    "cm_requirement": "A closed-sphere Gauss-Bonnet theorem, with the appropriate branch-point correction for branched minimal spheres, connected to the actual induced metric and measure."
+  },
+  "publication": "No Petersen theorem has been submitted or claimed kernel-verified in the target environment by this review."
+}

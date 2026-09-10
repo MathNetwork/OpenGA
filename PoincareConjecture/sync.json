@@ -9,6 +9,8 @@
     "OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower": "ca66101a-7280-449f-ad5d-350153b56ffd",
     "OpenGA.RicciFlow.patchArea_comp": "25bed6f8-0964-4851-8d72-bd621c8f9303",
     "OpenGA.RicciFlow.surfaceDensity_comp": "06588c07-4c58-4d0f-a257-445289cde218",
+    "OpenGA.Surface.patchArea_inducedMetric": "f1d3ae1f-1536-40e5-afeb-5a67fdbdbad8",
+    "OpenGA.Surface.surfaceDensity_inducedMetric": "69908894-8d8e-4068-91b2-d366e5045258",
     "OpenGA.Varifold.mass_ofParametrization_le_energy": "947563ea-c13b-4ec6-b08d-7b11e70914be",
     "OpenGA.Varifold.ofParametrization_independent_of_lift": "501be76f-ec02-41c5-8998-42f15f54da21",
     "OpenGA.Varifold.ofWeightedMap_eq_of_plane_eq": "4a4cf695-0ca3-4738-86e8-eba60eae34a2",
@@ -23,6 +25,7 @@
     "OpenGA.exists_event_free_partition": "2afae5fd-c4e2-4544-b37b-e819211739f1",
     "OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
     "OpenGA_EuclideanVarifold": "0ce91510-bed6-4687-9d9a-59db49ac32c1",
+    "OpenGA_ImmersedMetric": "71d6823a-2014-4ec2-8a21-0f6e3cdb3232",
     "OpenGA_ParametrizedVarifold": "6f457e50-d41f-4c21-b797-27b9539b003e",
     "OpenGA_RadialSurgeryVolumeBudget": "7b53cb40-bcab-4693-b755-615a06d5fb54",
     "OpenGA_SurfaceArea": "0e220955-5806-447e-b322-843240f3f915",
@@ -580,6 +583,33 @@
     ],
     "6445ec61-f49c-47ce-b681-7ab9ea9a4059": [],
     "688450a0-1949-4aa1-aeec-4ff61ccf5ddd": [],
+    "69908894-8d8e-4068-91b2-d366e5045258": [
+      {
+        "children": [
+          {
+            "definition_id": "71d6823a-2014-4ec2-8a21-0f6e3cdb3232",
+            "definition_name": "OpenGA_ImmersedMetric",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "The smooth metric induced by an immersion"
+          },
+          {
+            "definition_id": "0e220955-5806-447e-b322-843240f3f915",
+            "definition_name": "OpenGA_SurfaceArea",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 1,
+            "theorem_title": "Area density of a parametrized surface"
+          }
+        ],
+        "created_at": null,
+        "created_by": null,
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": null
+      }
+    ],
     "79da6e34-6c16-4bcf-bac0-c071f41d246d": [],
     "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e": [
       {
@@ -1381,6 +1411,44 @@
         "submission_id": null
       }
     ],
+    "f1d3ae1f-1536-40e5-afeb-5a67fdbdbad8": [
+      {
+        "children": [
+          {
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "status": "Proved",
+            "theorem_id": "69908894-8d8e-4068-91b2-d366e5045258",
+            "theorem_name": "OpenGA.Surface.surfaceDensity_inducedMetric",
+            "theorem_title": "Induced-metric area density agrees with ambient parametrized area"
+          }
+        ],
+        "created_at": null,
+        "created_by": null,
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": null
+      },
+      {
+        "children": [
+          {
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "status": "Proved",
+            "theorem_id": "69908894-8d8e-4068-91b2-d366e5045258",
+            "theorem_name": "OpenGA.Surface.surfaceDensity_inducedMetric",
+            "theorem_title": "Induced-metric area density agrees with ambient parametrized area"
+          }
+        ],
+        "created_at": "2026-09-10T03:05:19.982006+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": "e6e79781-a2e6-46ea-97e2-2db7537f9abb"
+      }
+    ],
     "fe9a0128-6fb2-494b-aba1-8436851df1e4": [
       {
         "children": [
@@ -1416,6 +1484,7 @@
     "Definitions/Def_OpenGA_CoordinateBallConnectedSum.lean": "4beee1de6655a98b3cf80f42d0bb391104c08a18b9512993bb76603a4186429b",
     "Definitions/Def_OpenGA_EuclideanVarifold.lean": "2eaafaee5b598f4f5c1f72894df01e63bc1601ab375257e32ae5929a95f92030",
     "Definitions/Def_OpenGA_ExtinctionWidthControl.lean": "afe4ed0e6b0879f093815c8e7478a4dc256b1a4cd398b1ffbe072f1b84136d18",
+    "Definitions/Def_OpenGA_ImmersedMetric.lean": "d1282b19d8f6a973172fd4736debfa1de0f1f7e75e0aa7a6577c4b8f63d51f45",
     "Definitions/Def_OpenGA_ParametrizedVarifold.lean": "a61739198e608d37c009111fd4bfbd00b06b3a8bdb2f80636387fd48f2a7dac7",
     "Definitions/Def_OpenGA_RadialSurgeryVolumeBudget.lean": "36434b89fceb457986f7e2c722a6d3262108e1a10ebdb42f0be5fe214f83e073",
     "Definitions/Def_OpenGA_ScalarWidthTrace.lean": "8f601ae71ec55995167ff09f845daea0707e662608f45c127642dc98a0581933",
@@ -1434,6 +1503,8 @@
     "Solutions/Sol_OpenGA_RadialSurgeryVolumeBudget_removedVolume_lower_e04116f768824385adb23d369736d0a3.lean": "e671e1f80c3c23087a4eea790cbaf81b0a461dc6c696b3d46d4fe78ccc3af42a",
     "Solutions/Sol_OpenGA_RicciFlow_patchArea_comp_c2dd3a10494f4c3eb36125088e5043d6.lean": "acfaaf1181a2ae7649472d3ef23c8fa79a0d6a0ace1cf69480abcd9bf5577fa3",
     "Solutions/Sol_OpenGA_RicciFlow_surfaceDensity_comp_4d52aebdc4054a0e83a69cf7c43a2eb3.lean": "416cf74b34eff60daf2118f1eed992be51c59a690882e3040049cf6678a06b55",
+    "Solutions/Sol_OpenGA_Surface_patchArea_inducedMetric_e6e79781a2e646ea97e22db7537f9abb.lean": "9395871a092124ca5aaa93d3826cfbc4a0aa6decdad05f855e767979f2d1940c",
+    "Solutions/Sol_OpenGA_Surface_surfaceDensity_inducedMetric_0539c3a6d718442291833a398c35b441.lean": "feebba34cff5e8de3ef7f95790d03dca3e86aab3728049deb6f5a64a4a41c03f",
     "Solutions/Sol_OpenGA_SurgeryTopologyEvolution_finiteExtinction_of_width_control_6beb3841435642a3b3dfa417e4042a5c.lean": "4b9738d885d25dc8d28eec99c31c0cd06fc606a35e5dd22cd87c5ba4d410a7ee",
     "Solutions/Sol_OpenGA_SurgeryTopologyEvolution_topology_from_extinction_58f269c43b234a748345965d2603ca5c.lean": "ddedb41c8809646f4262c9587ebadab4a4585231ae10f745c1aa5425db0ca6df",
     "Solutions/Sol_OpenGA_Varifold_mass_ofParametrization_le_energy_24400f2f77a84a88bd6ac2dc9454b43d.lean": "ef0a43fee3badea04e0f9cbfce24e551a860f222791dd06f5ddc0327b5dc6c58",
@@ -1472,6 +1543,8 @@
     "Theorems/Thm_OpenGA_RadialSurgeryVolumeBudget_removedVolume_lower.lean": "586d7b728444cacdeecfe126dad49165731d819840d6ac4d1283cb1b5794057f",
     "Theorems/Thm_OpenGA_RicciFlow_patchArea_comp.lean": "039453cfcfa373e3e37660e24c6adb79a8931f84cfea51b2053862d1cda89fe8",
     "Theorems/Thm_OpenGA_RicciFlow_surfaceDensity_comp.lean": "d46b8bdbb0ac5226312c32cf92ba5279ba1097064154afad1ee1f2e003edc0a0",
+    "Theorems/Thm_OpenGA_Surface_patchArea_inducedMetric.lean": "78110292d28826c4a24dd0a9d56583664f42e6b46d85a59f7f246c1b73f240d6",
+    "Theorems/Thm_OpenGA_Surface_surfaceDensity_inducedMetric.lean": "f95a3de71c236ad0a8124d03e8d0358fa43a8625aa1eabe4d7aa89c557f08a6f",
     "Theorems/Thm_OpenGA_SurgeryTopologyEvolution_finiteExtinction_of_width_control.lean": "3cbf8af35d63fa7f11dd9027e281d355fe9f3e6551e258168dbf5a2af5ed02ce",
     "Theorems/Thm_OpenGA_SurgeryTopologyEvolution_topology_from_extinction.lean": "028542e721e41b71a85652de80062eabcc18013c0d1d09897ad9491d101e37a2",
     "Theorems/Thm_OpenGA_Varifold_mass_ofParametrization_le_energy.lean": "bc676a81d19552ae9000d1286d06ad880887bca95ed593ab5319fddc95a32c61",
@@ -3261,7 +3334,7 @@
       "created_at": "2026-09-09T01:41:09.964537+00:00",
       "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
       "id": "33045187-e820-4325-a253-c8ba2c778897",
-      "milestone_description": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.\n\n**Colding-Minicozzi foundations.** [The mass of a parametrized surface varifold is bounded by its energy](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be) now connects the Euclidean varifold construction to the same integral area-energy theorem used by the width comparison branch. See the **Area-energy control of parametrized varifolds** milestone for the definitions and verified prerequisites. The geometric CM min-max and variation steps remain open; this foundation does not establish finite-time extinction.\n\n**Finite-extinction endgame in the mission graph.** [Uniform width control forces finite extinction](https://prove2.me/theorems/2e12f604-9e6a-4062-9bac-8727a1a9edb7); [Finite extinction reconstructs a connected sum of standard factors](https://prove2.me/theorems/33f0b928-916f-4ff5-833b-fbc31308c762); [The simply connected endgame for a standard connected-sum decomposition](https://prove2.me/theorems/c508d5db-b2a6-4c25-8144-9a9f55f2b4e2). These nodes now enter a checked [reduction of the existing Poincare goal](https://prove2.me/theorems/7ea2da12-4d1b-4bbc-8257-df87d92f5a8e). The width deadline and finite reconstruction are proved implications for explicitly supplied data. The construction of uniform width-controlled surgery topology and three connected-sum topology inputs remain Open. The extracted evolution has a nonempty initial positive time interval and finite reconstruction histories; it is not a definition of metric Ricci flow. The full geometric finite-extinction and classification milestones remain open.\n\n**Surface area in local coordinates.** [Area density of a parametrized surface](https://prove2.me/theorems/0e220955-5806-447e-b322-843240f3f915); [Surface area density under a change of parameters](https://prove2.me/theorems/06588c07-4c58-4d0f-a257-445289cde218); [Surface patch area is invariant under injective reparametrization](https://prove2.me/theorems/25bed6f8-0964-4851-8d72-bd621c8f9303). The definitions use the actual pullback of a smooth Riemannian metric. The proved change-of-parameters laws supply compatibility of local area integrals. Gluing to a closed surface, the minimal-sphere area estimate and the CM sweepout construction remain to be developed. These supporting results do not close finite-time extinction.",
+      "milestone_description": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.\n\n**Colding-Minicozzi foundations.** [The mass of a parametrized surface varifold is bounded by its energy](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be) now connects the Euclidean varifold construction to the same integral area-energy theorem used by the width comparison branch. See the **Area-energy control of parametrized varifolds** milestone for the definitions and verified prerequisites. The geometric CM min-max and variation steps remain open; this foundation does not establish finite-time extinction.\n\n**Finite-extinction endgame in the mission graph.** [Uniform width control forces finite extinction](https://prove2.me/theorems/2e12f604-9e6a-4062-9bac-8727a1a9edb7); [Finite extinction reconstructs a connected sum of standard factors](https://prove2.me/theorems/33f0b928-916f-4ff5-833b-fbc31308c762); [The simply connected endgame for a standard connected-sum decomposition](https://prove2.me/theorems/c508d5db-b2a6-4c25-8144-9a9f55f2b4e2). These nodes now enter a checked [reduction of the existing Poincare goal](https://prove2.me/theorems/7ea2da12-4d1b-4bbc-8257-df87d92f5a8e). The width deadline and finite reconstruction are proved implications for explicitly supplied data. The construction of uniform width-controlled surgery topology and three connected-sum topology inputs remain Open. The extracted evolution has a nonempty initial positive time interval and finite reconstruction histories; it is not a definition of metric Ricci flow. The full geometric finite-extinction and classification milestones remain open.\n\n**Surface area in local coordinates.** [Area density of a parametrized surface](https://prove2.me/theorems/0e220955-5806-447e-b322-843240f3f915); [Surface area density under a change of parameters](https://prove2.me/theorems/06588c07-4c58-4d0f-a257-445289cde218); [Surface patch area is invariant under injective reparametrization](https://prove2.me/theorems/25bed6f8-0964-4851-8d72-bd621c8f9303). The definitions use the actual pullback of a smooth Riemannian metric. The proved change-of-parameters laws supply compatibility of local area integrals. Gluing to a closed surface, the minimal-sphere area estimate and the CM sweepout construction remain to be developed. These supporting results do not close finite-time extinction.\n\n**Immersed-surface metric and area compatibility.** [The smooth metric induced by an immersion](https://prove2.me/theorems/71d6823a-2014-4ec2-8a21-0f6e3cdb3232); [Induced-metric area density agrees with ambient parametrized area](https://prove2.me/theorems/69908894-8d8e-4068-91b2-d366e5045258); [Induced-metric patch area agrees with ambient parametrized area](https://prove2.me/theorems/f1d3ae1f-1536-40e5-afeb-5a67fdbdbad8). A smooth immersion now supplies an actual induced smooth Riemannian metric, with proved agreement between its parameter-patch areas and those of the composed ambient map. Self-intersections are allowed; branch points are excluded. The global closed-surface Ricci-flow area variation has been checked in the linked OpenGA source; its full dependency tree is not yet published here. The minimal-sphere estimate, Gauss-Bonnet step and sweepout construction are not claimed by this batch, and finite-time extinction remains open.",
       "sort_order": 2,
       "theorem": null,
       "title": "Finite-time extinction"
@@ -4210,6 +4283,31 @@
       "visibility": "public",
       "vote_count": 0
     },
+    "69908894-8d8e-4068-91b2-d366e5045258": {
+      "audits": [],
+      "created_at": "2026-09-10T03:03:50.490088+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem OpenGA.Surface.surfaceDensity_inducedMetric\n    (g : SmoothRiemannianMetric J M) (f : N → M) (hf : ContMDiff I J ∞ f)\n    (hinj : ∀ x, Function.Injective (mfderiv I J f x))\n    (p : SurfaceParameter → N) {u : SurfaceParameter}\n    (hp : MDifferentiableAt 𝓘(ℝ, SurfaceParameter) I p u) :\n    surfaceDensity (inducedMetric g f hf hinj) p u = surfaceDensity g (f ∘ p) u := by sorry",
+      "local_path": "Theorems/Thm_OpenGA_Surface_surfaceDensity_inducedMetric.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $f:N\\to(M,g)$ be a smooth immersion of a finite-dimensional Hausdorff manifold, and write $h=f^*g$. Let $p:\\mathbb R^2\\to N$ be differentiable at $u$. With $J$ denoting the square root of the determinant of the pullback Gram matrix,\n\n$$J_h p(u)=J_g(f\\circ p)(u).$$\n\nNo injectivity of $p$ or of $f$ as a map is required. This identifies the existing parametrized area density with that computed from the actual induced metric. It supplies local compatibility for global surface area; it is not yet the area variation theorem.",
+      "preamble": "import Definitions.Def_OpenGA_ImmersedMetric\nimport Definitions.Def_OpenGA_SurfaceArea\nimport Mathlib.Analysis.InnerProductSpace.Dual\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.Analysis.LocallyConvex.Bounded\nimport Mathlib.Analysis.Normed.Module.FiniteDimension\nimport Mathlib.Analysis.Normed.Operator.Bilinear\nimport Mathlib.Analysis.SpecialFunctions.Sqrt\nimport Mathlib.Geometry.Manifold.BumpFunction\nimport Mathlib.Geometry.Manifold.ContMDiffMFDeriv\nimport Mathlib.Geometry.Manifold.Diffeomorph\nimport Mathlib.Geometry.Manifold.MFDeriv.FDeriv\nimport Mathlib.Geometry.Manifold.PartitionOfUnity\nimport Mathlib.Geometry.Manifold.VectorBundle.Basic\nimport Mathlib.Geometry.Manifold.VectorBundle.ContMDiffSection\nimport Mathlib.Geometry.Manifold.VectorBundle.Hom\nimport Mathlib.Geometry.Manifold.VectorBundle.LocalFrame\nimport Mathlib.Geometry.Manifold.VectorBundle.Riemannian\nimport Mathlib.Geometry.Manifold.VectorBundle.Tangent\nimport Mathlib.LinearAlgebra.Matrix.ToLin\nimport Mathlib.MeasureTheory.Integral.Bochner.Set\nimport Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace\nimport Mathlib.Topology.MetricSpace.ProperSpace\nimport Mathlib.Topology.VectorBundle.Basic\n\nnoncomputable section\n\nopen Bundle MeasureTheory Set\n\nopen scoped Manifold ContDiff\n\nopen DifferentialGeometry OpenGA.RicciFlow\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {N : Type*} [TopologicalSpace N] [ChartedSpace H N] [IsManifold I ∞ N] [T2Space N]\n  {F : Type*} [NormedAddCommGroup F] [NormedSpace ℝ F]\n  {G : Type*} [TopologicalSpace G] {J : ModelWithCorners ℝ F G}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace G M] [IsManifold J ∞ M]\n\nopen OpenGA.Surface",
+      "readback": null,
+      "source": "https://github.com/MathNetwork/OpenGA/blob/58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12/OpenGALib/Riemannian/Surface/Coordinates.lean#L39-L46",
+      "status": "Proved",
+      "tags": [
+        "colding-minicozzi",
+        "immersed-surfaces",
+        "riemannian-geometry",
+        "surface-area"
+      ],
+      "theorem_id": "69908894-8d8e-4068-91b2-d366e5045258",
+      "theorem_name": "OpenGA.Surface.surfaceDensity_inducedMetric",
+      "theorem_title": "Induced-metric area density agrees with ambient parametrized area",
+      "visibility": "public",
+      "vote_count": 0
+    },
     "6f457e50-d41f-4c21-b797-27b9539b003e": {
       "created_at": "2026-09-09T19:59:40.250683+00:00",
       "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
@@ -4232,6 +4330,31 @@
       "theorem_id": "6f457e50-d41f-4c21-b797-27b9539b003e",
       "theorem_name": "OpenGA_ParametrizedVarifold",
       "theorem_title": "Varifolds of Euclidean parametrized surfaces",
+      "visibility": "public",
+      "vote_count": 0
+    },
+    "71d6823a-2014-4ec2-8a21-0f6e3cdb3232": {
+      "created_at": "2026-09-10T03:03:05.658+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Definitions.Def_DifferentialGeometry_SmoothRiemannianMetric\nimport Mathlib.Analysis.InnerProductSpace.Dual\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.Analysis.LocallyConvex.Bounded\nimport Mathlib.Analysis.Normed.Module.FiniteDimension\nimport Mathlib.Analysis.Normed.Operator.Bilinear\nimport Mathlib.Analysis.SpecialFunctions.Sqrt\nimport Mathlib.Geometry.Manifold.BumpFunction\nimport Mathlib.Geometry.Manifold.ContMDiffMFDeriv\nimport Mathlib.Geometry.Manifold.Diffeomorph\nimport Mathlib.Geometry.Manifold.MFDeriv.FDeriv\nimport Mathlib.Geometry.Manifold.PartitionOfUnity\nimport Mathlib.Geometry.Manifold.VectorBundle.Basic\nimport Mathlib.Geometry.Manifold.VectorBundle.ContMDiffSection\nimport Mathlib.Geometry.Manifold.VectorBundle.Hom\nimport Mathlib.Geometry.Manifold.VectorBundle.LocalFrame\nimport Mathlib.Geometry.Manifold.VectorBundle.Riemannian\nimport Mathlib.Geometry.Manifold.VectorBundle.Tangent\nimport Mathlib.LinearAlgebra.Matrix.ToLin\nimport Mathlib.MeasureTheory.Integral.Bochner.Set\nimport Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace\nimport Mathlib.Topology.MetricSpace.ProperSpace\nimport Mathlib.Topology.VectorBundle.Basic\n\n/-! Induced metrics of smooth immersions. Supporting proofs are embedded\nbecause they construct the proof fields of the metric definition.\nReused DifferentialGeometry code: Apache-2.0, commit 1b535dd102b94cc42b107cca27059687888f08b3. -/\n\nsection\n\n/- Source: DifferentialGeometry.Bundle.Equiv -/\n\nopen Bundle\n\nopen scoped Manifold\n\nsection ToContMDiffVectorBundleEquivGeneral\n\nvariable {𝕜 : Type*} [NontriviallyNormedField 𝕜] [CompleteSpace 𝕜]\n  {EB : Type*} [NormedAddCommGroup EB] [NormedSpace 𝕜 EB]\n  {HB : Type*} [TopologicalSpace HB]\n  {IB : ModelWithCorners 𝕜 EB HB}\n  {n : WithTop ℕ∞}\n  {B₁ : Type*} [TopologicalSpace B₁] [ChartedSpace HB B₁]\n  {B₂ : Type*} [TopologicalSpace B₂] [ChartedSpace HB B₂]\n  {F₁ : Type*} [NormedAddCommGroup F₁] [NormedSpace 𝕜 F₁] [FiniteDimensional 𝕜 F₁]\n  {E₁ : B₁ → Type*} [∀ x, AddCommGroup (E₁ x)] [∀ x, Module 𝕜 (E₁ x)]\n  [TopologicalSpace (TotalSpace F₁ E₁)] [∀ x, TopologicalSpace (E₁ x)]\n  [FiberBundle F₁ E₁] [VectorBundle 𝕜 F₁ E₁]\n  [ContMDiffVectorBundle n F₁ E₁ IB]\n  {F₂ : Type*} [NormedAddCommGroup F₂] [NormedSpace 𝕜 F₂] [FiniteDimensional 𝕜 F₂]\n  {E₂ : B₂ → Type*} [∀ x, AddCommGroup (E₂ x)] [∀ x, Module 𝕜 (E₂ x)]\n  [TopologicalSpace (TotalSpace F₂ E₂)] [∀ x, TopologicalSpace (E₂ x)]\n  [FiberBundle F₂ E₂] [VectorBundle 𝕜 F₂ E₂]\n  [ContMDiffVectorBundle n F₂ E₂ IB]\n\nlemma contMDiffAt_clm_of_pointwise\n    {X : Type*} [TopologicalSpace X] [ChartedSpace HB X]\n    {A : X → (F₁ →L[𝕜] F₂)} {x : X}\n    (h : ∀ v, ContMDiffAt IB 𝓘(𝕜, F₂) n (fun q => A q v) x) :\n    ContMDiffAt IB 𝓘(𝕜, F₁ →L[𝕜] F₂) n A x := by\n  have : FiniteDimensional 𝕜 (F₁ →L[𝕜] F₂) := ContinuousLinearMap.finiteDimensional\n  let bF₁ := Module.finBasis 𝕜 F₁\n  let evalBasis : (F₁ →L[𝕜] F₂) →L[𝕜] (Fin (Module.finrank 𝕜 F₁) → F₂) :=\n    ContinuousLinearMap.pi (fun i => ContinuousLinearMap.apply 𝕜 F₂ (bF₁ i))\n  have evalBasis_inj : Function.Injective evalBasis := fun L₁ L₂ heq => by\n    ext v; rw [← bF₁.sum_equivFun v]; simp only [map_sum, map_smul]\n    congr 1; ext i; exact congrArg _ (congrFun heq i)\n  have : FiniteDimensional 𝕜 (Fin (Module.finrank 𝕜 F₁) → F₂) := inferInstance\n  obtain ⟨gLM, hgLM⟩ := evalBasis.toLinearMap.exists_leftInverse_of_injective\n    (evalBasis.ker_eq_bot_of_injective evalBasis_inj)\n  let g : (Fin (Module.finrank 𝕜 F₁) → F₂) →L[𝕜] (F₁ →L[𝕜] F₂) :=\n    ⟨gLM, LinearMap.continuous_of_finiteDimensional _⟩\n  have hg : ∀ x, g (evalBasis x) = x := fun x => congr($(hgLM) x)\n  have hEA : ContMDiffAt IB 𝓘(𝕜, Fin _ → F₂) n (evalBasis ∘ A) x :=\n    contMDiffAt_pi_space.mpr fun i => h (bF₁ i)\n  have : A = g ∘ evalBasis ∘ A := by funext q; exact (hg (A q)).symm\n  rw [this]\n  exact g.contDiff.contMDiff.contMDiffAt.comp _ hEA\n\nend ToContMDiffVectorBundleEquivGeneral\n\nend\n\nsection\n\n/- Source: DifferentialGeometry.Bundle.Frame -/\n\nopen scoped Manifold Topology ContDiff\n\nopen Bundle Filter\n\nvariable {𝕜 : Type*} [RCLike 𝕜]\n  {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n  {H : Type*} [TopologicalSpace H]\n  {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M]\n  {F : Type*} [NormedAddCommGroup F] [NormedSpace ℝ F] [NormedSpace 𝕜 F]\n    [IsScalarTower ℝ 𝕜 F]\n  {n : ℕ∞}\n  {V : M → Type*} [TopologicalSpace (TotalSpace F V)]\n  [∀ x, TopologicalSpace (V x)] [FiberBundle F V]\n  [∀ x, AddCommGroup (V x)]\n  [∀ x, Module ℝ (V x)] [∀ x, Module 𝕜 (V x)] [∀ x, IsScalarTower ℝ 𝕜 (V x)]\n  [VectorBundle ℝ F V]\n\nvariable {ι : Type*} {s : ι → (x : M) → V x} {u : Set M} {p : M}\n\ntheorem IsLocalFrameOn.exists_contMDiffSection_eqOn_nhd\n    [FiniteDimensional ℝ E] [IsManifold I ∞ M] [T2Space M]\n    (hs : IsLocalFrameOn I F n s u) (hu : IsOpen u) (hp : p ∈ u) :\n    ∃ (s' : ι → Cₛ^n⟮I; F, V⟯), ∀ᶠ x in 𝓝 p, ∀ i, s' i x = s i x := by\n  obtain ⟨χ, -, hχ⟩ :=\n    (SmoothBumpFunction.nhds_basis_tsupport (I := I) p).mem_iff.mp (hu.mem_nhds hp)\n  refine ⟨fun i => ⟨fun x => χ x • s i x, ?_⟩, ?_⟩\n  · exact (χ.contMDiff.of_le (by exact_mod_cast le_top)).contMDiffOn.smul_section_of_tsupport\n      hu hχ (hs.contMDiffOn i)\n  · filter_upwards [χ.eventuallyEq_one] with x hx i\n    simp [hx]\n\nend\n\nsection\n\n/- Source: DifferentialGeometry.Bundle.ClmSectionSmooth -/\n\nset_option autoImplicit false\n\nnoncomputable section\n\nopen Bundle Manifold Set FiberBundle\n\nopen scoped Manifold Topology ContDiff\n\nnamespace DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]\n\nvariable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n\nvariable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n\ntheorem cotangentCov_clmSection_smooth_aux\n    {F₂ : Type*} [NormedAddCommGroup F₂] [NormedSpace ℝ F₂] [FiniteDimensional ℝ F₂]\n    {V₂ : M → Type*} [∀ x, AddCommGroup (V₂ x)] [∀ x, Module ℝ (V₂ x)]\n    [TopologicalSpace (TotalSpace F₂ V₂)] [∀ x, TopologicalSpace (V₂ x)]\n    [FiberBundle F₂ V₂] [VectorBundle ℝ F₂ V₂]\n    [∀ x, IsTopologicalAddGroup (V₂ x)] [∀ x, ContinuousSMul ℝ (V₂ x)]\n    [T2Space M]\n    (φ : ∀ x : M, TangentSpace I x →L[ℝ] V₂ x)\n    (h : ∀ (Y : Cₛ^∞⟮I; E, (TangentSpace I : M → Type _)⟯),\n      ContMDiff I (I.prod 𝓘(ℝ, F₂)) ∞\n        (fun x => TotalSpace.mk' F₂ (E := V₂) x (φ x (Y x)))) :\n    ContMDiff I (I.prod 𝓘(ℝ, E →L[ℝ] F₂)) ∞\n      (fun x => TotalSpace.mk' (E →L[ℝ] F₂)\n        (E := fun x : M => TangentSpace I x →L[ℝ] V₂ x) x (φ x)) := by\n  intro x₀\n  rw [contMDiffAt_hom_bundle]\n  refine ⟨contMDiffAt_id, ?_⟩\n  apply contMDiffAt_clm_of_pointwise (IB := I) (X := M)\n  intro v\n  let e₁ := trivializationAt E (TangentSpace I : M → Type _) x₀\n  let e₂ := trivializationAt F₂ V₂ x₀\n  let b := Module.finBasis ℝ E\n  have he₁ : x₀ ∈ e₁.baseSet := mem_baseSet_trivializationAt E (TangentSpace I) x₀\n  have he₂ : x₀ ∈ e₂.baseSet := mem_baseSet_trivializationAt F₂ V₂ x₀\n  have hframe := e₁.isLocalFrameOn_localFrame_baseSet I (⊤ : ℕ∞) b\n  obtain ⟨Y, hY⟩ := hframe.exists_contMDiffSection_eqOn_nhd e₁.open_baseSet he₁\n  have hφY : ∀ i, ContMDiff I (I.prod 𝓘(ℝ, F₂)) ∞\n      (fun x => TotalSpace.mk' F₂ (E := V₂) x (φ x (Y i x))) := fun i => h (Y i)\n  have hφY_fiber : ∀ i, ContMDiffAt I 𝓘(ℝ, F₂) ∞\n      (fun x => (e₂ ⟨x, φ x (Y i x)⟩).2) x₀ := fun i => by\n    have hi := (contMDiffAt_section (F := F₂) (E := V₂) x₀).mp ((hφY i) x₀)\n    simpa [e₂, trivializationAt] using hi\n  have hsum : ContMDiffAt I 𝓘(ℝ, F₂) ∞\n      (fun x => ∑ i, b.repr v i • (e₂ ⟨x, φ x (Y i x)⟩).2) x₀ := by\n    apply ContMDiffAt.sum\n    intro i _\n    have hc : ContMDiffAt I 𝓘(ℝ) ∞ (fun _ : M => (b.repr v i : ℝ)) x₀ :=\n      contMDiffAt_const\n    exact hc.smul (hφY_fiber i)\n  refine hsum.congr_of_eventuallyEq ?_\n  have h_base₁ : ∀ᶠ x in 𝓝 x₀, x ∈ e₁.baseSet :=\n    e₁.open_baseSet.mem_nhds he₁\n  have h_base₂ : ∀ᶠ x in 𝓝 x₀, x ∈ e₂.baseSet :=\n    e₂.open_baseSet.mem_nhds he₂\n  filter_upwards [h_base₁, h_base₂, hY] with x hx₁ hx₂ hYx\n  have hv_decomp : v = ∑ i, b.repr v i • b i := (b.sum_repr v).symm\n  have h_inCoord :\n      (ContinuousLinearMap.inCoordinates E (TangentSpace I) F₂ V₂ x₀ x x₀ x (φ x)) v =\n      e₂.continuousLinearMapAt ℝ x ((φ x) (e₁.symmL ℝ x v)) := rfl\n  rw [h_inCoord]\n  have h₁ : e₁.symmL ℝ x v = ∑ i, (b.repr v) i • e₁.symmL ℝ x (b i) := by\n    conv_lhs => rw [hv_decomp]\n    rw [map_sum]; congr 1; ext i; rw [map_smul]\n  have h₂ : (φ x) (∑ i, (b.repr v) i • e₁.symmL ℝ x (b i)) =\n      ∑ i, (b.repr v) i • (φ x) (e₁.symmL ℝ x (b i)) := by\n    rw [map_sum]; congr 1; ext i; rw [map_smul]\n  have h₃ : e₂.continuousLinearMapAt ℝ x\n        (∑ i, (b.repr v) i • (φ x) (e₁.symmL ℝ x (b i))) =\n      ∑ i, (b.repr v) i • e₂.continuousLinearMapAt ℝ x ((φ x) (e₁.symmL ℝ x (b i))) := by\n    rw [map_sum]; congr 1; ext i; rw [map_smul]\n  rw [h₁, h₂, h₃]\n  refine Finset.sum_congr rfl (fun i _ => ?_)\n  congr 1\n  have h_lf : e₁.symmL ℝ x (b i) = (Y i) x := by\n    rw [hYx i]\n    rw [Trivialization.localFrame_apply_of_mem_baseSet (hx := hx₁)]\n    exact e₁.symmL_apply hx₁ _\n  rw [h_lf]\n  change (Trivialization.continuousLinearMapAt ℝ e₂ x) ((φ x) ((Y i) x)) = _\n  rw [show ⇑(e₂.continuousLinearMapAt ℝ x) = ⇑(e₂.linearMapAt ℝ x) from rfl,\n    e₂.coe_linearMapAt_of_mem hx₂]\n\nend DifferentialGeometry\n\nend\n\nend\n\nsection\n\n/- Source: DifferentialGeometry.Geometry.Metric.MetricExistence -/\n\nnoncomputable section\n\nopen Bundle Manifold Set ContinuousLinearMap Bornology Metric\n\nopen scoped Manifold Topology ContDiff\n\nnamespace DifferentialGeometry\n\nnamespace Geometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]\n\nvariable {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n\nvariable {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n\ntheorem posDef_isVonNBounded\n    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n    [FiniteDimensional ℝ E] (g : E →L[ℝ] E →L[ℝ] ℝ)\n    (hpos : ∀ v : E, v ≠ 0 → 0 < g v v) :\n    Bornology.IsVonNBounded ℝ {v : E | g v v < 1} := by\n  have hcont : Continuous (fun v : E => g v v) :=\n    isBoundedBilinearMap_apply.continuous.comp (g.continuous.prodMk continuous_id)\n  rw [NormedSpace.isVonNBounded_iff']\n  obtain ⟨c, hc, hcoer⟩ : ∃ c > 0, ∀ v : E, c * ‖v‖ ^ 2 ≤ g v v := by\n    rcases subsingleton_or_nontrivial E with hsub | hnt\n    · exact ⟨1, one_pos, fun v => by\n        have hv0 : v = 0 := Subsingleton.elim _ _\n        subst hv0; simp⟩\n    · have hsphere : IsCompact (Metric.sphere (0 : E) 1) := isCompact_sphere _ _\n      have hne : (Metric.sphere (0 : E) 1).Nonempty := by\n        rw [NormedSpace.sphere_nonempty]; exact zero_le_one\n      obtain ⟨v₀, hv₀, hmin⟩ := hsphere.exists_isMinOn hne hcont.continuousOn\n      have hv₀0 : v₀ ≠ 0 := by intro h; rw [h] at hv₀; simp at hv₀\n      refine ⟨g v₀ v₀, hpos v₀ hv₀0, ?_⟩\n      intro v\n      rcases eq_or_ne v 0 with rfl | hv\n      · simp\n      · have hvnorm : (0 : ℝ) < ‖v‖ := norm_pos_iff.mpr hv\n        have hscaleAll : ∀ (r : ℝ) (w : E), g (r • w) (r • w) = r ^ 2 * g w w := by\n          intro r w\n          rw [(g (r • w)).map_smul, map_smul, smul_apply,\n            smul_eq_mul, smul_eq_mul]; ring\n        have hu_sphere : ((‖v‖)⁻¹ • v) ∈ Metric.sphere (0 : E) 1 := by\n          rw [Metric.mem_sphere, dist_zero_right, norm_smul, norm_inv, norm_norm]\n          field_simp\n        have hmin' : g v₀ v₀ ≤ g ((‖v‖)⁻¹ • v) ((‖v‖)⁻¹ • v) := hmin hu_sphere\n        have hvv : v = ‖v‖ • ((‖v‖)⁻¹ • v) := by\n          rw [smul_smul, mul_inv_cancel₀ (ne_of_gt hvnorm), one_smul]\n        have hscale : g v v = ‖v‖ ^ 2 * g ((‖v‖)⁻¹ • v) ((‖v‖)⁻¹ • v) := by\n          conv_lhs => rw [hvv]\n          rw [hscaleAll ‖v‖ ((‖v‖)⁻¹ • v)]\n        rw [hscale]\n        nlinarith [sq_nonneg ‖v‖, hvnorm, hmin']\n  refine ⟨Real.sqrt (1 / c), fun v hv => ?_⟩\n  simp only [Set.mem_ofPred_eq] at hv\n  have h2 : c * ‖v‖ ^ 2 < 1 := lt_of_le_of_lt (hcoer v) hv\n  have h3 : ‖v‖ ^ 2 < 1 / c := by rw [lt_div_iff₀ hc, mul_comm]; exact h2\n  calc ‖v‖ = Real.sqrt (‖v‖ ^ 2) := (Real.sqrt_sq (norm_nonneg _)).symm\n    _ ≤ Real.sqrt (1 / c) := Real.sqrt_le_sqrt h3.le\n\nend Geometry\n\nend DifferentialGeometry\n\nend\n\nend\n\nsection\n\n/- Source: OpenGALib.Riemannian.Surface.InducedMetric -/\n\n/-!\n# Metrics induced by smooth immersions\n\nThe metric is pulled back by the actual manifold derivative. The assumptions\nare smoothness and injectivity of the differential, with no injectivity of the\nmap itself. Thus immersed surfaces, including self-intersections, are allowed.\n\nThe smoothness argument adapts the pullback construction in\n`DifferentialGeometry.Geometry.Metric.PullbackCross` from diffeomorphisms to\nimmersions. Boundedness follows from finite-dimensional positive definiteness.\nUpstream: qinz1yang/differential-geometry, Apache-2.0, v0.1.2,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nReference: Lee, Introduction to Riemannian Manifolds, second edition, Chapter 8.\n-/\n\nnoncomputable section\n\nopen Bundle\n\nopen scoped Manifold ContDiff\n\nnamespace OpenGA.Surface\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {N : Type*} [TopologicalSpace N] [ChartedSpace H N] [IsManifold I ∞ N]\n  {F : Type*} [NormedAddCommGroup F] [NormedSpace ℝ F]\n  {G : Type*} [TopologicalSpace G] {J : ModelWithCorners ℝ F G}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace G M] [IsManifold J ∞ M]\n\n/-- Pull back the ambient inner product along the differential of a map. -/\ndef inducedInner (g : DifferentialGeometry.SmoothRiemannianMetric J M) (f : N → M)\n    (x : N) : TangentSpace I x →L[ℝ] TangentSpace I x →L[ℝ] ℝ :=\n  (ContinuousLinearMap.precomp ℝ (mfderiv I J f x)).comp\n    ((g.inner (f x)).comp (mfderiv I J f x))\n\nomit [FiniteDimensional ℝ E] [IsManifold I ∞ N] in\n@[simp] theorem inducedInner_apply\n    (g : DifferentialGeometry.SmoothRiemannianMetric J M) (f : N → M)\n    (x : N) (v w : TangentSpace I x) :\n    inducedInner (I := I) g f x v w =\n      g.inner (f x) (mfderiv I J f x v) (mfderiv I J f x w) := rfl\n\nomit [FiniteDimensional ℝ E] [IsManifold I ∞ N] in\ntheorem inducedInner_pos\n    (g : DifferentialGeometry.SmoothRiemannianMetric J M) (f : N → M)\n    (hinj : ∀ x, Function.Injective (mfderiv I J f x))\n    (x : N) (v : TangentSpace I x) (hv : v ≠ 0) :\n    0 < inducedInner (I := I) g f x v v := by\n  apply g.pos\n  intro h\n  exact hv (hinj x (by simpa using h))\n\ntheorem inducedInner_contMDiff [T2Space N]\n    (g : DifferentialGeometry.SmoothRiemannianMetric J M) (f : N → M)\n    (hf : ContMDiff I J ∞ f) :\n    ContMDiff I (I.prod 𝓘(ℝ, E →L[ℝ] E →L[ℝ] ℝ)) ∞\n      (fun x => TotalSpace.mk' (E →L[ℝ] E →L[ℝ] ℝ) x (inducedInner (I := I) g f x)) := by\n  apply DifferentialGeometry.cotangentCov_clmSection_smooth_aux\n    (V₂ := fun x : N => TangentSpace I x →L[ℝ] ℝ)\n  intro Y\n  apply DifferentialGeometry.cotangentCov_clmSection_smooth_aux\n    (V₂ := fun _ : N => ℝ)\n  intro W\n  have htf : ContMDiff I.tangent J.tangent ∞ (tangentMap I J f) :=\n    hf.contMDiff_tangentMap (le_refl _)\n  have hv := htf.comp Y.contMDiff\n  have hw := htf.comp W.contMDiff\n  have hg := g.contMDiff.comp hf\n  have htotal := ContMDiff.clm_bundle_apply₂\n    (E₁ := fun b : M => TangentSpace J b)\n    (E₂ := fun b : M => TangentSpace J b)\n    (E₃ := fun _ : M => ℝ)\n    (b := f) (ψ := fun x => g.inner (f x))\n    (v := fun x => mfderiv I J f x (Y x))\n    (w := fun x => mfderiv I J f x (W x)) hg hv hw\n  have hscalar : ContMDiff I 𝓘(ℝ, ℝ) ∞\n      (fun x => g.inner (f x) (mfderiv I J f x (Y x)) (mfderiv I J f x (W x))) := by\n    intro x\n    have hx := htotal x\n    rw [contMDiffAt_totalSpace] at hx\n    simpa using hx.2\n  intro x\n  rw [contMDiffAt_section]\n  exact hscalar x\n\n/-- The smooth metric induced by a smooth map with injective differential. -/\ndef inducedMetric [T2Space N]\n    (g : DifferentialGeometry.SmoothRiemannianMetric J M) (f : N → M)\n    (hf : ContMDiff I J ∞ f) (hinj : ∀ x, Function.Injective (mfderiv I J f x)) :\n    DifferentialGeometry.SmoothRiemannianMetric I N where\n  inner := inducedInner (I := I) g f\n  symm x v w := g.symm (f x) (mfderiv I J f x v) (mfderiv I J f x w)\n  pos := inducedInner_pos g f hinj\n  isVonNBounded x := DifferentialGeometry.Geometry.posDef_isVonNBounded (E := E)\n    (inducedInner (I := I) g f x) (inducedInner_pos g f hinj x)\n  contMDiff := inducedInner_contMDiff g f hf\n\n@[simp] theorem inducedMetric_inner [T2Space N]\n    (g : DifferentialGeometry.SmoothRiemannianMetric J M) (f : N → M)\n    (hf : ContMDiff I J ∞ f) (hinj : ∀ x, Function.Injective (mfderiv I J f x))\n    (x : N) (v w : TangentSpace I x) :\n    (inducedMetric g f hf hinj).inner x v w =\n      g.inner (f x) (mfderiv I J f x v) (mfderiv I J f x w) := rfl\n\nend OpenGA.Surface\n\nend\n\nend\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "local_path": "Definitions/Def_OpenGA_ImmersedMetric.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $f:N\\to M$ be a smooth map between smooth real manifolds, where $N$ is Hausdorff and finite dimensional, and let $g$ be a smooth Riemannian metric on $M$. Suppose $df_x$ is injective for every $x\\in N$. The induced metric on $N$ is\n\n$$h_x(v,w)=g_{f(x)}(df_xv,df_xw).$$\n\nThe construction proves symmetry, positive definiteness, finite-dimensional boundedness and smoothness, and returns an actual smooth Riemannian metric. The map $f$ itself need not be injective; self-intersections are allowed. Branch points are excluded by differential injectivity. Supporting smooth-section and positivity proofs are retained from DifferentialGeometry with attribution; the immersion construction is the OpenGA adaptation.",
+      "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/MetricExistence.lean#L24-L67; https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Bundle/ClmSectionSmooth.lean#L27-L97; https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Bundle/Frame.lean#L40-L50; https://github.com/MathNetwork/OpenGA/blob/58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12/OpenGALib/Riemannian/Surface/InducedMetric.lean#L35-L39; https://github.com/MathNetwork/OpenGA/blob/58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12/OpenGALib/Riemannian/Surface/InducedMetric.lean#L42-L46; https://github.com/MathNetwork/OpenGA/blob/58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12/OpenGALib/Riemannian/Surface/InducedMetric.lean#L58-L89; https://github.com/MathNetwork/OpenGA/blob/58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12/OpenGALib/Riemannian/Surface/InducedMetric.lean#L49-L56; https://github.com/MathNetwork/OpenGA/blob/58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12/OpenGALib/Riemannian/Surface/InducedMetric.lean#L91-L101; https://github.com/MathNetwork/OpenGA/blob/58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12/OpenGALib/Riemannian/Surface/InducedMetric.lean#L103-L108; https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Bundle/Equiv.lean#L888-L910",
+      "status": "Definition",
+      "tags": [
+        "colding-minicozzi",
+        "immersed-surfaces",
+        "riemannian-geometry",
+        "surface-area"
+      ],
+      "theorem_id": "71d6823a-2014-4ec2-8a21-0f6e3cdb3232",
+      "theorem_name": "OpenGA_ImmersedMetric",
+      "theorem_title": "The smooth metric induced by an immersion",
       "visibility": "public",
       "vote_count": 0
     },
@@ -5006,6 +5129,31 @@
       "visibility": "public",
       "vote_count": 0
     },
+    "f1d3ae1f-1536-40e5-afeb-5a67fdbdbad8": {
+      "audits": [],
+      "created_at": "2026-09-10T03:05:07.973607+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem OpenGA.Surface.patchArea_inducedMetric\n    (g : SmoothRiemannianMetric J M) (f : N → M) (hf : ContMDiff I J ∞ f)\n    (hinj : ∀ x, Function.Injective (mfderiv I J f x))\n    (p : SurfaceParameter → N) (A : Set SurfaceParameter) (hA : MeasurableSet A)\n    (hp : ∀ u ∈ A, MDifferentiableAt 𝓘(ℝ, SurfaceParameter) I p u) :\n    patchArea (inducedMetric g f hf hinj) p A = patchArea g (f ∘ p) A := by sorry",
+      "local_path": "Theorems/Thm_OpenGA_Surface_patchArea_inducedMetric.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $f:N\\to(M,g)$ be a smooth immersion of a finite-dimensional Hausdorff manifold, and put $h=f^*g$. Let $A\\subseteq\\mathbb R^2$ be measurable and suppose $p:\\mathbb R^2\\to N$ is differentiable at every point of $A$. Then\n\n$$\\int_A J_h p(u)\\,du=\\int_A J_g(f\\circ p)(u)\\,du.$$\n\nThe integrals are Bochner integrals, so the equality also applies with Lean's total-integral convention; it identifies the ordinary finite areas whenever the density is integrable. Multiplicity is retained because neither map is required to be injective. This is compatibility of local patch integrals, not a claim about branch points or finite-time extinction.",
+      "preamble": "import Theorems.Thm_OpenGA_Surface_surfaceDensity_inducedMetric\nimport Definitions.Def_OpenGA_ImmersedMetric\nimport Definitions.Def_OpenGA_SurfaceArea\nimport Mathlib.Analysis.InnerProductSpace.Dual\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.Analysis.LocallyConvex.Bounded\nimport Mathlib.Analysis.Normed.Module.FiniteDimension\nimport Mathlib.Analysis.Normed.Operator.Bilinear\nimport Mathlib.Analysis.SpecialFunctions.Sqrt\nimport Mathlib.Geometry.Manifold.BumpFunction\nimport Mathlib.Geometry.Manifold.ContMDiffMFDeriv\nimport Mathlib.Geometry.Manifold.Diffeomorph\nimport Mathlib.Geometry.Manifold.MFDeriv.FDeriv\nimport Mathlib.Geometry.Manifold.PartitionOfUnity\nimport Mathlib.Geometry.Manifold.VectorBundle.Basic\nimport Mathlib.Geometry.Manifold.VectorBundle.ContMDiffSection\nimport Mathlib.Geometry.Manifold.VectorBundle.Hom\nimport Mathlib.Geometry.Manifold.VectorBundle.LocalFrame\nimport Mathlib.Geometry.Manifold.VectorBundle.Riemannian\nimport Mathlib.Geometry.Manifold.VectorBundle.Tangent\nimport Mathlib.LinearAlgebra.Matrix.ToLin\nimport Mathlib.MeasureTheory.Integral.Bochner.Set\nimport Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace\nimport Mathlib.Topology.MetricSpace.ProperSpace\nimport Mathlib.Topology.VectorBundle.Basic\n\nnoncomputable section\n\nopen Bundle MeasureTheory Set\n\nopen scoped Manifold ContDiff\n\nopen DifferentialGeometry OpenGA.RicciFlow\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {N : Type*} [TopologicalSpace N] [ChartedSpace H N] [IsManifold I ∞ N] [T2Space N]\n  {F : Type*} [NormedAddCommGroup F] [NormedSpace ℝ F]\n  {G : Type*} [TopologicalSpace G] {J : ModelWithCorners ℝ F G}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace G M] [IsManifold J ∞ M]\n\nopen OpenGA.Surface",
+      "readback": null,
+      "source": "https://github.com/MathNetwork/OpenGA/blob/58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12/OpenGALib/Riemannian/Surface/Coordinates.lean#L48-L57",
+      "status": "Proved",
+      "tags": [
+        "colding-minicozzi",
+        "immersed-surfaces",
+        "riemannian-geometry",
+        "surface-area"
+      ],
+      "theorem_id": "f1d3ae1f-1536-40e5-afeb-5a67fdbdbad8",
+      "theorem_name": "OpenGA.Surface.patchArea_inducedMetric",
+      "theorem_title": "Induced-metric patch area agrees with ambient parametrized area",
+      "visibility": "public",
+      "vote_count": 0
+    },
     "fe9a0128-6fb2-494b-aba1-8436851df1e4": {
       "audits": [],
       "created_at": "2026-09-09T21:06:50.466425+00:00",
@@ -5049,6 +5197,21 @@
       "status": "ACCEPTED",
       "theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
       "updated_at": "2026-09-09T03:20:21.899999+00:00",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Xinze-Li-Moqian",
+      "vote_count": 0
+    },
+    "0539c3a6-d718-4422-9183-3a398c35b441": {
+      "created_at": "2026-09-10T03:03:58.343248+00:00",
+      "deprecated_at": null,
+      "error_message": "",
+      "explanation": "Apply the manifold chain rule to f composed with p. The induced metric evaluates as the ambient metric on df of each tangent vector, so the two Gram matrices agree entrywise. Their determinants and square roots therefore agree.",
+      "file_path": "69908894-8d8e-4068-91b2-d366e5045258/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/0539c3a6-d718-4422-9183-3a398c35b441.lean",
+      "id": "0539c3a6-d718-4422-9183-3a398c35b441",
+      "local_path": "Solutions/Sol_OpenGA_Surface_surfaceDensity_inducedMetric_0539c3a6d718442291833a398c35b441.lean",
+      "status": "ACCEPTED",
+      "theorem_id": "69908894-8d8e-4068-91b2-d366e5045258",
+      "updated_at": "2026-09-10T03:04:45.849601+00:00",
       "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
       "username": "Xinze-Li-Moqian",
       "vote_count": 0
@@ -5533,6 +5696,21 @@
       "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
+    "e6e79781-a2e6-46ea-97e2-2db7537f9abb": {
+      "created_at": "2026-09-10T03:05:19.982006+00:00",
+      "deprecated_at": null,
+      "error_message": "",
+      "explanation": "Use the proved pointwise equality of area densities at every point of the measurable parameter domain. The set-integral congruence theorem then identifies the two Bochner integrals. The density result is the actual imported proof dependency.",
+      "file_path": "f1d3ae1f-1536-40e5-afeb-5a67fdbdbad8/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/e6e79781-a2e6-46ea-97e2-2db7537f9abb.lean",
+      "id": "e6e79781-a2e6-46ea-97e2-2db7537f9abb",
+      "local_path": "Solutions/Sol_OpenGA_Surface_patchArea_inducedMetric_e6e79781a2e646ea97e22db7537f9abb.lean",
+      "status": "ACCEPTED",
+      "theorem_id": "f1d3ae1f-1536-40e5-afeb-5a67fdbdbad8",
+      "updated_at": "2026-09-10T03:06:13.32604+00:00",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Xinze-Li-Moqian",
+      "vote_count": 0
+    },
     "ecffef77-6ae4-4288-95a2-b62ceb5e9571": {
       "created_at": "2026-09-09T20:00:06.191161+00:00",
       "deprecated_at": null,
@@ -5609,5 +5787,5 @@
       "vote_count": 0
     }
   },
-  "synced_at": "2026-09-10T02:11:09.312897+00:00"
+  "synced_at": "2026-09-10T03:08:34.633686+00:00"
 }

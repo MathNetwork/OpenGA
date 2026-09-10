@@ -1,6 +1,6 @@
 {
   "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
-  "reviewed_at": "2026-09-09T21:54:09.427538+00:00",
+  "reviewed_at": "2026-09-10T03:09:22.772281+00:00",
   "reviews": {
     "01167772-943a-4c75-ab15-9f7b235777a8": {
       "declarations": [
@@ -633,6 +633,38 @@
         }
       ],
       "scope": "Exact export of the actual pullback-metric area coordinate law. Original and staged types and definition bodies match; all eight source/export declarations passed the kernel axiom audit. Closed-surface gluing and CM sweepouts remain open."
+    },
+    "0539c3a6-d718-4422-9183-3a398c35b441": {
+      "source_theorem_id": "69908894-8d8e-4068-91b2-d366e5045258",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "feebba34cff5e8de3ef7f95790d03dca3e86aab3728049deb6f5a64a4a41c03f",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/0539c3a6-d718-4422-9183-3a398c35b441/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "OpenGA.Surface.surfaceDensity_inducedMetric",
+          "path": "OpenGALib/Riemannian/Surface/Coordinates.lean"
+        }
+      ],
+      "scope": "The actual induced metric and its parameter-patch area agree with the ambient composition. All thirteen source/export types and definition bodies match, and their proof closure uses only standard logical axioms. This is local area compatibility; the complete closed-surface Ricci-flow area derivative remains outside this platform batch."
+    },
+    "e6e79781-a2e6-46ea-97e2-2db7537f9abb": {
+      "source_theorem_id": "f1d3ae1f-1536-40e5-afeb-5a67fdbdbad8",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "9395871a092124ca5aaa93d3826cfbc4a0aa6decdad05f855e767979f2d1940c",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/e6e79781-a2e6-46ea-97e2-2db7537f9abb/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "OpenGA.Surface.patchArea_inducedMetric",
+          "path": "OpenGALib/Riemannian/Surface/Coordinates.lean"
+        }
+      ],
+      "scope": "The actual induced metric and its parameter-patch area agree with the ambient composition. All thirteen source/export types and definition bodies match, and their proof closure uses only standard logical axioms. This is local area compatibility; the complete closed-surface Ricci-flow area derivative remains outside this platform batch."
     }
   },
   "schema_version": 1

@@ -46,7 +46,7 @@
   "remaining_inputs": [
     "Construct the required Ricci-flow solution and its regularity from a compatible initial metric.",
     "Extend global surface area and its variation to the branched and Sobolev maps used by CM, including estimates uniform over almost-maximal sweepout slices.",
-    "Treat branch points, second fundamental forms, the Gauss equation and branched Gauss-Bonnet.",
+    "Upgrade and review the existing Petersen second fundamental form and Gauss-Codazzi implementation, identify its tangential curvature with the actual induced metric, and supply the branched Gauss-Bonnet theorem.",
     "Construct manifold-valued Sobolev maps, sweepouts, harmonic replacement and the min-max comparison families.",
     "Prove compatibility of geometric widths, curvature bounds and topological records with surgery."
   ],
@@ -86,11 +86,14 @@
     "status": "partially_published",
     "batch_record": "PoincareConjecture/Contributions/SurfaceArea/publication.json",
     "definitions": [
-      "0e220955-5806-447e-b322-843240f3f915"
+      "0e220955-5806-447e-b322-843240f3f915",
+      "71d6823a-2014-4ec2-8a21-0f6e3cdb3232"
     ],
     "accepted_theorems": {
       "OpenGA.RicciFlow.surfaceDensity_comp": "06588c07-4c58-4d0f-a257-445289cde218",
-      "OpenGA.RicciFlow.patchArea_comp": "25bed6f8-0964-4851-8d72-bd621c8f9303"
+      "OpenGA.RicciFlow.patchArea_comp": "25bed6f8-0964-4851-8d72-bd621c8f9303",
+      "OpenGA.Surface.surfaceDensity_inducedMetric": "69908894-8d8e-4068-91b2-d366e5045258",
+      "OpenGA.Surface.patchArea_inducedMetric": "f1d3ae1f-1536-40e5-afeb-5a67fdbdbad8"
     },
     "remaining_local_only": [
       "ScalarLowerBound.lean",
@@ -105,8 +108,11 @@
       "status": "local_only",
       "main_declaration": "OpenGA.RicciFlow.hasDerivAt_area",
       "platform_submission": null,
-      "mission_graph_connection_submitted": false
-    }
+      "mission_graph_connection_submitted": false,
+      "source_revision": "58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12",
+      "source_pushed": true
+    },
+    "immersion_metric_batch_record": "PoincareConjecture/Contributions/ImmersedSurfaceMetric/publication.json"
   },
   "sha256": {
     "OpenGALib/Interoperability/RicciFlow/ScalarLowerBound.lean": "dfb8c1f13339780b0369001a38603ece2f0893ec4886b0614c23209508935fb1",
@@ -121,6 +127,15 @@
     "OpenGALib/Riemannian/Surface/Coordinates.lean": "77a3665631f84618fef23724bbf97a3d002011c08abafa2f507edccb9370b4e2",
     "OpenGALib/Riemannian/VolumeVariation.lean": "bfa2ade552a90955b6bcf438ef6969ace1de565f87f32c858fe99095455f27e9",
     "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean": "22e03cdcdb4bf62517ca21138dd5290aaa49a83da42232afecc9e73e0cc847e2",
-    "PoincareConjecture/References/ColdingMinicozzi/ClosedSurfaceAreaAudit.lean": "f7e0fc2d4f78bb4048bfda60370b921249a6a5122e965b031a404e4fc2750f08"
+    "PoincareConjecture/References/ColdingMinicozzi/ClosedSurfaceAreaAudit.lean": "f7e0fc2d4f78bb4048bfda60370b921249a6a5122e965b031a404e4fc2750f08",
+    "PoincareConjecture/References/ColdingMinicozzi/BoundaryGeometryAudit.lean": "9e953857e699cb34a7c2f7e53556520f04226edf276fc064b7a9c2ebca08cc91"
+  },
+  "existing_submanifold_geometry": {
+    "petersen_review": "PoincareConjecture/References/Frenzymath/submanifold_geometry_review.json",
+    "differential_geometry_boundary": {
+      "declarations_audited": 4,
+      "scope": "Boundary second fundamental form; symmetry assumes symmetric chart coefficients. This does not supply the intrinsic Gauss equation for an arbitrary immersed surface.",
+      "audit": "PoincareConjecture/References/ColdingMinicozzi/BoundaryGeometryAudit.lean"
+    }
   }
 }

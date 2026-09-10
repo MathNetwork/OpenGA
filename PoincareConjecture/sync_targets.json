@@ -32,6 +32,9 @@
     "DifferentialGeometry_SmoothRiemannianMetric",
     "OpenGA_SurfaceArea",
     "OpenGA.RicciFlow.surfaceDensity_comp",
-    "OpenGA.RicciFlow.patchArea_comp"
+    "OpenGA.RicciFlow.patchArea_comp",
+    "OpenGA_ImmersedMetric",
+    "OpenGA.Surface.surfaceDensity_inducedMetric",
+    "OpenGA.Surface.patchArea_inducedMetric"
   ]
 }

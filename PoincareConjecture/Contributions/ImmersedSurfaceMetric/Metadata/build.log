@@ -1,0 +1,5 @@
+⚠ [2765/2773] Replayed Theorems.Thm_OpenGA_Surface_surfaceDensity_inducedMetric
+warning: Theorems/Thm_OpenGA_Surface_surfaceDensity_inducedMetric.lean:43:8: declaration uses `sorry`
+⚠ [2766/2773] Replayed Theorems.Thm_OpenGA_Surface_patchArea_inducedMetric
+warning: Theorems/Thm_OpenGA_Surface_patchArea_inducedMetric.lean:44:8: declaration uses `sorry`
+Build completed successfully (2773 jobs).
