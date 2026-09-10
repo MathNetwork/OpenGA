@@ -9,4 +9,4 @@ require OpenGALib from "../../.."
 
 @[default_target]
 lean_lib Review where
-  roots := #[`ReuseAudit, `ScalarAndAreaAudit]
+  roots := #[`ReuseAudit, `ScalarAndAreaAudit, `ClosedSurfaceAreaAudit]

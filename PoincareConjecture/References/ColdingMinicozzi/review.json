@@ -12,10 +12,20 @@
       "DifferentialGeometry.PDE.RicciFlow.scalar_curvature_lower_bound_of_scalarEvolution_of_regularity",
       "DifferentialGeometry.PDE.RicciFlow.scalarRegOfSmooth",
       "DifferentialGeometry.PDE.RicciFlow.metricDerivAt",
-      "DifferentialGeometry.Integral.Measure.hasDerivAt_sqrt_det_eq_half_trace_inv_mul"
+      "DifferentialGeometry.Integral.Measure.hasDerivAt_sqrt_det_eq_half_trace_inv_mul",
+      "DifferentialGeometry.Geometry.posDef_isVonNBounded",
+      "DifferentialGeometry.cotangentCov_clmSection_smooth_aux",
+      "DifferentialGeometry.Geometry.Curvature.MetricFamilySmoothOn.metricCLMSmoothAt",
+      "DifferentialGeometry.Integral.Measure.riemannianVolumeMeasure_isFiniteMeasure_of_compactSpace",
+      "DifferentialGeometry.Integral.Measure.riemannianVolumeMeasure_isOpenPosMeasure",
+      "DifferentialGeometry.Integral.Measure.volume_variation_formula"
     ],
     "adapted_source": "DifferentialGeometry/Geometry/Flow/RicciFlow/Estimates/FiniteTime/Solution.lean",
-    "adaptation": "The pointwise trace-norm proof and maximum-principle assembly are adapted for a nonpositive initial scalar bound. The original positive-scalar finite-lifetime theorem is not used as a finite-extinction theorem."
+    "adaptation": "The pointwise trace-norm proof and maximum-principle assembly are adapted for a nonpositive initial scalar bound. The original positive-scalar finite-lifetime theorem is not used as a finite-extinction theorem.",
+    "closed_surface_adaptation": {
+      "source": "DifferentialGeometry/Geometry/Metric/PullbackCross.lean",
+      "change": "Adapt the smooth pullback construction from diffeomorphisms to maps with injective differential. Use the existing finite-dimensional positive-definite boundedness proof. Localize the upstream all-real-time volume variation theorem by a smooth time map, keeping the upstream integration and chart-gluing proof unchanged."
+    }
   },
   "mathematical_reference": {
     "title": "Width and finite extinction time of Ricci flow",
@@ -30,11 +40,12 @@
     "normalization": "The initial bound -6 gives -6/(1+4*t), matching the existing extinction trace.",
     "surface": "The pullback metric and Ricci matrices use the actual manifold derivative of a fixed map from the Euclidean parameter plane. Positive induced determinant gives the local density variation. An integral formula on a parameter patch follows under explicit measurable, integrable and dominated-derivative hypotheses.",
     "width": "The actual scalar minimum enters WidthComparisonData and yields the CM right-slope estimate and existing width deadline, conditional on those comparison data. No geometric sweepout or varifold realization is asserted.",
-    "coordinates": "For actual differentiable surface maps, induced metrics transform by the derivative congruence and area densities by its absolute determinant. An injective differentiable change of parameters on a measurable domain preserves the patch area integral. This supplies coordinate compatibility but does not yet construct a closed-surface integral."
+    "coordinates": "The existing parameter change identities remain available. The induced metric on a smooth immersed surface now also gives exactly the original surfaceMetricMatrix, surfaceDensity and patchArea after composition with a differentiable parameter map. Global area uses DifferentialGeometry's Riemannian measure on the domain; the new patch compatibility theorem compares the two local density integrals.",
+    "closed_surface": "For a fixed smooth immersion of a compact boundaryless surface, construct its actual induced metric and global area measure, prove finite area and positivity for a nonempty domain, and derive HasDerivAt of total area under an actual IsSolutionOn Ricci flow at every regular time. The derivative is minus the integral of the ambient Ricci tensor traced using the induced metric. Joint regularity is derived from the solution predicate; no additional domination, global-in-time regularity, global frame, normal vector field, or injectivity of the map itself is assumed. Branch points and Sobolev maps are not covered."
   },
   "remaining_inputs": [
     "Construct the required Ricci-flow solution and its regularity from a compatible initial metric.",
-    "Use the proved patch-coordinate compatibility to construct the global closed-surface integral, and derive uniform domination from compactness.",
+    "Extend global surface area and its variation to the branched and Sobolev maps used by CM, including estimates uniform over almost-maximal sweepout slices.",
     "Treat branch points, second fundamental forms, the Gauss equation and branched Gauss-Bonnet.",
     "Construct manifold-valued Sobolev maps, sweepouts, harmonic replacement and the min-max comparison families.",
     "Prove compatibility of geometric widths, curvature bounds and topological records with surgery."
@@ -44,7 +55,7 @@
     "root_build": {
       "command": "lake build",
       "status": "passed",
-      "jobs": 4297
+      "jobs": 4307
     },
     "axiom_audit": {
       "command": "lake env lean PoincareConjecture/References/ColdingMinicozzi/ScalarAndAreaAudit.lean",
@@ -52,6 +63,18 @@
       "declarations": 26,
       "new_public_declarations": 21,
       "upstream_declarations": 5,
+      "allowed_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "closed_surface_axiom_audit": {
+      "command": "lake env lean PoincareConjecture/References/ColdingMinicozzi/ClosedSurfaceAreaAudit.lean",
+      "status": "passed",
+      "declarations": 33,
+      "new_public_declarations": 27,
+      "upstream_declarations": 6,
       "allowed_axioms": [
         "propext",
         "Classical.choice",
@@ -72,11 +95,18 @@
     "remaining_local_only": [
       "ScalarLowerBound.lean",
       "SurfaceAreaVariation.lean",
-      "WidthComparison.lean"
+      "WidthComparison.lean",
+      "ClosedSurfaceArea.lean"
     ],
     "new_area_dependency_chain_verified": true,
     "mission_root_graph_extended": false,
-    "milestone_progress_links_verified": true
+    "milestone_progress_links_verified": true,
+    "closed_surface_batch": {
+      "status": "local_only",
+      "main_declaration": "OpenGA.RicciFlow.hasDerivAt_area",
+      "platform_submission": null,
+      "mission_graph_connection_submitted": false
+    }
   },
   "sha256": {
     "OpenGALib/Interoperability/RicciFlow/ScalarLowerBound.lean": "dfb8c1f13339780b0369001a38603ece2f0893ec4886b0614c23209508935fb1",
@@ -84,6 +114,13 @@
     "OpenGALib/Interoperability/RicciFlow/WidthComparison.lean": "a952f7b7f92198e7e7d1562bdc2a46d28e128798cf705eec1986e73c216a0af8",
     "PoincareConjecture/References/ColdingMinicozzi/ScalarAndAreaAudit.lean": "cc1fd80ee5b956907f740a476e1c851394d54c268f8a2775aaab6a07ba6f822e",
     "OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean": "c307590e3b61f16183b32e95028c0aae80cf9784c46a513b95f87f353158a282",
-    "OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean": "aec0f726447b2b5a7a738e5d52186e16a54c2059413cef5ddc344f8289be6e62"
+    "OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean": "aec0f726447b2b5a7a738e5d52186e16a54c2059413cef5ddc344f8289be6e62",
+    "OpenGALib/Riemannian/Surface.lean": "201e3d13c9d75a77726f193a4d9116fae2efb648607e0865a3b6981a82a5c580",
+    "OpenGALib/Riemannian/Surface/InducedMetric.lean": "f56ccea5ced6844c414d085f2a0932a2d7c788ed5fbea50d2b95b5f93a250fae",
+    "OpenGALib/Riemannian/Surface/Area.lean": "2c09adf5058422582d9524af66a966268f11e7c3f28ae678ff062556a6d12814",
+    "OpenGALib/Riemannian/Surface/Coordinates.lean": "77a3665631f84618fef23724bbf97a3d002011c08abafa2f507edccb9370b4e2",
+    "OpenGALib/Riemannian/VolumeVariation.lean": "bfa2ade552a90955b6bcf438ef6969ace1de565f87f32c858fe99095455f27e9",
+    "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean": "22e03cdcdb4bf62517ca21138dd5290aaa49a83da42232afecc9e73e0cc847e2",
+    "PoincareConjecture/References/ColdingMinicozzi/ClosedSurfaceAreaAudit.lean": "f7e0fc2d4f78bb4048bfda60370b921249a6a5122e965b031a404e4fc2750f08"
   }
 }

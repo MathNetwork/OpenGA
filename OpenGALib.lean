@@ -14,6 +14,7 @@ import OpenGALib.Interoperability.RicciFlow
 import OpenGALib.GeometricMeasureTheory
 import OpenGALib.Riemannian.Geodesic.HopfRinow.EVariationLePathELength
 import OpenGALib.Riemannian.Geodesic.SymmetryLemma
+import OpenGALib.Riemannian.Surface
 import OpenGALib.Topology.SphereCovering
 import OpenGALib.Topology.ExtinctionEndgame
 
@@ -43,6 +44,11 @@ weak-* convergence and parametrized-surface interfaces are available through
 `OpenGALib.GeometricMeasureTheory`.
 The smooth Ricci-flow scalar lower bound, its use in the width deadline, and
 local parametrized area variation are exposed by `OpenGALib.Interoperability.RicciFlow`.
-The area formula currently requires explicit domination on a parameter patch;
-global surface gluing and the CM sweepout construction remain separate tasks.
+The global area variation of a fixed smooth immersion of a closed surface now
+uses the actual induced metric and its Riemannian measure. Smooth Ricci-flow
+regularity and compactness supply differentiation under the integral locally
+in time, without an additional domination hypothesis.
+The reusable induced metric, global area and patch compatibility live in
+`OpenGALib.Riemannian.Surface`. Branch points, minimal-surface curvature
+identities and the CM sweepout construction remain separate tasks.
 -/
