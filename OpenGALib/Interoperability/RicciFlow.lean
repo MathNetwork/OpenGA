@@ -6,4 +6,4 @@ import OpenGALib.Interoperability.RicciFlow.ClosedSurfaceArea
 import OpenGALib.Interoperability.RicciFlow.AreaMonotonicity
 import OpenGALib.Interoperability.RicciFlow.SurfaceSliceFamily
 import OpenGALib.Interoperability.RicciFlow.SurfaceWidthComparison
-import OpenGALib.Interoperability.RicciFlow.Sweepout
+import OpenGALib.Riemannian.Surface.Sweepout
