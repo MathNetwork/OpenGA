@@ -2,10 +2,13 @@ import OpenGALib.Analysis.SurgeryComparison
 import Mathlib.Geometry.Manifold.ChartedSpace
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
+import Mathlib.MeasureTheory.Measure.Restrict
 
 set_option autoImplicit false
 
 namespace PoincareFormalization
+
+open MeasureTheory
 
 /-- Open geometric construction for the volume-controlled width route.
 The process records analytic inputs; producing them from the manifold still
@@ -25,11 +28,13 @@ comparison-measure input used in the Bishop--Gromov route. The construction
 itself remains open, but the dependency is now explicit in the formal type. -/
 theorem surgery_comparison_process_with_comparison_measure
     (M : Type*) [TopologicalSpace M] [T2Space M]
+    [MeasurableSpace M]
     [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]
     [SimplyConnectedSpace M] [CompactSpace M]
     (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)))
-    (comparison_measure_input : Prop) :
-    comparison_measure_input ∧
+    (μ : Measure M)
+    (comparison_measure_input : ∀ s : Set M, IsOpen s → s.Nonempty → 0 < μ s) :
+    (∀ s : Set M, IsOpen s → s.Nonempty → 0 < μ s) ∧
       (∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →
         Nonempty (OpenGA.SurgeryComparisonProcess initialWidth finalTime)) := by
   sorry
