@@ -134,6 +134,14 @@
     "OpenGA.RicciFlow.inducedMetric_regularOn",
     "OpenGA.RicciFlow.traceTimeDeriv_inducedMetric",
     "OpenGA.MetricFamilyRegularOn.comp",
-    "OpenGA.hasDerivAt_totalRiemannianVolume"
+    "OpenGA.hasDerivAt_totalRiemannianVolume",
+    "Riemannian.RiemannianMetric.measure_geodesicBall_pos",
+    "Riemannian.RiemannianMetric.isOpen_geodesicBall",
+    "OpenGA_MeasuredReferenceBall",
+    "OpenGA_MeasuredSurgeryComparisonData",
+    "OpenGA.MeasuredReferenceBall.anchor_pos",
+    "OpenGA.nonempty_surgeryComparisonProcess_of_measuredData",
+    "PoincareFormalization.measured_surgery_data_of_not_homeomorph_sphere",
+    "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology"
   ]
 }

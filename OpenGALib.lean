@@ -6,8 +6,11 @@ import OpenGALib.Analysis.SurgeryComparison
 import OpenGALib.Analysis.ScalarLowerBound
 import OpenGALib.Analysis.WidthExtinction
 import OpenGALib.Analysis.WidthComparison
+import OpenGALib.Analysis.Width.AreaEvolution
+import OpenGALib.Analysis.Width.SurgeryAreaEvolution
 import OpenGALib.ComparisonGeometry.CurvatureBounds
 import OpenGALib.ComparisonGeometry.Volume
+import OpenGALib.ComparisonGeometry.MeasuredSurgery
 import OpenGALib.Interoperability.BishopGromov
 import OpenGALib.Interoperability.DifferentialGeometry
 import OpenGALib.Interoperability.RicciFlow
