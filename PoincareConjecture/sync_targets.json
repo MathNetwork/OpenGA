@@ -142,6 +142,11 @@
     "OpenGA.MeasuredReferenceBall.anchor_pos",
     "OpenGA.nonempty_surgeryComparisonProcess_of_measuredData",
     "PoincareFormalization.measured_surgery_data_of_not_homeomorph_sphere",
-    "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology"
+    "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology",
+    "OpenGA_WidthAreaEvolutionData",
+    "OpenGA_SurgeryAreaEvolutionData",
+    "OpenGA.nonempty_widthComparisonData_of_areaEvolution",
+    "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution",
+    "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology"
   ]
 }

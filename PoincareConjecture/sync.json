@@ -123,7 +123,9 @@
     "OpenGA.energyDensity_basis_independent": "1e7c607c-776e-41d3-8819-54cfe0543e69",
     "OpenGA.exists_event_free_partition": "2afae5fd-c4e2-4544-b37b-e819211739f1",
     "OpenGA.hasDerivAt_totalRiemannianVolume": "bce7eaf0-0d3d-4d1e-b6d5-9a0d2546cdf2",
+    "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution": "dfed080b-d445-470f-b001-e424b16b4b13",
     "OpenGA.nonempty_surgeryComparisonProcess_of_measuredData": "12c97728-18f8-426d-b7b0-502a28c7fb99",
+    "OpenGA.nonempty_widthComparisonData_of_areaEvolution": "547e3663-8069-406b-925c-acdf272db811",
     "OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
     "OpenGA_EuclideanVarifold": "0ce91510-bed6-4687-9d9a-59db49ac32c1",
     "OpenGA_ImmersedMetric": "71d6823a-2014-4ec2-8a21-0f6e3cdb3232",
@@ -132,11 +134,14 @@
     "OpenGA_ParametrizedVarifold": "6f457e50-d41f-4c21-b797-27b9539b003e",
     "OpenGA_RadialSurgeryVolumeBudget": "7b53cb40-bcab-4693-b755-615a06d5fb54",
     "OpenGA_SurfaceArea": "0e220955-5806-447e-b322-843240f3f915",
+    "OpenGA_SurgeryAreaEvolutionData": "74823526-a4ee-4cf1-844c-2fa50e923d38",
     "OpenGA_SurgeryComparisonProcess": "c76baf4f-4a85-4508-8e03-574d04648ce3",
     "OpenGA_UnorientedGrassmannian": "58b2081d-b550-4dfd-8504-7f8003d3c681",
     "OpenGA_VarifoldConvergence": "bfa7b976-aa93-4a5f-bd79-b99b58741eeb",
     "OpenGA_WeightedMapVarifold": "5d21e64d-c602-43dc-9943-7d91074dec76",
+    "OpenGA_WidthAreaEvolutionData": "e3bc03e8-d36a-4cb4-8941-cad17fa54760",
     "OrthonormalBasis.sum_apply_diagonal_invariant": "a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784",
+    "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology": "8767fd8d-2074-447d-a515-b7382081a8f6",
     "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
     "PoincareFormalization.measured_surgery_data_of_not_homeomorph_sphere": "fc6d603d-ee71-4320-8e35-b9967dd105ae",
     "PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere": "0347aa7b-4f24-4106-873e-c9b21fd9169f",
@@ -1768,6 +1773,51 @@
         "submission_id": "71848f9c-cbf5-4bd4-b885-8d7bee329480"
       }
     ],
+    "547e3663-8069-406b-925c-acdf272db811": [
+      {
+        "children": [
+          {
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "status": "Proved",
+            "theorem_id": "d81e3640-8579-4396-babb-69edac82be33",
+            "theorem_name": "OpenGA.integral_areaDensity_le_energyDensity",
+            "theorem_title": "Area-energy comparison for finite-energy vector fields"
+          },
+          {
+            "definition_id": "e3bc03e8-d36a-4cb4-8941-cad17fa54760",
+            "definition_name": "OpenGA_WidthAreaEvolutionData",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 1,
+            "theorem_title": "Uniform area evolution for width comparison"
+          }
+        ],
+        "created_at": "2026-09-10T21:40:59.320831+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": "3565c8c8-a1a0-47ca-b01c-17bdbcdf6e3d"
+      },
+      {
+        "children": [
+          {
+            "definition_id": "e3bc03e8-d36a-4cb4-8941-cad17fa54760",
+            "definition_name": "OpenGA_WidthAreaEvolutionData",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "Uniform area evolution for width comparison"
+          }
+        ],
+        "created_at": null,
+        "created_by": null,
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": null
+      }
+    ],
     "58a8c735-04e5-4c94-afef-0b03d5d80e0a": [
       {
         "children": [
@@ -1846,6 +1896,33 @@
         "deprecated_at": null,
         "deprecated_by": null,
         "submission_id": null
+      },
+      {
+        "children": [
+          {
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "status": "Open",
+            "theorem_id": "8767fd8d-2074-447d-a515-b7382081a8f6",
+            "theorem_name": "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology",
+            "theorem_title": "Construct surgery topology with uniform area evolution"
+          },
+          {
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 1,
+            "status": "Proved",
+            "theorem_id": "dfed080b-d445-470f-b001-e424b16b4b13",
+            "theorem_name": "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution",
+            "theorem_title": "Construct measured surgery comparison from area evolution"
+          }
+        ],
+        "created_at": "2026-09-10T21:46:57.709972+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": "f82f6ab1-1244-450b-b0f9-947f5d6009dd"
       }
     ],
     "5eccd9f0-0ef7-4638-b3c3-faf6f10a1245": [
@@ -2536,6 +2613,33 @@
             "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
             "ordinal": 11,
             "theorem_title": "The Ricci tensor traced on an immersed surface"
+          }
+        ],
+        "created_at": null,
+        "created_by": null,
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": null
+      }
+    ],
+    "8767fd8d-2074-447d-a515-b7382081a8f6": [
+      {
+        "children": [
+          {
+            "definition_id": "74823526-a4ee-4cf1-844c-2fa50e923d38",
+            "definition_name": "OpenGA_SurgeryAreaEvolutionData",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "Surgery profiles with uniform area evolution"
+          },
+          {
+            "definition_id": "619035ff-1499-4934-8c9f-89230aeafd54",
+            "definition_name": "OpenGA_ExtinctionWidthControl",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 1,
+            "theorem_title": "Uniform width control of nonempty component slices"
           }
         ],
         "created_at": null,
@@ -3805,6 +3909,51 @@
         "submission_id": null
       }
     ],
+    "dfed080b-d445-470f-b001-e424b16b4b13": [
+      {
+        "children": [
+          {
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "status": "Proved",
+            "theorem_id": "547e3663-8069-406b-925c-acdf272db811",
+            "theorem_name": "OpenGA.nonempty_widthComparisonData_of_areaEvolution",
+            "theorem_title": "Uniform area derivatives imply width comparison"
+          },
+          {
+            "definition_id": "74823526-a4ee-4cf1-844c-2fa50e923d38",
+            "definition_name": "OpenGA_SurgeryAreaEvolutionData",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 1,
+            "theorem_title": "Surgery profiles with uniform area evolution"
+          }
+        ],
+        "created_at": "2026-09-10T21:43:20.048722+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": "be48e378-6f84-445c-9616-93ba4e1e4ec1"
+      },
+      {
+        "children": [
+          {
+            "definition_id": "74823526-a4ee-4cf1-844c-2fa50e923d38",
+            "definition_name": "OpenGA_SurgeryAreaEvolutionData",
+            "deprecated_at": null,
+            "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+            "ordinal": 0,
+            "theorem_title": "Surgery profiles with uniform area evolution"
+          }
+        ],
+        "created_at": null,
+        "created_by": null,
+        "deprecated_at": null,
+        "deprecated_by": null,
+        "submission_id": null
+      }
+    ],
     "e7c52cae-9009-4e07-99f9-242d88949beb": [
       {
         "children": [
@@ -4268,11 +4417,13 @@
     "Definitions/Def_OpenGA_RadialSurgeryVolumeBudget.lean": "36434b89fceb457986f7e2c722a6d3262108e1a10ebdb42f0be5fe214f83e073",
     "Definitions/Def_OpenGA_ScalarWidthTrace.lean": "8f601ae71ec55995167ff09f845daea0707e662608f45c127642dc98a0581933",
     "Definitions/Def_OpenGA_SurfaceArea.lean": "cdb4dfef590f1a39b58a1a64f64e84f42f657dcda9ad91343ff2b091be72d634",
+    "Definitions/Def_OpenGA_SurgeryAreaEvolutionData.lean": "7cd6e5b4e62e426cf4465139c4662d86f066c227cb9ddd9c05c08d39f571a965",
     "Definitions/Def_OpenGA_SurgeryComparisonProcess.lean": "5ba3c6a7bd3c2360125eb754009e8698000043fb5c497db8be6d00d6a252e153",
     "Definitions/Def_OpenGA_SurgeryTopologyEvolution.lean": "b6ec59174acb352cb61ba878aa52f93a65471db0a7453d585bb5cf68be1d5d25",
     "Definitions/Def_OpenGA_UnorientedGrassmannian.lean": "1b5f6cbde689059852db3d8b0cd7c2890ce8a558b06dfcddd85cb97474d0ba36",
     "Definitions/Def_OpenGA_VarifoldConvergence.lean": "1e2d1177855ee77501bc7275454b088dc6841bbac175b2c2f633f908b8af9ff2",
     "Definitions/Def_OpenGA_WeightedMapVarifold.lean": "0f2128c68b1ec3510541c9721fce85fcb611e1b227eb5815cc87e513cbcbf043",
+    "Definitions/Def_OpenGA_WidthAreaEvolutionData.lean": "c9783c7797328bb8d92107b1ed0cce93479180fcc7f447198d5ee4417867210e",
     "Definitions/Def_OpenGA_WidthComparisonData.lean": "9a8c33f6132b66ab7cc3dd693b644b140b04c87c08bf140e8db81b160e0f5488",
     "Definitions/Def_OpenGA_WidthComparisonTrace.lean": "6713d3f63eea5cc92c91b8639ffef711ec0dbd81a14f5da53003796d465b9bb8",
     "Definitions/Def_OpenGA_WidthExtinctionTime.lean": "a02f23e506357ca800daf7629864e60452ffc1098d47aabd6c80630a9a451cf1",
@@ -4347,10 +4498,13 @@
     "Solutions/Sol_OpenGA_integral_areaDensity_eq_energyDensity_iff_01167772943a4c75ab159f7b235777a8.lean": "9142fa4bbcfa3f67405caf7e279e1fd5316c8d2a681b195cdcfe2e676aa77456",
     "Solutions/Sol_OpenGA_integral_areaDensity_le_energyDensity_096644e20f0145df975241d89decd664.lean": "e7044f4473b40bbe1b6c33341b84c9756e218eef8b867e49b5954023ac90b866",
     "Solutions/Sol_OpenGA_le_width_deadline_across_downward_jumps_f0552af4769d4fe48754b9e01fd5718b.lean": "aeb6b786fd328e52c6be60acb2cf0cd441a9ee2595df316b1bc2382521512a08",
+    "Solutions/Sol_OpenGA_nonempty_measuredSurgeryComparisonData_of_areaEvolution_be48e3786f84445c961693ba4e1e4ec1.lean": "653268b14090834ba6e4088f0725557501ecb9c8b529df197e992aee37bbd774",
     "Solutions/Sol_OpenGA_nonempty_surgeryComparisonProcess_of_measuredData_b92e1354af224965bb89ce5bb8c772db.lean": "1c7052e0351759fc07bfda6505f5546916b8d438d2e0fbc99a58ee329709e4d5",
+    "Solutions/Sol_OpenGA_nonempty_widthComparisonData_of_areaEvolution_3565c8c8a1a047cab01c17bdbcdf6e3d.lean": "ea38d5a8d86b75b0a647d738e78feeaaae3ca21317270eea80c868c074929a0d",
     "Solutions/Sol_OpenGA_nonempty_widthComparisonTrace_of_surgeryComparisonProcess_7698ef558ed64ed1a26df2854cf4ee04.lean": "6d216365e277eb8f413b1a33fe47d22d1c8fb7c6bbc702457c59581005abe631",
     "Solutions/Sol_OpenGA_scalar_lower_bound_across_upward_jumps_6d178906611948c0b6720f3881b70643.lean": "e627dd2d5f006bb2bc42732cee611d2851a6e45bf399c55aa839ce1c9d093348",
     "Solutions/Sol_OrthonormalBasis_sum_apply_diagonal_invariant_98c16d588c4b4ec5aa867a1af0257775.lean": "5f0a22543750f96ef79fda02d9762ef353a30905c2b00358238adfa1258a7a7c",
+    "Solutions/Sol_PoincareFormalization_ExtinctionEndgame_exists_measured_surgery_topology_f82f6ab11244450bb0f9947f5d6009dd.lean": "7a480ff62988c77bed1f5afb1d090c9b8b3a2283710f87d3b57addafc79671aa",
     "Solutions/Sol_PoincareFormalization_ExtinctionEndgame_exists_width_controlled_surgery_topology_870e3a5284b84f258babe2378fc18cc8.lean": "3a5e12d69b66e65e4957d134aa63c8cf67f7381ed1b559412d518ec4a82ff300",
     "Solutions/Sol_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_standard_decomposition_a63d8d8d38244e3192a575d2e263bf09.lean": "e7a5a90fd3863cc8082641fdeedc7d9a4006816b97be1776851a8a2d60ebdf02",
     "Solutions/Sol_PoincareFormalization_covering_is_homeomorph_bbe6fec01a124ebabb852c00ebf62342.lean": "d5676b60bfa2501caa3f404c0f8c437605939295fb56fe7133b901ada89c51d2",
@@ -4435,10 +4589,13 @@
     "Theorems/Thm_OpenGA_integral_areaDensity_eq_energyDensity_iff.lean": "2dff317470d51ba09f2a6213a5c81e0faf71209dd37bc53858ee967f0f322c83",
     "Theorems/Thm_OpenGA_integral_areaDensity_le_energyDensity.lean": "2b39298ae34637e1a5caef96635defee125dc41f104cce140f0fb7afa0a458d6",
     "Theorems/Thm_OpenGA_le_width_deadline_across_downward_jumps.lean": "1ad76d5518353e95cdc3642b2b18f662713c07684737d2ed603b3b5f81519662",
+    "Theorems/Thm_OpenGA_nonempty_measuredSurgeryComparisonData_of_areaEvolution.lean": "cbc108aa77416c0d59b1a9dfa0212852a4750fa579db88d55a99cae7379b383d",
     "Theorems/Thm_OpenGA_nonempty_surgeryComparisonProcess_of_measuredData.lean": "164f53beb893413e79dba78eb6530e6d1623b4bdf4ddb2891f24b535dad7946f",
+    "Theorems/Thm_OpenGA_nonempty_widthComparisonData_of_areaEvolution.lean": "be7686e4667974e7bcd6984d33e4944fd72334a0215d1e7849f3b83b6db34178",
     "Theorems/Thm_OpenGA_nonempty_widthComparisonTrace_of_surgeryComparisonProcess.lean": "6244ee849226d27a538c73bb47d8c38f7574b949f49dbd879579f01b7c307a3f",
     "Theorems/Thm_OpenGA_scalar_lower_bound_across_upward_jumps.lean": "6ea88e0e428666de1c25fe065c7a1936431824199ce263ee52e7d24c1dd52621",
     "Theorems/Thm_OrthonormalBasis_sum_apply_diagonal_invariant.lean": "7a72326cf7012a9ba11972e3ab31b0111f3d4808e5e60eeea7624629c3248ae7",
+    "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_exists_area_evolution_surgery_topology.lean": "490777eb157bd4919b4b7a618c669a35d9647489aa2b9cc1d2215627cb1c94bd",
     "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_exists_measured_surgery_topology.lean": "7d92b16ca9fd813c62d9217e50e51adf0c170c7e5967c0dbb245fe0d9af70cd0",
     "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_exists_width_controlled_surgery_topology.lean": "1447851f3c52c15e4c4a0e72727ad0f95c1e521e54f89583ed53b5f79251dd85",
     "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_nonempty_homeomorph_sphere_of_connected_sum_spheres.lean": "d8fd0cdbf946bb3ca12e4e84fdae04bb781de174a3e7c299778e273a8701362c",
@@ -4626,6 +4783,21 @@
       },
       {
         "kind": "sketch",
+        "source": "8767fd8d-2074-447d-a515-b7382081a8f6",
+        "target": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd"
+      },
+      {
+        "kind": "sketch",
+        "source": "dfed080b-d445-470f-b001-e424b16b4b13",
+        "target": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd",
+        "target": "5d3926a9-6dc7-49d7-aa52-a110fdf94291"
+      },
+      {
+        "kind": "sketch",
         "source": "16d46789-a853-4a33-a4a3-4134fe549c82",
         "target": "sketch-f49a1f88-a5c8-43b7-a45a-5768ddb274e8"
       },
@@ -4763,6 +4935,36 @@
         "kind": "sketch",
         "source": "sketch-ea395ce5-9ba3-4bfe-b7e6-bb18563f2f6f",
         "target": "5eccd9f0-0ef7-4638-b3c3-faf6f10a1245"
+      },
+      {
+        "kind": "sketch",
+        "source": "547e3663-8069-406b-925c-acdf272db811",
+        "target": "sketch-be48e378-6f84-445c-9616-93ba4e1e4ec1"
+      },
+      {
+        "kind": "sketch",
+        "source": "74823526-a4ee-4cf1-844c-2fa50e923d38",
+        "target": "sketch-be48e378-6f84-445c-9616-93ba4e1e4ec1"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-be48e378-6f84-445c-9616-93ba4e1e4ec1",
+        "target": "dfed080b-d445-470f-b001-e424b16b4b13"
+      },
+      {
+        "kind": "sketch",
+        "source": "d81e3640-8579-4396-babb-69edac82be33",
+        "target": "sketch-3565c8c8-a1a0-47ca-b01c-17bdbcdf6e3d"
+      },
+      {
+        "kind": "sketch",
+        "source": "e3bc03e8-d36a-4cb4-8941-cad17fa54760",
+        "target": "sketch-3565c8c8-a1a0-47ca-b01c-17bdbcdf6e3d"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-3565c8c8-a1a0-47ca-b01c-17bdbcdf6e3d",
+        "target": "547e3663-8069-406b-925c-acdf272db811"
       },
       {
         "kind": "sketch",
@@ -4931,6 +5133,16 @@
       },
       {
         "kind": "structural",
+        "source": "619035ff-1499-4934-8c9f-89230aeafd54",
+        "target": "8767fd8d-2074-447d-a515-b7382081a8f6"
+      },
+      {
+        "kind": "structural",
+        "source": "74823526-a4ee-4cf1-844c-2fa50e923d38",
+        "target": "8767fd8d-2074-447d-a515-b7382081a8f6"
+      },
+      {
+        "kind": "structural",
         "source": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
         "target": "c76baf4f-4a85-4508-8e03-574d04648ce3"
       },
@@ -4946,8 +5158,28 @@
       },
       {
         "kind": "structural",
+        "source": "74823526-a4ee-4cf1-844c-2fa50e923d38",
+        "target": "dfed080b-d445-470f-b001-e424b16b4b13"
+      },
+      {
+        "kind": "structural",
         "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
         "target": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b"
+      },
+      {
+        "kind": "structural",
+        "source": "e3bc03e8-d36a-4cb4-8941-cad17fa54760",
+        "target": "547e3663-8069-406b-925c-acdf272db811"
+      },
+      {
+        "kind": "structural",
+        "source": "0f9d3411-7856-4ef6-b615-2714c6e63615",
+        "target": "74823526-a4ee-4cf1-844c-2fa50e923d38"
+      },
+      {
+        "kind": "structural",
+        "source": "e3bc03e8-d36a-4cb4-8941-cad17fa54760",
+        "target": "74823526-a4ee-4cf1-844c-2fa50e923d38"
       },
       {
         "kind": "structural",
@@ -5058,6 +5290,11 @@
         "kind": "structural",
         "source": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
         "target": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb"
+      },
+      {
+        "kind": "structural",
+        "source": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+        "target": "e3bc03e8-d36a-4cb4-8941-cad17fa54760"
       },
       {
         "kind": "structural",
@@ -8309,6 +8546,31 @@
       },
       {
         "audits": [],
+        "created_at": "2026-09-10T21:40:56.2815+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.nonempty_widthComparisonData_of_areaEvolution {width : ℝ → ℝ} {time scalar : ℝ}\n    (D : WidthAreaEvolutionData width time scalar) :\n    Nonempty (WidthComparisonData width time scalar) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Integrate the derivative upper bound on a common short interval using the mean-value inequality. The extra term given by the initial area gap divided by the interval length consumes at most that gap. The area-energy inequality bounds the initial slice supremum by the finite energy cap. Taking the supremum of the evolved slices gives exactly the short-time area comparison required by WidthComparisonData. The common interval and cutoff are essential hypotheses; pointwise variation of a single surface is insufficient.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_WidthAreaEvolutionData\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\nopen OpenGA\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+        "status": "Proved",
+        "tags": [
+          "finite-extinction",
+          "width"
+        ],
+        "theorem_id": "547e3663-8069-406b-925c-acdf272db811",
+        "theorem_name": "OpenGA.nonempty_widthComparisonData_of_areaEvolution",
+        "theorem_title": "Uniform area derivatives imply width comparison",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
         "created_at": "2026-09-09T17:42:34.535496+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
         "created_by_username": "Xinze-Li-Moqian",
@@ -8461,6 +8723,32 @@
         "theorem_id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
         "theorem_name": "OpenGA.scalar_lower_bound_across_upward_jumps",
         "theorem_title": "Scalar lower bound across upward jumps",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-10T21:40:52.322434+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "import Definitions.Def_OpenGA_WidthAreaEvolutionData\nimport Definitions.Def_OpenGA_MeasuredSurgeryComparisonData\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\nstructure SurgeryAreaEvolutionData (initialWidth finalTime : ℝ) where\n  volumeControl : MeasuredRadialSurgeryData\n  events_inside : volumeControl.events ⊆ Ioo 0 finalTime\n  finalTime_pos : 0 < finalTime\n  scalar : ℝ → ℝ → ℝ\n  width : ℝ → ℝ → ℝ\n  scalar_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (scalar a) (Icc a b)\n  width_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (width a) (Icc a b)\n  scalar_initial : -6 ≤ scalar 0 0\n  width_initial : width 0 0 ≤ initialWidth\n  width_nonneg : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Icc a b, 0 ≤ width a t\n  scalar_slope : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, ∀ q : ℝ, q < (2 / 3 : ℝ) * (scalar a t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar a) t s\n  area_evolution : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, Nonempty (WidthAreaEvolutionData (width a) t (scalar a t))\n  scalar_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → scalar a b ≤ scalar b b\n  width_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → width b b ≤ width a b\n\n\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Measured radial surgery data and scalar/width profiles, with uniform area-evolution data on each event-free interval. The width comparison inequality is not assumed: it is obtained by integrating the area derivative estimates. Radial comparison, the removed-volume budget, scalar estimates, and jump inequalities remain explicit hypotheses.",
+        "node_type": "theorem",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+        "status": "Definition",
+        "tags": [
+          "finite-extinction",
+          "geometric-analysis",
+          "width"
+        ],
+        "theorem_id": "74823526-a4ee-4cf1-844c-2fa50e923d38",
+        "theorem_name": "OpenGA_SurgeryAreaEvolutionData",
+        "theorem_title": "Surgery profiles with uniform area evolution",
         "vote_count": 0
       },
       {
@@ -8634,6 +8922,31 @@
         "theorem_id": "868ac3ab-4452-48dd-81f3-278079cdf42c",
         "theorem_name": "OpenGA_WidthComparisonTrace",
         "theorem_title": "Width traces with area-energy comparison witnesses",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-10T21:41:32.286302+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology\n    (M : ClosedThreeManifold.{u}) [SimplyConnectedSpace M] :\n    ∃ (E : SurgeryTopologyEvolution M) (W : ℝ), 0 ≤ W ∧\n      ∀ T : ℝ, 0 < T → E.components T ≠ [] →\n        Nonempty (SurgeryAreaEvolutionData W T) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For every closed simply connected topological three-manifold, construct a surgery topology evolution and one nonnegative initial width bound. For each positive horizon with nonempty final slice, supply surgery area-evolution data. The remaining geometric tasks include the admissible sweepout families, their common short-time area estimates, and the actual surgery and radial volume hypotheses. This open construction refines the measured-data input to the active extinction endgame.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_SurgeryAreaEvolutionData\nimport Definitions.Def_OpenGA_ExtinctionWidthControl\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\nopen OpenGA\nuniverse u\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+        "status": "Open",
+        "tags": [
+          "finite-extinction",
+          "width"
+        ],
+        "theorem_id": "8767fd8d-2074-447d-a515-b7382081a8f6",
+        "theorem_name": "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology",
+        "theorem_title": "Construct surgery topology with uniform area evolution",
         "vote_count": 0
       },
       {
@@ -9058,6 +9371,57 @@
       },
       {
         "audits": [],
+        "created_at": "2026-09-10T21:43:08.060894+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution {W T : ℝ}\n    (D : SurgeryAreaEvolutionData W T) : Nonempty (MeasuredSurgeryComparisonData W T) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "At every time in each event-free interval, integrate the uniform area derivative estimates to construct the required width comparison datum. Preserve all volume, scalar, continuity, initial-value and jump conditions. This is a proved analytic adapter, not a construction of a Ricci flow with surgery.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_SurgeryAreaEvolutionData\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\nopen OpenGA\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+        "status": "Proved",
+        "tags": [
+          "finite-extinction",
+          "width"
+        ],
+        "theorem_id": "dfed080b-d445-470f-b001-e424b16b4b13",
+        "theorem_name": "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution",
+        "theorem_title": "Construct measured surgery comparison from area evolution",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-10T21:40:26.549705+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "import Definitions.Def_OpenGA_WidthComparisonData\nimport Mathlib.Analysis.Calculus.Deriv.MeanValue\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Analytic input before integrating the short-time area estimate. The same\ntime interval and sequence cutoff work for every slice. The derivative bound\nallows slices below the initial supremum to use their initial area gap;\nit does not demand negative area derivative from constant endpoint slices. -/\nstructure WidthAreaEvolutionData (width : ℝ → ℝ) (time scalar : ℝ) where\n  realizer : FiniteEnergyPair\n  realizer_conformal : realizer.IsConformal\n  realized_energy : realizer.energy = width time\n  competitor : ℕ → Icc (0 : ℝ) 1 → FiniteEnergyPair\n  energy_cap : ℕ → ℝ\n  energy_le_cap : ∀ j p, (competitor j p).energy ≤ energy_cap j\n  cap_tendsto : Tendsto energy_cap atTop (𝓝 (width time))\n  area : ℕ → Icc (0 : ℝ) 1 → ℝ → ℝ\n  area_initial : ∀ j p, area j p time = (competitor j p).area\n  uniform_evolution : ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧ ∃ start : ℕ,\n    ∀ j ≥ start,\n      (∀ s ∈ Ioo time (time + δ), width s ≤ ⨆ p, area j p s) ∧\n      (∀ p, ContinuousOn (area j p) (Icc time (time + δ))) ∧\n      (∀ p s, s ∈ Ioo time (time + δ) → DifferentiableAt ℝ (area j p) s) ∧\n      (∀ p s, s ∈ Ioo time (time + δ) →\n        deriv (area j p) s ≤ -(4 * Real.pi) - scalar / 2 * realizer.area + ε +\n          ((⨆ q, (competitor j q).area) - (competitor j p).area) / δ)\n\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Finite-energy comparison fields, a conformal limiting realizer, and time-dependent real area profiles. The energy caps converge to the initial width. For every positive error, one time interval and one sequence cutoff work for every slice: the evolved family bounds the width and each area derivative is at most $-4π-R A_*/2+ε+(A_j-A_{j,p})/δ$, where $A_j$ is the initial slice supremum. The area gap allows low-area slices to have nonnegative derivative. These are analytic data; their realization by geometric sweepouts and the uniform derivative estimate are separate open obligations.",
+        "node_type": "theorem",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+        "status": "Definition",
+        "tags": [
+          "finite-extinction",
+          "geometric-analysis",
+          "width"
+        ],
+        "theorem_id": "e3bc03e8-d36a-4cb4-8941-cad17fa54760",
+        "theorem_name": "OpenGA_WidthAreaEvolutionData",
+        "theorem_title": "Uniform area evolution for width comparison",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
         "created_at": "2026-09-09T21:06:25.491149+00:00",
         "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
         "created_by_username": "Xinze-Li-Moqian",
@@ -9225,6 +9589,18 @@
       },
       {
         "child_count": 2,
+        "created_at": "2026-09-10T21:40:59.320831+00:00",
+        "deprecated_at": null,
+        "explanation": "Integrate the derivative upper bound on a common short interval using the mean-value inequality. The extra term given by the initial area gap divided by the interval length consumes at most that gap. The area-energy inequality bounds the initial slice supremum by the finite energy cap. Taking the supremum of the evolved slices gives exactly the short-time area comparison required by WidthComparisonData. The common interval and cutoff are essential hypotheses; pointwise variation of a single surface is insufficient.",
+        "node_id": "sketch-3565c8c8-a1a0-47ca-b01c-17bdbcdf6e3d",
+        "node_type": "sketch",
+        "parent_theorem_id": "547e3663-8069-406b-925c-acdf272db811",
+        "status": "ACCEPTED",
+        "submission_id": "3565c8c8-a1a0-47ca-b01c-17bdbcdf6e3d",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 2,
         "created_at": "2026-09-09T03:41:14.183826+00:00",
         "deprecated_at": null,
         "explanation": "Assume the open comparison-data construction target. It supplies one initial width bound valid for every finite horizon and a trace of scalar and width profiles on each such horizon. Keep its partition, profiles, initial bounds, continuity and jump inequalities.\n\nAt each interior time the proved area-energy comparison theorem gives an eventual upper bound on the right-hand difference quotients of the width. The real right-neighborhood filter is nontrivial, so an eventual bound implies the frequently occurring bound required by ScalarWidthTrace. This fills its remaining width slope field.\n\nThe conclusion remains conditional on constructing the geometric comparison data; neither this reduction nor the analytic comparison theorem proves the Poincare conjecture independently.",
@@ -9333,6 +9709,18 @@
       },
       {
         "child_count": 2,
+        "created_at": "2026-09-10T21:43:20.048722+00:00",
+        "deprecated_at": null,
+        "explanation": "At every time in each event-free interval, integrate the uniform area derivative estimates to construct the required width comparison datum. Preserve all volume, scalar, continuity, initial-value and jump conditions. This is a proved analytic adapter, not a construction of a Ricci flow with surgery.",
+        "node_id": "sketch-be48e378-6f84-445c-9616-93ba4e1e4ec1",
+        "node_type": "sketch",
+        "parent_theorem_id": "dfed080b-d445-470f-b001-e424b16b4b13",
+        "status": "ACCEPTED",
+        "submission_id": "be48e378-6f84-445c-9616-93ba4e1e4ec1",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 2,
         "created_at": "2026-09-09T18:19:53.352804+00:00",
         "deprecated_at": null,
         "explanation": "Apply the proved normalized radial integral comparison from the removal radius to the reference radius. Combine the anchor lower bound with containment in the removed material, then clear the positive finite model-volume denominator. This is a conditional analytic consequence; geometric containment and the anchor are inputs.",
@@ -9377,6 +9765,18 @@
         "parent_theorem_id": "945e8722-bd96-4eba-a6eb-6458fadeea7a",
         "status": "ACCEPTED",
         "submission_id": "f49a1f88-a5c8-43b7-a45a-5768ddb274e8",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-10T21:46:57.709972+00:00",
+        "deprecated_at": null,
+        "explanation": "Keep the existing measured-surgery existence statement unchanged. The open area-evolution construction supplies data at each nonempty horizon; the proved integration adapter produces the required measured comparison data. The parent and the Poincare theorem remain open.",
+        "node_id": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd",
+        "node_type": "sketch",
+        "parent_theorem_id": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+        "status": "SKETCH_ACCEPTED",
+        "submission_id": "f82f6ab1-1244-450b-b0f9-947f5d6009dd",
         "username": "Xinze-Li-Moqian"
       },
       {
@@ -14373,6 +14773,29 @@
       "visibility": "public",
       "vote_count": 0
     },
+    "547e3663-8069-406b-925c-acdf272db811": {
+      "audits": [],
+      "created_at": "2026-09-10T21:40:56.2815+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem OpenGA.nonempty_widthComparisonData_of_areaEvolution {width : ℝ → ℝ} {time scalar : ℝ}\n    (D : WidthAreaEvolutionData width time scalar) :\n    Nonempty (WidthComparisonData width time scalar) := by sorry",
+      "local_path": "Theorems/Thm_OpenGA_nonempty_widthComparisonData_of_areaEvolution.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Integrate the derivative upper bound on a common short interval using the mean-value inequality. The extra term given by the initial area gap divided by the interval length consumes at most that gap. The area-energy inequality bounds the initial slice supremum by the finite energy cap. Taking the supremum of the evolved slices gives exactly the short-time area comparison required by WidthComparisonData. The common interval and cutoff are essential hypotheses; pointwise variation of a single surface is insufficient.",
+      "preamble": "import Definitions.Def_OpenGA_WidthAreaEvolutionData\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\nopen OpenGA\n",
+      "readback": null,
+      "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+      "status": "Proved",
+      "tags": [
+        "finite-extinction",
+        "width"
+      ],
+      "theorem_id": "547e3663-8069-406b-925c-acdf272db811",
+      "theorem_name": "OpenGA.nonempty_widthComparisonData_of_areaEvolution",
+      "theorem_title": "Uniform area derivatives imply width comparison",
+      "visibility": "public",
+      "vote_count": 0
+    },
     "58a8c735-04e5-4c94-afef-0b03d5d80e0a": {
       "audits": [],
       "created_at": "2026-09-09T17:42:34.535496+00:00",
@@ -14916,6 +15339,30 @@
       "visibility": "public",
       "vote_count": 0
     },
+    "74823526-a4ee-4cf1-844c-2fa50e923d38": {
+      "created_at": "2026-09-10T21:40:52.322434+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Definitions.Def_OpenGA_WidthAreaEvolutionData\nimport Definitions.Def_OpenGA_MeasuredSurgeryComparisonData\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\nstructure SurgeryAreaEvolutionData (initialWidth finalTime : ℝ) where\n  volumeControl : MeasuredRadialSurgeryData\n  events_inside : volumeControl.events ⊆ Ioo 0 finalTime\n  finalTime_pos : 0 < finalTime\n  scalar : ℝ → ℝ → ℝ\n  width : ℝ → ℝ → ℝ\n  scalar_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (scalar a) (Icc a b)\n  width_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (width a) (Icc a b)\n  scalar_initial : -6 ≤ scalar 0 0\n  width_initial : width 0 0 ≤ initialWidth\n  width_nonneg : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Icc a b, 0 ≤ width a t\n  scalar_slope : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, ∀ q : ℝ, q < (2 / 3 : ℝ) * (scalar a t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar a) t s\n  area_evolution : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, Nonempty (WidthAreaEvolutionData (width a) t (scalar a t))\n  scalar_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → scalar a b ≤ scalar b b\n  width_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → width b b ≤ width a b\n\n\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "local_path": "Definitions/Def_OpenGA_SurgeryAreaEvolutionData.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Measured radial surgery data and scalar/width profiles, with uniform area-evolution data on each event-free interval. The width comparison inequality is not assumed: it is obtained by integrating the area derivative estimates. Radial comparison, the removed-volume budget, scalar estimates, and jump inequalities remain explicit hypotheses.",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+      "status": "Definition",
+      "tags": [
+        "finite-extinction",
+        "geometric-analysis",
+        "width"
+      ],
+      "theorem_id": "74823526-a4ee-4cf1-844c-2fa50e923d38",
+      "theorem_name": "OpenGA_SurgeryAreaEvolutionData",
+      "theorem_title": "Surgery profiles with uniform area evolution",
+      "visibility": "public",
+      "vote_count": 0
+    },
     "753898d0-5818-47dd-b4fb-a5012bc9ec76": {
       "audits": [],
       "created_at": "2026-09-10T16:58:53.15672+00:00",
@@ -15273,6 +15720,29 @@
       "theorem_id": "868ac3ab-4452-48dd-81f3-278079cdf42c",
       "theorem_name": "OpenGA_WidthComparisonTrace",
       "theorem_title": "Width traces with area-energy comparison witnesses",
+      "visibility": "public",
+      "vote_count": 0
+    },
+    "8767fd8d-2074-447d-a515-b7382081a8f6": {
+      "audits": [],
+      "created_at": "2026-09-10T21:41:32.286302+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology\n    (M : ClosedThreeManifold.{u}) [SimplyConnectedSpace M] :\n    ∃ (E : SurgeryTopologyEvolution M) (W : ℝ), 0 ≤ W ∧\n      ∀ T : ℝ, 0 < T → E.components T ≠ [] →\n        Nonempty (SurgeryAreaEvolutionData W T) := by sorry",
+      "local_path": "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_exists_area_evolution_surgery_topology.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For every closed simply connected topological three-manifold, construct a surgery topology evolution and one nonnegative initial width bound. For each positive horizon with nonempty final slice, supply surgery area-evolution data. The remaining geometric tasks include the admissible sweepout families, their common short-time area estimates, and the actual surgery and radial volume hypotheses. This open construction refines the measured-data input to the active extinction endgame.",
+      "preamble": "import Definitions.Def_OpenGA_SurgeryAreaEvolutionData\nimport Definitions.Def_OpenGA_ExtinctionWidthControl\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\nopen OpenGA\nuniverse u\n",
+      "readback": null,
+      "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+      "status": "Open",
+      "tags": [
+        "finite-extinction",
+        "width"
+      ],
+      "theorem_id": "8767fd8d-2074-447d-a515-b7382081a8f6",
+      "theorem_name": "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology",
+      "theorem_title": "Construct surgery topology with uniform area evolution",
       "visibility": "public",
       "vote_count": 0
     },
@@ -16862,6 +17332,53 @@
       "visibility": "public",
       "vote_count": 0
     },
+    "dfed080b-d445-470f-b001-e424b16b4b13": {
+      "audits": [],
+      "created_at": "2026-09-10T21:43:08.060894+00:00",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "formal_statement": "theorem OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution {W T : ℝ}\n    (D : SurgeryAreaEvolutionData W T) : Nonempty (MeasuredSurgeryComparisonData W T) := by sorry",
+      "local_path": "Theorems/Thm_OpenGA_nonempty_measuredSurgeryComparisonData_of_areaEvolution.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "At every time in each event-free interval, integrate the uniform area derivative estimates to construct the required width comparison datum. Preserve all volume, scalar, continuity, initial-value and jump conditions. This is a proved analytic adapter, not a construction of a Ricci flow with surgery.",
+      "preamble": "import Definitions.Def_OpenGA_SurgeryAreaEvolutionData\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\nopen OpenGA\n",
+      "readback": null,
+      "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+      "status": "Proved",
+      "tags": [
+        "finite-extinction",
+        "width"
+      ],
+      "theorem_id": "dfed080b-d445-470f-b001-e424b16b4b13",
+      "theorem_name": "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution",
+      "theorem_title": "Construct measured surgery comparison from area evolution",
+      "visibility": "public",
+      "vote_count": 0
+    },
+    "e3bc03e8-d36a-4cb4-8941-cad17fa54760": {
+      "created_at": "2026-09-10T21:40:26.549705+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Definitions.Def_OpenGA_WidthComparisonData\nimport Mathlib.Analysis.Calculus.Deriv.MeanValue\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Analytic input before integrating the short-time area estimate. The same\ntime interval and sequence cutoff work for every slice. The derivative bound\nallows slices below the initial supremum to use their initial area gap;\nit does not demand negative area derivative from constant endpoint slices. -/\nstructure WidthAreaEvolutionData (width : ℝ → ℝ) (time scalar : ℝ) where\n  realizer : FiniteEnergyPair\n  realizer_conformal : realizer.IsConformal\n  realized_energy : realizer.energy = width time\n  competitor : ℕ → Icc (0 : ℝ) 1 → FiniteEnergyPair\n  energy_cap : ℕ → ℝ\n  energy_le_cap : ∀ j p, (competitor j p).energy ≤ energy_cap j\n  cap_tendsto : Tendsto energy_cap atTop (𝓝 (width time))\n  area : ℕ → Icc (0 : ℝ) 1 → ℝ → ℝ\n  area_initial : ∀ j p, area j p time = (competitor j p).area\n  uniform_evolution : ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧ ∃ start : ℕ,\n    ∀ j ≥ start,\n      (∀ s ∈ Ioo time (time + δ), width s ≤ ⨆ p, area j p s) ∧\n      (∀ p, ContinuousOn (area j p) (Icc time (time + δ))) ∧\n      (∀ p s, s ∈ Ioo time (time + δ) → DifferentiableAt ℝ (area j p) s) ∧\n      (∀ p s, s ∈ Ioo time (time + δ) →\n        deriv (area j p) s ≤ -(4 * Real.pi) - scalar / 2 * realizer.area + ε +\n          ((⨆ q, (competitor j q).area) - (competitor j p).area) / δ)\n\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "local_path": "Definitions/Def_OpenGA_WidthAreaEvolutionData.lean",
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Finite-energy comparison fields, a conformal limiting realizer, and time-dependent real area profiles. The energy caps converge to the initial width. For every positive error, one time interval and one sequence cutoff work for every slice: the evolved family bounds the width and each area derivative is at most $-4π-R A_*/2+ε+(A_j-A_{j,p})/δ$, where $A_j$ is the initial slice supremum. The area gap allows low-area slices to have nonnegative derivative. These are analytic data; their realization by geometric sweepouts and the uniform derivative estimate are separate open obligations.",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+      "status": "Definition",
+      "tags": [
+        "finite-extinction",
+        "geometric-analysis",
+        "width"
+      ],
+      "theorem_id": "e3bc03e8-d36a-4cb4-8941-cad17fa54760",
+      "theorem_name": "OpenGA_WidthAreaEvolutionData",
+      "theorem_title": "Uniform area evolution for width comparison",
+      "visibility": "public",
+      "vote_count": 0
+    },
     "e7c52cae-9009-4e07-99f9-242d88949beb": {
       "audits": [],
       "created_at": "2026-09-10T17:43:12.604777+00:00",
@@ -17698,6 +18215,21 @@
       "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
+    "3565c8c8-a1a0-47ca-b01c-17bdbcdf6e3d": {
+      "created_at": "2026-09-10T21:40:59.320831+00:00",
+      "deprecated_at": null,
+      "error_message": "",
+      "explanation": "Integrate the derivative upper bound on a common short interval using the mean-value inequality. The extra term given by the initial area gap divided by the interval length consumes at most that gap. The area-energy inequality bounds the initial slice supremum by the finite energy cap. Taking the supremum of the evolved slices gives exactly the short-time area comparison required by WidthComparisonData. The common interval and cutoff are essential hypotheses; pointwise variation of a single surface is insufficient.",
+      "file_path": "547e3663-8069-406b-925c-acdf272db811/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/3565c8c8-a1a0-47ca-b01c-17bdbcdf6e3d.lean",
+      "id": "3565c8c8-a1a0-47ca-b01c-17bdbcdf6e3d",
+      "local_path": "Solutions/Sol_OpenGA_nonempty_widthComparisonData_of_areaEvolution_3565c8c8a1a047cab01c17bdbcdf6e3d.lean",
+      "status": "ACCEPTED",
+      "theorem_id": "547e3663-8069-406b-925c-acdf272db811",
+      "updated_at": "2026-09-10T21:41:50.218765+00:00",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Xinze-Li-Moqian",
+      "vote_count": 0
+    },
     "379c6157-8439-4a05-93a5-f421e3a4e6ee": {
       "created_at": "2026-09-10T17:51:38.774434+00:00",
       "deprecated_at": null,
@@ -18343,6 +18875,21 @@
       "username": "salim",
       "vote_count": 1
     },
+    "be48e378-6f84-445c-9616-93ba4e1e4ec1": {
+      "created_at": "2026-09-10T21:43:20.048722+00:00",
+      "deprecated_at": null,
+      "error_message": "",
+      "explanation": "At every time in each event-free interval, integrate the uniform area derivative estimates to construct the required width comparison datum. Preserve all volume, scalar, continuity, initial-value and jump conditions. This is a proved analytic adapter, not a construction of a Ricci flow with surgery.",
+      "file_path": "dfed080b-d445-470f-b001-e424b16b4b13/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/be48e378-6f84-445c-9616-93ba4e1e4ec1.lean",
+      "id": "be48e378-6f84-445c-9616-93ba4e1e4ec1",
+      "local_path": "Solutions/Sol_OpenGA_nonempty_measuredSurgeryComparisonData_of_areaEvolution_be48e3786f84445c961693ba4e1e4ec1.lean",
+      "status": "ACCEPTED",
+      "theorem_id": "dfed080b-d445-470f-b001-e424b16b4b13",
+      "updated_at": "2026-09-10T21:46:55.174867+00:00",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Xinze-Li-Moqian",
+      "vote_count": 0
+    },
     "be7d0fdd-7cd7-42df-b7a2-98b351f35160": {
       "created_at": "2026-09-10T17:37:00.954985+00:00",
       "deprecated_at": null,
@@ -18688,6 +19235,21 @@
       "username": "Xinze-Li-Moqian",
       "vote_count": 0
     },
+    "f82f6ab1-1244-450b-b0f9-947f5d6009dd": {
+      "created_at": "2026-09-10T21:46:57.709972+00:00",
+      "deprecated_at": null,
+      "error_message": "",
+      "explanation": "Keep the existing measured-surgery existence statement unchanged. The open area-evolution construction supplies data at each nonempty horizon; the proved integration adapter produces the required measured comparison data. The parent and the Poincare theorem remain open.",
+      "file_path": "5d3926a9-6dc7-49d7-aa52-a110fdf94291/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/f82f6ab1-1244-450b-b0f9-947f5d6009dd.lean",
+      "id": "f82f6ab1-1244-450b-b0f9-947f5d6009dd",
+      "local_path": "Solutions/Sol_PoincareFormalization_ExtinctionEndgame_exists_measured_surgery_topology_f82f6ab11244450bb0f9947f5d6009dd.lean",
+      "status": "SKETCH_ACCEPTED",
+      "theorem_id": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+      "updated_at": "2026-09-10T21:48:01.775358+00:00",
+      "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Xinze-Li-Moqian",
+      "vote_count": 0
+    },
     "fa5f156d-d3f8-45b0-8007-1c1454024b80": {
       "created_at": "2026-09-10T16:59:05.256328+00:00",
       "deprecated_at": null,
@@ -18734,5 +19296,5 @@
       "vote_count": 0
     }
   },
-  "synced_at": "2026-09-10T21:32:58.788452+00:00"
+  "synced_at": "2026-09-10T21:52:24.245070+00:00"
 }
