@@ -15,7 +15,7 @@ open Set
 
 namespace OpenGA
 
-variable {P : Type*} [Nonempty P]
+variable {P : Type*}
 
 /-- The width of a real-valued energy profile, defined as its supremum. -/
 noncomputable def sweepoutWidth (energy : P → ℝ) : ℝ := ⨆ p, energy p
@@ -26,7 +26,7 @@ theorem energy_le_sweepoutWidth
   exact le_ciSup hbdd p
 
 theorem finite_sample_width_le
-    {ι : Type*} [Fintype ι] [Nonempty ι] (energy : P → ℝ)
+    {ι : Type*} [Fintype ι] [Nonempty ι] [Nonempty P] (energy : P → ℝ)
     (hbdd : BddAbove (Set.range energy)) (sample : ι → P) :
     (⨆ i, energy (sample i)) ≤ sweepoutWidth energy := by
   apply ciSup_le
