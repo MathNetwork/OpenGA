@@ -17,7 +17,9 @@ open scoped Topology
 namespace OpenGA
 
 /-- Analytic input before integrating the short-time area estimate. The same
-time interval and sequence cutoff work for every slice. -/
+time interval and sequence cutoff work for every slice. The derivative bound
+allows slices below the initial supremum to use their initial area gap;
+it does not demand negative area derivative from constant endpoint slices. -/
 structure WidthAreaEvolutionData (width : ℝ → ℝ) (time scalar : ℝ) where
   realizer : FiniteEnergyPair
   realizer_conformal : realizer.IsConformal
@@ -34,7 +36,8 @@ structure WidthAreaEvolutionData (width : ℝ → ℝ) (time scalar : ℝ) where
       (∀ p, ContinuousOn (area j p) (Icc time (time + δ))) ∧
       (∀ p s, s ∈ Ioo time (time + δ) → DifferentiableAt ℝ (area j p) s) ∧
       (∀ p s, s ∈ Ioo time (time + δ) →
-        deriv (area j p) s ≤ -(4 * Real.pi) - scalar / 2 * realizer.area + ε)
+        deriv (area j p) s ≤ -(4 * Real.pi) - scalar / 2 * realizer.area + ε +
+          ((⨆ q, (competitor j q).area) - (competitor j p).area) / δ)
 
 /-- Integrating the common derivative bound constructs the area-comparison
 field; bounded initial energies justify the real supremum over slices. -/
@@ -70,6 +73,12 @@ noncomputable def WidthAreaEvolutionData.toComparison
       time ⟨le_rfl, by linarith⟩ s ⟨hs.1.le, hs.2.le⟩ hs.1.le
     rw [D.area_initial] at hevol
     have hsup := le_ciSup hbdd p
+    have hgap : 0 ≤ ((⨆ q, (D.competitor j q).area) -
+        (D.competitor j p).area) / δ := div_nonneg (sub_nonneg.mpr hsup) hδ.le
+    have hstep : s - time ≤ δ := by linarith [hs.2]
+    have hbudget := mul_le_mul_of_nonneg_left hstep hgap
+    have hcancel := div_mul_cancel₀
+      ((⨆ q, (D.competitor j q).area) - (D.competitor j p).area) hδ.ne'
     nlinarith
 
 theorem nonempty_widthComparisonData_of_areaEvolution
