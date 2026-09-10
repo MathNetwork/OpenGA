@@ -1,5 +1,6 @@
 import OpenGALib.Analysis.Width.FiniteEnergyPair
 import OpenGALib.GeometricMeasureTheory.Varifold.Parametrization
+import OpenGALib.Analysis.AreaEnergy.LinearMap
 
 /-!
 # Energy pair of a parametrized surface
@@ -54,6 +55,25 @@ theorem pair_energy (P : ParametrizedSurfaceEnergy (F := F)) :
       (fderiv ℝ P.map x (P.basis 0)) (fderiv ℝ P.map x (P.basis 1)) := by
   exact FiniteEnergyPair.ofFields_energy
     (derivative_measurable P 0) (derivative_measurable P 1) P.energy_integrable
+
+theorem energy_integral_basis_independent
+    (map : EuclideanSpace ℝ (Fin 2) → F)
+    (region : Set (EuclideanSpace ℝ (Fin 2)))
+    (b c : OrthonormalBasis (Fin 2) ℝ (EuclideanSpace ℝ (Fin 2))) :
+    (∫ x in region, energyDensity (fderiv ℝ map x (b 0))
+      (fderiv ℝ map x (b 1))) =
+      ∫ x in region, energyDensity (fderiv ℝ map x (c 0))
+        (fderiv ℝ map x (c 1)) := by
+  have hpoint : ∀ x, energyDensity (fderiv ℝ map x (b 0))
+      (fderiv ℝ map x (b 1)) = energyDensity (fderiv ℝ map x (c 0))
+        (fderiv ℝ map x (c 1)) := by
+    intro x
+    exact energyDensity_basis_independent (fderiv ℝ map x).toLinearMap b c
+  have hae : (fun x => energyDensity (fderiv ℝ map x (b 0))
+      (fderiv ℝ map x (b 1))) =ᵐ[volume.restrict region]
+      (fun x => energyDensity (fderiv ℝ map x (c 0))
+        (fderiv ℝ map x (c 1))) := Filter.Eventually.of_forall hpoint
+  exact integral_congr_ae hae
 
 end ParametrizedSurfaceEnergy
 end OpenGA
