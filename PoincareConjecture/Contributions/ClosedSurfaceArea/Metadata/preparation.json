@@ -1,7 +1,8 @@
 {
-  "status": "dependency_graph_extracted",
+  "status": "published",
   "source_revision": "58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12",
   "target": "OpenGA.RicciFlow.hasDerivAt_area",
-  "platform_submission": null,
-  "note": "This directory contains the compiler extraction and dependency inventory. The complete area-variation export has not been generated or published. Its induced metric and local compatibility are published separately in ImmersedSurfaceMetric."
+  "platform_submission": "70fcf658-ebe3-45b4-855f-002f59adad7b",
+  "note": "The full area-variation dependency tree is published and read back. See the publication record for verified graph reachability and the remaining minimal-sphere/sweepout bridge.",
+  "publication_record": "PoincareConjecture/Contributions/ClosedSurfaceArea/publication.json"
 }

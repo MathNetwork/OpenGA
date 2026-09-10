@@ -1,5 +1,5 @@
 {
-  "reviewed_on": "2026-09-09",
+  "reviewed_on": "2026-09-10",
   "lean_toolchain": "leanprover/lean4:v4.33.1",
   "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
   "upstream": {
@@ -50,12 +50,12 @@
     "Construct manifold-valued Sobolev maps, sweepouts, harmonic replacement and the min-max comparison families.",
     "Prove compatibility of geometric widths, curvature bounds and topological records with surgery."
   ],
-  "blueprint_note": "The introductory claim of area loss at least 4*pi per unit time needs the scalar-curvature correction. The valid minimal-sphere bound is A\u2032 <= -4*pi - R_min*A/2, including the branch-point treatment required by CM.",
+  "blueprint_note": "The introductory claim of area loss at least 4*pi per unit time needs the scalar-curvature correction. The valid minimal-sphere bound is A′ <= -4*pi - R_min*A/2, including the branch-point treatment required by CM.",
   "validation": {
     "root_build": {
       "command": "lake build",
       "status": "passed",
-      "jobs": 4307
+      "jobs": 4310
     },
     "axiom_audit": {
       "command": "lake env lean PoincareConjecture/References/ColdingMinicozzi/ScalarAndAreaAudit.lean",
@@ -98,19 +98,21 @@
     "remaining_local_only": [
       "ScalarLowerBound.lean",
       "SurfaceAreaVariation.lean",
-      "WidthComparison.lean",
-      "ClosedSurfaceArea.lean"
+      "WidthComparison.lean"
     ],
     "new_area_dependency_chain_verified": true,
     "mission_root_graph_extended": false,
     "milestone_progress_links_verified": true,
     "closed_surface_batch": {
-      "status": "local_only",
+      "status": "published",
       "main_declaration": "OpenGA.RicciFlow.hasDerivAt_area",
-      "platform_submission": null,
+      "platform_submission": "70fcf658-ebe3-45b4-855f-002f59adad7b",
       "mission_graph_connection_submitted": false,
       "source_revision": "58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12",
-      "source_pushed": true
+      "source_pushed": true,
+      "batch_record": "PoincareConjecture/Contributions/ClosedSurfaceArea/publication.json",
+      "platform_theorem_id": "1f0b5a25-e4b0-445e-bef5-1e905b85ac1c",
+      "actual_area_variation_dependencies_verified": true
     },
     "immersion_metric_batch_record": "PoincareConjecture/Contributions/ImmersedSurfaceMetric/publication.json"
   },
@@ -121,7 +123,7 @@
     "PoincareConjecture/References/ColdingMinicozzi/ScalarAndAreaAudit.lean": "cc1fd80ee5b956907f740a476e1c851394d54c268f8a2775aaab6a07ba6f822e",
     "OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean": "c307590e3b61f16183b32e95028c0aae80cf9784c46a513b95f87f353158a282",
     "OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean": "aec0f726447b2b5a7a738e5d52186e16a54c2059413cef5ddc344f8289be6e62",
-    "OpenGALib/Riemannian/Surface.lean": "201e3d13c9d75a77726f193a4d9116fae2efb648607e0865a3b6981a82a5c580",
+    "OpenGALib/Riemannian/Surface.lean": "7eb0d34d0c6e64c83859ea55871bebc7a9a9b66f5db34162c9dcb33671679edd",
     "OpenGALib/Riemannian/Surface/InducedMetric.lean": "f56ccea5ced6844c414d085f2a0932a2d7c788ed5fbea50d2b95b5f93a250fae",
     "OpenGALib/Riemannian/Surface/Area.lean": "2c09adf5058422582d9524af66a966268f11e7c3f28ae678ff062556a6d12814",
     "OpenGALib/Riemannian/Surface/Coordinates.lean": "77a3665631f84618fef23724bbf97a3d002011c08abafa2f507edccb9370b4e2",

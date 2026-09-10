@@ -1,0 +1,113 @@
+{
+  "ContinuousMultilinearMap.compContinuousLinearMapL_diag_contDiff": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Geometry.Connection.ConnectionFamilySmoothOn": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Geometry.Connection.localMetricFlatBasis_contMDiffAt": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Geometry.Curvature.MetricFamilySmoothOn.metricCLMSmoothAt": [
+    "type",
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Integral.Measure.chartBasisFamily": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Integral.Measure.chartBasisVecFiber": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Integral.Measure.hasDerivAt_det_eq_det_mul_trace_inv_mul": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Integral.Measure.hasDerivAt_det_eq_trace_adjugate_mul": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Integral.Measure.hasDerivAt_det_of_entries": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Integral.Measure.hasDerivAt_prod_of_entries": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Integral.Measure.hasDerivAt_sqrt_det_eq_half_trace_inv_mul": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.PDE.RicciFlow.MetricConnectionFamilyVariationEquationOn": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor.RSTensor.RiemannianMetricGen.to02TensorGen": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.MetricFiberData.ofFlat": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.contractTensorRSFieldFun": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.contractTrace": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.cotangentSharpLinear": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.modelApplyInputBilinear": [
+    "type_fingerprint",
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.modelContractContravariantFirstBilinear": [
+    "type_fingerprint",
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.modelContractCovariantBilinear": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.modelContractTrace": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.modelTensorWithCovectorFirst": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.modelTensorWithCovectorFirstBilinear": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.model_contract_contravariant_first_bilinear_apply": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.model_contract_covariant_bilinear_apply": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.model_contract_trace_apply": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.tangentFlatEquiv": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.homLocalFrameCoeff_eq_localHomCoeff": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.localHomCoeff": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.vderiv_mlieBracket": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.mfderiv_eq_fderivWithin_chart_comp_closedSurface_DifferentialGeometry_Bundle_PartialMfderiv_Basic": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Geometry.Curvature.MetricFamilySmoothOn.metricCoord_eq_sum_closedSurface_DifferentialGeometry_Geometry_Metric_Family_PairSmoothness": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor0SBundle.model_trace_pairing_first_closedSurface_DifferentialGeometry_Tensor_RSTensor_Derivation_Contract": [
+    "value_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor.RSTensor.to02Tensor_trivialization_eq_closedSurface_DifferentialGeometry_Tensor_RSTensor_Metric": [
+    "type_fingerprint"
+  ],
+  "DifferentialGeometry.Tensor.RSTensor.to02Tensor_uCLM_closedSurface_DifferentialGeometry_Tensor_RSTensor_Metric": [
+    "value_fingerprint"
+  ],
+  "contMDiffOn_continuousMultilinearMapCoordChange": [
+    "type_fingerprint"
+  ]
+}

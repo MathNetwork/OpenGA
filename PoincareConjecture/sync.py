@@ -359,7 +359,7 @@ def main():
             raise ValueError("Invalid additional synchronization targets")
         names = targets["theorem_names"]
     client = Client(key)
-    if client.version != "0.9.8":
+    if client.version != "0.9.9":
         raise RuntimeError("Platform version changed; refresh https://prove2.me/skill.md before synchronizing")
     files, metadata = collect(client, names)
     source_count = len(files)

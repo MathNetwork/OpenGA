@@ -1,6 +1,6 @@
 {
   "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
-  "reviewed_at": "2026-09-10T03:09:22.772281+00:00",
+  "reviewed_at": "2026-09-10T18:14:08.314167+00:00",
   "reviews": {
     "01167772-943a-4c75-ab15-9f7b235777a8": {
       "declarations": [
@@ -665,6 +665,702 @@
         }
       ],
       "scope": "The actual induced metric and its parameter-patch area agree with the ambient composition. All thirteen source/export types and definition bodies match, and their proof closure uses only standard logical axioms. This is local area compatibility; the complete closed-surface Ricci-flow area derivative remains outside this platform batch."
+    },
+    "1ab970c0-c2d9-4f2b-8981-aa0e396e5db1": {
+      "source_theorem_id": "aabfaa76-3b1e-4916-b7ed-f5d40ca756b5",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "9dab13cebf56c4554b6829c350c4acde58f31c39da64e7d78d8175bf68a54523",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/1ab970c0-c2d9-4f2b-8981-aa0e396e5db1/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.chartLocal_weighted_finset_sum_eq_riemannianMeasure_integral",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Family.lean#L117-L157",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "679271a3-0d6c-4e51-9c58-242a0c2052bf": {
+      "source_theorem_id": "741b263b-ecda-4c21-a37e-7f488f1206a4",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "ef82ce57994fbccfcbb395f9d41d7954441745e51c893f6f4a3a8da95c791d96",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/679271a3-0d6c-4e51-9c58-242a0c2052bf/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.volume_variation_formula_of_chart_derivs",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Family.lean#L159-L198",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "471ac235-7f0c-425b-baeb-5ddc5195c1b5": {
+      "source_theorem_id": "bd734a87-d710-406c-aeb3-683dae54d3db",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "021f5c9b277a5bae49de1b4cf44c6a270a0ed6e6b69f679a43f23bec769d4a0d",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/471ac235-7f0c-425b-baeb-5ddc5195c1b5/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.continuousOn_traceTimeDerivMetric_on_base",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Family.lean#L202-L357",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "cb01e3bc-e1ec-491a-b7e3-6a04684c2a09": {
+      "source_theorem_id": "042c8d9e-722c-46d9-bd19-1050a44031f7",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "2ef34bf8d9323859160832cabeaee095a6351702dad6baefd5a082773d88bd19",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/cb01e3bc-e1ec-491a-b7e3-6a04684c2a09/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.traceTimeDerivMetric_continuous",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Family.lean#L359-L406",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "c707e99f-8e6a-42f0-9451-a6367327fcbb": {
+      "source_theorem_id": "9ac8420f-d186-4ba0-bca1-6a1cfb4b9609",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "12a6c3a3a72a553ec9ab03694928b087b5184db38217e843c2bb971946360210",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/c707e99f-8e6a-42f0-9451-a6367327fcbb/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.per_chart_integrand_hasDerivAt",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Family.lean#L39-L115",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "4e261d75-a4e5-4d25-8386-b25f1ff1888e": {
+      "source_theorem_id": "b20196f3-9a6b-411d-a148-181731cd5406",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "be59ae9c35d1b4127bcba3b063fc29780375387f064c9380870afd3cd9bdb34c",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/4e261d75-a4e5-4d25-8386-b25f1ff1888e/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.continuousOn_chartDensity_family",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Family.lean#L445-L480",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "379c6157-8439-4a05-93a5-f421e3a4e6ee": {
+      "source_theorem_id": "3ed08a0c-808d-439a-86a5-b5344dcff4c6",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "3e2b4c918771a16abd294863575a5bdfd227a3285ec47f75e2cc26e4be45189e",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/379c6157-8439-4a05-93a5-f421e3a4e6ee/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.per_chart_hasDerivAt",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Family.lean#L518-L1012",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "cf1e62af-8072-4890-9001-f53199622fc5": {
+      "source_theorem_id": "411c5422-cb80-44db-bf00-2c5893b536a1",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "01a776ee5b01760d97560f45b59b535b79c5030ff22be05dd1363bee4367787e",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/cf1e62af-8072-4890-9001-f53199622fc5/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.hasDerivAt_setIntegral_model",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/FamilyDecomposition.lean#L210-L239",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "f344bf48-e3ea-49fa-b041-ee5232abefba": {
+      "source_theorem_id": "6a4241c3-4444-43c4-85c0-5255a4f9cc74",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "7a024cb87b451af5e33564e47357002e59e1ca8de2ab14d4bad9e193b3df1ce0",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/f344bf48-e3ea-49fa-b041-ee5232abefba/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.deriv_chartGramMatrix_pullback",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/FamilyDecomposition.lean#L253-L313",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "bff8bb8b-ec06-4ac0-8848-2fea46583417": {
+      "source_theorem_id": "cecac29b-659f-4283-8343-2b3b768c4eff",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "8661c83343bf95f81f89fa6d27ff7409d51e92e03df7ff79805a835a8bd85091",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/bff8bb8b-ec06-4ac0-8848-2fea46583417/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.transitionMatrix_mul_reverse",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/FamilyDecomposition.lean#L315-L383",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "833becf4-fed3-4473-8629-dee8a22ceeaf": {
+      "source_theorem_id": "c5018655-93af-4c6a-87a2-faa4ee20e6c2",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "5b80ed2469d2bddd8731057f6875672d3cbfcdbdb065766059d9b134eab39ca6",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/833becf4-fed3-4473-8629-dee8a22ceeaf/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.integral_chart_ae",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/FamilyDecomposition.lean#L34-L105",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "71848f9c-cbf5-4bd4-b885-8d7bee329480": {
+      "source_theorem_id": "51602272-c134-4041-b632-4a3ea4ba4cd3",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "ee8c8e62ef3a08a95233d8e1c913a7794148f20dbf2745e06613fa58c084f9b0",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/71848f9c-cbf5-4bd4-b885-8d7bee329480/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.trace_chartGramMatrix_inv_deriv_chart_independent",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/FamilyDecomposition.lean#L399-L459",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "7924349d-b65e-4128-914b-558f8f088769": {
+      "source_theorem_id": "c3fdbaf5-6d09-49c9-92f7-544067828b39",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "c76f439d088aed6a71f3084fc00f075fcbb1e8b24e2a7e09f3e23f5e06339042",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/7924349d-b65e-4128-914b-558f8f088769/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.riemannianVolumeMeasure_eq_finset_sum",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/FamilyDecomposition.lean#L479-L504",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "e793e526-170e-4323-a690-5dcb62c9a900": {
+      "source_theorem_id": "e99bb518-d9ea-4535-8a73-996bacd0a48a",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "46b3d4bb876b07ebea6321015db60ead9afc439987530abb4bfca423b93f59be",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/e793e526-170e-4323-a690-5dcb62c9a900/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.integral_riemannianVolumeMeasure_eq_finset_sum",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/FamilyDecomposition.lean#L506-L542",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "a73317a9-5066-43ee-a893-eb92b7dc4170": {
+      "source_theorem_id": "0e03c2d5-0905-4c03-87e5-78d107c9b9a9",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "e089277cc2baf55d84034a84de4466e679cec3485edf9c2d9c6bb9d4eea94f79",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/a73317a9-5066-43ee-a893-eb92b7dc4170/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.volume_variation_formula_of_chart_integrals",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/FamilyDecomposition.lean#L624-L654",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "223f4a6c-2fec-4541-9065-86a7d3429698": {
+      "source_theorem_id": "2c07e373-1e94-4b3a-a3e5-501b08d7ec1a",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "6ae8d7662cf1e980746fde8ef03108ada12ca0231c87acca7541455ca1874675",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/223f4a6c-2fec-4541-9065-86a7d3429698/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.hasDerivAt_chartDensityFamily_eq_half_trace_inv_mul",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/FamilyDefs.lean#L131-L155",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "fb426a2c-720c-423b-ac15-0e0405f96116": {
+      "source_theorem_id": "e7c52cae-9009-4e07-99f9-242d88949beb",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "0150a62bb5c6e0634747c9d620f2ed9116eb828d324b4c9e3bf08cb416add6a2",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/fb426a2c-720c-423b-ac15-0e0405f96116/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.MetricFamilyRegularAt.of_chartGram_timeDeriv",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/FamilyDefs.lean#L189-L224",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "215a8912-7522-41aa-b325-90cc2e896108": {
+      "source_theorem_id": "f13e4103-b677-4822-83ce-e54eb4ade247",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "0bcaf61cc568219d471ff8f70ccd304b80796c0c958f0edc5dbbd388f7bd6f90",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/215a8912-7522-41aa-b325-90cc2e896108/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.FunctionRegularAt_const",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/FamilyDefs.lean#L226-L242",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "35352ec4-cb02-432f-9e67-b1254a2b5842": {
+      "source_theorem_id": "c7faebb6-c342-464a-bb2b-69cea2080558",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "1b9c35d5aa68c620a695e8e9a31fa72c5178614bf7a2c9ffbef750bd4159d6cc",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/35352ec4-cb02-432f-9e67-b1254a2b5842/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.chartBasisVecFiber_pullback",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Invariance.lean#L149-L217",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "bbb94b65-2ef9-4b97-b3d4-34b95b2c71db": {
+      "source_theorem_id": "feabcc83-4a75-4159-8fe6-8a3ac4038b2a",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "d51954279fcef7e35637b00489bcd927441aaaf40dfabd4ca302eba98a23812e",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/bbb94b65-2ef9-4b97-b3d4-34b95b2c71db/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.chartGramMatrix_pullback_eq_sum",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Invariance.lean#L219-L268",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "b2e6d47d-f703-47fc-a5b9-4600383a45b9": {
+      "source_theorem_id": "9a94c463-5497-498e-af60-e6567a32a6ce",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "8a81ddac67fff807fc41b7d09c5a8ff0f2d8cc76bb2b697dfdcd00c4ab7e94e8",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/b2e6d47d-f703-47fc-a5b9-4600383a45b9/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.aemeasurable_chartDensity_symm_pullback",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Invariance.lean#L370-L391",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "b421407e-1777-4890-b283-c504a9290217": {
+      "source_theorem_id": "2d0efe88-39f7-45a8-bfb3-44cf0fdff507",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "102d7916943c33738e8fb0e8a3c3f1f8f98a255f16ab95e4980395b37214e843",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/b421407e-1777-4890-b283-c504a9290217/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.chartLocalMeasure_lintegral",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Invariance.lean#L393-L429",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "4995da0a-eb7c-43ad-9c8a-4e4576888aef": {
+      "source_theorem_id": "6dc80260-2bf0-41f0-a0ef-a608e2cb1e82",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "17acdb8f897a7970f458c70e2bba20c80f7ef42471d10262c6f050a81daaad1a",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/4995da0a-eb7c-43ad-9c8a-4e4576888aef/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.hasDerivAt_sqrt_det_eq_half_trace_inv_mul",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/JacobiFormula.lean#L245-L272",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "c32cb91e-b432-4b8c-b50e-421f9d932b12": {
+      "source_theorem_id": "41592320-cc63-4139-a139-eaaf04cb136f",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "836e5c47fe9823ff19797b14db41edb434e58a09ba47e77ac3702f193a66de8a",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/c32cb91e-b432-4b8c-b50e-421f9d932b12/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.hasDerivAt_det_of_entries",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/JacobiFormula.lean#L34-L65",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "d9b236c0-582f-4d62-9153-94a726e86857": {
+      "source_theorem_id": "913d4649-bd3a-4857-87f6-6470bce03cf2",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "2265fe0829d98baa50240ece22ca45bfe743adcfe400ebee35f7a57c81d764d2",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/d9b236c0-582f-4d62-9153-94a726e86857/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.perm_sum_eq_trace_adjugate_mul",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/JacobiFormula.lean#L67-L195",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "4182e183-83c4-4680-a218-28f8530af82f": {
+      "source_theorem_id": "31e419ce-632e-40ef-af2b-0f10d4689980",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "2e1f31278d2ac8be70e7343bcb6039abe24149a4371d2116761ef5c2493920dc",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/4182e183-83c4-4680-a218-28f8530af82f/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.riemannianMeasure_compact_lt_top",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Properties.lean#L225-L271",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "f7eb9e91-abc0-4836-98f5-12e6d9739018": {
+      "source_theorem_id": "2812213a-5a25-4abd-b1dc-68c8c19dc5d8",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "c4bd0cb0bfe01768e46543b62a292de774338eba39a4f8d1f548dcadf258158c",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/f7eb9e91-abc0-4836-98f5-12e6d9739018/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.chartLocalMeasure_compact_lt_top",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/Properties.lean#L51-L148",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "50c58ddc-3666-497a-9475-84f5dd2b0a83": {
+      "source_theorem_id": "7e2a5a64-eea4-4862-8746-0e7d82b63146",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "7f9c982367789c3037b8aa9d2eb91f425e2ddba4a60e331b1c1ac6343e24dbb6",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/50c58ddc-3666-497a-9475-84f5dd2b0a83/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.volume_variation_formula",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Analysis/Integration/Measure/VolumeVariation.lean#L106-L145",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "687505b6-a300-447b-a2fa-2cef0a66f7fa": {
+      "source_theorem_id": "90997d51-1a47-477c-95d9-b0c41e61fb3f",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "0848aaae57cb33c76b5937c88c0d60012ce55e03131d78f3d977c6c3a6a31cb3",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/687505b6-a300-447b-a2fa-2cef0a66f7fa/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.chartBasisVec_contMDiffOn",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/ChartGram.lean#L158-L172",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "fa5f156d-d3f8-45b0-8007-1c1454024b80": {
+      "source_theorem_id": "753898d0-5818-47dd-b4fb-a5012bc9ec76",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "37a4f4a3ed9d4f040b21f36312eca70f544295280b051a26abf8be6f68693045",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/fa5f156d-d3f8-45b0-8007-1c1454024b80/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.chartGramMatrix_dotProduct_mulVec",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/ChartGram.lean#L246-L295",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "140db3d0-6990-4dc7-85d7-5ebd389c8320": {
+      "source_theorem_id": "ae271fa7-e699-4f99-95d3-6e2251ef6f9d",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "5a0957dd22dd4f587d096a657d7a92c3167e4560d294b8018d44de1a446abb71",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/140db3d0-6990-4dc7-85d7-5ebd389c8320/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.chartGramMatrix_posDef",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/ChartGram.lean#L297-L314",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "69ad9000-1250-4367-9c4e-4cdfdc5598e2": {
+      "source_theorem_id": "c0dbac2c-f130-48f6-84f9-3ea837214107",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "7dd894c12b7a8d24546ceaa8decc971b476acf27ba77eaeb517b78d91729221b",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/69ad9000-1250-4367-9c4e-4cdfdc5598e2/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.chartGramMatrix_entry_contMDiffOn",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/ChartGram.lean#L322-L349",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "5c4f1915-7278-46fe-9e2f-be9bd043591c": {
+      "source_theorem_id": "3cf8fcda-2e99-4db9-ab28-95f389a208d7",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "e6669ff13d47e796e6acb34faec970d6ae5c0b809297d95c55d6f2845e1a16e1",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/5c4f1915-7278-46fe-9e2f-be9bd043591c/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Integral.Measure.chartGramMatrix_det_contMDiffOn",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/ChartGram.lean#L359-L379",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "6c9bad43-e01f-4485-bfd7-c73a53310c66": {
+      "source_theorem_id": "2e472272-36d6-4505-96c2-cf3bbd24a7b9",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "ff078556eb1282541243ac1625ca3ba6fc77695ff605f60993bdd9389ca8540d",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/6c9bad43-e01f-4485-bfd7-c73a53310c66/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "DifferentialGeometry.Geometry.Curvature.MetricFamilySmoothOn.metricCLMSmoothAt",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/Family/PairSmoothness.lean#L91-L145",
+      "scope": "Reused DifferentialGeometry proof, available through the importing OpenGA module; authorship remains with the linked upstream project. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "70fcf658-ebe3-45b4-855f-002f59adad7b": {
+      "source_theorem_id": "1f0b5a25-e4b0-445e-bef5-1e905b85ac1c",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "98d45e4f198587b101e7f254cf210080f34bb5afeee9c06f4dbbe9cb118659d1",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/70fcf658-ebe3-45b4-855f-002f59adad7b/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "OpenGA.RicciFlow.hasDerivAt_area",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/MathNetwork/OpenGA/blob/58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12/OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean#L111-L129",
+      "scope": "OpenGA closed-surface area-variation development. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "31bc503a-b907-44ed-b41f-0b5a51dea75c": {
+      "source_theorem_id": "0995bf62-f67d-4a23-a72c-90f93455ee40",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "ebf3fd78daa4038fa6289a7071d51b1b71f5ec8e0b5389ffba292fd599ccde22",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/31bc503a-b907-44ed-b41f-0b5a51dea75c/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "OpenGA.RicciFlow.inducedMetric_regularOn",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/MathNetwork/OpenGA/blob/58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12/OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean#L38-L70",
+      "scope": "OpenGA closed-surface area-variation development. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "604eda60-82d4-4876-bccc-d054bcdbe124": {
+      "source_theorem_id": "85d88929-037a-4cbe-a11f-e7ead77bc7ea",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "ecb938a274ca4995ef1df1ad51993155c29d4cb6b4a2b61815c76f3a97319b87",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/604eda60-82d4-4876-bccc-d054bcdbe124/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "OpenGA.RicciFlow.traceTimeDeriv_inducedMetric",
+          "path": "OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean"
+        }
+      ],
+      "original_source": "https://github.com/MathNetwork/OpenGA/blob/58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12/OpenGALib/Interoperability/RicciFlow/ClosedSurfaceArea.lean#L91-L109",
+      "scope": "OpenGA closed-surface area-variation development. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "4adf8fa1-4fd1-458b-b105-e8397cbbc232": {
+      "source_theorem_id": "c76e06c6-b15b-4e6b-afa0-4decdee487dc",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "1562844395ff91806384ca88d49aa7b0c2b3e5e02ae5b5405422a53463620855",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/4adf8fa1-4fd1-458b-b105-e8397cbbc232/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "OpenGA.MetricFamilyRegularOn.comp",
+          "path": "OpenGALib/Riemannian/VolumeVariation.lean"
+        }
+      ],
+      "original_source": "https://github.com/MathNetwork/OpenGA/blob/58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12/OpenGALib/Riemannian/VolumeVariation.lean#L100-L118",
+      "scope": "OpenGA closed-surface area-variation development. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "255db963-969e-4e8a-abca-c84e122c509e": {
+      "source_theorem_id": "bce7eaf0-0d3d-4d1e-b6d5-9a0d2546cdf2",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "ef08262a3f5bb0e87c7eb7c78ca6beff15a52658b9d84966b1a448dc41af94cb",
+      "source_author": "Xinze-Li-Moqian",
+      "source_url": "https://prove2.me/api/v1/submissions/255db963-969e-4e8a-abca-c84e122c509e/solution",
+      "status": "integrated",
+      "declarations": [
+        {
+          "name": "OpenGA.hasDerivAt_totalRiemannianVolume",
+          "path": "OpenGALib/Riemannian/VolumeVariation.lean"
+        }
+      ],
+      "original_source": "https://github.com/MathNetwork/OpenGA/blob/58a1945f5e5ed41d2b0bf0ff83544cd7a290ee12/OpenGALib/Riemannian/VolumeVariation.lean#L133-L157",
+      "scope": "OpenGA closed-surface area-variation development. The complete exported closure passed source/export equivalence, exact solution-type checks and an axiom audit allowing only propext, Classical.choice and Quot.sound. This batch establishes smooth immersed closed-surface area variation; it does not prove branched minimal-sphere decay or finite extinction."
+    },
+    "0fe76133-97aa-466f-b05d-8164a3b0a95c": {
+      "source_theorem_id": "2cec3b8c-2a1d-4155-b03d-fdb67c26b003",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "3903235b8be85d6ff60adcea86cf695ae13693f7f75d4df2857d1b94e0884211",
+      "source_author": "Lucas",
+      "source_url": "https://prove2.me/api/v1/submissions/0fe76133-97aa-466f-b05d-8164a3b0a95c/solution",
+      "status": "deferred",
+      "declarations": [],
+      "scope": "Reviewed source: dyadic cofinality and the assumed interval-monotonicity field imply definedUpTo at every nonnegative time. Existence at all dyadic times is an explicit hypothesis. Retained in the mirror; integration into a reusable continuation module is deferred."
+    },
+    "be7d0fdd-7cd7-42df-b7a2-98b351f35160": {
+      "source_theorem_id": "9f552a29-ef4b-42d7-ab52-0aaa0ce76f33",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "6315efee0d311b4b8d75cab5abab7b187cd272589f7767354ad6c3429b04d52d",
+      "source_author": "Lucas",
+      "source_url": "https://prove2.me/api/v1/submissions/be7d0fdd-7cd7-42df-b7a2-98b351f35160/solution",
+      "status": "deferred",
+      "declarations": [],
+      "scope": "Reviewed source: a least dyadic block index constructs positive antitone parameter functions from given positive antitone sequences. This does not prove that the sequences satisfy geometric canonical-neighbourhood or surgery estimates. Retained in the mirror; integration into a reusable parameter module is deferred."
+    },
+    "f1a903ae-f375-4652-a2b3-1e916e38d315": {
+      "source_theorem_id": "9f68a67b-c7c6-45c8-88f1-aa7317a14ede",
+      "source_status": "ACCEPTED",
+      "source_mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "source_sha256": "a96796478a721619313814573779ec7904cbf57f5d263e8794d16812476b8e69",
+      "source_author": "Lucas",
+      "source_url": "https://prove2.me/api/v1/submissions/f1a903ae-f375-4652-a2b3-1e916e38d315/solution",
+      "status": "deferred",
+      "declarations": [],
+      "scope": "Reviewed source: the infimum-of-bad-times argument uses the record fields for forward extension, limit extension and a radial budget giving finite events. These conditions have not been constructed from an actual initial Riemannian manifold and a geometric surgery flow. Retained in the mirror; integration is deferred. No local kernel-audit claim is made for this mirrored source."
     }
   },
   "schema_version": 1
