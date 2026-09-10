@@ -1,5 +1,6 @@
 import OpenGALib.ComparisonGeometry.MetricBall
 import OpenGALib.ComparisonGeometry.VolumeMeasure
+import Mathlib.Topology.Order.Compact
 
 /-!
 # Volumes of Riemannian balls
@@ -77,5 +78,39 @@ theorem ballVolume_lt_top_of_le_of_isCompact_closure (g : RiemannianMetric I M)
     (p : M) {r R : ℝ} (hrR : r ≤ R)
     (hc : IsCompact (closure (g.geodesicBall p R))) : g.ballVolume p r < ⊤ :=
   lt_of_le_of_lt (g.ballVolume_mono p hrR) (g.ballVolume_lt_top_of_isCompact_closure p hc)
+
+/-- **Math.** A positive-radius ball with compact closure has positive real
+volume. Finiteness is essential because `ENNReal.toReal` sends infinity to zero. -/
+theorem ballVolume_toReal_pos (g : RiemannianMetric I M) (p : M) {r : ℝ}
+    (hr : 0 < r) (hc : IsCompact (closure (g.geodesicBall p r))) :
+    0 < (g.ballVolume p r).toReal :=
+  ENNReal.toReal_pos_iff.mpr
+    ⟨g.ballVolume_pos p hr, g.ballVolume_lt_top_of_isCompact_closure p hc⟩
+
+/-- **Math.** Normalizing a finite positive ball volume by any positive real
+model volume gives a positive reference constant. This is a single-ball
+statement; a common lower bound across surgery times needs additional geometry. -/
+theorem normalized_ballVolume_pos (g : RiemannianMetric I M) (p : M) {r v : ℝ}
+    (hr : 0 < r) (hc : IsCompact (closure (g.geodesicBall p r))) (hv : 0 < v) :
+    0 < (g.ballVolume p r).toReal / v :=
+  div_pos (g.ballVolume_toReal_pos p hr hc) hv
+
+/-- **Math.** A continuous family of normalized positive ball volumes on a
+nonempty compact parameter set admits one positive lower bound. Continuity and
+compactness are explicit geometric obligations, not consequences of pointwise
+positivity or of the surgery-event budget. -/
+theorem exists_uniform_normalized_ballVolume_lower
+    {A : Type*} [TopologicalSpace A] {s : Set A}
+    (hs : IsCompact s) (hne : s.Nonempty)
+    (g : A → RiemannianMetric I M) (p : A → M) (r v : A → ℝ)
+    (hr : ∀ a ∈ s, 0 < r a)
+    (hc : ∀ a ∈ s, IsCompact (closure ((g a).geodesicBall (p a) (r a))))
+    (hv : ∀ a ∈ s, 0 < v a)
+    (hcont : ContinuousOn (fun a => ((g a).ballVolume (p a) (r a)).toReal / v a) s) :
+    ∃ anchor : ℝ, 0 < anchor ∧
+      ∀ a ∈ s, anchor ≤ ((g a).ballVolume (p a) (r a)).toReal / v a := by
+  obtain ⟨a, ha, hmin⟩ := hs.exists_isMinOn hne hcont
+  exact ⟨_, (g a).normalized_ballVolume_pos (p a) (hr a ha) (hc a ha) (hv a ha),
+    fun b hb => hmin hb⟩
 
 end Riemannian.RiemannianMetric
