@@ -24,6 +24,7 @@ structure SweepoutEnergyProfile (P : Type*) [TopologicalSpace P] where
   energy : P → ℝ
   pair : P → FiniteEnergyPair
   pair_energy : ∀ p, (pair p).energy = energy p
+  pair_conformal : ∀ p, (pair p).IsConformal
   continuous_energy : Continuous energy
   energy_bdd : BddAbove (Set.range energy)
 
@@ -36,6 +37,7 @@ theorem energy_le_sweepoutWidth
     energy p ≤ sweepoutWidth energy := by
   exact le_ciSup hbdd p
 
+omit [TopologicalSpace P] in
 theorem finite_sample_width_le
     {ι : Type*} [Fintype ι] [Nonempty ι] [Nonempty P] (energy : P → ℝ)
     (hbdd : BddAbove (Set.range energy)) (sample : ι → P) :
@@ -52,5 +54,14 @@ theorem profile_width_eq
   congr 1
   funext p
   exact (profile.pair_energy p).symm
+
+theorem profile_pair_area_eq_energy
+    {P : Type*} [TopologicalSpace P] [Nonempty P]
+    (profile : SweepoutEnergyProfile P) (p : P) :
+    (profile.pair p).area = profile.energy p := by
+  have h := (integral_areaDensity_eq_energyDensity_iff
+    (profile.pair p).first_measurable (profile.pair p).second_measurable
+    (profile.pair p).energy_integrable).2 (profile.pair_conformal p)
+  exact h.trans (profile.pair_energy p)
 
 end OpenGA
