@@ -64,4 +64,17 @@ theorem profile_pair_area_eq_energy
     (profile.pair p).energy_integrable).2 (profile.pair_conformal p)
   exact h.trans (profile.pair_energy p)
 
+theorem exists_profile_maximizer
+    {P : Type*} [TopologicalSpace P] [CompactSpace P] [Nonempty P]
+    (profile : SweepoutEnergyProfile P) :
+    ∃ p : P, profile.energy p = sweepoutWidth profile.energy := by
+  obtain ⟨p, hp, hmax⟩ := isCompact_univ.exists_isMaxOn Set.univ_nonempty
+    profile.continuous_energy.continuousOn
+  refine ⟨p, ?_⟩
+  apply le_antisymm
+  · exact energy_le_sweepoutWidth profile.energy profile.energy_bdd p
+  · apply ciSup_le
+    intro q
+    exact (isMaxOn_iff.mp hmax) q (show q ∈ (Set.univ : Set P) from Set.mem_univ q)
+
 end OpenGA
