@@ -1,0 +1,74 @@
+{
+  "reviewed_on": "2026-09-09",
+  "lean_toolchain": "leanprover/lean4:v4.33.1",
+  "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "upstream": {
+    "repository": "https://github.com/qinz1yang/differential-geometry",
+    "revision": "1b535dd102b94cc42b107cca27059687888f08b3",
+    "release": "v0.1.2",
+    "license": "Apache-2.0",
+    "reused_proofs": [
+      "DifferentialGeometry.PDE.RicciFlow.scalar_curvature_evolution",
+      "DifferentialGeometry.PDE.RicciFlow.scalar_curvature_lower_bound_of_scalarEvolution_of_regularity",
+      "DifferentialGeometry.PDE.RicciFlow.scalarRegOfSmooth",
+      "DifferentialGeometry.PDE.RicciFlow.metricDerivAt",
+      "DifferentialGeometry.Integral.Measure.hasDerivAt_sqrt_det_eq_half_trace_inv_mul"
+    ],
+    "adapted_source": "DifferentialGeometry/Geometry/Flow/RicciFlow/Estimates/FiniteTime/Solution.lean",
+    "adaptation": "The pointwise trace-norm proof and maximum-principle assembly are adapted for a nonpositive initial scalar bound. The original positive-scalar finite-lifetime theorem is not used as a finite-extinction theorem."
+  },
+  "mathematical_reference": {
+    "title": "Width and finite extinction time of Ricci flow",
+    "authors": "Colding and Minicozzi",
+    "url": "https://arxiv.org/abs/0707.0108",
+    "section": "1.5"
+  },
+  "validated_scope": {
+    "scalar": "A closed boundaryless three-dimensional smooth Ricci flow satisfying IsSolutionOn and an initial scalar bound -3/(2*C), C > 0, has scalar curvature at least -3/(2*(t+C)) on each admissible compact smooth time slab. No initial curvature-operator lower bound is assumed.",
+    "regularity": "Scalar evolution and maximum-principle regularity are derived from the upstream solution predicate, whose geometric equation is metric variation by -2 Ricci. The theorem does not construct this solution from initial data.",
+    "minimum": "The scalar minimum is the infimum of the actual scalar-curvature range and is proved to be attained on a nonempty compact manifold.",
+    "normalization": "The initial bound -6 gives -6/(1+4*t), matching the existing extinction trace.",
+    "surface": "The pullback metric and Ricci matrices use the actual manifold derivative of a fixed map from the Euclidean parameter plane. Positive induced determinant gives the local density variation. An integral formula on a parameter patch follows under explicit measurable, integrable and dominated-derivative hypotheses.",
+    "width": "The actual scalar minimum enters WidthComparisonData and yields the CM right-slope estimate and existing width deadline, conditional on those comparison data. No geometric sweepout or varifold realization is asserted.",
+    "coordinates": "For actual differentiable surface maps, induced metrics transform by the derivative congruence and area densities by its absolute determinant. An injective differentiable change of parameters on a measurable domain preserves the patch area integral. This supplies coordinate compatibility but does not yet construct a closed-surface integral."
+  },
+  "remaining_inputs": [
+    "Construct the required Ricci-flow solution and its regularity from a compatible initial metric.",
+    "Use the proved patch-coordinate compatibility to construct the global closed-surface integral, and derive uniform domination from compactness.",
+    "Treat branch points, second fundamental forms, the Gauss equation and branched Gauss-Bonnet.",
+    "Construct manifold-valued Sobolev maps, sweepouts, harmonic replacement and the min-max comparison families.",
+    "Prove compatibility of geometric widths, curvature bounds and topological records with surgery."
+  ],
+  "blueprint_note": "The introductory claim of area loss at least 4*pi per unit time needs the scalar-curvature correction. The valid minimal-sphere bound is A\u2032 <= -4*pi - R_min*A/2, including the branch-point treatment required by CM.",
+  "validation": {
+    "root_build": {
+      "command": "lake build",
+      "status": "passed",
+      "jobs": 4297
+    },
+    "axiom_audit": {
+      "command": "lake env lean PoincareConjecture/References/ColdingMinicozzi/ScalarAndAreaAudit.lean",
+      "status": "passed",
+      "declarations": 26,
+      "new_public_declarations": 21,
+      "upstream_declarations": 5,
+      "allowed_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  },
+  "publication": {
+    "status": "not_submitted",
+    "graph_change": false
+  },
+  "sha256": {
+    "OpenGALib/Interoperability/RicciFlow/ScalarLowerBound.lean": "dfb8c1f13339780b0369001a38603ece2f0893ec4886b0614c23209508935fb1",
+    "OpenGALib/Interoperability/RicciFlow/SurfaceAreaVariation.lean": "cc8c07db32bf7e2efc29dd95cc23ff880d608313854eb01f0c625aa7fe28d6de",
+    "OpenGALib/Interoperability/RicciFlow/WidthComparison.lean": "a952f7b7f92198e7e7d1562bdc2a46d28e128798cf705eec1986e73c216a0af8",
+    "PoincareConjecture/References/ColdingMinicozzi/ScalarAndAreaAudit.lean": "cc1fd80ee5b956907f740a476e1c851394d54c268f8a2775aaab6a07ba6f822e",
+    "OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean": "c307590e3b61f16183b32e95028c0aae80cf9784c46a513b95f87f353158a282",
+    "OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean": "aec0f726447b2b5a7a738e5d52186e16a54c2059413cef5ddc344f8289be6e62"
+  }
+}

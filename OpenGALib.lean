@@ -10,6 +10,7 @@ import OpenGALib.ComparisonGeometry.CurvatureBounds
 import OpenGALib.ComparisonGeometry.Volume
 import OpenGALib.Interoperability.BishopGromov
 import OpenGALib.Interoperability.DifferentialGeometry
+import OpenGALib.Interoperability.RicciFlow
 import OpenGALib.GeometricMeasureTheory
 import OpenGALib.Riemannian.Geodesic.HopfRinow.EVariationLePathELength
 import OpenGALib.Riemannian.Geodesic.SymmetryLemma
@@ -40,4 +41,8 @@ compact closure does not require completeness of the ambient manifold.
 Euclidean varifolds following Simon, their Grassmannian, weight measures,
 weak-* convergence and parametrized-surface interfaces are available through
 `OpenGALib.GeometricMeasureTheory`.
+The smooth Ricci-flow scalar lower bound, its use in the width deadline, and
+local parametrized area variation are exposed by `OpenGALib.Interoperability.RicciFlow`.
+The area formula currently requires explicit domination on a parameter patch;
+global surface gluing and the CM sweepout construction remain separate tasks.
 -/
