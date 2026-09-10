@@ -20,6 +20,20 @@ theorem surgery_comparison_process_of_not_homeomorph_sphere
       Nonempty (OpenGA.SurgeryComparisonProcess initialWidth finalTime) := by
   sorry
 
+/-! A top-down refinement point: the geometric process is constrained by the
+comparison-measure input used in the Bishop--Gromov route. The construction
+itself remains open, but the dependency is now explicit in the formal type. -/
+theorem surgery_comparison_process_with_comparison_measure
+    (M : Type*) [TopologicalSpace M] [T2Space M]
+    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]
+    [SimplyConnectedSpace M] [CompactSpace M]
+    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)))
+    (comparison_measure_input : Prop) :
+    comparison_measure_input ∧
+      (∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →
+        Nonempty (OpenGA.SurgeryComparisonProcess initialWidth finalTime)) := by
+  sorry
+
 /-- The finite-trace construction follows from the geometric process and the
 proved volume-loss nonaccumulation argument. Only the geometric child is open. -/
 theorem comparison_trace_of_surgery_geometry
