@@ -1,7 +1,7 @@
 import OpenGALib.Interoperability.RicciFlow.SurfaceSliceFamily
 
 /-!
-# Sweepouts by immersed surface slices
+# Sweepouts by smooth surface maps
 
 This is the topological and smooth interface needed before constructing the
 Colding--Minicozzi comparison data. Endpoint slices are allowed to be
@@ -31,29 +31,43 @@ structure Sweepout where
   endpoint_zero_constant : ∃ c : M, ∀ x, map ⟨0, ⟨le_rfl, zero_le_one⟩⟩ x = c
   endpoint_one_constant : ∃ c : M, ∀ x, map ⟨1, ⟨zero_le_one, le_rfl⟩⟩ x = c
 
-/-- A smooth immersed sweepout. The smoothness and immersion conditions are
-pointwise in the sweepout parameter and can later be strengthened to joint
-space-parameter regularity when constructing harmonic replacements.
+/-- A sweepout with smooth slices. Degenerate slices, including the constant
+endpoints, are allowed. Continuity in a Sobolev mapping-space topology is a
+separate requirement of the full Colding--Minicozzi class.
 -/
 structure SmoothSweepout where
   map : Icc (0 : ℝ) 1 → N → M
   continuous_joint : Continuous (fun p : Icc (0 : ℝ) 1 × N => map p.1 p.2)
   smooth : ∀ u, ContMDiff 𝓘(ℝ, Surface.Model) I ∞ (map u)
-  immersion : ∀ u x, Function.Injective (mfderiv 𝓘(ℝ, Surface.Model) I (map u) x)
   endpoint_zero_constant : ∃ c : M, ∀ x, map ⟨0, ⟨le_rfl, zero_le_one⟩⟩ x = c
   endpoint_one_constant : ∃ c : M, ∀ x, map ⟨1, ⟨zero_le_one, le_rfl⟩⟩ x = c
 
-/-- Sampling a smooth sweepout at finitely many parameters gives the finite
-surface-slice interface used by width comparison. -/
+/-- Forget slice smoothness. -/
+def SmoothSweepout.toSweepout (W : SmoothSweepout (N := N) (I := I) (M := M)) :
+    Sweepout (N := N) (M := M) :=
+  ⟨W.map, W.continuous_joint, W.endpoint_zero_constant, W.endpoint_one_constant⟩
+
+/-- Constant sweepouts are valid smooth sweepouts. -/
+def SmoothSweepout.const (c : M) : SmoothSweepout (N := N) (I := I) (M := M) where
+  map := fun _ _ => c
+  continuous_joint := continuous_const
+  smooth := fun _ => contMDiff_const
+  endpoint_zero_constant := ⟨c, fun _ => rfl⟩
+  endpoint_one_constant := ⟨c, fun _ => rfl⟩
+
+/-- Sampling immersed slices requires their differential injectivity explicitly;
+constant endpoint slices cannot be supplied to this constructor. -/
 def sampleFamily
     {D : DifferentialGeometry.Geometry.Curvature.RealTimeInterval}
     {ι : Type*} [Fintype ι]
     (S : DifferentialGeometry.PDE.RicciFlow.SolutionOn (I := I) (M := M) D)
     (W : SmoothSweepout (N := N) (I := I) (M := M))
-    (sample : ι → Icc (0 : ℝ) 1) :
+    (sample : ι → Icc (0 : ℝ) 1)
+    (himmersion : ∀ i x,
+      Function.Injective (mfderiv 𝓘(ℝ, Surface.Model) I (W.map (sample i)) x)) :
     SurfaceSliceFamily (N := N) (I := I) (D := D) ι S :=
   { map := fun i => W.map (sample i)
     smooth := fun i => W.smooth (sample i)
-    immersion := fun i => W.immersion (sample i) }
+    immersion := himmersion }
 
 end OpenGA.RicciFlow

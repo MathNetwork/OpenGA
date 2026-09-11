@@ -24,7 +24,6 @@ structure SweepoutEnergyProfile (P : Type*) [TopologicalSpace P] where
   energy : P → ℝ
   pair : P → FiniteEnergyPair
   pair_energy : ∀ p, (pair p).energy = energy p
-  pair_conformal : ∀ p, (pair p).IsConformal
   continuous_energy : Continuous energy
   energy_bdd : BddAbove (Set.range energy)
 
@@ -57,11 +56,12 @@ theorem profile_width_eq
 
 theorem profile_pair_area_eq_energy
     {P : Type*} [TopologicalSpace P] [Nonempty P]
-    (profile : SweepoutEnergyProfile P) (p : P) :
+    (profile : SweepoutEnergyProfile P) (p : P)
+    (hconformal : (profile.pair p).IsConformal) :
     (profile.pair p).area = profile.energy p := by
   have h := (integral_areaDensity_eq_energyDensity_iff
     (profile.pair p).first_measurable (profile.pair p).second_measurable
-    (profile.pair p).energy_integrable).2 (profile.pair_conformal p)
+    (profile.pair p).energy_integrable).2 hconformal
   exact h.trans (profile.pair_energy p)
 
 theorem profile_pair_area_le_width
