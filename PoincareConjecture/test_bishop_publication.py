@@ -23,7 +23,7 @@ class PublicationOrderingTests(unittest.TestCase):
                 calls = []
 
                 class FakeClient:
-                    version = '0.9.8'
+                    version = '0.9.9'
                     def __init__(self, key): pass
                     def request(self, path):
                         return {'environments': [{'mathlib_rev': 'rev', 'toolchain': 'lean'}]}
