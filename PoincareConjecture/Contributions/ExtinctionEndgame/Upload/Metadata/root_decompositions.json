@@ -1,0 +1,166 @@
+{
+  "decompositions": [
+    {
+      "children": [
+        {
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "ordinal": 0,
+          "status": "Open",
+          "theorem_id": "6445ec61-f49c-47ce-b681-7ab9ea9a4059",
+          "theorem_name": "PoincareFormalization.exists_smooth_structure_three",
+          "theorem_title": "Moise's theorem: every topological $3$-manifold admits a smooth structure"
+        },
+        {
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "ordinal": 1,
+          "status": "Open",
+          "theorem_id": "c5c9092c-00f4-4939-893e-ea9cc075b564",
+          "theorem_name": "PoincareFormalization.nonempty_sdiffeomorph_sphere_three",
+          "theorem_title": "Three-dimensional smooth Poincaré conjecture — Mathlib statement"
+        }
+      ],
+      "created_at": "2026-09-09T04:36:59.775017+00:00",
+      "created_by": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "submission_id": "51179dae-3662-451e-b374-fe303c70b325"
+    },
+    {
+      "children": [
+        {
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "ordinal": 0,
+          "status": "Open",
+          "theorem_id": "0ecb5d1e-78dc-49f7-986e-4faa74dae462",
+          "theorem_name": "PoincareFormalization.homotopyEquiv_sphere_three",
+          "theorem_title": "A closed simply connected 3-manifold is a homotopy 3-sphere"
+        },
+        {
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "ordinal": 1,
+          "status": "Open",
+          "theorem_id": "79da6e34-6c16-4bcf-bac0-c071f41d246d",
+          "theorem_name": "PoincareFormalization.homotopy_three_sphere_nonempty_homeomorph",
+          "theorem_title": "A homotopy 3-sphere is homeomorphic to the 3-sphere (Perelman)"
+        }
+      ],
+      "created_at": "2026-09-08T16:00:19.504985+00:00",
+      "created_by": "bb76969b-87a2-41ce-9427-f0342ba97e56",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "submission_id": "97d3cac5-2b5e-48c6-9651-e94fe6c77fcd"
+    },
+    {
+      "children": [
+        {
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "ordinal": 0,
+          "status": "Open",
+          "theorem_id": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+          "theorem_name": "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+          "theorem_title": "Construct uniform width-controlled surgery topology"
+        },
+        {
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "ordinal": 1,
+          "status": "Proved",
+          "theorem_id": "2e12f604-9e6a-4062-9bac-8727a1a9edb7",
+          "theorem_name": "OpenGA.SurgeryTopologyEvolution.finiteExtinction_of_width_control",
+          "theorem_title": "Uniform width control forces finite extinction"
+        },
+        {
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "ordinal": 2,
+          "status": "Proved",
+          "theorem_id": "33f0b928-916f-4ff5-833b-fbc31308c762",
+          "theorem_name": "OpenGA.SurgeryTopologyEvolution.topology_from_extinction",
+          "theorem_title": "Finite extinction reconstructs a connected sum of standard factors"
+        },
+        {
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "ordinal": 3,
+          "status": "Open",
+          "theorem_id": "c508d5db-b2a6-4c25-8144-9a9f55f2b4e2",
+          "theorem_name": "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_standard_decomposition",
+          "theorem_title": "The simply connected endgame for a standard connected-sum decomposition"
+        }
+      ],
+      "created_at": "2026-09-09T21:07:54.516028+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "submission_id": "25d76430-fc9b-4aaa-9490-50a596f993ff"
+    },
+    {
+      "children": [
+        {
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "ordinal": 0,
+          "status": "Proved",
+          "theorem_id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+          "theorem_name": "OpenGA.scalar_lower_bound_across_upward_jumps",
+          "theorem_title": "Scalar lower bound across upward jumps"
+        },
+        {
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "ordinal": 1,
+          "status": "Proved",
+          "theorem_id": "16d46789-a853-4a33-a4a3-4134fe549c82",
+          "theorem_name": "OpenGA.le_width_deadline_across_downward_jumps",
+          "theorem_title": "Width deadline across downward jumps"
+        },
+        {
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "ordinal": 2,
+          "status": "Open",
+          "theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+          "theorem_name": "PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere",
+          "theorem_title": "Persistent profiles from a hypothetical Poincare counterexample"
+        }
+      ],
+      "created_at": "2026-09-09T02:40:07.087888+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "submission_id": "d543d39b-4273-4b91-826f-1b9c8c6191ee"
+    },
+    {
+      "children": [
+        {
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "ordinal": 0,
+          "status": "Proved",
+          "theorem_id": "192cef90-169f-4470-b074-8392596cb487",
+          "theorem_name": "PoincareFormalization.covering_is_homeomorph",
+          "theorem_title": "A connected covering of a simply connected space is a homeomorphism"
+        },
+        {
+          "deprecated_at": null,
+          "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+          "ordinal": 1,
+          "status": "Open",
+          "theorem_id": "4de517bb-1125-48cf-b44f-de4ca093a0a5",
+          "theorem_name": "PoincareFormalization.spherical_cover_of_finite_fundamental_group",
+          "theorem_title": "Elliptization: a spherical cover for a closed 3-manifold with finite fundamental group"
+        }
+      ],
+      "created_at": "2026-09-08T04:53:00.448294+00:00",
+      "created_by": "9d3ad061-c992-4b3d-a6dd-36ecc2a5278e",
+      "deprecated_at": null,
+      "deprecated_by": null,
+      "submission_id": "98612d40-bcb7-4333-afa7-69b60e20dfdc"
+    }
+  ]
+}

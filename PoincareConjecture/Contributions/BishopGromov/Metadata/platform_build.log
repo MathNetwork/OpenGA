@@ -1,0 +1,8 @@
+⚠ [1764/1771] Replayed Theorems.Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le
+warning: Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le.lean:20:8: declaration uses `sorry`
+⚠ [1765/1771] Replayed Theorems.Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross
+warning: Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross.lean:12:8: declaration uses `sorry`
+⚠ [1768/1771] Built Theorems.Thm_OpenGA_antitoneOn_lintegral_Ioc_div (2.3s)
+warning: Theorems/Thm_OpenGA_antitoneOn_lintegral_Ioc_div.lean:11:8: declaration uses `sorry`
+✔ [1770/1771] Built Solutions.Sol_OpenGA_antitoneOn_lintegral_Ioc_div (2.3s)
+Build completed successfully (1771 jobs).

@@ -1,0 +1,243 @@
+{
+  "checked_at": "2026-09-09T18:47:34.927294+00:00",
+  "compatibility": {
+    "existing_names_preserved": [
+      "Riemannian.RiemannianMetric.geodesicBall",
+      "Riemannian.RiemannianMetric.ballVolume",
+      "Riemannian.RiemannianMetric.ballVolume_pos",
+      "Riemannian.RiemannianMetric.volumeMeasure",
+      "Riemannian.RiemannianMetric.volumeMeasure_isFiniteMeasure",
+      "Riemannian.RiemannianMetric.volumeMeasure_isOpenPosMeasure"
+    ],
+    "original_import_paths_preserved": true
+  },
+  "counts": {
+    "added_interface_declarations": 20,
+    "audited_declarations": 26,
+    "interpretation": "Interface and elementary corollary counts, not counts of newly established comparison theorems.",
+    "relocated_existing_declarations": 6
+  },
+  "modules": {
+    "OpenGALib/ComparisonGeometry/CurvatureBounds.lean": "427186a8dcb6f30dd3a9f99b53615de2b68b404cc8d6ddefe9a5f0915dcdf581",
+    "OpenGALib/ComparisonGeometry/MetricBall.lean": "4a3a40ad8bf323bbd1c7332618fee33fe431a798d9969a754220ed99f1c1459b",
+    "OpenGALib/ComparisonGeometry/Volume.lean": "06585b3560c1a5286310b245820e8e21feacfd822061d10d0a8d0b3d172b2ad8",
+    "OpenGALib/ComparisonGeometry/VolumeMeasure.lean": "114d1b823484d5cd7c72793d351550d100163d5c5dc020be9996ffc646e4b1b1"
+  },
+  "publication": {
+    "milestone_status": "Open; no completion claimed",
+    "platform": "not_published"
+  },
+  "reading_notes": [
+    "Theorem 11.0.2 uses a complete manifold and a global Ricci lower bound. It does not itself assert the ball-local version requested by the platform milestone.",
+    "On printed page 197, the displayed limit of the unnormalized radial density needs normalization: for n>1 its model behaves as t^(n-1), while the ratio to model density tends to one. No unnormalized limit of one is adopted here.",
+    "The Riccati trace argument divides by n-1, so its eventual formal use must distinguish dimension one.",
+    "The Ricci coefficient is (n-1)*K for model sectional curvature K. RicciBoundedBelowOn takes the Ricci coefficient as its argument."
+  ],
+  "reuse": [
+    {
+      "declarations": [
+        "riemannianEDistOf",
+        "edistOf_mono"
+      ],
+      "module": "DifferentialGeometry.Geometry.Metric.DistanceScaling",
+      "use": "Reuse the existing explicit-metric path distance."
+    },
+    {
+      "declarations": [
+        "riemannianVolumeMeasure_isFiniteMeasureOnCompacts",
+        "riemannianVolumeMeasure_isLocallyFiniteMeasure",
+        "riemannianVolumeMeasure_isOpenPosMeasure"
+      ],
+      "module": "DifferentialGeometry.Analysis.Integration.Measure.Properties",
+      "use": "Reuse volume construction and measure properties; compact-closure ball finiteness follows by measure monotonicity."
+    },
+    {
+      "declarations": [
+        "RicciBoundedBelow"
+      ],
+      "module": "DifferentialGeometry.Geometry.Comparison.BonnetMyers.RicciBound",
+      "use": "Retain upstream tensor and curvature convention; prove the region predicate at univ equivalent to the global predicate."
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Factor existing explicit-metric ball and volume interfaces into reusable foundation modules, and add elementary consequences and a region-restricted Ricci predicate. This does not reprove the upstream Bishop-Gromov development or finish the platform milestone.",
+  "source": {
+    "author": "Xinze Li",
+    "chapter": "Bishop-Gromov Volume Comparison",
+    "local_pdf_sha256": "b8c3f1d3838bd49880fac8d8526e9cbe960571d848e16040745deba7fcb4843e",
+    "pdf_pages": [
+      198,
+      206
+    ],
+    "printed_pages": [
+      191,
+      199
+    ],
+    "title": "Lecture Notes on Comparison Geometry",
+    "url": "https://arxiv.org/abs/2404.09792v2",
+    "use": "Mathematical definitions, hypothesis review and proof organization; Lean proofs reuse the pinned dependency and Mathlib.",
+    "version": "v2"
+  },
+  "upstream": {
+    "commit": "1b535dd102b94cc42b107cca27059687888f08b3",
+    "license": "Apache-2.0",
+    "release": "v0.1.2",
+    "repository": "https://github.com/qinz1yang/differential-geometry"
+  },
+  "upstream_comparison_coverage": {
+    "Jacobi_Riccati": "JacobiRiccati.mean_riccati_le and JacobiRiccatiLocal.mean_riccati_on already exist; no replacement implemented.",
+    "density_comparison": "SegmentFrameBound.expDens_le_hyp already exists; no replacement implemented.",
+    "milestone_gap": "The platform requires outer-ball-local curvature assumptions with compact closure and also positive model curvature. The imported endpoint does not establish this full statement.",
+    "polar_integration": "SegmentPolar.segBall_area_eq already exists and is included in the existing axiom audit.",
+    "relative_volume": "SegmentPolar.segBall_vol_rel already proves complete-manifold global-Ricci comparison for K=-q^2, q>=0.",
+    "small_ball_comparison": "BishopLocal.localBall_ratio also exists, but its signature still assumes completeness, a global Ricci lower bound and a sufficiently small normal radius."
+  },
+  "verification": {
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "audit_file": "PoincareConjecture/References/DifferentialGeometry/ComparisonGeometryAudit.lean",
+    "audit_sha256": "dd86c802b52c2df9bcf9957161ff282b6f2562b3f827e6d61147e4ad9ed43fbb",
+    "curation": "passed: 25 declarations and 25 source reviews",
+    "existing_bishop_gromov_audit": "passed: 16 declarations",
+    "existing_library_warnings": "Pre-existing style and instance warnings remain outside the changed modules.",
+    "foundation_audit_count": 26,
+    "foundation_axioms": {
+      "Riemannian.RiemannianMetric.RicciBoundedBelowOn": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.RicciBoundedBelowOn.geodesicBall_mono": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.RicciBoundedBelowOn.mono": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.RicciBoundedBelowOn.of_le": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.ballVolume": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.ballVolume_eq_zero": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.ballVolume_lt_top_of_isCompact_closure": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.ballVolume_lt_top_of_le_of_isCompact_closure": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.ballVolume_mono": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.ballVolume_pos": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.ballVolume_pos_iff": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.geodesicBall": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.geodesicBall_eq_empty": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.geodesicBall_mono": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.geodesicBall_nonempty": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.geodesicBall_subset_of_metric_le": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.isOpen_geodesicBall": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.mem_geodesicBall": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.ricciBoundedBelowOn_union": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.ricciBoundedBelowOn_univ": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.self_mem_geodesicBall": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.volumeMeasure": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.volumeMeasure_isFiniteMeasure": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.volumeMeasure_isFiniteMeasureOnCompacts": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.volumeMeasure_isLocallyFiniteMeasure": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "Riemannian.RiemannianMetric.volumeMeasure_isOpenPosMeasure": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "full_library_build": "passed: 4230 jobs",
+    "new_module_warnings": 0,
+    "synchronization_tests": "19 passed"
+  }
+}

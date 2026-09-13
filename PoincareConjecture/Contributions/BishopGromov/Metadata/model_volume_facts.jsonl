@@ -1,0 +1,11 @@
+{"end": {"col": 59, "line": 3, "offset": 189}, "kind": "header", "start": {"col": 0, "line": 1, "offset": 0}}
+{"end": {"col": 40, "line": 273, "offset": 11944}, "kind": "command", "start": {"col": 0, "line": 272, "offset": 11846}, "syntaxKind": "Lean.Parser.Command.declaration"}
+{"end": {"col": 43, "line": 298, "offset": 13034}, "kind": "command", "start": {"col": 0, "line": 294, "offset": 12768}, "syntaxKind": "Lean.Parser.Command.declaration"}
+{"declEnd": {"col": 40, "line": 273, "offset": 11944}, "declStart": {"col": 0, "line": 272, "offset": 11846}, "docstring": null, "kind": "decl", "nameText": "hypRadVol", "privateTok": null, "valKind": "simple", "valStart": {"col": 53, "line": 272, "offset": 11899}}
+{"declEnd": {"col": 43, "line": 298, "offset": 13034}, "declStart": {"col": 0, "line": 294, "offset": 12768}, "docstring": null, "kind": "decl", "nameText": "hypRadVol_pos", "privateTok": null, "valKind": "simple", "valStart": {"col": 24, "line": 295, "offset": 12867}}
+{"const": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol", "end": {"col": 13, "line": 272, "offset": 11859}, "kind": "ref", "start": {"col": 4, "line": 272, "offset": 11850}}
+{"const": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity", "end": {"col": 34, "line": 273, "offset": 11938}, "kind": "ref", "start": {"col": 24, "line": 273, "offset": 11928}}
+{"const": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol_pos", "end": {"col": 21, "line": 294, "offset": 12789}, "kind": "ref", "start": {"col": 8, "line": 294, "offset": 12776}}
+{"const": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypRadVol", "end": {"col": 17, "line": 295, "offset": 12860}, "kind": "ref", "start": {"col": 8, "line": 295, "offset": 12851}}
+{"const": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDen_continuous", "end": {"col": 23, "line": 297, "offset": 12952}, "kind": "ref", "start": {"col": 6, "line": 297, "offset": 12935}}
+{"const": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.hypDensity_pos", "end": {"col": 31, "line": 298, "offset": 13022}, "kind": "ref", "start": {"col": 17, "line": 298, "offset": 13008}}

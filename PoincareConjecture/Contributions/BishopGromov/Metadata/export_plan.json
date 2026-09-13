@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "status": "first_analytic_batch_published",
+  "geometric_targets": [
+    "Riemannian.RiemannianMetric.ballVolume_ratio_le",
+    "Riemannian.RiemannianMetric.ballVolume_two_mul_le"
+  ],
+  "reachable_source_declarations": 1906,
+  "reachable_source_modules": 214,
+  "declaration_kinds": {
+    "theorem": 1513,
+    "def": 377,
+    "inductive": 8,
+    "ctor": 8
+  },
+  "first_batch": [
+    "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_Iic_cross",
+    "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le"
+  ],
+  "remaining_components": [
+    "Riemannian volume definitions and chart independence",
+    "Levi-Civita connection, Ricci tensor and compatible metric distance",
+    "Geodesic/Jacobi and polar integration dependency export",
+    "Complete-manifold comparison and OpenGA interfaces",
+    "Ball-local hypotheses and positive model curvature"
+  ],
+  "scope": "The first batch supplies analytic prerequisites, not a proof of the geometric milestone.",
+  "source_graph_sha256": "3db817783fc55374b0879d0d14be48e7c1fba484218f872e365aa856860cd2d7",
+  "derived_corollary": "OpenGA.antitoneOn_lintegral_Ioc_div",
+  "publication_record": "PoincareConjecture/Contributions/BishopGromov/publication.json",
+  "root_graph_connected": false
+}

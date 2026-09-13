@@ -1,0 +1,101 @@
+{
+  "description_sha256": "c33778e7ff2e0904dc38df99e3b2d58debff87b8f3293821cd7811b88e3545eb",
+  "expected_creator_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+  "history": [
+    {
+      "description": "A long-term Lean 4 formalization of the three-dimensional Poincaré theorem: every closed, simply connected topological 3-manifold is homeomorphic to the 3-sphere. The mathematical theorem is established; the open work here is its formalization, not a new proof of an open conjecture.\n\nThe project will first formulate the target faithfully, inventory existing foundations, and develop explicit prerequisite milestones toward a proof based on the literature on Ricci flow and geometrization. No claim is made that the required analytic and topological infrastructure is already available in Mathlib.\n\nThe development will use [OpenGA](https://github.com/MathNetwork/OpenGA) and [DifferentialGeometry](https://github.com/qinz1yang/differential-geometry) alongside Lean 4 and Mathlib. OpenGA will serve as the project library for reusable geometric-analysis infrastructure and the integration of reviewed results. DifferentialGeometry will provide upstream differential- and Riemannian-geometric definitions and proofs for review, adaptation and reuse. Reused code will retain its original attribution, explicit mathematical hypotheses and pinned source versions.\n\nThe primary mathematical reference for the Ricci-flow development is Kleiner and Lott's [Notes on Perelman's Papers](https://arxiv.org/abs/math/0605667). Contributions are welcome in comparison geometry, geometric analysis, Ricci flow and the topology needed to connect the smooth and topological statements. Library results will be submitted with their required dependencies and verified in the mission's Lean environment before they are counted as proved on Prove2Me.",
+      "description_sha256": "f3e603ab762c1aea76b78770726adb2ce70a3e97d7fc6472ad115e781e61ea45",
+      "verified_at": "2026-09-09T16:48:59.400955+00:00"
+    },
+    {
+      "description": "A long-term Lean 4 formalization of the three-dimensional Poincaré theorem: every closed, simply connected topological 3-manifold is homeomorphic to the 3-sphere. The mathematical theorem is established; the open work here is its formalization, not a new proof of an open conjecture.\n\nThe project will first formulate the target faithfully, inventory existing foundations, and develop explicit prerequisite milestones toward a proof based on the literature on Ricci flow and geometrization. No claim is made that the required analytic and topological infrastructure is already available in Mathlib.\n\nThe development will build on Lean 4 and Mathlib and draw on three complementary projects:\n\n- [OpenGA](https://github.com/MathNetwork/OpenGA) will serve as the project library for reusable geometric-analysis infrastructure and the integration of reviewed results.\n- [DifferentialGeometry](https://github.com/qinz1yang/differential-geometry) will provide upstream differential- and Riemannian-geometric definitions and proofs for review, adaptation and reuse.\n- [Poincare-Conjecture](https://github.com/frenzymath/Poincare-Conjecture), by Frenzymath / PKU@AI4Math, will provide a reference for proof architecture, milestone decomposition and source-faithful supporting formalizations, including its Kleiner-Lott project. Selected code will be reused after review.\n\nReused code will retain its original attribution, explicit mathematical hypotheses and pinned source versions. The primary mathematical reference for the Ricci-flow development is Kleiner and Lott's [Notes on Perelman's Papers](https://arxiv.org/abs/math/0605667). Contributions are welcome in comparison geometry, geometric analysis, Ricci flow and the topology needed to connect the smooth and topological statements. Library results will be submitted with their required dependencies and verified in the mission's Lean environment before they are counted as proved on Prove2Me.",
+      "description_sha256": "08cdedbdf8af497fc6f5750721d075573369687f418ee1854e731ed92a8aa429",
+      "verified_at": "2026-09-09T16:50:07.439200+00:00"
+    }
+  ],
+  "libraries": [
+    {
+      "name": "OpenGA",
+      "repository": "https://github.com/MathNetwork/OpenGA",
+      "role": "Reusable geometric-analysis infrastructure and reviewed integration."
+    },
+    {
+      "name": "DifferentialGeometry",
+      "repository": "https://github.com/qinz1yang/differential-geometry",
+      "role": "Upstream differential and Riemannian geometry definitions and proofs."
+    },
+    {
+      "name": "Poincare-Conjecture",
+      "repository": "https://github.com/frenzymath/Poincare-Conjecture",
+      "role": "Proof architecture, milestone decomposition, source-faithful supporting formalizations, and reviewed code reuse."
+    }
+  ],
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "mission_url": "https://prove2.me/missions/Formalization%20of%20the%20Poincar%C3%A9%20Conjecture",
+  "original_description": "A long-term Lean 4 formalization of the three-dimensional Poincaré theorem: every closed, simply connected topological 3-manifold is homeomorphic to the 3-sphere. The mathematical theorem is established; the open work here is its formalization, not a new proof of an open conjecture.\n\nThe project will first formulate the target faithfully, inventory existing foundations, and develop explicit prerequisite milestones toward a proof based on the literature on Ricci flow and geometrization. No claim is made that the required analytic and topological infrastructure is already available in Mathlib.",
+  "payload": {
+    "description": "A long-term Lean 4 formalization of the three-dimensional Poincaré theorem: every closed, simply connected topological 3-manifold is homeomorphic to the 3-sphere. The mathematical theorem is established; the open work here is its formalization, not a new proof of an open conjecture.\n\nThe project will first formulate the target faithfully, inventory existing foundations, and develop explicit prerequisite milestones toward a proof based on the literature on Ricci flow and geometrization. No claim is made that the required analytic and topological infrastructure is already available in Mathlib.\n\nThe development will build on Lean 4 and Mathlib and draw on three complementary projects:\n\n- [OpenGA](https://github.com/MathNetwork/OpenGA) will serve as the project library for reusable geometric-analysis infrastructure and the integration of reviewed results.\n- [DifferentialGeometry](https://github.com/qinz1yang/differential-geometry) will provide upstream differential- and Riemannian-geometric definitions and proofs for review, adaptation and reuse.\n- [Poincare-Conjecture](https://github.com/frenzymath/Poincare-Conjecture) will provide a reference for proof architecture, milestone decomposition and source-faithful supporting formalizations, including its Kleiner-Lott project. Selected code will be reused after review.\n\nReused code will retain its original attribution, explicit mathematical hypotheses and pinned source versions. The primary mathematical reference for the Ricci-flow development is Kleiner and Lott's [Notes on Perelman's Papers](https://arxiv.org/abs/math/0605667). Contributions are welcome in comparison geometry, geometric analysis, Ricci flow and the topology needed to connect the smooth and topological statements. Library results will be submitted with their required dependencies and verified in the mission's Lean environment before they are counted as proved on Prove2Me."
+  },
+  "previous_description": "A long-term Lean 4 formalization of the three-dimensional Poincaré theorem: every closed, simply connected topological 3-manifold is homeomorphic to the 3-sphere. The mathematical theorem is established; the open work here is its formalization, not a new proof of an open conjecture.\n\nThe project will first formulate the target faithfully, inventory existing foundations, and develop explicit prerequisite milestones toward a proof based on the literature on Ricci flow and geometrization. No claim is made that the required analytic and topological infrastructure is already available in Mathlib.\n\nThe development will build on Lean 4 and Mathlib and draw on three complementary projects:\n\n- [OpenGA](https://github.com/MathNetwork/OpenGA) will serve as the project library for reusable geometric-analysis infrastructure and the integration of reviewed results.\n- [DifferentialGeometry](https://github.com/qinz1yang/differential-geometry) will provide upstream differential- and Riemannian-geometric definitions and proofs for review, adaptation and reuse.\n- [Poincare-Conjecture](https://github.com/frenzymath/Poincare-Conjecture), by Frenzymath / PKU@AI4Math, will provide a reference for proof architecture, milestone decomposition and source-faithful supporting formalizations, including its Kleiner-Lott project. Selected code will be reused after review.\n\nReused code will retain its original attribution, explicit mathematical hypotheses and pinned source versions. The primary mathematical reference for the Ricci-flow development is Kleiner and Lott's [Notes on Perelman's Papers](https://arxiv.org/abs/math/0605667). Contributions are welcome in comparison geometry, geometric analysis, Ricci flow and the topology needed to connect the smooth and topological statements. Library results will be submitted with their required dependencies and verified in the mission's Lean environment before they are counted as proved on Prove2Me.",
+  "response": {
+    "created_at": "2026-09-08T03:14:30.803315+00:00",
+    "creator": {
+      "id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Moqian"
+    },
+    "description": "A long-term Lean 4 formalization of the three-dimensional Poincaré theorem: every closed, simply connected topological 3-manifold is homeomorphic to the 3-sphere. The mathematical theorem is established; the open work here is its formalization, not a new proof of an open conjecture.\n\nThe project will first formulate the target faithfully, inventory existing foundations, and develop explicit prerequisite milestones toward a proof based on the literature on Ricci flow and geometrization. No claim is made that the required analytic and topological infrastructure is already available in Mathlib.\n\nThe development will build on Lean 4 and Mathlib and draw on three complementary projects:\n\n- [OpenGA](https://github.com/MathNetwork/OpenGA) will serve as the project library for reusable geometric-analysis infrastructure and the integration of reviewed results.\n- [DifferentialGeometry](https://github.com/qinz1yang/differential-geometry) will provide upstream differential- and Riemannian-geometric definitions and proofs for review, adaptation and reuse.\n- [Poincare-Conjecture](https://github.com/frenzymath/Poincare-Conjecture) will provide a reference for proof architecture, milestone decomposition and source-faithful supporting formalizations, including its Kleiner-Lott project. Selected code will be reused after review.\n\nReused code will retain its original attribution, explicit mathematical hypotheses and pinned source versions. The primary mathematical reference for the Ricci-flow development is Kleiner and Lott's [Notes on Perelman's Papers](https://arxiv.org/abs/math/0605667). Contributions are welcome in comparison geometry, geometric analysis, Ricci flow and the topology needed to connect the smooth and topological statements. Library results will be submitted with their required dependencies and verified in the mission's Lean environment before they are counted as proved on Prove2Me.",
+    "fields": [
+      {
+        "id": "10e75dcb-a12f-48c1-9311-3df769c6e10b",
+        "name": "Topology",
+        "slug": "topology"
+      }
+    ],
+    "id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+    "main_theorem": {
+      "formal_statement": "namespace PoincareFormalization\n\ntheorem nonempty_homeomorph_sphere_three (M : Type*) [TopologicalSpace M]\n    [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M] :\n    Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization",
+      "natural_language_statement": "Every compact simply connected Hausdorff topological 3-manifold without boundary is homeomorphic to the unit 3-sphere in Euclidean 4-space. This follows the exact hypotheses and conclusion of Mathlib’s proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three; only the declaration namespace and local notation are adapted for this platform. No extra second-countability assumption is imposed.",
+      "status": "Open",
+      "theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "theorem_name": "PoincareFormalization.nonempty_homeomorph_sphere_three",
+      "theorem_title": "Three-dimensional topological Poincaré conjecture — Mathlib statement"
+    },
+    "mission_type": "ResearchPaper",
+    "name": "Formalization of the Poincaré Conjecture",
+    "release_requested_at": null,
+    "visibility": "public"
+  },
+  "schema_version": 1,
+  "started_at": "2026-09-09T16:54:01.084729+00:00",
+  "status": "VERIFIED",
+  "verified_at": "2026-09-09T16:54:03.249812+00:00",
+  "verified_mission": {
+    "created_at": "2026-09-08T03:14:30.803315+00:00",
+    "creator": {
+      "id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "username": "Moqian"
+    },
+    "description": "A long-term Lean 4 formalization of the three-dimensional Poincaré theorem: every closed, simply connected topological 3-manifold is homeomorphic to the 3-sphere. The mathematical theorem is established; the open work here is its formalization, not a new proof of an open conjecture.\n\nThe project will first formulate the target faithfully, inventory existing foundations, and develop explicit prerequisite milestones toward a proof based on the literature on Ricci flow and geometrization. No claim is made that the required analytic and topological infrastructure is already available in Mathlib.\n\nThe development will build on Lean 4 and Mathlib and draw on three complementary projects:\n\n- [OpenGA](https://github.com/MathNetwork/OpenGA) will serve as the project library for reusable geometric-analysis infrastructure and the integration of reviewed results.\n- [DifferentialGeometry](https://github.com/qinz1yang/differential-geometry) will provide upstream differential- and Riemannian-geometric definitions and proofs for review, adaptation and reuse.\n- [Poincare-Conjecture](https://github.com/frenzymath/Poincare-Conjecture) will provide a reference for proof architecture, milestone decomposition and source-faithful supporting formalizations, including its Kleiner-Lott project. Selected code will be reused after review.\n\nReused code will retain its original attribution, explicit mathematical hypotheses and pinned source versions. The primary mathematical reference for the Ricci-flow development is Kleiner and Lott's [Notes on Perelman's Papers](https://arxiv.org/abs/math/0605667). Contributions are welcome in comparison geometry, geometric analysis, Ricci flow and the topology needed to connect the smooth and topological statements. Library results will be submitted with their required dependencies and verified in the mission's Lean environment before they are counted as proved on Prove2Me.",
+    "fields": [
+      {
+        "id": "10e75dcb-a12f-48c1-9311-3df769c6e10b",
+        "name": "Topology",
+        "slug": "topology"
+      }
+    ],
+    "id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+    "main_theorem": {
+      "deprecated_at": null,
+      "formal_statement": "namespace PoincareFormalization\n\ntheorem nonempty_homeomorph_sphere_three (M : Type*) [TopologicalSpace M]\n    [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M] :\n    Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization",
+      "natural_language_statement": "Every compact simply connected Hausdorff topological 3-manifold without boundary is homeomorphic to the unit 3-sphere in Euclidean 4-space. This follows the exact hypotheses and conclusion of Mathlib’s proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three; only the declaration namespace and local notation are adapted for this platform. No extra second-countability assumption is imposed.",
+      "status": "Open",
+      "theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "theorem_name": "PoincareFormalization.nonempty_homeomorph_sphere_three",
+      "theorem_title": "Three-dimensional topological Poincaré conjecture — Mathlib statement"
+    },
+    "mission_type": "ResearchPaper",
+    "name": "Formalization of the Poincaré Conjecture",
+    "release_requested_at": null,
+    "visibility": "public"
+  }
+}

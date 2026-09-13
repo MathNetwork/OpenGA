@@ -1,0 +1,1438 @@
+{
+  "environments": {
+    "environments": [
+      {
+        "display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "is_default": true,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "toolchain": "leanprover/lean4:v4.33.1"
+      },
+      {
+        "display_name": "Mathlib 777aaa6 (Lean v4.29.0-rc3)",
+        "is_default": false,
+        "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e",
+        "toolchain": "leanprover/lean4:v4.29.0-rc3"
+      },
+      {
+        "display_name": "Mathlib c5ea003 (Lean v4.30.0)",
+        "is_default": false,
+        "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f",
+        "toolchain": "leanprover/lean4:v4.30.0"
+      }
+    ]
+  },
+  "graph": {
+    "edges": [
+      {
+        "kind": "sketch",
+        "source": "16d46789-a853-4a33-a4a3-4134fe549c82",
+        "target": "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+      },
+      {
+        "kind": "sketch",
+        "source": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+        "target": "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+      },
+      {
+        "kind": "sketch",
+        "source": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "target": "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "target": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+      },
+      {
+        "kind": "sketch",
+        "source": "6445ec61-f49c-47ce-b681-7ab9ea9a4059",
+        "target": "sketch-51179dae-3662-451e-b374-fe303c70b325"
+      },
+      {
+        "kind": "sketch",
+        "source": "c5c9092c-00f4-4939-893e-ea9cc075b564",
+        "target": "sketch-51179dae-3662-451e-b374-fe303c70b325"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-51179dae-3662-451e-b374-fe303c70b325",
+        "target": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+      },
+      {
+        "kind": "sketch",
+        "source": "18265c01-abe4-486f-84f2-c88759ab91fc",
+        "target": "sketch-42885aae-9f1a-4edc-b4c4-d8e3820e630a"
+      },
+      {
+        "kind": "sketch",
+        "source": "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+        "target": "sketch-42885aae-9f1a-4edc-b4c4-d8e3820e630a"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+        "target": "b0543216-8c0f-4f20-8b76-40d197f69fba"
+      },
+      {
+        "kind": "sketch",
+        "source": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+        "target": "sketch-719f4cdd-1059-4091-9819-7926dbc5806e"
+      },
+      {
+        "kind": "sketch",
+        "source": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+        "target": "sketch-719f4cdd-1059-4091-9819-7926dbc5806e"
+      },
+      {
+        "kind": "sketch",
+        "source": "d81e3640-8579-4396-babb-69edac82be33",
+        "target": "sketch-719f4cdd-1059-4091-9819-7926dbc5806e"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-719f4cdd-1059-4091-9819-7926dbc5806e",
+        "target": "18265c01-abe4-486f-84f2-c88759ab91fc"
+      },
+      {
+        "kind": "sketch",
+        "source": "0347aa7b-4f24-4106-873e-c9b21fd9169f",
+        "target": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3"
+      },
+      {
+        "kind": "sketch",
+        "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+        "target": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3"
+      },
+      {
+        "kind": "sketch",
+        "source": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+        "target": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3",
+        "target": "ed56bd90-927e-45c1-81d1-b79a2ca8a034"
+      },
+      {
+        "kind": "sketch",
+        "source": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b",
+        "target": "sketch-01167772-943a-4c75-ab15-9f7b235777a8"
+      },
+      {
+        "kind": "sketch",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "sketch-01167772-943a-4c75-ab15-9f7b235777a8"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-01167772-943a-4c75-ab15-9f7b235777a8",
+        "target": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7"
+      },
+      {
+        "kind": "sketch",
+        "source": "2afae5fd-c4e2-4544-b37b-e819211739f1",
+        "target": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04"
+      },
+      {
+        "kind": "sketch",
+        "source": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+        "target": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04"
+      },
+      {
+        "kind": "sketch",
+        "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+        "target": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04"
+      },
+      {
+        "kind": "sketch",
+        "source": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+        "target": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04",
+        "target": "ca00fe64-9dc8-4809-80cf-e824e93594b5"
+      },
+      {
+        "kind": "sketch",
+        "source": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+        "target": "sketch-4b0967cf-4f47-4150-9061-44c6425c704d"
+      },
+      {
+        "kind": "sketch",
+        "source": "ca66101a-7280-449f-ad5d-350153b56ffd",
+        "target": "sketch-4b0967cf-4f47-4150-9061-44c6425c704d"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-4b0967cf-4f47-4150-9061-44c6425c704d",
+        "target": "3aca5641-0de9-4b5b-b280-28243d1961cd"
+      },
+      {
+        "kind": "structural",
+        "source": "a15a21e2-9521-45ee-b36b-7db0df18ff13",
+        "target": "b0543216-8c0f-4f20-8b76-40d197f69fba"
+      },
+      {
+        "kind": "structural",
+        "source": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+        "target": "18265c01-abe4-486f-84f2-c88759ab91fc"
+      },
+      {
+        "kind": "structural",
+        "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+        "target": "ed56bd90-927e-45c1-81d1-b79a2ca8a034"
+      },
+      {
+        "kind": "structural",
+        "source": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+        "target": "0347aa7b-4f24-4106-873e-c9b21fd9169f"
+      },
+      {
+        "kind": "structural",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7"
+      },
+      {
+        "kind": "structural",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "78c6f8ef-0643-49d3-96b8-5d6dceda2385"
+      },
+      {
+        "kind": "structural",
+        "source": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+        "target": "868ac3ab-4452-48dd-81f3-278079cdf42c"
+      },
+      {
+        "kind": "structural",
+        "source": "a15a21e2-9521-45ee-b36b-7db0df18ff13",
+        "target": "868ac3ab-4452-48dd-81f3-278079cdf42c"
+      },
+      {
+        "kind": "structural",
+        "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+        "target": "ca00fe64-9dc8-4809-80cf-e824e93594b5"
+      },
+      {
+        "kind": "structural",
+        "source": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+        "target": "ca00fe64-9dc8-4809-80cf-e824e93594b5"
+      },
+      {
+        "kind": "structural",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "d81e3640-8579-4396-babb-69edac82be33"
+      },
+      {
+        "kind": "structural",
+        "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "target": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b"
+      },
+      {
+        "kind": "structural",
+        "source": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+        "target": "3aca5641-0de9-4b5b-b280-28243d1961cd"
+      },
+      {
+        "kind": "structural",
+        "source": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+        "target": "c76baf4f-4a85-4508-8e03-574d04648ce3"
+      },
+      {
+        "kind": "structural",
+        "source": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+        "target": "c76baf4f-4a85-4508-8e03-574d04648ce3"
+      },
+      {
+        "kind": "sketch",
+        "source": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
+        "target": "sketch-e04116f7-6882-4385-adb2-3d369736d0a3"
+      },
+      {
+        "kind": "sketch",
+        "source": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+        "target": "sketch-e04116f7-6882-4385-adb2-3d369736d0a3"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-e04116f7-6882-4385-adb2-3d369736d0a3",
+        "target": "ca66101a-7280-449f-ad5d-350153b56ffd"
+      },
+      {
+        "kind": "sketch",
+        "source": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+        "target": "sketch-fd6f90da-3fa3-48c4-95a0-f36e42b9fe72"
+      },
+      {
+        "kind": "sketch",
+        "source": "8f010cd2-75b6-40f7-abdf-ec788a788a40",
+        "target": "sketch-fd6f90da-3fa3-48c4-95a0-f36e42b9fe72"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-fd6f90da-3fa3-48c4-95a0-f36e42b9fe72",
+        "target": "58a8c735-04e5-4c94-afef-0b03d5d80e0a"
+      },
+      {
+        "kind": "sketch",
+        "source": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+        "target": "sketch-91cf1c6b-5ed5-463a-b593-6f385348e01e"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-91cf1c6b-5ed5-463a-b593-6f385348e01e",
+        "target": "00a47c26-3e61-4afc-91c7-117708e1baf9"
+      },
+      {
+        "kind": "structural",
+        "source": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "target": "7b53cb40-bcab-4693-b755-615a06d5fb54"
+      },
+      {
+        "kind": "structural",
+        "source": "8f010cd2-75b6-40f7-abdf-ec788a788a40",
+        "target": "7b53cb40-bcab-4693-b755-615a06d5fb54"
+      },
+      {
+        "kind": "structural",
+        "source": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+        "target": "ca66101a-7280-449f-ad5d-350153b56ffd"
+      },
+      {
+        "kind": "structural",
+        "source": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "target": "58a8c735-04e5-4c94-afef-0b03d5d80e0a"
+      },
+      {
+        "kind": "structural",
+        "source": "8f010cd2-75b6-40f7-abdf-ec788a788a40",
+        "target": "58a8c735-04e5-4c94-afef-0b03d5d80e0a"
+      },
+      {
+        "kind": "structural",
+        "source": "5f12b4eb-73fe-4f5b-9eca-ea195943cb23",
+        "target": "8f010cd2-75b6-40f7-abdf-ec788a788a40"
+      },
+      {
+        "kind": "structural",
+        "source": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "target": "00a47c26-3e61-4afc-91c7-117708e1baf9"
+      },
+      {
+        "kind": "structural",
+        "source": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "target": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb"
+      }
+    ],
+    "expanded_theorem_ids": [
+      "7b53cb40-bcab-4693-b755-615a06d5fb54",
+      "ca66101a-7280-449f-ad5d-350153b56ffd"
+    ],
+    "has_hidden_deprecated_sketches": false,
+    "nodes": [
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:20:20.946761+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →\n      Nonempty (OpenGA.SurgeryComparisonProcess initialWidth finalTime) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $M$ be a compact, simply connected, Hausdorff topological three-manifold without boundary, hypothetically not homeomorphic to the unit three-sphere. Construct $W_0\\ge0$ such that for every $T>0$ there is a surgery comparison process with initial width bound $W_0$ and final time $T$.\n\nOpen geometric construction. It must supply all fields of the imported analytic process: smoothability and normalization, suitable surgery flow and uniform radial comparison data, containment of controlled regions in removed material, a finite volume-loss budget allowing smooth volume growth, and scalar/sweepout comparison profiles with the prescribed inequalities and jumps. It does not assume event finiteness; that follows from the separately proved volume argument. This refines the existing comparison-data target. The full Ricci-flow and Bishop-Gromov geometric developments remain open.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\nimport Definitions.Def_OpenGA_SurgeryComparisonProcess\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+        "source": "Kleiner-Lott, Section 3.5, p. 13 and Sublemma 79.23, p. 157, https://arxiv.org/pdf/math/0605667v5#page=13; Colding-Minicozzi finite-extinction width argument, https://arxiv.org/pdf/0707.0108v1#page=7. This is a composite OpenGA construction target, not a claim that a single cited lemma supplies all fields.",
+        "status": "Open",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "0347aa7b-4f24-4106-873e-c9b21fd9169f",
+        "theorem_name": "PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere",
+        "theorem_title": "Volume-controlled width profiles from a hypothetical Poincare counterexample",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T03:18:25.623291+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.integral_areaDensity_eq_energyDensity_iff (hv : AEStronglyMeasurable v μ)\n    (hw : AEStronglyMeasurable w μ)\n    (hE : Integrable (fun x => energyDensity (v x) (w x)) μ) :\n    (∫ x, areaDensity (v x) (w x) ∂μ) = (∫ x, energyDensity (v x) (w x) ∂μ) ↔\n      ∀ᵐ x ∂μ, ⟪v x, w x⟫_ℝ = 0 ∧ ‖v x‖ = ‖w x‖ := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu=\\int_X E(v(x),w(x))\\,d\\mu$$\n\nholds exactly when\n\n$$\\langle v(x),w(x)\\rangle=0\\quad\\text{and}\\quad\\|v(x)\\|=\\|w(x)\\|\\quad\\text{for }\\mu\\text{-almost every }x.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen MeasureTheory\nopen scoped InnerProductSpace\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\nopen OpenGA",
+        "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+        "status": "Proved",
+        "tags": [
+          "geometric-analysis",
+          "openga-area-energy"
+        ],
+        "theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+        "theorem_name": "OpenGA.integral_areaDensity_eq_energyDensity_iff",
+        "theorem_title": "Equality in the integrated area-energy comparison",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T02:38:17.472582+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.le_width_deadline_across_downward_jumps\n    {C W₀ : ℝ} (hC : 0 < C)\n    (n : ℕ) (hn : 0 < n) (times : ℕ → ℝ) (widths : ℕ → ℝ → ℝ)\n    (hzero : times 0 = 0)\n    (htimes : ∀ i < n, times i < times (i + 1))\n    (hcont : ∀ i < n, ContinuousOn (widths i) (Icc (times i) (times (i + 1))))\n    (hinitial : widths 0 (times 0) ≤ W₀)\n    (hfinal : 0 ≤ widths (n - 1) (times n))\n    (hslope : ∀ i < n, ∀ x ∈ Ico (times i) (times (i + 1)), ∀ r : ℝ,\n      -(4 * Real.pi) + 3 / (4 * (x + C)) * widths i x < r →\n        ∃ᶠ z in 𝓝[>] x, slope (widths i) x z < r)\n    (hjumps : ∀ i, i + 1 < n →\n      widths (i + 1) (times (i + 1)) ≤ widths i (times (i + 1))) :\n    times n ≤ (C ^ ((1 : ℝ) / 4) + W₀ / (16 * Real.pi * C ^ ((3 : ℝ) / 4))) ^ (4 : ℕ) - C := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $C>0$, $W_0\\in\\mathbb R$, and $0=t_0<t_1<\\cdots<t_n$ with $n\\ge1$. Let $w_i$ be continuous on $[t_i,t_{i+1}]$, with $w_0(0)\\le W_0$ and $w_{n-1}(t_n)\\ge0$. Suppose that, for $t_i\\le t<t_{i+1}$,\n$$D_+w_i(t)\\le-4\\pi+\\frac{3}{4(t+C)}w_i(t),$$\nand that $w_{i+1}(t_{i+1})\\le w_i(t_{i+1})$ at each internal joining time. Then\n$$t_n\\le\\left(C^{1/4}+\\frac{W_0}{16\\pi C^{3/4}}\\right)^4-C.$$\nHere $D_+$ is the lower right Dini derivative, represented by frequent strict upper bounds on forward slopes. The limsup upper bound in the geometric application implies this hypothesis. Nonnegativity is needed only at the final endpoint.\n\nThis is the explicit analytic extinction estimate, extended to a finite sequence of downward jumps. It does not assert that a geometric flow or its width has been constructed.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Pow.Deriv\n\nset_option autoImplicit false\n\nopen Set Topology\nopen scoped Topology",
+        "source": "Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, https://arxiv.org/pdf/0707.0108, p.4, Theorem 1.7 and equations (1.8)-(1.10). Analytic consequence of (1.10), extended to finitely many downward jumps by interval comparison; lower-Dini hypotheses are sufficient. The geometric surgery application is separate.",
+        "status": "Proved",
+        "tags": [
+          "differential-inequalities",
+          "geometric-analysis",
+          "ricci-flow"
+        ],
+        "theorem_id": "16d46789-a853-4a33-a4a3-4134fe549c82",
+        "theorem_name": "OpenGA.le_width_deadline_across_downward_jumps",
+        "theorem_title": "Width deadline across downward jumps",
+        "vote_count": 1
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T03:39:56.179735+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.eventually_width_slope_lt_of_comparison\n    {width : ℝ → ℝ} {time scalar : ℝ}\n    (data : WidthComparisonData width time scalar) (q : ℝ)\n    (hq : -(4 * Real.pi) - scalar / 2 * width time < q) :\n    ∀ᶠ s in 𝓝[>] time, slope width time s < q := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "A finite-energy pair consists of a measure space, a real inner product space, and two almost-everywhere strongly measurable fields $v,w$ with integrable energy. Write\n\n$$A(p)=\\int\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(p)=\\frac12\\int(\\|v\\|^2+\\|w\\|^2).$$\n\nConformality means orthogonality and equal norms almost everywhere. A width comparison at time $t$, with scalar parameter $R$, supplies a conformal realizer $r$ with $E(r)=W(t)$; pairs $p_{j,u}$ for $j\\in\\mathbb N$, $u\\in[0,1]$; caps $c_j$ with $E(p_{j,u})\\le c_j$ and $c_j\\to W(t)$; and, for every $\\varepsilon>0$, numbers $\\delta>0$ and $J$ such that for $j\\ge J$ and $t<s<t+\\delta$,\n\n$$W(s)\\le\\sup_{u\\in[0,1]}A(p_{j,u})+(s-t)\\left(-4\\pi-\\frac R2 A(r)+\\varepsilon\\right).$$\n\nThe fields are analytic input data. No surface differential, sweepout homotopy class, harmonic map, or Ricci flow is defined by this bundle.\n\nUnder these hypotheses, for every $q>-4\\pi-\\frac R2W(t)$ the right-hand difference quotients eventually satisfy\n\n$$\\frac{W(s)-W(t)}{s-t}<q\\qquad(s\\downarrow t).$$\n\nThis is the analytic conversion from short-time comparison estimates to the upper right slope bound. The existence of geometric comparison data is a separate requirement.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_WidthComparisonData\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped InnerProductSpace Topology\nopen OpenGA",
+        "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692.",
+        "status": "Proved",
+        "tags": [
+          "geometric-analysis",
+          "openga-width-comparison"
+        ],
+        "theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
+        "theorem_name": "OpenGA.eventually_width_slope_lt_of_comparison",
+        "theorem_title": "Width slope bound from area-energy comparisons",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:18:56.042359+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.exists_event_free_partition {events : Set ℝ} {T : ℝ}\n    (hfinite : events.Finite) (hinside : events ⊆ Ioo 0 T) (hT : 0 < T) :\n    ∃ n : ℕ, 0 < n ∧ ∃ times : ℕ → ℝ,\n      times 0 = 0 ∧ times n = T ∧\n      (∀ i ≤ n, times i ∈ Icc 0 T) ∧\n      (∀ i < n, times i < times (i + 1)) ∧\n      (∀ i < n, Disjoint events (Ioo (times i) (times (i + 1)))) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "If a finite set of real event times is contained in $(0,T)$ with $T>0$, there is a finite strictly increasing partition $0=t_0<\\cdots<t_n=T$, $n>0$, all of whose open subintervals contain no event.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology",
+        "source": "OpenGA, OpenGALib/Analysis/FiniteEventPartition.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "2afae5fd-c4e2-4544-b37b-e819211739f1",
+        "theorem_name": "OpenGA.exists_event_free_partition",
+        "theorem_title": "An event-free partition for finitely many event times",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T03:18:22.203268+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.areaDensity_eq_energyDensity_iff (v w : F) :\n    areaDensity v w = energyDensity v w ↔ ⟪v, w⟫_ℝ = 0 ∧ ‖v‖ = ‖w‖ := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nFor every such pair,\n\n$$A(v,w)=E(v,w)\\quad\\Longleftrightarrow\\quad\\langle v,w\\rangle=0\\ \\text{and}\\ \\|v\\|=\\|w\\|.$$\n\nThe zero pair is included. This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen MeasureTheory\nopen scoped InnerProductSpace\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nopen OpenGA",
+        "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+        "status": "Proved",
+        "tags": [
+          "geometric-analysis",
+          "openga-area-energy"
+        ],
+        "theorem_id": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b",
+        "theorem_name": "OpenGA.areaDensity_eq_energyDensity_iff",
+        "theorem_title": "Equality of area and energy densities",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:19:42.122989+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.RadialSurgeryVolumeBudget.events_finite (B : RadialSurgeryVolumeBudget) :\n    B.events.Finite := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Every radial surgery volume budget has a finite set of event times. No discreteness hypothesis is needed.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_RadialSurgeryVolumeBudget\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nopen OpenGA",
+        "source": "OpenGA, OpenGALib/Analysis/SurgeryVolume.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+        "theorem_name": "OpenGA.RadialSurgeryVolumeBudget.events_finite",
+        "theorem_title": "Finitely many events from a radial volume-loss budget",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T04:36:43.079175+00:00",
+        "created_by": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
+        "created_by_username": "Shuze Chen",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "namespace PoincareFormalization\n\ntheorem exists_smooth_structure_three (M : Type*) [TopologicalSpace M] [T2Space M]\n    [SecondCountableTopology M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M] :\n    ∃ cs : ChartedSpace (EuclideanSpace ℝ (Fin 3)) M,\n      @IsManifold ℝ _ _ _ _ _ _ (𝓡 3) ∞ M _ cs := by\n  sorry\n\nend PoincareFormalization\n",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $M$ be a second countable Hausdorff topological space that is locally modelled on $\\mathbb{R}^3$: it carries an atlas of charts, each a homeomorphism from an open subset of $M$ onto an open subset of $\\mathbb{R}^3 =$ `EuclideanSpace ℝ (Fin 3)`. That is, $M$ is a topological $3$-manifold without boundary.\n\nThen $M$ admits a smooth structure: there is an atlas on the *same* topological space $M$, again modelled on $\\mathbb{R}^3$, all of whose transition maps are $C^\\infty$.\n\nThis is the existence half of Moise's theorem, which gives every topological $3$-manifold an essentially unique piecewise linear structure and smooth structure; uniqueness is not asserted here. It is the step that lets a purely topological hypothesis be handed to Ricci flow, which evolves a Riemannian metric and so is defined only on a smooth manifold. Morgan and Tian record it in the footnote to their statement of the Poincare conjecture, as the reason why the topological and the smooth classification of $3$-manifolds are equivalent.\n\n**Formalization note.** A term of type `ChartedSpace (EuclideanSpace ℝ (Fin 3)) M` is exactly an atlas on the fixed topological space $M$, so the existential quantifier ranges over the possible smooth structures on that topology; the ambient instance argument supplies the given topological atlas. The exhibited atlas is not required to be compatible with, or to refine, that given atlas — only the topology of $M$ is held fixed. The model with corners is `𝓡 3`, the identity model on $\\mathbb{R}^3$, and the smoothness order is $\\infty$. No compactness or connectedness is assumed.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Geometry.Manifold.IsManifold.Basic\nimport Mathlib.Geometry.Manifold.Instances.Real\n\nset_option autoImplicit false\n\nopen scoped Manifold ContDiff",
+        "source": "Edwin E. Moise, \"Affine structures in 3-manifolds. V. The triangulation theorem and Hauptvermutung\", Annals of Mathematics (2) 56 (1952), 96-114, doi:10.2307/1969769: any topological 3-manifold has an essentially unique piecewise-linear structure and smooth structure; only the existence of the smooth structure is asserted here. Stated in the form used here by John W. Morgan and Gang Tian, \"Ricci Flow and the Poincare Conjecture\", Clay Mathematics Monographs 3 (2007), Introduction, p. 5, footnote 1: \"Every topological 3-manifold admits a differentiable structure and every homeomorphism between smooth 3-manifolds can be approximated by a diffeomorphism. Thus, classification results about topological 3-manifolds up to homeomorphism and about smooth 3-manifolds up to diffeomorphism are equivalent. In this book 'manifold' means 'smooth manifold.'\" (https://arxiv.org/pdf/math/0607607, printed p. 5). See also John Milnor, \"The Poincare Conjecture\", Clay Mathematics Institute problem description, end of Section 3, p. 5: \"In dimension 3, the discrepancies between topological, piecewise linear, and differentiable theories disappear\" (https://www.claymath.org/wp-content/uploads/2022/06/poincare.pdf).",
+        "status": "Open",
+        "tags": [
+          "differential-geometry",
+          "topology"
+        ],
+        "theorem_id": "6445ec61-f49c-47ce-b681-7ab9ea9a4059",
+        "theorem_name": "PoincareFormalization.exists_smooth_structure_three",
+        "theorem_title": "Moise's theorem: every topological $3$-manifold admits a smooth structure",
+        "vote_count": 1
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T02:04:08.77703+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.scalar_lower_bound_across_upward_jumps\n    (n : ℕ) (hn : 0 < n) (times : ℕ → ℝ) (profiles : ℕ → ℝ → ℝ)\n    (hzero : times 0 = 0)\n    (htimes : ∀ i < n, times i < times (i + 1))\n    (hcont : ∀ i < n, ContinuousOn (profiles i) (Icc (times i) (times (i + 1))))\n    (hinitial : -6 ≤ profiles 0 (times 0))\n    (hslope : ∀ i < n, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n      q < (2 / 3 : ℝ) * (profiles i t) ^ 2 →\n        ∀ᶠ s in 𝓝[>] t, q < slope (profiles i) t s)\n    (hjumps : ∀ i, i + 1 < n →\n      profiles i (times (i + 1)) ≤ profiles (i + 1) (times (i + 1))) :\n    ∀ i < n, ∀ t ∈ Icc (times i) (times (i + 1)),\n      -(6 : ℝ) / (1 + 4 * t) ≤ profiles i t := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $n\\ge1$ and $0=t_0<t_1<\\cdots<t_n$. For $0\\le i<n$, let $r_i:[t_i,t_{i+1}]\\to\\mathbb R$ be continuous. Write\n$$D_+r_i(t)=\\liminf_{s\\to t^+}\\frac{r_i(s)-r_i(t)}{s-t}.$$\nAssume $r_0(0)\\ge-6$, and, for each $i<n$ and $t_i\\le t<t_{i+1}$,\n$$D_+r_i(t)\\ge\\frac23r_i(t)^2.$$\nAt every internal joining time, assume $r_i(t_{i+1})\\le r_{i+1}(t_{i+1})$ for $i+1<n$. Then\n$$r_i(t)\\ge-\\frac6{1+4t}\\qquad(0\\le i<n,\\ t_i\\le t\\le t_{i+1}).$$\nThis isolates the scalar comparison step used in Kleiner-Lott's surgery estimates, with upward jumps allowed. Applying it to scalar-curvature minima requires establishing these analytic hypotheses from the geometry; this statement does not itself formalize a Ricci flow.\n\n[Source: Kleiner-Lott, proof of Lemma 79.11, p. 154](https://arxiv.org/pdf/math/0605667v5#page=154), using [Appendix B, equations (B.1)-(B.2), p. 202](https://arxiv.org/pdf/math/0605667v5#page=202).",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Analysis.Calculus.MeanValue\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology",
+        "source": "Analytic comparison extracted from Kleiner-Lott, Notes on Perelman's Papers, arXiv:math/0605667v5, proof of Lemma 79.11 (p. 154) and Appendix B (B.1)-(B.2) (p. 202). Upward jumps generalize the unchanged minima in that argument; the geometric Ricci-flow hypotheses are not formalized here. https://arxiv.org/pdf/math/0605667v5",
+        "status": "Proved",
+        "tags": [
+          "differential-inequalities",
+          "geometric-analysis",
+          "ricci-flow"
+        ],
+        "theorem_id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+        "theorem_name": "OpenGA.scalar_lower_bound_across_upward_jumps",
+        "theorem_title": "Scalar lower bound across upward jumps",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T03:39:10.718887+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "import Definitions.Def_OpenGA_AreaEnergyDensities\nimport Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Order.ConditionallyCompleteLattice.Indexed\n\n/-!\n# Width variation from area-energy comparison data\n\nThis module isolates the analytic passage from comparison families to a\nright-hand slope estimate. The input consists of finite-energy measurable\nvector pairs, uniform energy caps tending to the width, an almost conformal\nrealizer, and a short-time area comparison. None of these data are a definition\nof a surface differential, a sweepout, a harmonic map, or a Ricci flow.\n\nThe intended geometric inputs are described in Colding-Minicozzi,\n*Width and Finite Extinction Time of Ricci Flow*, arXiv:0707.0108v1:\nequation (1.4), the paragraph after Theorem 1.14, and the proof of Theorem 1.7,\nequations (1.25)-(1.28) and footnote 6 (pp. 3, 6-8). The comparison hypothesis\nbelow packages the uniform error estimates after shrinking the time interval;\nconstructing it from geometry is a separate open task.\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory Set Filter\nopen scoped InnerProductSpace Topology\n\nnamespace OpenGA\n\n/-- **Math.** A measurable pair with finite Dirichlet energy. Its domain may\nalso be a disjoint union, as for a finite collection of sphere maps. -/\nstructure FiniteEnergyPair where\n  domain : Type\n  [measurableSpace : MeasurableSpace domain]\n  target : Type\n  [normedAddCommGroup : NormedAddCommGroup target]\n  [innerProductSpace : InnerProductSpace ℝ target]\n  measure : Measure domain\n  first : domain → target\n  second : domain → target\n  first_measurable : AEStronglyMeasurable first measure\n  second_measurable : AEStronglyMeasurable second measure\n  energy_integrable : Integrable (fun x => energyDensity (first x) (second x)) measure\n\nattribute [instance] FiniteEnergyPair.measurableSpace\n  FiniteEnergyPair.normedAddCommGroup FiniteEnergyPair.innerProductSpace\n\n/-- **Math.** Integrated area density of a finite-energy pair. -/\nnoncomputable def FiniteEnergyPair.area (p : FiniteEnergyPair) : ℝ :=\n  ∫ x, areaDensity (p.first x) (p.second x) ∂p.measure\n\n/-- **Math.** Integrated energy density of a finite-energy pair. -/\nnoncomputable def FiniteEnergyPair.energy (p : FiniteEnergyPair) : ℝ :=\n  ∫ x, energyDensity (p.first x) (p.second x) ∂p.measure\n\n/-- **Math.** Orthogonality and equal length almost everywhere; a condition\non the supplied fields, without asserting that they are a map differential. -/\ndef FiniteEnergyPair.IsConformal (p : FiniteEnergyPair) : Prop :=\n  ∀ᵐ x ∂p.measure, ⟪p.first x, p.second x⟫_ℝ = 0 ∧ ‖p.first x‖ = ‖p.second x‖\n\n/-- **Math.** Analytic comparison data at one time. Competitors are indexed by\na sequence and the unit interval. The realizer encodes the limiting harmonic\nspheres only once the separate geometric construction has been supplied. -/\nstructure WidthComparisonData (width : ℝ → ℝ) (time scalar : ℝ) where\n  realizer : FiniteEnergyPair\n  realizer_conformal : realizer.IsConformal\n  realized_energy : realizer.energy = width time\n  competitor : ℕ → Icc (0 : ℝ) 1 → FiniteEnergyPair\n  energy_cap : ℕ → ℝ\n  energy_le_cap : ∀ j p, (competitor j p).energy ≤ energy_cap j\n  cap_tendsto : Tendsto energy_cap atTop (𝓝 (width time))\n  area_comparison : ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧ ∃ start : ℕ,\n    ∀ j ≥ start, ∀ s ∈ Ioo time (time + δ),\n      width s ≤ (⨆ p, (competitor j p).area) +\n        (s - time) * (-(4 * Real.pi) - scalar / 2 * realizer.area + ε)\n\n\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "A finite-energy pair consists of a measure space, a real inner product space, and two almost-everywhere strongly measurable fields $v,w$ with integrable energy. Write\n\n$$A(p)=\\int\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(p)=\\frac12\\int(\\|v\\|^2+\\|w\\|^2).$$\n\nConformality means orthogonality and equal norms almost everywhere. A width comparison at time $t$, with scalar parameter $R$, supplies a conformal realizer $r$ with $E(r)=W(t)$; pairs $p_{j,u}$ for $j\\in\\mathbb N$, $u\\in[0,1]$; caps $c_j$ with $E(p_{j,u})\\le c_j$ and $c_j\\to W(t)$; and, for every $\\varepsilon>0$, numbers $\\delta>0$ and $J$ such that for $j\\ge J$ and $t<s<t+\\delta$,\n\n$$W(s)\\le\\sup_{u\\in[0,1]}A(p_{j,u})+(s-t)\\left(-4\\pi-\\frac R2 A(r)+\\varepsilon\\right).$$\n\nThe fields are analytic input data. No surface differential, sweepout homotopy class, harmonic map, or Ricci flow is defined by this bundle.",
+        "node_type": "theorem",
+        "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692.",
+        "status": "Definition",
+        "tags": [
+          "geometric-analysis",
+          "openga-width-comparison"
+        ],
+        "theorem_id": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+        "theorem_name": "OpenGA_WidthComparisonData",
+        "theorem_title": "Finite-energy fields and width comparison data",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:19:01.078472+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "import Definitions.Def_DifferentialGeometry_ModelRadialVolume\nimport Definitions.Def_DifferentialGeometry_RadialCrossComparison\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\nnamespace OpenGA\n\n/-- **Math.** Uniform radial comparison data and a finite volume-loss budget.\nNo finiteness or discreteness is assumed for the set of event times. -/\nstructure RadialSurgeryVolumeBudget where\n  events : Set ℝ\n  modelParameter : ℝ\n  modelParameter_nonneg : 0 ≤ modelParameter\n  referenceRadius : ℝ\n  removalRadius : ℝ\n  removalRadius_pos : 0 < removalRadius\n  radius_le : removalRadius ≤ referenceRadius\n  anchor : ℝ\n  anchor_pos : 0 < anchor\n  totalBudget : ℝ\n  density : ℝ → ℝ → ℝ≥0∞\n  density_measurable : ∀ t ∈ events,\n    AEMeasurable (density t) (volume.restrict (Ioc 0 referenceRadius))\n  density_comparison : ∀ t ∈ events, CrossAnti referenceRadius (density t)\n    (fun r => ENNReal.ofReal (hypDensity modelParameter 2 r))\n  reference_lower : ∀ t ∈ events, ENNReal.ofReal anchor ≤\n    (∫⁻ r in Ioc (0 : ℝ) referenceRadius, density t r) /\n      ENNReal.ofReal (hypRadVol modelParameter 2 referenceRadius)\n  removedVolume : ℝ → ℝ\n  removedVolume_nonneg : ∀ t ∈ events, 0 ≤ removedVolume t\n  removal_contains : ∀ t ∈ events,\n    (∫⁻ r in Ioc (0 : ℝ) removalRadius, density t r) ≤ ENNReal.ofReal (removedVolume t)\n  volume_budget : ∀ s : Finset ℝ, (↑s : Set ℝ) ⊆ events →\n    ∑ t ∈ s, removedVolume t ≤ totalBudget\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "An arbitrary set of real event times carries nonnegative radial densities with cross-comparison against the three-dimensional model of curvature $-q^2$, where $q\\ge0$. Fix $0<r\\le R$ and $\\kappa>0$. At every event the normalized radial volume at $R$ is at least $\\kappa$, and the radial integral at $r$ is bounded by the nonnegative removed volume. Every finite subset of events has total removed volume bounded by a single finite real budget. No finiteness or discreteness of the event set is assumed.\n\nThis is an analytic interface for the nonaccumulation argument. A geometric application must construct the densities, identify their integrals with contained regions, justify uniform scales and the anchor, and bound all removed volume including allowance for smooth volume growth. It is not a definition of Ricci flow or surgery.",
+        "node_type": "theorem",
+        "source": "OpenGA derived analytic interface. Kleiner-Lott, Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; radial scale comparison in Sublemma 79.23, p. 157. Colding-Minicozzi width estimates: https://arxiv.org/pdf/0707.0108v1#page=7",
+        "status": "Definition",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+        "theorem_name": "OpenGA_RadialSurgeryVolumeBudget",
+        "theorem_title": "Radial comparison and a surgery volume-loss budget",
+        "vote_count": 0
+      },
+      {
+        "audits": [
+          {
+            "audit_id": "ba8c9e07-2e79-4ad2-93a8-961434e0b0e8",
+            "comment": null,
+            "created_at": "2026-09-08T03:14:14.323015+00:00",
+            "decision": "confirm",
+            "reviewer_id": "b14dd546-c5f9-458e-861d-79f50bacd399",
+            "reviewer_username": "tianyipeng"
+          },
+          {
+            "audit_id": "a25ab758-e063-474b-9880-ed5349eb82f0",
+            "comment": "Confirmed by the mission captain (proposal self-audit).",
+            "created_at": "2026-09-08T03:14:30.996361+00:00",
+            "decision": "confirm",
+            "reviewer_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+            "reviewer_username": "Xinze-Li-Moqian"
+          }
+        ],
+        "created_at": "2026-09-08T00:37:48.77319+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "namespace PoincareFormalization\n\ntheorem nonempty_homeomorph_sphere_three (M : Type*) [TopologicalSpace M]\n    [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M] :\n    Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Every compact simply connected Hausdorff topological 3-manifold without boundary is homeomorphic to the unit 3-sphere in Euclidean 4-space. This follows the exact hypotheses and conclusion of Mathlib’s proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three; only the declaration namespace and local notation are adapted for this platform. No extra second-countability assumption is imposed.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected",
+        "source": "Mathlib, Junyan Xu, Geometry/Manifold/PoincareConjecture.lean, proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three, platform revision 0df444a: https://github.com/leanprover-community/mathlib4/blob/0df444a/Mathlib/Geometry/Manifold/PoincareConjecture.lean . Mathematical reference: John Milnor, The Poincaré Conjecture, Section 1, p. 1, https://www.claymath.org/wp-content/uploads/2022/06/poincare.pdf . Proof exposition: Morgan–Tian, Ricci Flow and the Poincaré Conjecture (2007), Corollary 0.2(a), https://www.claymath.org/library/monographs/cmim03.pdf ; correction https://arxiv.org/abs/1512.00699 .",
+        "status": "Open",
+        "tags": [
+          "mathlib",
+          "poincare-conjecture",
+          "topology"
+        ],
+        "theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+        "theorem_name": "PoincareFormalization.nonempty_homeomorph_sphere_three",
+        "theorem_title": "Three-dimensional topological Poincaré conjecture — Mathlib statement",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T03:39:56.083015+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "import Definitions.Def_OpenGA_WidthComparisonData\nimport Definitions.Def_OpenGA_ScalarWidthTrace\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite scalar and width data with area-energy comparison witnesses in\nplace of an assumed width slope bound. This is an analytic interface, not a\ndefinition of Ricci flow, surgery, or a geometric sweepout. -/\nstructure WidthComparisonTrace (initialWidth finalTime : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = finalTime\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ initialWidth\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  comparison : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)),\n    Nonempty (WidthComparisonData (width i) t (scalar i t))\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "A finite partition of a time interval carries continuous scalar and width profiles, normalized initial scalar bound, a common initial width bound, nonnegative widths, the scalar differential inequality, upward scalar jumps and downward width jumps. At each time before the end of a partition interval, an area-energy width comparison bundle is supplied. The width slope inequality is deliberately a conclusion of the comparison theorem, not a field of this bundle. This records analytic data to be constructed from geometry; it does not define a surgery flow.",
+        "node_type": "theorem",
+        "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692.",
+        "status": "Definition",
+        "tags": [
+          "geometric-analysis",
+          "openga-width-comparison"
+        ],
+        "theorem_id": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+        "theorem_name": "OpenGA_WidthComparisonTrace",
+        "theorem_title": "Width traces with area-energy comparison witnesses",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T02:38:00.672133+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite analytic data for the scalar-minimum and width argument on `[0, T]`.\nThis structure records inequalities and jumps only. It is not a definition of\nRicci flow, surgery, scalar curvature, or sweepout width. Supplying it from\ngeometric data is a separate theorem. -/\nstructure ScalarWidthTrace (W₀ T : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = T\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ W₀\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  width_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    -(4 * Real.pi) - scalar i t / 2 * width i t < q →\n      ∃ᶠ s in 𝓝[>] t, slope (width i) t s < q\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For real numbers $W_0,T$, a scalar-width trace consists of a positive finite number of intervals with\n$$0=t_0<t_1<\\cdots<t_n=T,$$\nand continuous real functions $r_i,w_i$ on each $[t_i,t_{i+1}]$. The initial bounds are $r_0(0)\\ge-6$ and $w_0(0)\\le W_0$, and all widths are nonnegative. On each right-open interval the lower right Dini derivatives obey\n$$D_+r_i\\ge\\frac23 r_i^2,\\qquad D_+w_i\\le-4\\pi-\\frac12r_iw_i.$$\nAt each internal joining time, the scalar profile can jump upward and the width can jump downward:\n$$r_i(t_{i+1})\\le r_{i+1}(t_{i+1}),\\qquad w_{i+1}(t_{i+1})\\le w_i(t_{i+1}).$$\nHere $D_+$ denotes the liminf of forward difference quotients. Scalar lower bounds are expressed by eventual strict slope bounds; width upper bounds use frequent strict slope bounds. A limsup upper bound, as in the geometric width estimate, implies the latter hypothesis.\n\nThis is an analytic interface assembled from the scalar comparison and width estimates. It does not define Ricci flow, surgery, scalar curvature, or geometric sweepout width. Producing these data from a manifold remains a separate geometric theorem.",
+        "node_type": "theorem",
+        "source": "Analytic interface extracted from Kleiner-Lott, Notes on Perelman's Papers, arXiv:math/0605667v5, Lemma 79.11 (p.154) and Appendix B (p.202), https://arxiv.org/pdf/math/0605667v5; Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, Theorem 1.7 and (1.8)-(1.10) (p.4), scalar evolution (1.17) (p.6), (1.28) (p.8), https://arxiv.org/pdf/0707.0108. Finite traces and the lower-Dini formulation are explicit analytic abstractions, not a verbatim named definition in either paper.",
+        "status": "Definition",
+        "tags": [
+          "geometric-analysis",
+          "ricci-flow"
+        ],
+        "theorem_id": "a15a21e2-9521-45ee-b36b-7db0df18ff13",
+        "theorem_name": "OpenGA_ScalarWidthTrace",
+        "theorem_title": "Scalar and width traces across surgery times",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T02:38:25.083946+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ W₀ : ℝ, 0 ≤ W₀ ∧ ∀ T : ℝ, 0 < T → Nonempty (OpenGA.ScalarWidthTrace W₀ T) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $M$ be a compact simply connected Hausdorff topological three-manifold without boundary. Suppose that $M$ is not homeomorphic to the unit three-sphere. Then there is a real number $W_0\\ge0$, independent of the final time, such that\n$$\\forall T>0,\\quad \\text{there exists a scalar-width trace on }[0,T]\\text{ with initial width at most }W_0.$$\nA scalar-width trace is the analytic data in the imported definition: finitely many continuous scalar and nonnegative width profiles, initial scalar minimum at least $-6$, differential inequalities\n$$D_+r\\ge\\frac23r^2,\\qquad D_+w\\le-4\\pi-\\frac12rw,$$\nand upward scalar jumps and downward width jumps.\n\nThis is a composite geometric extraction target for the Kleiner-Lott surgery route with the Colding-Minicozzi width input. It deliberately isolates the unresolved passage from geometry and topology to analytic data. It is not a formalization of any one named milestone. The scope includes passing from a topological three-manifold to smooth normalized initial data, constructing surgery flows for arbitrary finite times, identifying surviving nontrivial components under the nonspherical hypothesis, and establishing the scalar/width estimates, endpoint regularity, jump inequalities, and a uniform initial width bound. None of those geometric constructions is supplied by the trace definition.\n\nThe Kleiner-Lott source starts with smooth geometric data; the topological-to-smooth passage is an additional formalization obligation in this statement.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_ScalarWidthTrace\nimport Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\nset_option autoImplicit false",
+        "source": "Composite reduction target, not a verbatim theorem: Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 (pp.8-9), Proposition 77.2 (p.146), Lemma 79.11 (p.154), Lemma 81.2 (p.160), with Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7, Corollary 1.11 (p.4), and (1.28) (p.8). The topological smoothing bridge and the extraction of finite analytic profiles are explicitly unresolved parts of this derived target; this statement does not attest any individual geometric milestone.",
+        "status": "Open",
+        "tags": [
+          "differential-inequalities",
+          "geometric-analysis",
+          "ricci-flow"
+        ],
+        "theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "theorem_name": "PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere",
+        "theorem_title": "Persistent profiles from a hypothetical Poincare counterexample",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T04:36:44.243982+00:00",
+        "created_by": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
+        "created_by_username": "Shuze Chen",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "namespace PoincareFormalization\n\ntheorem nonempty_sdiffeomorph_sphere_three (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M] [IsManifold (𝓡 3) ∞ M]\n    [SimplyConnectedSpace M] [CompactSpace M] :\n    Nonempty (M ≃ₘ⟮𝓡 3, 𝓡 3⟯ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization\n",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Every compact, simply connected, Hausdorff smooth $3$-manifold without boundary is diffeomorphic to the unit $3$-sphere\n\n$$\\mathbb{S}^3 = \\{\\, x \\in \\mathbb{R}^4 : \\lVert x \\rVert = 1 \\,\\},$$\n\nwith its standard smooth structure.\n\nThis is the statement Perelman's argument proves. Ricci flow evolves a Riemannian metric on a smooth manifold, so the smooth category is where the proof takes place; Morgan and Tian state the conjecture in exactly this form and obtain it as Corollary 0.2(a). The topological Poincare conjecture follows from it together with Moise's theorem, that every topological $3$-manifold admits a differentiable structure.\n\n**Formalization note.** This follows the exact hypotheses and conclusion of Mathlib's `proof_wanted SimplyConnectedSpace.nonempty_sdiffeomorph_sphere_three` at the platform's Mathlib revision; only the declaration namespace and the local notation are adapted for this platform, matching the treatment of the topological statement in `PoincareFormalization.nonempty_homeomorph_sphere_three`. The smooth structure on $M$ is the `IsManifold (𝓡 3) ∞ M` instance, $\\mathbb{S}^3$ carries Mathlib's standard smooth structure, and `≃ₘ⟮𝓡 3, 𝓡 3⟯` is a $C^\\infty$ diffeomorphism. No second countability assumption is imposed.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Geometry.Manifold.Diffeomorph\nimport Mathlib.Geometry.Manifold.Instances.Sphere\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\nset_option autoImplicit false\n\nopen scoped Manifold ContDiff",
+        "source": "Mathlib, Junyan Xu, Mathlib/Geometry/Manifold/PoincareConjecture.lean, proof_wanted SimplyConnectedSpace.nonempty_sdiffeomorph_sphere_three (\"The 3-dimensional smooth Poincare conjecture (proven by Perelman)\"), platform revision 0df444a: https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/Geometry/Manifold/PoincareConjecture.lean . Mathematical reference: John W. Morgan and Gang Tian, \"Ricci Flow and the Poincare Conjecture\", Clay Mathematics Monographs 3 (2007), Introduction, p. 5: \"Poincare Conjecture: a closed, smooth, simply connected 3-manifold is diffeomorphic to S^3\", and Corollary 0.2(a), p. 6: \"A closed, simply connected 3-manifold is diffeomorphic to S^3\" (where, by footnote 1 on p. 5, 'manifold' means 'smooth manifold'), https://arxiv.org/pdf/math/0607607 ; correction to Section 19.2: https://arxiv.org/abs/1512.00699 . Original arguments: G. Perelman, arXiv:math/0211159, arXiv:math/0303109, arXiv:math/0307245.",
+        "status": "Open",
+        "tags": [
+          "differential-geometry",
+          "topology"
+        ],
+        "theorem_id": "c5c9092c-00f4-4939-893e-ea9cc075b564",
+        "theorem_name": "PoincareFormalization.nonempty_sdiffeomorph_sphere_three",
+        "theorem_title": "Three-dimensional smooth Poincaré conjecture — Mathlib statement",
+        "vote_count": 1
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:19:41.570973+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "import Definitions.Def_OpenGA_RadialSurgeryVolumeBudget\nimport Definitions.Def_OpenGA_WidthComparisonData\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\nnamespace OpenGA\n\n/-- **Math.** An interval within a finite horizon whose interior contains\nno event. Its endpoints may be event times. -/\ndef EventFreeInterval (events : Set ℝ) (T a b : ℝ) : Prop :=\n  0 ≤ a ∧ a < b ∧ b ≤ T ∧ Disjoint events (Ioo a b)\n\n/-- **Math.** Scalar/width comparison profiles and volume-loss control before\none knows that the event times are finite. Every geometric interpretation,\nincluding the budget and radial density hypotheses, remains a separate input. -/\nstructure SurgeryComparisonProcess (initialWidth finalTime : ℝ) where\n  volumeControl : RadialSurgeryVolumeBudget\n  events_inside : volumeControl.events ⊆ Ioo 0 finalTime\n  finalTime_pos : 0 < finalTime\n  scalar : ℝ → ℝ → ℝ\n  width : ℝ → ℝ → ℝ\n  scalar_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (scalar a) (Icc a b)\n  width_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (width a) (Icc a b)\n  scalar_initial : -6 ≤ scalar 0 0\n  width_initial : width 0 0 ≤ initialWidth\n  width_nonneg : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Icc a b, 0 ≤ width a t\n  scalar_slope : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, ∀ q : ℝ, q < (2 / 3 : ℝ) * (scalar a t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar a) t s\n  comparison : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, Nonempty (WidthComparisonData (width a) t (scalar a t))\n  scalar_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → scalar a b ≤ scalar b b\n  width_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → width b b ≤ width a b\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For an initial width bound $W_0$ and positive horizon $T$, this bundle combines a radial volume-loss budget with event times in $(0,T)$ and scalar/width profiles on every event-free interval. Profiles are continuous on each closed interval, widths are nonnegative, initial scalar is at least $-6$, and initial width is at most $W_0$. The scalar right-slope inequality is $R^\\prime\\ge\\frac23R^2$; each time carries an area-energy width-comparison witness. Adjacent intervals allow upward scalar jumps and downward width jumps.\n\nThe event set need not be finite by definition. Its finiteness is a theorem derived from volume control. These are conditional analytic data, whose construction from a manifold remains an Open geometric problem.",
+        "node_type": "theorem",
+        "source": "OpenGA derived analytic interface. Kleiner-Lott, Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; radial scale comparison in Sublemma 79.23, p. 157. Colding-Minicozzi width estimates: https://arxiv.org/pdf/0707.0108v1#page=7",
+        "status": "Definition",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+        "theorem_name": "OpenGA_SurgeryComparisonProcess",
+        "theorem_title": "Scalar and width profiles with surgery volume control",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:20:12.744317+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess {W T : ℝ}\n    (P : SurgeryComparisonProcess W T) : Nonempty (WidthComparisonTrace W T) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For any initial bound and final horizon, a surgery comparison process yields a finite width comparison trace with the same bounds. The trace satisfies the existing scalar and width interface used by the Poincare width-extinction reduction.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_SurgeryComparisonProcess\nimport Definitions.Def_OpenGA_WidthComparisonTrace\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nopen OpenGA",
+        "source": "OpenGA, OpenGALib/Analysis/SurgeryComparison.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+        "theorem_name": "OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess",
+        "theorem_title": "A finite width comparison trace from volume-controlled profiles",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:19:47.411297+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower (B : RadialSurgeryVolumeBudget)\n    {t : ℝ} (ht : t ∈ B.events) :\n    B.anchor * hypRadVol B.modelParameter 2 B.removalRadius ≤ B.removedVolume t := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For every event of a radial surgery volume budget, its removed volume is at least $\\kappa V_{q,2}(r)>0$, where $\\kappa$ is the positive reference-scale anchor and $r$ the positive removal radius. The bound is uniform over all events.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_RadialSurgeryVolumeBudget\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nopen OpenGA",
+        "source": "OpenGA, OpenGALib/Analysis/SurgeryVolume.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "geometric-analysis",
+          "poincare-conjecture",
+          "ricci-flow"
+        ],
+        "theorem_id": "ca66101a-7280-449f-ad5d-350153b56ffd",
+        "theorem_name": "OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower",
+        "theorem_title": "A uniform positive volume loss from model comparison",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T03:17:38.845171+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\n/-!\n# Area and energy densities\n\nFor the images `v`, `w` of an orthonormal tangent frame under a differential,\nthe area density is the square root of the Gram determinant and the energy\ndensity is half the sum of the squared norms. The area is bounded by the\nenergy, with equality precisely for orthogonal vectors of equal norm.\n\nThe integral results assume measurable vector fields and integrable energy;\nintegrability of the area is a conclusion, not an additional assumption.\nThey apply on any measure space, including a restricted domain measure.\nIdentifying these fields with a Sobolev differential on a surface remains a\nseparate geometric interface. No global frame on the sphere is asserted.\n\nReference: Colding-Minicozzi, *Width and Finite Extinction Time of Ricci Flow*,\narXiv:0707.0108v1, equation (1.4) and the following equality discussion, p. 3.\nhttps://arxiv.org/pdf/0707.0108v1#page=3\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory\nopen scoped InnerProductSpace\n\nnamespace OpenGA\n\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\n\n/-- **Math.** The two-dimensional Jacobian density of a pair of derivative vectors. -/\nnoncomputable def areaDensity (v w : F) : ℝ :=\n  Real.sqrt (‖v‖ ^ 2 * ‖w‖ ^ 2 - ⟪v, w⟫_ℝ ^ 2)\n\n/-- **Math.** The Dirichlet energy density of a pair of derivative vectors. -/\nnoncomputable def energyDensity (v w : F) : ℝ :=\n  (‖v‖ ^ 2 + ‖w‖ ^ 2) / 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsection Integral\n\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\n\n\n\n\n\n\n\nend Integral\n\nend OpenGA\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "node_type": "theorem",
+        "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+        "status": "Definition",
+        "tags": [
+          "geometric-analysis",
+          "openga-area-energy"
+        ],
+        "theorem_id": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+        "theorem_name": "OpenGA_AreaEnergyDensities",
+        "theorem_title": "Area and energy densities of a vector pair",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T03:18:24.1547+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.integral_areaDensity_le_energyDensity (hv : AEStronglyMeasurable v μ)\n    (hw : AEStronglyMeasurable w μ)\n    (hE : Integrable (fun x => energyDensity (v x) (w x)) μ) :\n    (∫ x, areaDensity (v x) (w x) ∂μ) ≤ ∫ x, energyDensity (v x) (w x) ∂μ := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density $x\\mapsto E(v(x),w(x))$. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu\\leq\\int_X E(v(x),w(x))\\,d\\mu.$$\n\nNo finiteness assumption on the measure is needed; finite energy is explicit. This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+        "node_type": "theorem",
+        "preamble": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen MeasureTheory\nopen scoped InnerProductSpace\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\nopen OpenGA",
+        "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+        "status": "Proved",
+        "tags": [
+          "geometric-analysis",
+          "openga-area-energy"
+        ],
+        "theorem_id": "d81e3640-8579-4396-babb-69edac82be33",
+        "theorem_name": "OpenGA.integral_areaDensity_le_energyDensity",
+        "theorem_title": "Area-energy comparison for finite-energy vector fields",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T03:40:21.582079+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem PoincareFormalization.persistent_comparison_data_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →\n      Nonempty (OpenGA.WidthComparisonTrace initialWidth finalTime) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $M$ be a compact, simply connected, Hausdorff topological three-manifold without boundary. Assume hypothetically that $M$ is not homeomorphic to the unit three-sphere. Construct a constant $W_0\\ge0$ such that for every $T>0$ there is a finite width comparison trace on $[0,T]$, with initial width at most $W_0$.\n\nA finite partition of a time interval carries continuous scalar and width profiles, normalized initial scalar bound, a common initial width bound, nonnegative widths, the scalar differential inequality, upward scalar jumps and downward width jumps. At each time before the end of a partition interval, an area-energy width comparison bundle is supplied. The width slope inequality is deliberately a conclusion of the comparison theorem, not a field of this bundle. This records analytic data to be constructed from geometry; it does not define a surgery flow.\n\nA finite-energy pair consists of a measure space, a real inner product space, and two almost-everywhere strongly measurable fields $v,w$ with integrable energy. Write\n\n$$A(p)=\\int\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(p)=\\frac12\\int(\\|v\\|^2+\\|w\\|^2).$$\n\nConformality means orthogonality and equal norms almost everywhere. A width comparison at time $t$, with scalar parameter $R$, supplies a conformal realizer $r$ with $E(r)=W(t)$; pairs $p_{j,u}$ for $j\\in\\mathbb N$, $u\\in[0,1]$; caps $c_j$ with $E(p_{j,u})\\le c_j$ and $c_j\\to W(t)$; and, for every $\\varepsilon>0$, numbers $\\delta>0$ and $J$ such that for $j\\ge J$ and $t<s<t+\\delta$,\n\n$$W(s)\\le\\sup_{u\\in[0,1]}A(p_{j,u})+(s-t)\\left(-4\\pi-\\frac R2 A(r)+\\varepsilon\\right).$$\n\nThe fields are analytic input data. No surface differential, sweepout homotopy class, harmonic map, or Ricci flow is defined by this bundle.\n\nThis is a composite open construction problem refining the existing persistent-profile target. Remaining geometric work includes a smooth model and normalization, the prime-factor and sweepout reductions, surgery-flow existence, scalar comparison, conformal width realizers, uniform short-time comparison estimates, endpoint continuity and surgery compatibility. In particular, this statement does not assert that these tasks are solved.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_WidthComparisonTrace\nimport Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\nset_option autoImplicit false",
+        "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692. For the surgery framework and topology: Kleiner-Lott, Notes on Perelman's papers, math/0605667v5, Claim 3.5, Remark 73.6, Proposition 77.2, Lemma 79.11 and Lemma 81.2. https://arxiv.org/pdf/math/0605667v5 . This is a composite open construction target, not a claim that these geometric sources have already been formalized.",
+        "status": "Open",
+        "tags": [
+          "geometric-analysis",
+          "openga-width-comparison"
+        ],
+        "theorem_id": "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+        "theorem_name": "PoincareFormalization.persistent_comparison_data_of_not_homeomorph_sphere",
+        "theorem_title": "Comparison data from a hypothetical Poincare counterexample",
+        "vote_count": 0
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-09T03:19:42.082002+00:00",
+        "deprecated_at": null,
+        "explanation": "Under almost-everywhere strong measurability and integrable energy, equality of total area and energy is equivalent to orthogonality and equal norms almost everywhere.\n\nThe pointwise area-energy bound first supplies integrability of the area density by domination. For two integrable functions ordered almost everywhere, equal integrals are equivalent to equality almost everywhere. Applying the proved pointwise equality criterion therefore gives\n\n$$A(v(x),w(x))=E(v(x),w(x))\\ \\text{a.e.}\\quad\\Longleftrightarrow\\quad \\langle v(x),w(x)\\rangle=0\\ \\text{and}\\ \\|v(x)\\|=\\|w(x)\\|\\ \\text{a.e.}$$",
+        "node_id": "sketch-01167772-943a-4c75-ab15-9f7b235777a8",
+        "node_type": "sketch",
+        "parent_theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+        "status": "ACCEPTED",
+        "submission_id": "01167772-943a-4c75-ab15-9f7b235777a8",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 3,
+        "created_at": "2026-09-09T18:26:27.188791+00:00",
+        "deprecated_at": null,
+        "explanation": "This reduction retains one Open geometric child: constructing volume-controlled scalar and width profiles from a hypothetical counterexample. Given its data for each horizon, the proved trace constructor derives event finiteness from model radial comparison and the volume-loss budget, sorts the event times and restricts the profiles to a finite trace. Thus the Bishop-Gromov analytic prerequisites enter the existing width route through a proved nonaccumulation step. The geometric child, the parent and the Poincare goal remain Open; this is not a proof of Ricci-flow surgery or of the full geometric Bishop-Gromov theorem.",
+        "node_id": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3",
+        "node_type": "sketch",
+        "parent_theorem_id": "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+        "status": "SKETCH_ACCEPTED",
+        "submission_id": "0943befc-504f-4d6d-af2b-43ec35d7a1b3",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-09T03:41:14.183826+00:00",
+        "deprecated_at": null,
+        "explanation": "Assume the open comparison-data construction target. It supplies one initial width bound valid for every finite horizon and a trace of scalar and width profiles on each such horizon. Keep its partition, profiles, initial bounds, continuity and jump inequalities.\n\nAt each interior time the proved area-energy comparison theorem gives an eventual upper bound on the right-hand difference quotients of the width. The real right-neighborhood filter is nontrivial, so an eventual bound implies the frequently occurring bound required by ScalarWidthTrace. This fills its remaining width slope field.\n\nThe conclusion remains conditional on constructing the geometric comparison data; neither this reduction nor the analytic comparison theorem proves the Poincare conjecture independently.",
+        "node_id": "sketch-42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+        "node_type": "sketch",
+        "parent_theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+        "status": "SKETCH_ACCEPTED",
+        "submission_id": "42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-09T18:21:28.80267+00:00",
+        "deprecated_at": null,
+        "explanation": "The imported lower-loss theorem gives a uniform positive loss epsilon. An infinite event set would contain a finite subset with more than totalBudget/epsilon elements. Summing their losses contradicts the budget. This formalizes the analytic nonaccumulation mechanism in Kleiner-Lott Section 3.5; constructing a geometric budget is still required.",
+        "node_id": "sketch-4b0967cf-4f47-4150-9061-44c6425c704d",
+        "node_type": "sketch",
+        "parent_theorem_id": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+        "status": "ACCEPTED",
+        "submission_id": "4b0967cf-4f47-4150-9061-44c6425c704d",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-09T04:36:59.775017+00:00",
+        "deprecated_at": null,
+        "explanation": "This submission is a reduction. It derives the goal statement\n\n$$M \\text{ compact, Hausdorff, simply connected, charted over } \\mathbb{R}^3 \\",
+        "node_id": "sketch-51179dae-3662-451e-b374-fe303c70b325",
+        "node_type": "sketch",
+        "parent_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+        "status": "SKETCH_ACCEPTED",
+        "submission_id": "51179dae-3662-451e-b374-fe303c70b325",
+        "username": "Shuze Chen"
+      },
+      {
+        "child_count": 3,
+        "created_at": "2026-09-09T03:40:06.598218+00:00",
+        "deprecated_at": null,
+        "explanation": "The comparison data imply an upper right slope bound $D=-4\\pi-\\frac R2W(t)$. The integrated conformality criterion first gives $A(r)=E(r)=W(t)$. The integrated area-energy inequality gives $\\sup_u A(p_{j,u})\\le c_j$, so each real supremum is bounded above.\n\nFix $q>D$ and set $\\varepsilon=(q-D)/4$. Use the comparison hypothesis to obtain a common right neighborhood and a threshold $J$. For each $s$ in that neighborhood, convergence of the caps allows a choice $j\\ge J$ with $c_j<W(t)+\\varepsilon(s-t)$. Combining the inequalities yields\n\n$$W(s)-W(t)<(s-t)(D+2\\varepsilon)<(s-t)q.$$\n\nDividing by $s-t>0$ proves the eventual slope estimate. The choice of $j$ may depend on $s$; the neighborhood is uniform because the comparison estimate holds for every sufficiently large index.",
+        "node_id": "sketch-719f4cdd-1059-4091-9819-7926dbc5806e",
+        "node_type": "sketch",
+        "parent_theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
+        "status": "ACCEPTED",
+        "submission_id": "719f4cdd-1059-4091-9819-7926dbc5806e",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 4,
+        "created_at": "2026-09-09T18:22:55.047906+00:00",
+        "deprecated_at": null,
+        "explanation": "Use volume control to prove event finiteness, then construct an event-free partition. Restrict the supplied profiles to its intervals. Initial bounds, continuity, differential inequalities, area-energy comparison witnesses and jumps transfer directly to the trace. No new geometric theorem is claimed.",
+        "node_id": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04",
+        "node_type": "sketch",
+        "parent_theorem_id": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+        "status": "ACCEPTED",
+        "submission_id": "7698ef55-8ed6-4ed1-a26d-f2854cf4ee04",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 3,
+        "created_at": "2026-09-09T02:40:07.087888+00:00",
+        "deprecated_at": null,
+        "explanation": "This is a conditional reduction of the topological Poincare conjecture to the geometric profile-extraction theorem. That child remains open. The two analytic inputs, scalar comparison and the width deadline, are proved independently.\n\nSuppose a compact simply connected Hausdorff topological three-manifold $M$ were not homeomorphic to $S^3$. The open geometric child supplies a number $W_0$, fixed before the final time, and finite scalar-width traces on arbitrarily long intervals. The scalar comparison theorem gives\n$$r_i(t)\\ge-\\frac6{1+4t}.$$\nBecause every width is nonnegative, the coupled width inequality implies\n$$D_+w_i(t)\\le-4\\pi-\\frac12r_i(t)w_i(t)\\le-4\\pi+\\frac3{1+4t}w_i(t).$$\nThis is precisely the width-deadline inequality with $C=1/4$. The downward jump hypothesis permits the deadline theorem to apply across all pieces, giving\n$$T\\le T_*:=\\left((1/4)^{1/4}+\\frac{W_0}{16\\pi(1/4)^{3/4}}\\right)^4-\\frac14.$$\nChoose $T=\\max(T_*,0)+1$. The geometric child supplies a trace at this positive time, while the analytic bound rules it out. This contradiction gives the required homeomorphism.\n\nThe unresolved geometric child includes smoothing, surgery existence, survival/topology, and the production of compatible scalar and width profiles. The reduction does not prove those ingredients or any of the four large geometric milestones. Every imported theorem is used in the argument; no extra import is present solely to create a graph edge.",
+        "node_id": "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "node_type": "sketch",
+        "parent_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+        "status": "SKETCH_ACCEPTED",
+        "submission_id": "d543d39b-4273-4b91-826f-1b9c8c6191ee",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:20:18.372121+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.antitoneOn_lintegral_Ioc_div {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g)\n    (hpos : ∀ r ∈ Ioc (0 : ℝ) R, 0 < ∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)\n    (hfin : ∀ r ∈ Ioc (0 : ℝ) R, (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ) < ⊤) :\n    AntitoneOn (fun r => (∫⁻ t in Ioc (0 : ℝ) r, f t ∂μ) /\n      (∫⁻ t in Ioc (0 : ℝ) r, g t ∂μ)) (Ioc (0 : ℝ) R) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ whenever $0<a\\le b\\le R$. Write $F(r)=\\int_{(0,r]} f\\,d\\mu$ and $G(r)=\\int_{(0,r]} g\\,d\\mu$, and assume $0<G(r)<\\infty$ for every $0<r\\le R$. Then\n\n$$\\frac{F(s)}{G(s)}\\le\\frac{F(r)}{G(r)}\\qquad(0<r\\le s\\le R).$$\n\nThe numerator may be infinite. This is the analytic normalized-volume monotonicity step; its application to Riemannian balls additionally requires geometric density comparison and polar integration.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\n\n\n\nset_option autoImplicit false\n\nopen MeasureTheory Set\nopen scoped ENNReal\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+        "source": "OpenGA, OpenGALib/Analysis/IntegralComparison.lean, derived from DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le (DifferentialGeometry v0.1.2). https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/IntegralComparison.lean",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+        "theorem_name": "OpenGA.antitoneOn_lintegral_Ioc_div",
+        "theorem_title": "Monotonicity of normalized radial integrals",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:14:56.406714+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le {s : ℝ}\n    (hf : AEMeasurable f (μ.restrict (Ioc (0 : ℝ) R)))\n    (hg : AEMeasurable g (μ.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f g) (hs : 0 ≤ s) (hsR : s ≤ R) :\n    (∫⁻ t in Ioc (0 : ℝ) R, f t ∂μ) * (∫⁻ t in Ioc (0 : ℝ) s, g t ∂μ)\n      ≤ (∫⁻ t in Ioc (0 : ℝ) s, f t ∂μ) * ∫⁻ t in Ioc (0 : ℝ) R, g t ∂μ := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $\\mu$ be a measure on $\\mathbb R$, let $0\\le s\\le R$, and let $f,g:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$. Assume $f(b)g(a)\\le f(a)g(b)$ for $0<a\\le b\\le R$. Then\n\n$$\\left(\\int_{(0,R]} f\\,d\\mu\\right)\\left(\\int_{(0,s]} g\\,d\\mu\\right)\\le\\left(\\int_{(0,s]} f\\,d\\mu\\right)\\left(\\int_{(0,R]} g\\,d\\mu\\right).$$\n\nThe endpoint $s=0$ is included. This is the analytic density-to-volume step of radial comparison; identifying these integrals with Riemannian ball volumes requires the separate geometric polar integration theorem.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_DifferentialGeometry_RadialCrossComparison\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\n\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nset_option autoImplicit false",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L68-L109",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb",
+        "theorem_name": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le",
+        "theorem_title": "Radial density comparison implies integrated comparison",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:13:16.952419+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Data.ENNReal.Real\nimport Mathlib.Algebra.Order.GroupWithZero.Basic\nimport Mathlib.Order.Interval.Set.LinearOrder\nimport Mathlib.Order.Interval.Set.Disjoint\n\nopen MeasureTheory Set\nopen scoped ENNReal\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\n\n\nvariable {μ : Measure ℝ} {f g : ℝ → ℝ≥0∞} {R : ℝ}\n\ndef CrossAnti (R : ℝ) (f g : ℝ → ℝ≥0∞) : Prop :=\n  ∀ a b : ℝ, 0 < a → a ≤ b → b ≤ R → f b * g a ≤ f a * g b\n\n\n\n\n\n\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $R\\in\\mathbb R$ and let $f,g:\\mathbb R\\to[0,\\infty]$. The cross-comparison condition requires\n\n$$f(b)g(a)\\le f(a)g(b)\\qquad(0<a\\le b\\le R).$$\n\nWhen $g$ is finite and positive, this expresses that $f/g$ is nonincreasing. The cross-multiplied formulation also permits vanishing or infinite densities without division. It is an analytic input for radial volume comparison.",
+        "node_type": "theorem",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/RatioIntegral.lean#L65-L66",
+        "status": "Definition",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "38c5277b-7ee4-406b-b53a-f2c4ca12e087",
+        "theorem_name": "DifferentialGeometry_RadialCrossComparison",
+        "theorem_title": "Cross-multiplied comparison of radial densities",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:42:34.535496+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.antitoneOn_lintegral_div_hypRadVol {f : ℝ → ℝ≥0∞} {q R : ℝ} {d : ℕ}\n    (hq : 0 ≤ q)\n    (hf : AEMeasurable f (volume.restrict (Ioc (0 : ℝ) R)))\n    (hcross : CrossAnti R f (fun t => ENNReal.ofReal (hypDensity q d t))) :\n    AntitoneOn (fun r => (∫⁻ t in Ioc (0 : ℝ) r, f t) /\n      ENNReal.ofReal (hypRadVol q d r)) (Ioc (0 : ℝ) R) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $q\\ge0$, $d\\in\\mathbb N$, $R\\in\\mathbb R$, and let $f:\\mathbb R\\to[0,\\infty]$ be almost-everywhere measurable on $(0,R]$ with respect to Lebesgue measure. Set $J(t)=s_q(t)^d$ and $V(r)=\\int_0^r J(t)\\,dt$. Assume $f(b)J(a)\\le f(a)J(b)$ for every $0<a\\le b\\le R$, interpreting the products in the extended nonnegative reals. Then\n\n$$\\frac{\\int_{(0,s]}f(t)\\,dt}{V(s)}\\le\\frac{\\int_{(0,r]}f(t)\\,dt}{V(r)}\\qquad(0<r\\le s\\le R).$$\n\nThe numerator may be infinite. For $d=n-1$, the denominator is the radial model volume at curvature $-q^2$. This supplies the analytic normalization step for volume comparison; identifying the numerator with Riemannian ball volume and deriving the density comparison from a Ricci bound are separate geometric steps.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_DifferentialGeometry_ModelRadialVolume\nimport Definitions.Def_DifferentialGeometry_RadialCrossComparison\n\nset_option autoImplicit false\n\nopen MeasureTheory Set\nopen scoped ENNReal\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+        "source": "OpenGA, OpenGALib/Analysis/ModelVolume.lean#L33-L55; derived from the published normalized integral comparison and the DifferentialGeometry model definitions. https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/ModelVolume.lean#L33",
+        "status": "Proved",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
+        "theorem_name": "OpenGA.antitoneOn_lintegral_div_hypRadVol",
+        "theorem_title": "Radial integral monotonicity with the model-volume denominator",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:39:54.904436+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Mathlib.Analysis.Calculus.Deriv.Pow\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp\n\nnoncomputable section\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\ndef hypSn (q r : ℝ) : ℝ :=\n  if q = 0 then r else Real.sinh (q * r) / q\n\ndef hypSnDeriv (q r : ℝ) : ℝ :=\n  if q = 0 then 1 else Real.cosh (q * r)\n\ndef hypDensity (q : ℝ) (d : ℕ) (r : ℝ) : ℝ :=\n  hypSn q r ^ d\n\ndef hypDensityDeriv (q : ℝ) (d : ℕ) (r : ℝ) : ℝ :=\n  (d : ℝ) * hypSn q r ^ (d - 1) * hypSnDeriv q r\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $q\\in\\mathbb R$ and $d\\in\\mathbb N$. Define the model radial function and density by\n\n$$s_q(r)=\\begin{cases}r,&q=0,\\\\\\sinh(qr)/q,&q\\ne0,\\end{cases}\\qquad J_{q,d}(r)=s_q(r)^d.$$\n\nFor $q\\ge0$ and $d=n-1$, these give the radial factors of the $n$-dimensional constant-curvature model with curvature $-q^2$. The bundle also defines their derivative expressions. The zero-curvature case is included; positive model curvature requires a separate trigonometric model.",
+        "node_type": "theorem",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/HyperbolicModel.lean#L17-L98",
+        "status": "Definition",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "5f12b4eb-73fe-4f5b-9eca-ea195943cb23",
+        "theorem_name": "DifferentialGeometry_HyperbolicModel",
+        "theorem_title": "Model radial function and density for nonpositive curvature",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T17:40:51.185784+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "/-\nCopyright 2026 The DifferentialGeometry contributors.\nLicensed under Apache-2.0. Adapted from qinz1yang/differential-geometry,\ncommit 1b535dd102b94cc42b107cca27059687888f08b3.\nOnly declaration placement and platform imports are changed.\n-/\n\nimport Definitions.Def_DifferentialGeometry_HyperbolicModel\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\n\nnoncomputable section\n\nnamespace DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\ndef hypRadVol (q : Real) (d : Nat) (R : Real) : Real :=\n  ∫ t in (0 : Real)..R, hypDensity q d t\n\nend DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "For $q\\in\\mathbb R$, $d\\in\\mathbb N$ and $r\\in\\mathbb R$, let $s_q$ be the model radial function and define\n\n$$V_{q,d}(r)=\\int_0^r s_q(t)^d\\,dt.$$\n\nFor $q\\ge0$, $r>0$ and $d=n-1$, this is the radial volume factor in the $n$-dimensional model of curvature $-q^2$. The constant angular factor is omitted because it cancels in volume ratios. The Lean definition uses the oriented interval integral, so it is defined for every real radius.",
+        "node_type": "theorem",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Comparison/Volume/BishopBall.lean#L272-L273",
+        "status": "Definition",
+        "tags": [
+          "bishop-gromov",
+          "differential-geometry",
+          "measure-theory"
+        ],
+        "theorem_id": "8f010cd2-75b6-40f7-abdf-ec788a788a40",
+        "theorem_name": "DifferentialGeometry_ModelRadialVolume",
+        "theorem_title": "Radial model volume for nonpositive curvature",
+        "vote_count": 0
+      },
+      {
+        "child_count": 1,
+        "created_at": "2026-09-09T17:21:17.706683+00:00",
+        "deprecated_at": null,
+        "explanation": "Fix $0<r\\le s\\le R$. Restrict measurability and the density comparison to $(0,s]$. The proved radial integral comparison gives\n\n$$F(s)G(r)\\le F(r)G(s).$$\n\nBoth $G(r)$ and $G(s)$ are positive and finite. Division by these factors therefore preserves the inequality even for extended nonnegative numerators, yielding $F(s)/G(s)\\le F(r)/G(r)$. The Lean proof imports the separately verified radial comparison theorem, so this dependency is visible in the proof graph.",
+        "node_id": "sketch-91cf1c6b-5ed5-463a-b593-6f385348e01e",
+        "node_type": "sketch",
+        "parent_theorem_id": "00a47c26-3e61-4afc-91c7-117708e1baf9",
+        "status": "ACCEPTED",
+        "submission_id": "91cf1c6b-5ed5-463a-b593-6f385348e01e",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-09T18:19:53.352804+00:00",
+        "deprecated_at": null,
+        "explanation": "Apply the proved normalized radial integral comparison from the removal radius to the reference radius. Combine the anchor lower bound with containment in the removed material, then clear the positive finite model-volume denominator. This is a conditional analytic consequence; geometric containment and the anchor are inputs.",
+        "node_id": "sketch-e04116f7-6882-4385-adb2-3d369736d0a3",
+        "node_type": "sketch",
+        "parent_theorem_id": "ca66101a-7280-449f-ad5d-350153b56ffd",
+        "status": "ACCEPTED",
+        "submission_id": "e04116f7-6882-4385-adb2-3d369736d0a3",
+        "username": "Xinze-Li-Moqian"
+      },
+      {
+        "child_count": 2,
+        "created_at": "2026-09-09T17:43:35.575473+00:00",
+        "deprecated_at": null,
+        "explanation": "Continuity and positivity of the model density give a positive finite model integral at every positive radius. The real interval integral agrees with its extended nonnegative Lebesgue integral. Apply the already proved normalized radial integral comparison and substitute this identity at both radii. The imported comparison theorem and both model definition bundles are genuine dependencies of this proof.",
+        "node_id": "sketch-fd6f90da-3fa3-48c4-95a0-f36e42b9fe72",
+        "node_type": "sketch",
+        "parent_theorem_id": "58a8c735-04e5-4c94-afef-0b03d5d80e0a",
+        "status": "ACCEPTED",
+        "submission_id": "fd6f90da-3fa3-48c4-95a0-f36e42b9fe72",
+        "username": "Xinze-Li-Moqian"
+      }
+    ],
+    "root_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+  },
+  "milestones": [
+    {
+      "completed": false,
+      "created_at": "2026-09-09T01:41:08.099214+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "01af4eaa-14be-4540-8708-3da1ea55850b",
+      "milestone_description": "Every closed oriented Riemannian three-manifold with normalized metric admits a Ricci flow with $(r,\\delta)$-cutoff for all $t\\ge0$, for suitable positive nonincreasing parameters $r,\\delta$, allowing empty slices.\n\n[Source: Kleiner-Lott, Proposition 77.2, p. 146 (existence consequence)](https://arxiv.org/pdf/math/0605667v5#page=146).",
+      "sort_order": 0,
+      "theorem": null,
+      "title": "All-time Ricci flow with surgery"
+    },
+    {
+      "completed": false,
+      "created_at": "2026-09-09T01:41:09.044793+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "245ff479-b4c3-46c9-aee5-43f931990aa1",
+      "milestone_description": "At a Kleiner-Lott cutoff surgery, recover the presurgery manifold up to diffeomorphism by finitely many operations: join two components by connected sum; sum a component with $S^1\\times S^2$ or $\\mathbb{RP}^3$; adjoin a component $S^1\\times S^2$ or a spherical space form.\n\n[Source: Kleiner-Lott, Lemma 73.4, p. 140](https://arxiv.org/pdf/math/0605667v5#page=140).",
+      "sort_order": 1,
+      "theorem": null,
+      "title": "Topological effect of surgery"
+    },
+    {
+      "completed": false,
+      "created_at": "2026-09-09T01:41:09.964537+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "33045187-e820-4325-a253-c8ba2c778897",
+      "milestone_description": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.\n\n**Colding-Minicozzi foundations.** [The mass of a parametrized surface varifold is bounded by its energy](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be) now connects the Euclidean varifold construction to the same integral area-energy theorem used by the width comparison branch. See the **Area-energy control of parametrized varifolds** milestone for the definitions and verified prerequisites. The geometric CM min-max and variation steps remain open; this foundation does not establish finite-time extinction.",
+      "sort_order": 2,
+      "theorem": null,
+      "title": "Finite-time extinction"
+    },
+    {
+      "completed": false,
+      "created_at": "2026-09-09T01:41:10.721747+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "29f0d323-76f4-4288-b819-626a482e9d5f",
+      "milestone_description": "If a Kleiner-Lott Ricci flow with surgery on a closed connected orientable three-manifold $M$ becomes extinct, then $M$ is diffeomorphic to a connected sum of $S^1\\times S^2$ factors and spherical space forms.\n\n[Source: Kleiner-Lott, Lemma 81.2, p. 160](https://arxiv.org/pdf/math/0605667v5#page=160).",
+      "sort_order": 3,
+      "theorem": null,
+      "title": "Topology from extinction"
+    },
+    {
+      "completed": true,
+      "created_at": "2026-09-09T02:04:41.741988+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "2d6c9060-c962-45a7-81c9-ba7f22f44012",
+      "milestone_description": "Let $n\\ge1$ and $0=t_0<t_1<\\cdots<t_n$. For $0\\le i<n$, let $r_i:[t_i,t_{i+1}]\\to\\mathbb R$ be continuous. Write\n$$D_+r_i(t)=\\liminf_{s\\to t^+}\\frac{r_i(s)-r_i(t)}{s-t}.$$\nAssume $r_0(0)\\ge-6$, and, for each $i<n$ and $t_i\\le t<t_{i+1}$,\n$$D_+r_i(t)\\ge\\frac23r_i(t)^2.$$\nAt every internal joining time, assume $r_i(t_{i+1})\\le r_{i+1}(t_{i+1})$ for $i+1<n$. Then\n$$r_i(t)\\ge-\\frac6{1+4t}\\qquad(0\\le i<n,\\ t_i\\le t\\le t_{i+1}).$$\nThis isolates the scalar comparison step used in Kleiner-Lott's surgery estimates, with upward jumps allowed. Applying it to scalar-curvature minima requires establishing these analytic hypotheses from the geometry; this statement does not itself formalize a Ricci flow.\n\n[Source: Kleiner-Lott, proof of Lemma 79.11, p. 154](https://arxiv.org/pdf/math/0605667v5#page=154), using [Appendix B, equations (B.1)-(B.2), p. 202](https://arxiv.org/pdf/math/0605667v5#page=202).",
+      "sort_order": 4,
+      "theorem": {
+        "id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+        "status": "Proved",
+        "theorem_name": "OpenGA.scalar_lower_bound_across_upward_jumps"
+      },
+      "title": "Scalar lower bound across upward jumps"
+    },
+    {
+      "completed": true,
+      "created_at": "2026-09-09T03:20:46.689646+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "59cdc370-8720-41f9-8b38-a4a11e9a9718",
+      "milestone_description": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density $x\\mapsto E(v(x),w(x))$. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu\\leq\\int_X E(v(x),w(x))\\,d\\mu.$$\n\nNo finiteness assumption on the measure is needed; finite energy is explicit. This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+      "sort_order": 5,
+      "theorem": {
+        "id": "d81e3640-8579-4396-babb-69edac82be33",
+        "status": "Proved",
+        "theorem_name": "OpenGA.integral_areaDensity_le_energyDensity"
+      },
+      "title": "Area-energy comparison for finite-energy vector fields"
+    },
+    {
+      "completed": true,
+      "created_at": "2026-09-09T03:20:47.418386+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "dd7060c8-1d02-4851-bad3-66eeef3a13b9",
+      "milestone_description": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu=\\int_X E(v(x),w(x))\\,d\\mu$$\n\nholds exactly when\n\n$$\\langle v(x),w(x)\\rangle=0\\quad\\text{and}\\quad\\|v(x)\\|=\\|w(x)\\|\\quad\\text{for }\\mu\\text{-almost every }x.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+      "sort_order": 6,
+      "theorem": {
+        "id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+        "status": "Proved",
+        "theorem_name": "OpenGA.integral_areaDensity_eq_energyDensity_iff"
+      },
+      "title": "Equality in the integrated area-energy comparison"
+    },
+    {
+      "completed": false,
+      "created_at": "2026-09-09T16:03:11.319685+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "cb96ab98-d517-4ecc-964b-b4b39a2d07a3",
+      "milestone_description": "Let $(M^n,g)$ be a smooth Riemannian manifold without boundary, with $n\\ge1$. Fix $p\\in M$, $K\\in\\mathbb R$ and $0<r_1\\le r_2$. Assume that the geodesic ball $B_g(p,r_2)$ has compact closure in $M$ and that on this ball\n\n$$\\operatorname{Ric}_g(v,v)\\ge(n-1)K\\,g(v,v)$$\n\nfor every tangent vector $v$. If $K>0$, also require $r_2\\le\\pi/\\sqrt K$. Define\n\n$$s_K(t)=\\begin{cases}\\sin(\\sqrt K\\,t)/\\sqrt K,&K>0,\\\\t,&K=0,\\\\\\sinh(\\sqrt{-K}\\,t)/\\sqrt{-K},&K<0,\\end{cases}\\qquad V_{K,n}(r)=\\int_0^r s_K(t)^{n-1}\\,dt.$$\n\nThen the Riemannian volumes of the concentric geodesic balls satisfy\n\n$$\\frac{\\operatorname{vol}_g(B_g(p,r_2))}{\\operatorname{vol}_g(B_g(p,r_1))}\\le\\frac{V_{K,n}(r_2)}{V_{K,n}(r_1)}.$$\n\nThis is the Riemannian Ricci-lower-bound version of the comparison in [Kleiner-Lott, Appendix G, equation (G.1) and the following paragraph, pp. 211-212](https://arxiv.org/pdf/math/0605667v5#page=211). The factors used to normalize $s_K$ cancel in the ratio. It supplies a comparison-geometry input to the [surgery noncollapsing estimates, Sublemma 79.23, p. 157](https://arxiv.org/pdf/math/0605667v5#page=157).\n\n**Verified analytic prerequisites.** [Integral comparison on nested lower intervals](https://prove2.me/theorems/1b1a2764-46a8-4ccb-9220-d38a56f8a6a5); [Radial density comparison implies integrated comparison](https://prove2.me/theorems/0c4bdb95-16b2-4bf0-ba4d-e7177b1dcebb); [Monotonicity of normalized radial integrals](https://prove2.me/theorems/00a47c26-3e61-4afc-91c7-117708e1baf9). The first two results preserve the DifferentialGeometry proofs; the third is an OpenGA corollary. These establish the integral comparison step. The full geometric milestone remains open: geometric density comparison, polar integration, the ball-local hypotheses and positive model curvature still require a faithful platform development.\n\n**Verified model definitions.** [Model radial function and density for nonpositive curvature](https://prove2.me/theorems/5f12b4eb-73fe-4f5b-9eca-ea195943cb23); [Radial model volume for nonpositive curvature](https://prove2.me/theorems/8f010cd2-75b6-40f7-abdf-ec788a788a40). They are used in [Radial integral monotonicity with the model-volume denominator](https://prove2.me/theorems/58a8c735-04e5-4c94-afef-0b03d5d80e0a), connected to the earlier integral comparison proof. This model batch covers curvature $K=-q^2\\le0$ and uses radial exponent $d=n-1$. The angular constant cancels in ratios. The geometric milestone remains open. The analytic component now enters the Poincare width route through the conditional volume-loss nonaccumulation argument linked below.\n\n**Volume-loss bridge to the mission graph.** [A uniform positive volume loss from model comparison](https://prove2.me/theorems/ca66101a-7280-449f-ad5d-350153b56ffd); [Finitely many events from a radial volume-loss budget](https://prove2.me/theorems/3aca5641-0de9-4b5b-b280-28243d1961cd); [An event-free partition for finitely many event times](https://prove2.me/theorems/2afae5fd-c4e2-4544-b37b-e819211739f1); [A finite width comparison trace from volume-controlled profiles](https://prove2.me/theorems/ca00fe64-9dc8-4809-80cf-e824e93594b5). These proved analytic results transfer a reference-scale volume lower bound to the removal scale, bound the number of events and construct the finite width comparison trace. [The geometric construction](https://prove2.me/theorems/0347aa7b-4f24-4106-873e-c9b21fd9169f) remains Open: it must supply surgery flow, uniform radial estimates and containment, a removed-volume budget allowing smooth volume growth, and scalar/sweepout profiles. The full geometric Bishop-Gromov milestone remains Open.",
+      "sort_order": 7,
+      "theorem": null,
+      "title": "Bishop-Gromov volume comparison"
+    },
+    {
+      "completed": false,
+      "created_at": "2026-09-09T16:13:29.515808+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "149701dc-6dbc-4301-8b60-688c2fccc086",
+      "milestone_description": "Fix $\\alpha,K>0$, $K'\\ge0$, $l\\ge0$ and positive integers $m,n$. There is a constant $C=C(\\alpha,K,K',l,m,n)$ with the following property. Let $r>0$ and let $g(t)$ solve Ricci flow on an open neighborhood $U$ of $p\\in M^n$ for $0\\le t\\le\\bar t$, where $0<\\bar t\\le\\alpha r^2/K$. Assume that the closure of the time-zero ball $B_{g(0)}(p,r)$ is a compact subset of $U$, and that\n\n$$|\\operatorname{Rm}(x,t)|\\le K/r^2\\quad\\text{on }U\\times[0,\\bar t],\\qquad |\\nabla^\\beta\\operatorname{Rm}(x,0)|\\le K'/r^{|\\beta|+2}\\quad(x\\in U,\\ |\\beta|\\le l).$$\n\nThen, for $x\\in B_{g(0)}(p,r/2)$, $0<t\\le\\bar t$ and $|\\beta|\\le m$,\n\n$$|\\nabla^\\beta\\operatorname{Rm}(x,t)|\\le\\frac{C}{r^{|\\beta|+2}(t/r^2)^{\\max(m-l,0)/2}}.$$\n\nThe source's $K=0$ case has identically zero curvature, so all the indicated derivatives vanish. The displayed positive-$K$ formulation makes the time bound unambiguous. The case $l=0$ is Shi's estimate; the source also includes initial derivative control for $l\\ge0$.\n\nSource: [Kleiner-Lott, Appendix D, Theorem D.1 and equations (D.2)-(D.4), p. 207](https://arxiv.org/pdf/math/0605667v5#page=207).",
+      "sort_order": 8,
+      "theorem": null,
+      "title": "Local curvature derivative estimates"
+    },
+    {
+      "completed": false,
+      "created_at": "2026-09-09T16:13:30.712627+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "c18c8e39-32d3-41f4-917e-449be9fefce3",
+      "milestone_description": "Let $g(t)$, $0\\le t<T$, be a smooth Ricci flow on a three-manifold, with complete time slices and curvature bounded on every compact time interval. Use the curvature-operator convention in which constant sectional curvature $k$ gives the operator $2k\\,\\mathrm{Id}$ on two-forms; its trace is the scalar curvature $R$.\n\nWrite its eigenvalues as $\\lambda_1\\le\\lambda_2\\le\\lambda_3$ and assume $\\lambda_1(x,0)\\ge-1$ for every $x$. At any spacetime point with $X=-\\lambda_1(x,t)>0$,\n\n$$R(x,t)\\ge X\\bigl(\\log X+\\log(1+t)-3\\bigr).$$\n\nSource: [Kleiner-Lott, Appendix B, equation (B.3) and its hypotheses, pp. 202-203](https://arxiv.org/pdf/math/0605667v5#page=203). This curvature-operator estimate supplies the pinching input used to obtain almost nonnegative curvature in blowup limits.",
+      "sort_order": 9,
+      "theorem": null,
+      "title": "Hamilton-Ivey pinching"
+    },
+    {
+      "completed": false,
+      "created_at": "2026-09-09T16:13:31.449305+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "92e1c50a-cec4-485b-8f38-28a2d24f11ea",
+      "milestone_description": "Consider smooth Ricci flows $g_i(t)$ on connected pointed $n$-manifolds $(M_i,p_i)$, defined for $t\\in(A,B)$, where $-\\infty\\le A<0<B\\le\\infty$. Assume that every $(M_i,g_i(0))$ is complete and that the injectivity radii at $(p_i,0)$ have a common positive lower bound.\n\nFor each compact interval $I\\subset(A,B)$, require a finite constant $N_I$ such that, for every $r>0$, there is an index $J_{r,I}$ for which\n\n$$i\\ge J_{r,I}\\ \\Longrightarrow\\ \\sup_{B_{g_i(0)}(p_i,r)\\times I}|\\operatorname{Rm}(g_i)|\\le N_I.$$\n\nThe curvature bound $N_I$ is independent of $r$; the starting index may depend on $r$.\n\nThen a subsequence converges smoothly in the pointed sense to a Ricci flow on a connected pointed manifold $(M_\\infty,p_\\infty)$, defined on the same interval $(A,B)$, with complete time slices. Convergence is through time-independent pointed identifications on compact spatial and time subsets.\n\nSource: [Kleiner-Lott, Appendix E, Corollary E.4, pp. 208-209](https://arxiv.org/pdf/math/0605667v5#page=208).",
+      "sort_order": 10,
+      "theorem": null,
+      "title": "Compactness of Ricci flows"
+    },
+    {
+      "completed": false,
+      "created_at": "2026-09-09T16:13:32.511276+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "944c0806-badc-43ae-bc07-982d49c86619",
+      "milestone_description": "Let $(M^n,g(\\tau))$, $0\\le\\tau<T$, be a connected complete backward Ricci flow, $\\partial_\\tau g=2\\operatorname{Ric}$, with curvature bounded on compact time intervals. Fix a basepoint $p$ at $\\tau=0$. For $\\tau>0$, define the reduced length by\n\n$$l_p(q,\\tau)=\\frac{1}{2\\sqrt\\tau}\\inf_{\\gamma(0)=p,\\,\\gamma(\\tau)=q}\\int_0^\\tau\\sqrt{s}\\left(R(\\gamma(s),s)+|\\dot\\gamma(s)|_{g(s)}^2\\right)\\,ds,$$\n\nusing the admissible curves of the source's $\\mathcal L$-length construction. Define the reduced volume with Kleiner-Lott's normalization by\n\n$$\\widetilde V_p(\\tau)=\\int_M\\tau^{-n/2}e^{-l_p(q,\\tau)}\\,d\\operatorname{vol}_{g(\\tau)}(q).$$\n\nThis integral is finite, and for $0<\\tau_1\\le\\tau_2<T$,\n\n$$\\widetilde V_p(\\tau_2)\\le\\widetilde V_p(\\tau_1).$$\n\nSource: [Kleiner-Lott, Section 23, pp. 43-44](https://arxiv.org/pdf/math/0605667v5#page=43), using [equations (15.1), (15.3)-(15.4) and the construction in Section 17](https://arxiv.org/pdf/math/0605667v5#page=33). The time variable is backward time; this source does not include a $(4\\pi)^{-n/2}$ prefactor in $\\widetilde V$.",
+      "sort_order": 11,
+      "theorem": null,
+      "title": "Reduced volume monotonicity"
+    },
+    {
+      "completed": false,
+      "created_at": "2026-09-09T16:13:33.241475+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "ed9cc5e0-19e6-4d15-bc2a-ff6701974891",
+      "milestone_description": "For every positive integer $n$, $0<T<\\infty$ and $\\rho,K,c>0$, there is $\\kappa=\\kappa(n,K,c,\\rho,T)>0$ with the following property. Let $g(t)$ solve Ricci flow on $M^n$ for $0\\le t<T$, with curvature bounded on $M\\times[0,T']$ for every $T'<T$. Assume that $g(0)$ is complete, $|\\operatorname{Rm}(g(0))|\\le K$ everywhere, and $\\operatorname{inj}(M,g(0))\\ge c$.\n\nWhenever $0<r<\\rho$, $r^2\\le t_0<T$, and\n\n$$|\\operatorname{Rm}(x,t)|\\le r^{-2}\\quad\\text{for all }x\\in B_{g(t_0)}(x_0,r),\\ t\\in[t_0-r^2,t_0],$$\n\none has\n\n$$\\operatorname{vol}_{g(t_0)}B_{g(t_0)}(x_0,r)\\ge\\kappa r^n.$$\n\nWith $n,K,c,\\rho$ fixed, $\\kappa$ can be chosen nonincreasing in $T$. The curvature hypothesis uses the entire backward parabolic region over the fixed final-time ball.\n\nSource: [Kleiner-Lott, Definition 26.1 and Theorem 26.2, p. 47](https://arxiv.org/pdf/math/0605667v5#page=47).",
+      "sort_order": 12,
+      "theorem": null,
+      "title": "No local collapsing"
+    },
+    {
+      "completed": false,
+      "created_at": "2026-09-09T16:13:34.032866+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "e77732ea-15a0-4bcf-a341-ab5be97949b3",
+      "milestone_description": "Fix $\\kappa>0$. Given any sequence of oriented three-dimensional $\\kappa$-solutions and basepoints $(x_i,0)$, apply parabolic dilations so that $R(x_i,0)=1$. A subsequence then converges smoothly in the pointed sense to an oriented three-dimensional $\\kappa$-solution with scalar curvature one at its basepoint at time zero.\n\nHere a $\\kappa$-solution has the meaning of Definition 38.1: it is ancient; its time slices are complete; its curvature is bounded on each compact time interval; its curvature operator is nonnegative; its scalar curvature is everywhere positive; and it is $\\kappa$-noncollapsed at all scales. Solutions based at time zero are considered on their common ancient interval $(-\\infty,0]$. All these conditions, including bounded curvature on compact time intervals, hold for the limit with the same $\\kappa$.\n\nSource: [Kleiner-Lott, Theorem 46.1 and its normalization in the proof, p. 81](https://arxiv.org/pdf/math/0605667v5#page=81); [Definition 38.1, p. 67](https://arxiv.org/pdf/math/0605667v5#page=67).",
+      "sort_order": 13,
+      "theorem": null,
+      "title": "Compactness of three-dimensional kappa-solutions"
+    },
+    {
+      "completed": false,
+      "created_at": "2026-09-09T16:13:34.822844+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "70d4aeb2-fb41-417e-918c-1d2649faafe7",
+      "milestone_description": "Let $\\Phi\\in C^\\infty(\\mathbb R)$ be positive and nondecreasing, with $\\Phi(s)/s$ decreasing to zero as $s\\to\\infty$ through positive values. For every $\\epsilon,\\kappa,\\sigma>0$, there exists $r_0>0$ with the following property.\n\nLet $g(t)$ be a Ricci flow on a three-manifold for $0\\le t\\le T$, $T\\ge1$, with complete time slices and sectional curvature bounded on compact time intervals. Suppose all sectional curvatures at $(x,t)$ are at least $-\\Phi(R(x,t))$, and the flow is $\\kappa$-noncollapsed at scales below $\\sigma$ in the parabolic sense of Definition 26.1.\n\nFor any $(x_0,t_0)$ with $1\\le t_0\\le T$ and $Q=R(x_0,t_0)\\ge r_0^{-2}$, the flow on\n\n$$\\{(x,t):d_{g(t_0)}(x,x_0)^2<(\\epsilon Q)^{-1},\\quad t_0-(\\epsilon Q)^{-1}\\le t\\le t_0\\}$$\n\nis, after parabolic rescaling by $Q$ and moving $t_0$ to zero, $\\epsilon$-close in the source's smooth spacetime sense to the corresponding region of a $\\kappa$-solution. The fixed noncollapsing scale $\\sigma$ is independent of the resulting threshold $r_0$.\n\nSource: [Kleiner-Lott, Definition 52.1, Theorem 52.7 and Remark 52.8, pp. 89-90](https://arxiv.org/pdf/math/0605667v5#page=89); smooth closeness is clarified in [Definition 58.1, p. 108](https://arxiv.org/pdf/math/0605667v5#page=108).",
+      "sort_order": 14,
+      "theorem": null,
+      "title": "Canonical neighborhood theorem"
+    },
+    {
+      "completed": false,
+      "created_at": "2026-09-09T16:13:35.651145+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "10e68fd6-579c-48dc-9506-3c0bb279f8f4",
+      "milestone_description": "Fix the source's sufficiently small global parameter $\\epsilon$, including the pinching convention preceding Lemma 79.12. Given $\\epsilon\\ge r_-\\ge r_+>0$, $\\kappa_->0$, $E_->0$ and finite $E>0$, there are positive constants\n\n$$\\bar\\delta=\\bar\\delta(r_-,r_+,\\kappa_-,E_-,E),\\qquad\\kappa_+=\\kappa_+(r_-,\\kappa_-,E_-,E)$$\n\nwith the following property. Let $0\\le a<b<c$, $b-a\\ge E_-$ and $c-a\\le E$. Consider a Ricci flow with $(r,\\delta)$-cutoff, as in Definition 73.1, with normalized initial data and a domain containing $[a,c)$. Assume\n\n- $r(t)\\ge r_-$ on $[a,b)$ and $r(t)\\ge r_+$ on $[b,c)$, with $r(t)\\le\\epsilon$;\n- the flow is $\\kappa_-$-noncollapsed below scale $\\epsilon$ on $[a,b)$;\n- $\\delta(t)\\le\\bar\\delta$ on $[a,c)$.\n\nThen it is $\\kappa_+$-noncollapsed below scale $\\epsilon$ on $[b,c)$. Crucially, $\\kappa_+$ can be chosen independently of $r_+$, although $\\bar\\delta$ may depend on it.\n\nHere normalized initial data means a compact initial three-manifold with $|\\operatorname{Rm}|\\le1$ and each unit ball having at least half the volume of the Euclidean unit ball. Noncollapsing is the surgery convention of Section 77: for $0<\\rho<\\epsilon$ and $t\\ge\\rho^2$, an unscathed backward parabolic neighborhood $P(x,t,\\rho,-\\rho^2)$ with $|\\operatorname{Rm}|\\le\\rho^{-2}$ has $\\operatorname{vol}B(x,t,\\rho)\\ge\\kappa\\rho^3$. The cutoff-flow hypothesis includes the source's pinching and canonical-neighborhood assumptions and prescribed surgery procedure.\n\nSource: [Kleiner-Lott, Lemma 79.12 and Remark 79.13, p. 154](https://arxiv.org/pdf/math/0605667v5#page=154); [Definition 73.1, p. 139](https://arxiv.org/pdf/math/0605667v5#page=139); [normalization and noncollapsing conventions in Section 77, p. 146](https://arxiv.org/pdf/math/0605667v5#page=146).",
+      "sort_order": 15,
+      "theorem": null,
+      "title": "Noncollapsing across surgery"
+    },
+    {
+      "completed": true,
+      "created_at": "2026-09-09T20:02:39.819333+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "89631254-a7b9-4d11-b01d-777444bbcd1e",
+      "milestone_description": "Let $f:\\mathbb R^2\\to E$ be $C^1$, $b_0,b_1$ an orthonormal basis, $P$ a measurable tangent lift, and $\\Omega$ a parameter domain with finite area and finite Dirichlet energy. Then\n\n$$\\mathbf M(V_f)\\le\\frac12\\int_\\Omega\\bigl(|df(b_0)|^2+|df(b_1)|^2\\bigr)\\,dx.$$\n\nThe Jacobian and tangent planes are those of the actual derivative. The proof reuses OpenGA's published integral area-energy comparison, which also enters the existing width-decay graph. This is CM equation (1.4) in a Euclidean parameter domain; no global frame on a sphere is asserted.\n\n**Varifold foundations.** [Grassmannian of unoriented planes](https://prove2.me/theorems/58b2081d-b550-4dfd-8504-7f8003d3c681); [Euclidean varifolds and their weight measures](https://prove2.me/theorems/0ce91510-bed6-4687-9d9a-59db49ac32c1); [Weak convergence of varifolds](https://prove2.me/theorems/bfa7b976-aa93-4a5f-bd79-b99b58741eeb); [Varifolds induced by weighted maps](https://prove2.me/theorems/5d21e64d-c602-43dc-9943-7d91074dec76); [Varifolds of Euclidean parametrized surfaces](https://prove2.me/theorems/6f457e50-d41f-4c21-b797-27b9539b003e). The published companion results verify the test-function formulas, independence of zero-Jacobian plane choices, and convergence of spatial weight integrals. [Browse the dependency graph](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be).\n\nThis is a proved Euclidean foundation for the Colding-Minicozzi route, using [the existing area-energy comparison](https://prove2.me/theorems/d81e3640-8579-4396-babb-69edac82be33) shared with the width graph. It does not close finite-time extinction. The manifold Grassmann bundle, Sobolev surface construction, minimal-sphere approximation and quantitative variation transfer remain to be formalized. Sources: [Colding-Minicozzi, equation (1.4) and Section 1.3](https://arxiv.org/pdf/0707.0108), [Simon, Chapter 8, Section 1](https://math.stanford.edu/~lms/ntu-gmt-text.pdf).",
+      "sort_order": 16,
+      "theorem": {
+        "id": "947563ea-c13b-4ec6-b08d-7b11e70914be",
+        "status": "Proved",
+        "theorem_name": "OpenGA.Varifold.mass_ofParametrization_le_energy"
+      },
+      "title": "Area-energy control of parametrized varifolds"
+    }
+  ],
+  "root": {
+    "audits": [
+      {
+        "audit_id": "ba8c9e07-2e79-4ad2-93a8-961434e0b0e8",
+        "comment": null,
+        "created_at": "2026-09-08T03:14:14.323015+00:00",
+        "decision": "confirm",
+        "reviewer_id": "b14dd546-c5f9-458e-861d-79f50bacd399",
+        "reviewer_username": "tianyipeng"
+      },
+      {
+        "audit_id": "a25ab758-e063-474b-9880-ed5349eb82f0",
+        "comment": "Confirmed by the mission captain (proposal self-audit).",
+        "created_at": "2026-09-08T03:14:30.996361+00:00",
+        "decision": "confirm",
+        "reviewer_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "reviewer_username": "Xinze-Li-Moqian"
+      }
+    ],
+    "created_at": "2026-09-08T00:37:48.77319+00:00",
+    "deprecated_at": null,
+    "deprecated_by": null,
+    "formal_statement": "namespace PoincareFormalization\n\ntheorem nonempty_homeomorph_sphere_three (M : Type*) [TopologicalSpace M]\n    [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M] :\n    Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization",
+    "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+    "natural_language_statement": "Every compact simply connected Hausdorff topological 3-manifold without boundary is homeomorphic to the unit 3-sphere in Euclidean 4-space. This follows the exact hypotheses and conclusion of Mathlib’s proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three; only the declaration namespace and local notation are adapted for this platform. No extra second-countability assumption is imposed.",
+    "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected",
+    "readback": null,
+    "source": "Mathlib, Junyan Xu, Geometry/Manifold/PoincareConjecture.lean, proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three, platform revision 0df444a: https://github.com/leanprover-community/mathlib4/blob/0df444a/Mathlib/Geometry/Manifold/PoincareConjecture.lean . Mathematical reference: John Milnor, The Poincaré Conjecture, Section 1, p. 1, https://www.claymath.org/wp-content/uploads/2022/06/poincare.pdf . Proof exposition: Morgan–Tian, Ricci Flow and the Poincaré Conjecture (2007), Corollary 0.2(a), https://www.claymath.org/library/monographs/cmim03.pdf ; correction https://arxiv.org/abs/1512.00699 .",
+    "status": "Open",
+    "tags": [
+      "mathlib",
+      "poincare-conjecture",
+      "topology"
+    ],
+    "theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+    "theorem_name": "PoincareFormalization.nonempty_homeomorph_sphere_three",
+    "theorem_title": "Three-dimensional topological Poincaré conjecture — Mathlib statement",
+    "visibility": "public",
+    "vote_count": 0
+  },
+  "version": "0.9.8"
+}

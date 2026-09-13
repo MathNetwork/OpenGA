@@ -1,0 +1,308 @@
+{
+  "patchArea_comp": {
+    "edges": [
+      {
+        "kind": "sketch",
+        "source": "06588c07-4c58-4d0f-a257-445289cde218",
+        "target": "sketch-c2dd3a10-494f-4c3e-b361-25088e5043d6"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-c2dd3a10-494f-4c3e-b361-25088e5043d6",
+        "target": "25bed6f8-0964-4851-8d72-bd621c8f9303"
+      },
+      {
+        "kind": "structural",
+        "source": "06588c07-4c58-4d0f-a257-445289cde218",
+        "target": "25bed6f8-0964-4851-8d72-bd621c8f9303"
+      },
+      {
+        "kind": "structural",
+        "source": "0e220955-5806-447e-b322-843240f3f915",
+        "target": "06588c07-4c58-4d0f-a257-445289cde218"
+      },
+      {
+        "kind": "structural",
+        "source": "9f78021b-c594-4538-b61f-06a8831433af",
+        "target": "0e220955-5806-447e-b322-843240f3f915"
+      }
+    ],
+    "expanded_theorem_ids": [],
+    "has_hidden_deprecated_sketches": false,
+    "nodes": [
+      {
+        "audits": [],
+        "created_at": "2026-09-10T02:05:20.030568+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.RicciFlow.surfaceDensity_comp\n    (g : SmoothRiemannianMetric I M) (f : SurfaceParameter → M)\n    {φ : SurfaceParameter → SurfaceParameter} {u : SurfaceParameter}\n    {A : SurfaceParameter →L[ℝ] SurfaceParameter} (hφ : HasFDerivAt φ A u)\n    (hf : MDifferentiableAt 𝓘(ℝ, SurfaceParameter) I f (φ u)) :\n    surfaceDensity g (f ∘ φ) u =\n      |(LinearMap.toMatrix (EuclideanSpace.basisFun (Fin 2) ℝ).toBasis\n        (EuclideanSpace.basisFun (Fin 2) ℝ).toBasis A.toLinearMap).det| *\n      surfaceDensity g f (φ u) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $(M,g)$ be a smooth Riemannian manifold, $f:\\mathbb R^2\\to M$, and $\\varphi:\\mathbb R^2\\to\\mathbb R^2$. Suppose $\\varphi$ has derivative $A$ at $u$ and $f$ is differentiable at $\\varphi(u)$. Then\n\n$$J_g(f\\circ\\varphi)(u)=|\\det A|\\,J_gf(\\varphi(u)).$$\n\nThe determinant is computed in the standard orthonormal parameter basis. Neither $A$ nor $df$ must be injective; orientation reversal and degenerate derivatives are allowed. This is the pointwise coordinate compatibility of parametrized surface area.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_SurfaceArea\nimport Mathlib.MeasureTheory.Function.Jacobian\n\nnoncomputable section\n\nopen Bundle Matrix MeasureTheory Set Filter\n\nopen scoped Manifold ContDiff Topology\n\nopen DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n\nopen OpenGA.RicciFlow",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean#L59-L73",
+        "status": "Proved",
+        "tags": [
+          "colding-minicozzi",
+          "poincare-foundations",
+          "riemannian-geometry",
+          "surface-area"
+        ],
+        "theorem_id": "06588c07-4c58-4d0f-a257-445289cde218",
+        "theorem_name": "OpenGA.RicciFlow.surfaceDensity_comp",
+        "theorem_title": "Surface area density under a change of parameters",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-10T02:04:51.873353+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "import Definitions.Def_DifferentialGeometry_SmoothRiemannianMetric\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.Geometry.Manifold.MFDeriv.FDeriv\nimport Mathlib.LinearAlgebra.Matrix.ToLin\nimport Mathlib.MeasureTheory.Integral.Bochner.Set\nimport Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace\nimport Mathlib.Analysis.SpecialFunctions.Sqrt\n\n/-!\n# Area density of a parametrized surface\n\nThe pullback metric is computed from the manifold derivative of the actual\nsurface map. Area is its Gram determinant density integrated against Euclidean\nparameter volume, with multiplicity. The metric type reuses DifferentialGeometry\nand Mathlib. No orientation or global tangent frame is chosen on the surface.\n-/\n\nnoncomputable section\n\nopen Bundle Matrix MeasureTheory Set Filter\nopen scoped Manifold ContDiff Topology\nopen DifferentialGeometry\n\nnamespace OpenGA.RicciFlow\n\nabbrev SurfaceParameter := EuclideanSpace ℝ (Fin 2)\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n  [FiniteDimensional ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n  [T2Space M]\n\n/-- The two images of the standard orthonormal parameter vectors under `df`. -/\ndef surfaceTangent (f : SurfaceParameter → M) (u : SurfaceParameter) (i : Fin 2) :\n    TangentSpace I (f u) :=\n  mfderiv 𝓘(ℝ, SurfaceParameter) I f u (EuclideanSpace.basisFun (Fin 2) ℝ i)\n\n/-- The induced metric matrix of a parametrized surface. -/\ndef surfaceMetricMatrix (g : SmoothRiemannianMetric I M)\n    (f : SurfaceParameter → M) (u : SurfaceParameter) : Matrix (Fin 2) (Fin 2) ℝ :=\n  fun i j => g.inner (f u) (surfaceTangent (I := I) f u i) (surfaceTangent (I := I) f u j)\n\n/-- Parametrized area density relative to Euclidean parameter volume. -/\ndef surfaceDensity (g : SmoothRiemannianMetric I M)\n    (f : SurfaceParameter → M) (u : SurfaceParameter) : ℝ :=\n  Real.sqrt (surfaceMetricMatrix g f u).det\n\n/-- Area of a fixed parameter domain, with multiplicity. -/\ndef patchArea (g : SmoothRiemannianMetric I M) (f : SurfaceParameter → M)\n    (Ω : Set SurfaceParameter) : ℝ :=\n  ∫ u in Ω, surfaceDensity g f u\n\nend OpenGA.RicciFlow\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $(M,g)$ be a smooth Riemannian manifold and let $f:\\mathbb R^2\\to M$. For the standard parameter vectors $e_1,e_2$, define\n\n$$G_f(u)_{ij}=g_{f(u)}(df_u(e_i),df_u(e_j)),\\qquad J_gf(u)=\\sqrt{\\det G_f(u)}.$$\n\nFor a parameter domain $\\Omega$, its area with multiplicity is $\\int_\\Omega J_gf(u)\\,du$ when the density is integrable. The definitions use the actual manifold derivative, with Lean's total derivative convention outside differentiability points, and the Bochner integral. They reuse the existing Mathlib/DifferentialGeometry smooth metric type. Coordinate compatibility and Ricci-flow variation are separate theorems.",
+        "node_type": "theorem",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L26-L26; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L34-L37; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L39-L42; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L44-L47; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L49-L52",
+        "status": "Definition",
+        "tags": [
+          "colding-minicozzi",
+          "poincare-foundations",
+          "riemannian-geometry",
+          "surface-area"
+        ],
+        "theorem_id": "0e220955-5806-447e-b322-843240f3f915",
+        "theorem_name": "OpenGA_SurfaceArea",
+        "theorem_title": "Area density of a parametrized surface",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-10T02:06:35.601673+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.RicciFlow.patchArea_comp\n    (g : SmoothRiemannianMetric I M) (f : SurfaceParameter → M)\n    {φ : SurfaceParameter → SurfaceParameter} {Ω : Set SurfaceParameter}\n    (hΩ : MeasurableSet Ω) (hφ : ∀ u ∈ Ω, DifferentiableAt ℝ φ u)\n    (hinj : Set.InjOn φ Ω)\n    (hf : ∀ v ∈ φ '' Ω, MDifferentiableAt 𝓘(ℝ, SurfaceParameter) I f v) :\n    patchArea g (f ∘ φ) Ω = patchArea g f (φ '' Ω) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $(M,g)$ be a smooth Riemannian manifold and $\\Omega\\subseteq\\mathbb R^2$ be measurable. Suppose $\\varphi:\\mathbb R^2\\to\\mathbb R^2$ is differentiable at every point of $\\Omega$ and injective on $\\Omega$, and $f:\\mathbb R^2\\to M$ is differentiable at every point of $\\varphi(\\Omega)$. Then\n\n$$\\int_\\Omega J_g(f\\circ\\varphi)(u)\\,du=\\int_{\\varphi(\\Omega)}J_gf(v)\\,dv.$$\n\nThese are Bochner integrals; in particular, the identity identifies the usual finite areas whenever the density is integrable. The surface map $f$ need not be injective, so multiplicity is retained. This establishes compatibility of local area integrals under changes of surface coordinates; it does not yet construct an integral on a closed surface.",
+        "node_type": "theorem",
+        "preamble": "import Theorems.Thm_OpenGA_RicciFlow_surfaceDensity_comp\nimport Definitions.Def_OpenGA_SurfaceArea\nimport Mathlib.MeasureTheory.Function.Jacobian\n\nnoncomputable section\n\nopen Bundle Matrix MeasureTheory Set Filter\n\nopen scoped Manifold ContDiff Topology\n\nopen DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n\nopen OpenGA.RicciFlow",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean#L75-L90",
+        "status": "Proved",
+        "tags": [
+          "colding-minicozzi",
+          "poincare-foundations",
+          "riemannian-geometry",
+          "surface-area"
+        ],
+        "theorem_id": "25bed6f8-0964-4851-8d72-bd621c8f9303",
+        "theorem_name": "OpenGA.RicciFlow.patchArea_comp",
+        "theorem_title": "Surface patch area is invariant under injective reparametrization",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:59:21.810934+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "/-\nReuses qinz1yang/differential-geometry, Copyright 2026 The DifferentialGeometry\ncontributors, Apache-2.0, commit 1b535dd102b94cc42b107cca27059687888f08b3.\nThe metric and distance are upstream/Mathlib constructions. The ball interface\nis curated in OpenGA; source hypotheses and mathematical definitions are preserved.\n-/\nimport Mathlib.Geometry.Manifold.VectorBundle.Riemannian\nimport Mathlib.Geometry.Manifold.VectorBundle.Tangent\n\nopen Bundle\nopen scoped Manifold ContDiff\n\nnamespace DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]\nvariable {H : Type*} [TopologicalSpace H]\n\nabbrev SmoothRiemannianMetric\n    (I : ModelWithCorners Real E H) (M : Type*)\n    [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] : Type _ :=\n  Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I : M -> Type _)\n\nend DifferentialGeometry\n\nnamespace Riemannian\n\n/-- **Math.** A **Riemannian metric** on a smooth manifold $M$ modelled\non $(E, H, I)$. Mathlib's `Bundle.ContMDiffRiemannianMetric` aliased:\ndata, not a typeclass attribute. -/\nabbrev RiemannianMetric\n    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n    {H : Type*} [TopologicalSpace H]\n    (I : ModelWithCorners ℝ E H)\n    (M : Type*) [TopologicalSpace M] [ChartedSpace H M]\n    [IsManifold I ∞ M] : Type _ :=\n  Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I : M → Type _)\n\nend Riemannian\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $M$ be a smooth manifold. A smooth Riemannian metric assigns a positive-definite symmetric bilinear form $g_x$ to every tangent space $T_xM$, varying smoothly with $x$. This bundle reuses Mathlib's metric type through the original DifferentialGeometry and OpenGA aliases. It imposes no completeness, curvature or orientation assumption.",
+        "node_type": "theorem",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/Basic.lean#L12-L15; https://github.com/MathNetwork/OpenGA/blob/16e60c2b09f5c1d3c2bf44ed81429b1a1fecc1b8/OpenGALib/Riemannian/Metric/RiemannianMetric.lean#L40-L49",
+        "status": "Definition",
+        "tags": [
+          "comparison-geometry",
+          "poincare-foundations",
+          "riemannian-geometry"
+        ],
+        "theorem_id": "9f78021b-c594-4538-b61f-06a8831433af",
+        "theorem_name": "DifferentialGeometry_SmoothRiemannianMetric",
+        "theorem_title": "Smooth Riemannian metric",
+        "vote_count": 0
+      },
+      {
+        "child_count": 1,
+        "created_at": "2026-09-10T02:06:46.558766+00:00",
+        "deprecated_at": null,
+        "explanation": "Use the proved pointwise density transformation. Mathlib's change-of-variables theorem for an injective differentiable map on a measurable set identifies the target-domain integral with the absolute-Jacobian-weighted source integral. Replace the integrands by the pointwise density formula. No global frame on the surface or compactness assumption is used.",
+        "node_id": "sketch-c2dd3a10-494f-4c3e-b361-25088e5043d6",
+        "node_type": "sketch",
+        "parent_theorem_id": "25bed6f8-0964-4851-8d72-bd621c8f9303",
+        "status": "ACCEPTED",
+        "submission_id": "c2dd3a10-494f-4c3e-b361-25088e5043d6",
+        "username": "Xinze-Li-Moqian"
+      }
+    ],
+    "root_id": "25bed6f8-0964-4851-8d72-bd621c8f9303"
+  },
+  "surfaceDensity_comp": {
+    "edges": [
+      {
+        "kind": "sketch",
+        "source": "06588c07-4c58-4d0f-a257-445289cde218",
+        "target": "sketch-c2dd3a10-494f-4c3e-b361-25088e5043d6"
+      },
+      {
+        "kind": "sketch",
+        "source": "sketch-c2dd3a10-494f-4c3e-b361-25088e5043d6",
+        "target": "25bed6f8-0964-4851-8d72-bd621c8f9303"
+      },
+      {
+        "kind": "structural",
+        "source": "0e220955-5806-447e-b322-843240f3f915",
+        "target": "06588c07-4c58-4d0f-a257-445289cde218"
+      },
+      {
+        "kind": "structural",
+        "source": "06588c07-4c58-4d0f-a257-445289cde218",
+        "target": "25bed6f8-0964-4851-8d72-bd621c8f9303"
+      },
+      {
+        "kind": "structural",
+        "source": "9f78021b-c594-4538-b61f-06a8831433af",
+        "target": "0e220955-5806-447e-b322-843240f3f915"
+      }
+    ],
+    "expanded_theorem_ids": [],
+    "has_hidden_deprecated_sketches": false,
+    "nodes": [
+      {
+        "audits": [],
+        "created_at": "2026-09-10T02:05:20.030568+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.RicciFlow.surfaceDensity_comp\n    (g : SmoothRiemannianMetric I M) (f : SurfaceParameter → M)\n    {φ : SurfaceParameter → SurfaceParameter} {u : SurfaceParameter}\n    {A : SurfaceParameter →L[ℝ] SurfaceParameter} (hφ : HasFDerivAt φ A u)\n    (hf : MDifferentiableAt 𝓘(ℝ, SurfaceParameter) I f (φ u)) :\n    surfaceDensity g (f ∘ φ) u =\n      |(LinearMap.toMatrix (EuclideanSpace.basisFun (Fin 2) ℝ).toBasis\n        (EuclideanSpace.basisFun (Fin 2) ℝ).toBasis A.toLinearMap).det| *\n      surfaceDensity g f (φ u) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $(M,g)$ be a smooth Riemannian manifold, $f:\\mathbb R^2\\to M$, and $\\varphi:\\mathbb R^2\\to\\mathbb R^2$. Suppose $\\varphi$ has derivative $A$ at $u$ and $f$ is differentiable at $\\varphi(u)$. Then\n\n$$J_g(f\\circ\\varphi)(u)=|\\det A|\\,J_gf(\\varphi(u)).$$\n\nThe determinant is computed in the standard orthonormal parameter basis. Neither $A$ nor $df$ must be injective; orientation reversal and degenerate derivatives are allowed. This is the pointwise coordinate compatibility of parametrized surface area.",
+        "node_type": "theorem",
+        "preamble": "import Definitions.Def_OpenGA_SurfaceArea\nimport Mathlib.MeasureTheory.Function.Jacobian\n\nnoncomputable section\n\nopen Bundle Matrix MeasureTheory Set Filter\n\nopen scoped Manifold ContDiff Topology\n\nopen DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n\nopen OpenGA.RicciFlow",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean#L59-L73",
+        "status": "Proved",
+        "tags": [
+          "colding-minicozzi",
+          "poincare-foundations",
+          "riemannian-geometry",
+          "surface-area"
+        ],
+        "theorem_id": "06588c07-4c58-4d0f-a257-445289cde218",
+        "theorem_name": "OpenGA.RicciFlow.surfaceDensity_comp",
+        "theorem_title": "Surface area density under a change of parameters",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-10T02:04:51.873353+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "import Definitions.Def_DifferentialGeometry_SmoothRiemannianMetric\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.Geometry.Manifold.MFDeriv.FDeriv\nimport Mathlib.LinearAlgebra.Matrix.ToLin\nimport Mathlib.MeasureTheory.Integral.Bochner.Set\nimport Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace\nimport Mathlib.Analysis.SpecialFunctions.Sqrt\n\n/-!\n# Area density of a parametrized surface\n\nThe pullback metric is computed from the manifold derivative of the actual\nsurface map. Area is its Gram determinant density integrated against Euclidean\nparameter volume, with multiplicity. The metric type reuses DifferentialGeometry\nand Mathlib. No orientation or global tangent frame is chosen on the surface.\n-/\n\nnoncomputable section\n\nopen Bundle Matrix MeasureTheory Set Filter\nopen scoped Manifold ContDiff Topology\nopen DifferentialGeometry\n\nnamespace OpenGA.RicciFlow\n\nabbrev SurfaceParameter := EuclideanSpace ℝ (Fin 2)\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n  [FiniteDimensional ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n  [T2Space M]\n\n/-- The two images of the standard orthonormal parameter vectors under `df`. -/\ndef surfaceTangent (f : SurfaceParameter → M) (u : SurfaceParameter) (i : Fin 2) :\n    TangentSpace I (f u) :=\n  mfderiv 𝓘(ℝ, SurfaceParameter) I f u (EuclideanSpace.basisFun (Fin 2) ℝ i)\n\n/-- The induced metric matrix of a parametrized surface. -/\ndef surfaceMetricMatrix (g : SmoothRiemannianMetric I M)\n    (f : SurfaceParameter → M) (u : SurfaceParameter) : Matrix (Fin 2) (Fin 2) ℝ :=\n  fun i j => g.inner (f u) (surfaceTangent (I := I) f u i) (surfaceTangent (I := I) f u j)\n\n/-- Parametrized area density relative to Euclidean parameter volume. -/\ndef surfaceDensity (g : SmoothRiemannianMetric I M)\n    (f : SurfaceParameter → M) (u : SurfaceParameter) : ℝ :=\n  Real.sqrt (surfaceMetricMatrix g f u).det\n\n/-- Area of a fixed parameter domain, with multiplicity. -/\ndef patchArea (g : SmoothRiemannianMetric I M) (f : SurfaceParameter → M)\n    (Ω : Set SurfaceParameter) : ℝ :=\n  ∫ u in Ω, surfaceDensity g f u\n\nend OpenGA.RicciFlow\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $(M,g)$ be a smooth Riemannian manifold and let $f:\\mathbb R^2\\to M$. For the standard parameter vectors $e_1,e_2$, define\n\n$$G_f(u)_{ij}=g_{f(u)}(df_u(e_i),df_u(e_j)),\\qquad J_gf(u)=\\sqrt{\\det G_f(u)}.$$\n\nFor a parameter domain $\\Omega$, its area with multiplicity is $\\int_\\Omega J_gf(u)\\,du$ when the density is integrable. The definitions use the actual manifold derivative, with Lean's total derivative convention outside differentiability points, and the Bochner integral. They reuse the existing Mathlib/DifferentialGeometry smooth metric type. Coordinate compatibility and Ricci-flow variation are separate theorems.",
+        "node_type": "theorem",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L26-L26; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L34-L37; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L39-L42; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L44-L47; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L49-L52",
+        "status": "Definition",
+        "tags": [
+          "colding-minicozzi",
+          "poincare-foundations",
+          "riemannian-geometry",
+          "surface-area"
+        ],
+        "theorem_id": "0e220955-5806-447e-b322-843240f3f915",
+        "theorem_name": "OpenGA_SurfaceArea",
+        "theorem_title": "Area density of a parametrized surface",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-10T02:06:35.601673+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "theorem OpenGA.RicciFlow.patchArea_comp\n    (g : SmoothRiemannianMetric I M) (f : SurfaceParameter → M)\n    {φ : SurfaceParameter → SurfaceParameter} {Ω : Set SurfaceParameter}\n    (hΩ : MeasurableSet Ω) (hφ : ∀ u ∈ Ω, DifferentiableAt ℝ φ u)\n    (hinj : Set.InjOn φ Ω)\n    (hf : ∀ v ∈ φ '' Ω, MDifferentiableAt 𝓘(ℝ, SurfaceParameter) I f v) :\n    patchArea g (f ∘ φ) Ω = patchArea g f (φ '' Ω) := by sorry",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $(M,g)$ be a smooth Riemannian manifold and $\\Omega\\subseteq\\mathbb R^2$ be measurable. Suppose $\\varphi:\\mathbb R^2\\to\\mathbb R^2$ is differentiable at every point of $\\Omega$ and injective on $\\Omega$, and $f:\\mathbb R^2\\to M$ is differentiable at every point of $\\varphi(\\Omega)$. Then\n\n$$\\int_\\Omega J_g(f\\circ\\varphi)(u)\\,du=\\int_{\\varphi(\\Omega)}J_gf(v)\\,dv.$$\n\nThese are Bochner integrals; in particular, the identity identifies the usual finite areas whenever the density is integrable. The surface map $f$ need not be injective, so multiplicity is retained. This establishes compatibility of local area integrals under changes of surface coordinates; it does not yet construct an integral on a closed surface.",
+        "node_type": "theorem",
+        "preamble": "import Theorems.Thm_OpenGA_RicciFlow_surfaceDensity_comp\nimport Definitions.Def_OpenGA_SurfaceArea\nimport Mathlib.MeasureTheory.Function.Jacobian\n\nnoncomputable section\n\nopen Bundle Matrix MeasureTheory Set Filter\n\nopen scoped Manifold ContDiff Topology\n\nopen DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n\nopen OpenGA.RicciFlow",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean#L75-L90",
+        "status": "Proved",
+        "tags": [
+          "colding-minicozzi",
+          "poincare-foundations",
+          "riemannian-geometry",
+          "surface-area"
+        ],
+        "theorem_id": "25bed6f8-0964-4851-8d72-bd621c8f9303",
+        "theorem_name": "OpenGA.RicciFlow.patchArea_comp",
+        "theorem_title": "Surface patch area is invariant under injective reparametrization",
+        "vote_count": 0
+      },
+      {
+        "audits": [],
+        "created_at": "2026-09-09T18:59:21.810934+00:00",
+        "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+        "created_by_username": "Xinze-Li-Moqian",
+        "definition": "/-\nReuses qinz1yang/differential-geometry, Copyright 2026 The DifferentialGeometry\ncontributors, Apache-2.0, commit 1b535dd102b94cc42b107cca27059687888f08b3.\nThe metric and distance are upstream/Mathlib constructions. The ball interface\nis curated in OpenGA; source hypotheses and mathematical definitions are preserved.\n-/\nimport Mathlib.Geometry.Manifold.VectorBundle.Riemannian\nimport Mathlib.Geometry.Manifold.VectorBundle.Tangent\n\nopen Bundle\nopen scoped Manifold ContDiff\n\nnamespace DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]\nvariable {H : Type*} [TopologicalSpace H]\n\nabbrev SmoothRiemannianMetric\n    (I : ModelWithCorners Real E H) (M : Type*)\n    [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M] : Type _ :=\n  Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I : M -> Type _)\n\nend DifferentialGeometry\n\nnamespace Riemannian\n\n/-- **Math.** A **Riemannian metric** on a smooth manifold $M$ modelled\non $(E, H, I)$. Mathlib's `Bundle.ContMDiffRiemannianMetric` aliased:\ndata, not a typeclass attribute. -/\nabbrev RiemannianMetric\n    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n    {H : Type*} [TopologicalSpace H]\n    (I : ModelWithCorners ℝ E H)\n    (M : Type*) [TopologicalSpace M] [ChartedSpace H M]\n    [IsManifold I ∞ M] : Type _ :=\n  Bundle.ContMDiffRiemannianMetric I ∞ E (TangentSpace I : M → Type _)\n\nend Riemannian\n",
+        "deprecated_at": null,
+        "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+        "formal_statement": "",
+        "has_more_children": false,
+        "has_more_parents": false,
+        "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $M$ be a smooth manifold. A smooth Riemannian metric assigns a positive-definite symmetric bilinear form $g_x$ to every tangent space $T_xM$, varying smoothly with $x$. This bundle reuses Mathlib's metric type through the original DifferentialGeometry and OpenGA aliases. It imposes no completeness, curvature or orientation assumption.",
+        "node_type": "theorem",
+        "source": "https://github.com/qinz1yang/differential-geometry/blob/1b535dd102b94cc42b107cca27059687888f08b3/DifferentialGeometry/Geometry/Metric/Basic.lean#L12-L15; https://github.com/MathNetwork/OpenGA/blob/16e60c2b09f5c1d3c2bf44ed81429b1a1fecc1b8/OpenGALib/Riemannian/Metric/RiemannianMetric.lean#L40-L49",
+        "status": "Definition",
+        "tags": [
+          "comparison-geometry",
+          "poincare-foundations",
+          "riemannian-geometry"
+        ],
+        "theorem_id": "9f78021b-c594-4538-b61f-06a8831433af",
+        "theorem_name": "DifferentialGeometry_SmoothRiemannianMetric",
+        "theorem_title": "Smooth Riemannian metric",
+        "vote_count": 0
+      },
+      {
+        "child_count": 1,
+        "created_at": "2026-09-10T02:06:46.558766+00:00",
+        "deprecated_at": null,
+        "explanation": "Use the proved pointwise density transformation. Mathlib's change-of-variables theorem for an injective differentiable map on a measurable set identifies the target-domain integral with the absolute-Jacobian-weighted source integral. Replace the integrands by the pointwise density formula. No global frame on the surface or compactness assumption is used.",
+        "node_id": "sketch-c2dd3a10-494f-4c3e-b361-25088e5043d6",
+        "node_type": "sketch",
+        "parent_theorem_id": "25bed6f8-0964-4851-8d72-bd621c8f9303",
+        "status": "ACCEPTED",
+        "submission_id": "c2dd3a10-494f-4c3e-b361-25088e5043d6",
+        "username": "Xinze-Li-Moqian"
+      }
+    ],
+    "root_id": "06588c07-4c58-4d0f-a257-445289cde218"
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "status": "PUBLISHED_CONDITIONAL_REDUCTION",
+  "namespace": "PoincareFormalization.ExtinctionEndgame",
+  "platform_publication": {
+    "attempted": true,
+    "graph_updated": true,
+    "status": "COMPLETE",
+    "root_status": "Open",
+    "record": "PoincareConjecture/Contributions/ExtinctionEndgame/Upload/publication.json",
+    "source_revision": "20ce5fe376984e6628a05ab1622edd8dc64b3985",
+    "verified_at": "2026-09-09T21:52:44.581898+00:00",
+    "graph": {
+      "after": {
+        "edges": 90,
+        "nodes": 55
+      },
+      "before": {
+        "edges": 60,
+        "nodes": 39
+      },
+      "checked_at": "2026-09-09T21:52:43.010736+00:00",
+      "connected_new_nodes": [
+        "OpenGA_CoordinateBallConnectedSum",
+        "OpenGA_SurgeryTopologyEvolution",
+        "OpenGA_ExtinctionWidthControl",
+        "OpenGA_WidthExtinctionTime",
+        "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+        "PoincareFormalization.ExtinctionEndgame.simply_connected_factors_of_connected_sum",
+        "PoincareFormalization.ExtinctionEndgame.not_simply_connected_sphere_handle",
+        "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_connected_sum_spheres",
+        "OpenGA.WidthComparisonTrace.le_extinctionTime",
+        "OpenGA.SurgeryTopologyEvolution.finiteExtinction_of_width_control",
+        "OpenGA.SurgeryTopologyEvolution.topology_from_extinction",
+        "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_standard_decomposition"
+      ],
+      "open_inputs": [
+        "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+        "PoincareFormalization.ExtinctionEndgame.simply_connected_factors_of_connected_sum",
+        "PoincareFormalization.ExtinctionEndgame.not_simply_connected_sphere_handle",
+        "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_connected_sum_spheres"
+      ],
+      "path": "Uniform width-controlled surgery topology -> finite extinction -> standard connected-sum decomposition -> simply connected endgame -> existing Poincare goal",
+      "preserved_prior_decompositions": true,
+      "previously_visible_proofs_omitted": [
+        "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+      ],
+      "prior_edges_not_in_display": [
+        [
+          "16d46789-a853-4a33-a4a3-4134fe549c82",
+          "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+        ],
+        [
+          "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+          "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+        ],
+        [
+          "b0543216-8c0f-4f20-8b76-40d197f69fba",
+          "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee"
+        ],
+        [
+          "sketch-d543d39b-4273-4b91-826f-1b9c8c6191ee",
+          "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+        ]
+      ],
+      "root_status": "Open",
+      "status": "VERIFIED"
+    }
+  },
+  "lean_version": "v4.33.1",
+  "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "sources": [
+    {
+      "url": "https://arxiv.org/pdf/math/0605667v5",
+      "locators": [
+        "Section 3.2",
+        "Lemma 73.4",
+        "Proposition 77.2",
+        "Lemma 81.2"
+      ]
+    },
+    {
+      "url": "https://arxiv.org/pdf/0707.0108",
+      "locators": [
+        "Theorem 1.7",
+        "Corollary 1.11"
+      ]
+    }
+  ],
+  "formalization_scope": [
+    "Connected sums use a quotient of punctured coordinate-ball complements, with quotient topology.",
+    "Spherical space forms are weakened to closed three-manifolds covered by the standard three-sphere.",
+    "SurgeryTopologyEvolution contains extracted component topology and finite reconstruction histories; it is not a metric Ricci flow.",
+    "A single initial width bound is required for all nonempty positive-time slices.",
+    "The initial component persists on a positive time interval, so width control cannot hold merely because all positive-time slices are empty.",
+    "The geometric construction must provide compatible smoothing, orientation, normalization, surgery, sweepouts and comparison estimates.",
+    "The final conditional theorem has exactly the hypotheses and conclusion of the platform topological goal."
+  ],
+  "open_problems": [
+    {
+      "name": "exists_width_controlled_surgery_topology",
+      "role": "Construct topological surgery records and uniform width comparison data from the geometric route.",
+      "status": "OPEN",
+      "proof": "sorry"
+    },
+    {
+      "name": "simply_connected_factors_of_connected_sum",
+      "role": "Van Kampen for the punctured coordinate-ball quotient.",
+      "status": "OPEN",
+      "proof": "sorry"
+    },
+    {
+      "name": "not_simply_connected_sphere_handle",
+      "role": "Exclude S1 times S2 in a simply connected decomposition.",
+      "status": "OPEN",
+      "proof": "sorry"
+    },
+    {
+      "name": "nonempty_homeomorph_sphere_of_connected_sum_spheres",
+      "role": "The connected sum of two three-spheres is a three-sphere.",
+      "status": "OPEN",
+      "proof": "sorry"
+    }
+  ],
+  "validation": {
+    "library_build": {
+      "command": "lake build OpenGALib",
+      "status": "PASS",
+      "jobs": 4250
+    },
+    "reduction_build": {
+      "command": "lake build",
+      "cwd": "PoincareConjecture/Contributions/ExtinctionEndgame",
+      "status": "PASS",
+      "jobs": 2805,
+      "expected_sorry_warnings": 4
+    },
+    "library_audit": {
+      "command": "lake env lean tests/ExtinctionEndgame.lean",
+      "status": "PASS",
+      "declarations": 122,
+      "allowed_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "reduction_audit": {
+      "command": "lake env lean Audit.lean",
+      "cwd": "PoincareConjecture/Contributions/ExtinctionEndgame",
+      "status": "PASS",
+      "exact_goal_type": true,
+      "extinction_open_dependencies": 1,
+      "topological_endgame_open_dependencies": 3,
+      "root_open_dependencies": 4,
+      "undeclared_proof_holes": 0
+    },
+    "platform_mirror": {
+      "status": "PASS",
+      "command": "lake build",
+      "cwd": "PoincareConjecture",
+      "jobs": 3673
+    },
+    "curation": {
+      "status": "PASS",
+      "command": "python3 PoincareConjecture/check_curation.py",
+      "declarations": 34,
+      "source_reviews": 36
+    }
+  },
+  "files": {
+    "OpenGALib.lean": "592a5e5ed39f0b3474077f633d581ee183898a9e89da8014b4772b51b3b0172f",
+    "OpenGALib/Topology/ConnectedSum.lean": "4beee1de6655a98b3cf80f42d0bb391104c08a18b9512993bb76603a4186429b",
+    "OpenGALib/Topology/SurgeryReconstruction.lean": "fcbfc39df0965237b4b4208ecb05eb625c214fc790e0b819c5194068796e73e6",
+    "OpenGALib/Topology/ExtinctionEndgame.lean": "59778334126ad2440992ac5d53fb464299f5b9acb4e80306e11d37af4cdd46c7",
+    "OpenGALib/Analysis/ComparisonExtinction.lean": "efa9fd56da558a8452621ac255c13b6018ce2193dbfc7c54c391206ceb2515b6",
+    "tests/ExtinctionEndgame.lean": "a0e69e65d46f6d2b95c69ab34b845145d85d3dda32528fe0f3eba6f305804678",
+    "PoincareConjecture/Contributions/ExtinctionEndgame/Audit.lean": "7b8e0c3333c52577b77966775defcb4e1f40d60ca9c4d474da75d90209d27660",
+    "PoincareConjecture/Contributions/ExtinctionEndgame/OpenProblems.lean": "5b8d398cb3b157d09fc426d5af57cf7821cf0a9326799d717dfb49e14bddf358",
+    "PoincareConjecture/Contributions/ExtinctionEndgame/Reduction.lean": "42a27e6550d9f2fd92074930731479c484c193bbbafc9d1fef09b2e86baea4a5",
+    "PoincareConjecture/Contributions/ExtinctionEndgame/lake-manifest.json": "f5d65f7b106803f73e02af9acff468ecb3ca4c38718ae2e1550c35dc2d9e001b",
+    "PoincareConjecture/Contributions/ExtinctionEndgame/lakefile.lean": "134870bd05cbfe3f568d1ca20a755d22f0efeb04e46cfe237af868ec15a24fc1",
+    "PoincareConjecture/Contributions/ExtinctionEndgame/lean-toolchain": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71"
+  }
+}

@@ -1,0 +1,4 @@
+{"end": {"col": 31, "line": 109, "offset": 6070}, "kind": "command", "start": {"col": 0, "line": 68, "offset": 3306}, "syntaxKind": "Lean.Parser.Command.declaration"}
+{"declEnd": {"col": 31, "line": 109, "offset": 6070}, "declStart": {"col": 0, "line": 68, "offset": 3306}, "docstring": null, "kind": "decl", "nameText": "lintegral_cross_le", "privateTok": null, "valKind": "simple", "valStart": {"col": 72, "line": 73, "offset": 3703}}
+{"const": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.lintegral_cross_le", "end": {"col": 26, "line": 68, "offset": 3332}, "kind": "ref", "start": {"col": 8, "line": 68, "offset": 3314}}
+{"const": "DifferentialGeometry.Geometry.Riemannian.VolumeComparison.CrossAnti", "end": {"col": 23, "line": 71, "offset": 3482}, "kind": "ref", "start": {"col": 14, "line": 71, "offset": 3473}}

@@ -235,12 +235,10 @@ private noncomputable def toBilinForm (g : RiemannianMetric I M) (x : M) :
     BilinearForm.Form ℝ E :=
   LinearMap.mk₂ ℝ
     (fun v w => g.inner x v w)
-    (fun v₁ v₂ w => by
-      simp only [show g.inner x (v₁ + v₂) = g.inner x v₁ + g.inner x v₂
-        from (g.inner x).map_add v₁ v₂, ContinuousLinearMap.add_apply])
-    (fun c v w => by
-      simp only [show g.inner x (c • v) = c • g.inner x v
-        from (g.inner x).map_smul c v, ContinuousLinearMap.smul_apply])
+    (fun v₁ v₂ w =>
+      congrArg (fun f : TangentSpace I x →L[ℝ] ℝ => f w) ((g.inner x).map_add v₁ v₂))
+    (fun c v w =>
+      congrArg (fun f : TangentSpace I x →L[ℝ] ℝ => f w) ((g.inner x).map_smul c v))
     (fun v w₁ w₂ => (g.inner x v).map_add w₁ w₂)
     (fun c v w => (g.inner x v).map_smul c w)
 
@@ -278,16 +276,22 @@ theorem metricInner_eq_iff_eq (g : RiemannianMetric I M) (x : M)
     (∀ Z : TangentSpace I x, g.metricInner x v Z = g.metricInner x w Z) ↔ v = w :=
   BilinearForm.inner_eq_iff_eq (g.toBilinForm_isPosDef x) v w
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** Inverse Riesz $\varphi \mapsto V_\varphi$ such that $g_x(V_\varphi, W) = \varphi(W)$.
 
 Constructed via the algebraic-core `BilinearForm.riesz` applied to the
-`LinearMap` coercion of the continuous functional. -/
+`LinearMap` coercion of the continuous functional.
+
+The `respectTransparency` exemptions on the three Riesz declarations
+mirror Mathlib's own practice around the `TangentSpace I x = E`
+definitional identification (cf. `NormedSpace.fromTangentSpace`). -/
 noncomputable def metricRiesz (g : RiemannianMetric I M) (x : M)
     (φ : TangentSpace I x →L[ℝ] ℝ) :
     TangentSpace I x :=
   BilinearForm.riesz (g.toBilinForm_isPosDef x)
     ((φ : TangentSpace I x →ₗ[ℝ] ℝ))
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** Defining property of Riesz: $\langle \text{metricRiesz}\,\varphi, W\rangle_g = \varphi(W)$. -/
 @[simp]
 theorem metricRiesz_inner (g : RiemannianMetric I M) (x : M)
@@ -296,6 +300,7 @@ theorem metricRiesz_inner (g : RiemannianMetric I M) (x : M)
   BilinearForm.riesz_inner (g.toBilinForm_isPosDef x)
     ((φ : TangentSpace I x →ₗ[ℝ] ℝ)) V
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Math.** Uniqueness: if $g_x(V, \cdot) = \varphi$, then $V = \text{metricRiesz}\,\varphi$. -/
 theorem metricRiesz_unique (g : RiemannianMetric I M) (x : M)
     (v : TangentSpace I x) (φ : TangentSpace I x →L[ℝ] ℝ)

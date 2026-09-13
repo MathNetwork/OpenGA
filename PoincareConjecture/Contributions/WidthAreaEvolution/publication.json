@@ -1,0 +1,465 @@
+{
+  "definitions": [
+    {
+      "dependencies": [],
+      "id": "OpenGA_WidthAreaEvolutionData",
+      "path": "Definitions/Def_OpenGA_WidthAreaEvolutionData.lean",
+      "payload": {
+        "definition": "import Definitions.Def_OpenGA_WidthComparisonData\nimport Mathlib.Analysis.Calculus.Deriv.MeanValue\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Analytic input before integrating the short-time area estimate. The same\ntime interval and sequence cutoff work for every slice. The derivative bound\nallows slices below the initial supremum to use their initial area gap;\nit does not demand negative area derivative from constant endpoint slices. -/\nstructure WidthAreaEvolutionData (width : ℝ → ℝ) (time scalar : ℝ) where\n  realizer : FiniteEnergyPair\n  realizer_conformal : realizer.IsConformal\n  realized_energy : realizer.energy = width time\n  competitor : ℕ → Icc (0 : ℝ) 1 → FiniteEnergyPair\n  energy_cap : ℕ → ℝ\n  energy_le_cap : ∀ j p, (competitor j p).energy ≤ energy_cap j\n  cap_tendsto : Tendsto energy_cap atTop (𝓝 (width time))\n  area : ℕ → Icc (0 : ℝ) 1 → ℝ → ℝ\n  area_initial : ∀ j p, area j p time = (competitor j p).area\n  uniform_evolution : ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧ ∃ start : ℕ,\n    ∀ j ≥ start,\n      (∀ s ∈ Ioo time (time + δ), width s ≤ ⨆ p, area j p s) ∧\n      (∀ p, ContinuousOn (area j p) (Icc time (time + δ))) ∧\n      (∀ p s, s ∈ Ioo time (time + δ) → DifferentiableAt ℝ (area j p) s) ∧\n      (∀ p s, s ∈ Ioo time (time + δ) →\n        deriv (area j p) s ≤ -(4 * Real.pi) - scalar / 2 * realizer.area + ε +\n          ((⨆ q, (competitor j q).area) - (competitor j p).area) / δ)\n\n\nend OpenGA\n",
+        "definition_name": "OpenGA_WidthAreaEvolutionData",
+        "definition_title": "Uniform area evolution for width comparison",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Finite-energy comparison fields, a conformal limiting realizer, and time-dependent real area profiles. The energy caps converge to the initial width. For every positive error, one time interval and one sequence cutoff work for every slice: the evolved family bounds the width and each area derivative is at most $-4π-R A_*/2+ε+(A_j-A_{j,p})/δ$, where $A_j$ is the initial slice supremum. The area gap allows low-area slices to have nonnegative derivative. These are analytic data; their realization by geometric sweepouts and the uniform derivative estimate are separate open obligations.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+        "tags": [
+          "finite-extinction",
+          "width",
+          "geometric-analysis"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-10T21:40:33.849772+00:00",
+        "job": {
+          "created_at": "2026-09-10T21:40:11.241205+00:00",
+          "definitions": "import Definitions.Def_OpenGA_WidthComparisonData\nimport Mathlib.Analysis.Calculus.Deriv.MeanValue\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Analytic input before integrating the short-time area estimate. The same\ntime interval and sequence cutoff work for every slice. The derivative bound\nallows slices below the initial supremum to use their initial area gap;\nit does not demand negative area derivative from constant endpoint slices. -/\nstructure WidthAreaEvolutionData (width : ℝ → ℝ) (time scalar : ℝ) where\n  realizer : FiniteEnergyPair\n  realizer_conformal : realizer.IsConformal\n  realized_energy : realizer.energy = width time\n  competitor : ℕ → Icc (0 : ℝ) 1 → FiniteEnergyPair\n  energy_cap : ℕ → ℝ\n  energy_le_cap : ∀ j p, (competitor j p).energy ≤ energy_cap j\n  cap_tendsto : Tendsto energy_cap atTop (𝓝 (width time))\n  area : ℕ → Icc (0 : ℝ) 1 → ℝ → ℝ\n  area_initial : ∀ j p, area j p time = (competitor j p).area\n  uniform_evolution : ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧ ∃ start : ℕ,\n    ∀ j ≥ start,\n      (∀ s ∈ Ioo time (time + δ), width s ≤ ⨆ p, area j p s) ∧\n      (∀ p, ContinuousOn (area j p) (Icc time (time + δ))) ∧\n      (∀ p s, s ∈ Ioo time (time + δ) → DifferentiableAt ℝ (area j p) s) ∧\n      (∀ p s, s ∈ Ioo time (time + δ) →\n        deriv (area j p) s ≤ -(4 * Real.pi) - scalar / 2 * realizer.area + ε +\n          ((⨆ q, (competitor j q).area) - (competitor j p).area) / δ)\n\n\nend OpenGA\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "64ac90db-f4ae-4339-9a19-6e3e05a2d790",
+          "kind": "definition",
+          "natural_language_statement": "Finite-energy comparison fields, a conformal limiting realizer, and time-dependent real area profiles. The energy caps converge to the initial width. For every positive error, one time interval and one sequence cutoff work for every slice: the evolved family bounds the width and each area derivative is at most $-4π-R A_*/2+ε+(A_j-A_{j,p})/δ$, where $A_j$ is the initial slice supremum. The area gap allows low-area slices to have nonnegative derivative. These are analytic data; their realization by geometric sweepouts and the uniform derivative estimate are separate open obligations.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+          "status": "PUBLISHED",
+          "tags": [
+            "finite-extinction",
+            "width",
+            "geometric-analysis"
+          ],
+          "theorem_id": "e3bc03e8-d36a-4cb4-8941-cad17fa54760",
+          "theorem_name": "OpenGA_WidthAreaEvolutionData",
+          "theorem_title": "Uniform area evolution for width comparison",
+          "updated_at": "2026-09-10T21:40:26.82935+00:00",
+          "visibility": "public"
+        },
+        "job_id": "64ac90db-f4ae-4339-9a19-6e3e05a2d790",
+        "response": {
+          "definition_name": "OpenGA_WidthAreaEvolutionData",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "64ac90db-f4ae-4339-9a19-6e3e05a2d790",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/64ac90db-f4ae-4339-9a19-6e3e05a2d790 until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-10T21:40:10.605574+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "e3bc03e8-d36a-4cb4-8941-cad17fa54760",
+        "verified_at": "2026-09-10T21:48:07.545472+00:00"
+      },
+      "sha256": "c9783c7797328bb8d92107b1ed0cce93479180fcc7f447198d5ee4417867210e"
+    },
+    {
+      "dependencies": [
+        "OpenGA_WidthAreaEvolutionData"
+      ],
+      "id": "OpenGA_SurgeryAreaEvolutionData",
+      "path": "Definitions/Def_OpenGA_SurgeryAreaEvolutionData.lean",
+      "payload": {
+        "definition": "import Definitions.Def_OpenGA_WidthAreaEvolutionData\nimport Definitions.Def_OpenGA_MeasuredSurgeryComparisonData\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\nstructure SurgeryAreaEvolutionData (initialWidth finalTime : ℝ) where\n  volumeControl : MeasuredRadialSurgeryData\n  events_inside : volumeControl.events ⊆ Ioo 0 finalTime\n  finalTime_pos : 0 < finalTime\n  scalar : ℝ → ℝ → ℝ\n  width : ℝ → ℝ → ℝ\n  scalar_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (scalar a) (Icc a b)\n  width_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (width a) (Icc a b)\n  scalar_initial : -6 ≤ scalar 0 0\n  width_initial : width 0 0 ≤ initialWidth\n  width_nonneg : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Icc a b, 0 ≤ width a t\n  scalar_slope : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, ∀ q : ℝ, q < (2 / 3 : ℝ) * (scalar a t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar a) t s\n  area_evolution : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, Nonempty (WidthAreaEvolutionData (width a) t (scalar a t))\n  scalar_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → scalar a b ≤ scalar b b\n  width_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → width b b ≤ width a b\n\n\n\nend OpenGA\n",
+        "definition_name": "OpenGA_SurgeryAreaEvolutionData",
+        "definition_title": "Surgery profiles with uniform area evolution",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Measured radial surgery data and scalar/width profiles, with uniform area-evolution data on each event-free interval. The width comparison inequality is not assumed: it is obtained by integrating the area derivative estimates. Radial comparison, the removed-volume budget, scalar estimates, and jump inequalities remain explicit hypotheses.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+        "tags": [
+          "finite-extinction",
+          "width",
+          "geometric-analysis"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-10T21:40:57.989752+00:00",
+        "job": {
+          "created_at": "2026-09-10T21:40:34.761302+00:00",
+          "definitions": "import Definitions.Def_OpenGA_WidthAreaEvolutionData\nimport Definitions.Def_OpenGA_MeasuredSurgeryComparisonData\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\nstructure SurgeryAreaEvolutionData (initialWidth finalTime : ℝ) where\n  volumeControl : MeasuredRadialSurgeryData\n  events_inside : volumeControl.events ⊆ Ioo 0 finalTime\n  finalTime_pos : 0 < finalTime\n  scalar : ℝ → ℝ → ℝ\n  width : ℝ → ℝ → ℝ\n  scalar_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (scalar a) (Icc a b)\n  width_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (width a) (Icc a b)\n  scalar_initial : -6 ≤ scalar 0 0\n  width_initial : width 0 0 ≤ initialWidth\n  width_nonneg : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Icc a b, 0 ≤ width a t\n  scalar_slope : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, ∀ q : ℝ, q < (2 / 3 : ℝ) * (scalar a t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar a) t s\n  area_evolution : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, Nonempty (WidthAreaEvolutionData (width a) t (scalar a t))\n  scalar_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → scalar a b ≤ scalar b b\n  width_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → width b b ≤ width a b\n\n\n\nend OpenGA\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "e4a4d63a-7135-4a65-a997-e8c8ae684f6b",
+          "kind": "definition",
+          "natural_language_statement": "Measured radial surgery data and scalar/width profiles, with uniform area-evolution data on each event-free interval. The width comparison inequality is not assumed: it is obtained by integrating the area derivative estimates. Radial comparison, the removed-volume budget, scalar estimates, and jump inequalities remain explicit hypotheses.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+          "status": "PUBLISHED",
+          "tags": [
+            "finite-extinction",
+            "width",
+            "geometric-analysis"
+          ],
+          "theorem_id": "74823526-a4ee-4cf1-844c-2fa50e923d38",
+          "theorem_name": "OpenGA_SurgeryAreaEvolutionData",
+          "theorem_title": "Surgery profiles with uniform area evolution",
+          "updated_at": "2026-09-10T21:40:52.604809+00:00",
+          "visibility": "public"
+        },
+        "job_id": "e4a4d63a-7135-4a65-a997-e8c8ae684f6b",
+        "response": {
+          "definition_name": "OpenGA_SurgeryAreaEvolutionData",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "e4a4d63a-7135-4a65-a997-e8c8ae684f6b",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/e4a4d63a-7135-4a65-a997-e8c8ae684f6b until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-10T21:40:34.396397+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "74823526-a4ee-4cf1-844c-2fa50e923d38",
+        "verified_at": "2026-09-10T21:48:07.880557+00:00"
+      },
+      "sha256": "7cd6e5b4e62e426cf4465139c4662d86f066c227cb9ddd9c05c08d39f571a965"
+    }
+  ],
+  "external_ids": {
+    "area_energy": "d81e3640-8579-4396-babb-69edac82be33"
+  },
+  "graph_verification": {
+    "edges": 708,
+    "nodes": 210,
+    "root_status": "Open",
+    "verified_paths": {
+      "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution": "dfed080b-d445-470f-b001-e424b16b4b13",
+      "OpenGA.nonempty_widthComparisonData_of_areaEvolution": "547e3663-8069-406b-925c-acdf272db811",
+      "OpenGA_SurgeryAreaEvolutionData": "74823526-a4ee-4cf1-844c-2fa50e923d38",
+      "OpenGA_WidthAreaEvolutionData": "e3bc03e8-d36a-4cb4-8941-cad17fa54760",
+      "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology": "8767fd8d-2074-447d-a515-b7382081a8f6",
+      "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+      "area_energy": "d81e3640-8579-4396-babb-69edac82be33"
+    }
+  },
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "root_required": [
+    "OpenGA_WidthAreaEvolutionData",
+    "OpenGA_SurgeryAreaEvolutionData",
+    "OpenGA.nonempty_widthComparisonData_of_areaEvolution",
+    "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution",
+    "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology",
+    "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology"
+  ],
+  "root_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+  "source_reviewed": true,
+  "sources": [
+    {
+      "path": "OpenGALib/Analysis/Width/AreaEvolution.lean",
+      "sha256": "5076cc8c7d0d9abf586bf344807764a1ff3415e474819ddbe9bb4f2c6ebc19e4"
+    },
+    {
+      "path": "OpenGALib/Analysis/Width/SurgeryAreaEvolution.lean",
+      "sha256": "5677d38990e8d65a239b80b289cb9b1bdd708a7f3db02aa4ffede643606cdf5c"
+    }
+  ],
+  "status": "MAIN_GRAPH_CONNECTED",
+  "theorems": [
+    {
+      "dependencies": [
+        "OpenGA_WidthAreaEvolutionData"
+      ],
+      "expected_verdict": "ACCEPTED",
+      "explanation": "Integrate the derivative upper bound on a common short interval using the mean-value inequality. The extra term given by the initial area gap divided by the interval length consumes at most that gap. The area-energy inequality bounds the initial slice supremum by the finite energy cap. Taking the supremum of the evolved slices gives exactly the short-time area comparison required by WidthComparisonData. The common interval and cutoff are essential hypotheses; pointwise variation of a single surface is insufficient.",
+      "id": "OpenGA.nonempty_widthComparisonData_of_areaEvolution",
+      "path": "Theorems/Thm_OpenGA_nonempty_widthComparisonData_of_areaEvolution.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem OpenGA.nonempty_widthComparisonData_of_areaEvolution {width : ℝ → ℝ} {time scalar : ℝ}\n    (D : WidthAreaEvolutionData width time scalar) :\n    Nonempty (WidthComparisonData width time scalar) := by sorry",
+        "natural_language_statement": "Integrate the derivative upper bound on a common short interval using the mean-value inequality. The extra term given by the initial area gap divided by the interval length consumes at most that gap. The area-energy inequality bounds the initial slice supremum by the finite energy cap. Taking the supremum of the evolved slices gives exactly the short-time area comparison required by WidthComparisonData. The common interval and cutoff are essential hypotheses; pointwise variation of a single surface is insufficient.",
+        "preamble": "import Definitions.Def_OpenGA_WidthAreaEvolutionData\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\nopen OpenGA\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+        "tags": [
+          "finite-extinction",
+          "width"
+        ],
+        "theorem_name": "OpenGA.nonempty_widthComparisonData_of_areaEvolution",
+        "theorem_title": "Uniform area derivatives imply width comparison"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_nonempty_widthComparisonData_of_areaEvolution.lean",
+      "proof_sha256": "ea38d5a8d86b75b0a647d738e78feeaaae3ca21317270eea80c868c074929a0d",
+      "publication": {
+        "checked_at": "2026-09-10T21:40:58.486500+00:00",
+        "job": {
+          "created_at": "2026-09-10T21:40:35.437855+00:00",
+          "definitions": "import Definitions.Def_OpenGA_WidthAreaEvolutionData\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\nopen OpenGA\n",
+          "error_message": "",
+          "formal_statement": "theorem OpenGA.nonempty_widthComparisonData_of_areaEvolution {width : ℝ → ℝ} {time scalar : ℝ}\n    (D : WidthAreaEvolutionData width time scalar) :\n    Nonempty (WidthComparisonData width time scalar) := by sorry",
+          "id": "02168e8f-739f-4e5e-8755-10437507ca47",
+          "kind": "problem",
+          "natural_language_statement": "Integrate the derivative upper bound on a common short interval using the mean-value inequality. The extra term given by the initial area gap divided by the interval length consumes at most that gap. The area-energy inequality bounds the initial slice supremum by the finite energy cap. Taking the supremum of the evolved slices gives exactly the short-time area comparison required by WidthComparisonData. The common interval and cutoff are essential hypotheses; pointwise variation of a single surface is insufficient.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+          "status": "PUBLISHED",
+          "tags": [
+            "finite-extinction",
+            "width"
+          ],
+          "theorem_id": "547e3663-8069-406b-925c-acdf272db811",
+          "theorem_name": "OpenGA.nonempty_widthComparisonData_of_areaEvolution",
+          "theorem_title": "Uniform area derivatives imply width comparison",
+          "updated_at": "2026-09-10T21:40:57.759951+00:00",
+          "visibility": "public"
+        },
+        "job_id": "02168e8f-739f-4e5e-8755-10437507ca47",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "02168e8f-739f-4e5e-8755-10437507ca47",
+              "name": "OpenGA.nonempty_widthComparisonData_of_areaEvolution"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-10T21:40:35.071216+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "547e3663-8069-406b-925c-acdf272db811",
+        "verified_at": "2026-09-10T21:48:08.375407+00:00"
+      },
+      "sha256": "be7686e4667974e7bcd6984d33e4944fd72334a0215d1e7849f3b83b6db34178",
+      "submission": {
+        "accepted_source_sha256": "ea38d5a8d86b75b0a647d738e78feeaaae3ca21317270eea80c868c074929a0d",
+        "checked_at": "2026-09-10T21:48:08.896041+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "3565c8c8-a1a0-47ca-b01c-17bdbcdf6e3d"
+        },
+        "started_at": "2026-09-10T21:40:58.944662+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "3565c8c8-a1a0-47ca-b01c-17bdbcdf6e3d",
+        "verdict": {
+          "created_at": "2026-09-10T21:40:59.320831+00:00",
+          "error_message": "",
+          "file_path": "547e3663-8069-406b-925c-acdf272db811/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/3565c8c8-a1a0-47ca-b01c-17bdbcdf6e3d.lean",
+          "id": "3565c8c8-a1a0-47ca-b01c-17bdbcdf6e3d",
+          "status": "ACCEPTED",
+          "theorem_id": "547e3663-8069-406b-925c-acdf272db811",
+          "updated_at": "2026-09-10T21:41:50.218765+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-10T21:48:09.512108+00:00"
+      }
+    },
+    {
+      "dependencies": [
+        "OpenGA_SurgeryAreaEvolutionData",
+        "OpenGA.nonempty_widthComparisonData_of_areaEvolution"
+      ],
+      "expected_verdict": "ACCEPTED",
+      "explanation": "At every time in each event-free interval, integrate the uniform area derivative estimates to construct the required width comparison datum. Preserve all volume, scalar, continuity, initial-value and jump conditions. This is a proved analytic adapter, not a construction of a Ricci flow with surgery.",
+      "id": "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution",
+      "path": "Theorems/Thm_OpenGA_nonempty_measuredSurgeryComparisonData_of_areaEvolution.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution {W T : ℝ}\n    (D : SurgeryAreaEvolutionData W T) : Nonempty (MeasuredSurgeryComparisonData W T) := by sorry",
+        "natural_language_statement": "At every time in each event-free interval, integrate the uniform area derivative estimates to construct the required width comparison datum. Preserve all volume, scalar, continuity, initial-value and jump conditions. This is a proved analytic adapter, not a construction of a Ricci flow with surgery.",
+        "preamble": "import Definitions.Def_OpenGA_SurgeryAreaEvolutionData\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\nopen OpenGA\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+        "tags": [
+          "finite-extinction",
+          "width"
+        ],
+        "theorem_name": "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution",
+        "theorem_title": "Construct measured surgery comparison from area evolution"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_nonempty_measuredSurgeryComparisonData_of_areaEvolution.lean",
+      "proof_sha256": "653268b14090834ba6e4088f0725557501ecb9c8b529df197e992aee37bbd774",
+      "publication": {
+        "checked_at": "2026-09-10T21:43:19.405893+00:00",
+        "job": {
+          "created_at": "2026-09-10T21:42:00.633208+00:00",
+          "definitions": "import Definitions.Def_OpenGA_SurgeryAreaEvolutionData\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\nopen OpenGA\n",
+          "error_message": "",
+          "formal_statement": "theorem OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution {W T : ℝ}\n    (D : SurgeryAreaEvolutionData W T) : Nonempty (MeasuredSurgeryComparisonData W T) := by sorry",
+          "id": "44b4c373-7092-427a-8d72-6fdbe09da048",
+          "kind": "problem",
+          "natural_language_statement": "At every time in each event-free interval, integrate the uniform area derivative estimates to construct the required width comparison datum. Preserve all volume, scalar, continuity, initial-value and jump conditions. This is a proved analytic adapter, not a construction of a Ricci flow with surgery.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+          "status": "PUBLISHED",
+          "tags": [
+            "finite-extinction",
+            "width"
+          ],
+          "theorem_id": "dfed080b-d445-470f-b001-e424b16b4b13",
+          "theorem_name": "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution",
+          "theorem_title": "Construct measured surgery comparison from area evolution",
+          "updated_at": "2026-09-10T21:43:08.441179+00:00",
+          "visibility": "public"
+        },
+        "job_id": "44b4c373-7092-427a-8d72-6fdbe09da048",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "44b4c373-7092-427a-8d72-6fdbe09da048",
+              "name": "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-10T21:42:00.370643+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "dfed080b-d445-470f-b001-e424b16b4b13",
+        "verified_at": "2026-09-10T21:48:09.742477+00:00"
+      },
+      "sha256": "cbc108aa77416c0d59b1a9dfa0212852a4750fa579db88d55a99cae7379b383d",
+      "submission": {
+        "accepted_source_sha256": "653268b14090834ba6e4088f0725557501ecb9c8b529df197e992aee37bbd774",
+        "checked_at": "2026-09-10T21:48:10.322936+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "be48e378-6f84-445c-9616-93ba4e1e4ec1"
+        },
+        "started_at": "2026-09-10T21:43:19.821146+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "be48e378-6f84-445c-9616-93ba4e1e4ec1",
+        "verdict": {
+          "created_at": "2026-09-10T21:43:20.048722+00:00",
+          "error_message": "",
+          "file_path": "dfed080b-d445-470f-b001-e424b16b4b13/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/be48e378-6f84-445c-9616-93ba4e1e4ec1.lean",
+          "id": "be48e378-6f84-445c-9616-93ba4e1e4ec1",
+          "status": "ACCEPTED",
+          "theorem_id": "dfed080b-d445-470f-b001-e424b16b4b13",
+          "updated_at": "2026-09-10T21:46:55.174867+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-10T21:48:10.815497+00:00"
+      }
+    },
+    {
+      "dependencies": [
+        "OpenGA_SurgeryAreaEvolutionData"
+      ],
+      "id": "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology",
+      "open_problem": true,
+      "path": "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_exists_area_evolution_surgery_topology.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology\n    (M : ClosedThreeManifold.{u}) [SimplyConnectedSpace M] :\n    ∃ (E : SurgeryTopologyEvolution M) (W : ℝ), 0 ≤ W ∧\n      ∀ T : ℝ, 0 < T → E.components T ≠ [] →\n        Nonempty (SurgeryAreaEvolutionData W T) := by sorry",
+        "natural_language_statement": "For every closed simply connected topological three-manifold, construct a surgery topology evolution and one nonnegative initial width bound. For each positive horizon with nonempty final slice, supply surgery area-evolution data. The remaining geometric tasks include the admissible sweepout families, their common short-time area estimates, and the actual surgery and radial volume hypotheses. This open construction refines the measured-data input to the active extinction endgame.",
+        "preamble": "import Definitions.Def_OpenGA_SurgeryAreaEvolutionData\nimport Definitions.Def_OpenGA_ExtinctionWidthControl\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\nopen OpenGA\nuniverse u\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+        "tags": [
+          "finite-extinction",
+          "width"
+        ],
+        "theorem_name": "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology",
+        "theorem_title": "Construct surgery topology with uniform area evolution"
+      },
+      "publication": {
+        "checked_at": "2026-09-10T21:41:35.652764+00:00",
+        "job": {
+          "created_at": "2026-09-10T21:41:00.093325+00:00",
+          "definitions": "import Definitions.Def_OpenGA_SurgeryAreaEvolutionData\nimport Definitions.Def_OpenGA_ExtinctionWidthControl\nset_option autoImplicit false\nopen Set Filter\nopen scoped Topology\nopen OpenGA\nuniverse u\n",
+          "error_message": "",
+          "formal_statement": "theorem PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology\n    (M : ClosedThreeManifold.{u}) [SimplyConnectedSpace M] :\n    ∃ (E : SurgeryTopologyEvolution M) (W : ℝ), 0 ≤ W ∧\n      ∀ T : ℝ, 0 < T → E.components T ≠ [] →\n        Nonempty (SurgeryAreaEvolutionData W T) := by sorry",
+          "id": "67574d13-e78c-48a4-9fdc-e19430ab0972",
+          "kind": "problem",
+          "natural_language_statement": "For every closed simply connected topological three-manifold, construct a surgery topology evolution and one nonnegative initial width bound. For each positive horizon with nonempty final slice, supply surgery area-evolution data. The remaining geometric tasks include the admissible sweepout families, their common short-time area estimates, and the actual surgery and radial volume hypotheses. This open construction refines the measured-data input to the active extinction endgame.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+          "status": "PUBLISHED",
+          "tags": [
+            "finite-extinction",
+            "width"
+          ],
+          "theorem_id": "8767fd8d-2074-447d-a515-b7382081a8f6",
+          "theorem_name": "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology",
+          "theorem_title": "Construct surgery topology with uniform area evolution",
+          "updated_at": "2026-09-10T21:41:34.547251+00:00",
+          "visibility": "public"
+        },
+        "job_id": "67574d13-e78c-48a4-9fdc-e19430ab0972",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "67574d13-e78c-48a4-9fdc-e19430ab0972",
+              "name": "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-10T21:40:59.833779+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "8767fd8d-2074-447d-a515-b7382081a8f6",
+        "verified_at": "2026-09-10T21:48:11.023548+00:00"
+      },
+      "sha256": "490777eb157bd4919b4b7a618c669a35d9647489aa2b9cc1d2215627cb1c94bd"
+    },
+    {
+      "dependencies": [
+        "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology",
+        "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution"
+      ],
+      "expected_verdict": "SKETCH_ACCEPTED",
+      "explanation": "Keep the existing measured-surgery existence statement unchanged. The open area-evolution construction supplies data at each nonempty horizon; the proved integration adapter produces the required measured comparison data. The parent and the Poincare theorem remain open.",
+      "id": "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology",
+      "path": "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_exists_measured_surgery_topology.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology\n    (M : ClosedThreeManifold.{u}) [SimplyConnectedSpace M] :\n    ∃ (E : SurgeryTopologyEvolution M) (W : ℝ), 0 ≤ W ∧\n      ∀ T : ℝ, 0 < T → E.components T ≠ [] →\n        Nonempty (MeasuredSurgeryComparisonData W T) := by sorry",
+        "natural_language_statement": "Keep the existing measured-surgery existence statement unchanged. The open area-evolution construction supplies data at each nonempty horizon; the proved integration adapter produces the required measured comparison data. The parent and the Poincare theorem remain open.",
+        "preamble": "import Definitions.Def_OpenGA_MeasuredSurgeryComparisonData\nimport Definitions.Def_OpenGA_ExtinctionWidthControl\n\nset_option autoImplicit false\nopen OpenGA\nuniverse u\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/Analysis/Width/AreaEvolution.lean",
+        "tags": [
+          "finite-extinction",
+          "width"
+        ],
+        "theorem_name": "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology",
+        "theorem_title": "Construct measured surgery topology for the extinction endgame"
+      },
+      "proof_path": "Solutions/Sol_PoincareFormalization_ExtinctionEndgame_exists_measured_surgery_topology.lean",
+      "proof_sha256": "7a480ff62988c77bed1f5afb1d090c9b8b3a2283710f87d3b57addafc79671aa",
+      "publication": {
+        "status": "PUBLISHED",
+        "theorem_id": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+        "verified_at": "2026-09-10T21:48:11.327793+00:00"
+      },
+      "sha256": "7d92b16ca9fd813c62d9217e50e51adf0c170c7e5967c0dbb245fe0d9af70cd0",
+      "submission": {
+        "accepted_source_sha256": "7a480ff62988c77bed1f5afb1d090c9b8b3a2283710f87d3b57addafc79671aa",
+        "checked_at": "2026-09-10T21:48:11.961256+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "f82f6ab1-1244-450b-b0f9-947f5d6009dd"
+        },
+        "started_at": "2026-09-10T21:46:57.411567+00:00",
+        "status": "SKETCH_ACCEPTED",
+        "submission_id": "f82f6ab1-1244-450b-b0f9-947f5d6009dd",
+        "verdict": {
+          "created_at": "2026-09-10T21:46:57.709972+00:00",
+          "error_message": "",
+          "file_path": "5d3926a9-6dc7-49d7-aa52-a110fdf94291/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/f82f6ab1-1244-450b-b0f9-947f5d6009dd.lean",
+          "id": "f82f6ab1-1244-450b-b0f9-947f5d6009dd",
+          "status": "SKETCH_ACCEPTED",
+          "theorem_id": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+          "updated_at": "2026-09-10T21:48:01.775358+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-10T21:48:12.596565+00:00"
+      }
+    }
+  ],
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "validation": {
+    "exact_target_checks": [
+      "Exact0.lean",
+      "Exact1.lean",
+      "Exact3.lean"
+    ],
+    "library_build": "4047 jobs passed",
+    "platform_environment_build": "2951 jobs passed",
+    "remaining_open": "Geometric surgery topology with uniform area evolution; parent statement unchanged.",
+    "resolved_proof_audit": "Both complete constructors use only propext, Classical.choice and Quot.sound; external area-energy proof fully expanded.",
+    "status": "passed"
+  },
+  "verified_at": "2026-09-10T21:48:23.746502+00:00"
+}

@@ -1,0 +1,28 @@
+⚠ [2818/2841] Replayed Theorems.Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le
+warning: Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_cross_le.lean:20:8: declaration uses `sorry`
+⚠ [2819/2841] Replayed Theorems.Thm_OpenGA_antitoneOn_lintegral_div_hypRadVol
+warning: Theorems/Thm_OpenGA_antitoneOn_lintegral_div_hypRadVol.lean:10:8: declaration uses `sorry`
+⚠ [2820/2841] Replayed Theorems.Thm_OpenGA_antitoneOn_lintegral_Ioc_div
+warning: Theorems/Thm_OpenGA_antitoneOn_lintegral_Ioc_div.lean:11:8: declaration uses `sorry`
+⚠ [2821/2841] Replayed Theorems.Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross
+warning: Theorems/Thm_DifferentialGeometry_Geometry_Riemannian_VolumeComparison_lintegral_Iic_cross.lean:12:8: declaration uses `sorry`
+⚠ [2822/2841] Replayed Theorems.Thm_PoincareFormalization_persistent_comparison_data_of_not_homeomorph_sphere
+warning: Theorems/Thm_PoincareFormalization_persistent_comparison_data_of_not_homeomorph_sphere.lean:8:8: declaration uses `sorry`
+✔ [2827/2841] Built Definitions.Def_OpenGA_RadialSurgeryVolumeBudget (6.8s)
+⚠ [2828/2841] Built Theorems.Thm_OpenGA_exists_event_free_partition (6.7s)
+warning: Theorems/Thm_OpenGA_exists_event_free_partition.lean:13:8: declaration uses `sorry`
+✔ [2829/2841] Built Solutions.Sol_OpenGA_exists_event_free_partition (7.1s)
+⚠ [2830/2841] Built Theorems.Thm_OpenGA_RadialSurgeryVolumeBudget_events_finite (3.5s)
+warning: Theorems/Thm_OpenGA_RadialSurgeryVolumeBudget_events_finite.lean:16:8: declaration uses `sorry`
+⚠ [2831/2841] Built Theorems.Thm_OpenGA_RadialSurgeryVolumeBudget_removedVolume_lower (3.7s)
+warning: Theorems/Thm_OpenGA_RadialSurgeryVolumeBudget_removedVolume_lower.lean:16:8: declaration uses `sorry`
+✔ [2832/2841] Built Solutions.Sol_OpenGA_RadialSurgeryVolumeBudget_removedVolume_lower (3.6s)
+✔ [2833/2841] Built Definitions.Def_OpenGA_SurgeryComparisonProcess (3.8s)
+⚠ [2835/2841] Built Theorems.Thm_OpenGA_nonempty_widthComparisonTrace_of_surgeryComparisonProcess (3.5s)
+warning: Theorems/Thm_OpenGA_nonempty_widthComparisonTrace_of_surgeryComparisonProcess.lean:17:8: declaration uses `sorry`
+✔ [2836/2841] Built Solutions.Sol_OpenGA_nonempty_widthComparisonTrace_of_surgeryComparisonProcess (3.4s)
+✔ [2837/2841] Built Solutions.Sol_OpenGA_RadialSurgeryVolumeBudget_events_finite (3.6s)
+⚠ [2838/2841] Built Theorems.Thm_PoincareFormalization_surgery_comparison_process_of_not_homeomorph_sphere (4.0s)
+warning: Theorems/Thm_PoincareFormalization_surgery_comparison_process_of_not_homeomorph_sphere.lean:18:8: declaration uses `sorry`
+✔ [2840/2841] Built Solutions.Sol_PoincareFormalization_persistent_comparison_data_of_not_homeomorph_sphere_surgery_bridge (3.3s)
+Build completed successfully (2841 jobs).

@@ -1,0 +1,391 @@
+{
+  "batch": "surface_area_coordinates",
+  "definitions": [
+    {
+      "definitions": [],
+      "id": "OpenGA_SurfaceArea",
+      "path": "Definitions/Def_OpenGA_SurfaceArea.lean",
+      "payload": {
+        "definition": "import Definitions.Def_DifferentialGeometry_SmoothRiemannianMetric\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.Geometry.Manifold.MFDeriv.FDeriv\nimport Mathlib.LinearAlgebra.Matrix.ToLin\nimport Mathlib.MeasureTheory.Integral.Bochner.Set\nimport Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace\nimport Mathlib.Analysis.SpecialFunctions.Sqrt\n\n/-!\n# Area density of a parametrized surface\n\nThe pullback metric is computed from the manifold derivative of the actual\nsurface map. Area is its Gram determinant density integrated against Euclidean\nparameter volume, with multiplicity. The metric type reuses DifferentialGeometry\nand Mathlib. No orientation or global tangent frame is chosen on the surface.\n-/\n\nnoncomputable section\n\nopen Bundle Matrix MeasureTheory Set Filter\nopen scoped Manifold ContDiff Topology\nopen DifferentialGeometry\n\nnamespace OpenGA.RicciFlow\n\nabbrev SurfaceParameter := EuclideanSpace ℝ (Fin 2)\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n  [FiniteDimensional ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n  [T2Space M]\n\n/-- The two images of the standard orthonormal parameter vectors under `df`. -/\ndef surfaceTangent (f : SurfaceParameter → M) (u : SurfaceParameter) (i : Fin 2) :\n    TangentSpace I (f u) :=\n  mfderiv 𝓘(ℝ, SurfaceParameter) I f u (EuclideanSpace.basisFun (Fin 2) ℝ i)\n\n/-- The induced metric matrix of a parametrized surface. -/\ndef surfaceMetricMatrix (g : SmoothRiemannianMetric I M)\n    (f : SurfaceParameter → M) (u : SurfaceParameter) : Matrix (Fin 2) (Fin 2) ℝ :=\n  fun i j => g.inner (f u) (surfaceTangent (I := I) f u i) (surfaceTangent (I := I) f u j)\n\n/-- Parametrized area density relative to Euclidean parameter volume. -/\ndef surfaceDensity (g : SmoothRiemannianMetric I M)\n    (f : SurfaceParameter → M) (u : SurfaceParameter) : ℝ :=\n  Real.sqrt (surfaceMetricMatrix g f u).det\n\n/-- Area of a fixed parameter domain, with multiplicity. -/\ndef patchArea (g : SmoothRiemannianMetric I M) (f : SurfaceParameter → M)\n    (Ω : Set SurfaceParameter) : ℝ :=\n  ∫ u in Ω, surfaceDensity g f u\n\nend OpenGA.RicciFlow\n",
+        "definition_name": "OpenGA_SurfaceArea",
+        "definition_title": "Area density of a parametrized surface",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Let $(M,g)$ be a smooth Riemannian manifold and let $f:\\mathbb R^2\\to M$. For the standard parameter vectors $e_1,e_2$, define\n\n$$G_f(u)_{ij}=g_{f(u)}(df_u(e_i),df_u(e_j)),\\qquad J_gf(u)=\\sqrt{\\det G_f(u)}.$$\n\nFor a parameter domain $\\Omega$, its area with multiplicity is $\\int_\\Omega J_gf(u)\\,du$ when the density is integrable. The definitions use the actual manifold derivative, with Lean's total derivative convention outside differentiability points, and the Bochner integral. They reuse the existing Mathlib/DifferentialGeometry smooth metric type. Coordinate compatibility and Ricci-flow variation are separate theorems.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L26-L26; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L34-L37; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L39-L42; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L44-L47; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L49-L52",
+        "tags": [
+          "surface-area",
+          "riemannian-geometry",
+          "colding-minicozzi",
+          "poincare-foundations"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-10T02:05:01.677099+00:00",
+        "job": {
+          "created_at": "2026-09-10T02:04:41.119635+00:00",
+          "definitions": "import Definitions.Def_DifferentialGeometry_SmoothRiemannianMetric\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.Geometry.Manifold.MFDeriv.FDeriv\nimport Mathlib.LinearAlgebra.Matrix.ToLin\nimport Mathlib.MeasureTheory.Integral.Bochner.Set\nimport Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace\nimport Mathlib.Analysis.SpecialFunctions.Sqrt\n\n/-!\n# Area density of a parametrized surface\n\nThe pullback metric is computed from the manifold derivative of the actual\nsurface map. Area is its Gram determinant density integrated against Euclidean\nparameter volume, with multiplicity. The metric type reuses DifferentialGeometry\nand Mathlib. No orientation or global tangent frame is chosen on the surface.\n-/\n\nnoncomputable section\n\nopen Bundle Matrix MeasureTheory Set Filter\nopen scoped Manifold ContDiff Topology\nopen DifferentialGeometry\n\nnamespace OpenGA.RicciFlow\n\nabbrev SurfaceParameter := EuclideanSpace ℝ (Fin 2)\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n  [FiniteDimensional ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n  [T2Space M]\n\n/-- The two images of the standard orthonormal parameter vectors under `df`. -/\ndef surfaceTangent (f : SurfaceParameter → M) (u : SurfaceParameter) (i : Fin 2) :\n    TangentSpace I (f u) :=\n  mfderiv 𝓘(ℝ, SurfaceParameter) I f u (EuclideanSpace.basisFun (Fin 2) ℝ i)\n\n/-- The induced metric matrix of a parametrized surface. -/\ndef surfaceMetricMatrix (g : SmoothRiemannianMetric I M)\n    (f : SurfaceParameter → M) (u : SurfaceParameter) : Matrix (Fin 2) (Fin 2) ℝ :=\n  fun i j => g.inner (f u) (surfaceTangent (I := I) f u i) (surfaceTangent (I := I) f u j)\n\n/-- Parametrized area density relative to Euclidean parameter volume. -/\ndef surfaceDensity (g : SmoothRiemannianMetric I M)\n    (f : SurfaceParameter → M) (u : SurfaceParameter) : ℝ :=\n  Real.sqrt (surfaceMetricMatrix g f u).det\n\n/-- Area of a fixed parameter domain, with multiplicity. -/\ndef patchArea (g : SmoothRiemannianMetric I M) (f : SurfaceParameter → M)\n    (Ω : Set SurfaceParameter) : ℝ :=\n  ∫ u in Ω, surfaceDensity g f u\n\nend OpenGA.RicciFlow\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "0238fcf6-7ae1-48c4-a552-6651da41addc",
+          "kind": "definition",
+          "natural_language_statement": "Let $(M,g)$ be a smooth Riemannian manifold and let $f:\\mathbb R^2\\to M$. For the standard parameter vectors $e_1,e_2$, define\n\n$$G_f(u)_{ij}=g_{f(u)}(df_u(e_i),df_u(e_j)),\\qquad J_gf(u)=\\sqrt{\\det G_f(u)}.$$\n\nFor a parameter domain $\\Omega$, its area with multiplicity is $\\int_\\Omega J_gf(u)\\,du$ when the density is integrable. The definitions use the actual manifold derivative, with Lean's total derivative convention outside differentiability points, and the Bochner integral. They reuse the existing Mathlib/DifferentialGeometry smooth metric type. Coordinate compatibility and Ricci-flow variation are separate theorems.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L26-L26; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L34-L37; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L39-L42; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L44-L47; https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean#L49-L52",
+          "status": "PUBLISHED",
+          "tags": [
+            "surface-area",
+            "riemannian-geometry",
+            "colding-minicozzi",
+            "poincare-foundations"
+          ],
+          "theorem_id": "0e220955-5806-447e-b322-843240f3f915",
+          "theorem_name": "OpenGA_SurfaceArea",
+          "theorem_title": "Area density of a parametrized surface",
+          "updated_at": "2026-09-10T02:04:52.922278+00:00",
+          "visibility": "public"
+        },
+        "job_id": "0238fcf6-7ae1-48c4-a552-6651da41addc",
+        "response": {
+          "definition_name": "OpenGA_SurfaceArea",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "0238fcf6-7ae1-48c4-a552-6651da41addc",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/0238fcf6-7ae1-48c4-a552-6651da41addc until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-10T02:04:40.792315+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "0e220955-5806-447e-b322-843240f3f915",
+        "verified_at": "2026-09-10T02:07:22.109821+00:00"
+      },
+      "sha256": "cdb4dfef590f1a39b58a1a64f64e84f42f657dcda9ad91343ff2b091be72d634"
+    }
+  ],
+  "graph": {
+    "local_dependency_chain_verified": true,
+    "new_nodes_reaching_mission_goal": [],
+    "note": "Milestone references are progress links, not proof dependencies. No artificial edge to the Poincare goal is inserted."
+  },
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "milestone_id": "33045187-e820-4325-a253-c8ba2c778897",
+  "milestone_update": {
+    "after": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.\n\n**Colding-Minicozzi foundations.** [The mass of a parametrized surface varifold is bounded by its energy](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be) now connects the Euclidean varifold construction to the same integral area-energy theorem used by the width comparison branch. See the **Area-energy control of parametrized varifolds** milestone for the definitions and verified prerequisites. The geometric CM min-max and variation steps remain open; this foundation does not establish finite-time extinction.\n\n**Finite-extinction endgame in the mission graph.** [Uniform width control forces finite extinction](https://prove2.me/theorems/2e12f604-9e6a-4062-9bac-8727a1a9edb7); [Finite extinction reconstructs a connected sum of standard factors](https://prove2.me/theorems/33f0b928-916f-4ff5-833b-fbc31308c762); [The simply connected endgame for a standard connected-sum decomposition](https://prove2.me/theorems/c508d5db-b2a6-4c25-8144-9a9f55f2b4e2). These nodes now enter a checked [reduction of the existing Poincare goal](https://prove2.me/theorems/7ea2da12-4d1b-4bbc-8257-df87d92f5a8e). The width deadline and finite reconstruction are proved implications for explicitly supplied data. The construction of uniform width-controlled surgery topology and three connected-sum topology inputs remain Open. The extracted evolution has a nonempty initial positive time interval and finite reconstruction histories; it is not a definition of metric Ricci flow. The full geometric finite-extinction and classification milestones remain open.\n\n**Surface area in local coordinates.** [Area density of a parametrized surface](https://prove2.me/theorems/0e220955-5806-447e-b322-843240f3f915); [Surface area density under a change of parameters](https://prove2.me/theorems/06588c07-4c58-4d0f-a257-445289cde218); [Surface patch area is invariant under injective reparametrization](https://prove2.me/theorems/25bed6f8-0964-4851-8d72-bd621c8f9303). The definitions use the actual pullback of a smooth Riemannian metric. The proved change-of-parameters laws supply compatibility of local area integrals. Gluing to a closed surface, the minimal-sphere area estimate and the CM sweepout construction remain to be developed. These supporting results do not close finite-time extinction.",
+    "before": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.\n\n**Colding-Minicozzi foundations.** [The mass of a parametrized surface varifold is bounded by its energy](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be) now connects the Euclidean varifold construction to the same integral area-energy theorem used by the width comparison branch. See the **Area-energy control of parametrized varifolds** milestone for the definitions and verified prerequisites. The geometric CM min-max and variation steps remain open; this foundation does not establish finite-time extinction.\n\n**Finite-extinction endgame in the mission graph.** [Uniform width control forces finite extinction](https://prove2.me/theorems/2e12f604-9e6a-4062-9bac-8727a1a9edb7); [Finite extinction reconstructs a connected sum of standard factors](https://prove2.me/theorems/33f0b928-916f-4ff5-833b-fbc31308c762); [The simply connected endgame for a standard connected-sum decomposition](https://prove2.me/theorems/c508d5db-b2a6-4c25-8144-9a9f55f2b4e2). These nodes now enter a checked [reduction of the existing Poincare goal](https://prove2.me/theorems/7ea2da12-4d1b-4bbc-8257-df87d92f5a8e). The width deadline and finite reconstruction are proved implications for explicitly supplied data. The construction of uniform width-controlled surgery topology and three connected-sum topology inputs remain Open. The extracted evolution has a nonempty initial positive time interval and finite reconstruction histories; it is not a definition of metric Ricci flow. The full geometric finite-extinction and classification milestones remain open.",
+    "canonical_theorem": null,
+    "response": {
+      "completed": false,
+      "created_at": "2026-09-09T01:41:09.964537+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "id": "33045187-e820-4325-a253-c8ba2c778897",
+      "milestone_description": "Every Kleiner-Lott Ricci flow with surgery starting from a closed simply connected Riemannian three-manifold satisfies $M_t=\\varnothing$ for all sufficiently large $t$.\n\n[Source: Kleiner-Lott, Claim 3.5, p. 9](https://arxiv.org/pdf/math/0605667v5#page=9). Kleiner-Lott cite [Perelman](https://arxiv.org/abs/math/0307245) and [Colding-Minicozzi](https://arxiv.org/abs/0707.0108) for this input.\n\n**Colding-Minicozzi foundations.** [The mass of a parametrized surface varifold is bounded by its energy](https://prove2.me/theorems/947563ea-c13b-4ec6-b08d-7b11e70914be) now connects the Euclidean varifold construction to the same integral area-energy theorem used by the width comparison branch. See the **Area-energy control of parametrized varifolds** milestone for the definitions and verified prerequisites. The geometric CM min-max and variation steps remain open; this foundation does not establish finite-time extinction.\n\n**Finite-extinction endgame in the mission graph.** [Uniform width control forces finite extinction](https://prove2.me/theorems/2e12f604-9e6a-4062-9bac-8727a1a9edb7); [Finite extinction reconstructs a connected sum of standard factors](https://prove2.me/theorems/33f0b928-916f-4ff5-833b-fbc31308c762); [The simply connected endgame for a standard connected-sum decomposition](https://prove2.me/theorems/c508d5db-b2a6-4c25-8144-9a9f55f2b4e2). These nodes now enter a checked [reduction of the existing Poincare goal](https://prove2.me/theorems/7ea2da12-4d1b-4bbc-8257-df87d92f5a8e). The width deadline and finite reconstruction are proved implications for explicitly supplied data. The construction of uniform width-controlled surgery topology and three connected-sum topology inputs remain Open. The extracted evolution has a nonempty initial positive time interval and finite reconstruction histories; it is not a definition of metric Ricci flow. The full geometric finite-extinction and classification milestones remain open.\n\n**Surface area in local coordinates.** [Area density of a parametrized surface](https://prove2.me/theorems/0e220955-5806-447e-b322-843240f3f915); [Surface area density under a change of parameters](https://prove2.me/theorems/06588c07-4c58-4d0f-a257-445289cde218); [Surface patch area is invariant under injective reparametrization](https://prove2.me/theorems/25bed6f8-0964-4851-8d72-bd621c8f9303). The definitions use the actual pullback of a smooth Riemannian metric. The proved change-of-parameters laws supply compatibility of local area integrals. Gluing to a closed surface, the minimal-sphere area estimate and the CM sweepout construction remain to be developed. These supporting results do not close finite-time extinction.",
+      "sort_order": 2,
+      "theorem": null,
+      "title": "Finite-time extinction"
+    },
+    "status": "VERIFIED",
+    "verified_at": "2026-09-10T02:07:28.877378+00:00"
+  },
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "prerequisite": {
+    "path": "Definitions/Def_DifferentialGeometry_SmoothRiemannianMetric.lean",
+    "sha256": "6119b09c9dbbf52d21ef7107cebfa0d9ba2801e80fc6e63d445afe93cc951110",
+    "theorem_id": "9f78021b-c594-4538-b61f-06a8831433af"
+  },
+  "schema_version": 1,
+  "scope": "Coordinate compatibility of local surface area. The full Ricci-flow scalar and area-variation batch is still local; closed-surface gluing and the finite-extinction milestone remain open.",
+  "source_reviewed": true,
+  "source_revision": "112b4c3c69de2a05fb160e565c0e6c1eef1ce44b",
+  "sources": [
+    {
+      "path": "OpenGALib/Interoperability/RicciFlow/SurfaceArea.lean",
+      "sha256": "c307590e3b61f16183b32e95028c0aae80cf9784c46a513b95f87f353158a282"
+    },
+    {
+      "path": "OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean",
+      "sha256": "aec0f726447b2b5a7a738e5d52186e16a54c2059413cef5ddc344f8289be6e62"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Metadata/coordinates_facts.jsonl",
+      "sha256": "00ddf03759006b21b640efb818fbc55a6ebbf1c35679734d49ba6a6067508764"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Metadata/area_facts.jsonl",
+      "sha256": "7297a0ec913e0a6b1f1e35bc9fea481d642646c8e4e2b080e4c5438d379823e0"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Definitions/Def_DifferentialGeometry_SmoothRiemannianMetric.lean",
+      "sha256": "6119b09c9dbbf52d21ef7107cebfa0d9ba2801e80fc6e63d445afe93cc951110"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Tools/export_surface_area.py",
+      "sha256": "219b9a64cfb6367afd3c8d97b80a5dcba66c427a327a9c782a100683d42764c2"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Tools/validate_exports.py",
+      "sha256": "d1de77d4735e57a13499666e22fadb64d9bb861e01bc2870bf8211bfe0995493"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Tools/ExtractSketchInfo.lean",
+      "sha256": "cb1ee4e7b984971bf805417c043af52ff4ec73755f2fba4703ff7c9d948d88d4"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Tools/ExportedTypes.lean",
+      "sha256": "ec0d59a128a074466d38569e430397717008365fb2eabc174da63070256ece2b"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Tools/OriginalTypes.lean",
+      "sha256": "2812eeeecd3858aedab642eac7e8cdcdf42d8cdd6e3d61b5ef6bcf5f0806c08a"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Tools/Audit.lean",
+      "sha256": "d6f7f865315bc984b9cd58fc357c1e7ff671a123cbfdee561fa5a449b46810cc"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Tools/Audit_patchArea_comp.lean",
+      "sha256": "5ee74acca551e2e786b15dce45b1414069d7df58f3cb2df882abd18e8f6d28c8"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Tools/ExtractDeclarationGraph.lean",
+      "sha256": "ac8e8137af38f78a6e60ccda9997cd884f3699e057a177b45c40779cbd00d3c9"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Tools/Audit_surfaceDensity_comp.lean",
+      "sha256": "a3e43fba4f72bd526900d497582b421983fd14c7b6fb64fd4aebc77f89e5b82c"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Verified/patchArea_comp.lean",
+      "sha256": "bfb653e774b32be88faa69f87e7da9c2055e45dd5a1ddadfba5134284111be97"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Verified/surfaceDensity_comp.lean",
+      "sha256": "6f12262649d6e7b7f66c46ece7b341fb6a7431d77b1807e1a1f6af346336a76d"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Metadata/selected_declaration_graph.json",
+      "sha256": "764b108f603dd5c3af3a7fcece5f918a3f714f255c99ec497739a630daee3239"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Metadata/original_types.json",
+      "sha256": "11bd9f506f6f46b010b80e554c5c2ce7fcc5080a4bd510e7d1ddfa94fbb3c6fa"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/Metadata/exported_types.json",
+      "sha256": "11bd9f506f6f46b010b80e554c5c2ce7fcc5080a4bd510e7d1ddfa94fbb3c6fa"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/lakefile.lean",
+      "sha256": "f8958b4b8ca98412b889a46cb01fc839a964d17e3a4ec8ce4068d8c84db05bc4"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/lake-manifest.json",
+      "sha256": "4ae764752cbe1a5eb9c2331fb0fbfb0e9bfa0ee2264b50056e5d81835e0ef303"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/SurfaceArea/lean-toolchain",
+      "sha256": "3aac669c7a910ec2389f4e4f921b605adf6ebf2d1e0c9b9cd0be4d33f3f5db71"
+    }
+  ],
+  "status": "PUBLISHED",
+  "theorems": [
+    {
+      "definitions": [
+        "OpenGA_SurfaceArea"
+      ],
+      "explanation": "Apply the manifold chain rule to the actual derivative of the surface map. Expanding in the standard parameter basis gives the congruence G(f composed with phi)=A transpose G(f) A. Take determinants and use sqrt(a squared times b)=abs(a) sqrt(b). The Gram-matrix congruence is included as a proved helper; no immersion or orientation assumption is introduced.",
+      "id": "surfaceDensity_comp",
+      "imports": [],
+      "path": "Theorems/Thm_OpenGA_RicciFlow_surfaceDensity_comp.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem OpenGA.RicciFlow.surfaceDensity_comp\n    (g : SmoothRiemannianMetric I M) (f : SurfaceParameter → M)\n    {φ : SurfaceParameter → SurfaceParameter} {u : SurfaceParameter}\n    {A : SurfaceParameter →L[ℝ] SurfaceParameter} (hφ : HasFDerivAt φ A u)\n    (hf : MDifferentiableAt 𝓘(ℝ, SurfaceParameter) I f (φ u)) :\n    surfaceDensity g (f ∘ φ) u =\n      |(LinearMap.toMatrix (EuclideanSpace.basisFun (Fin 2) ℝ).toBasis\n        (EuclideanSpace.basisFun (Fin 2) ℝ).toBasis A.toLinearMap).det| *\n      surfaceDensity g f (φ u) := by sorry",
+        "natural_language_statement": "Let $(M,g)$ be a smooth Riemannian manifold, $f:\\mathbb R^2\\to M$, and $\\varphi:\\mathbb R^2\\to\\mathbb R^2$. Suppose $\\varphi$ has derivative $A$ at $u$ and $f$ is differentiable at $\\varphi(u)$. Then\n\n$$J_g(f\\circ\\varphi)(u)=|\\det A|\\,J_gf(\\varphi(u)).$$\n\nThe determinant is computed in the standard orthonormal parameter basis. Neither $A$ nor $df$ must be injective; orientation reversal and degenerate derivatives are allowed. This is the pointwise coordinate compatibility of parametrized surface area.",
+        "preamble": "import Definitions.Def_OpenGA_SurfaceArea\nimport Mathlib.MeasureTheory.Function.Jacobian\n\nnoncomputable section\n\nopen Bundle Matrix MeasureTheory Set Filter\n\nopen scoped Manifold ContDiff Topology\n\nopen DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n\nopen OpenGA.RicciFlow",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean#L59-L73",
+        "tags": [
+          "surface-area",
+          "riemannian-geometry",
+          "colding-minicozzi",
+          "poincare-foundations"
+        ],
+        "theorem_name": "OpenGA.RicciFlow.surfaceDensity_comp",
+        "theorem_title": "Surface area density under a change of parameters"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_RicciFlow_surfaceDensity_comp.lean",
+      "proof_sha256": "416cf74b34eff60daf2118f1eed992be51c59a690882e3040049cf6678a06b55",
+      "publication": {
+        "checked_at": "2026-09-10T02:05:24.028945+00:00",
+        "job": {
+          "created_at": "2026-09-10T02:05:02.948107+00:00",
+          "definitions": "import Definitions.Def_OpenGA_SurfaceArea\nimport Mathlib.MeasureTheory.Function.Jacobian\n\nnoncomputable section\n\nopen Bundle Matrix MeasureTheory Set Filter\n\nopen scoped Manifold ContDiff Topology\n\nopen DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n\nopen OpenGA.RicciFlow",
+          "error_message": "",
+          "formal_statement": "theorem OpenGA.RicciFlow.surfaceDensity_comp\n    (g : SmoothRiemannianMetric I M) (f : SurfaceParameter → M)\n    {φ : SurfaceParameter → SurfaceParameter} {u : SurfaceParameter}\n    {A : SurfaceParameter →L[ℝ] SurfaceParameter} (hφ : HasFDerivAt φ A u)\n    (hf : MDifferentiableAt 𝓘(ℝ, SurfaceParameter) I f (φ u)) :\n    surfaceDensity g (f ∘ φ) u =\n      |(LinearMap.toMatrix (EuclideanSpace.basisFun (Fin 2) ℝ).toBasis\n        (EuclideanSpace.basisFun (Fin 2) ℝ).toBasis A.toLinearMap).det| *\n      surfaceDensity g f (φ u) := by sorry",
+          "id": "9caa2c90-0446-40df-8429-38d566f43d05",
+          "kind": "problem",
+          "natural_language_statement": "Let $(M,g)$ be a smooth Riemannian manifold, $f:\\mathbb R^2\\to M$, and $\\varphi:\\mathbb R^2\\to\\mathbb R^2$. Suppose $\\varphi$ has derivative $A$ at $u$ and $f$ is differentiable at $\\varphi(u)$. Then\n\n$$J_g(f\\circ\\varphi)(u)=|\\det A|\\,J_gf(\\varphi(u)).$$\n\nThe determinant is computed in the standard orthonormal parameter basis. Neither $A$ nor $df$ must be injective; orientation reversal and degenerate derivatives are allowed. This is the pointwise coordinate compatibility of parametrized surface area.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean#L59-L73",
+          "status": "PUBLISHED",
+          "tags": [
+            "surface-area",
+            "riemannian-geometry",
+            "colding-minicozzi",
+            "poincare-foundations"
+          ],
+          "theorem_id": "06588c07-4c58-4d0f-a257-445289cde218",
+          "theorem_name": "OpenGA.RicciFlow.surfaceDensity_comp",
+          "theorem_title": "Surface area density under a change of parameters",
+          "updated_at": "2026-09-10T02:05:23.358847+00:00",
+          "visibility": "public"
+        },
+        "job_id": "9caa2c90-0446-40df-8429-38d566f43d05",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "9caa2c90-0446-40df-8429-38d566f43d05",
+              "name": "OpenGA.RicciFlow.surfaceDensity_comp"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-10T02:05:02.623257+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "06588c07-4c58-4d0f-a257-445289cde218",
+        "verified_at": "2026-09-10T02:07:22.304461+00:00"
+      },
+      "sha256": "d46b8bdbb0ac5226312c32cf92ba5279ba1097064154afad1ee1f2e003edc0a0",
+      "submission": {
+        "accepted_source_sha256": "416cf74b34eff60daf2118f1eed992be51c59a690882e3040049cf6678a06b55",
+        "checked_at": "2026-09-10T02:07:22.797168+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "4d52aebd-c405-4a0e-83a6-9cf7c43a2eb3"
+        },
+        "started_at": "2026-09-10T02:05:24.523903+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "4d52aebd-c405-4a0e-83a6-9cf7c43a2eb3",
+        "verdict": {
+          "created_at": "2026-09-10T02:05:24.865763+00:00",
+          "error_message": "",
+          "file_path": "06588c07-4c58-4d0f-a257-445289cde218/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/4d52aebd-c405-4a0e-83a6-9cf7c43a2eb3.lean",
+          "id": "4d52aebd-c405-4a0e-83a6-9cf7c43a2eb3",
+          "status": "ACCEPTED",
+          "theorem_id": "06588c07-4c58-4d0f-a257-445289cde218",
+          "updated_at": "2026-09-10T02:06:15.505802+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-10T02:07:23.590055+00:00"
+      }
+    },
+    {
+      "definitions": [
+        "OpenGA_SurfaceArea"
+      ],
+      "explanation": "Use the proved pointwise density transformation. Mathlib's change-of-variables theorem for an injective differentiable map on a measurable set identifies the target-domain integral with the absolute-Jacobian-weighted source integral. Replace the integrands by the pointwise density formula. No global frame on the surface or compactness assumption is used.",
+      "id": "patchArea_comp",
+      "imports": [
+        "surfaceDensity_comp"
+      ],
+      "path": "Theorems/Thm_OpenGA_RicciFlow_patchArea_comp.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem OpenGA.RicciFlow.patchArea_comp\n    (g : SmoothRiemannianMetric I M) (f : SurfaceParameter → M)\n    {φ : SurfaceParameter → SurfaceParameter} {Ω : Set SurfaceParameter}\n    (hΩ : MeasurableSet Ω) (hφ : ∀ u ∈ Ω, DifferentiableAt ℝ φ u)\n    (hinj : Set.InjOn φ Ω)\n    (hf : ∀ v ∈ φ '' Ω, MDifferentiableAt 𝓘(ℝ, SurfaceParameter) I f v) :\n    patchArea g (f ∘ φ) Ω = patchArea g f (φ '' Ω) := by sorry",
+        "natural_language_statement": "Let $(M,g)$ be a smooth Riemannian manifold and $\\Omega\\subseteq\\mathbb R^2$ be measurable. Suppose $\\varphi:\\mathbb R^2\\to\\mathbb R^2$ is differentiable at every point of $\\Omega$ and injective on $\\Omega$, and $f:\\mathbb R^2\\to M$ is differentiable at every point of $\\varphi(\\Omega)$. Then\n\n$$\\int_\\Omega J_g(f\\circ\\varphi)(u)\\,du=\\int_{\\varphi(\\Omega)}J_gf(v)\\,dv.$$\n\nThese are Bochner integrals; in particular, the identity identifies the usual finite areas whenever the density is integrable. The surface map $f$ need not be injective, so multiplicity is retained. This establishes compatibility of local area integrals under changes of surface coordinates; it does not yet construct an integral on a closed surface.",
+        "preamble": "import Theorems.Thm_OpenGA_RicciFlow_surfaceDensity_comp\nimport Definitions.Def_OpenGA_SurfaceArea\nimport Mathlib.MeasureTheory.Function.Jacobian\n\nnoncomputable section\n\nopen Bundle Matrix MeasureTheory Set Filter\n\nopen scoped Manifold ContDiff Topology\n\nopen DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n\nopen OpenGA.RicciFlow",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean#L75-L90",
+        "tags": [
+          "surface-area",
+          "riemannian-geometry",
+          "colding-minicozzi",
+          "poincare-foundations"
+        ],
+        "theorem_name": "OpenGA.RicciFlow.patchArea_comp",
+        "theorem_title": "Surface patch area is invariant under injective reparametrization"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_RicciFlow_patchArea_comp.lean",
+      "proof_sha256": "acfaaf1181a2ae7649472d3ef23c8fa79a0d6a0ace1cf69480abcd9bf5577fa3",
+      "publication": {
+        "checked_at": "2026-09-10T02:06:45.742398+00:00",
+        "job": {
+          "created_at": "2026-09-10T02:06:21.550801+00:00",
+          "definitions": "import Theorems.Thm_OpenGA_RicciFlow_surfaceDensity_comp\nimport Definitions.Def_OpenGA_SurfaceArea\nimport Mathlib.MeasureTheory.Function.Jacobian\n\nnoncomputable section\n\nopen Bundle Matrix MeasureTheory Set Filter\n\nopen scoped Manifold ContDiff Topology\n\nopen DifferentialGeometry\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n\nopen OpenGA.RicciFlow",
+          "error_message": "",
+          "formal_statement": "theorem OpenGA.RicciFlow.patchArea_comp\n    (g : SmoothRiemannianMetric I M) (f : SurfaceParameter → M)\n    {φ : SurfaceParameter → SurfaceParameter} {Ω : Set SurfaceParameter}\n    (hΩ : MeasurableSet Ω) (hφ : ∀ u ∈ Ω, DifferentiableAt ℝ φ u)\n    (hinj : Set.InjOn φ Ω)\n    (hf : ∀ v ∈ φ '' Ω, MDifferentiableAt 𝓘(ℝ, SurfaceParameter) I f v) :\n    patchArea g (f ∘ φ) Ω = patchArea g f (φ '' Ω) := by sorry",
+          "id": "40719219-d74f-402a-8a50-500401560cc7",
+          "kind": "problem",
+          "natural_language_statement": "Let $(M,g)$ be a smooth Riemannian manifold and $\\Omega\\subseteq\\mathbb R^2$ be measurable. Suppose $\\varphi:\\mathbb R^2\\to\\mathbb R^2$ is differentiable at every point of $\\Omega$ and injective on $\\Omega$, and $f:\\mathbb R^2\\to M$ is differentiable at every point of $\\varphi(\\Omega)$. Then\n\n$$\\int_\\Omega J_g(f\\circ\\varphi)(u)\\,du=\\int_{\\varphi(\\Omega)}J_gf(v)\\,dv.$$\n\nThese are Bochner integrals; in particular, the identity identifies the usual finite areas whenever the density is integrable. The surface map $f$ need not be injective, so multiplicity is retained. This establishes compatibility of local area integrals under changes of surface coordinates; it does not yet construct an integral on a closed surface.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/112b4c3c69de2a05fb160e565c0e6c1eef1ce44b/OpenGALib/Interoperability/RicciFlow/SurfaceAreaCoordinates.lean#L75-L90",
+          "status": "PUBLISHED",
+          "tags": [
+            "surface-area",
+            "riemannian-geometry",
+            "colding-minicozzi",
+            "poincare-foundations"
+          ],
+          "theorem_id": "25bed6f8-0964-4851-8d72-bd621c8f9303",
+          "theorem_name": "OpenGA.RicciFlow.patchArea_comp",
+          "theorem_title": "Surface patch area is invariant under injective reparametrization",
+          "updated_at": "2026-09-10T02:06:38.881726+00:00",
+          "visibility": "public"
+        },
+        "job_id": "40719219-d74f-402a-8a50-500401560cc7",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "40719219-d74f-402a-8a50-500401560cc7",
+              "name": "OpenGA.RicciFlow.patchArea_comp"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-10T02:06:21.197237+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "25bed6f8-0964-4851-8d72-bd621c8f9303",
+        "verified_at": "2026-09-10T02:07:23.847521+00:00"
+      },
+      "sha256": "039453cfcfa373e3e37660e24c6adb79a8931f84cfea51b2053862d1cda89fe8",
+      "submission": {
+        "accepted_source_sha256": "acfaaf1181a2ae7649472d3ef23c8fa79a0d6a0ace1cf69480abcd9bf5577fa3",
+        "checked_at": "2026-09-10T02:07:24.557369+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "c2dd3a10-494f-4c3e-b361-25088e5043d6"
+        },
+        "started_at": "2026-09-10T02:06:46.245626+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "c2dd3a10-494f-4c3e-b361-25088e5043d6",
+        "verdict": {
+          "created_at": "2026-09-10T02:06:46.558766+00:00",
+          "error_message": "",
+          "file_path": "25bed6f8-0964-4851-8d72-bd621c8f9303/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/c2dd3a10-494f-4c3e-b361-25088e5043d6.lean",
+          "id": "c2dd3a10-494f-4c3e-b361-25088e5043d6",
+          "status": "ACCEPTED",
+          "theorem_id": "25bed6f8-0964-4851-8d72-bd621c8f9303",
+          "updated_at": "2026-09-10T02:07:23.401239+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-10T02:07:25.132187+00:00"
+      }
+    }
+  ],
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "transformations": [
+    "Preserve all area definitions and their source context. Replace only project imports with the already published metric definition.",
+    "Select proof and helper declarations by Lean declaration spans; rename theorem bindings by resolved reference spans.",
+    "Keep the Gram congruence as an inline proved helper. Import the density theorem as the genuine dependency of the integral theorem."
+  ],
+  "validation": {
+    "axioms": "All eight source/export declarations use only propext, Classical.choice and Quot.sound.",
+    "checked_at": "2026-09-10T02:01:31.950526+00:00",
+    "exact_types_and_definition_bodies": 8,
+    "proof_dependencies": "The density proof is compiled directly. The integral proof is also compiled with that proved density declaration instead of its platform stub.",
+    "solution_types": "both exact matches",
+    "staged_build": "passed, Mathlib and published metric definition only",
+    "status": "passed"
+  },
+  "verified_at": "2026-09-10T02:07:27.767966+00:00"
+}

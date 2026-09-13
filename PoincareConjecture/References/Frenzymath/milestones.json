@@ -1,0 +1,1960 @@
+{
+  "schema_version": 1,
+  "purpose": "Pinned reference-repository blueprint index. Its Morgan-Tian candidate selection is historical; the active Prove2Me milestone plan follows Kleiner-Lott.",
+  "indexed_at": "2026-09-09T01:32:23.110163+00:00",
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "reference": {
+    "repository": "https://github.com/frenzymath/Poincare-Conjecture",
+    "commit": "bb91a091f0b968f8bbe8d861e025a88d82b161be",
+    "branch": "main",
+    "license": "Apache-2.0",
+    "license_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/LICENSE",
+    "important_nodes_path": "PoincareConjecture/blueprint/important-statements.yaml",
+    "important_nodes_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/important-statements.yaml",
+    "important_nodes_sha256": "1170f3dd3fd39ad9b5d2254ea9cd446be8ab734fe7510c80cd00d29a12655c9f",
+    "toolchain": "leanprover/lean4:v4.32.1",
+    "mathlib_revision": "520045ab14e26149ee970e2e617ca04b09bde5d6",
+    "primary_lean_entry": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/PoincareConjecture/Basic.lean",
+    "mathematical_sources": [
+      {
+        "key": "morgan-tian",
+        "title": "Ricci Flow and the Poincare Conjecture",
+        "url": "https://arxiv.org/abs/math/0607607"
+      },
+      {
+        "key": "kleiner-lott",
+        "title": "Notes on Perelman's Papers",
+        "url": "https://arxiv.org/abs/math/0605667"
+      }
+    ]
+  },
+  "openga_relationship": {
+    "upstream_acknowledgment_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/README.md#L88",
+    "upstream_acknowledgment": "The reference README attributes part of its Riemannian infrastructure to OpenGA and reports subsequent extension and rewriting.",
+    "current_dependency_observation": "No direct OpenGA Lake requirement was found in the 18 current Lake configuration files; source projects use local packages such as Shared and DoCarmoLib.",
+    "lake_configs_checked": 18,
+    "retained_namespace_example": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/formalized-sources/DoCarmo/DoCarmoLib/MetricGeometry/ProperExhaustion.lean#L17",
+    "reuse_policy": "Preserve OpenGA provenance and attribution for the reference authors' subsequent work. Recheck imported proofs against the destination toolchain."
+  },
+  "counts": {
+    "chapters": 6,
+    "important_nodes": 61,
+    "milestone_candidates": 54,
+    "definition_prerequisites": 6,
+    "existing_goal_family": 1,
+    "primary_blueprint_notready": 61,
+    "primary_blueprint_lean_mappings": 0
+  },
+  "chapters": [
+    {
+      "title": "Foundations & Interfaces",
+      "important_nodes": 9
+    },
+    {
+      "title": "Analytic Control & Noncollapsing",
+      "important_nodes": 10
+    },
+    {
+      "title": "Kappa-Solutions & Surgery Continuation",
+      "important_nodes": 10
+    },
+    {
+      "title": "Curve-Shrinking Estimates",
+      "important_nodes": 10
+    },
+    {
+      "title": "Extinction & Component Topology",
+      "important_nodes": 11
+    },
+    {
+      "title": "Topological Endgame",
+      "important_nodes": 11
+    }
+  ],
+  "recommended_first_target": null,
+  "naming": {
+    "id": "Stable English semantic identifier, independent of book numbering and reference-repository labels.",
+    "working_title": "Human-readable mathematical name without source numbering.",
+    "source_refs": "Bibliographic locators only; changing an edition or adding another source does not rename the local target.",
+    "blueprint_labels": "External cross-references retained verbatim for provenance, not local identifiers.",
+    "platform_title": "Use a semantic English mathematical name without source numbering. Bibliographic indices remain in the description and source metadata."
+  },
+  "source_target_groups": [
+    {
+      "id": "forward_difference_comparison",
+      "working_title": "Forward difference quotient comparison",
+      "blueprint_labels": [
+        "thm:forward-dini-comparison"
+      ],
+      "source_refs": [
+        "MT:ch2:2.22"
+      ],
+      "next_action": "Retain as reference-repository provenance. Current milestone selection and formalization work follow PoincareConjecture/milestones.json.",
+      "original_source_review": "passed_for_published_scope",
+      "platform_catalog_duplicate_check": "Keyword results reviewed; no matching theorem attested. Semantic equivalence is not exhaustively decided.",
+      "linked_theorem_id": null,
+      "previous_publication": {
+        "platform_milestone_id": "01af4eaa-14be-4540-8708-3da1ea55850b",
+        "published_scope": "Lemma 2.22 (forward difference comparison)",
+        "source_pdf_page": 76,
+        "superseded_by": "PoincareConjecture/milestone_history.json#adopt_kleiner_lott"
+      },
+      "platform_milestone_id": null,
+      "selection_status": "reference_only_not_active_plan"
+    },
+    {
+      "id": "time_slice_maximum_comparison",
+      "working_title": "Time-slice maximum comparison",
+      "blueprint_labels": [
+        "thm:time-slice-maximum-comparison"
+      ],
+      "source_refs": [
+        "MT:ch2:2.23"
+      ],
+      "next_action": "Retain as reference-repository provenance. Current milestone selection and formalization work follow PoincareConjecture/milestones.json.",
+      "original_source_review": "pending",
+      "platform_catalog_duplicate_check": "pending",
+      "platform_milestone_id": null,
+      "linked_theorem_id": null,
+      "selection_status": "reference_only_not_active_plan"
+    },
+    {
+      "id": "local_neck_surgery",
+      "working_title": "Local neck surgery",
+      "blueprint_labels": [
+        "thm:local-neck-surgery"
+      ],
+      "source_refs": [
+        "MT:ch13:13.2"
+      ],
+      "next_action": "Retain as reference-repository provenance. Current milestone selection and formalization work follow PoincareConjecture/milestones.json.",
+      "original_source_review": "pending",
+      "platform_catalog_duplicate_check": "pending",
+      "platform_milestone_id": null,
+      "linked_theorem_id": null,
+      "selection_status": "reference_only_not_active_plan"
+    },
+    {
+      "id": "noncollapsing",
+      "working_title": "Generalized flow noncollapsing",
+      "blueprint_labels": [
+        "thm:generalized-flow-noncollapsing-interface"
+      ],
+      "source_refs": [
+        "MT:ch8:8.1"
+      ],
+      "next_action": "Retain as reference-repository provenance. Current milestone selection and formalization work follow PoincareConjecture/milestones.json.",
+      "original_source_review": "pending",
+      "platform_catalog_duplicate_check": "pending",
+      "platform_milestone_id": null,
+      "linked_theorem_id": null,
+      "selection_status": "reference_only_not_active_plan"
+    },
+    {
+      "id": "canonical_neighborhood_extension",
+      "working_title": "Strong canonical neighborhood extension",
+      "blueprint_labels": [
+        "thm:strong-canonical-neighborhood-extension"
+      ],
+      "source_refs": [
+        "MT:ch17:17.1"
+      ],
+      "next_action": "Retain as reference-repository provenance. Current milestone selection and formalization work follow PoincareConjecture/milestones.json.",
+      "original_source_review": "pending",
+      "platform_catalog_duplicate_check": "pending",
+      "platform_milestone_id": null,
+      "linked_theorem_id": null,
+      "selection_status": "reference_only_not_active_plan"
+    },
+    {
+      "id": "all_time_surgery_flow",
+      "working_title": "All-time controlled Ricci flow with surgery",
+      "blueprint_labels": [
+        "thm:all-time-controlled-surgery-flow"
+      ],
+      "source_refs": [
+        "MT:ch15:15.9",
+        "MT:ch15:15.10"
+      ],
+      "next_action": "Retain as reference-repository provenance. Current milestone selection and formalization work follow PoincareConjecture/milestones.json.",
+      "original_source_review": "pending",
+      "platform_catalog_duplicate_check": "pending",
+      "platform_milestone_id": null,
+      "linked_theorem_id": null,
+      "selection_status": "reference_only_not_active_plan"
+    },
+    {
+      "id": "finite_time_extinction",
+      "working_title": "Finite-time extinction",
+      "blueprint_labels": [
+        "thm:finite-time-extinction"
+      ],
+      "source_refs": [
+        "MT:ch18:18.1"
+      ],
+      "next_action": "Retain as reference-repository provenance. Current milestone selection and formalization work follow PoincareConjecture/milestones.json.",
+      "original_source_review": "passed_for_published_scope",
+      "platform_catalog_duplicate_check": "Keyword results reviewed; no matching theorem attested. Semantic equivalence is not exhaustively decided.",
+      "linked_theorem_id": null,
+      "previous_publication": {
+        "platform_milestone_id": "33045187-e820-4325-a253-c8ba2c778897",
+        "published_scope": "Theorem 18.1 (finite-time extinction)",
+        "source_pdf_page": 458,
+        "superseded_by": "PoincareConjecture/milestone_history.json#adopt_kleiner_lott"
+      },
+      "platform_milestone_id": null,
+      "selection_status": "reference_only_not_active_plan"
+    },
+    {
+      "id": "surgery_topology",
+      "working_title": "Topological effect of surgery",
+      "blueprint_labels": [
+        "thm:morgan-tian-proposition-15-3",
+        "lem:single-surgery-connected-sum-reconstruction"
+      ],
+      "source_refs": [
+        "MT:ch15:15.3"
+      ],
+      "next_action": "Retain as reference-repository provenance. Current milestone selection and formalization work follow PoincareConjecture/milestones.json.",
+      "original_source_review": "passed_for_published_scope",
+      "platform_catalog_duplicate_check": "Keyword results reviewed; no matching theorem attested. Semantic equivalence is not exhaustively decided.",
+      "linked_theorem_id": null,
+      "previous_publication": {
+        "platform_milestone_id": "245ff479-b4c3-46c9-aee5-43f931990aa1",
+        "published_scope": "Proposition 15.3 (topological effect of surgery)",
+        "source_pdf_page": 400,
+        "superseded_by": "PoincareConjecture/milestone_history.json#adopt_kleiner_lott"
+      },
+      "platform_milestone_id": null,
+      "selection_status": "reference_only_not_active_plan"
+    },
+    {
+      "id": "topology_from_extinction",
+      "working_title": "Topology across surgery and extinction",
+      "blueprint_labels": [
+        "thm:morgan-tian-corollary-15-4",
+        "thm:morgan-tian-corollary-15-4-empty",
+        "thm:extinction-connected-sum-classification"
+      ],
+      "source_refs": [
+        "MT:ch15:15.4"
+      ],
+      "next_action": "Retain as reference-repository provenance. Current milestone selection and formalization work follow PoincareConjecture/milestones.json.",
+      "original_source_review": "passed_for_corollary_15_4_clause_1_only",
+      "platform_catalog_duplicate_check": "Keyword results reviewed; no matching theorem attested. Semantic equivalence is not exhaustively decided.",
+      "linked_theorem_id": null,
+      "previous_publication": {
+        "platform_milestone_id": "29f0d323-76f4-4288-b819-626a482e9d5f",
+        "published_scope": "Corollary 15.4(1) (topology from extinction)",
+        "source_pdf_page": 401,
+        "superseded_by": "PoincareConjecture/milestone_history.json#adopt_kleiner_lott"
+      },
+      "platform_milestone_id": null,
+      "selection_status": "reference_only_not_active_plan"
+    }
+  ],
+  "reference_lean_checks": [
+    {
+      "path": "formalized-sources/MorganTian/MorganTianLib/Ch02/ForwardDifference.lean",
+      "url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/formalized-sources/MorganTian/MorganTianLib/Ch02/ForwardDifference.lean",
+      "sha256": "fc83546cfdd706caf6e09bf74f0c663b85810d75680828c449f7dd9b0a2dd3cb",
+      "declarations": [
+        "MorganTianLib.le_of_forwardDiffQuotientLE",
+        "MorganTianLib.forwardDiffQuotientLE_iSup",
+        "MorganTianLib.iSup_le_of_forwardDiff_max"
+      ],
+      "toolchain": "leanprover/lean4:v4.33.1",
+      "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "compile_result": "passed",
+      "axiom_check": "passed: all three declarations depend only on propext, Classical.choice and Quot.sound",
+      "scope": "Unmodified standalone source compiled using the OpenGA Lake environment. No code from this reference has been added to OpenGALib or submitted to Prove2Me."
+    }
+  ],
+  "review_findings": [
+    {
+      "id": "terminal_endpoint_missing",
+      "label": "lem:forward-dini-comparison-with-downward-jumps",
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex#L75",
+      "status": "statement_repair_required",
+      "finding": "The downward-jump condition is imposed only for 1 <= j < N, and continuity is imposed only on half-open partition intervals. Nothing controls f(b), although the conclusion includes b.",
+      "counterexample": "Take a=0, b=1, N=1, psi=0, G=0, f(t)=0 for 0<=t<1 and f(1)=1. Every written hypothesis holds but f(1)<=G(1) fails.",
+      "required_change": "Require the finite left lower limit and downward endpoint inequality also at j=N, or supply a sufficient terminal continuity condition."
+    },
+    {
+      "id": "width_route_bridge",
+      "label": "thm:finite-time-extinction",
+      "status": "additional_lemmas_required",
+      "local_path": "OpenGALib/Analysis/WidthExtinction.lean",
+      "finding": "OpenGA currently proves a continuous comparison for -4*pi + 3*W/(4*(t+C)). This blueprint uses loop-family width with -2*pi + 3*W/(1+4*t), nonzero starting times and downward jumps at surgery.",
+      "required_change": "Build and verify the normalization or generalized coefficient/time-shift bridge and a finite-partition comparison. Do not equate this calculus endpoint with finite-time extinction of a surgery flow."
+    },
+    {
+      "id": "smooth_topological_bridge",
+      "label": "thm:poincare-conjecture",
+      "status": "additional_lemma_required",
+      "platform_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "finding": "The reference root assumes a smooth closed 3-manifold and concludes a diffeomorphism. The existing platform root assumes a compact Hausdorff topological 3-manifold with ChartedSpace and concludes a homeomorphism.",
+      "required_change": "Supply a compatible smoothing result and forget the smooth structure at the conclusion before linking the smooth route to the existing target. The reference root is not a signature-identical replacement."
+    },
+    {
+      "id": "blueprint_is_not_lean_completion",
+      "status": "scope_classified",
+      "finding": "All 61 important nodes are marked notready and have no Lean mapping in the primary blueprint at this commit. Some supporting source projects contain Lean proofs; evaluate those separately."
+    },
+    {
+      "id": "source_faithfulness",
+      "status": "review_pending",
+      "finding": "The primary blueprint reorganizes, strengthens and combines source results. Source cross-references identify where to review; they are not captain attestation. Milestone titles must use verified original source indices and statements."
+    },
+    {
+      "id": "curve_shrinking_correction",
+      "status": "review_pending",
+      "finding": "The curve-shrinking chapter cites the Morgan-Tian correction. Keep the corrected constants and hypotheses when selecting Chapter 19 targets.",
+      "source_url": "https://arxiv.org/abs/1512.00699"
+    }
+  ],
+  "platform_cross_references": {
+    "snapshot_synced_at": "2026-09-09T02:17:03.011785+00:00",
+    "mission_milestones_in_snapshot": 5,
+    "existing_goal_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+    "existing_covering_theorem_id": "192cef90-169f-4470-b074-8392596cb487",
+    "existing_spherical_cover_theorem_id": "4de517bb-1125-48cf-b44f-de4ca093a0a5",
+    "policy": "Search the full platform catalog before publishing new nodes. The existing topological targets remain authoritative; links here record related goals only."
+  },
+  "nodes": [
+    {
+      "label": "thm:forward-dini-comparison",
+      "kind": "theorem",
+      "title": "Forward-Dini comparison principle",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex",
+      "reference_line": 36,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex#L36",
+      "statement_sha256": "51fec65479d02c6517bb87a8baba02b7dd352b47a7d2b444e2b3fb699560700b",
+      "source_refs": [
+        "MT:ch2:2.22"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "lem:forward-dini-mean-value"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Foundations & Interfaces",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:time-slice-maximum-comparison",
+      "kind": "theorem",
+      "title": "Time-slice maximum comparison",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex",
+      "reference_line": 166,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex#L166",
+      "statement_sha256": "2a80899442d7058302651f18655e747697670051f761f70f738a389923687c89",
+      "source_refs": [
+        "MT:ch2:2.23"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "lem:uniform-time-slice-transport",
+        "thm:forward-dini-comparison"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Foundations & Interfaces",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "def:epsilon-neck-and-scale",
+      "kind": "definition",
+      "title": "Epsilon-closeness, neck, and scale",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex",
+      "reference_line": 220,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex#L220",
+      "statement_sha256": "014a3bc2a5a7255da14dd94c9d9fe74c3d58bf04d85c77ef4a5e23cce34bdec5",
+      "source_refs": [
+        "MT:ch2:2.16",
+        "MT:ch2:2.18"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Foundations & Interfaces",
+      "role": "definition_prerequisite"
+    },
+    {
+      "label": "thm:local-neck-surgery",
+      "kind": "theorem",
+      "title": "Local surgery on a delta-neck",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex",
+      "reference_line": 640,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex#L640",
+      "statement_sha256": "785218fe9887a43d2e4587f78e7f7aa0952cf8474802a86e6673f59533e481a4",
+      "source_refs": [
+        "MT:ch13:13.2"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:interpolating-surgery-metric",
+        "lem:interpolating-surgery-metric-smooth",
+        "lem:radial-surgery-map-nonexpanding",
+        "lem:retained-neck-surgery-pinching",
+        "lem:standard-cap-surgery-curvature",
+        "lem:local-surgery-standard-cap-convergence"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Foundations & Interfaces",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "def:canonical-cap",
+      "kind": "definition",
+      "title": "Canonical cap",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex",
+      "reference_line": 682,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex#L682",
+      "statement_sha256": "ca3e296a6a03895c6a94b7723b9606e2cc89d8c086f293a02923acc9ca7ef9f6",
+      "source_refs": [
+        "MT:ch9:9.72"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:epsilon-neck-and-scale"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Foundations & Interfaces",
+      "role": "definition_prerequisite"
+    },
+    {
+      "label": "prop:overlapping-epsilon-necks",
+      "kind": "proposition",
+      "title": "Overlap control for small epsilon-necks",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex",
+      "reference_line": 859,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex#L859",
+      "statement_sha256": "51e57d59be33f51f8cac6c0edd583f9532e1683ba7196daf71f6933f40e31ffb",
+      "source_refs": [
+        "MT:app:A.11"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:epsilon-neck-and-scale",
+        "lem:epsilon-neck-metric-control"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Foundations & Interfaces",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:separating-neck-centers-form-tube",
+      "kind": "theorem",
+      "title": "Separating neck centers lie in an epsilon-tube",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex",
+      "reference_line": 1043,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex#L1043",
+      "statement_sha256": "293b45a8bb841cb82cf9d4925fd29a4a77d74ea4463875fa963e9a75f17df439",
+      "source_refs": [
+        "MT:app:A.12",
+        "MT:app:A.15",
+        "MT:app:A.17",
+        "MT:app:A.18",
+        "MT:app:A.19"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:canonical-neck-cap-regions",
+        "lem:neck-chain-product",
+        "lem:infinite-neck-chain-frontier",
+        "lem:balanced-neck-chain-extension",
+        "lem:finite-neck-chain-frontier-dichotomy"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Foundations & Interfaces",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:cap-and-neck-cover-classification",
+      "kind": "theorem",
+      "title": "Connected sets covered by canonical cap cores and neck centers",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex",
+      "reference_line": 1407,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex#L1407",
+      "statement_sha256": "d385e0ab40519de7d8d07f077e6192870849a75e9440cb047bcff79b86578f7c",
+      "source_refs": [
+        "MT:app:A.21"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:canonical-neck-cap-regions",
+        "lem:neck-chain-product",
+        "lem:balanced-neck-chain-extension",
+        "lem:infinite-neck-chain-frontier",
+        "lem:finite-cap-chain-frontier-dichotomy",
+        "thm:separating-neck-centers-form-tube",
+        "lem:nonseparating-neck-chain-or-bundle",
+        "lem:all-neck-component-tube-or-bundle",
+        "lem:neck-separation-type-locally-constant",
+        "lem:maximal-cap-selection",
+        "lem:adjacent-canonical-caps-form-component",
+        "prop:overlapping-epsilon-necks"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Foundations & Interfaces",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:canonical-neck-cap-topology",
+      "kind": "theorem",
+      "title": "Topology of a manifold covered by canonical caps and necks",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex",
+      "reference_line": 1485,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/foundations-and-interfaces.tex#L1485",
+      "statement_sha256": "f3e17c423b3c1ed2e1eb29eaedc2bbe84007aa38507fbf961cdc478174695f03",
+      "source_refs": [
+        "MT:app:A.25"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "thm:cap-and-neck-cover-classification"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Foundations & Interfaces",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "def:controlled-ricci-flow-with-surgery",
+      "kind": "definition",
+      "title": "Ricci flow with controlled surgery data",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex",
+      "reference_line": 588,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex#L588",
+      "statement_sha256": "9e89ff0360999826dbb3c3b5a9d30f06abe3d1d2c4d803786decafc3a713ffd6",
+      "source_refs": [
+        "MT:ch15:15.2",
+        "MT:ch15:15.5",
+        "MT:ch15:15.8"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:ricci-flow-with-surgery",
+        "def:strong-canonical-neighborhood-control",
+        "def:controlled-surgery-parameters",
+        "def:maximal-ricci-flow-extension"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Analytic Control & Noncollapsing",
+      "role": "definition_prerequisite"
+    },
+    {
+      "label": "thm:local-volume-injectivity-radius-control",
+      "kind": "theorem",
+      "title": "Local volume and injectivity-radius control",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex",
+      "reference_line": 632,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex#L632",
+      "statement_sha256": "0d89fb0c5005b910ddd7adfb4af910169fc3c4178a666c8ab6d013d6169ef998",
+      "source_refs": [
+        "MT:ch1:1.35",
+        "MT:ch1:1.36",
+        "MT:ch5:5.10"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Analytic Control & Noncollapsing",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:normalized-short-time-ricci-flow",
+      "kind": "theorem",
+      "title": "Normalized short-time flow",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex",
+      "reference_line": 685,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex#L685",
+      "statement_sha256": "9cd241b5843fff4347fe13946bd06bc8516350ef722a31dc2861cec2d46565f3",
+      "source_refs": [
+        "MT:ch3:3.11",
+        "MT:ch4:4.11",
+        "MT:ch5:5.16",
+        "MT:ch15:15.1"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:ricci-flow-with-surgery",
+        "def:controlled-ricci-flow-with-surgery",
+        "def:maximal-ricci-flow-extension",
+        "def:normalized-riemannian-three-manifold",
+        "thm:local-volume-injectivity-radius-control"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Analytic Control & Noncollapsing",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:local-ricci-flow-derivative-estimates",
+      "kind": "theorem",
+      "title": "Local Ricci-flow derivative estimates",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex",
+      "reference_line": 739,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex#L739",
+      "statement_sha256": "ca11f78d606498ef24cc646be1e8540e8b744ccaa25bea3bfe84c3117d4ad2f9",
+      "source_refs": [
+        "MT:ch3:3.28",
+        "MT:ch3:3.33"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:ricci-flow-with-surgery"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Analytic Control & Noncollapsing",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:reduced-exponential-regularity",
+      "kind": "theorem",
+      "title": "Regularity of the reduced exponential map",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex",
+      "reference_line": 984,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex#L984",
+      "statement_sha256": "f12113f3b0ff6eeeddd05e33f58a7b2ae7aed627337b89835d43f6a75194da0e",
+      "source_refs": [
+        "MT:ch6:6.18",
+        "MT:ch6:6.28",
+        "MT:ch6:6.56",
+        "MT:ch6:6.67"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:reduced-length",
+        "def:reduced-exponential-map",
+        "lem:reduced-length-support-inequality"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Analytic Control & Noncollapsing",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:generalized-flow-noncollapsing-interface",
+      "kind": "theorem",
+      "title": "Imported interface: generalized-flow noncollapsing",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex",
+      "reference_line": 1164,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex#L1164",
+      "statement_sha256": "e2a66c49dfc2fd6ae3bd5f8aa8190c1c3c21d1968b21670cf16e61500fad5761",
+      "source_refs": [
+        "MT:ch8:8.1"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:reduced-volume",
+        "def:reduced-exponential-map",
+        "prop:reduced-injectivity-set-monotonicity",
+        "lem:reduced-density-monotonicity",
+        "thm:reduced-exponential-regularity",
+        "lem:generalized-noncollapsing-small-image",
+        "lem:generalized-noncollapsing-large-tail"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Analytic Control & Noncollapsing",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:strong-curvature-tensor-maximum-principle",
+      "kind": "theorem",
+      "title": "Strong maximum principle for curvature tensors",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex",
+      "reference_line": 1236,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex#L1236",
+      "statement_sha256": "3235ecdcc0791370b70dc47120cc711fc8d6cebc94a85b97c2ad9beaefce71ea",
+      "source_refs": [
+        "MT:ch4:4.17",
+        "MT:ch4:4.18"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "thm:time-slice-maximum-comparison"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Analytic Control & Noncollapsing",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:hamilton-compactness-generalized-flows",
+      "kind": "theorem",
+      "title": "Pointed Ricci-flow compactness",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex",
+      "reference_line": 1582,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex#L1582",
+      "statement_sha256": "31f80d4b61ee7671c53eba30e8d11f46e0210859e1531ef56147435b99178869",
+      "source_refs": [
+        "MT:ch5:5.14",
+        "MT:ch5:5.15"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:ricci-flow-with-surgery",
+        "def:surgery-flow-noncollapsing",
+        "thm:local-ricci-flow-derivative-estimates",
+        "thm:pointed-riemannian-compactness"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Analytic Control & Noncollapsing",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:conditional-noncollapsing-extension",
+      "kind": "theorem",
+      "title": "Conditional noncollapsing extension",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex",
+      "reference_line": 2011,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex#L2011",
+      "statement_sha256": "71fca7596d3c4b2bd27b4d115cb6f5e1b810dd3455f8c394e56f3850af64b54d",
+      "source_refs": [
+        "MT:ch16:16.1",
+        "KL:II.5:II.5.2"
+      ],
+      "source_keys": [
+        "kleiner-lott"
+      ],
+      "dependencies": [
+        "def:normalized-riemannian-three-manifold",
+        "def:ricci-flow-with-cutoff",
+        "def:surgery-flow-noncollapsing",
+        "lem:kleiner-lott-noncollapsing-estimate",
+        "def:stagewise-delta-selector",
+        "def:controlled-ricci-flow-with-surgery"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Analytic Control & Noncollapsing",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:pointed-controlled-flow-compactness",
+      "kind": "theorem",
+      "title": "Pointed compactness for controlled flows",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex",
+      "reference_line": 2219,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex#L2219",
+      "statement_sha256": "c57900102849e74c138e07da75093fdaa8df3b9c0f83780ce8e03bef49ebb206",
+      "source_refs": [
+        "MT:ch11:11.1",
+        "MT:ch11:11.8",
+        "MT:ch11:11.10"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:surgery-flow-noncollapsing",
+        "def:controlled-ricci-flow-with-surgery",
+        "def:curvature-pinched-toward-positive",
+        "thm:hamilton-compactness-generalized-flows",
+        "lem:noncollapsing-predicate-pointed-limit",
+        "thm:local-ricci-flow-derivative-estimates",
+        "thm:bounded-curvature-at-bounded-distance",
+        "thm:curvature-null-splitting",
+        "lem:blowup-limit-slice-bounded-curvature",
+        "lem:finite-interval-harnack-distance-control"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Analytic Control & Noncollapsing",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "def:kappa-solution",
+      "kind": "definition",
+      "title": "Kappa-solution",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex",
+      "reference_line": 270,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/analytic-control-and-noncollapsing.tex#L270",
+      "statement_sha256": "4f52907381423fa8b8b84b04aebe2b89f6e895c2f481428a06251da584d913f5",
+      "source_refs": [
+        "MT:ch9:9.1",
+        "MT:ch9:9.2",
+        "KL:I.11:38.1"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Kappa-Solutions & Surgery Continuation",
+      "role": "definition_prerequisite"
+    },
+    {
+      "label": "thm:asymptotic-gradient-shrinking-soliton",
+      "kind": "theorem",
+      "title": "Asymptotic gradient-shrinker production",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex",
+      "reference_line": 48,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex#L48",
+      "statement_sha256": "314a8393bcc70d8dede74f10d9cc9ca433d38d475b539976f843894101561a89",
+      "source_refs": [
+        "MT:ch9:9.11",
+        "MT:ch9:9.42",
+        "MT:ch9:9.44"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:kappa-solution",
+        "def:reduced-length",
+        "def:reduced-volume",
+        "lem:reduced-length-support-inequality",
+        "lem:minimum-reduced-length-comparison",
+        "lem:reduced-density-monotonicity",
+        "thm:generalized-flow-noncollapsing-interface",
+        "thm:local-ricci-flow-derivative-estimates",
+        "thm:hamilton-compactness-generalized-flows"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Kappa-Solutions & Surgery Continuation",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:three-dimensional-gradient-shrinker-classification",
+      "kind": "theorem",
+      "title": "Three-dimensional gradient-shrinker classification",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex",
+      "reference_line": 75,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex#L75",
+      "statement_sha256": "012ec5955cda46c5dbfd47fd9b0a5761106047d306b7cb94aa9812d2b61f73c1",
+      "source_refs": [
+        "MT:ch9:9.53",
+        "MT:ch9:9.54"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:kappa-solution",
+        "thm:curvature-null-splitting",
+        "thm:two-dimensional-kappa-solutions-round"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Kappa-Solutions & Surgery Continuation",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:kappa-solution-asymptotic-models",
+      "kind": "theorem",
+      "title": "Asymptotic models of three-dimensional kappa-solutions",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex",
+      "reference_line": 103,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex#L103",
+      "statement_sha256": "6c7a474afbe3c995cb51af24a2030478fbef89236255ece72ac10be86dfe303a",
+      "source_refs": [
+        "MT:ch9:9.11",
+        "MT:ch9:9.42",
+        "MT:ch9:9.44",
+        "MT:ch9:9.53",
+        "MT:ch9:9.54"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "thm:asymptotic-gradient-shrinking-soliton",
+        "thm:three-dimensional-gradient-shrinker-classification",
+        "thm:ancient-scalar-curvature-monotonicity"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Kappa-Solutions & Surgery Continuation",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:kappa-solution-structure-summary",
+      "kind": "theorem",
+      "title": "Uniform structure of kappa-solutions",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex",
+      "reference_line": 598,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex#L598",
+      "statement_sha256": "81f9f5892f7f35ed610315634b84e34e7500a289ad4b9c116ebe955569718080",
+      "source_refs": [
+        "MT:ch9:9.93"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "prop:universal-nonround-kappa",
+        "prop:kappa-solution-curvature-trichotomy",
+        "thm:noncompact-kappa-solution-structure",
+        "thm:compact-kappa-solution-structure",
+        "thm:kappa-solution-compactness",
+        "thm:local-ricci-flow-derivative-estimates",
+        "thm:curvature-null-splitting"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Kappa-Solutions & Surgery Continuation",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:kappa-solution-canonical-neighborhoods",
+      "kind": "theorem",
+      "title": "Canonical neighborhoods in kappa-solutions",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex",
+      "reference_line": 668,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex#L668",
+      "statement_sha256": "d0cc651cde6da356764fdb0c0344d2d0d61f5090eff0b2f38f8562e8598b90bf",
+      "source_refs": [
+        "MT:ch9:9.94",
+        "MT:ch9:9.95"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:strong-canonical-neighborhood-control",
+        "thm:kappa-solution-structure-summary",
+        "lem:canonical-neighborhood-stability"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Kappa-Solutions & Surgery Continuation",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:standard-solution-canonical-neighborhoods",
+      "kind": "theorem",
+      "title": "Canonical neighborhoods in the standard solution",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex",
+      "reference_line": 703,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex#L703",
+      "statement_sha256": "571ac1ea5620cf6c739a744d89d22783024347a33823061ebf26200d7005f09b",
+      "source_refs": [
+        "MT:ch12:12.28",
+        "MT:ch12:12.32",
+        "MT:ch12:12.36"
+      ],
+      "source_keys": [
+        "kleiner-lott"
+      ],
+      "dependencies": [
+        "def:strong-canonical-neighborhood-control",
+        "def:standard-surgery-cap-model",
+        "thm:hamilton-compactness-generalized-flows",
+        "thm:kappa-solution-canonical-neighborhoods",
+        "lem:canonical-neighborhood-stability"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Kappa-Solutions & Surgery Continuation",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:strong-canonical-neighborhood-extension",
+      "kind": "theorem",
+      "title": "Extension of strong canonical neighborhoods",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex",
+      "reference_line": 1242,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex#L1242",
+      "statement_sha256": "1fc0703727f5f91a5f038a8d0b790ee0a729b919ff6c6c2fde9ddfcc8d772c1e",
+      "source_refs": [
+        "MT:ch17:17.1"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:stagewise-delta-selector",
+        "thm:conditional-noncollapsing-extension",
+        "def:strong-canonical-neighborhood-control",
+        "def:controlled-ricci-flow-with-surgery",
+        "def:curvature-pinched-toward-positive",
+        "lem:canonical-neighborhood-first-failure",
+        "lem:rescaled-high-curvature-canonical-control",
+        "lem:first-failure-noncollapsing-bridge",
+        "lem:pre-failure-kappa-limit",
+        "lem:backward-parabolic-neighborhood-dichotomy",
+        "lem:first-failure-zero-slice-canonical-transfer",
+        "lem:uniform-backward-lifetime",
+        "thm:pointed-controlled-flow-compactness",
+        "thm:kappa-solution-canonical-neighborhoods",
+        "lem:bounded-flow-line-cap-exclusion",
+        "lem:positive-component-persistence"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Kappa-Solutions & Surgery Continuation",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:finite-interval-surgery-bound",
+      "kind": "theorem",
+      "title": "Finite surgery count on bounded intervals",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex",
+      "reference_line": 1549,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex#L1549",
+      "statement_sha256": "70f960eff8985a09a99f2c61e40b3316981c66f0798066c0b0469aa8f473efd1",
+      "source_refs": [
+        "MT:ch17:17.12"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "lem:finite-horizon-surgery-phi-envelope",
+        "def:controlled-surgery-parameters",
+        "def:controlled-ricci-flow-with-surgery",
+        "def:curvature-pinched-toward-positive",
+        "lem:ricci-flow-surgery-horn-scale",
+        "lem:cutoff-surgery-volume-loss"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Kappa-Solutions & Surgery Continuation",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:all-time-controlled-surgery-flow",
+      "kind": "theorem",
+      "title": "All-time controlled Ricci flow with surgery",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex",
+      "reference_line": 1619,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/kappa-solutions-and-surgery-continuation.tex#L1619",
+      "statement_sha256": "925e8bb9cce0dc134bfae530093502ffa6021831c87c48ee96b0de35aff76efd",
+      "source_refs": [
+        "MT:ch15:15.9",
+        "MT:ch15:15.10"
+      ],
+      "source_keys": [
+        "morgan-tian",
+        "kleiner-lott"
+      ],
+      "dependencies": [
+        "def:ricci-flow-with-cutoff",
+        "def:stagewise-delta-selector",
+        "def:surgery-flow-noncollapsing",
+        "def:controlled-surgery-parameters",
+        "def:controlled-ricci-flow-with-surgery",
+        "def:curvature-pinched-toward-positive",
+        "thm:normalized-short-time-ricci-flow",
+        "thm:conditional-noncollapsing-extension",
+        "thm:strong-canonical-neighborhood-extension",
+        "lem:controlled-surgery-restart",
+        "thm:finite-interval-surgery-bound"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Kappa-Solutions & Surgery Continuation",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "def:ramp-curve",
+      "kind": "definition",
+      "title": "Ramp",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex",
+      "reference_line": 128,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex#L128",
+      "statement_sha256": "a4264b8287a2605fec47c3adb2b6243c47d5a8822dd6993f4be8b33ebb083175",
+      "source_refs": [
+        "MT:ch19:19.12"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Curve-Shrinking Estimates",
+      "role": "definition_prerequisite"
+    },
+    {
+      "label": "thm:ramp-preservation",
+      "kind": "theorem",
+      "title": "Ramp preservation",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex",
+      "reference_line": 168,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex#L168",
+      "statement_sha256": "21cf63770345cc8920d69064cb735ecc5fcf5d360e2d8cd0e38dfe3274d381b6",
+      "source_refs": [
+        "MT:ch19:19.13"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:ramp-curve",
+        "thm:time-slice-maximum-comparison",
+        "lem:ramp-slope-evolution"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Curve-Shrinking Estimates",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:curve-shrinking-short-time-existence",
+      "kind": "theorem",
+      "title": "Short-time existence and curvature blow-up alternative",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex",
+      "reference_line": 499,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex#L499",
+      "statement_sha256": "73976e02050f2857dc55f55a8f554bf6a56a72bc365f37737594f42667c4ea99",
+      "source_refs": [
+        "MT:ch19:19.1"
+      ],
+      "source_keys": [
+        "morgan-tian",
+        "perelman-finite-extinction:page-0003"
+      ],
+      "dependencies": [
+        "thm:parametric-curve-shrinking-wellposedness",
+        "lem:curve-flow-speed-and-tangent-evolution"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Curve-Shrinking Estimates",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:parametric-curve-shrinking-wellposedness",
+      "kind": "theorem",
+      "title": "Compact-parametric parabolic interface for immersed curve shrinking",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex",
+      "reference_line": 424,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex#L424",
+      "statement_sha256": "87966a1337ae681030c3a2de629c26061da6aa669a6a781d8f4e974dcaa6519e",
+      "source_refs": [
+        "MT:ch19:19.1"
+      ],
+      "source_keys": [
+        "morgan-tian",
+        "perelman-finite-extinction:page-0003",
+        "topping:page-0058",
+        "topping:page-0059"
+      ],
+      "dependencies": [
+        "lem:strongly-parabolic-circle-equation"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Curve-Shrinking Estimates",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:uniform-controlled-ramp-approximation",
+      "kind": "theorem",
+      "title": "Uniform smooth approximation by controlled ramps",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex",
+      "reference_line": 701,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex#L701",
+      "statement_sha256": "354238db23187c2157a458e449fbdf953c894a2789d9b1be473fe9211dc1a04a",
+      "source_refs": [
+        "MT:ch19:19.17"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "cor:sphere-family-polygonal-approximation",
+        "lem:smoothed-polygonal-ramp-bounds",
+        "def:lifted-ramp-chart-branch"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Curve-Shrinking Estimates",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:curve-flow-length-total-curvature-bounds",
+      "kind": "theorem",
+      "title": "Exponential length and total-curvature bounds",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex",
+      "reference_line": 904,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex#L904",
+      "statement_sha256": "0730bf8f13556c3856f68e7437f1f4862a4e4d7a62061e138690ad60682c419f",
+      "source_refs": [
+        "MT:ch19:19.10"
+      ],
+      "source_keys": [
+        "morgan-tian-correction"
+      ],
+      "dependencies": [
+        "lem:coupled-length-curvature-comparison"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Curve-Shrinking Estimates",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:ramp-curve-shrinking-global-existence",
+      "kind": "theorem",
+      "title": "Global existence for ramps",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex",
+      "reference_line": 930,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex#L930",
+      "statement_sha256": "aaee46925f7b1a33325e5431a2c8b7ac73e5b0ec356be49853997a6a486f0d21",
+      "source_refs": [
+        "MT:ch19:19.14"
+      ],
+      "source_keys": [
+        "morgan-tian-correction"
+      ],
+      "dependencies": [
+        "thm:time-slice-maximum-comparison",
+        "thm:parametric-curve-shrinking-wellposedness",
+        "thm:curve-shrinking-short-time-existence",
+        "lem:curve-flow-speed-and-tangent-evolution",
+        "lem:regularized-curve-curvature-inequality",
+        "lem:ramp-slope-evolution",
+        "thm:ramp-preservation"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Curve-Shrinking Estimates",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:short-time-curve-curvature-barrier",
+      "kind": "theorem",
+      "title": "Short-time pointwise curvature barrier",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex",
+      "reference_line": 1287,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex#L1287",
+      "statement_sha256": "3de1ca9fb9485099c8e44c1dc54449a3e3b045da25dc3964911167e5a5f089c7",
+      "source_refs": [
+        "MT:ch19:19.58"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:graph-flow-connection-drift",
+        "thm:time-slice-maximum-comparison",
+        "lem:graph-flow-small-slope-comparison",
+        "lem:graph-flow-drift-derivative-bounds",
+        "lem:graph-flow-tangential-derivative",
+        "def:curve-flow-local-graph-coordinates",
+        "lem:graph-slope-persistence"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Curve-Shrinking Estimates",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:curve-shrinking-derivative-estimates",
+      "kind": "theorem",
+      "title": "Derivative estimates for curve shrinking",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex",
+      "reference_line": 1503,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex#L1503",
+      "statement_sha256": "565cbd2a3aa93f864feae416cedc77a9ba594f3d827d09014f0b217e504ad9d5",
+      "source_refs": [
+        "MT:ch19:19.24"
+      ],
+      "source_keys": [
+        "morgan-tian",
+        "morgan-tian-correction",
+        "topping:page-0050",
+        "topping:page-0058",
+        "topping:page-0059"
+      ],
+      "dependencies": [
+        "thm:short-time-curve-curvature-barrier",
+        "def:curve-flow-local-graph-coordinates",
+        "lem:graph-slope-persistence",
+        "lem:graph-flow-small-slope-comparison",
+        "lem:curve-flow-parabolic-regularity-interface"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Curve-Shrinking Estimates",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:controlled-curve-shrinking-existence",
+      "kind": "theorem",
+      "title": "Controlled curve shrinking for compact loop families",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex",
+      "reference_line": 1553,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/curve-shrinking-estimates.tex#L1553",
+      "statement_sha256": "2c3cb2d2001539a60f74602e9a96c1e75eeb4f6ea4aff87e435c04cb04de95ab",
+      "source_refs": [
+        "MT:ch19:19.1",
+        "MT:ch19:19.10",
+        "MT:ch19:19.14",
+        "MT:ch19:19.17",
+        "MT:ch19:19.24"
+      ],
+      "source_keys": [
+        "morgan-tian",
+        "morgan-tian-correction"
+      ],
+      "dependencies": [
+        "thm:parametric-curve-shrinking-wellposedness",
+        "thm:ramp-curve-shrinking-global-existence",
+        "thm:uniform-controlled-ramp-approximation",
+        "lem:free-loop-approximation-preserves-pi1-orbit",
+        "thm:curve-flow-length-total-curvature-bounds",
+        "thm:curve-shrinking-derivative-estimates"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Curve-Shrinking Estimates",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "def:two-sphere-width",
+      "kind": "definition",
+      "title": "Least nontrivial two-sphere area",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex",
+      "reference_line": 32,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex#L32",
+      "statement_sha256": "2894345d918ff57c7d8e8191f44b814d570731d70c9e9b875696e364eb44bc3c",
+      "source_refs": [
+        "MT:ch18:18.10"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:path-of-components"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Extinction & Component Topology",
+      "role": "definition_prerequisite"
+    },
+    {
+      "label": "thm:two-sphere-width-realization",
+      "kind": "theorem",
+      "title": "Imported Sacks--Uhlenbeck realization of the two-sphere width",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex",
+      "reference_line": 51,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex#L51",
+      "statement_sha256": "3b15592ca94a0469c4422c66aa0c9c9bd9e7d56b17e1275fa0b145307df768ce",
+      "source_refs": [
+        "MT:ch18:18.10"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:two-sphere-width"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Extinction & Component Topology",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:finite-essential-sphere-surgeries",
+      "kind": "theorem",
+      "title": "Finiteness of essential sphere surgeries",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex",
+      "reference_line": 389,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex#L389",
+      "statement_sha256": "4353c5ab626642db8ef1ef3a906e66f138decebe44b6c5cbb724fa410d42e326",
+      "source_refs": [
+        "MT:ch18:18.8"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:controlled-ricci-flow-with-surgery",
+        "def:essential-sphere-family-complexity",
+        "lem:essential-sphere-family-finiteness",
+        "lem:essential-family-survives-essential-surgery",
+        "thm:finite-interval-surgery-bound"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Extinction & Component Topology",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:eventual-pi2-vanishing",
+      "kind": "theorem",
+      "title": "Eventual vanishing of $\\pi_2$",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex",
+      "reference_line": 469,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex#L469",
+      "statement_sha256": "1f25e050d969e9390a7ba9a82ea8e77c9d6503106dcf71708a6655c7356a28bd",
+      "source_refs": [
+        "MT:ch18:18.9"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:path-of-components",
+        "thm:finite-essential-sphere-surgeries",
+        "thm:trivial-surgery-component-map",
+        "thm:finite-interval-surgery-bound",
+        "lem:two-sphere-width-forward-inequality",
+        "lem:extinction-scalar-curvature-lower-bound",
+        "lem:forward-dini-comparison-with-downward-jumps",
+        "thm:noncompact-two-connected-cover-contractible"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Extinction & Component Topology",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "lem:hempel-essential-sphere-input",
+      "kind": "lemma",
+      "title": "Hempel essential-sphere input",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex",
+      "reference_line": 581,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex#L581",
+      "statement_sha256": "0634783df99ff9db0cd8b515d633166a7183513052fc7ba3c2957b9a926b24c4",
+      "source_refs": [
+        "MT:ch18:18.20"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Extinction & Component Topology",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:component-fundamental-group-persistence",
+      "kind": "theorem",
+      "title": "Persistence of the fundamental-group class",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex",
+      "reference_line": 548,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex#L548",
+      "statement_sha256": "fe61686b375fc6aec07264b19c10a287005dc5d7a182c2d0f49da0047a9f01fa",
+      "source_refs": [
+        "MT:ch18:18.19",
+        "MT:ch15:15.3"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:path-of-components",
+        "def:controlled-ricci-flow-with-surgery",
+        "thm:trivial-surgery-component-map",
+        "lem:finitely-generated-kurosh-free-factor",
+        "thm:finite-interval-surgery-bound"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Extinction & Component Topology",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:late-component-nontrivial-pi3",
+      "kind": "theorem",
+      "title": "Nonzero $\\pi_3$ on a late surviving component",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex",
+      "reference_line": 649,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex#L649",
+      "statement_sha256": "b5f97178ff93934637f77eecc0b2654cc6e0c881d5f42a07b53ce76e312ea3d1",
+      "source_refs": [
+        "MT:ch18:18.19"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:path-of-components",
+        "thm:eventual-pi2-vanishing",
+        "thm:component-fundamental-group-persistence",
+        "thm:free-product-pi2-obstruction",
+        "thm:finite-cover-homotopy-three-sphere"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Extinction & Component Topology",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:loop-space-pi3-identification",
+      "kind": "theorem",
+      "title": "Free-loop-space identification of $\\pi_3$",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex",
+      "reference_line": 733,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex#L733",
+      "statement_sha256": "b961b82b035723d2013af12e570df8770aa57e90ecbb20729e3d6799ba9a3d51",
+      "source_refs": [
+        "MT:ch18:18.16"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "lem:loop-space-quotient-wedge",
+        "lem:loop-space-universal-cover-lift"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Extinction & Component Topology",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:plateau-disk-existence-regularity",
+      "kind": "theorem",
+      "title": "Plateau disk existence and boundary regularity",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex",
+      "reference_line": 874,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex#L874",
+      "statement_sha256": "0b8f95c29ce2aa58761d23fc5d63533ab96493e7a2664c4e79dddb2bc4425944",
+      "source_refs": [
+        "MT:ch19:19.2"
+      ],
+      "source_keys": [
+        "morgan-tian",
+        "white-classical-area-minimizing-surfaces:page-0001",
+        "white-classical-area-minimizing-surfaces:page-0002"
+      ],
+      "dependencies": [],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Extinction & Component Topology",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:annular-douglas-minimizer",
+      "kind": "theorem",
+      "title": "Douglas attainment and regularity for a nondegenerate annulus",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex",
+      "reference_line": 1046,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex#L1046",
+      "statement_sha256": "0b9a3ddee615d6e8972cda7d061599ca286a791d09a5c71a70de8ddb3edf6f7f",
+      "source_refs": [
+        "MT:ch19:19.15",
+        "white-classical-area-minimizing-surfaces:page-0001",
+        "white-classical-area-minimizing-surfaces:page-0002"
+      ],
+      "source_keys": [
+        "morgan-tian",
+        "white-classical-area-minimizing-surfaces:page-0001",
+        "white-classical-area-minimizing-surfaces:page-0002"
+      ],
+      "dependencies": [
+        "def:nondegenerate-douglas-annulus-class"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Extinction & Component Topology",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:finite-time-extinction",
+      "kind": "theorem",
+      "title": "Finite-time extinction",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex",
+      "reference_line": 1934,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/extinction-and-component-topology.tex#L1934",
+      "statement_sha256": "facb902fc569c4ea1179e15a11302dc7c1fbd765e332c95693b5bb4cf91d384f",
+      "source_refs": [
+        "MT:ch18:18.1"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:path-of-components",
+        "def:controlled-ricci-flow-with-surgery",
+        "def:ricci-flow-with-cutoff",
+        "thm:all-time-controlled-surgery-flow",
+        "thm:finite-interval-surgery-bound",
+        "thm:eventual-pi2-vanishing",
+        "thm:late-component-nontrivial-pi3",
+        "thm:loop-width-forward-inequality",
+        "lem:extinction-scalar-curvature-lower-bound",
+        "lem:forward-dini-comparison-with-downward-jumps"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Extinction & Component Topology",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:positive-ricci-three-manifold-roundness",
+      "kind": "theorem",
+      "title": "Hamilton roundness for positive Ricci curvature",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/topological-endgame.tex",
+      "reference_line": 113,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/topological-endgame.tex#L113",
+      "statement_sha256": "6ba96645df1e64de284642cd4034eca0b502f766a4d8023bc714b66636253d32",
+      "source_refs": [
+        "MT:ch4:4.23"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:spherical-space-form"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Topological Endgame",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "lem:relative-fiber-boundary-pairing",
+      "kind": "lemma",
+      "title": "Boundary pairing in a fibered neck region",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/topological-endgame.tex",
+      "reference_line": 324,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/topological-endgame.tex#L324",
+      "statement_sha256": "fb220d7394b6981666e1a174202fa976a5df6cd12ca81df3daa3a6a2ae91aa69",
+      "source_refs": [
+        "MT:app:A.20",
+        "MT:app:A.21",
+        "MT:app:A.24"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "lem:fiber-saturation-from-spherical-frontier"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Topological Endgame",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "lem:maximal-overlap-incidence-no-branching",
+      "kind": "lemma",
+      "title": "Maximal-overlap incidence has no branching",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/topological-endgame.tex",
+      "reference_line": 456,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/topological-endgame.tex#L456",
+      "statement_sha256": "9c19fbe672fbb128efd3bfae51ed71914bde4cc06496ded7f6e574396d7e709e",
+      "source_refs": [
+        "MT:app:A.17",
+        "MT:app:A.21",
+        "MT:app:A.23",
+        "MT:app:A.25"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:canonical-neck-cap-regions",
+        "def:balanced-neck-chain",
+        "prop:overlapping-epsilon-necks",
+        "lem:neck-chain-product",
+        "lem:balanced-neck-chain-extension",
+        "lem:finite-neck-chain-frontier-dichotomy",
+        "lem:capped-chain-exposed-frontier",
+        "lem:finite-cap-chain-frontier-dichotomy",
+        "lem:infinite-neck-chain-frontier",
+        "lem:adjacent-canonical-caps-form-component",
+        "lem:exposed-end-successor-overlap"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Topological Endgame",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:morgan-tian-proposition-15-3",
+      "kind": "theorem",
+      "title": "Morgan--Tian one-surgery topological type",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/topological-endgame.tex",
+      "reference_line": 769,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/topological-endgame.tex#L769",
+      "statement_sha256": "79332d7dafd6e556f9d2a2806f96faf8e999b1b1215c2f6b1cf2da139afae593",
+      "source_refs": [
+        "MT:ch15:15.3"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:controlled-ricci-flow-with-surgery",
+        "def:ricci-flow-with-cutoff",
+        "lem:actual-disappearing-component-frontier-saturation",
+        "lem:whole-disappearing-component-classification",
+        "lem:frontier-disappearing-component-classification",
+        "lem:local-capping-connected-sum-identities"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Topological Endgame",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "lem:single-surgery-connected-sum-reconstruction",
+      "kind": "lemma",
+      "title": "Reconstruction across one surgery time",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/topological-endgame.tex",
+      "reference_line": 825,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/topological-endgame.tex#L825",
+      "statement_sha256": "e5e069b5168ef787bcf34895297104a25ee3d5e4509f24799fd527dd141b481a",
+      "source_refs": [
+        "MT:ch15:15.3"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:controlled-ricci-flow-with-surgery",
+        "def:ricci-flow-with-cutoff",
+        "def:smooth-connected-sum",
+        "def:spherical-space-form",
+        "def:sphere-bundles-over-circle",
+        "lem:actual-disappearing-component-frontier-saturation",
+        "lem:whole-disappearing-component-classification",
+        "lem:frontier-disappearing-component-classification",
+        "lem:local-capping-connected-sum-identities"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Topological Endgame",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:extinction-connected-sum-classification",
+      "kind": "theorem",
+      "title": "Connected-sum classification from finite extinction",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/topological-endgame.tex",
+      "reference_line": 874,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/topological-endgame.tex#L874",
+      "statement_sha256": "27ebc432160ca95e81c1b60fac64d12e8d591aa642a53ac11b800c101dda88e3",
+      "source_refs": [
+        "MT:ch15:15.4",
+        "MT:intro:0.1"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:controlled-ricci-flow-with-surgery",
+        "def:ricci-flow-with-cutoff",
+        "def:smooth-connected-sum",
+        "def:spherical-space-form",
+        "def:sphere-bundles-over-circle",
+        "lem:two-sphere-diffeomorphism-classes",
+        "thm:finite-interval-surgery-bound",
+        "lem:single-surgery-connected-sum-reconstruction"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Topological Endgame",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:morgan-tian-corollary-15-4",
+      "kind": "theorem",
+      "title": "Orientable specialization of Morgan--Tian Corollary 15.4",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/topological-endgame.tex",
+      "reference_line": 1125,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/topological-endgame.tex#L1125",
+      "statement_sha256": "2196deb7537953a5ebfe3b8eafd0426fb63be7e758488853afc375451ae06a44",
+      "source_refs": [
+        "MT:ch15:15.4"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:controlled-ricci-flow-with-surgery",
+        "def:ricci-flow-with-cutoff",
+        "thm:morgan-tian-corollary-15-4-general",
+        "thm:morgan-tian-proposition-15-3",
+        "def:thurston-geometrized",
+        "lem:geometrization-closed-under-standard-factors"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Topological Endgame",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:morgan-tian-corollary-15-4-empty",
+      "kind": "theorem",
+      "title": "Orientable specialization of the Corollary 15.4 empty-slice clause",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/topological-endgame.tex",
+      "reference_line": 1158,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/topological-endgame.tex#L1158",
+      "statement_sha256": "0fdc522c1fb9a517b481edbf54b903f9c69736114c6cb716e5b1bbff8d0ad7f3",
+      "source_refs": [
+        "MT:ch15:15.4"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:controlled-ricci-flow-with-surgery",
+        "def:ricci-flow-with-cutoff",
+        "thm:morgan-tian-corollary-15-4-empty-general",
+        "thm:morgan-tian-corollary-15-4",
+        "thm:extinction-connected-sum-classification",
+        "def:smooth-connected-sum",
+        "def:spherical-space-form",
+        "def:sphere-bundles-over-circle",
+        "lem:two-sphere-diffeomorphism-classes",
+        "thm:morgan-tian-proposition-15-3",
+        "lem:single-surgery-connected-sum-reconstruction",
+        "lem:orientability-preserved-by-surgery"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Topological Endgame",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:free-product-connected-sum-classification",
+      "kind": "theorem",
+      "title": "The free-product topology theorem",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/topological-endgame.tex",
+      "reference_line": 1229,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/topological-endgame.tex#L1229",
+      "statement_sha256": "924559b6bf033623c0307d455725a4c3b78924bbeffbad175804350fb1f3aa4f",
+      "source_refs": [
+        "MT:intro:0.1"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:smooth-connected-sum",
+        "def:spherical-space-form",
+        "def:sphere-bundles-over-circle",
+        "lem:normalized-initial-metric-exists",
+        "thm:free-product-excludes-two-sided-projective-plane",
+        "thm:all-time-controlled-surgery-flow",
+        "thm:finite-time-extinction",
+        "thm:extinction-connected-sum-classification"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Topological Endgame",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:connected-sum-fundamental-group",
+      "kind": "theorem",
+      "title": "Fundamental group of a finite connected sum",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/topological-endgame.tex",
+      "reference_line": 1260,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/topological-endgame.tex#L1260",
+      "statement_sha256": "1bd8763090c318b96daf831fd99ad42b03d432692a3b119929ad9717a8563add",
+      "source_refs": [
+        "MT:intro:0.1"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:smooth-connected-sum"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Topological Endgame",
+      "role": "milestone_candidate"
+    },
+    {
+      "label": "thm:poincare-conjecture",
+      "kind": "theorem",
+      "title": "Poincare conjecture",
+      "reference_path": "PoincareConjecture/blueprint/src/chapters/topological-endgame.tex",
+      "reference_line": 1360,
+      "reference_url": "https://github.com/frenzymath/Poincare-Conjecture/blob/bb91a091f0b968f8bbe8d861e025a88d82b161be/PoincareConjecture/blueprint/src/chapters/topological-endgame.tex#L1360",
+      "statement_sha256": "1695565b22fd14a0577130c2b547407fc9b6bfa3115ccbc67dae6bc3a4ad6a90",
+      "source_refs": [
+        "MT:intro:0.2(a)"
+      ],
+      "source_keys": [
+        "morgan-tian"
+      ],
+      "dependencies": [
+        "def:simply-connected",
+        "lem:path-connected-implies-connected",
+        "lem:simply-connected-three-manifold-orientable",
+        "lem:normalized-initial-metric-exists",
+        "thm:free-product-excludes-two-sided-projective-plane",
+        "thm:all-time-controlled-surgery-flow",
+        "def:ricci-flow-with-cutoff",
+        "thm:finite-time-extinction",
+        "thm:morgan-tian-corollary-15-4-empty",
+        "thm:free-product-connected-sum-classification",
+        "lem:orientability-preserved-by-surgery",
+        "thm:connected-sum-fundamental-group",
+        "lem:trivial-free-product-factors",
+        "lem:sphere-bundle-fundamental-group",
+        "lem:simply-connected-spherical-space-form",
+        "lem:three-sphere-connected-sum-identity"
+      ],
+      "blueprint_status": "notready",
+      "lean_declarations": [],
+      "chapter": "Topological Endgame",
+      "role": "existing_goal_family"
+    }
+  ],
+  "publication": {
+    "receipt_path": "PoincareConjecture/milestones_published.json",
+    "history_path": "PoincareConjecture/milestone_history.json",
+    "active_plan_path": "PoincareConjecture/milestones.json",
+    "verified_at": "2026-09-09T02:17:53.146938+00:00",
+    "published_count": 5,
+    "source": "kleiner-lott",
+    "note": "The original Morgan-Tian publication has been superseded. Historical candidate groups must not be treated as current platform statements.",
+    "completed_milestone_count": 1
+  },
+  "active_milestone_plan": "PoincareConjecture/milestones.json",
+  "active_primary_source": "kleiner-lott"
+}

@@ -1,0 +1,1445 @@
+{
+  "edges": [
+    {
+      "kind": "sketch",
+      "source": "2e12f604-9e6a-4062-9bac-8727a1a9edb7",
+      "target": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff"
+    },
+    {
+      "kind": "sketch",
+      "source": "33f0b928-916f-4ff5-833b-fbc31308c762",
+      "target": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff"
+    },
+    {
+      "kind": "sketch",
+      "source": "c508d5db-b2a6-4c25-8144-9a9f55f2b4e2",
+      "target": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff"
+    },
+    {
+      "kind": "sketch",
+      "source": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+      "target": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff"
+    },
+    {
+      "kind": "sketch",
+      "source": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff",
+      "target": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+    },
+    {
+      "kind": "sketch",
+      "source": "6445ec61-f49c-47ce-b681-7ab9ea9a4059",
+      "target": "sketch-51179dae-3662-451e-b374-fe303c70b325"
+    },
+    {
+      "kind": "sketch",
+      "source": "c5c9092c-00f4-4939-893e-ea9cc075b564",
+      "target": "sketch-51179dae-3662-451e-b374-fe303c70b325"
+    },
+    {
+      "kind": "sketch",
+      "source": "sketch-51179dae-3662-451e-b374-fe303c70b325",
+      "target": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+    },
+    {
+      "kind": "sketch",
+      "source": "619035ff-1499-4934-8c9f-89230aeafd54",
+      "target": "sketch-6beb3841-4356-42a3-b3df-a417e4042a5c"
+    },
+    {
+      "kind": "sketch",
+      "source": "945e8722-bd96-4eba-a6eb-6458fadeea7a",
+      "target": "sketch-6beb3841-4356-42a3-b3df-a417e4042a5c"
+    },
+    {
+      "kind": "sketch",
+      "source": "95ea3aea-cf45-4445-aeaf-765e9a9e127b",
+      "target": "sketch-6beb3841-4356-42a3-b3df-a417e4042a5c"
+    },
+    {
+      "kind": "sketch",
+      "source": "sketch-6beb3841-4356-42a3-b3df-a417e4042a5c",
+      "target": "2e12f604-9e6a-4062-9bac-8727a1a9edb7"
+    },
+    {
+      "kind": "sketch",
+      "source": "18265c01-abe4-486f-84f2-c88759ab91fc",
+      "target": "sketch-42885aae-9f1a-4edc-b4c4-d8e3820e630a"
+    },
+    {
+      "kind": "sketch",
+      "source": "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+      "target": "sketch-42885aae-9f1a-4edc-b4c4-d8e3820e630a"
+    },
+    {
+      "kind": "sketch",
+      "source": "sketch-42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+      "target": "b0543216-8c0f-4f20-8b76-40d197f69fba"
+    },
+    {
+      "kind": "sketch",
+      "source": "192cef90-169f-4470-b074-8392596cb487",
+      "target": "sketch-a63d8d8d-3824-4e31-92a5-75d2e263bf09"
+    },
+    {
+      "kind": "sketch",
+      "source": "4593f200-a9c0-4715-9c46-b8c80a268057",
+      "target": "sketch-a63d8d8d-3824-4e31-92a5-75d2e263bf09"
+    },
+    {
+      "kind": "sketch",
+      "source": "82499fe3-a4f5-4f42-96da-34e3e6fe56ba",
+      "target": "sketch-a63d8d8d-3824-4e31-92a5-75d2e263bf09"
+    },
+    {
+      "kind": "sketch",
+      "source": "cbde63f3-ca2b-4aef-b124-5827b74f7e4c",
+      "target": "sketch-a63d8d8d-3824-4e31-92a5-75d2e263bf09"
+    },
+    {
+      "kind": "sketch",
+      "source": "eafa0066-fef6-45ad-87b1-02fc3898b4f8",
+      "target": "sketch-a63d8d8d-3824-4e31-92a5-75d2e263bf09"
+    },
+    {
+      "kind": "sketch",
+      "source": "sketch-a63d8d8d-3824-4e31-92a5-75d2e263bf09",
+      "target": "c508d5db-b2a6-4c25-8144-9a9f55f2b4e2"
+    },
+    {
+      "kind": "sketch",
+      "source": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+      "target": "sketch-719f4cdd-1059-4091-9819-7926dbc5806e"
+    },
+    {
+      "kind": "sketch",
+      "source": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+      "target": "sketch-719f4cdd-1059-4091-9819-7926dbc5806e"
+    },
+    {
+      "kind": "sketch",
+      "source": "d81e3640-8579-4396-babb-69edac82be33",
+      "target": "sketch-719f4cdd-1059-4091-9819-7926dbc5806e"
+    },
+    {
+      "kind": "sketch",
+      "source": "sketch-719f4cdd-1059-4091-9819-7926dbc5806e",
+      "target": "18265c01-abe4-486f-84f2-c88759ab91fc"
+    },
+    {
+      "kind": "sketch",
+      "source": "16d46789-a853-4a33-a4a3-4134fe549c82",
+      "target": "sketch-f49a1f88-a5c8-43b7-a45a-5768ddb274e8"
+    },
+    {
+      "kind": "sketch",
+      "source": "18265c01-abe4-486f-84f2-c88759ab91fc",
+      "target": "sketch-f49a1f88-a5c8-43b7-a45a-5768ddb274e8"
+    },
+    {
+      "kind": "sketch",
+      "source": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+      "target": "sketch-f49a1f88-a5c8-43b7-a45a-5768ddb274e8"
+    },
+    {
+      "kind": "sketch",
+      "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+      "target": "sketch-f49a1f88-a5c8-43b7-a45a-5768ddb274e8"
+    },
+    {
+      "kind": "sketch",
+      "source": "95ea3aea-cf45-4445-aeaf-765e9a9e127b",
+      "target": "sketch-f49a1f88-a5c8-43b7-a45a-5768ddb274e8"
+    },
+    {
+      "kind": "sketch",
+      "source": "sketch-f49a1f88-a5c8-43b7-a45a-5768ddb274e8",
+      "target": "945e8722-bd96-4eba-a6eb-6458fadeea7a"
+    },
+    {
+      "kind": "sketch",
+      "source": "0347aa7b-4f24-4106-873e-c9b21fd9169f",
+      "target": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3"
+    },
+    {
+      "kind": "sketch",
+      "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+      "target": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3"
+    },
+    {
+      "kind": "sketch",
+      "source": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+      "target": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3"
+    },
+    {
+      "kind": "sketch",
+      "source": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3",
+      "target": "ed56bd90-927e-45c1-81d1-b79a2ca8a034"
+    },
+    {
+      "kind": "sketch",
+      "source": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b",
+      "target": "sketch-01167772-943a-4c75-ab15-9f7b235777a8"
+    },
+    {
+      "kind": "sketch",
+      "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+      "target": "sketch-01167772-943a-4c75-ab15-9f7b235777a8"
+    },
+    {
+      "kind": "sketch",
+      "source": "sketch-01167772-943a-4c75-ab15-9f7b235777a8",
+      "target": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7"
+    },
+    {
+      "kind": "sketch",
+      "source": "2afae5fd-c4e2-4544-b37b-e819211739f1",
+      "target": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04"
+    },
+    {
+      "kind": "sketch",
+      "source": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+      "target": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04"
+    },
+    {
+      "kind": "sketch",
+      "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+      "target": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04"
+    },
+    {
+      "kind": "sketch",
+      "source": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+      "target": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04"
+    },
+    {
+      "kind": "sketch",
+      "source": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04",
+      "target": "ca00fe64-9dc8-4809-80cf-e824e93594b5"
+    },
+    {
+      "kind": "sketch",
+      "source": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+      "target": "sketch-4b0967cf-4f47-4150-9061-44c6425c704d"
+    },
+    {
+      "kind": "sketch",
+      "source": "ca66101a-7280-449f-ad5d-350153b56ffd",
+      "target": "sketch-4b0967cf-4f47-4150-9061-44c6425c704d"
+    },
+    {
+      "kind": "sketch",
+      "source": "sketch-4b0967cf-4f47-4150-9061-44c6425c704d",
+      "target": "3aca5641-0de9-4b5b-b280-28243d1961cd"
+    },
+    {
+      "kind": "structural",
+      "source": "619035ff-1499-4934-8c9f-89230aeafd54",
+      "target": "2e12f604-9e6a-4062-9bac-8727a1a9edb7"
+    },
+    {
+      "kind": "structural",
+      "source": "95ea3aea-cf45-4445-aeaf-765e9a9e127b",
+      "target": "2e12f604-9e6a-4062-9bac-8727a1a9edb7"
+    },
+    {
+      "kind": "structural",
+      "source": "4593f200-a9c0-4715-9c46-b8c80a268057",
+      "target": "33f0b928-916f-4ff5-833b-fbc31308c762"
+    },
+    {
+      "kind": "structural",
+      "source": "a15a21e2-9521-45ee-b36b-7db0df18ff13",
+      "target": "b0543216-8c0f-4f20-8b76-40d197f69fba"
+    },
+    {
+      "kind": "structural",
+      "source": "4593f200-a9c0-4715-9c46-b8c80a268057",
+      "target": "c508d5db-b2a6-4c25-8144-9a9f55f2b4e2"
+    },
+    {
+      "kind": "structural",
+      "source": "619035ff-1499-4934-8c9f-89230aeafd54",
+      "target": "fe9a0128-6fb2-494b-aba1-8436851df1e4"
+    },
+    {
+      "kind": "structural",
+      "source": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+      "target": "18265c01-abe4-486f-84f2-c88759ab91fc"
+    },
+    {
+      "kind": "structural",
+      "source": "8a4a74f9-f4d9-4425-9a7c-390771b2977a",
+      "target": "4593f200-a9c0-4715-9c46-b8c80a268057"
+    },
+    {
+      "kind": "structural",
+      "source": "4593f200-a9c0-4715-9c46-b8c80a268057",
+      "target": "619035ff-1499-4934-8c9f-89230aeafd54"
+    },
+    {
+      "kind": "structural",
+      "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+      "target": "619035ff-1499-4934-8c9f-89230aeafd54"
+    },
+    {
+      "kind": "structural",
+      "source": "4593f200-a9c0-4715-9c46-b8c80a268057",
+      "target": "82499fe3-a4f5-4f42-96da-34e3e6fe56ba"
+    },
+    {
+      "kind": "structural",
+      "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+      "target": "945e8722-bd96-4eba-a6eb-6458fadeea7a"
+    },
+    {
+      "kind": "structural",
+      "source": "95ea3aea-cf45-4445-aeaf-765e9a9e127b",
+      "target": "945e8722-bd96-4eba-a6eb-6458fadeea7a"
+    },
+    {
+      "kind": "structural",
+      "source": "4593f200-a9c0-4715-9c46-b8c80a268057",
+      "target": "cbde63f3-ca2b-4aef-b124-5827b74f7e4c"
+    },
+    {
+      "kind": "structural",
+      "source": "4593f200-a9c0-4715-9c46-b8c80a268057",
+      "target": "eafa0066-fef6-45ad-87b1-02fc3898b4f8"
+    },
+    {
+      "kind": "structural",
+      "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+      "target": "ed56bd90-927e-45c1-81d1-b79a2ca8a034"
+    },
+    {
+      "kind": "structural",
+      "source": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+      "target": "0347aa7b-4f24-4106-873e-c9b21fd9169f"
+    },
+    {
+      "kind": "structural",
+      "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+      "target": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7"
+    },
+    {
+      "kind": "structural",
+      "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+      "target": "78c6f8ef-0643-49d3-96b8-5d6dceda2385"
+    },
+    {
+      "kind": "structural",
+      "source": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+      "target": "868ac3ab-4452-48dd-81f3-278079cdf42c"
+    },
+    {
+      "kind": "structural",
+      "source": "a15a21e2-9521-45ee-b36b-7db0df18ff13",
+      "target": "868ac3ab-4452-48dd-81f3-278079cdf42c"
+    },
+    {
+      "kind": "structural",
+      "source": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+      "target": "ca00fe64-9dc8-4809-80cf-e824e93594b5"
+    },
+    {
+      "kind": "structural",
+      "source": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+      "target": "ca00fe64-9dc8-4809-80cf-e824e93594b5"
+    },
+    {
+      "kind": "structural",
+      "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+      "target": "d81e3640-8579-4396-babb-69edac82be33"
+    },
+    {
+      "kind": "structural",
+      "source": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+      "target": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b"
+    },
+    {
+      "kind": "structural",
+      "source": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+      "target": "3aca5641-0de9-4b5b-b280-28243d1961cd"
+    },
+    {
+      "kind": "structural",
+      "source": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+      "target": "c76baf4f-4a85-4508-8e03-574d04648ce3"
+    },
+    {
+      "kind": "structural",
+      "source": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+      "target": "c76baf4f-4a85-4508-8e03-574d04648ce3"
+    }
+  ],
+  "has_hidden_deprecated_sketches": false,
+  "nodes": [
+    {
+      "audits": [],
+      "created_at": "2026-09-09T18:20:20.946761+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →\n      Nonempty (OpenGA.SurgeryComparisonProcess initialWidth finalTime) := by sorry",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $M$ be a compact, simply connected, Hausdorff topological three-manifold without boundary, hypothetically not homeomorphic to the unit three-sphere. Construct $W_0\\ge0$ such that for every $T>0$ there is a surgery comparison process with initial width bound $W_0$ and final time $T$.\n\nOpen geometric construction. It must supply all fields of the imported analytic process: smoothability and normalization, suitable surgery flow and uniform radial comparison data, containment of controlled regions in removed material, a finite volume-loss budget allowing smooth volume growth, and scalar/sweepout comparison profiles with the prescribed inequalities and jumps. It does not assume event finiteness; that follows from the separately proved volume argument. This refines the existing comparison-data target. The full Ricci-flow and Bishop-Gromov geometric developments remain open.",
+      "node_type": "theorem",
+      "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\nimport Definitions.Def_OpenGA_SurgeryComparisonProcess\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+      "source": "Kleiner-Lott, Section 3.5, p. 13 and Sublemma 79.23, p. 157, https://arxiv.org/pdf/math/0605667v5#page=13; Colding-Minicozzi finite-extinction width argument, https://arxiv.org/pdf/0707.0108v1#page=7. This is a composite OpenGA construction target, not a claim that a single cited lemma supplies all fields.",
+      "status": "Open",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "0347aa7b-4f24-4106-873e-c9b21fd9169f",
+      "theorem_name": "PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere",
+      "theorem_title": "Volume-controlled width profiles from a hypothetical Poincare counterexample",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T03:18:25.623291+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem OpenGA.integral_areaDensity_eq_energyDensity_iff (hv : AEStronglyMeasurable v μ)\n    (hw : AEStronglyMeasurable w μ)\n    (hE : Integrable (fun x => energyDensity (v x) (w x)) μ) :\n    (∫ x, areaDensity (v x) (w x) ∂μ) = (∫ x, energyDensity (v x) (w x) ∂μ) ↔\n      ∀ᵐ x ∂μ, ⟪v x, w x⟫_ℝ = 0 ∧ ‖v x‖ = ‖w x‖ := by sorry",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu=\\int_X E(v(x),w(x))\\,d\\mu$$\n\nholds exactly when\n\n$$\\langle v(x),w(x)\\rangle=0\\quad\\text{and}\\quad\\|v(x)\\|=\\|w(x)\\|\\quad\\text{for }\\mu\\text{-almost every }x.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+      "node_type": "theorem",
+      "preamble": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen MeasureTheory\nopen scoped InnerProductSpace\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\nopen OpenGA",
+      "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+      "status": "Proved",
+      "tags": [
+        "geometric-analysis",
+        "openga-area-energy"
+      ],
+      "theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+      "theorem_name": "OpenGA.integral_areaDensity_eq_energyDensity_iff",
+      "theorem_title": "Equality in the integrated area-energy comparison",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T02:38:17.472582+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem OpenGA.le_width_deadline_across_downward_jumps\n    {C W₀ : ℝ} (hC : 0 < C)\n    (n : ℕ) (hn : 0 < n) (times : ℕ → ℝ) (widths : ℕ → ℝ → ℝ)\n    (hzero : times 0 = 0)\n    (htimes : ∀ i < n, times i < times (i + 1))\n    (hcont : ∀ i < n, ContinuousOn (widths i) (Icc (times i) (times (i + 1))))\n    (hinitial : widths 0 (times 0) ≤ W₀)\n    (hfinal : 0 ≤ widths (n - 1) (times n))\n    (hslope : ∀ i < n, ∀ x ∈ Ico (times i) (times (i + 1)), ∀ r : ℝ,\n      -(4 * Real.pi) + 3 / (4 * (x + C)) * widths i x < r →\n        ∃ᶠ z in 𝓝[>] x, slope (widths i) x z < r)\n    (hjumps : ∀ i, i + 1 < n →\n      widths (i + 1) (times (i + 1)) ≤ widths i (times (i + 1))) :\n    times n ≤ (C ^ ((1 : ℝ) / 4) + W₀ / (16 * Real.pi * C ^ ((3 : ℝ) / 4))) ^ (4 : ℕ) - C := by sorry",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $C>0$, $W_0\\in\\mathbb R$, and $0=t_0<t_1<\\cdots<t_n$ with $n\\ge1$. Let $w_i$ be continuous on $[t_i,t_{i+1}]$, with $w_0(0)\\le W_0$ and $w_{n-1}(t_n)\\ge0$. Suppose that, for $t_i\\le t<t_{i+1}$,\n$$D_+w_i(t)\\le-4\\pi+\\frac{3}{4(t+C)}w_i(t),$$\nand that $w_{i+1}(t_{i+1})\\le w_i(t_{i+1})$ at each internal joining time. Then\n$$t_n\\le\\left(C^{1/4}+\\frac{W_0}{16\\pi C^{3/4}}\\right)^4-C.$$\nHere $D_+$ is the lower right Dini derivative, represented by frequent strict upper bounds on forward slopes. The limsup upper bound in the geometric application implies this hypothesis. Nonnegativity is needed only at the final endpoint.\n\nThis is the explicit analytic extinction estimate, extended to a finite sequence of downward jumps. It does not assert that a geometric flow or its width has been constructed.",
+      "node_type": "theorem",
+      "preamble": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Pow.Deriv\n\nset_option autoImplicit false\n\nopen Set Topology\nopen scoped Topology",
+      "source": "Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, https://arxiv.org/pdf/0707.0108, p.4, Theorem 1.7 and equations (1.8)-(1.10). Analytic consequence of (1.10), extended to finitely many downward jumps by interval comparison; lower-Dini hypotheses are sufficient. The geometric surgery application is separate.",
+      "status": "Proved",
+      "tags": [
+        "differential-inequalities",
+        "geometric-analysis",
+        "ricci-flow"
+      ],
+      "theorem_id": "16d46789-a853-4a33-a4a3-4134fe549c82",
+      "theorem_name": "OpenGA.le_width_deadline_across_downward_jumps",
+      "theorem_title": "Width deadline across downward jumps",
+      "vote_count": 1
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T03:39:56.179735+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem OpenGA.eventually_width_slope_lt_of_comparison\n    {width : ℝ → ℝ} {time scalar : ℝ}\n    (data : WidthComparisonData width time scalar) (q : ℝ)\n    (hq : -(4 * Real.pi) - scalar / 2 * width time < q) :\n    ∀ᶠ s in 𝓝[>] time, slope width time s < q := by sorry",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "A finite-energy pair consists of a measure space, a real inner product space, and two almost-everywhere strongly measurable fields $v,w$ with integrable energy. Write\n\n$$A(p)=\\int\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(p)=\\frac12\\int(\\|v\\|^2+\\|w\\|^2).$$\n\nConformality means orthogonality and equal norms almost everywhere. A width comparison at time $t$, with scalar parameter $R$, supplies a conformal realizer $r$ with $E(r)=W(t)$; pairs $p_{j,u}$ for $j\\in\\mathbb N$, $u\\in[0,1]$; caps $c_j$ with $E(p_{j,u})\\le c_j$ and $c_j\\to W(t)$; and, for every $\\varepsilon>0$, numbers $\\delta>0$ and $J$ such that for $j\\ge J$ and $t<s<t+\\delta$,\n\n$$W(s)\\le\\sup_{u\\in[0,1]}A(p_{j,u})+(s-t)\\left(-4\\pi-\\frac R2 A(r)+\\varepsilon\\right).$$\n\nThe fields are analytic input data. No surface differential, sweepout homotopy class, harmonic map, or Ricci flow is defined by this bundle.\n\nUnder these hypotheses, for every $q>-4\\pi-\\frac R2W(t)$ the right-hand difference quotients eventually satisfy\n\n$$\\frac{W(s)-W(t)}{s-t}<q\\qquad(s\\downarrow t).$$\n\nThis is the analytic conversion from short-time comparison estimates to the upper right slope bound. The existence of geometric comparison data is a separate requirement.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_WidthComparisonData\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped InnerProductSpace Topology\nopen OpenGA",
+      "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692.",
+      "status": "Proved",
+      "tags": [
+        "geometric-analysis",
+        "openga-width-comparison"
+      ],
+      "theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
+      "theorem_name": "OpenGA.eventually_width_slope_lt_of_comparison",
+      "theorem_title": "Width slope bound from area-energy comparisons",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-08T04:51:46.882397+00:00",
+      "created_by": "9d3ad061-c992-4b3d-a6dd-36ecc2a5278e",
+      "created_by_username": "salim",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem PoincareFormalization.covering_is_homeomorph\n    {E X : Type*} [TopologicalSpace E] [TopologicalSpace X]\n    [ConnectedSpace E] [SimplyConnectedSpace X] [LocallyPathConnectedSpace X]\n    (p : E → X) (hp : IsCoveringMap p) :\n    ∃ e : E ≃ₜ X, (e : E → X) = p := by sorry",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $E$ be a nonempty connected topological space, let $X$ be a simply connected and locally path connected topological space, and let $p:E\\to X$ be a covering map. Then $p$ itself is a homeomorphism:\n$$\\exists e:E\\cong X,\\qquad e=p.$$\nNo compactness, Hausdorff, or dimension assumption is needed. This gives the final covering-space step in deriving Poincaré from a spherical covering. The hypothesis that such a covering exists is not part of this result's conclusion.",
+      "node_type": "theorem",
+      "preamble": "import Mathlib.Topology.Homotopy.Lifting",
+      "source": "Corollary of Hatcher, Algebraic Topology (2002), Section 1.3, Propositions 1.33 (pp. 61–62, existence of lifts) and 1.34 (p. 62, uniqueness of lifts): https://pi.math.cornell.edu/~hatcher/AT/AT.pdf . Uses the existing Mathlib implementations in Topology/Homotopy/Lifting.lean and Topology/Covering/Basic.lean, revision 0df444a360eaa60ab8c11dca51a86af692955474.",
+      "status": "Proved",
+      "tags": [
+        "covering-spaces",
+        "poincare-conjecture",
+        "topology"
+      ],
+      "theorem_id": "192cef90-169f-4470-b074-8392596cb487",
+      "theorem_name": "PoincareFormalization.covering_is_homeomorph",
+      "theorem_title": "A connected covering of a simply connected space is a homeomorphism",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T18:18:56.042359+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem OpenGA.exists_event_free_partition {events : Set ℝ} {T : ℝ}\n    (hfinite : events.Finite) (hinside : events ⊆ Ioo 0 T) (hT : 0 < T) :\n    ∃ n : ℕ, 0 < n ∧ ∃ times : ℕ → ℝ,\n      times 0 = 0 ∧ times n = T ∧\n      (∀ i ≤ n, times i ∈ Icc 0 T) ∧\n      (∀ i < n, times i < times (i + 1)) ∧\n      (∀ i < n, Disjoint events (Ioo (times i) (times (i + 1)))) := by sorry",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "If a finite set of real event times is contained in $(0,T)$ with $T>0$, there is a finite strictly increasing partition $0=t_0<\\cdots<t_n=T$, $n>0$, all of whose open subintervals contain no event.",
+      "node_type": "theorem",
+      "preamble": "import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology",
+      "source": "OpenGA, OpenGALib/Analysis/FiniteEventPartition.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+      "status": "Proved",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "2afae5fd-c4e2-4544-b37b-e819211739f1",
+      "theorem_name": "OpenGA.exists_event_free_partition",
+      "theorem_title": "An event-free partition for finitely many event times",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T03:18:22.203268+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem OpenGA.areaDensity_eq_energyDensity_iff (v w : F) :\n    areaDensity v w = energyDensity v w ↔ ⟪v, w⟫_ℝ = 0 ∧ ‖v‖ = ‖w‖ := by sorry",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nFor every such pair,\n\n$$A(v,w)=E(v,w)\\quad\\Longleftrightarrow\\quad\\langle v,w\\rangle=0\\ \\text{and}\\ \\|v\\|=\\|w\\|.$$\n\nThe zero pair is included. This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+      "node_type": "theorem",
+      "preamble": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen MeasureTheory\nopen scoped InnerProductSpace\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nopen OpenGA",
+      "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+      "status": "Proved",
+      "tags": [
+        "geometric-analysis",
+        "openga-area-energy"
+      ],
+      "theorem_id": "2b8dd212-cbd1-4a9f-a5c0-bc4173eff02b",
+      "theorem_name": "OpenGA.areaDensity_eq_energyDensity_iff",
+      "theorem_title": "Equality of area and energy densities",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T21:06:53.921573+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "\n/-!\n# From width-controlled extinction to the Poincare endgame\n\nThe analytic and finite-topology links are proved. The last theorem lists\nthe remaining topology lemmas as explicit hypotheses. The separate mission\nworkspace declares those open problems and the geometric data-construction\nproblem; no unproved theorem is imported into this reusable library.\n\nReferences: Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7\nand Corollary 1.11; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5,\nSection 3.2 and Lemmas 73.4 and 81.2.\n-/\n\nnamespace OpenGA\n\nuniverse u\n\nnamespace SurgeryTopologyEvolution\n\nvariable {M : ClosedThreeManifold.{u}}\n\n\n\n\ntheorem finiteExtinction_of_width_control (E : SurgeryTopologyEvolution M)\n    {W : ℝ} (h : E.HasWidthControl W) : E.FiniteExtinction := by sorry\n\n\n\nend SurgeryTopologyEvolution\n\n\n\nend OpenGA\n",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "If an extracted surgery topology E has width control with one bound W on every nonempty positive-time slice, all slices at and beyond max(T*(1/4,W),0)+1 are empty. This is a proved analytic implication; constructing the data from a geometric surgery flow remains open.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_ExtinctionWidthControl\nimport Definitions.Def_OpenGA_WidthExtinctionTime\n",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/ExtinctionEndgame.lean#L1-L83; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "status": "Proved",
+      "tags": [
+        "connected-sum",
+        "finite-extinction",
+        "openga-endgame",
+        "poincare-conjecture"
+      ],
+      "theorem_id": "2e12f604-9e6a-4062-9bac-8727a1a9edb7",
+      "theorem_name": "OpenGA.SurgeryTopologyEvolution.finiteExtinction_of_width_control",
+      "theorem_title": "Uniform width control forces finite extinction",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T21:06:25.936334+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "\n/-!\n# The topological endpoint of finite surgery\n\nKleiner-Lott, Lemma 73.4 (p. 140), reconstructs the topology before a surgery\nby connected sums and restoration of specified discarded components. Lemma\n81.2 (p. 160) iterates this description backwards from an empty slice.\nSource: https://arxiv.org/pdf/math/0605667v5\n\nThis file proves that finite iteration explicitly. A `SurgeryReconstruction`\nrecords the topological consequence of an operation, not its metric surgery\nconstruction. Obtaining these records from a Kleiner-Lott flow remains a\ngeometric task.\n\nFor the topological conclusion we retain a weaker class than round spherical\nspace forms: closed three-manifolds covered by the standard three-sphere.\nEvery round spherical space form has such a covering. This weakening is\nsufficient for the simply connected endgame and does not assert that every\nsphere-covered manifold carries a round quotient metric.\n-/\n\nnamespace OpenGA\n\nuniverse u\n\n\n\n\nattribute [instance] ClosedThreeManifold.topology ClosedThreeManifold.hausdorff\n  ClosedThreeManifold.charts ClosedThreeManifold.compact ClosedThreeManifold.connected\n\nnamespace ClosedThreeManifold\n\n\n\n\n\n\n\n\n\n\n\nend ClosedThreeManifold\n\n\n\nnamespace ConnectedSumClosure\n\nvariable {P Q : ClosedThreeManifold.{u} → Prop} {M : ClosedThreeManifold.{u}}\n\n\n\nend ConnectedSumClosure\n\n\n\n\n\nnamespace FiniteSurgeryHistory\n\n\n\n\n\nend FiniteSurgeryHistory\n\n\n\nnamespace SurgeryTopologyEvolution\n\nvariable {M : ClosedThreeManifold.{u}}\n\n\n\n\ntheorem topology_from_extinction (E : SurgeryTopologyEvolution M) (h : E.FiniteExtinction) :\n    ConnectedSumClosure ClosedThreeManifold.IsStandardFactor M := by sorry\n\nend SurgeryTopologyEvolution\n\nend OpenGA\n",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "If a SurgeryTopologyEvolution of M becomes empty after some positive time, M lies in the finite connected-sum closure of sphere-covered manifolds and S1 times S2 factors. The proof iterates its finite reconstruction history backwards from an empty slice. It formalizes the finite-induction step of KL Lemma 81.2 for explicitly supplied records; obtaining those records from metric surgery is still required.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_SurgeryTopologyEvolution\n",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/SurgeryReconstruction.lean#L1-L168; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "status": "Proved",
+      "tags": [
+        "connected-sum",
+        "finite-extinction",
+        "openga-endgame",
+        "poincare-conjecture"
+      ],
+      "theorem_id": "33f0b928-916f-4ff5-833b-fbc31308c762",
+      "theorem_name": "OpenGA.SurgeryTopologyEvolution.topology_from_extinction",
+      "theorem_title": "Finite extinction reconstructs a connected sum of standard factors",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T18:19:42.122989+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem OpenGA.RadialSurgeryVolumeBudget.events_finite (B : RadialSurgeryVolumeBudget) :\n    B.events.Finite := by sorry",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Every radial surgery volume budget has a finite set of event times. No discreteness hypothesis is needed.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_RadialSurgeryVolumeBudget\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nopen OpenGA",
+      "source": "OpenGA, OpenGALib/Analysis/SurgeryVolume.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+      "status": "Proved",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+      "theorem_name": "OpenGA.RadialSurgeryVolumeBudget.events_finite",
+      "theorem_title": "Finitely many events from a radial volume-loss budget",
+      "vote_count": 1
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T21:05:59.068717+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Definitions.Def_OpenGA_CoordinateBallConnectedSum\nimport Mathlib.Topology.Homotopy.Lifting\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\n/-!\n# The topological endpoint of finite surgery\n\nKleiner-Lott, Lemma 73.4 (p. 140), reconstructs the topology before a surgery\nby connected sums and restoration of specified discarded components. Lemma\n81.2 (p. 160) iterates this description backwards from an empty slice.\nSource: https://arxiv.org/pdf/math/0605667v5\n\nThis file proves that finite iteration explicitly. A `SurgeryReconstruction`\nrecords the topological consequence of an operation, not its metric surgery\nconstruction. Obtaining these records from a Kleiner-Lott flow remains a\ngeometric task.\n\nFor the topological conclusion we retain a weaker class than round spherical\nspace forms: closed three-manifolds covered by the standard three-sphere.\nEvery round spherical space form has such a covering. This weakening is\nsufficient for the simply connected endgame and does not assert that every\nsphere-covered manifold carries a round quotient metric.\n-/\n\nnamespace OpenGA\n\nuniverse u\n\n/-- A nonempty, connected, compact Hausdorff topological three-manifold\nwithout boundary. The topology and atlas are part of the data. -/\nstructure ClosedThreeManifold where\n  Carrier : Type u\n  topology : TopologicalSpace Carrier\n  hausdorff : @T2Space Carrier topology\n  charts : @ChartedSpace EuclideanThree _ Carrier topology\n  compact : @CompactSpace Carrier topology\n  connected : @ConnectedSpace Carrier topology\n\ninstance : CoeSort ClosedThreeManifold.{u} (Type u) := ⟨ClosedThreeManifold.Carrier⟩\nattribute [instance] ClosedThreeManifold.topology ClosedThreeManifold.hausdorff\n  ClosedThreeManifold.charts ClosedThreeManifold.compact ClosedThreeManifold.connected\n\nnamespace ClosedThreeManifold\n\ninstance (M : ClosedThreeManifold) : LocallyPathConnectedSpace M :=\n  ChartedSpace.locallyPathConnectedSpace EuclideanThree M\n\n/-- A topological consequence of being a round spherical space form. -/\ndef IsSphereCovered (M : ClosedThreeManifold) : Prop :=\n  ∃ p : SphereThree → M, IsCoveringMap p ∧ Function.Surjective p\n\n/-- The orientable sphere-bundle factor occurring in the surgery endgame. -/\ndef IsSphereHandle (M : ClosedThreeManifold) : Prop :=\n  Nonempty (M ≃ₜ (SphereOne × SphereTwo))\n\n/-- The allowed terminal factors, with spherical space forms weakened to\nthe covering property needed for the topological conclusion. -/\ndef IsStandardFactor (M : ClosedThreeManifold) : Prop :=\n  M.IsSphereCovered ∨ M.IsSphereHandle\n\n\n\nend ClosedThreeManifold\n\n/-- Finite, nonempty connected-sum expressions in factors satisfying `P`.\nThe operation is the actual quotient construction in `IsConnectedSum`.\nThere is deliberately no constructor declaring an arbitrary manifold to be\nthe empty connected sum. -/\ninductive ConnectedSumClosure (P : ClosedThreeManifold.{u} → Prop) :\n    ClosedThreeManifold.{u} → Prop\n  | factor {M : ClosedThreeManifold.{u}} : P M → ConnectedSumClosure P M\n  | homeomorph {M N : ClosedThreeManifold.{u}} : ConnectedSumClosure P M →\n      Nonempty (N ≃ₜ M) → ConnectedSumClosure P N\n  | sum {M N X : ClosedThreeManifold.{u}} : ConnectedSumClosure P M → ConnectedSumClosure P N →\n      IsConnectedSum M N X → ConnectedSumClosure P X\n\nnamespace ConnectedSumClosure\n\nvariable {P Q : ClosedThreeManifold.{u} → Prop} {M : ClosedThreeManifold.{u}}\n\n\n\nend ConnectedSumClosure\n\n/-- Topology recoverable from a later slice and the standard discarded factors. -/\ndef SurgeryReconstruction (before after : List ClosedThreeManifold.{u}) : Prop :=\n  ∀ M ∈ before, ConnectedSumClosure (fun N => N ∈ after ∨ N.IsStandardFactor) M\n\n/-- A finite chain of reconstruction records, in forward time order. -/\ninductive FiniteSurgeryHistory :\n    List ClosedThreeManifold.{u} → List ClosedThreeManifold.{u} → Prop\n  | refl (slice) : FiniteSurgeryHistory slice slice\n  | step {before middle after} : SurgeryReconstruction before middle →\n      FiniteSurgeryHistory middle after → FiniteSurgeryHistory before after\n\nnamespace FiniteSurgeryHistory\n\n\n\n\n\nend FiniteSurgeryHistory\n\n/-- Time-indexed component topology with finite reconstruction on each\nbounded horizon. This is extracted topological data, not a definition of\nRicci flow: no metric or Ricci equation is encoded here. -/\nstructure SurgeryTopologyEvolution (M : ClosedThreeManifold.{u}) where\n  components : ℝ → List ClosedThreeManifold.{u}\n  initial : components 0 = [M]\n  initial_interval : ∃ τ : ℝ, 0 < τ ∧ ∀ t ∈ Set.Icc 0 τ, components t = [M]\n  history : ∀ T, 0 ≤ T → FiniteSurgeryHistory (components 0) (components T)\n\nnamespace SurgeryTopologyEvolution\n\nvariable {M : ClosedThreeManifold.{u}}\n\n/-- Every component is absent from some positive time onward. -/\ndef FiniteExtinction (E : SurgeryTopologyEvolution M) : Prop :=\n  ∃ T : ℝ, 0 < T ∧ ∀ t : ℝ, T ≤ t → E.components t = []\n\n\n\nend SurgeryTopologyEvolution\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Bundle connected nonempty compact Hausdorff three-manifolds. Standard factors are manifolds covered surjectively by the unit three-sphere, or homeomorphic to S1 times S2. The first condition is weaker than being a round spherical space form. ConnectedSumClosure is a finite nonempty expression using actual coordinate-ball connected sums and homeomorphisms. A reconstruction record expresses each earlier component using later components and standard factors; it need not use each later component once. SurgeryTopologyEvolution supplies component lists, an initial positive interval on which the list is [M], and a finite reconstruction history from time zero to every nonnegative horizon. FiniteExtinction means that every slice is empty after some positive time. This is extracted topological data, not a metric Ricci flow or a claim of geometric existence.",
+      "node_type": "theorem",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/SurgeryReconstruction.lean#L1-L168; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "status": "Definition",
+      "tags": [
+        "connected-sum",
+        "finite-extinction",
+        "openga-endgame",
+        "poincare-conjecture"
+      ],
+      "theorem_id": "4593f200-a9c0-4715-9c46-b8c80a268057",
+      "theorem_name": "OpenGA_SurgeryTopologyEvolution",
+      "theorem_title": "Finite topological reconstruction data for surgery",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T21:06:21.29684+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Definitions.Def_OpenGA_SurgeryTopologyEvolution\nimport Definitions.Def_OpenGA_WidthComparisonTrace\n\n/-!\n# From width-controlled extinction to the Poincare endgame\n\nThe analytic and finite-topology links are proved. The last theorem lists\nthe remaining topology lemmas as explicit hypotheses. The separate mission\nworkspace declares those open problems and the geometric data-construction\nproblem; no unproved theorem is imported into this reusable library.\n\nReferences: Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7\nand Corollary 1.11; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5,\nSection 3.2 and Lemmas 73.4 and 81.2.\n-/\n\nnamespace OpenGA\n\nuniverse u\n\nnamespace SurgeryTopologyEvolution\n\nvariable {M : ClosedThreeManifold.{u}}\n\n/-- A single initial width bound works for every positive horizon whose\nfinal slice is nonempty. Supplying this property from geometric sweepouts\nand surgery is an open input, not part of the definition of an evolution. -/\ndef HasWidthControl (E : SurgeryTopologyEvolution M) (W : ℝ) : Prop :=\n  ∀ T : ℝ, 0 < T → E.components T ≠ [] → Nonempty (WidthComparisonTrace W T)\n\n\n\n\n\nend SurgeryTopologyEvolution\n\n\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For an extracted SurgeryTopologyEvolution E and one real bound W, every positive time T with nonempty components must admit a WidthComparisonTrace W T. The same W is used for all horizons. The initial positive interval ensures this requirement is nonvacuous. The trace contains abstract analytic comparison data; realizing its fields by geometric sweepouts and a Ricci flow with surgery remains a separate open problem.",
+      "node_type": "theorem",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/ExtinctionEndgame.lean#L1-L83; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "status": "Definition",
+      "tags": [
+        "connected-sum",
+        "finite-extinction",
+        "openga-endgame",
+        "poincare-conjecture"
+      ],
+      "theorem_id": "619035ff-1499-4934-8c9f-89230aeafd54",
+      "theorem_name": "OpenGA_ExtinctionWidthControl",
+      "theorem_title": "Uniform width control of nonempty component slices",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T04:36:43.079175+00:00",
+      "created_by": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
+      "created_by_username": "Shuze Chen",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "namespace PoincareFormalization\n\ntheorem exists_smooth_structure_three (M : Type*) [TopologicalSpace M] [T2Space M]\n    [SecondCountableTopology M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M] :\n    ∃ cs : ChartedSpace (EuclideanSpace ℝ (Fin 3)) M,\n      @IsManifold ℝ _ _ _ _ _ _ (𝓡 3) ∞ M _ cs := by\n  sorry\n\nend PoincareFormalization\n",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $M$ be a second countable Hausdorff topological space that is locally modelled on $\\mathbb{R}^3$: it carries an atlas of charts, each a homeomorphism from an open subset of $M$ onto an open subset of $\\mathbb{R}^3 =$ `EuclideanSpace ℝ (Fin 3)`. That is, $M$ is a topological $3$-manifold without boundary.\n\nThen $M$ admits a smooth structure: there is an atlas on the *same* topological space $M$, again modelled on $\\mathbb{R}^3$, all of whose transition maps are $C^\\infty$.\n\nThis is the existence half of Moise's theorem, which gives every topological $3$-manifold an essentially unique piecewise linear structure and smooth structure; uniqueness is not asserted here. It is the step that lets a purely topological hypothesis be handed to Ricci flow, which evolves a Riemannian metric and so is defined only on a smooth manifold. Morgan and Tian record it in the footnote to their statement of the Poincare conjecture, as the reason why the topological and the smooth classification of $3$-manifolds are equivalent.\n\n**Formalization note.** A term of type `ChartedSpace (EuclideanSpace ℝ (Fin 3)) M` is exactly an atlas on the fixed topological space $M$, so the existential quantifier ranges over the possible smooth structures on that topology; the ambient instance argument supplies the given topological atlas. The exhibited atlas is not required to be compatible with, or to refine, that given atlas — only the topology of $M$ is held fixed. The model with corners is `𝓡 3`, the identity model on $\\mathbb{R}^3$, and the smoothness order is $\\infty$. No compactness or connectedness is assumed.",
+      "node_type": "theorem",
+      "preamble": "import Mathlib.Geometry.Manifold.IsManifold.Basic\nimport Mathlib.Geometry.Manifold.Instances.Real\n\nset_option autoImplicit false\n\nopen scoped Manifold ContDiff",
+      "source": "Edwin E. Moise, \"Affine structures in 3-manifolds. V. The triangulation theorem and Hauptvermutung\", Annals of Mathematics (2) 56 (1952), 96-114, doi:10.2307/1969769: any topological 3-manifold has an essentially unique piecewise-linear structure and smooth structure; only the existence of the smooth structure is asserted here. Stated in the form used here by John W. Morgan and Gang Tian, \"Ricci Flow and the Poincare Conjecture\", Clay Mathematics Monographs 3 (2007), Introduction, p. 5, footnote 1: \"Every topological 3-manifold admits a differentiable structure and every homeomorphism between smooth 3-manifolds can be approximated by a diffeomorphism. Thus, classification results about topological 3-manifolds up to homeomorphism and about smooth 3-manifolds up to diffeomorphism are equivalent. In this book 'manifold' means 'smooth manifold.'\" (https://arxiv.org/pdf/math/0607607, printed p. 5). See also John Milnor, \"The Poincare Conjecture\", Clay Mathematics Institute problem description, end of Section 3, p. 5: \"In dimension 3, the discrepancies between topological, piecewise linear, and differentiable theories disappear\" (https://www.claymath.org/wp-content/uploads/2022/06/poincare.pdf).",
+      "status": "Open",
+      "tags": [
+        "differential-geometry",
+        "topology"
+      ],
+      "theorem_id": "6445ec61-f49c-47ce-b681-7ab9ea9a4059",
+      "theorem_name": "PoincareFormalization.exists_smooth_structure_three",
+      "theorem_title": "Moise's theorem: every topological $3$-manifold admits a smooth structure",
+      "vote_count": 1
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T02:04:08.77703+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem OpenGA.scalar_lower_bound_across_upward_jumps\n    (n : ℕ) (hn : 0 < n) (times : ℕ → ℝ) (profiles : ℕ → ℝ → ℝ)\n    (hzero : times 0 = 0)\n    (htimes : ∀ i < n, times i < times (i + 1))\n    (hcont : ∀ i < n, ContinuousOn (profiles i) (Icc (times i) (times (i + 1))))\n    (hinitial : -6 ≤ profiles 0 (times 0))\n    (hslope : ∀ i < n, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n      q < (2 / 3 : ℝ) * (profiles i t) ^ 2 →\n        ∀ᶠ s in 𝓝[>] t, q < slope (profiles i) t s)\n    (hjumps : ∀ i, i + 1 < n →\n      profiles i (times (i + 1)) ≤ profiles (i + 1) (times (i + 1))) :\n    ∀ i < n, ∀ t ∈ Icc (times i) (times (i + 1)),\n      -(6 : ℝ) / (1 + 4 * t) ≤ profiles i t := by sorry",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $n\\ge1$ and $0=t_0<t_1<\\cdots<t_n$. For $0\\le i<n$, let $r_i:[t_i,t_{i+1}]\\to\\mathbb R$ be continuous. Write\n$$D_+r_i(t)=\\liminf_{s\\to t^+}\\frac{r_i(s)-r_i(t)}{s-t}.$$\nAssume $r_0(0)\\ge-6$, and, for each $i<n$ and $t_i\\le t<t_{i+1}$,\n$$D_+r_i(t)\\ge\\frac23r_i(t)^2.$$\nAt every internal joining time, assume $r_i(t_{i+1})\\le r_{i+1}(t_{i+1})$ for $i+1<n$. Then\n$$r_i(t)\\ge-\\frac6{1+4t}\\qquad(0\\le i<n,\\ t_i\\le t\\le t_{i+1}).$$\nThis isolates the scalar comparison step used in Kleiner-Lott's surgery estimates, with upward jumps allowed. Applying it to scalar-curvature minima requires establishing these analytic hypotheses from the geometry; this statement does not itself formalize a Ricci flow.\n\n[Source: Kleiner-Lott, proof of Lemma 79.11, p. 154](https://arxiv.org/pdf/math/0605667v5#page=154), using [Appendix B, equations (B.1)-(B.2), p. 202](https://arxiv.org/pdf/math/0605667v5#page=202).",
+      "node_type": "theorem",
+      "preamble": "import Mathlib.Analysis.Calculus.MeanValue\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology",
+      "source": "Analytic comparison extracted from Kleiner-Lott, Notes on Perelman's Papers, arXiv:math/0605667v5, proof of Lemma 79.11 (p. 154) and Appendix B (B.1)-(B.2) (p. 202). Upward jumps generalize the unchanged minima in that argument; the geometric Ricci-flow hypotheses are not formalized here. https://arxiv.org/pdf/math/0605667v5",
+      "status": "Proved",
+      "tags": [
+        "differential-inequalities",
+        "geometric-analysis",
+        "ricci-flow"
+      ],
+      "theorem_id": "688450a0-1949-4aa1-aeec-4ff61ccf5ddd",
+      "theorem_name": "OpenGA.scalar_lower_bound_across_upward_jumps",
+      "theorem_title": "Scalar lower bound across upward jumps",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T03:39:10.718887+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Definitions.Def_OpenGA_AreaEnergyDensities\nimport Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport Mathlib.Order.ConditionallyCompleteLattice.Indexed\n\n/-!\n# Width variation from area-energy comparison data\n\nThis module isolates the analytic passage from comparison families to a\nright-hand slope estimate. The input consists of finite-energy measurable\nvector pairs, uniform energy caps tending to the width, an almost conformal\nrealizer, and a short-time area comparison. None of these data are a definition\nof a surface differential, a sweepout, a harmonic map, or a Ricci flow.\n\nThe intended geometric inputs are described in Colding-Minicozzi,\n*Width and Finite Extinction Time of Ricci Flow*, arXiv:0707.0108v1:\nequation (1.4), the paragraph after Theorem 1.14, and the proof of Theorem 1.7,\nequations (1.25)-(1.28) and footnote 6 (pp. 3, 6-8). The comparison hypothesis\nbelow packages the uniform error estimates after shrinking the time interval;\nconstructing it from geometry is a separate open task.\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory Set Filter\nopen scoped InnerProductSpace Topology\n\nnamespace OpenGA\n\n/-- **Math.** A measurable pair with finite Dirichlet energy. Its domain may\nalso be a disjoint union, as for a finite collection of sphere maps. -/\nstructure FiniteEnergyPair where\n  domain : Type\n  [measurableSpace : MeasurableSpace domain]\n  target : Type\n  [normedAddCommGroup : NormedAddCommGroup target]\n  [innerProductSpace : InnerProductSpace ℝ target]\n  measure : Measure domain\n  first : domain → target\n  second : domain → target\n  first_measurable : AEStronglyMeasurable first measure\n  second_measurable : AEStronglyMeasurable second measure\n  energy_integrable : Integrable (fun x => energyDensity (first x) (second x)) measure\n\nattribute [instance] FiniteEnergyPair.measurableSpace\n  FiniteEnergyPair.normedAddCommGroup FiniteEnergyPair.innerProductSpace\n\n/-- **Math.** Integrated area density of a finite-energy pair. -/\nnoncomputable def FiniteEnergyPair.area (p : FiniteEnergyPair) : ℝ :=\n  ∫ x, areaDensity (p.first x) (p.second x) ∂p.measure\n\n/-- **Math.** Integrated energy density of a finite-energy pair. -/\nnoncomputable def FiniteEnergyPair.energy (p : FiniteEnergyPair) : ℝ :=\n  ∫ x, energyDensity (p.first x) (p.second x) ∂p.measure\n\n/-- **Math.** Orthogonality and equal length almost everywhere; a condition\non the supplied fields, without asserting that they are a map differential. -/\ndef FiniteEnergyPair.IsConformal (p : FiniteEnergyPair) : Prop :=\n  ∀ᵐ x ∂p.measure, ⟪p.first x, p.second x⟫_ℝ = 0 ∧ ‖p.first x‖ = ‖p.second x‖\n\n/-- **Math.** Analytic comparison data at one time. Competitors are indexed by\na sequence and the unit interval. The realizer encodes the limiting harmonic\nspheres only once the separate geometric construction has been supplied. -/\nstructure WidthComparisonData (width : ℝ → ℝ) (time scalar : ℝ) where\n  realizer : FiniteEnergyPair\n  realizer_conformal : realizer.IsConformal\n  realized_energy : realizer.energy = width time\n  competitor : ℕ → Icc (0 : ℝ) 1 → FiniteEnergyPair\n  energy_cap : ℕ → ℝ\n  energy_le_cap : ∀ j p, (competitor j p).energy ≤ energy_cap j\n  cap_tendsto : Tendsto energy_cap atTop (𝓝 (width time))\n  area_comparison : ∀ ε : ℝ, 0 < ε → ∃ δ : ℝ, 0 < δ ∧ ∃ start : ℕ,\n    ∀ j ≥ start, ∀ s ∈ Ioo time (time + δ),\n      width s ≤ (⨆ p, (competitor j p).area) +\n        (s - time) * (-(4 * Real.pi) - scalar / 2 * realizer.area + ε)\n\n\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "A finite-energy pair consists of a measure space, a real inner product space, and two almost-everywhere strongly measurable fields $v,w$ with integrable energy. Write\n\n$$A(p)=\\int\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(p)=\\frac12\\int(\\|v\\|^2+\\|w\\|^2).$$\n\nConformality means orthogonality and equal norms almost everywhere. A width comparison at time $t$, with scalar parameter $R$, supplies a conformal realizer $r$ with $E(r)=W(t)$; pairs $p_{j,u}$ for $j\\in\\mathbb N$, $u\\in[0,1]$; caps $c_j$ with $E(p_{j,u})\\le c_j$ and $c_j\\to W(t)$; and, for every $\\varepsilon>0$, numbers $\\delta>0$ and $J$ such that for $j\\ge J$ and $t<s<t+\\delta$,\n\n$$W(s)\\le\\sup_{u\\in[0,1]}A(p_{j,u})+(s-t)\\left(-4\\pi-\\frac R2 A(r)+\\varepsilon\\right).$$\n\nThe fields are analytic input data. No surface differential, sweepout homotopy class, harmonic map, or Ricci flow is defined by this bundle.",
+      "node_type": "theorem",
+      "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692.",
+      "status": "Definition",
+      "tags": [
+        "geometric-analysis",
+        "openga-width-comparison"
+      ],
+      "theorem_id": "78c6f8ef-0643-49d3-96b8-5d6dceda2385",
+      "theorem_name": "OpenGA_WidthComparisonData",
+      "theorem_title": "Finite-energy fields and width comparison data",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T18:19:01.078472+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Definitions.Def_DifferentialGeometry_ModelRadialVolume\nimport Definitions.Def_DifferentialGeometry_RadialCrossComparison\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\nnamespace OpenGA\n\n/-- **Math.** Uniform radial comparison data and a finite volume-loss budget.\nNo finiteness or discreteness is assumed for the set of event times. -/\nstructure RadialSurgeryVolumeBudget where\n  events : Set ℝ\n  modelParameter : ℝ\n  modelParameter_nonneg : 0 ≤ modelParameter\n  referenceRadius : ℝ\n  removalRadius : ℝ\n  removalRadius_pos : 0 < removalRadius\n  radius_le : removalRadius ≤ referenceRadius\n  anchor : ℝ\n  anchor_pos : 0 < anchor\n  totalBudget : ℝ\n  density : ℝ → ℝ → ℝ≥0∞\n  density_measurable : ∀ t ∈ events,\n    AEMeasurable (density t) (volume.restrict (Ioc 0 referenceRadius))\n  density_comparison : ∀ t ∈ events, CrossAnti referenceRadius (density t)\n    (fun r => ENNReal.ofReal (hypDensity modelParameter 2 r))\n  reference_lower : ∀ t ∈ events, ENNReal.ofReal anchor ≤\n    (∫⁻ r in Ioc (0 : ℝ) referenceRadius, density t r) /\n      ENNReal.ofReal (hypRadVol modelParameter 2 referenceRadius)\n  removedVolume : ℝ → ℝ\n  removedVolume_nonneg : ∀ t ∈ events, 0 ≤ removedVolume t\n  removal_contains : ∀ t ∈ events,\n    (∫⁻ r in Ioc (0 : ℝ) removalRadius, density t r) ≤ ENNReal.ofReal (removedVolume t)\n  volume_budget : ∀ s : Finset ℝ, (↑s : Set ℝ) ⊆ events →\n    ∑ t ∈ s, removedVolume t ≤ totalBudget\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "has_more_children": true,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "An arbitrary set of real event times carries nonnegative radial densities with cross-comparison against the three-dimensional model of curvature $-q^2$, where $q\\ge0$. Fix $0<r\\le R$ and $\\kappa>0$. At every event the normalized radial volume at $R$ is at least $\\kappa$, and the radial integral at $r$ is bounded by the nonnegative removed volume. Every finite subset of events has total removed volume bounded by a single finite real budget. No finiteness or discreteness of the event set is assumed.\n\nThis is an analytic interface for the nonaccumulation argument. A geometric application must construct the densities, identify their integrals with contained regions, justify uniform scales and the anchor, and bound all removed volume including allowance for smooth volume growth. It is not a definition of Ricci flow or surgery.",
+      "node_type": "theorem",
+      "source": "OpenGA derived analytic interface. Kleiner-Lott, Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; radial scale comparison in Sublemma 79.23, p. 157. Colding-Minicozzi width estimates: https://arxiv.org/pdf/0707.0108v1#page=7",
+      "status": "Definition",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "7b53cb40-bcab-4693-b755-615a06d5fb54",
+      "theorem_name": "OpenGA_RadialSurgeryVolumeBudget",
+      "theorem_title": "Radial comparison and a surgery volume-loss budget",
+      "vote_count": 0
+    },
+    {
+      "audits": [
+        {
+          "audit_id": "ba8c9e07-2e79-4ad2-93a8-961434e0b0e8",
+          "comment": null,
+          "created_at": "2026-09-08T03:14:14.323015+00:00",
+          "decision": "confirm",
+          "reviewer_id": "b14dd546-c5f9-458e-861d-79f50bacd399",
+          "reviewer_username": "tianyipeng"
+        },
+        {
+          "audit_id": "a25ab758-e063-474b-9880-ed5349eb82f0",
+          "comment": "Confirmed by the mission captain (proposal self-audit).",
+          "created_at": "2026-09-08T03:14:30.996361+00:00",
+          "decision": "confirm",
+          "reviewer_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+          "reviewer_username": "Xinze-Li-Moqian"
+        }
+      ],
+      "created_at": "2026-09-08T00:37:48.77319+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "namespace PoincareFormalization\n\ntheorem nonempty_homeomorph_sphere_three (M : Type*) [TopologicalSpace M]\n    [T2Space M] [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M] :\n    Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Every compact simply connected Hausdorff topological 3-manifold without boundary is homeomorphic to the unit 3-sphere in Euclidean 4-space. This follows the exact hypotheses and conclusion of Mathlib’s proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three; only the declaration namespace and local notation are adapted for this platform. No extra second-countability assumption is imposed.",
+      "node_type": "theorem",
+      "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected",
+      "source": "Mathlib, Junyan Xu, Geometry/Manifold/PoincareConjecture.lean, proof_wanted SimplyConnectedSpace.nonempty_homeomorph_sphere_three, platform revision 0df444a: https://github.com/leanprover-community/mathlib4/blob/0df444a/Mathlib/Geometry/Manifold/PoincareConjecture.lean . Mathematical reference: John Milnor, The Poincaré Conjecture, Section 1, p. 1, https://www.claymath.org/wp-content/uploads/2022/06/poincare.pdf . Proof exposition: Morgan–Tian, Ricci Flow and the Poincaré Conjecture (2007), Corollary 0.2(a), https://www.claymath.org/library/monographs/cmim03.pdf ; correction https://arxiv.org/abs/1512.00699 .",
+      "status": "Open",
+      "tags": [
+        "mathlib",
+        "poincare-conjecture",
+        "topology"
+      ],
+      "theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "theorem_name": "PoincareFormalization.nonempty_homeomorph_sphere_three",
+      "theorem_title": "Three-dimensional topological Poincaré conjecture — Mathlib statement",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T21:06:30.842979+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "\n/-!\n# Open geometric and topological inputs to the extinction endgame\n\nThese are open problems, with explicit `sorry` bodies. They are kept in the\nmission workspace, outside the reusable OpenGALib import tree. Successfully\nelaborating this file does not prove any of the four problems.\n\nThe geometry problem asks for data extracted from the intended Kleiner-Lott\nand Colding-Minicozzi construction. `SurgeryTopologyEvolution` is explicitly\nan abstraction of its topological output, not the full metric surgery flow.\nIn particular, this file does not claim to formalize the Ricci equation,\ncutoff conditions, or the analytic min-max construction.\n-/\n\nnamespace PoincareFormalization.ExtinctionEndgame\n\nopen OpenGA\n\nuniverse u\n\n\n\n\n\n\n\n\ntheorem nonempty_homeomorph_sphere_of_connected_sum_spheres\n    (M N X : ClosedThreeManifold.{u}) (hsum : IsConnectedSum M N X)\n    (hM : Nonempty (M ≃ₜ SphereThree)) (hN : Nonempty (N ≃ₜ SphereThree)) :\n    Nonempty (X ≃ₜ SphereThree) := by sorry\n\nend PoincareFormalization.ExtinctionEndgame\n",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "If closed three-manifolds M and N are each homeomorphic to the unit three-sphere, then every coordinate-ball connected sum X of M and N is also homeomorphic to that sphere. The gluing may use any boundary homeomorphism.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_SurgeryTopologyEvolution\n",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/OpenProblems.lean#L1-L67; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "status": "Open",
+      "tags": [
+        "connected-sum",
+        "finite-extinction",
+        "openga-endgame",
+        "poincare-conjecture"
+      ],
+      "theorem_id": "82499fe3-a4f5-4f42-96da-34e3e6fe56ba",
+      "theorem_name": "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_connected_sum_spheres",
+      "theorem_title": "A connected sum of three-spheres is a three-sphere",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T03:39:56.083015+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Definitions.Def_OpenGA_WidthComparisonData\nimport Definitions.Def_OpenGA_ScalarWidthTrace\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite scalar and width data with area-energy comparison witnesses in\nplace of an assumed width slope bound. This is an analytic interface, not a\ndefinition of Ricci flow, surgery, or a geometric sweepout. -/\nstructure WidthComparisonTrace (initialWidth finalTime : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = finalTime\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ initialWidth\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  comparison : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)),\n    Nonempty (WidthComparisonData (width i) t (scalar i t))\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "A finite partition of a time interval carries continuous scalar and width profiles, normalized initial scalar bound, a common initial width bound, nonnegative widths, the scalar differential inequality, upward scalar jumps and downward width jumps. At each time before the end of a partition interval, an area-energy width comparison bundle is supplied. The width slope inequality is deliberately a conclusion of the comparison theorem, not a field of this bundle. This records analytic data to be constructed from geometry; it does not define a surgery flow.",
+      "node_type": "theorem",
+      "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692.",
+      "status": "Definition",
+      "tags": [
+        "geometric-analysis",
+        "openga-width-comparison"
+      ],
+      "theorem_id": "868ac3ab-4452-48dd-81f3-278079cdf42c",
+      "theorem_name": "OpenGA_WidthComparisonTrace",
+      "theorem_title": "Width traces with area-energy comparison witnesses",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T21:04:29.235835+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.Topology.Constructions\n\n/-!\n# Connected sums by gluing punctured coordinate balls\n\nThe definition uses an actual quotient space: remove an open coordinate ball\nfrom each manifold and identify the two boundary spheres by a homeomorphism.\nThe coordinate charts contain the closed balls in their open sources, so the\nboundaries have collars; arbitrary wild embedded balls are not allowed.\n\nOnly the topological connected sum is defined here. Orientations, smooth\nstructures on the quotient, independence of the choices, and the van Kampen\ntheorem for this construction are separate results.\n-/\n\nnamespace OpenGA\n\nabbrev EuclideanThree := EuclideanSpace ℝ (Fin 3)\nabbrev SphereTwo := ↥(Metric.sphere (0 : EuclideanThree) 1)\nabbrev SphereThree := ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)\nabbrev SphereOne := ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin 2)) 1)\n\nuniverse u\n\n/-- A coordinate chart defined on a neighborhood of the closed unit ball. -/\nstructure CoordinateBall (M : Type u) [TopologicalSpace M] where\n  chart : OpenPartialHomeomorph EuclideanThree M\n  closedBall_subset_source : Metric.closedBall 0 1 ⊆ chart.source\n\nnamespace CoordinateBall\n\nvariable {M : Type u} [TopologicalSpace M]\n\n/-- The manifold with the open coordinate ball removed. -/\ndef Punctured (B : CoordinateBall M) := ↥((B.chart '' Metric.ball 0 1)ᶜ)\n\ninstance (B : CoordinateBall M) : TopologicalSpace B.Punctured :=\n  inferInstanceAs (TopologicalSpace ↥((B.chart '' Metric.ball 0 1)ᶜ))\n\n/-- Boundary points remain in the punctured manifold. -/\ndef boundary (B : CoordinateBall M) (x : SphereTwo) : B.Punctured := by\n  refine ⟨B.chart x, ?_⟩\n  rintro ⟨y, hy, heq⟩\n  have hxy : y = (x : EuclideanThree) := B.chart.injOn\n    (B.closedBall_subset_source (Metric.ball_subset_closedBall hy))\n    (B.closedBall_subset_source (Metric.sphere_subset_closedBall x.property)) heq\n  have hdist := Metric.mem_sphere.mp x.property\n  have hlt := Metric.mem_ball.mp hy\n  rw [hxy, hdist] at hlt\n  exact lt_irrefl _ hlt\n\nend CoordinateBall\n\nnamespace ConnectedSum\n\nvariable {M N : Type u} [TopologicalSpace M] [TopologicalSpace N]\n\n/-- The generating identifications, before taking equivalence closure. -/\ndef BoundaryIdentification (B : CoordinateBall M) (C : CoordinateBall N)\n    (glue : SphereTwo ≃ₜ SphereTwo) :\n    (B.Punctured ⊕ C.Punctured) → (B.Punctured ⊕ C.Punctured) → Prop :=\n  fun a b => ∃ x : SphereTwo,\n    a = Sum.inl (B.boundary x) ∧ b = Sum.inr (C.boundary (glue x))\n\n/-- Gluing two punctured manifolds along their entire boundary spheres.\n`Quot` takes the equivalence closure, and its topology is the quotient topology. -/\ndef Space (B : CoordinateBall M) (C : CoordinateBall N)\n    (glue : SphereTwo ≃ₜ SphereTwo) := Quot (BoundaryIdentification B C glue)\n\ninstance (B : CoordinateBall M) (C : CoordinateBall N) (glue : SphereTwo ≃ₜ SphereTwo) :\n    TopologicalSpace (Space B C glue) :=\n  inferInstanceAs (TopologicalSpace (Quot (BoundaryIdentification B C glue)))\n\nend ConnectedSum\n\n/-- `X` is a topological connected sum of `M` and `N`, witnessed by coordinate\nballs, a boundary gluing map, and a homeomorphism to the resulting quotient. -/\ndef IsConnectedSum (M N X : Type u)\n    [TopologicalSpace M] [TopologicalSpace N] [TopologicalSpace X] : Prop :=\n  ∃ (B : CoordinateBall M) (C : CoordinateBall N) (glue : SphereTwo ≃ₜ SphereTwo),\n    Nonempty (X ≃ₜ ConnectedSum.Space B C glue)\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Remove open unit balls embedded by coordinate charts defined on their closed balls, then identify their boundary two-spheres through a homeomorphism. The construction carries the quotient topology. IsConnectedSum asks for a homeomorphism with this quotient; orientation is not imposed. The coordinate-ball condition gives collared boundaries. This is a topological construction, with no classification theorem built in.",
+      "node_type": "theorem",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/ConnectedSum.lean#L1-L85; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "status": "Definition",
+      "tags": [
+        "connected-sum",
+        "finite-extinction",
+        "openga-endgame",
+        "poincare-conjecture"
+      ],
+      "theorem_id": "8a4a74f9-f4d9-4425-9a7c-390771b2977a",
+      "theorem_name": "OpenGA_CoordinateBallConnectedSum",
+      "theorem_title": "Coordinate-ball connected sums of three-manifolds",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T21:05:57.501508+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "\n/-!\n# The lifetime bound for scalar and width comparison traces\n\nThis packages the existing scalar lower bound, area-energy width comparison,\nand finite-jump deadline into one reusable theorem. No geometric existence\nclaim is made: the trace is an explicit input.\n-/\n\nnamespace OpenGA\n\nopen Set Filter\nopen scoped Topology\n\n\ntheorem WidthComparisonTrace.le_extinctionTime {W T : ℝ} (F : WidthComparisonTrace W T) :\n    T ≤ widthExtinctionTime (1 / 4) W := by sorry\n\nend OpenGA\n",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Every normalized finite scalar/width comparison trace with initial width bound W and final time T satisfies T <= T*(1/4,W). The proof combines the existing scalar lower bound, area-energy width comparison and finite downward-jump deadline. Existence of such traces is an explicit input.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_WidthComparisonTrace\nimport Definitions.Def_OpenGA_WidthExtinctionTime\n",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Analysis/ComparisonExtinction.lean#L1-L52; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "status": "Proved",
+      "tags": [
+        "connected-sum",
+        "finite-extinction",
+        "openga-endgame",
+        "poincare-conjecture"
+      ],
+      "theorem_id": "945e8722-bd96-4eba-a6eb-6458fadeea7a",
+      "theorem_name": "OpenGA.WidthComparisonTrace.le_extinctionTime",
+      "theorem_title": "A width comparison trace has a finite deadline",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T21:04:29.248696+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Pow.Deriv\n\n/-!\n# The width inequality forces extinction\n\nA nonnegative continuous quantity `W` whose forward Dini derivative\nsatisfies\n$$\\frac{d}{dt} W(t) \\;\\le\\; -4\\pi + \\frac{3}{4(t+C)}\\, W(t)$$\ncannot live past the explicit deadline\n$$T^* \\;=\\; \\Big(C^{1/4} + \\frac{W(0)}{16\\pi\\, C^{3/4}}\\Big)^{4} - C .$$\n\nThis is the pure-calculus endpoint of the Colding–Minicozzi finite-time\nextinction argument: the width of a nontrivial sweepout class along a\nRicci flow satisfies the displayed inequality, is nonnegative by\ndefinition, and therefore the flow cannot be immortal. All geometry is\nupstream, in the two constants; this file is analysis only.\n\nThe differential inequality enters in the weakest useful sense — the\nliminf of forward difference quotients (`slope`), the form consumed by\nMathlib's fencing lemmas. It is implied both by the limsup-of-forward-\ndifference-quotients hypothesis of the blueprint and by any pointwise\nright-differentiable version, so every downstream supplier can\ninstantiate it.\n\n## Ground truth\n\nColding–Minicozzi, *Estimates for the extinction time for the Ricci\nflow on certain 3-manifolds and a question of Perelman*, §1 (the\nintegration displayed between Theorem 0.1 and its corollary).\nBlueprint: PoincareNet card `lem-width-inequality-forces-extinction`\n(id `aa4c3210ae78`).\n\n## Main declarations\n\n* `widthExtinctionTime C W₀` — the explicit deadline `T*(C, W₀)`.\n* `le_widthExtinctionTime_of_slope_le` — a nonnegative continuous `W`\n  satisfying the width differential inequality on `[0, t]` forces\n  `t ≤ widthExtinctionTime C (W 0)`.\n* `le_widthExtinctionTime_across_downward_jumps` — the same deadline for\n  finitely many continuous width profiles with downward jumps.\n\n## Proof shape\n\nNo integrating factor is applied to `W` itself (transporting Dini\nbounds through a product costs an epsilon-management detour). Instead,\nfor each `ε > 0` the *explicit* solution of the perturbed comparison\nequation `B' = 3/(4(t+C))·B - 4π + ε`, `B 0 = W 0 + ε`, is written\ndown in closed form and Mathlib's contact fencing lemma\n`image_le_of_liminf_slope_right_lt_deriv_boundary'` pins `W ≤ B`:\nat a contact point `W x = B x` the hypothesised Dini bound for `W` is\n*strictly* below `B'`. Letting `ε ↓ 0` and reading the sign of the\nlimit solution at `t` yields the deadline.\n-/\n\nopen Set Topology\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- **Math.** The **extinction deadline** $T^*(C, W_0) = \\big(C^{1/4} +\n\\frac{W_0}{16\\pi C^{3/4}}\\big)^4 - C$: past this time, no nonnegative\nquantity can satisfy the width differential inequality. -/\nnoncomputable def widthExtinctionTime (C W₀ : ℝ) : ℝ :=\n  (C ^ ((1 : ℝ)/4) + W₀ / (16 * Real.pi * C ^ ((3 : ℝ)/4))) ^ (4 : ℕ) - C\n\nnamespace WidthExtinction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nend WidthExtinction\n\n\n\n\n\n\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Define T*(C,W) = (C^(1/4) + W/(16 pi C^(3/4)))^4 - C for real C and W. Its use as an extinction deadline requires C positive and the scalar/width comparison hypotheses; those conclusions are theorem nodes, not part of this definition.",
+      "node_type": "theorem",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Analysis/WidthExtinction.lean#L1-L368; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "status": "Definition",
+      "tags": [
+        "connected-sum",
+        "finite-extinction",
+        "openga-endgame",
+        "poincare-conjecture"
+      ],
+      "theorem_id": "95ea3aea-cf45-4445-aeaf-765e9a9e127b",
+      "theorem_name": "OpenGA_WidthExtinctionTime",
+      "theorem_title": "The explicit width extinction deadline",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T02:38:00.672133+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Mathlib.Analysis.Calculus.MeanValue\nimport Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\n\nset_option autoImplicit false\n\nopen Set Filter\nopen scoped Topology\n\nnamespace OpenGA\n\n/-- Finite analytic data for the scalar-minimum and width argument on `[0, T]`.\nThis structure records inequalities and jumps only. It is not a definition of\nRicci flow, surgery, scalar curvature, or sweepout width. Supplying it from\ngeometric data is a separate theorem. -/\nstructure ScalarWidthTrace (W₀ T : ℝ) where\n  count : ℕ\n  count_pos : 0 < count\n  times : ℕ → ℝ\n  first_time : times 0 = 0\n  last_time : times count = T\n  times_strict : ∀ i < count, times i < times (i + 1)\n  scalar : ℕ → ℝ → ℝ\n  width : ℕ → ℝ → ℝ\n  scalar_cont : ∀ i < count, ContinuousOn (scalar i) (Icc (times i) (times (i + 1)))\n  width_cont : ∀ i < count, ContinuousOn (width i) (Icc (times i) (times (i + 1)))\n  scalar_initial : -6 ≤ scalar 0 (times 0)\n  width_initial : width 0 (times 0) ≤ W₀\n  width_nonneg : ∀ i < count, ∀ t ∈ Icc (times i) (times (i + 1)), 0 ≤ width i t\n  scalar_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    q < (2 / 3 : ℝ) * (scalar i t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar i) t s\n  width_slope : ∀ i < count, ∀ t ∈ Ico (times i) (times (i + 1)), ∀ q : ℝ,\n    -(4 * Real.pi) - scalar i t / 2 * width i t < q →\n      ∃ᶠ s in 𝓝[>] t, slope (width i) t s < q\n  scalar_jump : ∀ i, i + 1 < count →\n    scalar i (times (i + 1)) ≤ scalar (i + 1) (times (i + 1))\n  width_jump : ∀ i, i + 1 < count →\n    width (i + 1) (times (i + 1)) ≤ width i (times (i + 1))\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For real numbers $W_0,T$, a scalar-width trace consists of a positive finite number of intervals with\n$$0=t_0<t_1<\\cdots<t_n=T,$$\nand continuous real functions $r_i,w_i$ on each $[t_i,t_{i+1}]$. The initial bounds are $r_0(0)\\ge-6$ and $w_0(0)\\le W_0$, and all widths are nonnegative. On each right-open interval the lower right Dini derivatives obey\n$$D_+r_i\\ge\\frac23 r_i^2,\\qquad D_+w_i\\le-4\\pi-\\frac12r_iw_i.$$\nAt each internal joining time, the scalar profile can jump upward and the width can jump downward:\n$$r_i(t_{i+1})\\le r_{i+1}(t_{i+1}),\\qquad w_{i+1}(t_{i+1})\\le w_i(t_{i+1}).$$\nHere $D_+$ denotes the liminf of forward difference quotients. Scalar lower bounds are expressed by eventual strict slope bounds; width upper bounds use frequent strict slope bounds. A limsup upper bound, as in the geometric width estimate, implies the latter hypothesis.\n\nThis is an analytic interface assembled from the scalar comparison and width estimates. It does not define Ricci flow, surgery, scalar curvature, or geometric sweepout width. Producing these data from a manifold remains a separate geometric theorem.",
+      "node_type": "theorem",
+      "source": "Analytic interface extracted from Kleiner-Lott, Notes on Perelman's Papers, arXiv:math/0605667v5, Lemma 79.11 (p.154) and Appendix B (p.202), https://arxiv.org/pdf/math/0605667v5; Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, Theorem 1.7 and (1.8)-(1.10) (p.4), scalar evolution (1.17) (p.6), (1.28) (p.8), https://arxiv.org/pdf/0707.0108. Finite traces and the lower-Dini formulation are explicit analytic abstractions, not a verbatim named definition in either paper.",
+      "status": "Definition",
+      "tags": [
+        "geometric-analysis",
+        "ricci-flow"
+      ],
+      "theorem_id": "a15a21e2-9521-45ee-b36b-7db0df18ff13",
+      "theorem_name": "OpenGA_ScalarWidthTrace",
+      "theorem_title": "Scalar and width traces across surgery times",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T02:38:25.083946+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ W₀ : ℝ, 0 ≤ W₀ ∧ ∀ T : ℝ, 0 < T → Nonempty (OpenGA.ScalarWidthTrace W₀ T) := by sorry",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $M$ be a compact simply connected Hausdorff topological three-manifold without boundary. Suppose that $M$ is not homeomorphic to the unit three-sphere. Then there is a real number $W_0\\ge0$, independent of the final time, such that\n$$\\forall T>0,\\quad \\text{there exists a scalar-width trace on }[0,T]\\text{ with initial width at most }W_0.$$\nA scalar-width trace is the analytic data in the imported definition: finitely many continuous scalar and nonnegative width profiles, initial scalar minimum at least $-6$, differential inequalities\n$$D_+r\\ge\\frac23r^2,\\qquad D_+w\\le-4\\pi-\\frac12rw,$$\nand upward scalar jumps and downward width jumps.\n\nThis is a composite geometric extraction target for the Kleiner-Lott surgery route with the Colding-Minicozzi width input. It deliberately isolates the unresolved passage from geometry and topology to analytic data. It is not a formalization of any one named milestone. The scope includes passing from a topological three-manifold to smooth normalized initial data, constructing surgery flows for arbitrary finite times, identifying surviving nontrivial components under the nonspherical hypothesis, and establishing the scalar/width estimates, endpoint regularity, jump inequalities, and a uniform initial width bound. None of those geometric constructions is supplied by the trace definition.\n\nThe Kleiner-Lott source starts with smooth geometric data; the topological-to-smooth passage is an additional formalization obligation in this statement.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_ScalarWidthTrace\nimport Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\nset_option autoImplicit false",
+      "source": "Composite reduction target, not a verbatim theorem: Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 (pp.8-9), Proposition 77.2 (p.146), Lemma 79.11 (p.154), Lemma 81.2 (p.160), with Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7, Corollary 1.11 (p.4), and (1.28) (p.8). The topological smoothing bridge and the extraction of finite analytic profiles are explicitly unresolved parts of this derived target; this statement does not attest any individual geometric milestone.",
+      "status": "Open",
+      "tags": [
+        "differential-inequalities",
+        "geometric-analysis",
+        "ricci-flow"
+      ],
+      "theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+      "theorem_name": "PoincareFormalization.persistent_profiles_of_not_homeomorph_sphere",
+      "theorem_title": "Persistent profiles from a hypothetical Poincare counterexample",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T21:06:33.437985+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "\n/-!\n# The formal finite-extinction reduction of the Poincare goal\n\nThe proofs in this file have no holes of their own, but depend on the four\nexplicit open theorems in `OpenProblems.lean`. They are conditional proof\nsketches, not proofs of the Poincare conjecture or of geometric extinction.\n\nDependency chain:\n  geometric construction (open) -> width-controlled component evolution\n  -> finite extinction -> connected-sum reconstruction\n  -> simply connected endgame (three open topology lemmas) -> mission goal.\n\nThe auxiliary definitions and analytic/topological iteration theorems in\nOpenGALib have no project axioms or proof holes. The distinction is checked\nby `Audit.lean` and the reusable-library regression check.\n-/\n\nnamespace PoincareFormalization.ExtinctionEndgame\n\nopen OpenGA\n\nuniverse u\n\n\n\n\ntheorem nonempty_homeomorph_sphere_of_standard_decomposition\n    (M : ClosedThreeManifold.{u}) [SimplyConnectedSpace M]\n    (h : ConnectedSumClosure ClosedThreeManifold.IsStandardFactor M) :\n    Nonempty (M ≃ₜ SphereThree) := by sorry\n\n\n\n\n\nend PoincareFormalization.ExtinctionEndgame\n",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "A closed simply connected three-manifold with a finite connected-sum decomposition into sphere-covered factors and S1 times S2 factors is homeomorphic to S3. This conditional proof sketch uses three open topology lemmas: simple connectivity descends to factors, sphere handles are not simply connected, and the sum of two three-spheres is a three-sphere. The sphere-covering base case reuses salim's proved covering theorem.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_SurgeryTopologyEvolution\n",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/Reduction.lean#L1-L75; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "status": "Open",
+      "tags": [
+        "connected-sum",
+        "finite-extinction",
+        "openga-endgame",
+        "poincare-conjecture"
+      ],
+      "theorem_id": "c508d5db-b2a6-4c25-8144-9a9f55f2b4e2",
+      "theorem_name": "PoincareFormalization.ExtinctionEndgame.nonempty_homeomorph_sphere_of_standard_decomposition",
+      "theorem_title": "The simply connected endgame for a standard connected-sum decomposition",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T04:36:44.243982+00:00",
+      "created_by": "136472b2-7660-4cad-97ab-bc0d424d2ccd",
+      "created_by_username": "Shuze Chen",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "namespace PoincareFormalization\n\ntheorem nonempty_sdiffeomorph_sphere_three (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M] [IsManifold (𝓡 3) ∞ M]\n    [SimplyConnectedSpace M] [CompactSpace M] :\n    Nonempty (M ≃ₘ⟮𝓡 3, 𝓡 3⟯ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1)) := by\n  sorry\n\nend PoincareFormalization\n",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Every compact, simply connected, Hausdorff smooth $3$-manifold without boundary is diffeomorphic to the unit $3$-sphere\n\n$$\\mathbb{S}^3 = \\{\\, x \\in \\mathbb{R}^4 : \\lVert x \\rVert = 1 \\,\\},$$\n\nwith its standard smooth structure.\n\nThis is the statement Perelman's argument proves. Ricci flow evolves a Riemannian metric on a smooth manifold, so the smooth category is where the proof takes place; Morgan and Tian state the conjecture in exactly this form and obtain it as Corollary 0.2(a). The topological Poincare conjecture follows from it together with Moise's theorem, that every topological $3$-manifold admits a differentiable structure.\n\n**Formalization note.** This follows the exact hypotheses and conclusion of Mathlib's `proof_wanted SimplyConnectedSpace.nonempty_sdiffeomorph_sphere_three` at the platform's Mathlib revision; only the declaration namespace and the local notation are adapted for this platform, matching the treatment of the topological statement in `PoincareFormalization.nonempty_homeomorph_sphere_three`. The smooth structure on $M$ is the `IsManifold (𝓡 3) ∞ M` instance, $\\mathbb{S}^3$ carries Mathlib's standard smooth structure, and `≃ₘ⟮𝓡 3, 𝓡 3⟯` is a $C^\\infty$ diffeomorphism. No second countability assumption is imposed.",
+      "node_type": "theorem",
+      "preamble": "import Mathlib.Geometry.Manifold.Diffeomorph\nimport Mathlib.Geometry.Manifold.Instances.Sphere\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\nset_option autoImplicit false\n\nopen scoped Manifold ContDiff",
+      "source": "Mathlib, Junyan Xu, Mathlib/Geometry/Manifold/PoincareConjecture.lean, proof_wanted SimplyConnectedSpace.nonempty_sdiffeomorph_sphere_three (\"The 3-dimensional smooth Poincare conjecture (proven by Perelman)\"), platform revision 0df444a: https://github.com/leanprover-community/mathlib4/blob/0df444a360eaa60ab8c11dca51a86af692955474/Mathlib/Geometry/Manifold/PoincareConjecture.lean . Mathematical reference: John W. Morgan and Gang Tian, \"Ricci Flow and the Poincare Conjecture\", Clay Mathematics Monographs 3 (2007), Introduction, p. 5: \"Poincare Conjecture: a closed, smooth, simply connected 3-manifold is diffeomorphic to S^3\", and Corollary 0.2(a), p. 6: \"A closed, simply connected 3-manifold is diffeomorphic to S^3\" (where, by footnote 1 on p. 5, 'manifold' means 'smooth manifold'), https://arxiv.org/pdf/math/0607607 ; correction to Section 19.2: https://arxiv.org/abs/1512.00699 . Original arguments: G. Perelman, arXiv:math/0211159, arXiv:math/0303109, arXiv:math/0307245.",
+      "status": "Open",
+      "tags": [
+        "differential-geometry",
+        "topology"
+      ],
+      "theorem_id": "c5c9092c-00f4-4939-893e-ea9cc075b564",
+      "theorem_name": "PoincareFormalization.nonempty_sdiffeomorph_sphere_three",
+      "theorem_title": "Three-dimensional smooth Poincaré conjecture — Mathlib statement",
+      "vote_count": 1
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T18:19:41.570973+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Definitions.Def_OpenGA_RadialSurgeryVolumeBudget\nimport Definitions.Def_OpenGA_WidthComparisonData\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\nnamespace OpenGA\n\n/-- **Math.** An interval within a finite horizon whose interior contains\nno event. Its endpoints may be event times. -/\ndef EventFreeInterval (events : Set ℝ) (T a b : ℝ) : Prop :=\n  0 ≤ a ∧ a < b ∧ b ≤ T ∧ Disjoint events (Ioo a b)\n\n/-- **Math.** Scalar/width comparison profiles and volume-loss control before\none knows that the event times are finite. Every geometric interpretation,\nincluding the budget and radial density hypotheses, remains a separate input. -/\nstructure SurgeryComparisonProcess (initialWidth finalTime : ℝ) where\n  volumeControl : RadialSurgeryVolumeBudget\n  events_inside : volumeControl.events ⊆ Ioo 0 finalTime\n  finalTime_pos : 0 < finalTime\n  scalar : ℝ → ℝ → ℝ\n  width : ℝ → ℝ → ℝ\n  scalar_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (scalar a) (Icc a b)\n  width_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (width a) (Icc a b)\n  scalar_initial : -6 ≤ scalar 0 0\n  width_initial : width 0 0 ≤ initialWidth\n  width_nonneg : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Icc a b, 0 ≤ width a t\n  scalar_slope : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, ∀ q : ℝ, q < (2 / 3 : ℝ) * (scalar a t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar a) t s\n  comparison : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, Nonempty (WidthComparisonData (width a) t (scalar a t))\n  scalar_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → scalar a b ≤ scalar b b\n  width_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → width b b ≤ width a b\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For an initial width bound $W_0$ and positive horizon $T$, this bundle combines a radial volume-loss budget with event times in $(0,T)$ and scalar/width profiles on every event-free interval. Profiles are continuous on each closed interval, widths are nonnegative, initial scalar is at least $-6$, and initial width is at most $W_0$. The scalar right-slope inequality is $R^\\prime\\ge\\frac23R^2$; each time carries an area-energy width-comparison witness. Adjacent intervals allow upward scalar jumps and downward width jumps.\n\nThe event set need not be finite by definition. Its finiteness is a theorem derived from volume control. These are conditional analytic data, whose construction from a manifold remains an Open geometric problem.",
+      "node_type": "theorem",
+      "source": "OpenGA derived analytic interface. Kleiner-Lott, Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; radial scale comparison in Sublemma 79.23, p. 157. Colding-Minicozzi width estimates: https://arxiv.org/pdf/0707.0108v1#page=7",
+      "status": "Definition",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "c76baf4f-4a85-4508-8e03-574d04648ce3",
+      "theorem_name": "OpenGA_SurgeryComparisonProcess",
+      "theorem_title": "Scalar and width profiles with surgery volume control",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T18:20:12.744317+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess {W T : ℝ}\n    (P : SurgeryComparisonProcess W T) : Nonempty (WidthComparisonTrace W T) := by sorry",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For any initial bound and final horizon, a surgery comparison process yields a finite width comparison trace with the same bounds. The trace satisfies the existing scalar and width interface used by the Poincare width-extinction reduction.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_SurgeryComparisonProcess\nimport Definitions.Def_OpenGA_WidthComparisonTrace\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nopen OpenGA",
+      "source": "OpenGA, OpenGALib/Analysis/SurgeryComparison.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+      "status": "Proved",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+      "theorem_name": "OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess",
+      "theorem_title": "A finite width comparison trace from volume-controlled profiles",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T18:19:47.411297+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower (B : RadialSurgeryVolumeBudget)\n    {t : ℝ} (ht : t ∈ B.events) :\n    B.anchor * hypRadVol B.modelParameter 2 B.removalRadius ≤ B.removedVolume t := by sorry",
+      "has_more_children": true,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For every event of a radial surgery volume budget, its removed volume is at least $\\kappa V_{q,2}(r)>0$, where $\\kappa$ is the positive reference-scale anchor and $r$ the positive removal radius. The bound is uniform over all events.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_RadialSurgeryVolumeBudget\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\nopen OpenGA",
+      "source": "OpenGA, OpenGALib/Analysis/SurgeryVolume.lean. Analytic nonaccumulation mechanism: Kleiner-Lott Section 3.5, p. 13, https://arxiv.org/pdf/math/0605667v5#page=13; comparison of scales in Sublemma 79.23, p. 157.",
+      "status": "Proved",
+      "tags": [
+        "bishop-gromov",
+        "geometric-analysis",
+        "poincare-conjecture",
+        "ricci-flow"
+      ],
+      "theorem_id": "ca66101a-7280-449f-ad5d-350153b56ffd",
+      "theorem_name": "OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower",
+      "theorem_title": "A uniform positive volume loss from model comparison",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T03:17:38.845171+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "definition": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\n/-!\n# Area and energy densities\n\nFor the images `v`, `w` of an orthonormal tangent frame under a differential,\nthe area density is the square root of the Gram determinant and the energy\ndensity is half the sum of the squared norms. The area is bounded by the\nenergy, with equality precisely for orthogonal vectors of equal norm.\n\nThe integral results assume measurable vector fields and integrable energy;\nintegrability of the area is a conclusion, not an additional assumption.\nThey apply on any measure space, including a restricted domain measure.\nIdentifying these fields with a Sobolev differential on a surface remains a\nseparate geometric interface. No global frame on the sphere is asserted.\n\nReference: Colding-Minicozzi, *Width and Finite Extinction Time of Ricci Flow*,\narXiv:0707.0108v1, equation (1.4) and the following equality discussion, p. 3.\nhttps://arxiv.org/pdf/0707.0108v1#page=3\n-/\n\nset_option autoImplicit false\n\nopen MeasureTheory\nopen scoped InnerProductSpace\n\nnamespace OpenGA\n\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\n\n/-- **Math.** The two-dimensional Jacobian density of a pair of derivative vectors. -/\nnoncomputable def areaDensity (v w : F) : ℝ :=\n  Real.sqrt (‖v‖ ^ 2 * ‖w‖ ^ 2 - ⟪v, w⟫_ℝ ^ 2)\n\n/-- **Math.** The Dirichlet energy density of a pair of derivative vectors. -/\nnoncomputable def energyDensity (v w : F) : ℝ :=\n  (‖v‖ ^ 2 + ‖w‖ ^ 2) / 2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsection Integral\n\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\n\n\n\n\n\n\n\nend Integral\n\nend OpenGA\n",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nThis isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+      "node_type": "theorem",
+      "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+      "status": "Definition",
+      "tags": [
+        "geometric-analysis",
+        "openga-area-energy"
+      ],
+      "theorem_id": "caf5e7f7-144e-4bc2-9730-695304525ad0",
+      "theorem_name": "OpenGA_AreaEnergyDensities",
+      "theorem_title": "Area and energy densities of a vector pair",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T21:06:22.810625+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "\n/-!\n# Open geometric and topological inputs to the extinction endgame\n\nThese are open problems, with explicit `sorry` bodies. They are kept in the\nmission workspace, outside the reusable OpenGALib import tree. Successfully\nelaborating this file does not prove any of the four problems.\n\nThe geometry problem asks for data extracted from the intended Kleiner-Lott\nand Colding-Minicozzi construction. `SurgeryTopologyEvolution` is explicitly\nan abstraction of its topological output, not the full metric surgery flow.\nIn particular, this file does not claim to formalize the Ricci equation,\ncutoff conditions, or the analytic min-max construction.\n-/\n\nnamespace PoincareFormalization.ExtinctionEndgame\n\nopen OpenGA\n\nuniverse u\n\n\n\n\ntheorem simply_connected_factors_of_connected_sum (M N X : ClosedThreeManifold.{u})\n    (hsum : IsConnectedSum M N X) (hX : SimplyConnectedSpace X) :\n    SimplyConnectedSpace M ∧ SimplyConnectedSpace N := by sorry\n\n\n\n\n\nend PoincareFormalization.ExtinctionEndgame\n",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For closed connected three-manifolds M, N, X with X a coordinate-ball connected sum of M and N, simple connectivity of X implies simple connectivity of both M and N. This is the van Kampen input; no such property is assumed in the connected-sum definition.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_SurgeryTopologyEvolution\n",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/OpenProblems.lean#L1-L67; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "status": "Open",
+      "tags": [
+        "connected-sum",
+        "finite-extinction",
+        "openga-endgame",
+        "poincare-conjecture"
+      ],
+      "theorem_id": "cbde63f3-ca2b-4aef-b124-5827b74f7e4c",
+      "theorem_name": "PoincareFormalization.ExtinctionEndgame.simply_connected_factors_of_connected_sum",
+      "theorem_title": "Simply connected connected sums have simply connected factors",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T03:18:24.1547+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem OpenGA.integral_areaDensity_le_energyDensity (hv : AEStronglyMeasurable v μ)\n    (hw : AEStronglyMeasurable w μ)\n    (hE : Integrable (fun x => energyDensity (v x) (w x)) μ) :\n    (∫ x, areaDensity (v x) (w x) ∂μ) ≤ ∫ x, energyDensity (v x) (w x) ∂μ := by sorry",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For vectors $v,w$ in a real inner product space, define the area density and energy density by\n\n$$A(v,w)=\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(v,w)=\\frac{\\|v\\|^2+\\|w\\|^2}{2}.$$\n\nLet $(X,\\mu)$ be a measure space and let $v,w:X\\to F$ be almost-everywhere strongly measurable fields with integrable energy density $x\\mapsto E(v(x),w(x))$. Then\n\n$$\\int_X A(v(x),w(x))\\,d\\mu\\leq\\int_X E(v(x),w(x))\\,d\\mu.$$\n\nNo finiteness assumption on the measure is needed; finite energy is explicit. This isolates the analytic ingredient in the surface area-energy comparison. Identifying the vector fields with the differential of a Sobolev surface map, and proving invariance under changes of orthonormal frame, are separate geometric tasks.",
+      "node_type": "theorem",
+      "preamble": "import Mathlib.Analysis.InnerProductSpace.Continuous\nimport Mathlib.MeasureTheory.Integral.Bochner.Basic\nimport Mathlib.Tactic.Linarith\nimport Mathlib.Tactic.Ring\n\nimport Definitions.Def_OpenGA_AreaEnergyDensities\n\nset_option autoImplicit false\nopen MeasureTheory\nopen scoped InnerProductSpace\nvariable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]\nvariable {X : Type*} [MeasurableSpace X] {μ : Measure X} {v w : X → F}\nopen OpenGA",
+      "source": "Colding and Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, p. 3, equation (1.4) and the immediately following equality discussion. https://arxiv.org/pdf/0707.0108v1#page=3 . This is the vector-pair / measurable-field analytic extraction, not the full Sobolev surface-map statement or the width-equivalence proposition. Lean formalization: OpenGA, OpenGALib/Analysis/AreaEnergy.lean, SHA-256 60e99951d08c13f4b8a2c8003962f92588cf6b48c16655ac2a232433178e375a.",
+      "status": "Proved",
+      "tags": [
+        "geometric-analysis",
+        "openga-area-energy"
+      ],
+      "theorem_id": "d81e3640-8579-4396-babb-69edac82be33",
+      "theorem_name": "OpenGA.integral_areaDensity_le_energyDensity",
+      "theorem_title": "Area-energy comparison for finite-energy vector fields",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T21:06:25.491149+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "\n/-!\n# Open geometric and topological inputs to the extinction endgame\n\nThese are open problems, with explicit `sorry` bodies. They are kept in the\nmission workspace, outside the reusable OpenGALib import tree. Successfully\nelaborating this file does not prove any of the four problems.\n\nThe geometry problem asks for data extracted from the intended Kleiner-Lott\nand Colding-Minicozzi construction. `SurgeryTopologyEvolution` is explicitly\nan abstraction of its topological output, not the full metric surgery flow.\nIn particular, this file does not claim to formalize the Ricci equation,\ncutoff conditions, or the analytic min-max construction.\n-/\n\nnamespace PoincareFormalization.ExtinctionEndgame\n\nopen OpenGA\n\nuniverse u\n\n\n\n\n\n\ntheorem not_simply_connected_sphere_handle (M : ClosedThreeManifold.{u})\n    (hhandle : M.IsSphereHandle) : ¬SimplyConnectedSpace M := by sorry\n\n\n\nend PoincareFormalization.ExtinctionEndgame\n",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "A closed three-manifold homeomorphic to S1 times S2 is not simply connected. This excludes the handle factors from a simply connected connected-sum decomposition.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_SurgeryTopologyEvolution\n",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/OpenProblems.lean#L1-L67; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "status": "Open",
+      "tags": [
+        "connected-sum",
+        "finite-extinction",
+        "openga-endgame",
+        "poincare-conjecture"
+      ],
+      "theorem_id": "eafa0066-fef6-45ad-87b1-02fc3898b4f8",
+      "theorem_name": "PoincareFormalization.ExtinctionEndgame.not_simply_connected_sphere_handle",
+      "theorem_title": "The sphere handle is not simply connected",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T03:40:21.582079+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "theorem PoincareFormalization.persistent_comparison_data_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →\n      Nonempty (OpenGA.WidthComparisonTrace initialWidth finalTime) := by sorry",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "Let $M$ be a compact, simply connected, Hausdorff topological three-manifold without boundary. Assume hypothetically that $M$ is not homeomorphic to the unit three-sphere. Construct a constant $W_0\\ge0$ such that for every $T>0$ there is a finite width comparison trace on $[0,T]$, with initial width at most $W_0$.\n\nA finite partition of a time interval carries continuous scalar and width profiles, normalized initial scalar bound, a common initial width bound, nonnegative widths, the scalar differential inequality, upward scalar jumps and downward width jumps. At each time before the end of a partition interval, an area-energy width comparison bundle is supplied. The width slope inequality is deliberately a conclusion of the comparison theorem, not a field of this bundle. This records analytic data to be constructed from geometry; it does not define a surgery flow.\n\nA finite-energy pair consists of a measure space, a real inner product space, and two almost-everywhere strongly measurable fields $v,w$ with integrable energy. Write\n\n$$A(p)=\\int\\sqrt{\\|v\\|^2\\|w\\|^2-\\langle v,w\\rangle^2},\\qquad E(p)=\\frac12\\int(\\|v\\|^2+\\|w\\|^2).$$\n\nConformality means orthogonality and equal norms almost everywhere. A width comparison at time $t$, with scalar parameter $R$, supplies a conformal realizer $r$ with $E(r)=W(t)$; pairs $p_{j,u}$ for $j\\in\\mathbb N$, $u\\in[0,1]$; caps $c_j$ with $E(p_{j,u})\\le c_j$ and $c_j\\to W(t)$; and, for every $\\varepsilon>0$, numbers $\\delta>0$ and $J$ such that for $j\\ge J$ and $t<s<t+\\delta$,\n\n$$W(s)\\le\\sup_{u\\in[0,1]}A(p_{j,u})+(s-t)\\left(-4\\pi-\\frac R2 A(r)+\\varepsilon\\right).$$\n\nThe fields are analytic input data. No surface differential, sweepout homotopy class, harmonic map, or Ricci flow is defined by this bundle.\n\nThis is a composite open construction problem refining the existing persistent-profile target. Remaining geometric work includes a smooth model and normalization, the prime-factor and sweepout reductions, surgery-flow existence, scalar comparison, conformal width realizers, uniform short-time comparison estimates, endpoint continuity and surgery compatibility. In particular, this statement does not assert that these tasks are solved.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_WidthComparisonTrace\nimport Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\n\nset_option autoImplicit false",
+      "source": "Derived analytic interface for the Colding-Minicozzi width argument, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1: equation (1.4), p. 3; paragraph after Theorem 1.14, p. 6; proof of Theorem 1.7, equations (1.25)-(1.28) and footnote 6, pp. 7-8. https://arxiv.org/pdf/0707.0108v1 . The comparison hypothesis packages uniform errors after restricting time. This conditional interface is not a literal formalization of the geometric theorem. OpenGA source: OpenGALib/Analysis/WidthComparison.lean, SHA-256 a40198606f46aee38c39118ba5b4653639d70a5637e3c993c150fc4f2de7d692. For the surgery framework and topology: Kleiner-Lott, Notes on Perelman's papers, math/0605667v5, Claim 3.5, Remark 73.6, Proposition 77.2, Lemma 79.11 and Lemma 81.2. https://arxiv.org/pdf/math/0605667v5 . This is a composite open construction target, not a claim that these geometric sources have already been formalized.",
+      "status": "Open",
+      "tags": [
+        "geometric-analysis",
+        "openga-width-comparison"
+      ],
+      "theorem_id": "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+      "theorem_name": "PoincareFormalization.persistent_comparison_data_of_not_homeomorph_sphere",
+      "theorem_title": "Comparison data from a hypothetical Poincare counterexample",
+      "vote_count": 0
+    },
+    {
+      "audits": [],
+      "created_at": "2026-09-09T21:06:50.466425+00:00",
+      "created_by": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b",
+      "created_by_username": "Xinze-Li-Moqian",
+      "deprecated_at": null,
+      "env_display_name": "Mathlib 0df444a (Lean v4.33.1)",
+      "formal_statement": "\n/-!\n# Open geometric and topological inputs to the extinction endgame\n\nThese are open problems, with explicit `sorry` bodies. They are kept in the\nmission workspace, outside the reusable OpenGALib import tree. Successfully\nelaborating this file does not prove any of the four problems.\n\nThe geometry problem asks for data extracted from the intended Kleiner-Lott\nand Colding-Minicozzi construction. `SurgeryTopologyEvolution` is explicitly\nan abstraction of its topological output, not the full metric surgery flow.\nIn particular, this file does not claim to formalize the Ricci equation,\ncutoff conditions, or the analytic min-max construction.\n-/\n\nnamespace PoincareFormalization.ExtinctionEndgame\n\nopen OpenGA\n\nuniverse u\n\n\ntheorem exists_width_controlled_surgery_topology (M : ClosedThreeManifold.{u})\n    [SimplyConnectedSpace M] :\n    ∃ (E : SurgeryTopologyEvolution M) (W : ℝ), 0 ≤ W ∧ E.HasWidthControl W := by sorry\n\n\n\n\n\n\n\nend PoincareFormalization.ExtinctionEndgame\n",
+      "has_more_children": false,
+      "has_more_parents": false,
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+      "natural_language_statement": "For every closed simply connected topological three-manifold M, construct an extracted surgery topology E and one W >= 0 such that every nonempty positive-time slice supplies a WidthComparisonTrace W T. E must preserve [M] on an initial positive time interval and carry finite topological reconstruction records at every horizon. This statement requests extracted data, not a complete metric-flow object. The intended KL/CM construction must still provide smoothing, orientation, a normalized metric, controlled surgery, nontrivial sweepouts and the width estimates. These geometric obligations remain open.",
+      "node_type": "theorem",
+      "preamble": "import Definitions.Def_OpenGA_ExtinctionWidthControl\n",
+      "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/OpenProblems.lean#L1-L67; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "status": "Open",
+      "tags": [
+        "connected-sum",
+        "finite-extinction",
+        "openga-endgame",
+        "poincare-conjecture"
+      ],
+      "theorem_id": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+      "theorem_name": "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+      "theorem_title": "Construct uniform width-controlled surgery topology",
+      "vote_count": 0
+    },
+    {
+      "child_count": 2,
+      "created_at": "2026-09-09T03:19:42.082002+00:00",
+      "deprecated_at": null,
+      "explanation": "Under almost-everywhere strong measurability and integrable energy, equality of total area and energy is equivalent to orthogonality and equal norms almost everywhere.\n\nThe pointwise area-energy bound first supplies integrability of the area density by domination. For two integrable functions ordered almost everywhere, equal integrals are equivalent to equality almost everywhere. Applying the proved pointwise equality criterion therefore gives\n\n$$A(v(x),w(x))=E(v(x),w(x))\\ \\text{a.e.}\\quad\\Longleftrightarrow\\quad \\langle v(x),w(x)\\rangle=0\\ \\text{and}\\ \\|v(x)\\|=\\|w(x)\\|\\ \\text{a.e.}$$",
+      "node_id": "sketch-01167772-943a-4c75-ab15-9f7b235777a8",
+      "node_type": "sketch",
+      "parent_theorem_id": "126d8aa9-2df0-4852-b3cd-4e4b6ffdd0c7",
+      "status": "ACCEPTED",
+      "submission_id": "01167772-943a-4c75-ab15-9f7b235777a8",
+      "username": "Xinze-Li-Moqian"
+    },
+    {
+      "child_count": 3,
+      "created_at": "2026-09-09T18:26:27.188791+00:00",
+      "deprecated_at": null,
+      "explanation": "This reduction retains one Open geometric child: constructing volume-controlled scalar and width profiles from a hypothetical counterexample. Given its data for each horizon, the proved trace constructor derives event finiteness from model radial comparison and the volume-loss budget, sorts the event times and restricts the profiles to a finite trace. Thus the Bishop-Gromov analytic prerequisites enter the existing width route through a proved nonaccumulation step. The geometric child, the parent and the Poincare goal remain Open; this is not a proof of Ricci-flow surgery or of the full geometric Bishop-Gromov theorem.",
+      "node_id": "sketch-0943befc-504f-4d6d-af2b-43ec35d7a1b3",
+      "node_type": "sketch",
+      "parent_theorem_id": "ed56bd90-927e-45c1-81d1-b79a2ca8a034",
+      "status": "SKETCH_ACCEPTED",
+      "submission_id": "0943befc-504f-4d6d-af2b-43ec35d7a1b3",
+      "username": "Xinze-Li-Moqian"
+    },
+    {
+      "child_count": 4,
+      "created_at": "2026-09-09T21:07:54.516028+00:00",
+      "deprecated_at": null,
+      "explanation": "Finite-extinction endgame with the exact existing topological goal. The geometric extracted-data construction supplies uniform width control; the proved deadline forces extinction, and finite surgery histories reconstruct standard connected-sum factors. The standard decomposition sketch uses the three explicit open topology lemmas and the proved sphere-covering base case. Four open leaves remain; this submission is a conditional reduction. https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/Reduction.lean#L1-L75; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+      "node_id": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff",
+      "node_type": "sketch",
+      "parent_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "status": "SKETCH_ACCEPTED",
+      "submission_id": "25d76430-fc9b-4aaa-9490-50a596f993ff",
+      "username": "Xinze-Li-Moqian"
+    },
+    {
+      "child_count": 2,
+      "created_at": "2026-09-09T03:41:14.183826+00:00",
+      "deprecated_at": null,
+      "explanation": "Assume the open comparison-data construction target. It supplies one initial width bound valid for every finite horizon and a trace of scalar and width profiles on each such horizon. Keep its partition, profiles, initial bounds, continuity and jump inequalities.\n\nAt each interior time the proved area-energy comparison theorem gives an eventual upper bound on the right-hand difference quotients of the width. The real right-neighborhood filter is nontrivial, so an eventual bound implies the frequently occurring bound required by ScalarWidthTrace. This fills its remaining width slope field.\n\nThe conclusion remains conditional on constructing the geometric comparison data; neither this reduction nor the analytic comparison theorem proves the Poincare conjecture independently.",
+      "node_id": "sketch-42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+      "node_type": "sketch",
+      "parent_theorem_id": "b0543216-8c0f-4f20-8b76-40d197f69fba",
+      "status": "SKETCH_ACCEPTED",
+      "submission_id": "42885aae-9f1a-4edc-b4c4-d8e3820e630a",
+      "username": "Xinze-Li-Moqian"
+    },
+    {
+      "child_count": 2,
+      "created_at": "2026-09-09T18:21:28.80267+00:00",
+      "deprecated_at": null,
+      "explanation": "The imported lower-loss theorem gives a uniform positive loss epsilon. An infinite event set would contain a finite subset with more than totalBudget/epsilon elements. Summing their losses contradicts the budget. This formalizes the analytic nonaccumulation mechanism in Kleiner-Lott Section 3.5; constructing a geometric budget is still required.",
+      "node_id": "sketch-4b0967cf-4f47-4150-9061-44c6425c704d",
+      "node_type": "sketch",
+      "parent_theorem_id": "3aca5641-0de9-4b5b-b280-28243d1961cd",
+      "status": "ACCEPTED",
+      "submission_id": "4b0967cf-4f47-4150-9061-44c6425c704d",
+      "username": "Xinze-Li-Moqian"
+    },
+    {
+      "child_count": 2,
+      "created_at": "2026-09-09T04:36:59.775017+00:00",
+      "deprecated_at": null,
+      "explanation": "This submission is a reduction. It derives the goal statement\n\n$$M \\text{ compact, Hausdorff, simply connected, charted over } \\mathbb{R}^3 \\",
+      "node_id": "sketch-51179dae-3662-451e-b374-fe303c70b325",
+      "node_type": "sketch",
+      "parent_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "status": "SKETCH_ACCEPTED",
+      "submission_id": "51179dae-3662-451e-b374-fe303c70b325",
+      "username": "Shuze Chen"
+    },
+    {
+      "child_count": 3,
+      "created_at": "2026-09-09T21:07:05.786133+00:00",
+      "deprecated_at": null,
+      "explanation": "If an extracted surgery topology E has width control with one bound W on every nonempty positive-time slice, all slices at and beyond max(T*(1/4,W),0)+1 are empty. This is a proved analytic implication; constructing the data from a geometric surgery flow remains open. Reviewed source: https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Topology/ExtinctionEndgame.lean#L1-L83. Small adapters reuse the existing platform theorem interfaces; no proof holes are added.",
+      "node_id": "sketch-6beb3841-4356-42a3-b3df-a417e4042a5c",
+      "node_type": "sketch",
+      "parent_theorem_id": "2e12f604-9e6a-4062-9bac-8727a1a9edb7",
+      "status": "ACCEPTED",
+      "submission_id": "6beb3841-4356-42a3-b3df-a417e4042a5c",
+      "username": "Xinze-Li-Moqian"
+    },
+    {
+      "child_count": 3,
+      "created_at": "2026-09-09T03:40:06.598218+00:00",
+      "deprecated_at": null,
+      "explanation": "The comparison data imply an upper right slope bound $D=-4\\pi-\\frac R2W(t)$. The integrated conformality criterion first gives $A(r)=E(r)=W(t)$. The integrated area-energy inequality gives $\\sup_u A(p_{j,u})\\le c_j$, so each real supremum is bounded above.\n\nFix $q>D$ and set $\\varepsilon=(q-D)/4$. Use the comparison hypothesis to obtain a common right neighborhood and a threshold $J$. For each $s$ in that neighborhood, convergence of the caps allows a choice $j\\ge J$ with $c_j<W(t)+\\varepsilon(s-t)$. Combining the inequalities yields\n\n$$W(s)-W(t)<(s-t)(D+2\\varepsilon)<(s-t)q.$$\n\nDividing by $s-t>0$ proves the eventual slope estimate. The choice of $j$ may depend on $s$; the neighborhood is uniform because the comparison estimate holds for every sufficiently large index.",
+      "node_id": "sketch-719f4cdd-1059-4091-9819-7926dbc5806e",
+      "node_type": "sketch",
+      "parent_theorem_id": "18265c01-abe4-486f-84f2-c88759ab91fc",
+      "status": "ACCEPTED",
+      "submission_id": "719f4cdd-1059-4091-9819-7926dbc5806e",
+      "username": "Xinze-Li-Moqian"
+    },
+    {
+      "child_count": 4,
+      "created_at": "2026-09-09T18:22:55.047906+00:00",
+      "deprecated_at": null,
+      "explanation": "Use volume control to prove event finiteness, then construct an event-free partition. Restrict the supplied profiles to its intervals. Initial bounds, continuity, differential inequalities, area-energy comparison witnesses and jumps transfer directly to the trace. No new geometric theorem is claimed.",
+      "node_id": "sketch-7698ef55-8ed6-4ed1-a26d-f2854cf4ee04",
+      "node_type": "sketch",
+      "parent_theorem_id": "ca00fe64-9dc8-4809-80cf-e824e93594b5",
+      "status": "ACCEPTED",
+      "submission_id": "7698ef55-8ed6-4ed1-a26d-f2854cf4ee04",
+      "username": "Xinze-Li-Moqian"
+    },
+    {
+      "child_count": 5,
+      "created_at": "2026-09-09T21:06:40.05152+00:00",
+      "deprecated_at": null,
+      "explanation": "A closed simply connected three-manifold with a finite connected-sum decomposition into sphere-covered factors and S1 times S2 factors is homeomorphic to S3. This conditional proof sketch uses three open topology lemmas: simple connectivity descends to factors, sphere handles are not simply connected, and the sum of two three-spheres is a three-sphere. The sphere-covering base case reuses salim's proved covering theorem. Reviewed source: https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/Reduction.lean#L1-L75. Small adapters reuse the existing platform theorem interfaces; no proof holes are added.",
+      "node_id": "sketch-a63d8d8d-3824-4e31-92a5-75d2e263bf09",
+      "node_type": "sketch",
+      "parent_theorem_id": "c508d5db-b2a6-4c25-8144-9a9f55f2b4e2",
+      "status": "SKETCH_ACCEPTED",
+      "submission_id": "a63d8d8d-3824-4e31-92a5-75d2e263bf09",
+      "username": "Xinze-Li-Moqian"
+    },
+    {
+      "child_count": 5,
+      "created_at": "2026-09-09T21:06:09.434296+00:00",
+      "deprecated_at": null,
+      "explanation": "Every normalized finite scalar/width comparison trace with initial width bound W and final time T satisfies T <= T*(1/4,W). The proof combines the existing scalar lower bound, area-energy width comparison and finite downward-jump deadline. Existence of such traces is an explicit input. Reviewed source: https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/OpenGALib/Analysis/ComparisonExtinction.lean#L1-L52. Small adapters reuse the existing platform theorem interfaces; no proof holes are added.",
+      "node_id": "sketch-f49a1f88-a5c8-43b7-a45a-5768ddb274e8",
+      "node_type": "sketch",
+      "parent_theorem_id": "945e8722-bd96-4eba-a6eb-6458fadeea7a",
+      "status": "ACCEPTED",
+      "submission_id": "f49a1f88-a5c8-43b7-a45a-5768ddb274e8",
+      "username": "Xinze-Li-Moqian"
+    }
+  ],
+  "root_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e"
+}

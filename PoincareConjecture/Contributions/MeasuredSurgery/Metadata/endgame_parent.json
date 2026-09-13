@@ -1,0 +1,24 @@
+{
+  "audits": [],
+  "created_at": "2026-09-09T21:06:50.466425+00:00",
+  "deprecated_at": null,
+  "deprecated_by": null,
+  "formal_statement": "\n/-!\n# Open geometric and topological inputs to the extinction endgame\n\nThese are open problems, with explicit `sorry` bodies. They are kept in the\nmission workspace, outside the reusable OpenGALib import tree. Successfully\nelaborating this file does not prove any of the four problems.\n\nThe geometry problem asks for data extracted from the intended Kleiner-Lott\nand Colding-Minicozzi construction. `SurgeryTopologyEvolution` is explicitly\nan abstraction of its topological output, not the full metric surgery flow.\nIn particular, this file does not claim to formalize the Ricci equation,\ncutoff conditions, or the analytic min-max construction.\n-/\n\nnamespace PoincareFormalization.ExtinctionEndgame\n\nopen OpenGA\n\nuniverse u\n\n\ntheorem exists_width_controlled_surgery_topology (M : ClosedThreeManifold.{u})\n    [SimplyConnectedSpace M] :\n    ∃ (E : SurgeryTopologyEvolution M) (W : ℝ), 0 ≤ W ∧ E.HasWidthControl W := by sorry\n\n\n\n\n\n\n\nend PoincareFormalization.ExtinctionEndgame\n",
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "natural_language_statement": "For every closed simply connected topological three-manifold M, construct an extracted surgery topology E and one W >= 0 such that every nonempty positive-time slice supplies a WidthComparisonTrace W T. E must preserve [M] on an initial positive time interval and carry finite topological reconstruction records at every horizon. This statement requests extracted data, not a complete metric-flow object. The intended KL/CM construction must still provide smoothing, orientation, a normalized metric, controlled surgery, nontrivial sweepouts and the width estimates. These geometric obligations remain open.",
+  "preamble": "import Definitions.Def_OpenGA_ExtinctionWidthControl\n",
+  "readback": null,
+  "source": "https://github.com/MathNetwork/OpenGA/blob/20ce5fe376984e6628a05ab1622edd8dc64b3985/PoincareConjecture/Contributions/ExtinctionEndgame/OpenProblems.lean#L1-L67; Kleiner-Lott, https://arxiv.org/pdf/math/0605667v5, Section 3.2 and Lemmas 73.4, 81.2; Colding-Minicozzi, https://arxiv.org/pdf/0707.0108, Theorem 1.7 and Corollary 1.11.",
+  "status": "Open",
+  "tags": [
+    "connected-sum",
+    "finite-extinction",
+    "openga-endgame",
+    "poincare-conjecture"
+  ],
+  "theorem_id": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+  "theorem_name": "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+  "theorem_title": "Construct uniform width-controlled surgery topology",
+  "visibility": "public",
+  "vote_count": 0
+}

@@ -1,0 +1,72 @@
+{
+  "measure": {
+    "audits": [],
+    "created_at": "2026-09-10T20:28:16.982854+00:00",
+    "deprecated_at": null,
+    "deprecated_by": null,
+    "formal_statement": "theorem Riemannian.RiemannianMetric.measure_geodesicBall_pos\n    [FiniteDimensional ℝ E] [T2Space M] [SigmaCompactSpace M]\n    (g : RiemannianMetric I M) (p : M) {r : ℝ}\n    (hμ : ∀ s : Set M, IsOpen s → s.Nonempty → 0 < μ s)\n    (hopen : IsOpen (g.geodesicBall p r)) (hr : 0 < r) :\n    0 < μ (g.geodesicBall p r) := by sorry",
+    "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+    "natural_language_statement": "Let g be a smooth Riemannian metric on a finite-dimensional manifold M and let mu be a measure that assigns positive measure to every nonempty open set. If a geodesic ball B_g(p,r) has positive radius and is open, then its mu-measure is positive. This is the measure-theoretic positivity interface for normalized ball-volume ratios in Bishop-Gromov comparison.",
+    "preamble": "import Definitions.Def_OpenGA_GeodesicBall\nimport Mathlib.MeasureTheory.Measure.Restrict\nnoncomputable section\nset_option autoImplicit false\nopen Bundle Set DifferentialGeometry MeasureTheory\nopen scoped Manifold ContDiff ENNReal\nopen Riemannian Riemannian.RiemannianMetric\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [MeasurableSpace M] [ChartedSpace H M] [IsManifold I ∞ M]\n  {μ : Measure M}\n",
+    "readback": null,
+    "source": "OpenGA, OpenGALib/ComparisonGeometry/Volume.lean; openness input: https://prove2.me/theorems/c13cb69f-c40b-40b3-8960-3a59f11c9123",
+    "status": "Proved",
+    "tags": [
+      "bishop-gromov",
+      "comparison-geometry",
+      "measure-theory"
+    ],
+    "theorem_id": "77397b5f-f00d-4fe2-aaef-e8544eda2e28",
+    "theorem_name": "Riemannian.RiemannianMetric.measure_geodesicBall_pos",
+    "theorem_title": "Positive measure of a geodesic ball",
+    "visibility": "public",
+    "vote_count": 0
+  },
+  "openness": {
+    "audits": [],
+    "created_at": "2026-09-10T19:41:09.16134+00:00",
+    "deprecated_at": null,
+    "deprecated_by": null,
+    "formal_statement": "theorem Riemannian.RiemannianMetric.isOpen_geodesicBall [FiniteDimensional ℝ E] [T2Space M] [SigmaCompactSpace M]\n    (g : RiemannianMetric I M) (p : M) (r : ℝ) :\n    IsOpen (g.geodesicBall p r) := by sorry",
+    "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+    "natural_language_statement": "Let $M$ be a smooth Hausdorff, $\\sigma$-compact manifold with a finite-dimensional real inner-product model space, and let $g$ be a smooth Riemannian metric. For every $p\\in M$ and $r\\in\\mathbb R$, the metric ball $B_g(p,r)$ is open in the original manifold topology. Completeness, connectedness and curvature assumptions are not required. This identifies the ball interface with the topology needed for local volume estimates.",
+    "preamble": "import Definitions.Def_OpenGA_GeodesicBall\nimport Mathlib.Geometry.Manifold.Metrizable\n\nnoncomputable section\nset_option autoImplicit false\n\nopen Bundle Set DifferentialGeometry\nopen scoped Manifold ContDiff ENNReal\n\nopen Riemannian Riemannian.RiemannianMetric\n\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n  {H : Type*} [TopologicalSpace H] {I : ModelWithCorners ℝ E H}\n  {M : Type*} [TopologicalSpace M] [ChartedSpace H M] [IsManifold I ∞ M]",
+    "readback": null,
+    "source": "https://github.com/MathNetwork/OpenGA/blob/16e60c2b09f5c1d3c2bf44ed81429b1a1fecc1b8/OpenGALib/ComparisonGeometry/MetricBall.lean#L63-L78",
+    "status": "Proved",
+    "tags": [
+      "comparison-geometry",
+      "poincare-foundations",
+      "riemannian-geometry"
+    ],
+    "theorem_id": "c13cb69f-c40b-40b3-8960-3a59f11c9123",
+    "theorem_name": "Riemannian.RiemannianMetric.isOpen_geodesicBall",
+    "theorem_title": "Riemannian metric balls are open in the manifold topology",
+    "visibility": "public",
+    "vote_count": 0
+  },
+  "parent": {
+    "audits": [],
+    "created_at": "2026-09-09T18:20:20.946761+00:00",
+    "deprecated_at": null,
+    "deprecated_by": null,
+    "formal_statement": "theorem PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →\n      Nonempty (OpenGA.SurgeryComparisonProcess initialWidth finalTime) := by sorry",
+    "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+    "natural_language_statement": "Let $M$ be a compact, simply connected, Hausdorff topological three-manifold without boundary, hypothetically not homeomorphic to the unit three-sphere. Construct $W_0\\ge0$ such that for every $T>0$ there is a surgery comparison process with initial width bound $W_0$ and final time $T$.\n\nOpen geometric construction. It must supply all fields of the imported analytic process: smoothability and normalization, suitable surgery flow and uniform radial comparison data, containment of controlled regions in removed material, a finite volume-loss budget allowing smooth volume growth, and scalar/sweepout comparison profiles with the prescribed inequalities and jumps. It does not assume event finiteness; that follows from the separately proved volume argument. This refines the existing comparison-data target. The full Ricci-flow and Bishop-Gromov geometric developments remain open.",
+    "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\nimport Definitions.Def_OpenGA_SurgeryComparisonProcess\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+    "readback": null,
+    "source": "Kleiner-Lott, Section 3.5, p. 13 and Sublemma 79.23, p. 157, https://arxiv.org/pdf/math/0605667v5#page=13; Colding-Minicozzi finite-extinction width argument, https://arxiv.org/pdf/0707.0108v1#page=7. This is a composite OpenGA construction target, not a claim that a single cited lemma supplies all fields.",
+    "status": "Open",
+    "tags": [
+      "bishop-gromov",
+      "geometric-analysis",
+      "poincare-conjecture",
+      "ricci-flow"
+    ],
+    "theorem_id": "0347aa7b-4f24-4106-873e-c9b21fd9169f",
+    "theorem_name": "PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere",
+    "theorem_title": "Volume-controlled width profiles from a hypothetical Poincare counterexample",
+    "visibility": "public",
+    "vote_count": 0
+  }
+}

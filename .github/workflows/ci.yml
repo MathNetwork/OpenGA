@@ -13,6 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Test platform synchronization and review handling
+        run: python3 -m unittest discover -s PoincareConjecture -p 'test_*.py'
+
       - name: Enforce sorry-free main (release policy)
         run: |
           # Release policy: main is a release-quality branch and carries NO
@@ -134,18 +137,35 @@ jobs:
           fi
           exit $FAIL
 
+      - name: Check curated source receipts and theorem axioms
+        run: python3 PoincareConjecture/check_curation.py
+
+      - name: Audit reused Bishop-Gromov theorem axioms
+        run: lake env lean PoincareConjecture/References/DifferentialGeometry/BishopGromovAudit.lean
+
       - name: Shake — unused-import baseline
         run: |
-          # `lake exe shake` flags files with unused imports (and missing
-          # transitive-relied-on imports). Baseline is current debt; CI
-          # fails on growth, mirrors Mathlib's `noshake.json` discipline.
-          ACTUAL=$(lake exe shake OpenGALib --no-downstream 2>&1 | grep -c "^/.*\.lean:$" || echo 0)
+          # Lean 4.33 integrates shake into Lake. Its current implementation
+          # requires every imported file to use the new `module` syntax;
+          # OpenGALib and DifferentialGeometry still have legacy modules.
+          # Report that limitation explicitly instead of counting a failed
+          # command as zero suggestions. Other command failures are fatal.
+          if ! lake shake OpenGALib > /tmp/shake.log 2>&1; then
+            cat /tmp/shake.log
+            if grep -Fq 'only works with `module`s currently' /tmp/shake.log; then
+              echo '::warning::Shake is unavailable for the current legacy module imports. Full builds and theorem axiom audits remain enforced.'
+              exit 0
+            fi
+            exit 1
+          fi
+          cat /tmp/shake.log
+          ACTUAL=$(awk '/^\/.*\.lean:$/ { count++ } END { print count+0 }' /tmp/shake.log)
           EXPECTED_SHAKE=38
           echo "Shake suggestions: $ACTUAL (expected ≤ $EXPECTED_SHAKE; gradually reduce)"
           if [ "$ACTUAL" -gt "$EXPECTED_SHAKE" ]; then
             echo "::error::Shake regression: $ACTUAL > $EXPECTED_SHAKE"
             echo "Add the missing import to the consumer file, or update EXPECTED_SHAKE only when reducing."
-            echo "Run \`lake exe shake OpenGALib --no-downstream\` locally to see the suggestions."
+            echo "Run \`lake shake OpenGALib\` locally to see the suggestions."
             exit 1
           fi
 

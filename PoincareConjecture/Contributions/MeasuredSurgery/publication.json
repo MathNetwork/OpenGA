@@ -1,0 +1,605 @@
+{
+  "definitions": [
+    {
+      "dependencies": [],
+      "id": "OpenGA_MeasuredReferenceBall",
+      "path": "Definitions/Def_OpenGA_MeasuredReferenceBall.lean",
+      "payload": {
+        "definition": "import Definitions.Def_OpenGA_GeodesicBall\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped Manifold ContDiff ENNReal BigOperators Topology\n\nnamespace OpenGA\n\n/-- **Math.** A finite positive-radius reference ball for an open-positive measure.\nThe measure is abstract: identifying it with Riemannian volume is an obligation\nof the geometric application. No claim of a Ricci flow is encoded here. -/\nstructure MeasuredReferenceBall where\n  Carrier : Type\n  [topology : TopologicalSpace Carrier]\n  [measurable : MeasurableSpace Carrier]\n  [chart : ChartedSpace (EuclideanSpace ℝ (Fin 3)) Carrier]\n  [smooth : IsManifold (𝓘(ℝ, EuclideanSpace ℝ (Fin 3))) ∞ Carrier]\n  [hausdorff : T2Space Carrier]\n  [sigmaCompact : SigmaCompactSpace Carrier]\n  metric : Riemannian.RiemannianMetric (𝓘(ℝ, EuclideanSpace ℝ (Fin 3))) Carrier\n  measure : Measure Carrier\n  open_pos : ∀ s : Set Carrier, IsOpen s → s.Nonempty → 0 < measure s\n  center : Carrier\n  radius : ℝ\n  radius_pos : 0 < radius\n  measure_lt_top : measure (metric.geodesicBall center radius) < ⊤\n  modelVolume : ℝ\n  modelVolume_pos : 0 < modelVolume\n\nattribute [instance] MeasuredReferenceBall.topology MeasuredReferenceBall.measurable\n  MeasuredReferenceBall.chart MeasuredReferenceBall.smooth MeasuredReferenceBall.hausdorff\n  MeasuredReferenceBall.sigmaCompact\n\nnoncomputable def MeasuredReferenceBall.anchor (B : MeasuredReferenceBall) : ℝ :=\n  (B.measure (B.metric.geodesicBall B.center B.radius)).toReal / B.modelVolume\n\nend OpenGA\n",
+        "definition_name": "OpenGA_MeasuredReferenceBall",
+        "definition_title": "A finite measured reference ball",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "A reference ball $B_g(p,r)$ in a smooth Riemannian three-manifold, with $r>0$, a measure $\\mu$ positive on nonempty open sets, $\\mu(B_g(p,r))<\\infty$, and a normalization $v>0$. Define the real anchor by $$a=\\mu(B_g(p,r))/v.$$ The measure is abstract; a geometric application must identify it with the appropriate Riemannian volume. This datum contains no surgery flow and does not assert a uniform estimate over event times.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/ComparisonGeometry/MeasuredSurgery.lean",
+        "tags": [
+          "poincare-conjecture",
+          "bishop-gromov",
+          "geometric-analysis"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-10T21:19:08.984497+00:00",
+        "job": {
+          "created_at": "2026-09-10T21:17:11.532434+00:00",
+          "definitions": "import Definitions.Def_OpenGA_GeodesicBall\nimport Mathlib.MeasureTheory.Measure.Restrict\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped Manifold ContDiff ENNReal BigOperators Topology\n\nnamespace OpenGA\n\n/-- **Math.** A finite positive-radius reference ball for an open-positive measure.\nThe measure is abstract: identifying it with Riemannian volume is an obligation\nof the geometric application. No claim of a Ricci flow is encoded here. -/\nstructure MeasuredReferenceBall where\n  Carrier : Type\n  [topology : TopologicalSpace Carrier]\n  [measurable : MeasurableSpace Carrier]\n  [chart : ChartedSpace (EuclideanSpace ℝ (Fin 3)) Carrier]\n  [smooth : IsManifold (𝓘(ℝ, EuclideanSpace ℝ (Fin 3))) ∞ Carrier]\n  [hausdorff : T2Space Carrier]\n  [sigmaCompact : SigmaCompactSpace Carrier]\n  metric : Riemannian.RiemannianMetric (𝓘(ℝ, EuclideanSpace ℝ (Fin 3))) Carrier\n  measure : Measure Carrier\n  open_pos : ∀ s : Set Carrier, IsOpen s → s.Nonempty → 0 < measure s\n  center : Carrier\n  radius : ℝ\n  radius_pos : 0 < radius\n  measure_lt_top : measure (metric.geodesicBall center radius) < ⊤\n  modelVolume : ℝ\n  modelVolume_pos : 0 < modelVolume\n\nattribute [instance] MeasuredReferenceBall.topology MeasuredReferenceBall.measurable\n  MeasuredReferenceBall.chart MeasuredReferenceBall.smooth MeasuredReferenceBall.hausdorff\n  MeasuredReferenceBall.sigmaCompact\n\nnoncomputable def MeasuredReferenceBall.anchor (B : MeasuredReferenceBall) : ℝ :=\n  (B.measure (B.metric.geodesicBall B.center B.radius)).toReal / B.modelVolume\n\nend OpenGA\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "92cf534f-5ea3-4d93-b8d2-22b827c23aaa",
+          "kind": "definition",
+          "natural_language_statement": "A reference ball $B_g(p,r)$ in a smooth Riemannian three-manifold, with $r>0$, a measure $\\mu$ positive on nonempty open sets, $\\mu(B_g(p,r))<\\infty$, and a normalization $v>0$. Define the real anchor by $$a=\\mu(B_g(p,r))/v.$$ The measure is abstract; a geometric application must identify it with the appropriate Riemannian volume. This datum contains no surgery flow and does not assert a uniform estimate over event times.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/ComparisonGeometry/MeasuredSurgery.lean",
+          "status": "PUBLISHED",
+          "tags": [
+            "poincare-conjecture",
+            "bishop-gromov",
+            "geometric-analysis"
+          ],
+          "theorem_id": "d4774607-34c8-43ee-ac38-57ff5ed18157",
+          "theorem_name": "OpenGA_MeasuredReferenceBall",
+          "theorem_title": "A finite measured reference ball",
+          "updated_at": "2026-09-10T21:17:25.948704+00:00",
+          "visibility": "public"
+        },
+        "job_id": "92cf534f-5ea3-4d93-b8d2-22b827c23aaa",
+        "response": {
+          "definition_name": "OpenGA_MeasuredReferenceBall",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "92cf534f-5ea3-4d93-b8d2-22b827c23aaa",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/92cf534f-5ea3-4d93-b8d2-22b827c23aaa until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-10T21:17:11.225107+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "d4774607-34c8-43ee-ac38-57ff5ed18157",
+        "verified_at": "2026-09-10T21:28:53.447617+00:00"
+      },
+      "sha256": "27dd5cf393c7840097b92620c7bbe7d8c5ed4d61ba6602380ef8d752ce976f34"
+    },
+    {
+      "dependencies": [
+        "OpenGA_MeasuredReferenceBall"
+      ],
+      "id": "OpenGA_MeasuredSurgeryComparisonData",
+      "path": "Definitions/Def_OpenGA_MeasuredSurgeryComparisonData.lean",
+      "payload": {
+        "definition": "import Definitions.Def_OpenGA_MeasuredReferenceBall\nimport Definitions.Def_OpenGA_SurgeryComparisonProcess\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped Manifold ContDiff ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\nnamespace OpenGA\n\nstructure MeasuredRadialSurgeryData where\n  events : Set ℝ\n  modelParameter : ℝ\n  modelParameter_nonneg : 0 ≤ modelParameter\n  referenceRadius : ℝ\n  removalRadius : ℝ\n  removalRadius_pos : 0 < removalRadius\n  radius_le : removalRadius ≤ referenceRadius\n  referenceBall : MeasuredReferenceBall\n  totalBudget : ℝ\n  density : ℝ → ℝ → ℝ≥0∞\n  density_measurable : ∀ t ∈ events,\n    AEMeasurable (density t) (volume.restrict (Ioc 0 referenceRadius))\n  density_comparison : ∀ t ∈ events, CrossAnti referenceRadius (density t)\n    (fun r => ENNReal.ofReal (hypDensity modelParameter 2 r))\n  reference_lower : ∀ t ∈ events, ENNReal.ofReal referenceBall.anchor ≤\n    (∫⁻ r in Ioc (0 : ℝ) referenceRadius, density t r) /\n      ENNReal.ofReal (hypRadVol modelParameter 2 referenceRadius)\n  removedVolume : ℝ → ℝ\n  removedVolume_nonneg : ∀ t ∈ events, 0 ≤ removedVolume t\n  removal_contains : ∀ t ∈ events,\n    (∫⁻ r in Ioc (0 : ℝ) removalRadius, density t r) ≤ ENNReal.ofReal (removedVolume t)\n  volume_budget : ∀ s : Finset ℝ, (↑s : Set ℝ) ⊆ events →\n    ∑ t ∈ s, removedVolume t ≤ totalBudget\n\n\nstructure MeasuredSurgeryComparisonData (initialWidth finalTime : ℝ) where\n  volumeControl : MeasuredRadialSurgeryData\n  events_inside : volumeControl.events ⊆ Ioo 0 finalTime\n  finalTime_pos : 0 < finalTime\n  scalar : ℝ → ℝ → ℝ\n  width : ℝ → ℝ → ℝ\n  scalar_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (scalar a) (Icc a b)\n  width_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (width a) (Icc a b)\n  scalar_initial : -6 ≤ scalar 0 0\n  width_initial : width 0 0 ≤ initialWidth\n  width_nonneg : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Icc a b, 0 ≤ width a t\n  scalar_slope : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, ∀ q : ℝ, q < (2 / 3 : ℝ) * (scalar a t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar a) t s\n  comparison : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, Nonempty (WidthComparisonData (width a) t (scalar a t))\n  scalar_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → scalar a b ≤ scalar b b\n  width_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → width b b ≤ width a b\n\n\nend OpenGA\n",
+        "definition_name": "OpenGA_MeasuredSurgeryComparisonData",
+        "definition_title": "Measured data for a surgery comparison process",
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "natural_language_statement": "Radial densities, removed-volume budgets, and scalar and width profiles on event-free intervals, with the same inequalities as the existing surgery comparison process. The reference constant is the normalized measure of a finite positive-radius reference ball. For every event $t$, the normalized reference radial integral is assumed to be at least this same constant. Uniformity, density comparison, containment, and the total removed-volume budget remain explicit hypotheses. Event finiteness and positivity of the reference constant are not assumed; they follow when this datum is converted to the original process.",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/ComparisonGeometry/MeasuredSurgery.lean",
+        "tags": [
+          "poincare-conjecture",
+          "bishop-gromov",
+          "geometric-analysis"
+        ]
+      },
+      "publication": {
+        "checked_at": "2026-09-10T21:20:10.152741+00:00",
+        "job": {
+          "created_at": "2026-09-10T21:19:09.676463+00:00",
+          "definitions": "import Definitions.Def_OpenGA_MeasuredReferenceBall\nimport Definitions.Def_OpenGA_SurgeryComparisonProcess\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped Manifold ContDiff ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\nnamespace OpenGA\n\nstructure MeasuredRadialSurgeryData where\n  events : Set ℝ\n  modelParameter : ℝ\n  modelParameter_nonneg : 0 ≤ modelParameter\n  referenceRadius : ℝ\n  removalRadius : ℝ\n  removalRadius_pos : 0 < removalRadius\n  radius_le : removalRadius ≤ referenceRadius\n  referenceBall : MeasuredReferenceBall\n  totalBudget : ℝ\n  density : ℝ → ℝ → ℝ≥0∞\n  density_measurable : ∀ t ∈ events,\n    AEMeasurable (density t) (volume.restrict (Ioc 0 referenceRadius))\n  density_comparison : ∀ t ∈ events, CrossAnti referenceRadius (density t)\n    (fun r => ENNReal.ofReal (hypDensity modelParameter 2 r))\n  reference_lower : ∀ t ∈ events, ENNReal.ofReal referenceBall.anchor ≤\n    (∫⁻ r in Ioc (0 : ℝ) referenceRadius, density t r) /\n      ENNReal.ofReal (hypRadVol modelParameter 2 referenceRadius)\n  removedVolume : ℝ → ℝ\n  removedVolume_nonneg : ∀ t ∈ events, 0 ≤ removedVolume t\n  removal_contains : ∀ t ∈ events,\n    (∫⁻ r in Ioc (0 : ℝ) removalRadius, density t r) ≤ ENNReal.ofReal (removedVolume t)\n  volume_budget : ∀ s : Finset ℝ, (↑s : Set ℝ) ⊆ events →\n    ∑ t ∈ s, removedVolume t ≤ totalBudget\n\n\nstructure MeasuredSurgeryComparisonData (initialWidth finalTime : ℝ) where\n  volumeControl : MeasuredRadialSurgeryData\n  events_inside : volumeControl.events ⊆ Ioo 0 finalTime\n  finalTime_pos : 0 < finalTime\n  scalar : ℝ → ℝ → ℝ\n  width : ℝ → ℝ → ℝ\n  scalar_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (scalar a) (Icc a b)\n  width_cont : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ContinuousOn (width a) (Icc a b)\n  scalar_initial : -6 ≤ scalar 0 0\n  width_initial : width 0 0 ≤ initialWidth\n  width_nonneg : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Icc a b, 0 ≤ width a t\n  scalar_slope : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, ∀ q : ℝ, q < (2 / 3 : ℝ) * (scalar a t) ^ 2 →\n      ∀ᶠ s in 𝓝[>] t, q < slope (scalar a) t s\n  comparison : ∀ a b, EventFreeInterval volumeControl.events finalTime a b →\n    ∀ t ∈ Ico a b, Nonempty (WidthComparisonData (width a) t (scalar a t))\n  scalar_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → scalar a b ≤ scalar b b\n  width_jump : ∀ a b c,\n    EventFreeInterval volumeControl.events finalTime a b →\n    EventFreeInterval volumeControl.events finalTime b c → width b b ≤ width a b\n\n\nend OpenGA\n",
+          "error_message": "",
+          "formal_statement": "",
+          "id": "f347c403-eb52-4902-92e8-4e85dcb398b9",
+          "kind": "definition",
+          "natural_language_statement": "Radial densities, removed-volume budgets, and scalar and width profiles on event-free intervals, with the same inequalities as the existing surgery comparison process. The reference constant is the normalized measure of a finite positive-radius reference ball. For every event $t$, the normalized reference radial integral is assumed to be at least this same constant. Uniformity, density comparison, containment, and the total removed-volume budget remain explicit hypotheses. Event finiteness and positivity of the reference constant are not assumed; they follow when this datum is converted to the original process.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/ComparisonGeometry/MeasuredSurgery.lean",
+          "status": "PUBLISHED",
+          "tags": [
+            "poincare-conjecture",
+            "bishop-gromov",
+            "geometric-analysis"
+          ],
+          "theorem_id": "0f9d3411-7856-4ef6-b615-2714c6e63615",
+          "theorem_name": "OpenGA_MeasuredSurgeryComparisonData",
+          "theorem_title": "Measured data for a surgery comparison process",
+          "updated_at": "2026-09-10T21:19:29.469717+00:00",
+          "visibility": "public"
+        },
+        "job_id": "f347c403-eb52-4902-92e8-4e85dcb398b9",
+        "response": {
+          "definition_name": "OpenGA_MeasuredSurgeryComparisonData",
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "job_id": "f347c403-eb52-4902-92e8-4e85dcb398b9",
+          "message": "Definition queued. Poll GET /api/v1/publish-jobs/f347c403-eb52-4902-92e8-4e85dcb398b9 until status is PUBLISHED, FAILED, or ERROR.",
+          "status": "PENDING"
+        },
+        "started_at": "2026-09-10T21:19:09.381230+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "0f9d3411-7856-4ef6-b615-2714c6e63615",
+        "verified_at": "2026-09-10T21:28:53.727607+00:00"
+      },
+      "sha256": "3f1fa3d113310b866b5d966bc9c4fd3edaf4c881aa86668531d1773c5703b515"
+    }
+  ],
+  "external_ids": {
+    "measure": "77397b5f-f00d-4fe2-aaef-e8544eda2e28",
+    "openness": "c13cb69f-c40b-40b3-8960-3a59f11c9123",
+    "parent": "0347aa7b-4f24-4106-873e-c9b21fd9169f"
+  },
+  "graph_verification": {
+    "edges": 692,
+    "nodes": 202,
+    "root_status": "Open",
+    "verified_paths": {
+      "OpenGA.MeasuredReferenceBall.anchor_pos": "5eccd9f0-0ef7-4638-b3c3-faf6f10a1245",
+      "OpenGA.nonempty_surgeryComparisonProcess_of_measuredData": "12c97728-18f8-426d-b7b0-502a28c7fb99",
+      "OpenGA_MeasuredReferenceBall": "d4774607-34c8-43ee-ac38-57ff5ed18157",
+      "OpenGA_MeasuredSurgeryComparisonData": "0f9d3411-7856-4ef6-b615-2714c6e63615",
+      "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+      "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+      "measure": "77397b5f-f00d-4fe2-aaef-e8544eda2e28",
+      "openness": "c13cb69f-c40b-40b3-8960-3a59f11c9123"
+    }
+  },
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "mission_id": "29133a9f-c412-4f19-968e-3deae9a335b5",
+  "root_required": [
+    "OpenGA_MeasuredReferenceBall",
+    "OpenGA_MeasuredSurgeryComparisonData",
+    "OpenGA.MeasuredReferenceBall.anchor_pos",
+    "OpenGA.nonempty_surgeryComparisonProcess_of_measuredData",
+    "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology",
+    "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology"
+  ],
+  "root_theorem_id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+  "source_reviewed": true,
+  "sources": [
+    {
+      "path": "OpenGALib/ComparisonGeometry/MeasuredSurgery.lean",
+      "sha256": "b10dc060d3f2de56f68841c02dc08f78898e0a723133bc7a8533295ab442c369"
+    },
+    {
+      "path": "OpenGALib/ComparisonGeometry/BallMeasure.lean",
+      "sha256": "3b8a4bba767820eda271711703be88f1303d2c9aaa6d32851ce9383ca969df03"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/Drafts/SurgeryGeometry.lean",
+      "sha256": "e7a60a63695f39486fe6645ec7b805a3c90ac781bc6ae4eb2026007f83e3f2d5"
+    },
+    {
+      "path": "PoincareConjecture/Contributions/MeasuredSurgery/Endgame.lean",
+      "sha256": "0e27480bfe177187ca0cd6413fd3ce512880db527e1a4c5493894f1a292087c0"
+    }
+  ],
+  "status": "MAIN_GRAPH_CONNECTED",
+  "theorems": [
+    {
+      "dependencies": [
+        "OpenGA_MeasuredReferenceBall"
+      ],
+      "expected_verdict": "ACCEPTED",
+      "explanation": "Use geodesic-ball openness and the proved positive-measure theorem. Finiteness makes the real conversion positive; division by the positive normalization preserves positivity.",
+      "id": "OpenGA.MeasuredReferenceBall.anchor_pos",
+      "path": "Theorems/Thm_OpenGA_MeasuredReferenceBall_anchor_pos.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem OpenGA.MeasuredReferenceBall.anchor_pos (B : MeasuredReferenceBall) : 0 < B.anchor := by sorry",
+        "natural_language_statement": "For a measured reference ball with normalization $v>0$, its anchor satisfies $$a=\\mu(B_g(p,r))/v>0.$$ Openness and positive radius give strictly positive measure. The finite-measure hypothesis permits passage from extended nonnegative values to a positive real number.",
+        "preamble": "import Definitions.Def_OpenGA_MeasuredReferenceBall\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped Manifold ContDiff ENNReal BigOperators Topology\n\nopen OpenGA\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/ComparisonGeometry/MeasuredSurgery.lean",
+        "tags": [
+          "poincare-conjecture",
+          "bishop-gromov",
+          "geometric-analysis"
+        ],
+        "theorem_name": "OpenGA.MeasuredReferenceBall.anchor_pos",
+        "theorem_title": "The measured reference anchor is positive"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_MeasuredReferenceBall_anchor_pos.lean",
+      "proof_sha256": "75e69fde2544e221651376728b021d2c89435e544070d0a605a8a79cdc209d17",
+      "publication": {
+        "checked_at": "2026-09-10T21:20:10.516914+00:00",
+        "job": {
+          "created_at": "2026-09-10T21:19:10.204493+00:00",
+          "definitions": "import Definitions.Def_OpenGA_MeasuredReferenceBall\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped Manifold ContDiff ENNReal BigOperators Topology\n\nopen OpenGA\n",
+          "error_message": "",
+          "formal_statement": "theorem OpenGA.MeasuredReferenceBall.anchor_pos (B : MeasuredReferenceBall) : 0 < B.anchor := by sorry",
+          "id": "3a2da86c-c4b9-468e-951f-51e375f5eb45",
+          "kind": "problem",
+          "natural_language_statement": "For a measured reference ball with normalization $v>0$, its anchor satisfies $$a=\\mu(B_g(p,r))/v>0.$$ Openness and positive radius give strictly positive measure. The finite-measure hypothesis permits passage from extended nonnegative values to a positive real number.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/ComparisonGeometry/MeasuredSurgery.lean",
+          "status": "PUBLISHED",
+          "tags": [
+            "poincare-conjecture",
+            "bishop-gromov",
+            "geometric-analysis"
+          ],
+          "theorem_id": "5eccd9f0-0ef7-4638-b3c3-faf6f10a1245",
+          "theorem_name": "OpenGA.MeasuredReferenceBall.anchor_pos",
+          "theorem_title": "The measured reference anchor is positive",
+          "updated_at": "2026-09-10T21:19:26.506538+00:00",
+          "visibility": "public"
+        },
+        "job_id": "3a2da86c-c4b9-468e-951f-51e375f5eb45",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "3a2da86c-c4b9-468e-951f-51e375f5eb45",
+              "name": "OpenGA.MeasuredReferenceBall.anchor_pos"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-10T21:19:09.939787+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "5eccd9f0-0ef7-4638-b3c3-faf6f10a1245",
+        "verified_at": "2026-09-10T21:28:53.946418+00:00"
+      },
+      "sha256": "2340b6e095339827b3562cd3a490afcc5fa54512ebaacbf9525a23abaddefde7",
+      "submission": {
+        "accepted_source_sha256": "75e69fde2544e221651376728b021d2c89435e544070d0a605a8a79cdc209d17",
+        "checked_at": "2026-09-10T21:28:54.507392+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "ea395ce5-9ba3-4bfe-b7e6-bb18563f2f6f"
+        },
+        "started_at": "2026-09-10T21:20:10.865324+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "ea395ce5-9ba3-4bfe-b7e6-bb18563f2f6f",
+        "verdict": {
+          "created_at": "2026-09-10T21:20:11.24108+00:00",
+          "error_message": "",
+          "file_path": "5eccd9f0-0ef7-4638-b3c3-faf6f10a1245/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/ea395ce5-9ba3-4bfe-b7e6-bb18563f2f6f.lean",
+          "id": "ea395ce5-9ba3-4bfe-b7e6-bb18563f2f6f",
+          "status": "ACCEPTED",
+          "theorem_id": "5eccd9f0-0ef7-4638-b3c3-faf6f10a1245",
+          "updated_at": "2026-09-10T21:20:51.17717+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-10T21:28:54.965026+00:00"
+      }
+    },
+    {
+      "dependencies": [
+        "OpenGA_MeasuredSurgeryComparisonData",
+        "OpenGA.MeasuredReferenceBall.anchor_pos"
+      ],
+      "expected_verdict": "ACCEPTED",
+      "explanation": "Construct the radial budget by deriving its anchor positivity from the measured reference ball. Copy the remaining budget fields and event-free scalar/width profile inequalities unchanged into the existing process.",
+      "id": "OpenGA.nonempty_surgeryComparisonProcess_of_measuredData",
+      "path": "Theorems/Thm_OpenGA_nonempty_surgeryComparisonProcess_of_measuredData.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem OpenGA.nonempty_surgeryComparisonProcess_of_measuredData {W T : ℝ} (D : MeasuredSurgeryComparisonData W T) : Nonempty (SurgeryComparisonProcess W T) := by sorry",
+        "natural_language_statement": "Measured radial volume-control data and scalar/width profiles determine a surgery comparison process with the same initial-width bound and final time. The only missing budget field, positivity of its reference anchor, is derived from the measured reference ball. The uniform radial lower bound, density comparison, removed-volume containment and budget are retained as hypotheses. This proves an adapter between analytic interfaces, not the existence of a Ricci flow.",
+        "preamble": "import Definitions.Def_OpenGA_MeasuredSurgeryComparisonData\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped Manifold ContDiff ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\nopen OpenGA\n",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/ComparisonGeometry/MeasuredSurgery.lean",
+        "tags": [
+          "poincare-conjecture",
+          "bishop-gromov",
+          "geometric-analysis"
+        ],
+        "theorem_name": "OpenGA.nonempty_surgeryComparisonProcess_of_measuredData",
+        "theorem_title": "Construct a surgery process from measured comparison data"
+      },
+      "proof_path": "Solutions/Sol_OpenGA_nonempty_surgeryComparisonProcess_of_measuredData.lean",
+      "proof_sha256": "1c7052e0351759fc07bfda6505f5546916b8d438d2e0fbc99a58ee329709e4d5",
+      "publication": {
+        "checked_at": "2026-09-10T21:22:02.554928+00:00",
+        "job": {
+          "created_at": "2026-09-10T21:21:36.592691+00:00",
+          "definitions": "import Definitions.Def_OpenGA_MeasuredSurgeryComparisonData\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped Manifold ContDiff ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison\n\nopen OpenGA\n",
+          "error_message": "",
+          "formal_statement": "theorem OpenGA.nonempty_surgeryComparisonProcess_of_measuredData {W T : ℝ} (D : MeasuredSurgeryComparisonData W T) : Nonempty (SurgeryComparisonProcess W T) := by sorry",
+          "id": "b74bb7a6-85a0-4968-97ab-e7ff216150e9",
+          "kind": "problem",
+          "natural_language_statement": "Measured radial volume-control data and scalar/width profiles determine a surgery comparison process with the same initial-width bound and final time. The only missing budget field, positivity of its reference anchor, is derived from the measured reference ball. The uniform radial lower bound, density comparison, removed-volume containment and budget are retained as hypotheses. This proves an adapter between analytic interfaces, not the existence of a Ricci flow.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/ComparisonGeometry/MeasuredSurgery.lean",
+          "status": "PUBLISHED",
+          "tags": [
+            "poincare-conjecture",
+            "bishop-gromov",
+            "geometric-analysis"
+          ],
+          "theorem_id": "12c97728-18f8-426d-b7b0-502a28c7fb99",
+          "theorem_name": "OpenGA.nonempty_surgeryComparisonProcess_of_measuredData",
+          "theorem_title": "Construct a surgery process from measured comparison data",
+          "updated_at": "2026-09-10T21:21:56.034905+00:00",
+          "visibility": "public"
+        },
+        "job_id": "b74bb7a6-85a0-4968-97ab-e7ff216150e9",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "b74bb7a6-85a0-4968-97ab-e7ff216150e9",
+              "name": "OpenGA.nonempty_surgeryComparisonProcess_of_measuredData"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-10T21:21:36.228641+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "12c97728-18f8-426d-b7b0-502a28c7fb99",
+        "verified_at": "2026-09-10T21:28:55.149158+00:00"
+      },
+      "sha256": "164f53beb893413e79dba78eb6530e6d1623b4bdf4ddb2891f24b535dad7946f",
+      "submission": {
+        "accepted_source_sha256": "1c7052e0351759fc07bfda6505f5546916b8d438d2e0fbc99a58ee329709e4d5",
+        "checked_at": "2026-09-10T21:28:55.533732+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "b92e1354-af22-4965-bb89-ce5bb8c772db"
+        },
+        "started_at": "2026-09-10T21:22:03.073909+00:00",
+        "status": "ACCEPTED",
+        "submission_id": "b92e1354-af22-4965-bb89-ce5bb8c772db",
+        "verdict": {
+          "created_at": "2026-09-10T21:22:03.478146+00:00",
+          "error_message": "",
+          "file_path": "12c97728-18f8-426d-b7b0-502a28c7fb99/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/b92e1354-af22-4965-bb89-ce5bb8c772db.lean",
+          "id": "b92e1354-af22-4965-bb89-ce5bb8c772db",
+          "status": "ACCEPTED",
+          "theorem_id": "12c97728-18f8-426d-b7b0-502a28c7fb99",
+          "updated_at": "2026-09-10T21:22:42.94942+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-10T21:28:56.044884+00:00"
+      }
+    },
+    {
+      "dependencies": [
+        "OpenGA_MeasuredSurgeryComparisonData"
+      ],
+      "id": "PoincareFormalization.measured_surgery_data_of_not_homeomorph_sphere",
+      "open_problem": true,
+      "path": "Theorems/Thm_PoincareFormalization_measured_surgery_data_of_not_homeomorph_sphere.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem PoincareFormalization.measured_surgery_data_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →\n      Nonempty (OpenGA.MeasuredSurgeryComparisonData initialWidth finalTime) := by sorry",
+        "natural_language_statement": "For a compact simply connected Hausdorff topological three-manifold $M$ hypothetically not homeomorphic to $S^3$, construct one $W\\ge0$ such that for every $T>0$ there are measured surgery comparison data on $[0,T]$. This is an Open geometric construction. It must supply the reference ball and measure, the uniform radial lower bound at every event, density comparison, removed-region containment, a total volume budget, and scalar/sweepout profiles. The intended application must identify the abstract measure with geometric volume. Smoothing, Ricci flow with surgery, and the Colding–Minicozzi estimates remain to be developed.",
+        "preamble": "import Definitions.Def_OpenGA_MeasuredSurgeryComparisonData\nimport Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\nimport Definitions.Def_OpenGA_SurgeryComparisonProcess\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/ComparisonGeometry/MeasuredSurgery.lean",
+        "tags": [
+          "poincare-conjecture",
+          "bishop-gromov",
+          "geometric-analysis"
+        ],
+        "theorem_name": "PoincareFormalization.measured_surgery_data_of_not_homeomorph_sphere",
+        "theorem_title": "Construct measured surgery data from a hypothetical counterexample"
+      },
+      "publication": {
+        "checked_at": "2026-09-10T21:21:36.823527+00:00",
+        "job": {
+          "created_at": "2026-09-10T21:20:12.067637+00:00",
+          "definitions": "import Definitions.Def_OpenGA_MeasuredSurgeryComparisonData\nimport Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\nimport Definitions.Def_OpenGA_SurgeryComparisonProcess\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+          "error_message": "",
+          "formal_statement": "theorem PoincareFormalization.measured_surgery_data_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →\n      Nonempty (OpenGA.MeasuredSurgeryComparisonData initialWidth finalTime) := by sorry",
+          "id": "9701b792-b302-4f16-a643-0eca0889c2a0",
+          "kind": "problem",
+          "natural_language_statement": "For a compact simply connected Hausdorff topological three-manifold $M$ hypothetically not homeomorphic to $S^3$, construct one $W\\ge0$ such that for every $T>0$ there are measured surgery comparison data on $[0,T]$. This is an Open geometric construction. It must supply the reference ball and measure, the uniform radial lower bound at every event, density comparison, removed-region containment, a total volume budget, and scalar/sweepout profiles. The intended application must identify the abstract measure with geometric volume. Smoothing, Ricci flow with surgery, and the Colding–Minicozzi estimates remain to be developed.",
+          "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/ComparisonGeometry/MeasuredSurgery.lean",
+          "status": "PUBLISHED",
+          "tags": [
+            "poincare-conjecture",
+            "bishop-gromov",
+            "geometric-analysis"
+          ],
+          "theorem_id": "fc6d603d-ee71-4320-8e35-b9967dd105ae",
+          "theorem_name": "PoincareFormalization.measured_surgery_data_of_not_homeomorph_sphere",
+          "theorem_title": "Construct measured surgery data from a hypothetical counterexample",
+          "updated_at": "2026-09-10T21:20:32.474168+00:00",
+          "visibility": "public"
+        },
+        "job_id": "9701b792-b302-4f16-a643-0eca0889c2a0",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "9701b792-b302-4f16-a643-0eca0889c2a0",
+              "name": "PoincareFormalization.measured_surgery_data_of_not_homeomorph_sphere"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-10T21:20:11.766580+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "fc6d603d-ee71-4320-8e35-b9967dd105ae",
+        "verified_at": "2026-09-10T21:28:56.347376+00:00"
+      },
+      "sha256": "9b4a1801aa24e758804e6f61ed58456e3408aa0083126917c8355cdff7ffe6a6"
+    },
+    {
+      "dependencies": [
+        "OpenGA.nonempty_surgeryComparisonProcess_of_measuredData",
+        "PoincareFormalization.measured_surgery_data_of_not_homeomorph_sphere"
+      ],
+      "expected_verdict": "SKETCH_ACCEPTED",
+      "explanation": "Reduce the unchanged process-existence statement to the Open measured-data construction. For each horizon apply the proved measured-data adapter, whose budget anchor positivity uses the reference-ball openness and measure-positivity theorems. All geometric and uniform-comparison obligations stay in the new Open child; the parent and Poincare goal remain Open.",
+      "id": "PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere",
+      "path": "Theorems/Thm_PoincareFormalization_surgery_comparison_process_of_not_homeomorph_sphere.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere\n    (M : Type*) [TopologicalSpace M] [T2Space M]\n    [ChartedSpace (EuclideanSpace ℝ (Fin 3)) M]\n    [SimplyConnectedSpace M] [CompactSpace M]\n    (hnot : ¬ Nonempty (M ≃ₜ ↥(Metric.sphere (0 : EuclideanSpace ℝ (Fin (3 + 1))) 1))) :\n    ∃ initialWidth : ℝ, 0 ≤ initialWidth ∧ ∀ finalTime : ℝ, 0 < finalTime →\n      Nonempty (OpenGA.SurgeryComparisonProcess initialWidth finalTime) := by sorry",
+        "natural_language_statement": "Let $M$ be a compact, simply connected, Hausdorff topological three-manifold without boundary, hypothetically not homeomorphic to the unit three-sphere. Construct $W_0\\ge0$ such that for every $T>0$ there is a surgery comparison process with initial width bound $W_0$ and final time $T$.\n\nOpen geometric construction. It must supply all fields of the imported analytic process: smoothability and normalization, suitable surgery flow and uniform radial comparison data, containment of controlled regions in removed material, a finite volume-loss budget allowing smooth volume growth, and scalar/sweepout comparison profiles with the prescribed inequalities and jumps. It does not assume event finiteness; that follows from the separately proved volume argument. This refines the existing comparison-data target. The full Ricci-flow and Bishop-Gromov geometric developments remain open.",
+        "preamble": "import Mathlib.Geometry.Manifold.ChartedSpace\nimport Mathlib.Analysis.InnerProductSpace.PiL2\nimport Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected\nimport Definitions.Def_OpenGA_SurgeryComparisonProcess\nimport Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic\nimport Mathlib.MeasureTheory.Integral.Lebesgue.Add\nimport Mathlib.Data.Finset.Sort\nimport Mathlib.Data.Set.Finite.Basic\nimport Mathlib.Algebra.Order.Archimedean.Basic\nimport Mathlib.Algebra.Order.BigOperators.Group.Finset\nimport Mathlib.Tactic.Linarith\n\nset_option autoImplicit false\nopen MeasureTheory Set Filter\nopen scoped ENNReal BigOperators Topology\nopen DifferentialGeometry.Geometry.Riemannian.VolumeComparison",
+        "source": "https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/OpenGALib/ComparisonGeometry/MeasuredSurgery.lean",
+        "tags": [
+          "poincare-conjecture",
+          "bishop-gromov",
+          "geometric-analysis"
+        ],
+        "theorem_name": "PoincareFormalization.surgery_comparison_process_of_not_homeomorph_sphere",
+        "theorem_title": "Volume-controlled width profiles from a hypothetical Poincare counterexample"
+      },
+      "proof_path": "Solutions/Sol_PoincareFormalization_surgery_comparison_process_of_not_homeomorph_sphere.lean",
+      "proof_sha256": "9b03638b4443ad2729ecc3f7b6df7cda433687721d75c2ba4542fba409f16c29",
+      "publication": {
+        "status": "PUBLISHED",
+        "theorem_id": "0347aa7b-4f24-4106-873e-c9b21fd9169f",
+        "verified_at": "2026-09-10T21:28:56.628891+00:00"
+      },
+      "sha256": "5f0a0a3532cf6e83c74e619b0cd4caef52c9816e42f088fd7c9e2a55468ea598",
+      "submission": {
+        "accepted_source_sha256": "9b03638b4443ad2729ecc3f7b6df7cda433687721d75c2ba4542fba409f16c29",
+        "checked_at": "2026-09-10T21:28:57.139502+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "e2b775eb-e5c4-401a-be7c-8c5011d97752"
+        },
+        "started_at": "2026-09-10T21:22:45.184075+00:00",
+        "status": "SKETCH_ACCEPTED",
+        "submission_id": "e2b775eb-e5c4-401a-be7c-8c5011d97752",
+        "verdict": {
+          "created_at": "2026-09-10T21:22:45.498743+00:00",
+          "error_message": "",
+          "file_path": "0347aa7b-4f24-4106-873e-c9b21fd9169f/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/e2b775eb-e5c4-401a-be7c-8c5011d97752.lean",
+          "id": "e2b775eb-e5c4-401a-be7c-8c5011d97752",
+          "status": "SKETCH_ACCEPTED",
+          "theorem_id": "0347aa7b-4f24-4106-873e-c9b21fd9169f",
+          "updated_at": "2026-09-10T21:23:26.40484+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-10T21:28:57.700501+00:00"
+      }
+    },
+    {
+      "dependencies": [
+        "OpenGA_MeasuredSurgeryComparisonData"
+      ],
+      "id": "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology",
+      "open_problem": true,
+      "path": "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_exists_measured_surgery_topology.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "theorem PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology\n    (M : ClosedThreeManifold.{u}) [SimplyConnectedSpace M] :\n    ∃ (E : SurgeryTopologyEvolution M) (W : ℝ), 0 ≤ W ∧\n      ∀ T : ℝ, 0 < T → E.components T ≠ [] →\n        Nonempty (MeasuredSurgeryComparisonData W T) := by sorry",
+        "natural_language_statement": "For every closed simply connected topological three-manifold $M$, construct an extracted surgery topology $E$ and one $W\\ge0$ such that, for every $T>0$ with a nonempty final slice, measured surgery comparison data exist with initial-width bound $W$ and horizon $T$. The reference measure, uniform radial estimates, removed-volume budget and sweepout profiles must be supplied by the geometric construction. This Open statement refines the active width-controlled topology input; it does not claim a construction of a Ricci flow or a proof of finite extinction.",
+        "preamble": "import Definitions.Def_OpenGA_MeasuredSurgeryComparisonData\nimport Definitions.Def_OpenGA_ExtinctionWidthControl\n\nset_option autoImplicit false\nopen OpenGA\nuniverse u\n",
+        "source": "OpenGA measured-reference-ball refinement of the extinction endgame: https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/PoincareConjecture/Contributions/MeasuredSurgery/Endgame.lean",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "bishop-gromov"
+        ],
+        "theorem_name": "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology",
+        "theorem_title": "Construct measured surgery topology for the extinction endgame"
+      },
+      "publication": {
+        "checked_at": "2026-09-10T21:28:08.457036+00:00",
+        "job": {
+          "created_at": "2026-09-10T21:26:35.656416+00:00",
+          "definitions": "import Definitions.Def_OpenGA_MeasuredSurgeryComparisonData\nimport Definitions.Def_OpenGA_ExtinctionWidthControl\n\nset_option autoImplicit false\nopen OpenGA\nuniverse u\n",
+          "error_message": "",
+          "formal_statement": "theorem PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology\n    (M : ClosedThreeManifold.{u}) [SimplyConnectedSpace M] :\n    ∃ (E : SurgeryTopologyEvolution M) (W : ℝ), 0 ≤ W ∧\n      ∀ T : ℝ, 0 < T → E.components T ≠ [] →\n        Nonempty (MeasuredSurgeryComparisonData W T) := by sorry",
+          "id": "816f0511-b230-44bd-b800-48b6d9364025",
+          "kind": "problem",
+          "natural_language_statement": "For every closed simply connected topological three-manifold $M$, construct an extracted surgery topology $E$ and one $W\\ge0$ such that, for every $T>0$ with a nonempty final slice, measured surgery comparison data exist with initial-width bound $W$ and horizon $T$. The reference measure, uniform radial estimates, removed-volume budget and sweepout profiles must be supplied by the geometric construction. This Open statement refines the active width-controlled topology input; it does not claim a construction of a Ricci flow or a proof of finite extinction.",
+          "source": "OpenGA measured-reference-ball refinement of the extinction endgame: https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/PoincareConjecture/Contributions/MeasuredSurgery/Endgame.lean",
+          "status": "PUBLISHED",
+          "tags": [
+            "poincare-conjecture",
+            "finite-extinction",
+            "bishop-gromov"
+          ],
+          "theorem_id": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+          "theorem_name": "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology",
+          "theorem_title": "Construct measured surgery topology for the extinction endgame",
+          "updated_at": "2026-09-10T21:28:03.078321+00:00",
+          "visibility": "public"
+        },
+        "job_id": "816f0511-b230-44bd-b800-48b6d9364025",
+        "response": {
+          "errors": [],
+          "guidelines": "Reminder: write the natural_language_statement like an academic paper, not a Lean dump. Use standard mathematical notation in KaTeX (backslashes doubled in JSON) instead of raw Lean expressions, give context for every variable and symbol, put the main formula in a display-math block, follow it with a short paragraph on the result's mathematical role, keep Lean-specific details in an optional final Formalization Note paragraph, and do not include proof details. Full principles: references/contribute.md#important-principles-of-submit-problemsdefinitions",
+          "jobs": [
+            {
+              "job_id": "816f0511-b230-44bd-b800-48b6d9364025",
+              "name": "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology"
+            }
+          ],
+          "message": "1/1 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+        },
+        "started_at": "2026-09-10T21:26:35.324144+00:00",
+        "status": "PUBLISHED",
+        "theorem_id": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+        "verified_at": "2026-09-10T21:28:57.919649+00:00"
+      },
+      "sha256": "7d92b16ca9fd813c62d9217e50e51adf0c170c7e5967c0dbb245fe0d9af70cd0"
+    },
+    {
+      "dependencies": [
+        "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology",
+        "OpenGA.nonempty_surgeryComparisonProcess_of_measuredData"
+      ],
+      "expected_verdict": "SKETCH_ACCEPTED",
+      "explanation": "Keep the target statement unchanged. The Open measured-data construction supplies a topology evolution and one initial width bound for every nonempty horizon. At each such horizon, the proved measured-data adapter gives a surgery comparison process, and the proved finite-trace constructor gives the required WidthComparisonTrace. Positivity of its budget anchor is derived from the finite reference-ball measure. The uniform radial bound, actual surgery and width estimates remain in the Open geometric child; the parent and Poincare goal remain Open.",
+      "id": "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+      "path": "Theorems/Thm_PoincareFormalization_ExtinctionEndgame_exists_width_controlled_surgery_topology.lean",
+      "payload": {
+        "env": "0df444a360eaa60ab8c11dca51a86af692955474",
+        "formal_statement": "\n/-!\n# Open geometric and topological inputs to the extinction endgame\n\nThese are open problems, with explicit `sorry` bodies. They are kept in the\nmission workspace, outside the reusable OpenGALib import tree. Successfully\nelaborating this file does not prove any of the four problems.\n\nThe geometry problem asks for data extracted from the intended Kleiner-Lott\nand Colding-Minicozzi construction. `SurgeryTopologyEvolution` is explicitly\nan abstraction of its topological output, not the full metric surgery flow.\nIn particular, this file does not claim to formalize the Ricci equation,\ncutoff conditions, or the analytic min-max construction.\n-/\n\nnamespace PoincareFormalization.ExtinctionEndgame\n\nopen OpenGA\n\nuniverse u\n\n\ntheorem exists_width_controlled_surgery_topology (M : ClosedThreeManifold.{u})\n    [SimplyConnectedSpace M] :\n    ∃ (E : SurgeryTopologyEvolution M) (W : ℝ), 0 ≤ W ∧ E.HasWidthControl W := by sorry\n\n\n\n\n\n\n\nend PoincareFormalization.ExtinctionEndgame\n",
+        "natural_language_statement": "For every closed simply connected topological three-manifold M, construct an extracted surgery topology E and one W >= 0 such that every nonempty positive-time slice supplies a WidthComparisonTrace W T. E must preserve [M] on an initial positive time interval and carry finite topological reconstruction records at every horizon. This statement requests extracted data, not a complete metric-flow object. The intended KL/CM construction must still provide smoothing, orientation, a normalized metric, controlled surgery, nontrivial sweepouts and the width estimates. These geometric obligations remain open.",
+        "preamble": "import Definitions.Def_OpenGA_ExtinctionWidthControl\n",
+        "source": "OpenGA measured-reference-ball refinement of the extinction endgame: https://github.com/MathNetwork/OpenGA/blob/feat/prove2me-differential-geometry/PoincareConjecture/Contributions/MeasuredSurgery/Endgame.lean",
+        "tags": [
+          "poincare-conjecture",
+          "finite-extinction",
+          "bishop-gromov"
+        ],
+        "theorem_name": "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology",
+        "theorem_title": "Construct uniform width-controlled surgery topology"
+      },
+      "proof_path": "Solutions/Sol_PoincareFormalization_ExtinctionEndgame_exists_width_controlled_surgery_topology.lean",
+      "proof_sha256": "3a5e12d69b66e65e4957d134aa63c8cf67f7381ed1b559412d518ec4a82ff300",
+      "publication": {
+        "status": "PUBLISHED",
+        "theorem_id": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+        "verified_at": "2026-09-10T21:28:58.089675+00:00"
+      },
+      "sha256": "1447851f3c52c15e4c4a0e72727ad0f95c1e521e54f89583ed53b5f79251dd85",
+      "submission": {
+        "accepted_source_sha256": "3a5e12d69b66e65e4957d134aa63c8cf67f7381ed1b559412d518ec4a82ff300",
+        "checked_at": "2026-09-10T21:28:58.446032+00:00",
+        "response": {
+          "guidelines": "Reminder: write the explanation like a section of a math paper, not a tactic-by-tactic transcript. Walk through the mathematical argument and show how it maps onto your Lean code, in Markdown with KaTeX math. The explanation is the only part of a submission you can edit later, via PATCH /api/v1/submissions/:id. Full principles: references/prove.md#attach-an-explanation",
+          "message": "Proof submitted for verification. Poll GET /submission/{id} for results.",
+          "status": "PENDING",
+          "submission_id": "870e3a52-84b8-4f25-8bab-e2378fc18cc8"
+        },
+        "started_at": "2026-09-10T21:28:08.961034+00:00",
+        "status": "SKETCH_ACCEPTED",
+        "submission_id": "870e3a52-84b8-4f25-8bab-e2378fc18cc8",
+        "verdict": {
+          "created_at": "2026-09-10T21:28:09.23075+00:00",
+          "error_message": "",
+          "file_path": "fe9a0128-6fb2-494b-aba1-8436851df1e4/cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b/870e3a52-84b8-4f25-8bab-e2378fc18cc8.lean",
+          "id": "870e3a52-84b8-4f25-8bab-e2378fc18cc8",
+          "status": "SKETCH_ACCEPTED",
+          "theorem_id": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+          "updated_at": "2026-09-10T21:28:54.590205+00:00",
+          "user_id": "cd9090e5-05ea-4bf2-9a9c-dd2100e2c82b"
+        },
+        "verified_at": "2026-09-10T21:28:59.555863+00:00"
+      }
+    }
+  ],
+  "toolchain": "leanprover/lean4:v4.33.1",
+  "validation": {
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "build": "Mathlib-only submission workspace: 2934 jobs passed",
+    "checked_at": "2026-09-10T21:16:59.644786+00:00",
+    "endgame_build": "Mathlib-only batch build passed: 2956 jobs",
+    "endgame_target": "Tools/EndgameType.lean: active endgame target matched exactly",
+    "exact_types": "Tools/Exact0.lean, Exact1.lean and Exact3.lean passed; unchanged parent target matched",
+    "resolved_axioms": "Tools/ResolvedAudit.lean passed with imported proved stubs replaced by complete proofs",
+    "scope": "Two definitions, two complete proofs, two Open geometric children and two exact-type reductions; root reachability required through the active extinction endgame.",
+    "status": "passed"
+  },
+  "verified_at": "2026-09-10T21:29:10.226129+00:00"
+}

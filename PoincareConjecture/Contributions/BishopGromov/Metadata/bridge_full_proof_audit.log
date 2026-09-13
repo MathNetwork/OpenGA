@@ -1,0 +1,4 @@
+OpenGA.RadialSurgeryVolumeBudget.removedVolume_lower: [propext, Classical.choice, Quot.sound]
+OpenGA.RadialSurgeryVolumeBudget.events_finite: [propext, Classical.choice, Quot.sound]
+OpenGA.exists_event_free_partition: [propext, Classical.choice, Quot.sound]
+OpenGA.nonempty_widthComparisonTrace_of_surgeryComparisonProcess: [propext, Classical.choice, Quot.sound]

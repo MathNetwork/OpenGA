@@ -1,0 +1,100 @@
+{
+  "checked_at": "2026-09-09T04:01:07.956996+00:00",
+  "declarations": [
+    {
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "name": "OpenGA.areaDensity_eq_normDet",
+      "type": "\u2200 {E : Type u_1} {F : Type u_2} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace \u211d E]\n  [inst_2 : FiniteDimensional \u211d E] [inst_3 : NormedAddCommGroup F] [inst_4 : InnerProductSpace \u211d F] (L : E \u2192\u2097[\u211d] F)\n  (b : OrthonormalBasis (Fin 2) \u211d E), OpenGA.areaDensity (L (b 0)) (L (b 1)) = L.normDet"
+    },
+    {
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "name": "OpenGA.areaDensity_basis_independent",
+      "type": "\u2200 {E : Type u_1} {F : Type u_2} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace \u211d E] [FiniteDimensional \u211d E]\n  [inst_3 : NormedAddCommGroup F] [inst_4 : InnerProductSpace \u211d F] (L : E \u2192\u2097[\u211d] F) (b c : OrthonormalBasis (Fin 2) \u211d E),\n  OpenGA.areaDensity (L (b 0)) (L (b 1)) = OpenGA.areaDensity (L (c 0)) (L (c 1))"
+    },
+    {
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "name": "OpenGA.energyDensity_basis_independent",
+      "type": "\u2200 {E : Type u_1} {F : Type u_2} [inst : NormedAddCommGroup E] [inst_1 : InnerProductSpace \u211d E]\n  [inst_2 : NormedAddCommGroup F] [inst_3 : InnerProductSpace \u211d F] (L : E \u2192\u2097[\u211d] F) (b c : OrthonormalBasis (Fin 2) \u211d E),\n  OpenGA.energyDensity (L (b 0)) (L (b 1)) = OpenGA.energyDensity (L (c 0)) (L (c 1))"
+    }
+  ],
+  "lean_toolchain": "leanprover/lean4:v4.33.1",
+  "local_path": "OpenGALib/Analysis/AreaEnergy/LinearMap.lean",
+  "mathlib_revision": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "platform_published": true,
+  "platform_verified_at": "2026-09-09T15:47:54.746928+00:00",
+  "publication_record": "PoincareConjecture/Contributions/LinearMapDensities/publication.json",
+  "published_dependencies": [
+    {
+      "declaration": "OrthonormalBasis.sum_apply_diagonal_invariant",
+      "status": "Proved",
+      "submission_id": "98c16d58-8c4b-4ec5-aa86-7a1af0257775",
+      "theorem_id": "a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784",
+      "url": "https://prove2.me/theorems/a3ed1c4d-b3cb-4d2e-9caf-b6e4c734e784"
+    }
+  ],
+  "published_theorems": [
+    {
+      "declaration": "OpenGA.areaDensity_eq_normDet",
+      "status": "Proved",
+      "submission_id": "15a12bda-4d91-481f-9492-2022ec9bf42b",
+      "theorem_id": "eddc764e-527d-4d07-a812-94f60b637407",
+      "url": "https://prove2.me/theorems/eddc764e-527d-4d07-a812-94f60b637407"
+    },
+    {
+      "declaration": "OpenGA.areaDensity_basis_independent",
+      "status": "Proved",
+      "submission_id": "59b54355-c04b-4077-925b-c7d3785054ad",
+      "theorem_id": "85285131-e406-453d-81b2-2e602a3e878d",
+      "url": "https://prove2.me/theorems/85285131-e406-453d-81b2-2e602a3e878d"
+    },
+    {
+      "declaration": "OpenGA.energyDensity_basis_independent",
+      "status": "Proved",
+      "submission_id": "973f67d3-d234-4233-800f-35c83decf01c",
+      "theorem_id": "1e7c607c-776e-41d3-8819-54cfe0543e69",
+      "url": "https://prove2.me/theorems/1e7c607c-776e-41d3-8819-54cfe0543e69"
+    }
+  ],
+  "remaining_interface": "Apply the pointwise results to manifold differentials with their Riemannian inner products, establish regularity of the resulting densities for varying tangent fibers, and integrate over surfaces. Sobolev maps, sweepouts and the equality of area and energy widths remain open.",
+  "reused_results": [
+    {
+      "name": "LinearMap.normDet_sq_eq_det_gram",
+      "path": "Mathlib/Analysis/InnerProductSpace/NormDet.lean",
+      "repository": "https://github.com/leanprover-community/mathlib4",
+      "revision": "0df444a360eaa60ab8c11dca51a86af692955474"
+    },
+    {
+      "name": "OrthonormalBasis.sum_apply_diagonal_invariant",
+      "path": "OpenGALib/Algebraic/Auxiliary/OrthonormalBasisDiagonal.lean"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Pointwise linear maps from a two-dimensional real inner product space into any real inner product space. The area density is the intrinsic norm determinant, and both area and energy densities are independent of orthonormal basis. No injectivity or orientation assumption is required.",
+  "source": "Derived linear-algebra interface for Colding-Minicozzi, Width and Finite Extinction Time of Ricci Flow, arXiv:0707.0108v1, equation (1.4), p. 3. https://arxiv.org/pdf/0707.0108v1#page=3",
+  "source_sha256": "b316e1614ddc42bfa4b1bdce446cbc2503f9e5ee8008d8a591c2ca9d80532d35",
+  "status": "proved_and_published",
+  "verification": {
+    "axiom_audit": "passed for all three declarations",
+    "curation_check": "passed: 16 source reviews and 16 curated declarations; no pending or stale reviews",
+    "custom_linter_baselines": "MathTag 0, AnchorPurity 0, Naming 0",
+    "full_library_build": "passed (3283 jobs)",
+    "module_build": "passed",
+    "new_module_warnings": 0,
+    "platform_proof_verification": "ACCEPTED for all three declarations and the reusable bilinear dependency",
+    "platform_source_reviews": "no pending or stale reviews",
+    "synchronization_tests": "14 passed",
+    "synchronized_mirror_build": "passed (3192 jobs)"
+  }
+}

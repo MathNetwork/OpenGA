@@ -1,0 +1,7 @@
+⚠ [2698/2706] Replayed Theorems.Thm_OpenGA_RicciFlow_surfaceDensity_comp
+warning: Theorems/Thm_OpenGA_RicciFlow_surfaceDensity_comp.lean:18:8: declaration uses `sorry`
+⚠ [2699/2706] Replayed Theorems.Thm_OpenGA_RicciFlow_patchArea_comp
+warning: Theorems/Thm_OpenGA_RicciFlow_patchArea_comp.lean:19:8: declaration uses `sorry`
+✔ [2704/2706] Built Verified.surfaceDensity_comp (3.2s)
+✔ [2705/2706] Built Verified.patchArea_comp (2.0s)
+Build completed successfully (2706 jobs).

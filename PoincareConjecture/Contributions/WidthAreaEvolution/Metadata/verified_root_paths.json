@@ -1,0 +1,232 @@
+{
+  "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution": [
+    {
+      "id": "dfed080b-d445-470f-b001-e424b16b4b13",
+      "name": "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution"
+    },
+    {
+      "id": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd",
+      "name": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd"
+    },
+    {
+      "id": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology"
+    },
+    {
+      "id": "sketch-870e3a52-84b8-4f25-8bab-e2378fc18cc8",
+      "name": "sketch-870e3a52-84b8-4f25-8bab-e2378fc18cc8"
+    },
+    {
+      "id": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology"
+    },
+    {
+      "id": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff",
+      "name": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff"
+    },
+    {
+      "id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "name": "PoincareFormalization.nonempty_homeomorph_sphere_three"
+    }
+  ],
+  "OpenGA.nonempty_widthComparisonData_of_areaEvolution": [
+    {
+      "id": "547e3663-8069-406b-925c-acdf272db811",
+      "name": "OpenGA.nonempty_widthComparisonData_of_areaEvolution"
+    },
+    {
+      "id": "sketch-be48e378-6f84-445c-9616-93ba4e1e4ec1",
+      "name": "sketch-be48e378-6f84-445c-9616-93ba4e1e4ec1"
+    },
+    {
+      "id": "dfed080b-d445-470f-b001-e424b16b4b13",
+      "name": "OpenGA.nonempty_measuredSurgeryComparisonData_of_areaEvolution"
+    },
+    {
+      "id": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd",
+      "name": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd"
+    },
+    {
+      "id": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology"
+    },
+    {
+      "id": "sketch-870e3a52-84b8-4f25-8bab-e2378fc18cc8",
+      "name": "sketch-870e3a52-84b8-4f25-8bab-e2378fc18cc8"
+    },
+    {
+      "id": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology"
+    },
+    {
+      "id": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff",
+      "name": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff"
+    },
+    {
+      "id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "name": "PoincareFormalization.nonempty_homeomorph_sphere_three"
+    }
+  ],
+  "OpenGA_SurgeryAreaEvolutionData": [
+    {
+      "id": "74823526-a4ee-4cf1-844c-2fa50e923d38",
+      "name": "OpenGA_SurgeryAreaEvolutionData"
+    },
+    {
+      "id": "8767fd8d-2074-447d-a515-b7382081a8f6",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology"
+    },
+    {
+      "id": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd",
+      "name": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd"
+    },
+    {
+      "id": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology"
+    },
+    {
+      "id": "sketch-870e3a52-84b8-4f25-8bab-e2378fc18cc8",
+      "name": "sketch-870e3a52-84b8-4f25-8bab-e2378fc18cc8"
+    },
+    {
+      "id": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology"
+    },
+    {
+      "id": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff",
+      "name": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff"
+    },
+    {
+      "id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "name": "PoincareFormalization.nonempty_homeomorph_sphere_three"
+    }
+  ],
+  "OpenGA_WidthAreaEvolutionData": [
+    {
+      "id": "e3bc03e8-d36a-4cb4-8941-cad17fa54760",
+      "name": "OpenGA_WidthAreaEvolutionData"
+    },
+    {
+      "id": "74823526-a4ee-4cf1-844c-2fa50e923d38",
+      "name": "OpenGA_SurgeryAreaEvolutionData"
+    },
+    {
+      "id": "8767fd8d-2074-447d-a515-b7382081a8f6",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology"
+    },
+    {
+      "id": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd",
+      "name": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd"
+    },
+    {
+      "id": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology"
+    },
+    {
+      "id": "sketch-870e3a52-84b8-4f25-8bab-e2378fc18cc8",
+      "name": "sketch-870e3a52-84b8-4f25-8bab-e2378fc18cc8"
+    },
+    {
+      "id": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology"
+    },
+    {
+      "id": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff",
+      "name": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff"
+    },
+    {
+      "id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "name": "PoincareFormalization.nonempty_homeomorph_sphere_three"
+    }
+  ],
+  "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology": [
+    {
+      "id": "8767fd8d-2074-447d-a515-b7382081a8f6",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_area_evolution_surgery_topology"
+    },
+    {
+      "id": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd",
+      "name": "sketch-f82f6ab1-1244-450b-b0f9-947f5d6009dd"
+    },
+    {
+      "id": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology"
+    },
+    {
+      "id": "sketch-870e3a52-84b8-4f25-8bab-e2378fc18cc8",
+      "name": "sketch-870e3a52-84b8-4f25-8bab-e2378fc18cc8"
+    },
+    {
+      "id": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology"
+    },
+    {
+      "id": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff",
+      "name": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff"
+    },
+    {
+      "id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "name": "PoincareFormalization.nonempty_homeomorph_sphere_three"
+    }
+  ],
+  "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology": [
+    {
+      "id": "5d3926a9-6dc7-49d7-aa52-a110fdf94291",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_measured_surgery_topology"
+    },
+    {
+      "id": "sketch-870e3a52-84b8-4f25-8bab-e2378fc18cc8",
+      "name": "sketch-870e3a52-84b8-4f25-8bab-e2378fc18cc8"
+    },
+    {
+      "id": "fe9a0128-6fb2-494b-aba1-8436851df1e4",
+      "name": "PoincareFormalization.ExtinctionEndgame.exists_width_controlled_surgery_topology"
+    },
+    {
+      "id": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff",
+      "name": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff"
+    },
+    {
+      "id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "name": "PoincareFormalization.nonempty_homeomorph_sphere_three"
+    }
+  ],
+  "area_energy": [
+    {
+      "id": "d81e3640-8579-4396-babb-69edac82be33",
+      "name": "OpenGA.integral_areaDensity_le_energyDensity"
+    },
+    {
+      "id": "sketch-719f4cdd-1059-4091-9819-7926dbc5806e",
+      "name": "sketch-719f4cdd-1059-4091-9819-7926dbc5806e"
+    },
+    {
+      "id": "18265c01-abe4-486f-84f2-c88759ab91fc",
+      "name": "OpenGA.eventually_width_slope_lt_of_comparison"
+    },
+    {
+      "id": "sketch-f49a1f88-a5c8-43b7-a45a-5768ddb274e8",
+      "name": "sketch-f49a1f88-a5c8-43b7-a45a-5768ddb274e8"
+    },
+    {
+      "id": "945e8722-bd96-4eba-a6eb-6458fadeea7a",
+      "name": "OpenGA.WidthComparisonTrace.le_extinctionTime"
+    },
+    {
+      "id": "sketch-6beb3841-4356-42a3-b3df-a417e4042a5c",
+      "name": "sketch-6beb3841-4356-42a3-b3df-a417e4042a5c"
+    },
+    {
+      "id": "2e12f604-9e6a-4062-9bac-8727a1a9edb7",
+      "name": "OpenGA.SurgeryTopologyEvolution.finiteExtinction_of_width_control"
+    },
+    {
+      "id": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff",
+      "name": "sketch-25d76430-fc9b-4aaa-9490-50a596f993ff"
+    },
+    {
+      "id": "7ea2da12-4d1b-4bbc-8257-df87d92f5a8e",
+      "name": "PoincareFormalization.nonempty_homeomorph_sphere_three"
+    }
+  ]
+}

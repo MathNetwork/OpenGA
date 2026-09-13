@@ -1,0 +1,164 @@
+[
+  {
+    "name": "DifferentialGeometry.SmoothRiemannianMetric",
+    "module": "DifferentialGeometry.Geometry.Metric.Basic",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "DifferentialGeometry.SmoothRiemannianMetric",
+    "startLine": 12,
+    "endLine": 15,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.RicciFlow.SurfaceParameter",
+    "module": "OpenGALib.Interoperability.RicciFlow.SurfaceArea",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RicciFlow.SurfaceParameter",
+    "startLine": 26,
+    "endLine": 26,
+    "typeDeps": [],
+    "valueDeps": []
+  },
+  {
+    "name": "OpenGA.RicciFlow.patchArea",
+    "module": "OpenGALib.Interoperability.RicciFlow.SurfaceArea",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RicciFlow.patchArea",
+    "startLine": 49,
+    "endLine": 52,
+    "typeDeps": [
+      "DifferentialGeometry.SmoothRiemannianMetric",
+      "OpenGA.RicciFlow.SurfaceParameter"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.SmoothRiemannianMetric",
+      "OpenGA.RicciFlow.surfaceDensity",
+      "OpenGA.RicciFlow.SurfaceParameter"
+    ]
+  },
+  {
+    "name": "OpenGA.RicciFlow.patchArea_comp",
+    "module": "OpenGALib.Interoperability.RicciFlow.SurfaceAreaCoordinates",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RicciFlow.patchArea_comp",
+    "startLine": 75,
+    "endLine": 90,
+    "typeDeps": [
+      "DifferentialGeometry.SmoothRiemannianMetric",
+      "OpenGA.RicciFlow.SurfaceParameter",
+      "OpenGA.RicciFlow.patchArea"
+    ],
+    "valueDeps": [
+      "OpenGA.RicciFlow.surfaceDensity_comp",
+      "DifferentialGeometry.SmoothRiemannianMetric",
+      "OpenGA.RicciFlow.surfaceDensity",
+      "OpenGA.RicciFlow.SurfaceParameter",
+      "OpenGA.RicciFlow.patchArea"
+    ]
+  },
+  {
+    "name": "OpenGA.RicciFlow.surfaceDensity",
+    "module": "OpenGALib.Interoperability.RicciFlow.SurfaceArea",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RicciFlow.surfaceDensity",
+    "startLine": 44,
+    "endLine": 47,
+    "typeDeps": [
+      "DifferentialGeometry.SmoothRiemannianMetric",
+      "OpenGA.RicciFlow.SurfaceParameter"
+    ],
+    "valueDeps": [
+      "DifferentialGeometry.SmoothRiemannianMetric",
+      "OpenGA.RicciFlow.surfaceMetricMatrix",
+      "OpenGA.RicciFlow.SurfaceParameter"
+    ]
+  },
+  {
+    "name": "OpenGA.RicciFlow.surfaceDensity_comp",
+    "module": "OpenGALib.Interoperability.RicciFlow.SurfaceAreaCoordinates",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RicciFlow.surfaceDensity_comp",
+    "startLine": 59,
+    "endLine": 73,
+    "typeDeps": [
+      "DifferentialGeometry.SmoothRiemannianMetric",
+      "OpenGA.RicciFlow.surfaceDensity",
+      "OpenGA.RicciFlow.SurfaceParameter"
+    ],
+    "valueDeps": [
+      "OpenGA.RicciFlow.surfaceMetricMatrix_comp",
+      "DifferentialGeometry.SmoothRiemannianMetric",
+      "OpenGA.RicciFlow.surfaceDensity",
+      "OpenGA.RicciFlow.surfaceMetricMatrix",
+      "OpenGA.RicciFlow.SurfaceParameter"
+    ]
+  },
+  {
+    "name": "OpenGA.RicciFlow.surfaceMetricMatrix",
+    "module": "OpenGALib.Interoperability.RicciFlow.SurfaceArea",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RicciFlow.surfaceMetricMatrix",
+    "startLine": 39,
+    "endLine": 42,
+    "typeDeps": [
+      "DifferentialGeometry.SmoothRiemannianMetric",
+      "OpenGA.RicciFlow.SurfaceParameter"
+    ],
+    "valueDeps": [
+      "OpenGA.RicciFlow.surfaceTangent",
+      "DifferentialGeometry.SmoothRiemannianMetric",
+      "OpenGA.RicciFlow.SurfaceParameter"
+    ]
+  },
+  {
+    "name": "OpenGA.RicciFlow.surfaceMetricMatrix_comp",
+    "module": "OpenGALib.Interoperability.RicciFlow.SurfaceAreaCoordinates",
+    "kind": "theorem",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RicciFlow.surfaceMetricMatrix_comp",
+    "startLine": 26,
+    "endLine": 57,
+    "typeDeps": [
+      "DifferentialGeometry.SmoothRiemannianMetric",
+      "OpenGA.RicciFlow.surfaceMetricMatrix",
+      "OpenGA.RicciFlow.SurfaceParameter"
+    ],
+    "valueDeps": [
+      "OpenGA.RicciFlow.surfaceTangent",
+      "DifferentialGeometry.SmoothRiemannianMetric",
+      "OpenGA.RicciFlow.surfaceMetricMatrix",
+      "OpenGA.RicciFlow.SurfaceParameter"
+    ]
+  },
+  {
+    "name": "OpenGA.RicciFlow.surfaceTangent",
+    "module": "OpenGALib.Interoperability.RicciFlow.SurfaceArea",
+    "kind": "def",
+    "isPrivate": false,
+    "isInstance": false,
+    "userName": "OpenGA.RicciFlow.surfaceTangent",
+    "startLine": 34,
+    "endLine": 37,
+    "typeDeps": [
+      "OpenGA.RicciFlow.SurfaceParameter"
+    ],
+    "valueDeps": [
+      "OpenGA.RicciFlow.SurfaceParameter"
+    ]
+  }
+]

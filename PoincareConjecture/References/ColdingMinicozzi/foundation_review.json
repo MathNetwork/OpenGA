@@ -1,0 +1,168 @@
+{
+  "reviewed_on": "2026-09-10",
+  "scope": "Pinned local OpenGA, DifferentialGeometry 1b535dd102b94cc42b107cca27059687888f08b3, the recorded Petersen source review, and the CM-Hypergraph blueprint. Missing means not located or not connected in these checked sources; it is not a claim of worldwide absence.",
+  "route": "Colding-Minicozzi width and finite extinction, followed by surgery topology reconstruction",
+  "reference": "https://arxiv.org/html/0707.0108v1",
+  "concepts": [
+    {
+      "concept": "Tangent and normal spaces along immersions",
+      "status": "implemented",
+      "remaining": [
+        "Smooth normal bundle",
+        "Smooth dependence of the metric projections",
+        "Normal covariant derivative"
+      ],
+      "modules": [
+        "OpenGALib.Riemannian.Surface.TangentNormal",
+        "OpenGALib.Riemannian.Surface.NormalProjection"
+      ],
+      "implemented": [
+        "Tangent plane and metric normal space",
+        "Orthogonal direct-sum decomposition",
+        "Tangent and normal linear projections",
+        "Dimension and codimension formulas"
+      ]
+    },
+    {
+      "concept": "Second fundamental form and mean curvature",
+      "status": "upstream_candidates_need_integration",
+      "evidence": [
+        "PoincareConjecture/References/Frenzymath/submanifold_geometry_review.json",
+        "PoincareConjecture/References/ColdingMinicozzi/BoundaryGeometryAudit.lean"
+      ],
+      "remaining": [
+        "Intrinsic second fundamental form along arbitrary smooth immersions",
+        "Identify the projected connection with the induced metric Levi-Civita connection",
+        "Mean curvature and the minimality predicate"
+      ]
+    },
+    {
+      "concept": "Gauss equation and Gauss-Bonnet",
+      "status": "incomplete_for_cm",
+      "remaining": [
+        "Migrate the reviewed Petersen Gauss identity to the actual induced metric",
+        "Closed-surface Gauss-Bonnet",
+        "Branch-point curvature correction"
+      ]
+    },
+    {
+      "concept": "Branched conformal and minimal spheres",
+      "status": "not_located_in_checked_lean_sources",
+      "remaining": [
+        "Finite branch orders in conformal charts",
+        "Area and curvature integrability at branch points",
+        "Extension of the verified smooth-immersion area variation"
+      ]
+    },
+    {
+      "concept": "Varifolds",
+      "status": "measure_foundations_implemented",
+      "module": "OpenGALib.GeometricMeasureTheory.Varifold",
+      "remaining": [
+        "Tangential divergence and first variation",
+        "Stationarity",
+        "Manifold tangent-plane and metric compatibility",
+        "Bubble convergence implies varifold convergence"
+      ]
+    },
+    {
+      "concept": "Manifold-valued Sobolev maps and sweepouts",
+      "status": "not_located_in_checked_lean_sources",
+      "remaining": [
+        "C0 intersect W12 mapping-space topology",
+        "Dirichlet energy and weak differential",
+        "Sweepouts with constant endpoint slices and homotopies through sweepouts",
+        "Width as an infimum over sweepouts of slice-energy suprema",
+        "Energy continuity to identify slice suprema with maxima",
+        "Positive width for a nontrivial class"
+      ]
+    },
+    {
+      "concept": "Harmonic replacement and good sweepouts",
+      "status": "not_integrated",
+      "upstream_scope": "The reviewed HarmonicMapTension module covers identity/diffeomorphism tension in the DeTurck setting, not the sphere-valued-domain harmonic replacement needed by CM.",
+      "remaining": [
+        "Small-energy Dirichlet replacement",
+        "Continuity and energy improvement",
+        "Bubble compactness",
+        "Uniform control of every almost-maximal slice"
+      ]
+    },
+    {
+      "concept": "Ricci flow with surgery",
+      "status": "analytic_and_topological_conditional_interfaces",
+      "evidence": [
+        "OpenGALib/Analysis/SurgeryComparison.lean",
+        "OpenGALib/Topology/SurgeryReconstruction.lean"
+      ],
+      "remaining": [
+        "Geometric neck/cap and surgery definitions with quantitative parameters",
+        "Existence and continuation of the surgery flow",
+        "Extract finite surgery histories and width comparison traces from the geometric flow"
+      ],
+      "platform_interface": "Definitions.Def_OpenGA_CutoffSurgeryProcess: an abstract continuation record; it does not construct a metric surgery flow."
+    },
+    {
+      "concept": "Topological endgame",
+      "status": "conditional_theorems_implemented",
+      "module": "OpenGALib.Topology.ExtinctionEndgame",
+      "remaining": [
+        "Simply connected connected sums have simply connected factors",
+        "Sphere handles are not simply connected",
+        "Connected sums of standard spheres are standard spheres",
+        "Topological-to-smooth structure bridge for the mission hypotheses"
+      ]
+    }
+  ],
+  "blueprint_corrections": [
+    {
+      "file": "CMHypergraph/atoms/definitions/def-sweepout-width.md",
+      "issue": "The displayed outer minimum assumes attainment. CM equation (1.1) uses an infimum. Slice energy attains its maximum only after the appropriate continuity and compactness are proved.",
+      "action": "Use infimum/supremum in the Lean definition and prove any attainment separately; the sibling blueprint has not been edited."
+    },
+    {
+      "file": "CMHypergraph/atoms/definitions/def-sweepout-width.md",
+      "issue": "The two endpoint slices are constant maps, but need not be the same constant map. A path between such endpoints is not automatically a loop at one fixed basepoint in the mapping space.",
+      "action": "Define homotopy through the actual space of sweepouts first; make basepoint or relative-homotopy conventions explicit when identifying classes with pi3."
+    }
+  ],
+  "next_geometric_result": "Construct the second fundamental form from the ambient connection and the actual normal projection, then identify the induced curvature in the Gauss equation.",
+  "publication": "This review and the new tangent/normal definitions are local; the separate ClosedSurfaceArea publication ledger records platform status.",
+  "new_module_validation": {
+    "build": "passed",
+    "full_build_jobs": 4310,
+    "axiom_audit": "passed",
+    "declarations_checked": 13,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "status": "passed"
+  },
+  "new_platform_observations": [
+    {
+      "theorem": "OpenGA.CutoffSurgeryProcess.definedUpTo_of_dyadic",
+      "submission_id": "0fe76133-97aa-466f-b05d-8164a3b0a95c",
+      "source_sha256": "3903235b8be85d6ff60adcea86cf695ae13693f7f75d4df2857d1b94e0884211",
+      "assessment": "Reviewed source: dyadic cofinality and the assumed interval-monotonicity field imply definedUpTo at every nonnegative time. Existence at all dyadic times is an explicit hypothesis. Retained in the mirror; integration into a reusable continuation module is deferred."
+    },
+    {
+      "theorem": "OpenGA.exists_cutoffParameters_dyadic",
+      "submission_id": "be7d0fdd-7cd7-42df-b7a2-98b351f35160",
+      "source_sha256": "6315efee0d311b4b8d75cab5abab7b187cd272589f7767354ad6c3429b04d52d",
+      "assessment": "Reviewed source: a least dyadic block index constructs positive antitone parameter functions from given positive antitone sequences. This does not prove that the sequences satisfy geometric canonical-neighbourhood or surgery estimates. Retained in the mirror; integration into a reusable parameter module is deferred."
+    },
+    {
+      "theorem": "OpenGA.CutoffSurgeryProcess.definedUpTo_all_time",
+      "submission_id": "f1a903ae-f375-4652-a2b3-1e916e38d315",
+      "source_sha256": "a96796478a721619313814573779ec7904cbf57f5d263e8794d16812476b8e69",
+      "assessment": "Reviewed source: the infimum-of-bad-times argument uses the record fields for forward extension, limit extension and a radial budget giving finite events. These conditions have not been constructed from an actual initial Riemannian manifold and a geometric surgery flow. Retained in the mirror; integration is deferred. No local kernel-audit claim is made for this mirrored source."
+    }
+  ],
+  "source_sha256": {
+    "OpenGALib/Riemannian/Surface/TangentNormal.lean": "0c2293292fb8c6f3dce39d5573ae0c261df5c2ab325e664088a1275a5b68043f",
+    "OpenGALib/Riemannian/Surface/NormalProjection.lean": "41b791f5ca48ce4c867a7c151330900f17af5804001c6fe1d4670a039a1cd1a5",
+    "PoincareConjecture/References/ColdingMinicozzi/FoundationAudit.lean": "dbed036fdf87ebe67964f88672131849247aad773f1d02a3c43fb9209b6e9c1a"
+  }
+}
